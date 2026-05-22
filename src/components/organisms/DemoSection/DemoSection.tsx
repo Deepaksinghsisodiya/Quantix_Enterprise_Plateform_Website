@@ -132,6 +132,7 @@ export const DemoSection = () => {
                             src={demo.videoThumbnail}
                             alt="Demo thumbnail"
                             fill
+                            sizes="(max-width: 1024px) 100vw, 58vw"
                             className="object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
                           />
                           {/* Play button overlay with modern ripple effect */}
@@ -174,6 +175,7 @@ export const DemoSection = () => {
                             src={activeScreenshot.src}
                             alt={activeScreenshot.title}
                             fill
+                            sizes="(max-width: 1024px) 100vw, 58vw"
                             className="object-contain"
                           />
                           
@@ -322,6 +324,7 @@ export const DemoSection = () => {
                           src={shot.src}
                           alt={shot.title}
                           fill
+                          sizes="44px"
                           className="object-cover"
                         />
                       </div>

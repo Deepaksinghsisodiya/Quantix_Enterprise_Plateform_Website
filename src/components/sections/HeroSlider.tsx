@@ -23,6 +23,15 @@ interface SlideData {
 const SLIDES: SlideData[] = [
   {
     id: 1,
+    subtitle: "RETAIL POS",
+    title: "SMARTER RETAIL OPERATIONS START HERE",
+    description: "Sync your store inventory, track staff performance, and delight retail customers across multiple branches.",
+    backgroundImage: "/images/hero-retail.jpg",
+    primaryCtaText: "Start Free Trial",
+    secondaryCtaText: "Explore Features",
+  },
+  {
+    id: 2,
     subtitle: "RESTAURANT POS",
     title: "THE ALL-IN-ONE POS FOR RESTAURANTS",
     description: "Manage tables, order dispatch, and kitchen flows in real time — all from one single unified device.",
@@ -31,22 +40,22 @@ const SLIDES: SlideData[] = [
     secondaryCtaText: "Watch Demo",
   },
   {
-    id: 2,
-    subtitle: "RETAIL SUITE",
-    title: "SMARTER RETAIL OPERATIONS START HERE",
-    description: "Sync your store inventory, track staff performance, and delight retail customers across multiple branches.",
-    backgroundImage: "/images/hero-retail.jpg",
-    primaryCtaText: "Start Free Trial",
-    secondaryCtaText: "Explore Features",
-  },
-  {
     id: 3,
-    subtitle: "MODERN CAFES & BARS",
-    title: "BUILT FOR EVERY KIND OF DINING BUSINESS",
-    description: "From cozy corner cafes to franchise chains — Quantix scales seamlessly to match your growth.",
+    subtitle: "CLOUD POS",
+    title: "RUN YOUR BUSINESS FROM THE CLOUD",
+    description: "Access real-time sales data, inventory levels, and analytics from anywhere in the world on any device.",
     backgroundImage: "/images/hero-cafe.jpg",
     primaryCtaText: "Start Free Trial",
     secondaryCtaText: "View Plans",
+  },
+  {
+    id: 4,
+    subtitle: "LOCAL BILLING POS",
+    title: "OFFLINE-FIRST LOCAL BILLING TERMINAL",
+    description: "Keep selling even when the internet goes down. Seamless local billing with automatic cloud sync when reconnected.",
+    backgroundImage: "/images/hero-local.png",
+    primaryCtaText: "Start Free Trial",
+    secondaryCtaText: "Explore Offline",
   },
 ];
 

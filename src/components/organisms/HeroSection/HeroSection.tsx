@@ -19,18 +19,7 @@ export interface HeroSlide {
   backgroundImage: string; // URL – placeholder for now
 }
 
-// Dummy data – replace with CMS data later
 const SLIDES: HeroSlide[] = [
-  {
-    id: "restaurant",
-    badge: "RESTAURANT POS",
-    heading: "THE ALL-IN-ONE POS FOR RESTAURANTS",
-    subheading:
-      "Manage tables, orders, and kitchen flow in real time — all from one device.",
-    primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "Contact Sales →", href: "#contact" },
-    backgroundImage: "/images/hero-restaurant.jpg",
-  },
   {
     id: "retail",
     badge: "RETAIL POS",
@@ -42,14 +31,34 @@ const SLIDES: HeroSlide[] = [
     backgroundImage: "/images/hero-retail.jpg",
   },
   {
-    id: "cafe",
-    badge: "CAFES & BARS",
-    heading: "BUILT FOR EVERY BUSINESS TYPE",
+    id: "restaurant",
+    badge: "RESTAURANT POS",
+    heading: "THE ALL-IN-ONE POS FOR RESTAURANTS",
     subheading:
-      "From boutique cafes to franchise chains — Quantix scales with you every step.",
+      "Manage tables, orders, and kitchen flow in real time — all from one device.",
+    primaryCta: { label: "Start Free Trial", href: "/sign-up" },
+    secondaryCta: { label: "Contact Sales →", href: "#contact" },
+    backgroundImage: "/images/hero-restaurant.jpg",
+  },
+  {
+    id: "cloud",
+    badge: "CLOUD POS",
+    heading: "RUN YOUR BUSINESS FROM THE CLOUD",
+    subheading:
+      "Access real-time sales data, inventory levels, and analytics from anywhere in the world on any device.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
     secondaryCta: { label: "See Pricing →", href: "#pricing" },
     backgroundImage: "/images/hero-cafe.jpg",
+  },
+  {
+    id: "local",
+    badge: "LOCAL BILLING POS",
+    heading: "OFFLINE-FIRST LOCAL BILLING TERMINAL",
+    subheading:
+      "Keep selling even when the internet goes down. Seamless local billing with automatic cloud sync when reconnected.",
+    primaryCta: { label: "Start Free Trial", href: "/sign-up" },
+    secondaryCta: { label: "See Offline Mode →", href: "#services" },
+    backgroundImage: "/images/hero-local.png",
   },
 ];
 
@@ -104,6 +113,7 @@ const HeroSection = () => {
                 src={slide.backgroundImage}
                 alt={slide.heading}
                 fill
+                sizes="100vw"
                 priority
                 className="object-cover"
               />

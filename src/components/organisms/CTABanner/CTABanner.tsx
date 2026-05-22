@@ -16,7 +16,7 @@ export const CTABanner = () => {
   return (
     <section
       ref={ref}
-      className="w-full bg-blue-600 py-24 text-center border-t border-blue-500"
+      className="w-full bg-slate-900 py-24 text-center border-t border-slate-800"
     >
       <div className="site-container">
         <motion.div
@@ -27,14 +27,14 @@ export const CTABanner = () => {
           <h2 className="text-3xl font-black text-white sm:text-4xl tracking-tight">
             Ready to modernize your business?
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-blue-100 text-sm sm:text-base leading-relaxed">
+          <p className="mt-4 max-w-2xl mx-auto text-slate-300 text-sm sm:text-base leading-relaxed">
             Join 2,000+ businesses already using Quantix. Start your 3-day free trial — no credit card needed.
           </p>
           <div className="mt-8 flex flex-row flex-wrap items-center justify-center gap-4">
-            <button className="bg-white text-blue-600 hover:bg-slate-50 font-bold px-6 py-3 rounded-full shadow-sm text-xs cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-white/10">
+            <button className="bg-blue-600 text-white hover:bg-blue-700 font-bold px-6 py-3 rounded-full shadow-sm text-xs cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-blue-500/25">
               Start Free Trial
             </button>
-            <button className="border border-white text-white hover:bg-white/10 font-bold px-6 py-3 rounded-full text-xs cursor-pointer bg-transparent transition-all duration-200 hover:scale-105 active:scale-95">
+            <button className="border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white font-bold px-6 py-3 rounded-full text-xs cursor-pointer bg-transparent transition-all duration-200 hover:scale-105 active:scale-95">
               Talk to Sales
             </button>
           </div>

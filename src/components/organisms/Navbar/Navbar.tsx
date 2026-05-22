@@ -53,8 +53,8 @@ const Navbar = () => {
 
   // Motion variants for background transition
   const bgVariant = {
-    transparent: { backgroundColor: 'rgba(15, 23, 42, 0.92)' }, // Dark semi-transparent background initially
-    solid: { backgroundColor: 'rgba(15, 23, 42, 1.0)' }, // Solid dark navy on scroll
+    transparent: { backgroundColor: 'rgba(255, 255, 255, 0)' }, // Transparent initially
+    solid: { backgroundColor: 'rgba(255, 255, 255, 1.0)' }, // Solid white on scroll
   };
 
   // Slide down fullscreen mobile menu
@@ -96,7 +96,12 @@ const Navbar = () => {
         initial="transparent"
         animate={scrolled ? 'solid' : 'transparent'}
         variants={bgVariant}
-        className="backdrop-blur-md transition-colors duration-300 border-b border-white/5 shadow-md"
+        className={cn(
+          "transition-all duration-300",
+          scrolled 
+            ? "backdrop-blur-md border-b border-slate-100 shadow-sm" 
+            : "border-b border-transparent"
+        )}
       >
         <div className="site-container flex items-center justify-between py-4">
           {/* Left: Square logo icon + "Quantix" text */}
@@ -118,8 +123,9 @@ const Navbar = () => {
                 <rect x="3" y="14" width="7" height="7" />
               </svg>
             </div>
-            <span className="text-lg font-bold tracking-tight text-white">
-              Quantix            </span>
+            <span className={cn("text-lg font-bold tracking-tight transition-colors duration-300", (scrolled || mobileOpen) ? "text-slate-900" : "text-white")}>
+              Quantix
+            </span>
           </Link>
 
           {/* Desktop navigation links (Center) */}
@@ -131,8 +137,10 @@ const Navbar = () => {
                   <Link
                     href={link.href}
                     className={cn(
-                      'text-xs font-semibold tracking-wide uppercase transition-all duration-200 hover:scale-105 active:scale-95 inline-block cursor-pointer',
-                      isActive ? 'text-blue-500 font-bold' : 'text-slate-300 hover:text-white'
+                      'text-xs font-bold tracking-wide uppercase transition-all duration-200 hover:scale-105 active:scale-95 inline-block cursor-pointer',
+                      isActive 
+                        ? 'text-blue-600 font-bold' 
+                        : (scrolled ? 'text-slate-700 hover:text-blue-600' : 'text-slate-200 hover:text-white')
                     )}
                   >
                     {link.label}
@@ -147,7 +155,12 @@ const Navbar = () => {
             {/* Mode toggle button */}
             <button
               onClick={() => dispatch(toggleTheme())}
-              className="p-2 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer active:scale-90"
+              className={cn(
+                "p-2 rounded-full transition-all duration-200 cursor-pointer active:scale-90",
+                scrolled 
+                  ? "text-slate-600 hover:text-slate-900 hover:bg-slate-100" 
+                  : "text-slate-300 hover:text-white hover:bg-white/10"
+              )}
               aria-label="Toggle dark mode"
               type="button"
             >
@@ -156,7 +169,10 @@ const Navbar = () => {
 
             <Link
               href="/sign-in"
-              className="text-xs font-semibold text-white hover:text-slate-200 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95"
+              className={cn(
+                "text-xs font-bold cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95",
+                scrolled ? "text-slate-700 hover:text-blue-600" : "text-white hover:text-slate-200"
+              )}
             >
               Sign In
             </Link>
@@ -174,7 +190,12 @@ const Navbar = () => {
             {/* Mode toggle button */}
             <button
               onClick={() => dispatch(toggleTheme())}
-              className="p-2 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer active:scale-90"
+              className={cn(
+                "p-2 rounded-full transition-all duration-200 cursor-pointer active:scale-90",
+                (scrolled || mobileOpen) 
+                  ? "text-slate-600 hover:text-slate-900 hover:bg-slate-100" 
+                  : "text-slate-300 hover:text-white hover:bg-white/10"
+              )}
               aria-label="Toggle dark mode"
               type="button"
             >
@@ -183,7 +204,10 @@ const Navbar = () => {
 
             <button
               type="button"
-              className="rounded-full p-2 text-white hover:bg-white/10 transition-all"
+              className={cn(
+                "rounded-full p-2 transition-all",
+                (scrolled || mobileOpen) ? "text-slate-800 hover:bg-slate-100" : "text-white hover:bg-white/10"
+              )}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               onClick={toggleMobile}
@@ -201,10 +225,10 @@ const Navbar = () => {
               animate="visible"
               exit="exit"
               variants={menuVariant}
-              className="fixed inset-0 z-40 bg-[#0F172A] flex flex-col justify-center min-h-screen w-full"
+              className="fixed inset-0 z-40 bg-white flex flex-col justify-center min-h-screen w-full"
             >
               <div className="w-full max-w-md mx-auto flex flex-col items-center justify-center py-20 px-8">
-                <ul className="space-y-8 text-center text-xl font-bold uppercase tracking-wider text-slate-300 w-full mb-12">
+                <ul className="space-y-8 text-center text-xl font-bold uppercase tracking-wider text-slate-700 w-full mb-12">
                   {LINKS.map((link) => {
                     const isActive = pathname === link.href;
                     return (
@@ -214,7 +238,7 @@ const Navbar = () => {
                           onClick={toggleMobile}
                           className={cn(
                             'transition-all duration-200 hover:scale-105 active:scale-95 inline-block',
-                            isActive ? 'text-blue-500' : 'hover:text-white'
+                            isActive ? 'text-blue-600' : 'text-slate-800 hover:text-blue-600'
                           )}
                         >
                           {link.label}
@@ -227,7 +251,7 @@ const Navbar = () => {
                 <motion.div variants={itemVariant} className="flex flex-col gap-4 w-full">
                   <Link
                     href="/sign-in"
-                    className="rounded-full border border-slate-700 text-center py-3.5 text-xs font-bold text-white bg-slate-900/40 hover:bg-slate-900 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                    className="rounded-full border border-slate-200 text-slate-700 text-center py-3.5 text-xs font-bold bg-slate-50 hover:bg-slate-100 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                     onClick={toggleMobile}
                   >
                     Sign In

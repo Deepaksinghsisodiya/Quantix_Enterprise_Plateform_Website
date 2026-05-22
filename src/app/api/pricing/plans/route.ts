@@ -41,7 +41,7 @@ export async function GET() {
       priceMonthly: 0,
       priceSuffix: '',
       description: 'For large chains, franchises, and businesses with unique needs.',
-      features: ['Dedicated account manager', 'SLA guarantees', 'Custom pricing'],
+      features: ['Dedicated account manager', 'SLA guarantees', 'Tailored pricing'],
       custom: true,
     },
   ];

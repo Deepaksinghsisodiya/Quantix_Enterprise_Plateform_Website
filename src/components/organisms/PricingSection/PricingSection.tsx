@@ -8,8 +8,11 @@ import { ATMButton } from '@/components/atoms/ATMButton';
 import { Check, Headset } from 'lucide-react';
 
 export const PricingSection = () => {
-  const billing = useState<'monthly' | 'annual'>('monthly')[0];
-  const setBilling = useState<'monthly' | 'annual'>('monthly')[1];
+  const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly');
+  const [selectedPlanId, setSelectedPlanId] = useState<string>('pro');
+  const handleSelectPlan = (planId: string) => {
+    setSelectedPlanId(planId);
+  };
   const { data: plans = [], isLoading } = useGetPricingPlansQuery();
   const ref = React.useRef(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
@@ -87,11 +90,11 @@ export const PricingSection = () => {
         'Everything in Professional',
         'Unlimited locations',
         'Dedicated account manager',
-        'Custom integrations',
+        'Enterprise integrations',
         'White-label options',
         'SLA guarantee',
         'On-site training',
-        'Custom contracts & billing'
+        'Tailored contracts & billing'
       ],
       custom: true,
     },
@@ -162,107 +165,149 @@ export const PricingSection = () => {
               <div className="h-10 w-full bg-gray-200 rounded mt-8" />
             </div>
           ))}
-          {!isLoading && pricingPlans.map((plan) => (
-            <AnimatePresence key={plan.id} mode="wait">
-              <motion.div
-                className={cn(
-                  'rounded-2xl border p-6 flex flex-col justify-between transition-all duration-300 relative mt-6 md:mt-0',
-                  plan.mostPopular
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-xl shadow-blue-600/10'
-                    : 'bg-white text-gray-900 border-slate-100 shadow-xs hover:shadow-md'
-                )}
-                whileHover={{ y: -6 }}
-                layout
-              >
-                <div>
-                  {/* Top Badge centered on border */}
-                  {plan.custom && (
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 shrink-0">
-                      <span className="inline-flex items-center rounded-full bg-blue-600 px-3 py-1 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm whitespace-nowrap">
-                        Custom
-                      </span>
-                    </div>
-                  )}
-                  {plan.mostPopular && (
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 shrink-0">
-                      <span className="inline-flex items-center rounded-full bg-amber-400 px-3 py-1 text-[9px] font-bold uppercase tracking-wider text-gray-950 shadow-sm whitespace-nowrap">
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Name as small uppercase label */}
-                  <h3 className={cn('text-[10px] font-bold uppercase tracking-wider text-slate-400', plan.mostPopular && 'text-blue-200')}>
-                    {plan.name}
-                  </h3>
-
-                  {/* Price */}
-                  <div className="mt-2 mb-4">
-                    {plan.custom ? (
-                      <div className="flex items-baseline">
-                        <span className={cn('text-3xl font-black text-slate-900 tracking-tight', plan.mostPopular && 'text-white')}>Custom</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-baseline gap-1.5 flex-wrap">
-                        <span className={cn('text-3xl font-black text-slate-900 tracking-tight', plan.mostPopular && 'text-white')}>
-                          {plan.id === 'free' ? 'Free' : `$${billing === 'monthly' ? plan.priceMonthly : getAnnualPrice(plan.priceMonthly)}`}
-                        </span>
-                        <span className={cn('text-xs font-semibold text-slate-500', plan.mostPopular ? 'text-blue-200' : 'text-slate-400')}>
-                          {plan.id === 'free' ? '3 days, no card' : (billing === 'monthly' ? '/month' : '/year')}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Description */}
-                  <p className={cn('text-xs text-slate-500 mb-6 leading-relaxed', plan.mostPopular && 'text-blue-100')}>{plan.description}</p>
-
-                  {/* Features list */}
-                  <ul className="mb-8 space-y-3">
-                    {plan.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-start text-xs font-medium"> 
-                        <Check className={cn('h-4 w-4 mr-2 shrink-0 stroke-[3]', plan.mostPopular ? 'text-white' : 'text-blue-600')} />
-                        <span className={cn('text-slate-700', plan.mostPopular && 'text-white')}>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* CTA Button as rounded-full pill */}
-                <div>
-                  {plan.id === 'free' ? (
-                    <button
-                      className="w-full text-xs font-bold border border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent py-3 px-4 rounded-full transition cursor-pointer text-center block"
-                      aria-label="Start free trial"
-                    >
-                      Start Free Trial
-                    </button>
-                  ) : plan.custom ? (
-                    <button
-                      className="w-full text-xs font-bold bg-slate-950 hover:bg-slate-900 text-white py-3 px-4 rounded-full transition cursor-pointer text-center block"
-                      aria-label="Contact sales"
-                    >
-                      Contact Sales
-                    </button>
-                  ) : plan.mostPopular ? (
-                    <button
-                      className="w-full text-xs font-bold bg-white text-blue-600 hover:bg-slate-50 py-3 px-4 rounded-full transition cursor-pointer text-center block"
-                      aria-label="Get started"
-                    >
-                      Get Started
-                    </button>
-                  ) : (
-                    <button
-                      className="w-full text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-full transition cursor-pointer text-center block"
-                      aria-label="Get started"
-                    >
-                      Get Started
-                    </button>
-                  )}
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          ))}
+           {!isLoading && pricingPlans.map((plan) => {
+             const isSelected = selectedPlanId === plan.id;
+             return (
+               <AnimatePresence key={plan.id} mode="wait">
+                 <motion.div
+                   onClick={() => handleSelectPlan(plan.id)}
+                   className={cn(
+                     'rounded-2xl border p-6 flex flex-col justify-between transition-all duration-300 relative mt-6 md:mt-0 cursor-pointer',
+                     plan.mostPopular
+                       ? (isSelected 
+                           ? 'bg-blue-600 text-white border-blue-400 ring-2 ring-blue-400/30 shadow-xl shadow-blue-600/20' 
+                           : 'bg-blue-600 text-white border-blue-600 shadow-xl shadow-blue-600/10')
+                       : (isSelected 
+                           ? 'bg-white text-gray-900 border-blue-500 ring-2 ring-blue-500/10 shadow-md' 
+                           : 'bg-white text-gray-900 border-slate-100 shadow-xs hover:shadow-md hover:border-blue-200')
+                   )}
+                   whileHover={{ 
+                     y: -10, 
+                     scale: 1.02,
+                     boxShadow: plan.mostPopular 
+                       ? '0 25px 50px -12px rgba(37, 99, 235, 0.4)' 
+                       : '0 25px 50px -12px rgba(0, 0, 0, 0.08)'
+                   }}
+                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                   layout
+                 >
+                   <div>
+                     {plan.mostPopular && (
+                       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 shrink-0">
+                         <span className="inline-flex items-center rounded-full bg-amber-400 px-3 py-1 text-[9px] font-bold uppercase tracking-wider text-gray-950 shadow-sm whitespace-nowrap">
+                           Most Popular
+                         </span>
+                       </div>
+                     )}
+   
+                     {/* Name as small uppercase label */}
+                     <h3 className={cn('text-[10px] font-bold uppercase tracking-wider text-slate-400', plan.mostPopular && 'text-blue-200')}>
+                       {plan.name}
+                     </h3>
+   
+                     {/* Price */}
+                     <div className="mt-2 mb-4">
+                       {plan.custom ? (
+                         <div className="flex items-baseline">
+                           <span className={cn('text-3xl font-black text-slate-900 tracking-tight', plan.mostPopular && 'text-white')}>Tailored</span>
+                         </div>
+                       ) : (
+                         <div className="flex items-baseline gap-1.5 flex-wrap">
+                           <span className={cn('text-3xl font-black text-slate-900 tracking-tight', plan.mostPopular && 'text-white')}>
+                             {plan.id === 'free' ? 'Free' : `$${billing === 'monthly' ? plan.priceMonthly : getAnnualPrice(plan.priceMonthly)}`}
+                           </span>
+                           <span className={cn('text-xs font-semibold text-slate-500', plan.mostPopular ? 'text-blue-200' : 'text-slate-400')}>
+                             {plan.id === 'free' ? '3 days, no card' : (billing === 'monthly' ? '/month' : '/year')}
+                           </span>
+                         </div>
+                       )}
+                     </div>
+   
+                     {/* Description */}
+                     <p className={cn('text-xs text-slate-500 mb-6 leading-relaxed', plan.mostPopular && 'text-blue-100')}>{plan.description}</p>
+   
+                     {/* Features list */}
+                     <ul className="mb-8 space-y-3">
+                       {plan.features.map((feat, idx) => {
+                         // Remove custom wording from features dynamically if present
+                         const featureText = feat.replace(/Custom/g, 'Tailored');
+                         return (
+                           <li key={idx} className="flex items-start text-xs font-medium"> 
+                             <Check className={cn('h-4 w-4 mr-2 shrink-0 stroke-[3]', plan.mostPopular ? 'text-white' : 'text-blue-600')} />
+                             <span className={cn('text-slate-700', plan.mostPopular && 'text-white')}>{featureText}</span>
+                           </li>
+                         );
+                       })}
+                     </ul>
+                   </div>
+   
+                   {/* CTA Button as rounded-full pill */}
+                   <div>
+                     {isSelected ? (
+                       <button
+                         onClick={(e) => {
+                           e.stopPropagation();
+                         }}
+                         className={cn(
+                           "w-full text-xs font-bold py-3 px-4 rounded-full transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]",
+                           plan.mostPopular
+                             ? "bg-white text-blue-600 hover:bg-slate-50"
+                             : "bg-blue-600 text-white hover:bg-blue-700"
+                         )}
+                         aria-label="Selected plan"
+                       >
+                         <Check className="h-4 w-4 stroke-[3]" /> Selected
+                       </button>
+                     ) : plan.id === 'free' ? (
+                       <button
+                         onClick={(e) => {
+                           e.stopPropagation();
+                           handleSelectPlan(plan.id);
+                         }}
+                         className="w-full text-xs font-bold border border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent py-3 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer text-center block"
+                         aria-label="Start free trial"
+                       >
+                         Start Free Trial
+                       </button>
+                     ) : plan.custom ? (
+                       <button
+                         onClick={(e) => {
+                           e.stopPropagation();
+                           handleSelectPlan(plan.id);
+                         }}
+                         className="w-full text-xs font-bold bg-slate-950 hover:bg-slate-900 text-white py-3 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer text-center block"
+                         aria-label="Get started"
+                       >
+                         Get Started
+                       </button>
+                     ) : plan.mostPopular ? (
+                       <button
+                         onClick={(e) => {
+                           e.stopPropagation();
+                           handleSelectPlan(plan.id);
+                         }}
+                         className="w-full text-xs font-bold bg-white text-blue-600 hover:bg-slate-50 py-3 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer text-center block"
+                         aria-label="Get started"
+                       >
+                         Get Started
+                       </button>
+                     ) : (
+                       <button
+                         onClick={(e) => {
+                           e.stopPropagation();
+                           handleSelectPlan(plan.id);
+                         }}
+                         className="w-full text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer text-center block"
+                         aria-label="Get started"
+                       >
+                         Get Started
+                       </button>
+                     )}
+                   </div>
+                 </motion.div>
+               </AnimatePresence>
+             );
+           })}
         </motion.div>
 
         {/* Footer note */}

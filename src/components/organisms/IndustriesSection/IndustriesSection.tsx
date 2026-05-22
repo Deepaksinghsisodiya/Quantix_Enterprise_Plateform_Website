@@ -155,6 +155,7 @@ export const IndustriesSection = () => {
                       src="/images/hero-retail.jpg"
                       alt="Retail shop counter"
                       fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover"
                     />
                   </div>
@@ -203,6 +204,7 @@ export const IndustriesSection = () => {
                       src="/images/hero-restaurant.jpg"
                       alt="Gourmet dish presentation"
                       fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover"
                     />
                   </div>

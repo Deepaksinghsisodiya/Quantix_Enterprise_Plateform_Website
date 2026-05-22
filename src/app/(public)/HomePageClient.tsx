@@ -108,11 +108,11 @@ export default function HomePageClient() {
           <LazyFAQSection />
         </Suspense>
       </section>
-      <section className={cn("scroll-mt-20 bg-blue-600")}>
+      <section className={cn("scroll-mt-20 bg-slate-900")}>
         <CTABanner />
       </section>
 
-      <section id="footer" className={cn("scroll-mt-20 bg-black")}>
+      <section id="footer" className={cn("scroll-mt-20 bg-white")}>
         <Footer />
       </section>
 

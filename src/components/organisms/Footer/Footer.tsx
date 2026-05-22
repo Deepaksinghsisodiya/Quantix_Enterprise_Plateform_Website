@@ -43,13 +43,13 @@ const legalLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="bg-black text-gray-400 pt-16">
+    <footer className="bg-white text-slate-500 pt-16 border-t border-slate-200/60">
       <div className="site-container">
         {/* Main columns */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-5">
           {/* Column 1 – Brand */}
           <div className="space-y-6">
-            <div className="flex items-center space-x-2 text-white">
+            <div className="flex items-center space-x-2 text-slate-900">
               {/* Quantix POS Logo */}
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white shrink-0">
                 <svg
@@ -70,7 +70,7 @@ export const Footer = () => {
               </div>
               <span className="text-lg font-bold tracking-tight">Quantix</span>
             </div>
-            <p className="text-xs sm:text-sm text-gray-400 max-w-xs leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-slate-500 max-w-xs leading-relaxed font-semibold">
               The modern POS platform for retail and restaurant businesses. Simple, powerful, and built to scale.
             </p>
             {/* Social icons - plain text design match */}
@@ -79,7 +79,7 @@ export const Footer = () => {
                 href="https://twitter.com/quantix"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 cursor-pointer text-xs font-bold font-mono"
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:text-blue-500 hover:bg-blue-50 transition-all duration-200 cursor-pointer text-xs font-bold font-mono"
                 aria-label="Twitter"
               >
                 x
@@ -88,7 +88,7 @@ export const Footer = () => {
                 href="https://linkedin.com/company/quantix"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 cursor-pointer text-xs font-bold font-mono"
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:text-blue-500 hover:bg-blue-50 transition-all duration-200 cursor-pointer text-xs font-bold font-mono"
                 aria-label="LinkedIn"
               >
                 in
@@ -97,7 +97,7 @@ export const Footer = () => {
                 href="https://github.com/quantix"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 cursor-pointer text-xs font-bold font-mono"
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:text-blue-500 hover:bg-blue-50 transition-all duration-200 cursor-pointer text-xs font-bold font-mono"
                 aria-label="GitHub"
               >
                 gh
@@ -107,13 +107,13 @@ export const Footer = () => {
 
           {/* Column 2 – Product */}
           <div>
-            <h3 className="mb-4 font-bold text-white text-xs uppercase tracking-wider">
+            <h3 className="mb-4 font-bold text-slate-900 text-xs uppercase tracking-wider">
               Product
             </h3>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
+            <ul className="space-y-2.5 text-xs sm:text-sm font-semibold">
               {productLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="hover:text-white transition-colors duration-200">
+                  <Link href={link.href} className="text-slate-500 hover:text-blue-500 transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -123,13 +123,13 @@ export const Footer = () => {
 
           {/* Column 3 – Company */}
           <div>
-            <h3 className="mb-4 font-bold text-white text-xs uppercase tracking-wider">
+            <h3 className="mb-4 font-bold text-slate-900 text-xs uppercase tracking-wider">
               Company
             </h3>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
+            <ul className="space-y-2.5 text-xs sm:text-sm font-semibold">
               {companyLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="hover:text-white transition-colors duration-200">
+                  <Link href={link.href} className="text-slate-500 hover:text-blue-500 transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -139,13 +139,13 @@ export const Footer = () => {
 
           {/* Column 4 – Industries */}
           <div>
-            <h3 className="mb-4 font-bold text-white text-xs uppercase tracking-wider">
+            <h3 className="mb-4 font-bold text-slate-900 text-xs uppercase tracking-wider">
               Industries
             </h3>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
+            <ul className="space-y-2.5 text-xs sm:text-sm font-semibold">
               {industryLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="hover:text-white transition-colors duration-200">
+                  <Link href={link.href} className="text-slate-500 hover:text-blue-500 transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -155,13 +155,13 @@ export const Footer = () => {
 
           {/* Column 5 – Legal */}
           <div>
-            <h3 className="mb-4 font-bold text-white text-xs uppercase tracking-wider">
+            <h3 className="mb-4 font-bold text-slate-900 text-xs uppercase tracking-wider">
               Legal
             </h3>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
+            <ul className="space-y-2.5 text-xs sm:text-sm font-semibold">
               {legalLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="hover:text-white transition-colors duration-200">
+                  <Link href={link.href} className="text-slate-500 hover:text-blue-500 transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -171,9 +171,9 @@ export const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 border-t border-slate-900 pt-6 pb-10 flex flex-col items-center justify-between text-xs sm:text-sm md:flex-row md:items-center">
-          <p className="text-gray-500">© 2025 Quantix, Inc. All rights reserved.</p>
-          <div className="mt-3 md:mt-0 flex items-center gap-1.5 text-gray-500 font-semibold uppercase tracking-wider text-[10px]">
+        <div className="mt-16 border-t border-slate-100 pt-6 pb-10 flex flex-col items-center justify-between text-xs sm:text-sm md:flex-row md:items-center">
+          <p className="text-slate-400 font-semibold">© 2025 Quantix, Inc. All rights reserved.</p>
+          <div className="mt-3 md:mt-0 flex items-center gap-1.5 text-slate-400 font-semibold uppercase tracking-wider text-[10px]">
             <span className="flex h-4.5 w-4.5 items-center justify-center text-blue-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
