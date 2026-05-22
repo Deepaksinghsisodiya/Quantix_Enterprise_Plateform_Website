@@ -1,0 +1,21 @@
+"use client";
+
+import React from "react";
+import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
+import Navbar from "@/components/organisms/Navbar/Navbar";
+import { FAQSection } from "@/components/organisms/FAQSection/FAQSection";
+import { Footer } from "@/components/organisms/Footer/Footer";
+
+export default function FAQPage() {
+  return (
+    <PublicLayout>
+      <Navbar />
+
+      <main className="pt-20 bg-gray-50 min-h-[70vh]">
+        <FAQSection />
+      </main>
+
+      <Footer />
+    </PublicLayout>
+  );
+}
