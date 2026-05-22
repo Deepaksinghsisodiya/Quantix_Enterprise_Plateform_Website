@@ -7,13 +7,7 @@ import { ATMTextField } from "@/components/atoms/ATMTextField";
 import { ATMTextArea } from "@/components/atoms/ATMTextArea";
 import { useSubmitContactFormMutation } from "@/redux/services/contactApi";
 import { toast } from "sonner";
-import {
-  Phone,
-  Mail,
-  MapPin,
-  Clock,
-  Shield,
-} from "lucide-react";
+import { Shield } from "lucide-react";
 
 export const ContactSalesSection = () => {
   const [submitContact, { isLoading }] = useSubmitContactFormMutation();
@@ -54,62 +48,27 @@ export const ContactSalesSection = () => {
   const fieldDarkClasses = "[&>label]:text-slate-400 [&>label]:text-[10px] [&>label]:font-bold [&>label]:tracking-wider [&>label]:uppercase [&_input]:bg-slate-950/60 [&_input]:border-slate-800/80 [&_input]:text-white [&_input]:placeholder-slate-600 [&_input]:h-11 [&_input]:rounded-lg [&_textarea]:bg-slate-950/60 [&_textarea]:border-slate-800/80 [&_textarea]:text-white [&_textarea]:placeholder-slate-600 [&_textarea]:rounded-lg";
 
   return (
-    <section className="bg-slate-950 py-24 border-t border-slate-900" id="contact">
-      <div className="site-container grid grid-cols-1 gap-12 lg:grid-cols-2 items-center">
-        {/* Left column – info */}
-        <div className="space-y-8 text-white">
-          <div>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-400 mb-4">
-              CONTACT SALES
-            </div>
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Need a custom plan?
-            </h2>
-            <p className="mt-4 text-sm text-slate-400 leading-relaxed max-w-lg">
-              Whether you're a growing chain or a franchise, our team will build a pricing package and integration plan tailored to your exact needs.
-            </p>
+    <section className="bg-slate-950 py-24 border-t border-slate-900 flex items-center justify-center min-h-[75vh]" id="contact">
+      <div className="site-container max-w-2xl flex flex-col items-center">
+        {/* Header info */}
+        <div className="text-center mb-10 max-w-lg">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 px-3.5 py-1.5 text-xs font-semibold text-blue-400 mb-4 shadow-sm">
+            CONTACT SALES
           </div>
-          <div className="space-y-4">
-            <ContactRow
-              icon={<Phone className="h-4.5 w-4.5" />}
-              label="Call us"
-              value="+1 (800) 555-QNTX"
-            />
-            <ContactRow
-              icon={<Mail className="h-4.5 w-4.5" />}
-              label="Email us"
-              value="sales@qauntix.com"
-            />
-            <ContactRow
-              icon={<MapPin className="h-4.5 w-4.5" />}
-              label="Headquarters"
-              value="San Francisco, CA 94105"
-            />
-            <ContactRow
-              icon={<Clock className="h-4.5 w-4.5" />}
-              label="Response time"
-              value="Within 1 business day"
-            />
-          </div>
-          {/* Enterprise support card */}
-          <div className="rounded-2xl bg-slate-900/30 border border-slate-900 p-6">
-            <div className="flex items-start gap-4">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-500/10 text-blue-400">
-                <Shield className="h-5 w-5" />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-white">Enterprise-grade support</h3>
-                <p className="mt-1.5 text-xs text-slate-400 leading-relaxed">
-                  Dedicated onboarding specialist, SLA-backed uptime, custom integration development, and a named account manager available around the clock.
-                </p>
-              </div>
-            </div>
-          </div>
+          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            Need a Custom Plan?
+          </h2>
+          <p className="mt-4 text-sm text-slate-400 leading-relaxed">
+            Whether you are a growing chain or a franchise, tell us about your requirements and our team will build a tailored solution for your business.
+          </p>
         </div>
 
-        {/* Right column – contact form */}
-        <div className="rounded-2xl bg-slate-900/20 border border-slate-800/80 p-8 shadow-2xl backdrop-blur-xs">
-          <h3 className="mb-6 text-lg font-bold text-white">
+        {/* Contact Form */}
+        <div className="w-full rounded-2xl bg-slate-900/20 border border-slate-800/80 p-8 sm:p-10 shadow-2xl backdrop-blur-xs relative overflow-hidden">
+          {/* Ambient subtle glow */}
+          <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
+          
+          <h3 className="mb-6 text-lg font-bold text-white text-center sm:text-left">
             Get in touch with sales
           </h3>
           <form onSubmit={formik.handleSubmit} className="space-y-4">
@@ -185,28 +144,16 @@ export const ContactSalesSection = () => {
               Send Message →
             </ATMButton>
           </form>
+
+          {/* Secure details tag */}
+          <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-500 border-t border-slate-900 pt-4">
+            <Shield className="h-3.5 w-3.5 text-blue-500" />
+            <span>Your request is secure. We respond within 24 hours.</span>
+          </div>
         </div>
       </div>
     </section>
   );
 };
-
-interface ContactRowProps {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-}
-
-const ContactRow: React.FC<ContactRowProps> = ({ icon, label, value }) => (
-  <div className="flex items-center gap-3">
-    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-600/10 text-blue-400">
-      {icon}
-    </div>
-    <div>
-      <p className="text-[10px] font-bold tracking-wider uppercase text-slate-400 leading-none">{label}</p>
-      <p className="text-sm font-semibold text-white mt-1.5 leading-none">{value}</p>
-    </div>
-  </div>
-);
 
 export default ContactSalesSection;

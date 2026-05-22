@@ -28,7 +28,7 @@ export const CTABanner = () => {
             Ready to modernize your business?
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-blue-100 text-sm sm:text-base leading-relaxed">
-            Join 2,000+ businesses already using Qauntix. Start your 3-day free trial — no credit card needed.
+            Join 2,000+ businesses already using Quantix. Start your 3-day free trial — no credit card needed.
           </p>
           <div className="mt-8 flex flex-row flex-wrap items-center justify-center gap-4">
             <button className="bg-white text-blue-600 hover:bg-slate-50 font-bold px-6 py-3 rounded-full shadow-sm text-xs cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-white/10">

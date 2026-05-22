@@ -51,7 +51,7 @@ export default function SignUpPage() {
                 <rect x="3" y="14" width="7" height="7" />
               </svg>
             </div>
-            <span className="text-xl font-bold tracking-tight text-white">Qauntix</span>
+            <span className="text-xl font-bold tracking-tight text-white">Quantix</span>
           </div>
           <h2 className="text-center text-2xl font-black tracking-tight text-white uppercase">
             Start your 3-day free trial

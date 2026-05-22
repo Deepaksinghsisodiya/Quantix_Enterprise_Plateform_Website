@@ -54,7 +54,7 @@ export async function GET() {
     {
       id: "8",
       title: "Offline Mode",
-      description: "Keep selling even without internet. Qauntix syncs all transactions automatically when back online.",
+      description: "Keep selling even without internet. Quantix syncs all transactions automatically when back online.",
       icon: "Lock",
       color: "cyan-500",
     },

@@ -13,7 +13,6 @@ import { TestimonialBanner } from "@/components/organisms/TestimonialBanner/Test
 import { PricingSection } from "@/components/organisms/PricingSection/PricingSection";
 import { TestimonialsSection } from "@/components/organisms/TestimonialsSection/TestimonialsSection";
 import { FAQSection } from "@/components/organisms/FAQSection/FAQSection";
-import { ContactSalesSection } from "@/components/organisms/ContactSalesSection/ContactSalesSection";
 import { CTABanner } from "@/components/organisms/CTABanner/CTABanner";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { ATMLoader } from "@/components/atoms/ATMLoader";
@@ -51,7 +50,7 @@ export default function HomePageClient() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
-            name: "Qauntix",
+            name: "Quantix",
             operatingSystem: "Web",
             applicationCategory: "BusinessApplication",
             description: "All‑in‑One POS platform for retail and restaurant businesses.",
@@ -109,11 +108,6 @@ export default function HomePageClient() {
           <LazyFAQSection />
         </Suspense>
       </section>
-
-      <section id="contact" className={cn("scroll-mt-20 bg-gray-900")}>
-        <ContactSalesSection />
-      </section>
-
       <section className={cn("scroll-mt-20 bg-blue-600")}>
         <CTABanner />
       </section>

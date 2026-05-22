@@ -15,7 +15,7 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    quote: "Qauntix transformed how we manage our 3 stores. Inventory sync alone saves us 4 hours a week. The analytics helped us cut slow-moving stock by 30% in two months.",
+    quote: "Quantix transformed how we manage our 3 stores. Inventory sync alone saves us 4 hours a week. The analytics helped us cut slow-moving stock by 30% in two months.",
     author: "Sarah Mitchell",
     role: "Owner, Bella Boutique",
     industry: "Retail",
@@ -31,7 +31,7 @@ const testimonials: Testimonial[] = [
     initials: "JC",
   },
   {
-    quote: "We expanded from 2 to 8 locations in a year. Qauntix scaled with us effortlessly. The multi-location dashboard is a game-changer for our regional managers.",
+    quote: "We expanded from 2 to 8 locations in a year. Quantix scaled with us effortlessly. The multi-location dashboard is a game-changer for our regional managers.",
     author: "Priya Sharma",
     role: "Founder, FreshMart Chain",
     industry: "Retail",
@@ -73,7 +73,7 @@ export const TestimonialsSection = () => (
           TESTIMONIALS
         </div>
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Businesses love Qauntix
+          Businesses love Quantix
         </h2>
         <p className="mt-4 text-base text-gray-600 max-w-2xl mx-auto">
           Real results from real businesses across retail and restaurants. Hover to pause.

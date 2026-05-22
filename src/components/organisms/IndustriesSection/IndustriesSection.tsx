@@ -141,7 +141,7 @@ export const IndustriesSection = () => {
                     Built for modern retail stores
                   </h3>
                   <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                    From boutiques to multi-branch chains — Qauntix handles your entire retail workflow. Track inventory across warehouses, manage staff shifts, and deliver a seamless checkout experience.
+                    From boutiques to multi-branch chains — Quantix handles your entire retail workflow. Track inventory across warehouses, manage staff shifts, and deliver a seamless checkout experience.
                   </p>
                   <Checklist left={retailFeaturesLeft} right={retailFeaturesRight} />
                   <button className="mt-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-3 px-6 shadow-sm transition cursor-pointer">
@@ -189,7 +189,7 @@ export const IndustriesSection = () => {
                     Made for fast-paced restaurants
                   </h3>
                   <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                    Table management, kitchen display systems, online ordering integration — Qauntix keeps your restaurant running smoothly during the busiest hours with zero bottlenecks.
+                    Table management, kitchen display systems, online ordering integration — Quantix keeps your restaurant running smoothly during the busiest hours with zero bottlenecks.
                   </p>
                   <Checklist left={restaurantFeaturesLeft} right={restaurantFeaturesRight} />
                   <button className="mt-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-3 px-6 shadow-sm transition cursor-pointer">

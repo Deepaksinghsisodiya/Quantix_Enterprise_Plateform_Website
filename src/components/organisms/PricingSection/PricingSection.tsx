@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useInView } from 'framer-motion';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useGetPricingPlansQuery, PricingPlan } from '@/redux/services/pricingApi';
 import { ATMButton } from '@/components/atoms/ATMButton';
-import { Check } from 'lucide-react';
+import { Check, Headset } from 'lucide-react';
 
 export const PricingSection = () => {
-  const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly');
+  const billing = useState<'monthly' | 'annual'>('monthly')[0];
+  const setBilling = useState<'monthly' | 'annual'>('monthly')[1];
   const { data: plans = [], isLoading } = useGetPricingPlansQuery();
   const ref = React.useRef(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
+  const ctaRef = React.useRef(null);
+  const ctaInView = useInView(ctaRef, { once: true, margin: '-100px' });
 
   // fallback dummy data if API not yet ready
   const dummyPlans: PricingPlan[] = [
@@ -99,7 +103,8 @@ export const PricingSection = () => {
   const getAnnualPrice = (monthly: number) => Math.round(monthly * 12 * 0.84);
 
   return (
-    <section className="py-24 bg-slate-50/50 border-t border-slate-100" ref={ref} id="pricing">
+    <>
+      <section className="py-24 bg-slate-50/50 border-t border-slate-100" ref={ref} id="pricing">
       <div className="site-container">
         {/* Header */}
         <div className="text-center mb-12">
@@ -269,7 +274,52 @@ export const PricingSection = () => {
         </div>
       </div>
     </section>
-  );
+
+    {/* Need Customization? Contact Sales CTA banner */}
+    <section
+      ref={ctaRef}
+      className="w-full bg-[#F1F5F9] py-16 border-t border-slate-200"
+    >
+      <div className="site-container">
+        <motion.div
+          className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 text-center md:text-left"
+          initial={{ opacity: 0, y: 20 }}
+          animate={ctaInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          {/* Left side: Icon + Heading + Subtext */}
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600 border border-blue-100 shadow-xs">
+              <Headset className="h-6 w-6 stroke-[2]" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold tracking-tight text-gray-900">
+                Need a Custom Plan?
+              </h3>
+              <p className="mt-1 text-sm text-gray-500 max-w-md">
+                Talk to our sales team and get a tailored solution for your business.
+              </p>
+            </div>
+          </div>
+
+          {/* Right side: Two CTA Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-4 shrink-0">
+            <Link href="/contact">
+              <ATMButton variant="primary" size="md">
+                Contact Sales
+              </ATMButton>
+            </Link>
+            <Link href="/#resources">
+              <ATMButton variant="outline" size="md">
+                Schedule a Demo
+              </ATMButton>
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  </>
+);
 };
 
 export default PricingSection;

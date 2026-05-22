@@ -5,7 +5,7 @@ interface ToastProviderProps {
   children: ReactNode;
 }
 
-// Custom styling to match Qauntix brand (primary color #2563EB)
+// Custom styling to match Quantix brand (primary color #2563EB)
 const toastTheme = {
   toast: 'bg-white dark:bg-gray-800 border border-primary text-primary',
   description: 'text-gray-700 dark:text-gray-200',

@@ -186,7 +186,7 @@ export const PlatformDemoSection = () => {
           </div>
           <div className="space-y-6 lg:pt-8">
             <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-              Transform your business with Qauntix's integrated software — designed to streamline operations, enhance customer experiences, and boost profitability through real-time insights.
+              Transform your business with Quantix's integrated software — designed to streamline operations, enhance customer experiences, and boost profitability through real-time insights.
             </p>
             <Link
               href="#features"

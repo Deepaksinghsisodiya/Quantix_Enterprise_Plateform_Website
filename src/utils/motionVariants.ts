@@ -1,5 +1,5 @@
 // src/utils/motionVariants.ts
-// Re‑usable Framer Motion animation variants for the Qauntix UI.
+// Re‑usable Framer Motion animation variants for the Quantix UI.
 // These are intentionally simple but give a premium feel with fade‑up,
 // staggered container, fade‑in and scale‑in effects.
 

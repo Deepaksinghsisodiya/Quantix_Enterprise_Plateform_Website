@@ -9,8 +9,8 @@ export async function GET() {
     },
     {
       id: "2",
-      question: "What hardware does Qauntix support?",
-      answer: "Qauntix works on iPad, Android tablets, and any web browser. We support receipt printers, barcode scanners, cash drawers, and card readers via integrations.",
+      question: "What hardware does Quantix support?",
+      answer: "Quantix works on iPad, Android tablets, and any web browser. We support receipt printers, barcode scanners, cash drawers, and card readers via integrations.",
     },
     {
       id: "3",
@@ -25,7 +25,7 @@ export async function GET() {
     {
       id: "5",
       question: "Is my data secure and backed up?",
-      answer: "Qauntix is PCI DSS compliant with end-to‑end encryption, SOC 2 Type II certification, and automatic daily backups with 99.9% uptime SLA.",
+      answer: "Quantix is PCI DSS compliant with end-to‑end encryption, SOC 2 Type II certification, and automatic daily backups with 99.9% uptime SLA.",
     },
     {
       id: "6",

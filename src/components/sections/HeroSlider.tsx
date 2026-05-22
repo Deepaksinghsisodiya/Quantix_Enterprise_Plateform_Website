@@ -43,7 +43,7 @@ const SLIDES: SlideData[] = [
     id: 3,
     subtitle: "MODERN CAFES & BARS",
     title: "BUILT FOR EVERY KIND OF DINING BUSINESS",
-    description: "From cozy corner cafes to franchise chains — Qauntix scales seamlessly to match your growth.",
+    description: "From cozy corner cafes to franchise chains — Quantix scales seamlessly to match your growth.",
     backgroundImage: "/images/hero-cafe.jpg",
     primaryCtaText: "Start Free Trial",
     secondaryCtaText: "View Plans",

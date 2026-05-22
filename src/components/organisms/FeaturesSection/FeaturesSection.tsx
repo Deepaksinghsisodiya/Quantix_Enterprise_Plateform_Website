@@ -122,7 +122,7 @@ export const FeaturesSection = () => {
       id: "8",
       title: "Offline Mode",
       description:
-        "Keep selling even without internet. Qauntix syncs all transactions automatically when back online.",
+        "Keep selling even without internet. Quantix syncs all transactions automatically when back online.",
       icon: "Lock",
       color: "cyan-500",
     },
@@ -157,7 +157,7 @@ export const FeaturesSection = () => {
             Every tool your business needs
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-base text-gray-600">
-            From counter to cloud — Qauntix handles every part of your operation.
+            From counter to cloud — Quantix handles every part of your operation.
           </p>
         </div>
 

@@ -46,7 +46,7 @@ const SLIDES: HeroSlide[] = [
     badge: "CAFES & BARS",
     heading: "BUILT FOR EVERY BUSINESS TYPE",
     subheading:
-      "From boutique cafes to franchise chains — Qauntix scales with you every step.",
+      "From boutique cafes to franchise chains — Quantix scales with you every step.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
     secondaryCta: { label: "See Pricing →", href: "#pricing" },
     backgroundImage: "/images/hero-cafe.jpg",

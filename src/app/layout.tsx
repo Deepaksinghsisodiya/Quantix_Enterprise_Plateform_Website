@@ -25,23 +25,23 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
   title: {
-    default: "Qauntix — The All‑in‑One POS Platform",
-    template: "%s | Qauntix",
+    default: "Quantix — The All‑in‑One POS Platform",
+    template: "%s | Quantix",
   },
   description:
     "Enterprise‑grade POS for retail and restaurant businesses. Streamline orders, inventory, staff, and analytics.",
   openGraph: {
-    title: "Qauntix POS Platform",
+    title: "Quantix POS Platform",
     description:
       "All‑in‑One POS solution for modern businesses. Free trial, no credit card required.",
     url: process.env.NEXT_PUBLIC_APP_URL,
-    siteName: "Qauntix",
+    siteName: "Quantix",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Qauntix dashboard screenshot",
+        alt: "Quantix dashboard screenshot",
       },
     ],
     locale: "en_US",
@@ -49,11 +49,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Qauntix POS Platform",
+    title: "Quantix POS Platform",
     description:
       "All‑in‑One POS solution for modern businesses. Free trial, no credit card required.",
     images: ["/og-image.png"],
-    creator: "@qauntix",
+    creator: "@quantix",
   },
   robots: {
     index: true,

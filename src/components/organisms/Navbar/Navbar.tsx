@@ -37,7 +37,7 @@ const LINKS: NavLink[] = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  
+
   const pathname = usePathname();
   const dispatch = useDispatch();
   const themeMode = useSelector((state: RootState) => state.theme.mode);
@@ -99,7 +99,7 @@ const Navbar = () => {
         className="backdrop-blur-md transition-colors duration-300 border-b border-white/5 shadow-md"
       >
         <div className="site-container flex items-center justify-between py-4">
-          {/* Left: Square logo icon + "Qauntix" text */}
+          {/* Left: Square logo icon + "Quantix" text */}
           <Link href="/" className="flex items-center gap-2.5 z-50">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-white shadow-md">
               <svg
@@ -119,8 +119,7 @@ const Navbar = () => {
               </svg>
             </div>
             <span className="text-lg font-bold tracking-tight text-white">
-              Qauntix
-            </span>
+              Quantix            </span>
           </Link>
 
           {/* Desktop navigation links (Center) */}
@@ -161,7 +160,7 @@ const Navbar = () => {
             >
               Sign In
             </Link>
-            
+
             <Link
               href="/sign-up"
               className="rounded-full bg-blue-600 px-5 py-2 text-xs font-bold text-white hover:bg-blue-700 shadow-md hover:shadow-lg hover:shadow-blue-600/25 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95"

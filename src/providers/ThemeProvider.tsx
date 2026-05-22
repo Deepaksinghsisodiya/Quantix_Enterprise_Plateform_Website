@@ -19,7 +19,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 
   // Hydrate persisted theme once on client mount
   useEffect(() => {
-    const persisted = localStorage.getItem('qauntix-theme') as 'light' | 'dark' | null;
+    const persisted = localStorage.getItem('quantix-theme') as 'light' | 'dark' | null;
     if (persisted && persisted !== theme) {
       dispatch(setTheme(persisted));
     }
@@ -34,7 +34,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
       html.classList.remove('dark');
     }
     // Persist for next loads
-    localStorage.setItem('qauntix-theme', theme);
+    localStorage.setItem('quantix-theme', theme);
   }, [theme]);
 
   return <>{children}</>;

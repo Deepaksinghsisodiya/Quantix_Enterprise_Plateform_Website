@@ -27,7 +27,7 @@ interface Props {
 export const TestimonialBanner = ({
   items = [
     {
-      quote: "QAUNTIX FEELS LIKE OUR THIRD ARM — IT LET US FOCUS ON HOSPITALITY, NOT PAPERWORK.",
+      quote: "QUANTIX FEELS LIKE OUR THIRD ARM — IT LET US FOCUS ON HOSPITALITY, NOT PAPERWORK.",
       author: "James Chen",
       role: "GM, The Harbor Kitchen • Table 87",
       avatarColor: "blue-600",

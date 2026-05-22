@@ -68,7 +68,7 @@ export const Footer = () => {
                   <rect x="3" y="14" width="7" height="7" />
                 </svg>
               </div>
-              <span className="text-lg font-bold tracking-tight">Qauntix</span>
+              <span className="text-lg font-bold tracking-tight">Quantix</span>
             </div>
             <p className="text-xs sm:text-sm text-gray-400 max-w-xs leading-relaxed font-medium">
               The modern POS platform for retail and restaurant businesses. Simple, powerful, and built to scale.
@@ -76,7 +76,7 @@ export const Footer = () => {
             {/* Social icons - plain text design match */}
             <div className="flex space-x-2">
               <a
-                href="https://twitter.com/qauntix"
+                href="https://twitter.com/quantix"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 cursor-pointer text-xs font-bold font-mono"
@@ -85,7 +85,7 @@ export const Footer = () => {
                 x
               </a>
               <a
-                href="https://linkedin.com/company/qauntix"
+                href="https://linkedin.com/company/quantix"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 cursor-pointer text-xs font-bold font-mono"
@@ -94,7 +94,7 @@ export const Footer = () => {
                 in
               </a>
               <a
-                href="https://github.com/qauntix"
+                href="https://github.com/quantix"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 cursor-pointer text-xs font-bold font-mono"
@@ -172,7 +172,7 @@ export const Footer = () => {
 
         {/* Bottom bar */}
         <div className="mt-16 border-t border-slate-900 pt-6 pb-10 flex flex-col items-center justify-between text-xs sm:text-sm md:flex-row md:items-center">
-          <p className="text-gray-500">© 2025 Qauntix, Inc. All rights reserved.</p>
+          <p className="text-gray-500">© 2025 Quantix, Inc. All rights reserved.</p>
           <div className="mt-3 md:mt-0 flex items-center gap-1.5 text-gray-500 font-semibold uppercase tracking-wider text-[10px]">
             <span className="flex h-4.5 w-4.5 items-center justify-center text-blue-500">
               <svg
