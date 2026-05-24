@@ -1,21 +1,18 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
-import ContactSalesFormWrapper from '@/components/organisms/ContactSalesSection/ContactSalesFormWrapper';
+import React from "react";
+import SplitAuthLayout from "@/components/organisms/SplitAuthLayout/SplitAuthLayout";
+import ContactSalesFormWrapper from "@/components/organisms/ContactSalesSection/ContactSalesFormWrapper";
 
 export default function ContactSalesPage() {
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="pt-20 bg-slate-950 min-h-[70vh]">
-        <ContactSalesFormWrapper />
-      </main>
-
-      <Footer />
-    </PublicLayout>
+    <SplitAuthLayout
+      coverImage="/contact_cover.png"
+      coverAlt="Quantix Enterprise Solutions"
+      coverHeadline="Built for scale"
+      coverSubtext="From single-store setups to enterprise chains — our team designs solutions tailored to your growth."
+    >
+      <ContactSalesFormWrapper />
+    </SplitAuthLayout>
   );
 }

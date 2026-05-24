@@ -1,3 +1,4 @@
+// src/components/atoms/ATMSelectField.tsx
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
@@ -16,9 +17,10 @@ export interface ATMSelectFieldProps
   error?: string;
   placeholder?: string;
   isLoading?: boolean;
+  leftIcon?: React.ReactNode;
 }
 
-const selectVariants = cva('block w-full rounded-md border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed', {
+const selectVariants = cva('block w-full rounded-md border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500', {
   variants: {
     size: {
       sm: 'px-2 py-1 text-sm',
@@ -38,19 +40,25 @@ export const ATMSelectField: React.FC<ATMSelectFieldProps> = ({
   isLoading = false,
   size,
   disabled,
+  leftIcon,
   className,
   ...rest
 }) => {
-  const selectClass = cn(selectVariants({ size, className }));
+  const selectClass = cn(
+    selectVariants({ size }),
+    leftIcon ? 'pl-10' : '',
+    error ? 'border-red-600 focus:border-red-600 focus:ring-red-600' : ''
+  );
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className={cn("flex flex-col gap-1", className)}>
       {label && (
         <label htmlFor={name} className="text-sm font-medium text-gray-700 dark:text-gray-200">
           {label}
         </label>
       )}
-      <div className="relative">
+      <div className="relative flex items-center w-full">
+        {leftIcon && <span className="absolute left-3 pointer-events-none z-10">{leftIcon}</span>}
         <select
           id={name}
           name={name}
@@ -85,3 +93,5 @@ export const ATMSelectField: React.FC<ATMSelectFieldProps> = ({
     </div>
   );
 };
+
+export default ATMSelectField;
