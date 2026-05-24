@@ -1,9 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #2563EB;
-  --color-darkBg: #0F172A;
-  --color-darkSurface: #1E293B;
+  /* Dynamic Custom Variables mapping to Tailwind */
+  --color-primary: var(--primary-color);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-darkBg: var(--dark-bg);
+  --color-darkSurface: var(--dark-surface);
+  
+  /* OVERRIDE Tailwind's default blue color palette dynamically */
+  /* This ensures that any hardcoded 'bg-blue-600' or 'text-blue-600' classes */
+  /* across the entire project will update automatically when the theme changes! */
+  --color-blue-400: var(--primary-light);
+  --color-blue-500: var(--primary-light);
+  --color-blue-600: var(--primary-color);
+  --color-blue-700: var(--primary-dark);
+  
+  /* Additional theme mappings */
+  --color-background: var(--bg-color);
+  --color-foreground: var(--text-color);
 }
 
 html {
@@ -11,12 +26,45 @@ html {
 }
 
 :root {
-  --color-primary: #2563EB;
-  --color-background: #ffffff;
-  --color-foreground: #171717;
+  /* ==========================================
+     THEME CONFIGURATION - CHANGE COLORS HERE
+     ========================================== */
+  /* Theme Option 1: Premium Quantix Blue (Default) */
+  --primary-color: #2563EB;
+  --primary-light: #3B82F6;
+  --primary-dark: #1D4ED8;
+  
+  /* Theme Option 2: Vibrant Indigo/Purple (Uncomment to use)
+  --primary-color: #6366F1;
+  --primary-light: #818CF8;
+  --primary-dark: #4F46E5;
+  */
+  
+
+  /* Theme Option 3: Modern Emerald Green (Uncomment to use)
+  --primary-color: #10B981;
+  --primary-light: #34D399;
+  --primary-dark: #059669;
+  */
+
+  /* Theme Option 4: Cyberpunk Crimson/Rose (Uncomment to use)
+  --primary-color: #F43F5E;
+  --primary-light: #FB7185;
+  --primary-dark: #E11D48;
+  */
+
+  /* Global Core Colors */
+  --bg-color: #ffffff;
+  --text-color: #171717;
+  --dark-bg: #0F172A;
+  --dark-surface: #1E293B;
+
+  --color-primary: var(--primary-color);
+  --color-background: var(--bg-color);
+  --color-foreground: var(--text-color);
   --color-surface: #f5f5f5;
   --color-border: #e5e5e5;
-  --site-max-width: 80rem; /* 1280px (equivalent to max-w-7xl). Change this value to adjust the entire project's container width. */
+  --site-max-width: 80rem; /* 1280px */
 }
 
 /* Centralized container class to align every section's width across the project */
