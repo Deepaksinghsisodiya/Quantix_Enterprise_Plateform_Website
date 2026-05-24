@@ -23,17 +23,28 @@ const LINKS: NavLink[] = [
 ];
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const pathname = usePathname();
 
-  // Scroll listener for background transition (>30px)
+
+  // Hide navbar only when scroll reaches the footer area (bottom of page)
   useEffect(() => {
+    const footerBuffer = 300; // px from bottom where navbar starts hiding
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      const scrollBottom = window.scrollY + window.innerHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+
+      // Only hide when user is near the very bottom (footer zone)
+      if (pageHeight - scrollBottom < footerBuffer) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // run on mount
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -45,6 +56,7 @@ const Navbar = () => {
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = 'hidden';
+      setHidden(false); // always show navbar when menu is open
     } else {
       document.body.style.overflow = '';
     }
@@ -53,10 +65,8 @@ const Navbar = () => {
     };
   }, [mobileOpen]);
 
-  // Determine if links and logo should be white or dark based on the active page background
-  const isDarkPage = ['/', '/contact', '/sign-in', '/sign-up'].includes(pathname);
-  // When scrolled or mobile drawer is open, background is dark, so we must use white text.
-  const useWhiteText = mobileOpen || scrolled || isDarkPage;
+  // Navbar always uses dark frosted glass — text is always white
+  const useWhiteText = true;
 
   // Close mobile menu on path changes
   useEffect(() => {
@@ -83,45 +93,29 @@ const Navbar = () => {
     <>
       <nav
         className={cn(
-          'absolute top-0 left-0 z-50 w-full px-0 transition-all duration-500 ease-in-out',
-          scrolled
-            ? 'bg-[#06080F]/75 backdrop-blur-md border-b border-white/10 py-2.5 shadow-lg shadow-black/20'
-            : 'bg-transparent border-b border-transparent py-4'
+          'fixed top-0 left-0 z-50 w-full px-0 bg-transparent border-b border-transparent py-3 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]',
+          hidden && !mobileOpen ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'
         )}
       >
-        {/* Morphing Outer Card: mx-2 on mobile, mx-4 on tablet, mx-8 on laptop, centers on desktop at xl-max-w-7xl */}
+        {/* Outer Card — consistent dark frosted glass (readable over any section) */}
         <div
           className={cn(
-            'transition-all duration-500 ease-in-out border-t-0 border-x-0 border-b-0',
-            scrolled
-              ? 'mx-0 w-full max-w-full rounded-none border-transparent bg-transparent'
-              : cn(
-                'mx-2 sm:mx-4 lg:mx-8 xl:mx-auto xl:max-w-7xl rounded-2xl border transition-colors duration-300',
-                mobileOpen
-                  ? 'bg-[#06080F] border-transparent shadow-none'
-                  : useWhiteText
-                    ? 'bg-[#06080F]/40 backdrop-blur-md border-white/10 shadow-sm'
-                    : 'bg-white/50 backdrop-blur-md border-slate-900/10 shadow-sm'
-              )
+            'mx-2 sm:mx-4 lg:mx-8 xl:mx-auto xl:max-w-7xl rounded-2xl transition-all duration-300',
+            mobileOpen
+              ? 'bg-[#06080F] border border-transparent shadow-none'
+              : 'bg-[#0a0e1a]/70 backdrop-blur-xl border border-white/[0.06] shadow-lg shadow-black/10'
           )}
         >
-          {/* Inner Content Container: Mathematically matches site-container indentation in both states */}
-          <div
-            className={cn(
-              'transition-all duration-500 ease-in-out flex items-center justify-between',
-              scrolled
-                ? 'site-container py-0'
-                : 'w-full mx-auto py-2 px-3 sm:px-4 lg:px-6 xl:max-w-7xl'
-            )}
-          >
-            {/* Left: Lucide Layers icon + "Quantix" (Syne font) */}
-            <Link href="/" className="flex items-center gap-2.5 z-50 group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 transition-all duration-300 group-hover:scale-110 group-hover:shadow-indigo-500/40">
-                <Layers className="h-5 w-5 text-white transition-transform duration-300" />
+          {/* Inner Content */}
+          <div className="w-full mx-auto py-2 px-3 sm:px-4 lg:px-6 xl:max-w-7xl flex items-center justify-between">
+            {/* Left: Smaller Quantix icon */}
+            <Link href="/" className="flex items-center gap-2 z-50 group">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 transition-all duration-300 group-hover:scale-110 group-hover:shadow-indigo-500/40">
+                <Layers className="h-3.5 w-3.5 text-white" />
               </div>
               <span
                 className={cn(
-                  'text-xl font-bold tracking-tight transition-all duration-300 font-syne uppercase group-hover:scale-[1.03]',
+                  'text-base font-bold tracking-tight transition-all duration-300 font-syne uppercase group-hover:scale-[1.03]',
                   useWhiteText
                     ? 'text-white group-hover:text-blue-400'
                     : 'text-slate-900 group-hover:text-blue-600'
@@ -131,7 +125,7 @@ const Navbar = () => {
               </span>
             </Link>
 
-            {/* Center: Nav links with interactive sliding background & hover micro-interactions */}
+            {/* Center: Nav links */}
             <ul className="hidden space-x-2 md:flex items-center">
               {LINKS.map((link) => {
                 const isActive = pathname === link.href;
@@ -200,7 +194,7 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {/* Morphing Hamburger Menu Trigger for Mobile (z-50 keeps it over overlay) */}
+            {/* Morphing Hamburger Menu Trigger for Mobile */}
             <div className="flex md:hidden items-center z-50">
               <button
                 type="button"
@@ -212,7 +206,6 @@ const Navbar = () => {
                 aria-expanded={mobileOpen}
                 onClick={toggleMobile}
               >
-                {/* Apple-style morphing CSS bars */}
                 <span className={cn(
                   "w-5 h-[2px] bg-current rounded-full transition-all duration-300 ease-out",
                   mobileOpen ? "rotate-45 translate-y-[5px]" : ""
@@ -231,8 +224,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Enterprise-grade Full-Screen Slide Overlay for Mobile Menu */}
-      {/* Moved outside the <nav> element to prevent CSS transition containment clipping */}
+      {/* Full-Screen Slide Overlay for Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -242,7 +234,6 @@ const Navbar = () => {
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-40 bg-[#06080F] flex flex-col justify-between pt-24 pb-8 px-6 md:hidden"
           >
-            {/* Top/Center: Informational Links with Descriptions */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -277,7 +268,6 @@ const Navbar = () => {
               })}
             </motion.div>
 
-            {/* Bottom: Docked Enterprise Action Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
