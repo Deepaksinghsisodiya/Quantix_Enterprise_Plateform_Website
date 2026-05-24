@@ -40,11 +40,11 @@ export const DemoSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const containerVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 25 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: i * 0.15 },
+      transition: { delay: i * 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
     }),
   };
 
@@ -74,7 +74,7 @@ export const DemoSection = () => {
     : null;
 
   return (
-    <section className="bg-slate-50/50 py-24 relative overflow-hidden border-t border-slate-100" ref={ref} id="resources">
+    <section className="bg-gradient-to-b from-slate-50/50 via-white to-slate-50/50 py-24 relative overflow-hidden border-t border-slate-100" ref={ref} id="resources">
       {/* Decorative Blur Blobs */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl pointer-events-none" />
@@ -82,14 +82,14 @@ export const DemoSection = () => {
       <div className="site-container relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3.5 py-1.5 text-xs font-semibold text-blue-600 mb-4 shadow-xs">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
             <Sparkles className="h-3.5 w-3.5 fill-blue-100" />
             SEE IT IN ACTION
           </div>
-          <h2 className="text-3xl font-display font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-syne font-black text-gray-900 md:text-5xl uppercase leading-tight">
             Watch Quantix work for you
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-base text-gray-500">
+          <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-gray-500 font-medium">
             Take a guided tour of the tools powering modern restaurants and retailers worldwide.
           </p>
         </div>
@@ -230,7 +230,7 @@ export const DemoSection = () => {
               {/* Title & Description Below Media Player */}
               <div className="mt-5 flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-xl font-display font-bold text-gray-900 flex items-center gap-2">
+                  <h3 className="text-xl font-syne font-bold text-gray-900 flex items-center gap-2">
                     {activeMedia.type === 'video' ? (
                       <>
                         <Film className="h-5 w-5 text-blue-600" />
@@ -243,7 +243,7 @@ export const DemoSection = () => {
                       </>
                     )}
                   </h3>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm text-slate-500 font-medium">
                     {activeMedia.type === 'video' 
                       ? "See how restaurant and retail workflows come together seamlessly."
                       : `Detailed close-up on the ${activeScreenshot?.title.toLowerCase()} page details.`
@@ -272,7 +272,7 @@ export const DemoSection = () => {
           >
             {/* Interactive Screenshots list */}
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-4">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-4">
                 EXPLORE PLATFORM INTERFACES
               </p>
               <div className="space-y-3">
@@ -280,7 +280,7 @@ export const DemoSection = () => {
                 <button
                   type="button"
                   className={cn(
-                    "flex w-full items-center gap-4 text-left p-3.5 rounded-xl border transition-all duration-300 cursor-pointer",
+                    "flex w-full items-center gap-3 sm:gap-4 text-left p-2.5 sm:p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer hover:scale-[1.01]",
                     activeMedia.type === 'video'
                       ? "border-blue-500 bg-blue-50/40 shadow-sm shadow-blue-500/5 ring-1 ring-blue-500 animate-none"
                       : "border-slate-100 bg-white hover:border-slate-200 hover:bg-slate-50/50 hover:shadow-xs"
@@ -294,7 +294,7 @@ export const DemoSection = () => {
                     <Film className="h-5 w-5" />
                   </div>
                   <div className="flex-1">
-                    <span className="inline-block rounded-sm bg-red-100 text-red-600 text-[8px] font-bold px-1.5 py-0.5 mb-1 tracking-wide uppercase">
+                    <span className="inline-block rounded-md bg-red-100 text-red-600 text-[8px] font-extrabold px-1.5 py-0.5 mb-1 tracking-wide uppercase">
                       VIDEO
                     </span>
                     <p className="font-bold text-gray-900 text-sm">Play Platform Video Tour</p>
@@ -310,7 +310,7 @@ export const DemoSection = () => {
                       key={shot.id}
                       type="button"
                       className={cn(
-                        "flex w-full items-center gap-4 text-left p-3 rounded-xl border transition-all duration-300 cursor-pointer",
+                        "flex w-full items-center gap-3 sm:gap-4 text-left p-2.5 sm:p-3 rounded-2xl border transition-all duration-300 cursor-pointer hover:scale-[1.01]",
                         isActive
                           ? "border-blue-500 bg-blue-50/40 shadow-sm shadow-blue-500/5 ring-1 ring-blue-500"
                           : "border-slate-100 bg-white hover:border-slate-200 hover:bg-slate-50 hover:shadow-xs"
@@ -329,7 +329,7 @@ export const DemoSection = () => {
                         />
                       </div>
                       <div className="flex-1">
-                        <span className="inline-block rounded-sm bg-blue-100 text-blue-700 text-[8px] font-bold px-1.5 py-0.5 mb-1 tracking-wide uppercase">
+                        <span className="inline-block rounded-md bg-blue-100/80 text-blue-700 text-[8px] font-extrabold px-1.5 py-0.5 mb-1 tracking-wide uppercase">
                           {getCategory(shot.title)}
                         </span>
                         <p className="font-bold text-gray-900 text-sm">{shot.title}</p>
@@ -342,7 +342,8 @@ export const DemoSection = () => {
             </div>
 
             {/* Notification Card */}
-            <div className="rounded-2xl border border-slate-800 bg-slate-950 p-6 text-white shadow-xl relative overflow-hidden group/card">
+            <div className="rounded-3xl border border-slate-900 bg-slate-950 p-6 text-white shadow-xl relative overflow-hidden group/card">
+              <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:14px_24px]" />
               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
               
               <div className="flex items-center gap-4 relative z-10">
@@ -350,8 +351,8 @@ export const DemoSection = () => {
                   <Bell className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="font-bold text-white text-base">New Demos & Walkthroughs</p>
-                  <p className="text-xs text-slate-400 mt-0.5">Subscribe to get notified as soon as new modules are released.</p>
+                  <p className="font-syne font-bold text-white text-base">New Demos & Walkthroughs</p>
+                  <p className="text-xs text-slate-400 mt-0.5 font-medium leading-relaxed">Subscribe to get notified as soon as new modules are released.</p>
                 </div>
               </div>
 
@@ -364,17 +365,17 @@ export const DemoSection = () => {
               >
                 {({ isSubmitting, getFieldProps, errors, touched }) => (
                   <Form className="mt-5 w-full relative z-10">
-                    <div className="flex items-center justify-between bg-slate-900 border border-slate-800 rounded-full p-1 pl-4 w-full focus-within:ring-2 focus-within:ring-blue-500/30 focus-within:border-blue-500 transition-all">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0 bg-transparent sm:bg-slate-900 border-none sm:border sm:border-slate-800 rounded-none sm:rounded-full p-0 sm:p-1 sm:pl-4 w-full focus-within:ring-2 focus-within:ring-blue-500/30 focus-within:border-blue-500 transition-all">
                       <input
                         type="email"
                         placeholder="your@email.com"
                         {...getFieldProps("email")}
-                        className="bg-transparent border-none outline-none text-slate-200 text-xs w-full mr-2 placeholder:text-slate-600 focus:outline-none focus:ring-0 focus:border-none p-0 py-1 font-semibold"
+                        className="bg-slate-900 sm:bg-transparent border border-slate-800 sm:border-none outline-none text-slate-200 text-xs w-full sm:mr-2 placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 sm:focus:ring-0 rounded-full sm:rounded-none px-4 py-3 sm:px-0 sm:py-1 font-semibold"
                       />
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-full font-bold px-5 py-2 text-xs transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-blue-600/25 cursor-pointer shrink-0"
+                        className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-full font-bold px-6 py-3 sm:py-2 text-xs transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-blue-600/25 cursor-pointer shrink-0"
                       >
                         Notify me
                       </button>

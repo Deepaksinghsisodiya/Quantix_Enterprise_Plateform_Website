@@ -4,259 +4,303 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Layers, BookOpen, Briefcase, Tag, Mail } from 'lucide-react';
+import { Layers } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
-// Nav link definition
+// Nav link definition with description for premium mobile view
 interface NavLink {
   label: string;
-  href: string; // Next.js page routes
-  icon: React.ComponentType<{ className?: string; size?: number }>;
+  href: string;
+  desc: string;
 }
 
 const LINKS: NavLink[] = [
-  { label: 'Features', href: '/features', icon: Layers },
-  { label: 'Resources', href: '/resources', icon: BookOpen },
-  { label: 'Services', href: '/services', icon: Briefcase },
-  { label: 'Pricing', href: '/pricing', icon: Tag },
-  { label: 'Contact Sales', href: '/contact', icon: Mail },
+  { label: 'FEATURES', href: '/features', desc: 'Smarter retail, restaurant, and cloud POS tools' },
+  { label: 'RESOURCES', href: '/resources', desc: 'Guides, API documentation, and industry insights' },
+  { label: 'SERVICES', href: '/services', desc: 'Enterprise integrations and 24/7 custom support' },
+  { label: 'PRICING', href: '/pricing', desc: 'Flexible plans tailored to your business scale' },
+  { label: 'CONTACT SALES', href: '/contact', desc: 'Talk to our retail and billing specialists' },
 ];
 
-/**
- * Navbar component (organism).
- * - Sticky top-0 with z-50.
- * - Always uses a dark navy background (#0F172A) to ensure white text is perfectly visible
- *   on both light background subpages and dark homepage.
- * - On scroll past 80px: transitions from semi-transparent dark to solid dark navy.
- * - Mobile hamburger toggles a full-screen overlay with stagger animations.
- * - Active link highlighted using pathname.
- * - Dispatches toggleTheme to Redux.
- */
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-
   const pathname = usePathname();
 
-
-  // Scroll listener for background transition
+  // Scroll listener for background transition (>30px)
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handler);
-    return () => window.removeEventListener('scroll', handler);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 30);
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // run on mount
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMobile = useCallback(() => setMobileOpen((prev) => !prev), []);
+  const toggleMobile = useCallback(() => {
+    setMobileOpen((prev) => !prev);
+  }, []);
 
-  // Determine if header text should be white or dark based on scroll state, page theme, and mobile open state
-  const isDarkPageAtTop = ['/', '/contact', '/sign-in', '/sign-up'].includes(pathname);
-  const useWhiteText = !mobileOpen && isDarkPageAtTop;
+  // Prevent background scrolling when mobile overlay is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
 
+  // Determine if links and logo should be white or dark based on the active page background
+  const isDarkPage = ['/', '/contact', '/sign-in', '/sign-up'].includes(pathname);
+  // When scrolled or mobile drawer is open, background is dark, so we must use white text.
+  const useWhiteText = mobileOpen || scrolled || isDarkPage;
 
+  // Close mobile menu on path changes
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
-  // Slide down fullscreen mobile menu
-  const menuVariant = {
-    hidden: { opacity: 0, y: '-100%' },
-    visible: {
+  // Animation variants for Staggered Mobile Menu links
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
       opacity: 1,
-      y: 0,
       transition: {
-        type: 'spring' as const,
-        stiffness: 100,
-        damping: 15,
-        staggerChildren: 0.08,
-        delayChildren: 0.15,
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: '-100%',
-      transition: {
-        duration: 0.35,
-        ease: 'easeInOut' as const,
+        staggerChildren: 0.05,
       },
     },
   };
 
-  const itemVariant = {
-    hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0 },
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 120, damping: 14 } },
   };
 
   return (
-    <nav
-      role="navigation"
-      aria-label="Main navigation"
-      className="fixed inset-x-0 top-0 z-50 w-full pointer-events-auto"
-    >
-      <div
+    <>
+      <nav
         className={cn(
-          "w-full transition-all duration-300 ease-in-out",
+          'fixed top-0 left-0 z-50 w-full px-0 transition-all duration-500 ease-in-out',
           scrolled
-            ? (isDarkPageAtTop
-                ? "border-b border-slate-800/50 bg-slate-950/80 shadow-lg shadow-slate-950/20 backdrop-blur-md"
-                : "border-b border-slate-200/50 bg-white/90 shadow-sm backdrop-blur-md")
-            : "bg-transparent border-b border-transparent"
+            ? 'bg-[#06080F]/75 backdrop-blur-md border-b border-white/10 py-2.5 shadow-lg shadow-black/20'
+            : 'bg-transparent border-b border-transparent py-4'
         )}
       >
-        <div className={cn("site-container flex items-center justify-between transition-all duration-300", scrolled ? "py-3" : "py-5")}>
-          {/* Left: Square logo icon + "Quantix" text */}
-          {/* Left: Square logo icon + "Quantix" text */}
-          <Link href="/" className="flex items-center gap-2.5 z-50 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 transition-all duration-300 group-hover:scale-105">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5.5 w-5.5"
+        {/* Morphing Outer Card: mx-2 on mobile, mx-4 on tablet, mx-8 on laptop, centers on desktop at xl-max-w-7xl */}
+        <div
+          className={cn(
+            'transition-all duration-500 ease-in-out border-t-0 border-x-0 border-b-0',
+            scrolled
+              ? 'mx-0 w-full max-w-full rounded-none border-transparent bg-transparent'
+              : cn(
+                'mx-2 sm:mx-4 lg:mx-8 xl:mx-auto xl:max-w-7xl rounded-2xl border transition-colors duration-300',
+                mobileOpen
+                  ? 'bg-[#06080F] border-transparent shadow-none'
+                  : useWhiteText
+                    ? 'bg-[#06080F]/40 backdrop-blur-md border-white/10 shadow-sm'
+                    : 'bg-white/50 backdrop-blur-md border-slate-900/10 shadow-sm'
+              )
+          )}
+        >
+          {/* Inner Content Container: Mathematically matches site-container indentation in both states */}
+          <div
+            className={cn(
+              'transition-all duration-500 ease-in-out flex items-center justify-between',
+              scrolled
+                ? 'site-container py-0'
+                : 'w-full mx-auto py-2 px-3 sm:px-4 lg:px-6 xl:max-w-7xl'
+            )}
+          >
+            {/* Left: Lucide Layers icon + "Quantix" (Syne font) */}
+            <Link href="/" className="flex items-center gap-2.5 z-50 group">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 transition-all duration-300 group-hover:scale-110 group-hover:shadow-indigo-500/40">
+                <Layers className="h-5 w-5 text-white transition-transform duration-300" />
+              </div>
+              <span
+                className={cn(
+                  'text-xl font-bold tracking-tight transition-all duration-300 font-syne uppercase group-hover:scale-[1.03]',
+                  useWhiteText
+                    ? 'text-white group-hover:text-blue-400'
+                    : 'text-slate-900 group-hover:text-blue-600'
+                )}
               >
-                <path
-                  d="M12 2L3.5 7L12 12L20.5 7L12 2Z"
-                  fill="url(#logo-grad-1)"
-                />
-                <path
-                  d="M3.5 7V17L12 22V12L3.5 7Z"
-                  fill="url(#logo-grad-2)"
-                />
-                <path
-                  d="M12 12V22L20.5 17V7L12 12Z"
-                  fill="url(#logo-grad-3)"
-                />
-                <defs>
-                  <linearGradient id="logo-grad-1" x1="12" y1="2" x2="12" y2="12" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#93C5FD" />
-                    <stop offset="1" stopColor="#60A5FA" />
-                  </linearGradient>
-                  <linearGradient id="logo-grad-2" x1="3.5" y1="7" x2="12" y2="22" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#3B82F6" />
-                    <stop offset="1" stopColor="#1E3A8A" />
-                  </linearGradient>
-                  <linearGradient id="logo-grad-3" x1="12" y1="12" x2="20.5" y2="17" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#2563EB" />
-                    <stop offset="1" stopColor="#1D4ED8" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-            <span className={cn("text-lg font-bold tracking-tight transition-colors duration-300 font-display", useWhiteText ? "text-white" : "text-slate-900")}>
-              Quantix
-            </span>
-          </Link>
+                Quantix
+              </span>
+            </Link>
 
-          {/* Desktop navigation links (Center) */}
-          <ul className="hidden space-x-8 md:flex">
-            {LINKS.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={cn(
-                      'text-xs font-bold tracking-wide uppercase transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer',
-                      isActive 
-                        ? 'text-blue-500 font-bold' 
-                        : (useWhiteText ? 'text-slate-200 hover:text-white' : 'text-slate-700 hover:text-blue-600')
+            {/* Center: Nav links with interactive sliding background & hover micro-interactions */}
+            <ul className="hidden space-x-2 md:flex items-center">
+              {LINKS.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <li key={link.href} className="relative py-1.5 px-3 group">
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        'relative z-10 text-[13px] font-semibold tracking-[0.08em] uppercase transition-all duration-300 block hover:scale-105 active:scale-95',
+                        isActive
+                          ? (useWhiteText ? 'text-white font-bold' : 'text-blue-600 font-bold')
+                          : useWhiteText
+                            ? 'text-slate-300 group-hover:text-white'
+                            : 'text-slate-600 group-hover:text-slate-950'
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+
+                    {/* Soft hover pill background for inactive items */}
+                    {!isActive && (
+                      <span
+                        className={cn(
+                          'absolute inset-0 rounded-lg -z-0 opacity-0 group-hover:opacity-100 transition-all duration-300 border border-transparent scale-95 group-hover:scale-100',
+                          useWhiteText
+                            ? 'bg-white/5 border-white/5'
+                            : 'bg-slate-950/5 border-slate-950/5'
+                        )}
+                      />
                     )}
-                  >
-                    <span>{link.label}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
 
-          {/* Desktop Right CTA + Theme Toggle */}
-          <div className="hidden md:flex items-center gap-5">
+                    {/* Dynamic sliding layout pill for the active route */}
+                    {isActive && (
+                      <motion.span
+                        layoutId="activeNavTab"
+                        className={cn(
+                          'absolute inset-0 rounded-lg -z-0 border',
+                          useWhiteText
+                            ? 'bg-white/10 border-white/5'
+                            : 'bg-slate-950/5 border-slate-950/5'
+                        )}
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
 
-            <Link
-              href="/sign-in"
-              className={cn(
-                "text-xs font-bold cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95",
-                useWhiteText ? "text-white hover:text-slate-200" : "text-slate-700 hover:text-blue-600"
-              )}
-            >
-              Sign In
-            </Link>
+            {/* Right side: Ghost Sign In + Blue/Indigo Start Free Trial */}
+            <div className="hidden md:flex items-center gap-6">
+              <Link
+                href="/sign-in"
+                className={cn(
+                  'text-[13px] font-semibold tracking-[0.08em] uppercase transition-all duration-200 hover:scale-105 active:scale-95',
+                  useWhiteText ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-950'
+                )}
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/sign-up"
+                className="flex items-center justify-center h-9 px-5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:from-blue-700 active:to-indigo-700 text-white font-bold text-[13px] tracking-[0.08em] uppercase transition-all duration-300 hover:scale-[1.06] active:scale-95 shadow-md shadow-indigo-600/10 hover:shadow-lg hover:shadow-indigo-600/30"
+              >
+                Start Free Trial
+              </Link>
+            </div>
 
-            <Link
-              href="/sign-up"
-              className="rounded-full bg-blue-600 px-5 py-2 text-xs font-bold text-white hover:bg-blue-700 shadow-md hover:shadow-lg hover:shadow-blue-600/25 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95"
-            >
-              Start Free Trial
-            </Link>
-          </div>
-
-          {/* Mobile hamburger + Mode Toggle */}
-          <div className="flex md:hidden items-center gap-3 z-50">
-
-            <button
-              type="button"
-              className={cn(
-                "rounded-full p-2 transition-all",
-                useWhiteText ? "text-white hover:bg-white/10" : "text-slate-800 hover:bg-slate-100"
-              )}
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              aria-expanded={mobileOpen}
-              onClick={toggleMobile}
-            >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+            {/* Morphing Hamburger Menu Trigger for Mobile (z-50 keeps it over overlay) */}
+            <div className="flex md:hidden items-center z-50">
+              <button
+                type="button"
+                className={cn(
+                  'flex flex-col justify-center items-center w-8 h-8 rounded-full transition-all duration-200 focus:outline-none',
+                  useWhiteText ? 'text-white' : 'text-slate-800'
+                )}
+                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={mobileOpen}
+                onClick={toggleMobile}
+              >
+                {/* Apple-style morphing CSS bars */}
+                <span className={cn(
+                  "w-5 h-[2px] bg-current rounded-full transition-all duration-300 ease-out",
+                  mobileOpen ? "rotate-45 translate-y-[5px]" : ""
+                )} />
+                <span className={cn(
+                  "w-5 h-[2px] bg-current rounded-full my-[3px] transition-all duration-300 ease-out",
+                  mobileOpen ? "opacity-0 scale-x-0" : ""
+                )} />
+                <span className={cn(
+                  "w-5 h-[2px] bg-current rounded-full transition-all duration-300 ease-out",
+                  mobileOpen ? "-rotate-45 -translate-y-[5px]" : ""
+                )} />
+              </button>
+            </div>
           </div>
         </div>
+      </nav>
 
-        {/* Mobile fullscreen menu overlay */}
-        <AnimatePresence>
-          {mobileOpen && (
+      {/* Enterprise-grade Full-Screen Slide Overlay for Mobile Menu */}
+      {/* Moved outside the <nav> element to prevent CSS transition containment clipping */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-40 bg-[#06080F] flex flex-col justify-between pt-24 pb-8 px-6 md:hidden"
+          >
+            {/* Top/Center: Informational Links with Descriptions */}
             <motion.div
+              variants={containerVariants}
               initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={menuVariant}
-              className="fixed inset-0 z-40 bg-white flex flex-col justify-center min-h-screen w-full"
+              animate="show"
+              className="flex flex-col gap-1.5 w-full max-w-md mx-auto"
             >
-              <div className="w-full max-w-md mx-auto flex flex-col items-center justify-center py-20 px-8">
-                <ul className="space-y-8 text-center text-xl font-bold uppercase tracking-wider text-slate-700 w-full mb-12">
-                  {LINKS.map((link) => {
-                    const isActive = pathname === link.href;
-                    return (
-                      <motion.li key={link.href} variants={itemVariant}>
-                        <Link
-                          href={link.href}
-                          onClick={toggleMobile}
-                          className={cn(
-                            'transition-all duration-200 hover:scale-105 active:scale-95',
-                            isActive ? 'text-blue-600' : 'text-slate-800 hover:text-blue-600'
-                          )}
-                        >
-                          <span>{link.label}</span>
-                        </Link>
-                      </motion.li>
-                    );
-                  })}
-                </ul>
-
-                <motion.div variants={itemVariant} className="flex flex-col gap-4 w-full">
-                  <Link
-                    href="/sign-in"
-                    className="rounded-full border border-slate-200 text-slate-700 text-center py-3.5 text-xs font-bold bg-slate-50 hover:bg-slate-100 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
-                    onClick={toggleMobile}
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/sign-up"
-                    className="rounded-full bg-blue-600 text-center py-3.5 text-xs font-bold text-white hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 shadow-lg hover:shadow-blue-600/25"
-                    onClick={toggleMobile}
-                  >
-                    Start Free Trial
-                  </Link>
-                </motion.div>
-              </div>
+              {LINKS.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <motion.div key={link.href} variants={itemVariants}>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        'flex flex-col gap-0.5 py-3 px-4 rounded-xl transition-all duration-200',
+                        isActive
+                          ? 'bg-white/10 border border-white/5'
+                          : 'hover:bg-white/5 border border-transparent'
+                      )}
+                    >
+                      <span className={cn(
+                        'text-[14px] font-bold tracking-wider uppercase transition-colors duration-200',
+                        isActive ? 'text-blue-400' : 'text-white'
+                      )}>
+                        {link.label}
+                      </span>
+                      <span className="text-[11px] text-slate-400 font-medium tracking-normal normal-case">
+                        {link.desc}
+                      </span>
+                    </Link>
+                  </motion.div>
+                );
+              })}
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </nav>
+
+            {/* Bottom: Docked Enterprise Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.4 }}
+              className="flex flex-col gap-3 w-full max-w-md mx-auto"
+            >
+              <Link
+                href="/sign-in"
+                className="flex items-center justify-center h-11 rounded-xl text-[13px] font-bold uppercase tracking-[0.08em] border border-white/10 text-white bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/sign-up"
+                className="flex items-center justify-center h-11 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:from-blue-700 active:to-indigo-700 text-white font-extrabold text-[13px] uppercase tracking-[0.08em] transition-all duration-200 shadow-lg shadow-blue-600/20"
+              >
+                Start Free Trial
+              </Link>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

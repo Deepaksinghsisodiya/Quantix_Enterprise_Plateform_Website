@@ -11,7 +11,7 @@ export default function ContactSalesPage() {
     <PublicLayout>
       <Navbar />
 
-      <main className="pt-20 bg-slate-900 min-h-[70vh]">
+      <main className="pt-20 bg-slate-950 min-h-[70vh]">
         <ContactSalesFormWrapper />
       </main>
 

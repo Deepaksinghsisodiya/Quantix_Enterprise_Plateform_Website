@@ -1,4 +1,5 @@
 'use client';
+
 import React from "react";
 import { useInView } from "framer-motion";
 import { motion } from "framer-motion";
@@ -52,6 +53,22 @@ const getColorClasses = (color: string) => {
       return "bg-violet-50 text-violet-600 border border-violet-100 group-hover:bg-violet-600 group-hover:text-white group-hover:border-violet-600";
     default:
       return "bg-gray-50 text-gray-600 border border-gray-100 group-hover:bg-gray-600 group-hover:text-white group-hover:border-gray-600";
+  }
+};
+
+// Generates specific gradient glow classes to color-match corner highlights
+const getGlowClass = (color: string) => {
+  switch (color) {
+    case "blue-500": return "from-blue-500/10";
+    case "purple-500": return "from-purple-500/10";
+    case "teal-500": return "from-teal-500/10";
+    case "indigo-500": return "from-indigo-500/10";
+    case "green-500": return "from-green-500/10";
+    case "orange-500": return "from-orange-500/10";
+    case "red-500": return "from-red-500/10";
+    case "cyan-500": return "from-cyan-500/10";
+    case "violet-500": return "from-violet-500/10";
+    default: return "from-slate-500/10";
   }
 };
 
@@ -142,21 +159,21 @@ export const FeaturesSection = () => {
   return (
     <section
       ref={ref}
-      className="bg-white py-24 border-b border-slate-100"
+      className="bg-gradient-to-b from-white via-slate-50/20 to-white py-24 border-b border-slate-100"
       aria-labelledby="features-section"
     >
       <div className="site-container">
         <div className="text-center">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-xs font-semibold text-primary mb-4">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
             EVERYTHING INCLUDED
           </div>
           <h2
             id="features-section"
-            className="text-3xl font-display font-bold tracking-tight text-gray-900 sm:text-4xl"
+            className="text-3xl font-syne font-black tracking-tight text-gray-900 sm:text-5xl uppercase leading-tight"
           >
             Every tool your business needs
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-base text-gray-600">
+          <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-gray-600 font-medium">
             From counter to cloud — Quantix handles every part of your operation.
           </p>
         </div>
@@ -172,30 +189,36 @@ export const FeaturesSection = () => {
             <motion.div
               key={card.id}
               className={cn(
-                "rounded-2xl border border-slate-100 bg-white p-8 text-left hover:shadow-[0_20px_40px_rgba(37,99,235,0.06)] hover:border-blue-500/20 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] relative overflow-hidden group shadow-[0_4px_12px_rgba(0,0,0,0.015)]",
+                "rounded-3xl border border-slate-100 bg-white p-8 text-left hover:border-blue-500/20 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.05)]",
                 isLoading && "animate-pulse"
               )}
               initial={{ opacity: 0, translateY: 20 }}
               animate={isInView ? { opacity: 1, translateY: 0 } : {}}
-              transition={{ delay: idx * 0.05, duration: 0.4 }}
+              transition={{ delay: idx * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Corner highlight gradient glow */}
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/5 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              {/* Corner color-matched ambient highlight gradient glow */}
+              <div className={cn(
+                "absolute top-0 right-0 w-32 h-32 bg-gradient-to-br to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none",
+                getGlowClass(card.color)
+              )} />
 
-              {/* Icon Container */}
+              {/* Icon Container with interactive scale effect on active child */}
               <div
                 className={cn(
                   "flex h-12 w-12 items-center justify-center rounded-xl text-sm transition-all duration-300",
                   getColorClasses(card.color)
                 )}
               >
-                {/* @ts-ignore – the icon map is typed loosely for brevity */}
-                {ICON_MAP[card.icon]}
+                <div className="transition-transform duration-300 group-hover:scale-115">
+                  {/* @ts-ignore – the icon map is typed loosely for brevity */}
+                  {ICON_MAP[card.icon]}
+                </div>
               </div>
-              <h3 className="mt-6 text-base font-display font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+              
+              <h3 className="mt-6 text-lg font-syne font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                 {card.title}
               </h3>
-              <p className="mt-3 text-xs sm:text-sm text-gray-500 leading-relaxed group-hover:text-slate-600 transition-colors duration-300 font-medium">
+              <p className="mt-3 text-sm text-slate-500 leading-relaxed group-hover:text-slate-600 transition-colors duration-300 font-medium">
                 {card.description}
               </p>
             </motion.div>
@@ -210,8 +233,7 @@ export const FeaturesSection = () => {
             <ATMButton
               variant="outline"
               onClick={() => {
-                // @ts-ignore – useFeaturesQuery expose refetch via dispatch
-                // In real code you would call the .refetch() method from the hook
+                // @ts-ignore – refetch would be invoked in dynamic hooks
               }}
             >
               Retry
@@ -222,3 +244,5 @@ export const FeaturesSection = () => {
     </section>
   );
 };
+
+export default FeaturesSection;
