@@ -180,7 +180,7 @@ export const PlatformDemoSection = () => {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 items-start mb-16">
           <div className="space-y-4">
             <p className="text-blue-600 font-bold tracking-wider uppercase text-sm">PLATFORM DEMO</p>
-            <h2 className="text-3xl font-black text-gray-900 md:text-5xl leading-tight">
+            <h2 className="text-3xl font-display font-black text-gray-900 md:text-5xl leading-tight">
               KEEP THINGS FLOWING WITH THE ALL-IN-ONE POS
             </h2>
           </div>
@@ -214,7 +214,7 @@ export const PlatformDemoSection = () => {
               </div>
               {/* Info text */}
               <div>
-                <h3 className="text-lg font-bold text-gray-900">{card.title}</h3>
+                <h3 className="text-lg font-display font-semibold text-gray-900">{card.title}</h3>
                 <p className="mt-2 text-sm text-gray-500 leading-relaxed">{card.caption}</p>
               </div>
             </motion.div>

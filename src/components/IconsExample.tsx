@@ -6,8 +6,8 @@ import { FaGithub, FaTwitter, FaLinkedin, FaGoogle } from "react-icons/fa";
 
 export default function IconsExample() {
   return (
-    <div className="p-8 bg-slate-900 border border-slate-800 rounded-2xl shadow-xl max-w-xl mx-auto my-12 font-jakarta text-white">
-      <h3 className="text-xl font-bold tracking-tight mb-2 uppercase text-blue-500">
+    <div className="p-8 bg-slate-900 border border-slate-800 rounded-2xl shadow-xl max-w-xl mx-auto my-12 font-sans text-white">
+      <h3 className="text-xl font-display font-bold tracking-tight mb-2 uppercase text-blue-500">
         Icon Integration Demo
       </h3>
       <p className="text-xs text-slate-400 font-semibold mb-6">
@@ -16,7 +16,7 @@ export default function IconsExample() {
 
       {/* Lucide Icons Showcase (UI) */}
       <div className="mb-6">
-        <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">
+        <h4 className="text-xs font-display font-bold text-slate-300 uppercase tracking-wider mb-3">
           1. Lucide React (UI Icons)
         </h4>
         <div className="grid grid-cols-3 gap-3">
@@ -49,7 +49,7 @@ export default function IconsExample() {
 
       {/* React Icons Showcase (Brands) */}
       <div>
-        <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">
+        <h4 className="text-xs font-display font-bold text-slate-300 uppercase tracking-wider mb-3">
           2. React Icons (Brand & Social)
         </h4>
         <div className="grid grid-cols-2 gap-3">

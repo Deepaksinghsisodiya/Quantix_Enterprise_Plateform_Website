@@ -11,7 +11,7 @@ export default function ServicesPage() {
     <PublicLayout>
       <Navbar />
 
-      <main className="pt-20 bg-white min-h-[70vh]">
+      <main className="pt-20 bg-white dark:bg-slate-950 transition-colors duration-300 min-h-[70vh]">
         <IndustriesSection />
       </main>
 

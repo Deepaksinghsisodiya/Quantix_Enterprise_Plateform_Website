@@ -90,7 +90,7 @@ export const TestimonialBanner = ({
             className="max-w-4xl space-y-4 text-white text-left"
           >
             <div className="text-blue-500 text-5xl font-serif leading-none select-none">“</div>
-            <h2 className="text-2xl font-black uppercase md:text-4xl tracking-tight leading-tight max-w-3xl">
+            <h2 className="text-2xl font-display font-black uppercase md:text-4xl tracking-tight leading-tight max-w-3xl">
               {current.quote}
             </h2>
             <div className="flex items-center gap-4 pt-4">

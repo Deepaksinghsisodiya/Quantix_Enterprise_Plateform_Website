@@ -72,7 +72,7 @@ export const TestimonialsSection = () => (
         <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-xs font-semibold text-blue-600 mb-4">
           TESTIMONIALS
         </div>
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        <h2 className="text-3xl font-display font-bold tracking-tight text-gray-900 sm:text-4xl">
           Businesses love Quantix
         </h2>
         <p className="mt-4 text-base text-gray-600 max-w-2xl mx-auto">

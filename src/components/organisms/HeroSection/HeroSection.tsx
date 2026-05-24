@@ -124,7 +124,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-transparent" />
 
       {/* Content */}
-      <div className="relative z-10 flex h-full w-full flex-col items-center justify-center text-center md:items-start md:text-left site-container">
+      <div className="relative z-10 flex h-full w-full flex-col items-center justify-center text-center md:items-start md:text-left site-container pt-20">
         {/* Badge */}
         <div className="mb-4 flex items-center space-x-2 rounded-full bg-white/10 px-3 py-1.5 backdrop-blur-xs border border-white/5">
           <div className="h-2 w-2 rounded-full bg-blue-500" />
@@ -133,7 +133,7 @@ const HeroSection = () => {
           </span>
         </div>
         {/* Heading */}
-        <h1 className="mb-4 max-w-4xl text-4xl sm:text-5xl font-black uppercase tracking-tight text-white md:text-7xl leading-[1.05]">
+        <h1 className="mb-4 max-w-4xl text-4xl sm:text-5xl font-display font-extrabold tracking-tight uppercase text-white md:text-7xl leading-[1.05]">
           {SLIDES[activeIndex].heading}
         </h1>
         {/* Sub‑heading */}

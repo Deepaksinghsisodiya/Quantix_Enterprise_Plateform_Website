@@ -49,26 +49,44 @@ export const Footer = () => {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-5">
           {/* Column 1 – Brand */}
           <div className="space-y-6">
-            <div className="flex items-center space-x-2 text-slate-900">
+            <div className="flex items-center space-x-2 text-slate-900 group">
               {/* Quantix POS Logo */}
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white shrink-0">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shrink-0 shadow-md shadow-blue-500/20">
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
-                  className="h-4 w-4"
                   fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4.5 w-4.5"
                 >
-                  <rect x="3" y="3" width="7" height="7" />
-                  <rect x="14" y="3" width="7" height="7" />
-                  <rect x="14" y="14" width="7" height="7" />
-                  <rect x="3" y="14" width="7" height="7" />
+                  <path
+                    d="M12 2L3.5 7L12 12L20.5 7L12 2Z"
+                    fill="url(#footer-logo-grad-1)"
+                  />
+                  <path
+                    d="M3.5 7V17L12 22V12L3.5 7Z"
+                    fill="url(#footer-logo-grad-2)"
+                  />
+                  <path
+                    d="M12 12V22L20.5 17V7L12 12Z"
+                    fill="url(#footer-logo-grad-3)"
+                  />
+                  <defs>
+                    <linearGradient id="footer-logo-grad-1" x1="12" y1="2" x2="12" y2="12" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#93C5FD" />
+                      <stop offset="1" stopColor="#60A5FA" />
+                    </linearGradient>
+                    <linearGradient id="footer-logo-grad-2" x1="3.5" y1="7" x2="12" y2="22" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#3B82F6" />
+                      <stop offset="1" stopColor="#1E3A8A" />
+                    </linearGradient>
+                    <linearGradient id="footer-logo-grad-3" x1="12" y1="12" x2="20.5" y2="17" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#2563EB" />
+                      <stop offset="1" stopColor="#1D4ED8" />
+                    </linearGradient>
+                  </defs>
                 </svg>
               </div>
-              <span className="text-lg font-bold tracking-tight">Quantix</span>
+              <span className="text-lg font-display font-bold tracking-tight">Quantix</span>
             </div>
             <p className="text-xs sm:text-sm text-slate-500 max-w-xs leading-relaxed font-semibold">
               The modern POS platform for retail and restaurant businesses. Simple, powerful, and built to scale.
@@ -107,7 +125,7 @@ export const Footer = () => {
 
           {/* Column 2 – Product */}
           <div>
-            <h3 className="mb-4 font-bold text-slate-900 text-xs uppercase tracking-wider">
+            <h3 className="mb-4 font-display font-bold text-slate-900 text-xs uppercase tracking-wider">
               Product
             </h3>
             <ul className="space-y-2.5 text-xs sm:text-sm font-semibold">
@@ -123,7 +141,7 @@ export const Footer = () => {
 
           {/* Column 3 – Company */}
           <div>
-            <h3 className="mb-4 font-bold text-slate-900 text-xs uppercase tracking-wider">
+            <h3 className="mb-4 font-display font-bold text-slate-900 text-xs uppercase tracking-wider">
               Company
             </h3>
             <ul className="space-y-2.5 text-xs sm:text-sm font-semibold">
@@ -139,7 +157,7 @@ export const Footer = () => {
 
           {/* Column 4 – Industries */}
           <div>
-            <h3 className="mb-4 font-bold text-slate-900 text-xs uppercase tracking-wider">
+            <h3 className="mb-4 font-display font-bold text-slate-900 text-xs uppercase tracking-wider">
               Industries
             </h3>
             <ul className="space-y-2.5 text-xs sm:text-sm font-semibold">
@@ -155,7 +173,7 @@ export const Footer = () => {
 
           {/* Column 5 – Legal */}
           <div>
-            <h3 className="mb-4 font-bold text-slate-900 text-xs uppercase tracking-wider">
+            <h3 className="mb-4 font-display font-bold text-slate-900 text-xs uppercase tracking-wider">
               Legal
             </h3>
             <ul className="space-y-2.5 text-xs sm:text-sm font-semibold">

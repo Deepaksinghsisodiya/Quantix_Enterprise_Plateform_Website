@@ -19,15 +19,6 @@ html {
   --site-max-width: 80rem; /* 1280px (equivalent to max-w-7xl). Change this value to adjust the entire project's container width. */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #0F172A;
-    --color-foreground: #E5E7EB;
-    --color-surface: #1E293B;
-    --color-border: #334155;
-  }
-}
-
 /* Centralized container class to align every section's width across the project */
 .site-container {
   width: 100%;
@@ -68,10 +59,18 @@ html {
 }
 
 /* Typography defaults */
-body {
-  background: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-sans, system-ui, sans-serif);
-  line-height: 1.6;
+@layer base {
+  body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-inter), sans-serif;
+    letter-spacing: -0.01em;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-jakarta), sans-serif;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
 }
 

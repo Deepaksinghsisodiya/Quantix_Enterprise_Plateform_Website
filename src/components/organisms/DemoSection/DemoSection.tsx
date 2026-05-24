@@ -86,7 +86,7 @@ export const DemoSection = () => {
             <Sparkles className="h-3.5 w-3.5 fill-blue-100" />
             SEE IT IN ACTION
           </div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-display font-extrabold tracking-tight text-gray-900 sm:text-4xl">
             Watch Quantix work for you
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-base text-gray-500">
@@ -230,7 +230,7 @@ export const DemoSection = () => {
               {/* Title & Description Below Media Player */}
               <div className="mt-5 flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                  <h3 className="text-xl font-display font-bold text-gray-900 flex items-center gap-2">
                     {activeMedia.type === 'video' ? (
                       <>
                         <Film className="h-5 w-5 text-blue-600" />

@@ -24,7 +24,7 @@ export const CTABanner = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <h2 className="text-3xl font-black text-white sm:text-4xl tracking-tight">
+          <h2 className="text-3xl font-display font-black text-white sm:text-4xl tracking-tight">
             Ready to modernize your business?
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-slate-300 text-sm sm:text-base leading-relaxed">

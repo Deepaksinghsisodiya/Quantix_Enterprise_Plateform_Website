@@ -11,7 +11,7 @@ export default function ResourcesPage() {
     <PublicLayout>
       <Navbar />
 
-      <main className="pt-20 bg-gray-50 min-h-[70vh]">
+      <main className="pt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300 min-h-[70vh]">
         <DemoSection />
       </main>
 

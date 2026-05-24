@@ -4,24 +4,22 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Menu, X, Layers, BookOpen, Briefcase, Tag, Mail } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { RootState } from '../../../redux/store';
-import { toggleTheme } from '../../../redux/slices/themeSlice';
 
 // Nav link definition
 interface NavLink {
   label: string;
   href: string; // Next.js page routes
+  icon: React.ComponentType<{ className?: string; size?: number }>;
 }
 
 const LINKS: NavLink[] = [
-  { label: 'Features', href: '/features' },
-  { label: 'Resources', href: '/resources' },
-  { label: 'Services', href: '/services' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Contact Sales', href: '/contact' },
+  { label: 'Features', href: '/features', icon: Layers },
+  { label: 'Resources', href: '/resources', icon: BookOpen },
+  { label: 'Services', href: '/services', icon: Briefcase },
+  { label: 'Pricing', href: '/pricing', icon: Tag },
+  { label: 'Contact Sales', href: '/contact', icon: Mail },
 ];
 
 /**
@@ -39,23 +37,22 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const pathname = usePathname();
-  const dispatch = useDispatch();
-  const themeMode = useSelector((state: RootState) => state.theme.mode);
+
 
   // Scroll listener for background transition
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 80);
+    const handler = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handler);
     return () => window.removeEventListener('scroll', handler);
   }, []);
 
   const toggleMobile = useCallback(() => setMobileOpen((prev) => !prev), []);
 
-  // Motion variants for background transition
-  const bgVariant = {
-    transparent: { backgroundColor: 'rgba(255, 255, 255, 0)' }, // Transparent initially
-    solid: { backgroundColor: 'rgba(255, 255, 255, 1.0)' }, // Solid white on scroll
-  };
+  // Determine if header text should be white or dark based on scroll state, page theme, and mobile open state
+  const isDarkPageAtTop = ['/', '/contact', '/sign-in', '/sign-up'].includes(pathname);
+  const useWhiteText = !mobileOpen && isDarkPageAtTop;
+
+
 
   // Slide down fullscreen mobile menu
   const menuVariant = {
@@ -90,40 +87,58 @@ const Navbar = () => {
     <nav
       role="navigation"
       aria-label="Main navigation"
-      className="fixed inset-x-0 top-0 z-50 w-full"
+      className="fixed inset-x-0 top-0 z-50 w-full pointer-events-auto"
     >
-      <motion.div
-        initial="transparent"
-        animate={scrolled ? 'solid' : 'transparent'}
-        variants={bgVariant}
+      <div
         className={cn(
-          "transition-all duration-300",
-          scrolled 
-            ? "backdrop-blur-md border-b border-slate-100 shadow-sm" 
-            : "border-b border-transparent"
+          "w-full transition-all duration-300 ease-in-out",
+          scrolled
+            ? (isDarkPageAtTop
+                ? "border-b border-slate-800/50 bg-slate-950/80 shadow-lg shadow-slate-950/20 backdrop-blur-md"
+                : "border-b border-slate-200/50 bg-white/90 shadow-sm backdrop-blur-md")
+            : "bg-transparent border-b border-transparent"
         )}
       >
-        <div className="site-container flex items-center justify-between py-4">
+        <div className={cn("site-container flex items-center justify-between transition-all duration-300", scrolled ? "py-3" : "py-5")}>
           {/* Left: Square logo icon + "Quantix" text */}
-          <Link href="/" className="flex items-center gap-2.5 z-50">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-white shadow-md">
+          {/* Left: Square logo icon + "Quantix" text */}
+          <Link href="/" className="flex items-center gap-2.5 z-50 group">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 transition-all duration-300 group-hover:scale-105">
               <svg
-                xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
-                className="h-4.5 w-4.5"
                 fill="none"
-                stroke="currentColor"
-                strokeWidth={2.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5.5 w-5.5"
               >
-                <rect x="3" y="3" width="7" height="7" />
-                <rect x="14" y="3" width="7" height="7" />
-                <rect x="14" y="14" width="7" height="7" />
-                <rect x="3" y="14" width="7" height="7" />
+                <path
+                  d="M12 2L3.5 7L12 12L20.5 7L12 2Z"
+                  fill="url(#logo-grad-1)"
+                />
+                <path
+                  d="M3.5 7V17L12 22V12L3.5 7Z"
+                  fill="url(#logo-grad-2)"
+                />
+                <path
+                  d="M12 12V22L20.5 17V7L12 12Z"
+                  fill="url(#logo-grad-3)"
+                />
+                <defs>
+                  <linearGradient id="logo-grad-1" x1="12" y1="2" x2="12" y2="12" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#93C5FD" />
+                    <stop offset="1" stopColor="#60A5FA" />
+                  </linearGradient>
+                  <linearGradient id="logo-grad-2" x1="3.5" y1="7" x2="12" y2="22" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#3B82F6" />
+                    <stop offset="1" stopColor="#1E3A8A" />
+                  </linearGradient>
+                  <linearGradient id="logo-grad-3" x1="12" y1="12" x2="20.5" y2="17" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#2563EB" />
+                    <stop offset="1" stopColor="#1D4ED8" />
+                  </linearGradient>
+                </defs>
               </svg>
             </div>
-            <span className={cn("text-lg font-bold tracking-tight transition-colors duration-300", (scrolled || mobileOpen) ? "text-slate-900" : "text-white")}>
+            <span className={cn("text-lg font-bold tracking-tight transition-colors duration-300 font-display", useWhiteText ? "text-white" : "text-slate-900")}>
               Quantix
             </span>
           </Link>
@@ -137,13 +152,13 @@ const Navbar = () => {
                   <Link
                     href={link.href}
                     className={cn(
-                      'text-xs font-bold tracking-wide uppercase transition-all duration-200 hover:scale-105 active:scale-95 inline-block cursor-pointer',
+                      'text-xs font-bold tracking-wide uppercase transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer',
                       isActive 
-                        ? 'text-blue-600 font-bold' 
-                        : (scrolled ? 'text-slate-700 hover:text-blue-600' : 'text-slate-200 hover:text-white')
+                        ? 'text-blue-500 font-bold' 
+                        : (useWhiteText ? 'text-slate-200 hover:text-white' : 'text-slate-700 hover:text-blue-600')
                     )}
                   >
-                    {link.label}
+                    <span>{link.label}</span>
                   </Link>
                 </li>
               );
@@ -152,26 +167,12 @@ const Navbar = () => {
 
           {/* Desktop Right CTA + Theme Toggle */}
           <div className="hidden md:flex items-center gap-5">
-            {/* Mode toggle button */}
-            <button
-              onClick={() => dispatch(toggleTheme())}
-              className={cn(
-                "p-2 rounded-full transition-all duration-200 cursor-pointer active:scale-90",
-                scrolled 
-                  ? "text-slate-600 hover:text-slate-900 hover:bg-slate-100" 
-                  : "text-slate-300 hover:text-white hover:bg-white/10"
-              )}
-              aria-label="Toggle dark mode"
-              type="button"
-            >
-              {themeMode === 'dark' ? <Sun className="h-4.5 w-4.5" /> : <Moon className="h-4.5 w-4.5" />}
-            </button>
 
             <Link
               href="/sign-in"
               className={cn(
                 "text-xs font-bold cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95",
-                scrolled ? "text-slate-700 hover:text-blue-600" : "text-white hover:text-slate-200"
+                useWhiteText ? "text-white hover:text-slate-200" : "text-slate-700 hover:text-blue-600"
               )}
             >
               Sign In
@@ -187,26 +188,12 @@ const Navbar = () => {
 
           {/* Mobile hamburger + Mode Toggle */}
           <div className="flex md:hidden items-center gap-3 z-50">
-            {/* Mode toggle button */}
-            <button
-              onClick={() => dispatch(toggleTheme())}
-              className={cn(
-                "p-2 rounded-full transition-all duration-200 cursor-pointer active:scale-90",
-                (scrolled || mobileOpen) 
-                  ? "text-slate-600 hover:text-slate-900 hover:bg-slate-100" 
-                  : "text-slate-300 hover:text-white hover:bg-white/10"
-              )}
-              aria-label="Toggle dark mode"
-              type="button"
-            >
-              {themeMode === 'dark' ? <Sun className="h-4.5 w-4.5" /> : <Moon className="h-4.5 w-4.5" />}
-            </button>
 
             <button
               type="button"
               className={cn(
                 "rounded-full p-2 transition-all",
-                (scrolled || mobileOpen) ? "text-slate-800 hover:bg-slate-100" : "text-white hover:bg-white/10"
+                useWhiteText ? "text-white hover:bg-white/10" : "text-slate-800 hover:bg-slate-100"
               )}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
@@ -237,11 +224,11 @@ const Navbar = () => {
                           href={link.href}
                           onClick={toggleMobile}
                           className={cn(
-                            'transition-all duration-200 hover:scale-105 active:scale-95 inline-block',
+                            'transition-all duration-200 hover:scale-105 active:scale-95',
                             isActive ? 'text-blue-600' : 'text-slate-800 hover:text-blue-600'
                           )}
                         >
-                          {link.label}
+                          <span>{link.label}</span>
                         </Link>
                       </motion.li>
                     );
@@ -268,7 +255,7 @@ const Navbar = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </nav>
   );
 };

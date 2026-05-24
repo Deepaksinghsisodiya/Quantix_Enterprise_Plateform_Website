@@ -61,7 +61,7 @@ const SLIDES: SlideData[] = [
 
 export default function HeroSlider() {
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-slate-950 font-jakarta">
+    <div className="relative w-full h-screen overflow-hidden bg-slate-950 font-sans">
       <Swiper
         modules={[Autoplay, Pagination, EffectFade]}
         effect="fade"
@@ -99,7 +99,7 @@ export default function HeroSlider() {
                 </div>
 
                 {/* Heading */}
-                <h1 className="mb-6 text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tight text-white leading-[1.05]">
+                <h1 className="mb-6 text-4xl sm:text-5xl md:text-7xl font-display font-extrabold tracking-tight uppercase text-white leading-[1.05]">
                   {slide.title}
                 </h1>
 

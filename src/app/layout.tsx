@@ -1,24 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "./providers";
 
 // Font configuration
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
+const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 // Site metadata
@@ -77,10 +75,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${plusJakartaSans.variable} h-full antialiased`}
+      className="h-full antialiased"
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-gray-50 font-jakarta" suppressHydrationWarning>
+      <body className={`${inter.variable} ${jakarta.variable} font-sans antialiased min-h-full flex flex-col bg-gray-50 dark:bg-slate-950 transition-colors duration-300`} suppressHydrationWarning>
         <Providers>{children}</Providers>
       </body>
     </html>

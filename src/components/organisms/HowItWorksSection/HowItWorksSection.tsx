@@ -57,7 +57,7 @@ export const HowItWorksSection = () => {
           <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-xs font-semibold text-primary mb-4">
             HOW IT WORKS
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
+          <h2 className="text-3xl font-display font-bold text-gray-900 md:text-4xl">
             Up and running in minutes
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-gray-600">
@@ -84,7 +84,7 @@ export const HowItWorksSection = () => {
                     {step.number}
                   </div>
                 </div>
-                <h3 className="mt-6 text-base font-bold text-gray-900">{step.title}</h3>
+                <h3 className="mt-6 text-base font-display font-bold text-gray-900">{step.title}</h3>
                 <p className="mt-2 text-xs text-gray-500 leading-relaxed max-w-[240px]">{step.description}</p>
               </motion.div>
               {/* Solid line between steps (except after last) */}

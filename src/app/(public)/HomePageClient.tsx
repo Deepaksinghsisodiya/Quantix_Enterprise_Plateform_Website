@@ -66,23 +66,23 @@ export default function HomePageClient() {
         <HeroSection />
       </section>
 
-      <section id="features" className={cn("scroll-mt-20 bg-white")}>
+      <section id="features" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <PlatformDemoSection />
       </section>
 
-      <section id="platform" className={cn("scroll-mt-20 bg-gray-50")}>
+      <section id="platform" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <FeaturesSection />
       </section>
 
-      <section id="how-it-works" className={cn("scroll-mt-20 bg-white")}>
+      <section id="how-it-works" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <HowItWorksSection />
       </section>
 
-      <section id="resources" className={cn("scroll-mt-20 bg-gray-50")}>
+      <section id="resources" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <DemoSection />
       </section>
 
-      <section id="services" className={cn("scroll-mt-20 bg-white")}>
+      <section id="services" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <IndustriesSection />
       </section>
 
@@ -91,19 +91,19 @@ export default function HomePageClient() {
       </section>
 
       {/* Lazy loaded sections */}
-      <section id="pricing" className={cn("scroll-mt-20 bg-gray-50")}>
+      <section id="pricing" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyPricingSection />
         </Suspense>
       </section>
 
-      <section id="testimonials" className={cn("scroll-mt-20 bg-white")}>
+      <section id="testimonials" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyTestimonialsSection />
         </Suspense>
       </section>
 
-      <section id="faq" className={cn("scroll-mt-20 bg-gray-50")}>
+      <section id="faq" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyFAQSection />
         </Suspense>
@@ -112,7 +112,7 @@ export default function HomePageClient() {
         <CTABanner />
       </section>
 
-      <section id="footer" className={cn("scroll-mt-20 bg-white")}>
+      <section id="footer" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Footer />
       </section>
 

@@ -34,26 +34,44 @@ export default function SignInPage() {
 
           {/* Logo and title */}
           <div className="flex items-center justify-center gap-2.5 mb-6">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-lg">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25">
               <svg
-                xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
-                className="h-5 w-5"
                 fill="none"
-                stroke="currentColor"
-                strokeWidth={2.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5.5 w-5.5"
               >
-                <rect x="3" y="3" width="7" height="7" />
-                <rect x="14" y="3" width="7" height="7" />
-                <rect x="14" y="14" width="7" height="7" />
-                <rect x="3" y="14" width="7" height="7" />
+                <path
+                  d="M12 2L3.5 7L12 12L20.5 7L12 2Z"
+                  fill="url(#signin-logo-grad-1)"
+                />
+                <path
+                  d="M3.5 7V17L12 22V12L3.5 7Z"
+                  fill="url(#signin-logo-grad-2)"
+                />
+                <path
+                  d="M12 12V22L20.5 17V7L12 12Z"
+                  fill="url(#signin-logo-grad-3)"
+                />
+                <defs>
+                  <linearGradient id="signin-logo-grad-1" x1="12" y1="2" x2="12" y2="12" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#93C5FD" />
+                    <stop offset="1" stopColor="#60A5FA" />
+                  </linearGradient>
+                  <linearGradient id="signin-logo-grad-2" x1="3.5" y1="7" x2="12" y2="22" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#3B82F6" />
+                    <stop offset="1" stopColor="#1E3A8A" />
+                  </linearGradient>
+                  <linearGradient id="signin-logo-grad-3" x1="12" y1="12" x2="20.5" y2="17" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#2563EB" />
+                    <stop offset="1" stopColor="#1D4ED8" />
+                  </linearGradient>
+                </defs>
               </svg>
             </div>
-            <span className="text-xl font-bold tracking-tight text-white">Quantix</span>
+            <span className="text-xl font-display font-bold tracking-tight text-white">Quantix</span>
           </div>
-          <h2 className="text-center text-2xl font-black tracking-tight text-white uppercase">
+          <h2 className="text-center text-2xl font-display font-black tracking-tight text-white uppercase">
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-xs text-slate-400 font-semibold">

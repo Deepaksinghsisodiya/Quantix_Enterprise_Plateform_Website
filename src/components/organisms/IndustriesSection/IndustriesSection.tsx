@@ -82,7 +82,7 @@ export const IndustriesSection = () => {
           <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-xs font-semibold text-blue-600 mb-4">
             INDUSTRIES
           </div>
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-display font-bold tracking-tight text-gray-900 sm:text-4xl">
             Tailored for your industry
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-base text-gray-600">
@@ -137,7 +137,7 @@ export const IndustriesSection = () => {
                   <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-blue-600">
                     RETAIL
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
+                  <h3 className="text-2xl sm:text-3xl font-display font-black text-gray-900 tracking-tight">
                     Built for modern retail stores
                   </h3>
                   <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
@@ -186,7 +186,7 @@ export const IndustriesSection = () => {
                   <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-blue-600">
                     RESTAURANT
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
+                  <h3 className="text-2xl sm:text-3xl font-display font-black text-gray-900 tracking-tight">
                     Made for fast-paced restaurants
                   </h3>
                   <p className="text-gray-600 leading-relaxed text-sm sm:text-base">

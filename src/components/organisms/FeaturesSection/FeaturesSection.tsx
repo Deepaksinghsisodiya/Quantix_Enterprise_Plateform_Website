@@ -152,7 +152,7 @@ export const FeaturesSection = () => {
           </div>
           <h2
             id="features-section"
-            className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+            className="text-3xl font-display font-bold tracking-tight text-gray-900 sm:text-4xl"
           >
             Every tool your business needs
           </h2>
@@ -192,7 +192,7 @@ export const FeaturesSection = () => {
                 {/* @ts-ignore – the icon map is typed loosely for brevity */}
                 {ICON_MAP[card.icon]}
               </div>
-              <h3 className="mt-6 text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+              <h3 className="mt-6 text-base font-display font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                 {card.title}
               </h3>
               <p className="mt-3 text-xs sm:text-sm text-gray-500 leading-relaxed group-hover:text-slate-600 transition-colors duration-300 font-medium">
