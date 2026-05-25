@@ -1,5 +1,5 @@
-// src/components/organisms/CTABanner/CTABanner.tsx
 import React from "react";
+import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
@@ -52,18 +52,18 @@ export const CTABanner = () => {
 
           {/* Responsive Action Buttons */}
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto sm:max-w-none">
-            <button
-              type="button"
-              className="w-full sm:w-auto bg-blue-600 text-white hover:bg-blue-700 font-bold px-8 py-4 rounded-full shadow-lg shadow-blue-500/20 text-xs cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95"
+            <Link
+              href="/sign-up"
+              className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-full shadow-lg shadow-blue-500/20 text-xs text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 block sm:inline-block"
             >
               Start Free Trial
-            </button>
-            <button
-              type="button"
-              className="w-full sm:w-auto border border-slate-800 text-slate-300 hover:bg-slate-900 hover:text-white font-bold px-8 py-4 rounded-full text-xs cursor-pointer bg-transparent transition-all duration-200 hover:scale-105 active:scale-95"
+            </Link>
+            <Link
+              href="/contact"
+              className="w-full sm:w-auto border border-slate-800 text-slate-300 hover:bg-slate-900 hover:text-white font-bold px-8 py-4 rounded-full text-xs text-center cursor-pointer bg-transparent transition-all duration-200 hover:scale-105 active:scale-95 block sm:inline-block"
             >
               Talk to Sales
-            </button>
+            </Link>
           </div>
         </motion.div>
       </div>

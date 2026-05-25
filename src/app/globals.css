@@ -29,16 +29,17 @@ html {
   /* ==========================================
      THEME CONFIGURATION - CHANGE COLORS HERE
      ========================================== */
-  /* Theme Option 1: Premium Quantix Blue (Default) */
+  /* Theme Option 1: Premium Quantix Blue (Default)
   --primary-color: #2563EB;
   --primary-light: #3B82F6;
   --primary-dark: #1D4ED8;
+  */
   
-  /* Theme Option 2: Vibrant Indigo/Purple (Uncomment to use)
+  /* Theme Option 2: Vibrant Indigo/Purple (Uncomment to use) */
   --primary-color: #6366F1;
   --primary-light: #818CF8;
   --primary-dark: #4F46E5;
-  */
+  
   
 
   /* Theme Option 3: Modern Emerald Green (Uncomment to use)
