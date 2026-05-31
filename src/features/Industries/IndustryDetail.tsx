@@ -133,19 +133,19 @@ export const IndustryDetail: React.FC<IndustryDetailProps> = ({
   const industry = useMemo(() => {
     if (apiIndustry) {
       return {
-        title: apiIndustry.title || apiIndustry.name,
-        tagline: apiIndustry.name.toUpperCase(),
+        title: apiIndustry.title || apiIndustry.name || "",
+        tagline: (apiIndustry.name || apiIndustry.title || "").toUpperCase(),
         icon: ICON_MAP[slug] || <Store className="h-10 w-10 text-primary" />,
         backgroundImage: apiIndustry.imageUrl || "/images/hero-retail.jpg",
-        heroHeadline: apiIndustry.description,
+        heroHeadline: apiIndustry.description || "",
         statNumber: apiIndustry.statValue || "30%",
         statLabel: apiIndustry.statLabel || "Process Efficiency Gain",
         summary: apiIndustry.description,
-        keyFeatures: apiIndustry.features.map((f) => ({ 
+        keyFeatures: (apiIndustry.features || []).map((f) => ({ 
           title: f, 
           desc: "Leverage standard high-performance industry tools." 
         })),
-        technicalHighlights: apiIndustry.features,
+        technicalHighlights: apiIndustry.features || [],
       };
     }
     return localIndustry;

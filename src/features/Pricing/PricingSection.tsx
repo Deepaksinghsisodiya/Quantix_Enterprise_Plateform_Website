@@ -135,7 +135,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
 
           {/* Cards grid */}
           <motion.div
-            className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-stretch justify-center"
+            className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch justify-center max-w-5xl mx-auto"
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
             variants={gridVariants}
@@ -180,24 +180,24 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                     )}
 
                     {/* Name as small uppercase label */}
-                    <h3 className={cn('text-[10px] font-syne font-bold uppercase tracking-wider text-slate-400', plan.mostPopular && 'text-blue-200')}>
+                    <h3 className={cn('text-[10px] font-syne font-bold uppercase tracking-wider text-slate-400 text-center', plan.mostPopular && 'text-blue-200')}>
                       {plan.name}
                     </h3>
 
                     {/* Price */}
-                    <div className="mt-3 mb-4">
+                    <div className="mt-3 mb-4 flex justify-center">
                       {plan.custom ? (
-                        <div className="flex items-baseline h-10">
-                          <span className={cn('text-3xl font-syne font-black text-slate-900 tracking-tight', plan.mostPopular && 'text-white')}>
+                        <div className="flex items-center justify-center h-10 w-full">
+                          <span className={cn('text-3xl font-syne font-black text-slate-900 tracking-tight text-center', plan.mostPopular && 'text-white')}>
                             Custom
                           </span>
                         </div>
                       ) : (
-                        <div className="flex items-baseline gap-1.5 flex-wrap h-10">
-                          <span className={cn('text-3xl font-syne font-black text-slate-900 tracking-tight', plan.mostPopular && 'text-white')}>
+                        <div className="flex items-baseline justify-center gap-1.5 h-10 w-full">
+                          <span className={cn('text-3xl font-syne font-black text-slate-900 tracking-tight text-center', plan.mostPopular && 'text-white')}>
                             {plan.id === 'free' ? 'Free' : `$${billing === 'monthly' ? plan.priceMonthly : getAnnualPrice(plan.priceMonthly)}`}
                           </span>
-                          <span className={cn('text-xs font-bold text-slate-500', plan.mostPopular ? 'text-blue-200' : 'text-slate-400')}>
+                          <span className={cn('text-xs font-bold text-slate-500 text-center', plan.mostPopular ? 'text-blue-200' : 'text-slate-400')}>
                             {plan.id === 'free' ? '3 days' : (billing === 'monthly' ? '/mo' : '/yr')}
                           </span>
                         </div>
@@ -205,7 +205,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                     </div>
 
                     {/* Description */}
-                    <p className={cn('text-xs text-slate-500 mb-6 leading-relaxed font-medium', plan.mostPopular && 'text-blue-100')}>{plan.description}</p>
+                    <p className={cn('text-xs text-slate-500 mb-6 leading-relaxed font-medium text-center', plan.mostPopular && 'text-blue-100')}>{plan.description}</p>
 
                     {/* Features list */}
                     <ul className="mb-8 space-y-3">

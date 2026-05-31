@@ -62,18 +62,18 @@ function VerifyContent() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-8 sm:p-10 backdrop-blur-md relative overflow-hidden"
+        className="rounded-3xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/40 p-8 sm:p-10 backdrop-blur-md relative overflow-hidden"
       >
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
         
         <div className="text-center space-y-4 mb-8">
-          <div className="h-12 w-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto text-blue-400">
+          <div className="h-12 w-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto text-blue-500 dark:text-blue-400">
             <Mail size={22} />
           </div>
-          <h2 className="text-2xl font-syne font-black text-white uppercase tracking-tight">
+          <h2 className="text-2xl font-syne font-black text-slate-900 dark:text-white uppercase tracking-tight">
             Verify Email
           </h2>
-          <p className="text-xs text-slate-400 font-medium leading-relaxed">
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
             We have sent a verification code to your email. Enter the code below to verify your account.
           </p>
         </div>
@@ -90,7 +90,7 @@ function VerifyContent() {
               value={otp}
               onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
               placeholder="e.g. 123456"
-              className="w-full text-center tracking-[0.5em] font-mono text-lg rounded-xl border border-slate-800 bg-slate-950/60 py-3.5 text-white placeholder-slate-600 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full text-center tracking-[0.5em] font-mono text-lg rounded-xl border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-950/60 py-3.5 text-slate-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-600 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
 
@@ -104,13 +104,13 @@ function VerifyContent() {
           </button>
         </form>
 
-        <div className="mt-8 text-center border-t border-slate-800/60 pt-6">
-          <p className="text-xs text-slate-500 font-medium">
+        <div className="mt-8 text-center border-t border-gray-200 dark:border-slate-800/60 pt-6">
+          <p className="text-xs text-slate-550 dark:text-slate-500 font-medium">
             Didn't receive the email?{' '}
             <button
               onClick={handleResendOtp}
               disabled={isSendingOtp}
-              className="text-blue-400 hover:text-blue-300 font-bold disabled:opacity-50 cursor-pointer"
+              className="text-blue-500 hover:text-blue-400 font-bold disabled:opacity-50 cursor-pointer"
             >
               {isSendingOtp ? 'Resending...' : 'Resend Code'}
             </button>
@@ -125,7 +125,7 @@ export default function VerifyEmailPage() {
   return (
     <PublicLayout>
       <Navbar />
-      <main className="pt-20 bg-slate-950 min-h-screen flex items-center">
+      <main className="pt-20 bg-white dark:bg-slate-950 min-h-screen flex items-center text-slate-900 dark:text-white transition-colors duration-300">
         <Suspense fallback={
           <div className="site-container text-center py-24 text-slate-400">Loading verification session...</div>
         }>

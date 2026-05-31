@@ -49,6 +49,34 @@ const Navbar = () => {
     }
   };
 
+  const handleBrandClick = (e: React.MouseEvent) => {
+    if (pathname === '/') {
+      e.preventDefault();
+      
+      const start = window.scrollY;
+      const startTime = performance.now();
+      const duration = 1200; // 1.2s slow-motion duration
+
+      const easeInOutCubic = (t: number) => {
+        return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+      };
+
+      const scroll = (timestamp: number) => {
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        const ease = easeInOutCubic(progress);
+        
+        window.scrollTo(0, start * (1 - ease));
+
+        if (progress < 1) {
+          requestAnimationFrame(scroll);
+        }
+      };
+
+      requestAnimationFrame(scroll);
+    }
+  };
+
 
   // Hide navbar only when scroll reaches the footer area (bottom of page)
   useEffect(() => {
@@ -131,7 +159,7 @@ const Navbar = () => {
           {/* Inner Content */}
           <div className="w-full mx-auto py-2 px-3 sm:px-4 lg:px-6 xl:max-w-7xl flex items-center justify-between">
             {/* Left: Smaller Quantix icon */}
-            <Link href="/" className="flex items-center gap-2 z-50 group">
+            <Link href="/" onClick={handleBrandClick} className="flex items-center gap-2 z-50 group">
               <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 transition-all duration-300 group-hover:scale-110 group-hover:shadow-indigo-500/40">
                 <Layers className="h-3.5 w-3.5 text-white" />
               </div>

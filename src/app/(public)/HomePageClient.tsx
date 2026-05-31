@@ -1,6 +1,6 @@
 "use client";
 
-import React, { lazy, Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import HeroSection from "@/components/organisms/HeroSection/HeroSection";
 import Navbar from "@/components/organisms/Navbar/Navbar";
@@ -14,11 +14,15 @@ import { CTABanner } from "@/components/organisms/CTABanner/CTABanner";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { ATMLoader } from "@/components/atoms/ATMLoader";
 import { cn } from "@/lib/utils";
+import { ArrowUp } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Lazy loaded sections (below the fold)
-const LazyPricingWrapper = lazy(() => import("@/features/Pricing/PricingWrapper"));
-const LazyTestimonialsSection = lazy(() => import("@/features/Testimonials/TestimonialsSectionWrapper"));
-const LazyFAQWrapper = lazy(() => import("@/features/FAQ/FAQWrapper"));
+import dynamic from "next/dynamic";
+
+// Dynamic loaded sections (below the fold) optimized for Next.js
+const LazyPricingWrapper = dynamic(() => import("@/features/Pricing/PricingWrapper"), { ssr: false });
+const LazyTestimonialsSection = dynamic(() => import("@/features/Testimonials/TestimonialsSectionWrapper"), { ssr: false });
+const LazyFAQWrapper = dynamic(() => import("@/features/FAQ/FAQWrapper"), { ssr: false });
 
 export default function HomePageClient() {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -32,10 +36,27 @@ export default function HomePageClient() {
   }, []);
 
   const scrollToHome = () => {
-    const home = document.getElementById("home");
-    if (home) {
-      home.scrollIntoView({ behavior: "smooth" });
-    }
+    const start = window.scrollY;
+    const startTime = performance.now();
+    const duration = 1200; // 1.2 seconds for slow-motion effect
+
+    const easeInOutCubic = (t: number) => {
+      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+    };
+
+    const scroll = (timestamp: number) => {
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      const ease = easeInOutCubic(progress);
+      
+      window.scrollTo(0, start * (1 - ease));
+
+      if (progress < 1) {
+        requestAnimationFrame(scroll);
+      }
+    };
+
+    requestAnimationFrame(scroll);
   };
 
   return (
@@ -114,15 +135,24 @@ export default function HomePageClient() {
       </section>
 
       {/* Back to top button */}
-      {showTopBtn && (
-        <button
-          onClick={scrollToHome}
-          className="fixed bottom-6 right-6 z-50 rounded-full bg-primary p-3 text-white shadow-lg hover:bg-primary/90 transition"
-          aria-label="Back to top"
-        >
-          ↑
-        </button>
-      )}
+      <AnimatePresence>
+        {showTopBtn && (
+          <motion.button
+            key="back-to-top"
+            onClick={scrollToHome}
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            whileHover={{ scale: 1.1, y: -4 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="fixed bottom-8 right-8 z-50 rounded-2xl bg-blue-600 hover:bg-blue-500 p-4 text-white shadow-2xl shadow-blue-500/20 flex items-center justify-center cursor-pointer transition-all border border-blue-500/30"
+            aria-label="Back to top"
+          >
+            <ArrowUp size={18} className="stroke-[2.5]" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </PublicLayout>
   );
 }

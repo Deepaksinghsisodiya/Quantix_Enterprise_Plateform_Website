@@ -95,12 +95,12 @@ export const ROICalculator: React.FC = () => {
   };
 
   return (
-    <div className="space-y-12 max-w-4xl mx-auto py-12">
+    <div className="space-y-12 max-w-4xl mx-auto py-12 px-4 sm:px-0">
       {/* Configuration Form Card */}
-      <div className="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-8 sm:p-10 backdrop-blur-md relative overflow-hidden">
+      <div className="rounded-3xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/40 p-8 sm:p-10 backdrop-blur-md relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
         
-        <div className="flex items-center gap-3 text-white mb-8 border-b border-slate-800/60 pb-4">
+        <div className="flex items-center gap-3 text-slate-900 dark:text-white mb-8 border-b border-gray-200 dark:border-slate-800/60 pb-4">
           <Calculator className="text-blue-500" />
           <h3 className="text-lg font-syne font-bold uppercase tracking-tight">Your Business Profile</h3>
         </div>
@@ -109,7 +109,7 @@ export const ROICalculator: React.FC = () => {
           {/* Business Type Selector */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Business Type</label>
+              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Business Type</label>
               <div className="grid grid-cols-2 gap-2">
                 {(['restaurant', 'retail'] as BusinessType[]).map((type) => (
                   <button
@@ -119,7 +119,7 @@ export const ROICalculator: React.FC = () => {
                     className={`rounded-xl py-3 text-xs font-bold capitalize transition-all cursor-pointer border ${
                       inputs.businessType === type
                         ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-600/20'
-                        : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200'
+                        : 'bg-gray-200 dark:bg-slate-950/60 border-gray-350 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-gray-300 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-200'
                     }`}
                   >
                     {type}
@@ -130,7 +130,7 @@ export const ROICalculator: React.FC = () => {
 
             {/* Current Setup System */}
             <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Current POS setup</label>
+              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Current POS setup</label>
               <div className="grid grid-cols-3 gap-2">
                 {(['manual', 'competitor', 'none'] as CurrentSystem[]).map((sys) => (
                   <button
@@ -140,7 +140,7 @@ export const ROICalculator: React.FC = () => {
                     className={`rounded-xl py-3 text-[10px] font-bold capitalize transition-all cursor-pointer border ${
                       inputs.currentSystem === sys
                         ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-600/20'
-                        : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200'
+                        : 'bg-gray-200 dark:bg-slate-950/60 border-gray-350 dark:border-slate-800 text-slate-650 dark:text-slate-400 hover:bg-gray-300 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-200'
                     }`}
                   >
                     {sys === 'competitor' ? 'Other POS' : sys}
@@ -153,9 +153,9 @@ export const ROICalculator: React.FC = () => {
           {/* Location / Volume Sliders */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
             <div className="space-y-2">
-              <div className="flex justify-between text-xs font-semibold text-slate-400">
+              <div className="flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
                 <span>Locations</span>
-                <span className="text-white font-mono font-bold">{inputs.locations}</span>
+                <span className="text-slate-900 dark:text-white font-mono font-bold">{inputs.locations}</span>
               </div>
               <input
                 type="range"
@@ -163,14 +163,14 @@ export const ROICalculator: React.FC = () => {
                 max={50}
                 value={inputs.locations}
                 onChange={(e) => updateInput('locations', Number(e.target.value))}
-                className="w-full accent-blue-500 cursor-pointer h-1.5 bg-slate-950 rounded-lg appearance-none"
+                className="w-full accent-blue-500 cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
               />
             </div>
 
             <div className="space-y-2">
-              <div className="flex justify-between text-xs font-semibold text-slate-400">
+              <div className="flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
                 <span>Daily Transactions</span>
-                <span className="text-white font-mono font-bold">{inputs.dailyTransactions}</span>
+                <span className="text-slate-900 dark:text-white font-mono font-bold">{inputs.dailyTransactions}</span>
               </div>
               <input
                 type="range"
@@ -179,14 +179,14 @@ export const ROICalculator: React.FC = () => {
                 step={10}
                 value={inputs.dailyTransactions}
                 onChange={(e) => updateInput('dailyTransactions', Number(e.target.value))}
-                className="w-full accent-blue-500 cursor-pointer h-1.5 bg-slate-950 rounded-lg appearance-none"
+                className="w-full accent-blue-500 cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
               />
             </div>
 
             <div className="space-y-2">
-              <div className="flex justify-between text-xs font-semibold text-slate-400">
+              <div className="flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
                 <span>Employees count</span>
-                <span className="text-white font-mono font-bold">{inputs.employees}</span>
+                <span className="text-slate-900 dark:text-white font-mono font-bold">{inputs.employees}</span>
               </div>
               <input
                 type="range"
@@ -194,13 +194,13 @@ export const ROICalculator: React.FC = () => {
                 max={100}
                 value={inputs.employees}
                 onChange={(e) => updateInput('employees', Number(e.target.value))}
-                className="w-full accent-blue-500 cursor-pointer h-1.5 bg-slate-950 rounded-lg appearance-none"
+                className="w-full accent-blue-500 cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
               />
             </div>
           </div>
 
           {/* Action triggers */}
-          <div className="flex gap-3 pt-6 border-t border-slate-800/60 mt-6">
+          <div className="flex gap-3 pt-6 border-t border-gray-250 dark:border-slate-800/60 mt-6">
             <button
               onClick={() => setShowResults(true)}
               className="rounded-xl bg-blue-600 hover:bg-blue-500 py-3.5 px-8 text-xs font-bold text-white transition-all cursor-pointer shadow-lg shadow-blue-600/20"
@@ -209,7 +209,7 @@ export const ROICalculator: React.FC = () => {
             </button>
             <button
               onClick={reset}
-              className="rounded-xl border border-slate-800 hover:bg-slate-900 py-3.5 px-6 text-xs font-bold text-slate-400 transition-all cursor-pointer flex items-center gap-1.5"
+              className="rounded-xl border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 py-3.5 px-6 text-xs font-bold text-slate-600 dark:text-slate-400 transition-all cursor-pointer flex items-center gap-1.5"
             >
               <RotateCcw size={13} /> Reset
             </button>
@@ -228,42 +228,42 @@ export const ROICalculator: React.FC = () => {
           >
             {/* KPI Cards Row */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-slate-900/20 border border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
-                <div className="h-8 w-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto">
+              <div className="bg-gray-50/50 dark:bg-slate-900/20 border border-gray-200 dark:border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
+                <div className="h-8 w-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
                   <DollarSign size={16} />
                 </div>
-                <div className="text-xl sm:text-2xl font-mono font-black text-white">${results.monthlySavings.toLocaleString()}</div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Monthly Savings</div>
+                <div className="text-xl sm:text-2xl font-mono font-black text-slate-900 dark:text-white">${results.monthlySavings.toLocaleString()}</div>
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-500">Monthly Savings</div>
               </div>
 
-              <div className="bg-slate-900/20 border border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
-                <div className="h-8 w-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center mx-auto">
+              <div className="bg-gray-50/50 dark:bg-slate-900/20 border border-gray-200 dark:border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
+                <div className="h-8 w-8 rounded-lg bg-blue-500/10 text-blue-500 dark:text-blue-400 flex items-center justify-center mx-auto">
                   <Clock size={16} />
                 </div>
-                <div className="text-xl sm:text-2xl font-mono font-black text-white">{results.timeSavedPerWeek} hrs</div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Time Saved / Wk</div>
+                <div className="text-xl sm:text-2xl font-mono font-black text-slate-900 dark:text-white">{results.timeSavedPerWeek} hrs</div>
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-500">Time Saved / Wk</div>
               </div>
 
-              <div className="bg-slate-900/20 border border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
-                <div className="h-8 w-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center mx-auto">
+              <div className="bg-gray-50/50 dark:bg-slate-900/20 border border-gray-200 dark:border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
+                <div className="h-8 w-8 rounded-lg bg-purple-500/10 text-purple-500 dark:text-purple-400 flex items-center justify-center mx-auto">
                   <TrendingUp size={16} />
                 </div>
-                <div className="text-xl sm:text-2xl font-mono font-black text-white">{results.roiPercentage}%</div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Projected ROI</div>
+                <div className="text-xl sm:text-2xl font-mono font-black text-slate-900 dark:text-white">{results.roiPercentage}%</div>
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-500">Projected ROI</div>
               </div>
 
-              <div className="bg-slate-900/20 border border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
-                <div className="h-8 w-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto">
+              <div className="bg-gray-50/50 dark:bg-slate-900/20 border border-gray-200 dark:border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
+                <div className="h-8 w-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mx-auto">
                   <Calendar size={16} />
                 </div>
-                <div className="text-xl sm:text-2xl font-mono font-black text-white">{results.paybackDays} days</div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Payback Period</div>
+                <div className="text-xl sm:text-2xl font-mono font-black text-slate-900 dark:text-white">{results.paybackDays} days</div>
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-500">Payback Period</div>
               </div>
             </div>
 
             {/* Visual breakdown progress metrics */}
-            <div className="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-8 backdrop-blur-md space-y-6">
-              <h4 className="text-xs font-syne font-bold uppercase text-slate-400 tracking-wider">Estimated Savings Breakdown</h4>
+            <div className="rounded-3xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/40 p-8 backdrop-blur-md space-y-6">
+              <h4 className="text-xs font-syne font-bold uppercase text-slate-500 dark:text-slate-400 tracking-wider">Estimated Savings Breakdown</h4>
               
               <div className="space-y-4">
                 {[
@@ -273,10 +273,10 @@ export const ROICalculator: React.FC = () => {
                 ].map((item, idx) => (
                   <div key={idx} className="space-y-1">
                     <div className="flex justify-between text-xs font-semibold">
-                      <span className="text-slate-400">{item.label}</span>
-                      <span className="text-white font-mono">${item.value.toLocaleString()}/mo ({item.pct}%)</span>
+                      <span className="text-slate-500 dark:text-slate-400">{item.label}</span>
+                      <span className="text-slate-900 dark:text-white font-mono">${item.value.toLocaleString()}/mo ({item.pct}%)</span>
                     </div>
-                    <div className="h-2.5 w-full bg-slate-950 rounded-full overflow-hidden">
+                    <div className="h-2.5 w-full bg-gray-200 dark:bg-slate-950 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${item.pct}%` }}
@@ -288,13 +288,13 @@ export const ROICalculator: React.FC = () => {
               </div>
 
               {/* Secure verification footers */}
-              <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="pt-6 border-t border-gray-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase">
                   <ShieldCheck size={14} className="text-emerald-500" /> Based on benchmark average POS rates
                 </div>
                 <button
                   onClick={handleShare}
-                  className="rounded-xl border border-slate-800 hover:bg-slate-900 py-2.5 px-4 text-xs font-bold text-slate-300 transition-all cursor-pointer flex items-center gap-1.5"
+                  className="rounded-xl border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 py-2.5 px-4 text-xs font-bold text-slate-650 dark:text-slate-300 transition-all cursor-pointer flex items-center gap-1.5"
                 >
                   <Share2 size={13} /> {copied ? 'Copied!' : 'Share ROI Results'}
                 </button>
