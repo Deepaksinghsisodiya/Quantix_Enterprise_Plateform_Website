@@ -74,27 +74,27 @@ export default function ResourcesPage() {
   return (
     <PublicLayout>
       <Navbar />
-      <main className="pt-24 bg-slate-950 min-h-screen text-white pb-16">
+      <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
         <div className="site-container text-center mb-16 space-y-6 max-w-3xl">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-400 shadow-sm">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-500 dark:text-blue-400 shadow-sm">
             RESOURCE LIBRARY
           </div>
-          <h1 className="text-3xl sm:text-5xl font-syne font-black tracking-tight uppercase leading-tight">
+          <h1 className="text-3xl sm:text-5xl font-syne font-black tracking-tight uppercase leading-tight text-slate-900 dark:text-white">
             Knowledge Content Hub
           </h1>
-          <p className="max-w-xl mx-auto text-xs sm:text-sm text-slate-400 font-medium leading-relaxed">
+          <p className="max-w-xl mx-auto text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
             Download our curated ebooks, restaurant checklists, and enterprise POS guides to optimize checkout efficiency.
           </p>
 
           {/* Search bar */}
           <div className="relative max-w-lg mx-auto">
-            <Search className="absolute left-4 top-3.5 h-4 w-4 text-slate-500" />
+            <Search className="absolute left-4 top-3.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
             <input
               type="text"
               placeholder="Search library assets..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-xl border border-slate-800 bg-slate-900/40 py-3.5 pl-11 pr-4 text-xs text-white placeholder-slate-600 focus:border-blue-500 focus:outline-none"
+              className="w-full rounded-xl border border-gray-250 dark:border-slate-800 bg-gray-50 dark:bg-slate-900/40 py-3.5 pl-11 pr-4 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:border-blue-500 focus:outline-none"
             />
           </div>
         </div>
@@ -104,9 +104,8 @@ export default function ResourcesPage() {
           <div className="flex flex-wrap justify-center gap-2">
             <button
               onClick={() => setActiveType(null)}
-              className={`rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all border cursor-pointer ${
-                !activeType ? 'bg-blue-600 border-blue-500 text-white' : 'bg-slate-900/40 border-slate-800 text-slate-400 hover:border-slate-700'
-              }`}
+              className={`rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all border cursor-pointer ${!activeType ? 'bg-blue-600 border-blue-500 text-white' : 'bg-gray-100 dark:bg-slate-900/40 border-gray-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-gray-300 dark:hover:border-slate-700'
+                }`}
             >
               All Types
             </button>
@@ -114,9 +113,8 @@ export default function ResourcesPage() {
               <button
                 key={type}
                 onClick={() => setActiveType(activeType === type ? null : type)}
-                className={`rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all border cursor-pointer ${
-                  activeType === type ? 'bg-blue-600 border-blue-500 text-white' : 'bg-slate-900/40 border-slate-800 text-slate-400 hover:border-slate-700'
-                }`}
+                className={`rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all border cursor-pointer ${activeType === type ? 'bg-blue-600 border-blue-500 text-white' : 'bg-gray-100 dark:bg-slate-900/40 border-gray-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-gray-300 dark:hover:border-slate-700'
+                  }`}
               >
                 {RESOURCE_TYPE_LABELS[type] ?? type}
               </button>
@@ -128,9 +126,8 @@ export default function ResourcesPage() {
               <button
                 key={topic}
                 onClick={() => setActiveTopic(activeTopic === topic ? null : topic)}
-                className={`rounded-full px-3.5 py-1 text-[9px] font-bold uppercase tracking-wider transition-all border cursor-pointer ${
-                  activeTopic === topic ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-slate-900/20 border-slate-800/40 text-slate-500 hover:border-slate-800'
-                }`}
+                className={`rounded-full px-3.5 py-1 text-[9px] font-bold uppercase tracking-wider transition-all border cursor-pointer ${activeTopic === topic ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-gray-50 dark:bg-slate-900/20 border-gray-200 dark:border-slate-800/40 text-slate-400 dark:text-slate-500 hover:border-gray-300 dark:hover:border-slate-800'
+                  }`}
               >
                 {TOPIC_LABELS[topic] ?? topic}
               </button>
@@ -149,29 +146,29 @@ export default function ResourcesPage() {
                 return (
                   <div
                     key={resource.id}
-                    className="rounded-3xl border border-slate-800/80 bg-slate-900/20 p-5 backdrop-blur-md relative overflow-hidden flex flex-col justify-between hover:border-blue-500/30 transition-all group"
+                    className="rounded-3xl border border-gray-200 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/20 p-5 backdrop-blur-md relative overflow-hidden flex flex-col justify-between hover:border-blue-500/30 transition-all group"
                   >
                     <div className="space-y-4">
                       {/* Badge / Category */}
                       <div className="flex items-center gap-2">
-                        <span className="rounded bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-blue-400">
+                        <span className="rounded bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-blue-500 dark:text-blue-400">
                           {RESOURCE_TYPE_LABELS[resource.type] ?? resource.type}
                         </span>
-                        <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">
+                        <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                           {TOPIC_LABELS[resource.topic] ?? resource.topic}
                         </span>
                       </div>
 
                       {/* Header */}
-                      <h3 className="text-sm font-syne font-bold uppercase tracking-tight text-white group-hover:text-blue-400 transition-colors">
+                      <h3 className="text-sm font-syne font-bold uppercase tracking-tight text-slate-900 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
                         {resource.title}
                       </h3>
-                      <p className="text-xs text-slate-400 leading-relaxed font-medium">
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
                         {resource.description}
                       </p>
                     </div>
 
-                    <div className="mt-8 border-t border-slate-800/60 pt-4">
+                    <div className="mt-8 border-t border-gray-150 dark:border-slate-800/60 pt-4">
                       {isGated ? (
                         unlockingId === resource.id ? (
                           <div className="flex gap-2">
@@ -180,7 +177,7 @@ export default function ResourcesPage() {
                               value={gateEmail}
                               onChange={(e) => setGateEmail(e.target.value)}
                               placeholder="Enter your email to unlock..."
-                              className="flex-1 rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-[10px] text-white focus:border-blue-500 focus:outline-none"
+                              className="flex-1 rounded-lg border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 py-2 text-[10px] text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                             />
                             <button
                               onClick={() => handleUnlockResource(resource.id)}
@@ -190,7 +187,7 @@ export default function ResourcesPage() {
                             </button>
                             <button
                               onClick={() => { setUnlockingId(null); setGateEmail(''); }}
-                              className="rounded-lg border border-slate-850 p-2 text-slate-500 hover:bg-slate-900 cursor-pointer"
+                              className="rounded-lg border border-gray-200 dark:border-slate-850 p-2 text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-900 cursor-pointer"
                             >
                               <X size={12} />
                             </button>
@@ -198,7 +195,7 @@ export default function ResourcesPage() {
                         ) : (
                           <button
                             onClick={() => setUnlockingId(resource.id)}
-                            className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300 transition-all cursor-pointer"
+                            className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-500 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300 transition-all cursor-pointer"
                           >
                             <Lock size={13} />
                             Unlock via business email
@@ -208,7 +205,7 @@ export default function ResourcesPage() {
                         <a
                           href={resource.downloadUrl}
                           download
-                          className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 hover:text-blue-300 transition-all cursor-pointer"
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 transition-all cursor-pointer"
                         >
                           <Download size={13} />
                           Download Resource

@@ -403,17 +403,17 @@ export default function ProductTourPage() {
   return (
     <PublicLayout>
       <Navbar />
-      <main className="pt-24 bg-slate-950 min-h-screen text-white pb-16">
+      <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
         {/* Intro view */}
         {phase === 'intro' && (
           <div className="site-container max-w-lg text-center py-20 space-y-6">
-            <div className="mx-auto h-16 w-16 rounded-3xl bg-blue-500/10 text-blue-400 flex items-center justify-center border border-blue-500/20 shadow-md">
-              <Play size={24} className="fill-blue-400" />
+            <div className="mx-auto h-16 w-16 rounded-3xl bg-blue-500/10 text-blue-500 dark:text-blue-400 flex items-center justify-center border border-blue-500/20 shadow-md">
+              <Play size={24} className="fill-blue-500 dark:fill-blue-400" />
             </div>
-            <h1 className="text-3xl sm:text-5xl font-syne font-black uppercase tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-5xl font-syne font-black uppercase tracking-tight leading-tight text-slate-900 dark:text-white">
               POS Product Tour
             </h1>
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
               Explore the entire POS transaction workflow with our live, interactive virtual iPad terminal. No details missed.
             </p>
             <button
@@ -431,53 +431,53 @@ export default function ProductTourPage() {
             {/* Left Column: Metadata + Actions */}
             <div className="lg:col-span-4 space-y-6">
               <div className="space-y-3">
-                <div className="inline-flex items-center gap-1 rounded bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-blue-400">
+                <div className="inline-flex items-center gap-1 rounded bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-blue-500 dark:text-blue-400">
                   {current.icon} {current.category}
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-syne font-black uppercase tracking-tight text-white leading-tight">
+                <h2 className="text-2xl sm:text-3xl font-syne font-black uppercase tracking-tight text-slate-900 dark:text-white leading-tight">
                   {current.title}
                 </h2>
-                <p className="text-xs text-slate-400 leading-relaxed font-medium">
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                   {current.description}
                 </p>
               </div>
 
               {/* Progress and indicators */}
-              <div className="bg-slate-900/20 border border-slate-850 p-4 rounded-2xl space-y-3">
-                <div className="flex justify-between items-center text-[10px] text-slate-500 font-bold uppercase">
+              <div className="bg-gray-50 dark:bg-slate-900/20 border border-gray-200 dark:border-slate-850 p-4 rounded-2xl space-y-3">
+                <div className="flex justify-between items-center text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">
                   <span>Progress bar</span>
                   <span>{currentStep + 1} of {steps.length}</span>
                 </div>
-                <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                <div className="w-full h-1.5 bg-gray-200 dark:bg-slate-900 rounded-full overflow-hidden">
                   <div className="h-full bg-blue-500 transition-all duration-300" style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }} />
                 </div>
               </div>
 
               {/* Hotspot details trigger */}
               <div className="space-y-2">
-                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Terminal Hotspot Zones:</span>
+                <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Terminal Hotspot Zones:</span>
                 <div className="space-y-2">
                   {current.hotspots.map((hot, idx) => (
                     <button
                       key={idx}
                       onClick={() => setActiveHotspot(activeHotspot === idx ? null : idx)}
                       className={`w-full text-left p-3.5 rounded-xl border text-xs font-semibold uppercase transition-all cursor-pointer flex justify-between items-center ${
-                        activeHotspot === idx ? 'bg-blue-600/10 border-blue-500 text-blue-400' : 'bg-slate-900/10 border-slate-850 text-slate-400 hover:border-slate-800'
+                        activeHotspot === idx ? 'bg-blue-600/10 border-blue-500 text-blue-500 dark:text-blue-400' : 'bg-gray-50 dark:bg-slate-900/10 border-gray-200 dark:border-slate-850 text-slate-500 dark:text-slate-400 hover:border-gray-300 dark:hover:border-slate-800'
                       }`}
                     >
                       <span>{hot.label.split(' — ')[0]}</span>
-                      <span className="text-[10px] text-slate-500">➔</span>
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500">➔</span>
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Control Buttons */}
-              <div className="flex gap-3 pt-4 border-t border-slate-850/60">
+              <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-slate-850/60">
                 <button
                   onClick={handlePrevStep}
                   disabled={currentStep === 0}
-                  className="flex-1 border border-slate-800 hover:bg-slate-900/60 text-slate-400 hover:text-white font-bold text-xs py-3.5 rounded-full uppercase tracking-wider transition-all disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                  className="flex-1 border border-gray-300 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-900/60 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-white font-bold text-xs py-3.5 rounded-full uppercase tracking-wider transition-all disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
                 >
                   Previous
                 </button>
@@ -492,7 +492,7 @@ export default function ProductTourPage() {
 
             {/* Right Column: Virtual POS Terminal Mockup */}
             <div className="lg:col-span-8">
-              <div className="relative rounded-[32px] border-8 border-slate-800 bg-slate-950 aspect-[4/3] w-full shadow-2xl shadow-blue-500/5 overflow-hidden flex flex-col justify-between">
+              <div className="relative rounded-[32px] border-8 border-gray-300 dark:border-slate-800 bg-slate-950 aspect-[4/3] w-full shadow-2xl shadow-blue-500/5 overflow-hidden flex flex-col justify-between">
                 {/* Simulated iPad Screen Content */}
                 <div className="absolute inset-0 bg-slate-950 text-slate-100 font-sans select-none">
                   {current.previewComponent(null, null)}
@@ -523,7 +523,7 @@ export default function ProductTourPage() {
                           initial={{ opacity: 0, y: 10, scale: 0.95 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                          className="absolute bottom-8 left-1/2 -translate-x-1/2 w-48 rounded-xl border border-slate-800 bg-slate-950/95 p-3 text-[10px] leading-relaxed text-slate-300 shadow-xl backdrop-blur-md z-50 text-center"
+                          className="absolute bottom-8 left-1/2 -translate-x-1/2 w-48 rounded-xl border border-gray-250 dark:border-slate-800 bg-white dark:bg-slate-950/95 p-3 text-[10px] leading-relaxed text-slate-700 dark:text-slate-300 shadow-xl backdrop-blur-md z-50 text-center"
                         >
                           {hotspot.label}
                         </motion.div>
@@ -539,13 +539,13 @@ export default function ProductTourPage() {
         {/* Tour Completed View */}
         {phase === 'complete' && (
           <div className="site-container max-w-lg text-center py-20 space-y-6">
-            <div className="mx-auto h-16 w-16 rounded-3xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20 shadow-md">
+            <div className="mx-auto h-16 w-16 rounded-3xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/20 shadow-md">
               <CheckCircle2 size={24} className="animate-bounce" />
             </div>
-            <h1 className="text-3xl sm:text-5xl font-syne font-black uppercase tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-5xl font-syne font-black uppercase tracking-tight leading-tight text-slate-900 dark:text-white">
               Tour Completed!
             </h1>
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
               You have experienced the full transaction loop. Ready to launch with your own store inventory?
             </p>
             <div className="flex flex-col gap-3 max-w-xs mx-auto">
@@ -556,7 +556,7 @@ export default function ProductTourPage() {
               </Link>
               <button
                 onClick={() => setPhase('intro')}
-                className="w-full border border-slate-800 hover:bg-slate-900/60 text-slate-400 hover:text-white font-bold text-xs py-4 rounded-full transition-all cursor-pointer uppercase tracking-wider"
+                className="w-full border border-gray-300 dark:border-slate-850 hover:bg-gray-100 dark:hover:bg-slate-900/60 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-white font-bold text-xs py-4 rounded-full transition-all cursor-pointer uppercase tracking-wider"
               >
                 Restart Product Tour
               </button>

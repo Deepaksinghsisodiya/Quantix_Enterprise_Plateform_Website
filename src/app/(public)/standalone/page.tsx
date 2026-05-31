@@ -37,16 +37,16 @@ export default function StandalonePOSPage() {
   return (
     <PublicLayout>
       <Navbar />
-      <main className="pt-24 bg-slate-950 min-h-screen text-white pb-16">
+      <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
         {/* Hero Section with HSL tokens */}
         <div className="site-container text-center mb-16 space-y-6 max-w-3xl">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-cyan-400 shadow-sm">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 shadow-sm">
             STANDALONE OFFLINE POS
           </div>
-          <h1 className="text-3xl sm:text-5xl font-syne font-black tracking-tight uppercase leading-tight">
-            Full POS Power, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Zero Subscriptions</span>
+          <h1 className="text-3xl sm:text-5xl font-syne font-black tracking-tight uppercase leading-tight text-slate-900 dark:text-white">
+            Full POS Power, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500 dark:from-cyan-400 dark:to-blue-500">Zero Subscriptions</span>
           </h1>
-          <p className="max-w-xl mx-auto text-xs sm:text-sm text-slate-400 font-medium leading-relaxed">
+          <p className="max-w-xl mx-auto text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
             Quantix Standalone runs 100% offline with perpetual validation tokens. No internet requirements, no recurring monthly fees.
           </p>
           <div className="flex justify-center gap-3">
@@ -56,7 +56,7 @@ export default function StandalonePOSPage() {
               </button>
             </Link>
             <Link href="/enterprise-vs-standalone">
-              <button className="border border-slate-800 hover:bg-slate-900/55 text-white font-bold text-xs px-6 py-3.5 rounded-full transition-all cursor-pointer">
+              <button className="border border-gray-300 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-900/55 text-slate-700 dark:text-white font-bold text-xs px-6 py-3.5 rounded-full transition-all cursor-pointer">
                 Compare Deployments
               </button>
             </Link>
@@ -65,15 +65,15 @@ export default function StandalonePOSPage() {
 
         {/* How Offline Works Grid */}
         <div className="site-container max-w-5xl mb-24">
-          <h2 className="text-xl sm:text-2xl font-syne font-black uppercase text-center tracking-tight text-white mb-12">How it works</h2>
+          <h2 className="text-xl sm:text-2xl font-syne font-black uppercase text-center tracking-tight text-slate-900 dark:text-white mb-12">How it works</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {STEPS.map((s) => (
-              <div key={s.step} className="bg-slate-900/20 border border-slate-850 p-6 rounded-2xl space-y-3 relative hover:border-cyan-500/20 transition-all">
-                <div className="h-10 w-10 rounded-full bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20 text-xs font-bold font-syne">
+              <div key={s.step} className="bg-gray-50 dark:bg-slate-900/20 border border-gray-200 dark:border-slate-850 p-6 rounded-2xl space-y-3 relative hover:border-cyan-500/20 transition-all">
+                <div className="h-10 w-10 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center border border-cyan-500/20 text-xs font-bold font-syne">
                   {s.step}
                 </div>
-                <h3 className="text-xs font-bold text-white uppercase font-syne">{s.title}</h3>
-                <p className="text-[10px] text-slate-500 leading-normal font-medium">{s.description}</p>
+                <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase font-syne">{s.title}</h3>
+                <p className="text-[10px] text-slate-500 dark:text-slate-500 leading-normal font-medium">{s.description}</p>
               </div>
             ))}
           </div>
@@ -81,26 +81,26 @@ export default function StandalonePOSPage() {
 
         {/* Token Pricing Tiers */}
         <div className="site-container max-w-5xl mb-24">
-          <h2 className="text-xl sm:text-2xl font-syne font-black uppercase text-center tracking-tight text-white mb-12">Token Validity Tiers</h2>
-          <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/10 backdrop-blur-md">
+          <h2 className="text-xl sm:text-2xl font-syne font-black uppercase text-center tracking-tight text-slate-900 dark:text-white mb-12">Token Validity Tiers</h2>
+          <div className="overflow-x-auto rounded-2xl border border-gray-200 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/10 backdrop-blur-md">
             <table className="w-full border-collapse text-left">
               <thead>
-                <tr className="border-b border-slate-850 bg-slate-900/20">
-                  <th className="p-5 text-[10px] font-bold uppercase tracking-wider text-slate-400">Tier Name</th>
-                  <th className="p-5 text-[10px] font-bold uppercase tracking-wider text-slate-400">Description</th>
-                  <th className="p-5 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-right">From (30 Days)</th>
-                  <th className="p-5 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-right">365 Days Value</th>
-                  <th className="p-5 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-center">Included Scope</th>
+                <tr className="border-b border-gray-200 dark:border-slate-850 bg-gray-100 dark:bg-slate-900/20">
+                  <th className="p-5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Tier Name</th>
+                  <th className="p-5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Description</th>
+                  <th className="p-5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 text-right">From (30 Days)</th>
+                  <th className="p-5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 text-right">365 Days Value</th>
+                  <th className="p-5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 text-center">Included Scope</th>
                 </tr>
               </thead>
               <tbody>
                 {TOKEN_TIERS.map((tier, idx) => (
-                  <tr key={idx} className="border-b border-slate-850/60 hover:bg-slate-900/10 transition-colors">
-                    <td className="p-5 text-xs font-bold uppercase text-white font-syne">{tier.name}</td>
-                    <td className="p-5 text-xs text-slate-400 font-medium">{tier.desc}</td>
-                    <td className="p-5 text-xs font-bold text-white text-right">${tier.min}</td>
-                    <td className="p-5 text-xs font-bold text-cyan-400 text-right">${tier.best}</td>
-                    <td className="p-5 text-xs text-slate-500 text-center font-semibold">{tier.features}</td>
+                  <tr key={idx} className="border-b border-gray-150 dark:border-slate-850/60 hover:bg-gray-100/50 dark:hover:bg-slate-900/10 transition-colors">
+                    <td className="p-5 text-xs font-bold uppercase text-slate-900 dark:text-white font-syne">{tier.name}</td>
+                    <td className="p-5 text-xs text-slate-600 dark:text-slate-400 font-medium">{tier.desc}</td>
+                    <td className="p-5 text-xs font-bold text-slate-900 dark:text-white text-right">${tier.min}</td>
+                    <td className="p-5 text-xs font-bold text-cyan-600 dark:text-cyan-400 text-right">${tier.best}</td>
+                    <td className="p-5 text-xs text-slate-400 dark:text-slate-500 text-center font-semibold">{tier.features}</td>
                   </tr>
                 ))}
               </tbody>
@@ -110,12 +110,12 @@ export default function StandalonePOSPage() {
 
         {/* Full Offline Checklist */}
         <div className="site-container max-w-4xl mb-24">
-          <h2 className="text-xl sm:text-2xl font-syne font-black uppercase text-center tracking-tight text-white mb-12">100% Offline Capability</h2>
+          <h2 className="text-xl sm:text-2xl font-syne font-black uppercase text-center tracking-tight text-slate-900 dark:text-white mb-12">100% Offline Capability</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {OFFLINE_FEATURES.map((feat, idx) => (
-              <div key={idx} className="flex items-center gap-3 rounded-2xl border border-slate-850 bg-slate-900/10 p-4">
-                <WifiOff size={16} className="text-cyan-400 shrink-0" />
-                <span className="text-xs text-slate-300 font-semibold">{feat}</span>
+              <div key={idx} className="flex items-center gap-3 rounded-2xl border border-gray-200 dark:border-slate-850 bg-gray-50/50 dark:bg-slate-900/10 p-4">
+                <WifiOff size={16} className="text-cyan-600 dark:text-cyan-400 shrink-0" />
+                <span className="text-xs text-slate-700 dark:text-slate-300 font-semibold">{feat}</span>
               </div>
             ))}
           </div>
@@ -123,30 +123,30 @@ export default function StandalonePOSPage() {
 
         {/* Recharge & Renewal FAQs */}
         <div className="site-container max-w-3xl mb-24 space-y-4">
-          <h2 className="text-xl sm:text-2xl font-syne font-black uppercase text-center tracking-tight text-white mb-8">Recharge & Validity FAQs</h2>
+          <h2 className="text-xl sm:text-2xl font-syne font-black uppercase text-center tracking-tight text-slate-900 dark:text-white mb-8">Recharge & Validity FAQs</h2>
           {[
             { q: 'What happens when my license token validity expires?', a: 'Your offline standalone client enters a 7-day grace period (read-only mode), enabling you to export past invoice logs or run audits. After 7 days, a valid recharge token is required.' },
             { q: 'How do I renew or purchase another token?', a: 'Simply log into your web dashboard, choose your desired offline token tier, and complete checkout. Your active token is issued instantly to enter inside your local client.' },
             { q: 'Can I migrate my offline SQLite data to Enterprise Cloud?', a: 'Yes! You can easily upgrade your setup. Quantix technical support will securely sync your local databases directly to our SQL cloud instances.' }
           ].map((faq, idx) => (
-            <div key={idx} className="p-5 border border-slate-850 bg-slate-900/10 rounded-2xl space-y-2">
-              <h3 className="text-xs font-bold uppercase text-white font-syne flex items-center gap-2">
-                <HelpCircle size={14} className="text-cyan-400" /> {faq.q}
+            <div key={idx} className="p-5 border border-gray-200 dark:border-slate-850 bg-gray-50/50 dark:bg-slate-900/10 rounded-2xl space-y-2">
+              <h3 className="text-xs font-bold uppercase text-slate-900 dark:text-white font-syne flex items-center gap-2">
+                <HelpCircle size={14} className="text-cyan-600 dark:text-cyan-400" /> {faq.q}
               </h3>
-              <p className="text-xs text-slate-400 leading-relaxed font-medium pl-6">{faq.a}</p>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium pl-6">{faq.a}</p>
             </div>
           ))}
         </div>
 
         {/* Video Tutorial Walkthrough */}
         <div className="site-container max-w-4xl">
-          <h2 className="text-xl sm:text-2xl font-syne font-black uppercase text-center tracking-tight text-white mb-8">Guided Token Setup</h2>
-          <div className="rounded-3xl border border-slate-800 bg-slate-900/20 overflow-hidden relative group">
-            <div className="aspect-video bg-slate-950/80 flex flex-col items-center justify-center space-y-4 p-6 border-b border-slate-850">
-              <div className="h-16 w-16 rounded-full bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20 shadow-lg cursor-pointer hover:scale-105 transition-all">
+          <h2 className="text-xl sm:text-2xl font-syne font-black uppercase text-center tracking-tight text-slate-900 dark:text-white mb-8">Guided Token Setup</h2>
+          <div className="rounded-3xl border border-gray-250 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/20 overflow-hidden relative group">
+            <div className="aspect-video bg-gray-100 dark:bg-slate-950/80 flex flex-col items-center justify-center space-y-4 p-6 border-b border-gray-200 dark:border-slate-850">
+              <div className="h-16 w-16 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center border border-cyan-500/20 shadow-lg cursor-pointer hover:scale-105 transition-all">
                 <Video size={24} />
               </div>
-              <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Watch Standalone POS Setup Tutorial (5 Mins)</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Watch Standalone POS Setup Tutorial (5 Mins)</p>
             </div>
           </div>
         </div>
