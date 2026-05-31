@@ -277,8 +277,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
           {/* Footer note */}
           <div className="mt-12 text-center">
             <p className="text-sm text-slate-500 font-medium">
-              All plans include SSL security, automatic backups, and free onboarding support.{' '}
-              <a href="/contact" className="text-blue-600 font-bold hover:underline">Questions? Talk to sales →</a>
+              Not sure which setup is right? Take our <Link href="/quiz" className="text-blue-600 font-bold hover:underline">Plan Finder Quiz →</Link> or calculate your returns with our <Link href="/roi-calculator" className="text-blue-600 font-bold hover:underline">ROI Calculator →</Link>
             </p>
           </div>
         </div>
