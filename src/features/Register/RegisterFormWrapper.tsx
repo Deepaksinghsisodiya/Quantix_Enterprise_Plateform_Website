@@ -41,7 +41,7 @@ export const RegisterFormWrapper: React.FC = () => {
     validationSchema: signUpSchema,
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        await signup({
+        const res = await signup({
           merchantType: "Standalone",
           companyName: values.company,
           contactName: values.name,
@@ -52,8 +52,14 @@ export const RegisterFormWrapper: React.FC = () => {
           billingCycle: "Monthly",
         }).unwrap();
 
-        toast.success("Account registration initiated successfully! Please check your email to verify and set up your password.");
-        router.push("/sign-in");
+        const merchantId = res?.data?.leadId || res?.data?.merchantId || res?.leadId || res?.merchantId;
+
+        toast.success("Account registration initiated successfully! Please verify your email to continue.");
+        if (merchantId) {
+          router.push(`/sign-up/verify?id=${merchantId}`);
+        } else {
+          router.push("/sign-in");
+        }
       } catch (err: any) {
         const message = err?.data?.message || err?.message || "Failed to register. Please check details and try again.";
         toast.error(message);
