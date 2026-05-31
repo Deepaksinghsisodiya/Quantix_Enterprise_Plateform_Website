@@ -3,6 +3,7 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "./providers";
+import { Toaster } from "sonner";
 
 // Font configuration
 const inter = Inter({
@@ -79,7 +80,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className={`${inter.variable} ${jakarta.variable} font-sans antialiased min-h-full flex flex-col bg-gray-50 dark:bg-slate-950 transition-colors duration-300`} suppressHydrationWarning>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <Toaster richColors position="top-right" theme="dark" />
+        </Providers>
       </body>
     </html>
   );

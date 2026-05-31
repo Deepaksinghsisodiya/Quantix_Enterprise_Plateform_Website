@@ -2,7 +2,7 @@
 
 import React from "react";
 import SplitAuthLayout from "@/components/organisms/SplitAuthLayout/SplitAuthLayout";
-import ContactSalesFormWrapper from "@/components/organisms/ContactSalesSection/ContactSalesFormWrapper";
+import ContactSalesFormWrapper from "@/features/Contact/ContactSalesFormWrapper";
 
 export default function ContactSalesPage() {
   return (

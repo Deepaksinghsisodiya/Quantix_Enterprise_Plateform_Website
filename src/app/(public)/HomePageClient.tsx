@@ -5,23 +5,20 @@ import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import HeroSection from "@/components/organisms/HeroSection/HeroSection";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 import { PlatformDemoSection } from "@/components/organisms/PlatformDemoSection/PlatformDemoSection";
-import { FeaturesSection } from "@/components/organisms/FeaturesSection/FeaturesSection";
 import { HowItWorksSection } from "@/components/organisms/HowItWorksSection/HowItWorksSection";
-import { DemoSection } from "@/components/organisms/DemoSection/DemoSection";
-import { IndustriesSection } from "@/components/organisms/IndustriesSection/IndustriesSection";
-import { TestimonialBanner } from "@/components/organisms/TestimonialBanner/TestimonialBanner";
-import { PricingSection } from "@/components/organisms/PricingSection/PricingSection";
-import { TestimonialsSection } from "@/components/organisms/TestimonialsSection/TestimonialsSection";
-import { FAQSection } from "@/components/organisms/FAQSection/FAQSection";
+import DemoWrapper from "@/features/Demo/DemoWrapper";
+import IndustriesSectionWrapper from "@/features/Industries/IndustriesSectionWrapper";
+import TestimonialBannerWrapper from "@/features/Testimonials/TestimonialBannerWrapper";
+import FeaturesWrapper from "@/features/Features/FeaturesWrapper";
 import { CTABanner } from "@/components/organisms/CTABanner/CTABanner";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { ATMLoader } from "@/components/atoms/ATMLoader";
 import { cn } from "@/lib/utils";
 
 // Lazy loaded sections (below the fold)
-const LazyPricingSection = lazy(() => import("@/components/organisms/PricingSection/PricingSection"));
-const LazyTestimonialsSection = lazy(() => import("@/components/organisms/TestimonialsSection/TestimonialsSection"));
-const LazyFAQSection = lazy(() => import("@/components/organisms/FAQSection/FAQSection"));
+const LazyPricingWrapper = lazy(() => import("@/features/Pricing/PricingWrapper"));
+const LazyTestimonialsSection = lazy(() => import("@/features/Testimonials/TestimonialsSectionWrapper"));
+const LazyFAQWrapper = lazy(() => import("@/features/FAQ/FAQWrapper"));
 
 export default function HomePageClient() {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -71,7 +68,7 @@ export default function HomePageClient() {
       </section>
 
       <section id="platform" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
-        <FeaturesSection />
+        <FeaturesWrapper />
       </section>
 
       <section id="how-it-works" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
@@ -79,21 +76,21 @@ export default function HomePageClient() {
       </section>
 
       <section id="resources" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
-        <DemoSection />
+        <DemoWrapper />
       </section>
 
       <section id="services" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
-        <IndustriesSection />
+        <IndustriesSectionWrapper />
       </section>
 
       <section className={cn("scroll-mt-20 bg-gray-900")}>
-        <TestimonialBanner />
+        <TestimonialBannerWrapper />
       </section>
 
       {/* Lazy loaded sections */}
       <section id="pricing" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
-          <LazyPricingSection />
+          <LazyPricingWrapper />
         </Suspense>
       </section>
 
@@ -105,7 +102,7 @@ export default function HomePageClient() {
 
       <section id="faq" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
-          <LazyFAQSection />
+          <LazyFAQWrapper />
         </Suspense>
       </section>
       <section className={cn("scroll-mt-20 bg-slate-900")}>

@@ -6,6 +6,7 @@ import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { Award, Users, Globe, Target, Flame } from "lucide-react";
+import SocialProofStatsWrapper from "@/features/SocialProof/SocialProofStatsWrapper";
 import Link from "next/link";
 
 export default function AboutPage() {
@@ -34,24 +35,7 @@ export default function AboutPage() {
 
         {/* Section 2: Numbers/Statistics Grid */}
         <section className="-mt-10 relative z-20 site-container max-w-5xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-8 rounded-3xl shadow-xl text-center">
-            <div className="space-y-1">
-              <h2 className="text-3xl md:text-4xl font-syne font-black text-primary">$4.2B+</h2>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Processed Annually</p>
-            </div>
-            <div className="space-y-1 border-l border-slate-100 dark:border-slate-800">
-              <h2 className="text-3xl md:text-4xl font-syne font-black text-primary">15,000+</h2>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Active Merchants</p>
-            </div>
-            <div className="space-y-1 border-l border-slate-100 dark:border-slate-800">
-              <h2 className="text-3xl md:text-4xl font-syne font-black text-primary">99.99%</h2>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Terminal Uptime</p>
-            </div>
-            <div className="space-y-1 border-l border-slate-100 dark:border-slate-800">
-              <h2 className="text-3xl md:text-4xl font-syne font-black text-primary">120+</h2>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Team Members</p>
-            </div>
-          </div>
+          <SocialProofStatsWrapper />
         </section>
 
         {/* Section 3: Pillars / Core Values */}

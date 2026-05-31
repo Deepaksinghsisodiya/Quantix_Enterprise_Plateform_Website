@@ -2,7 +2,7 @@
 
 import React from "react";
 import SplitAuthLayout from "@/components/organisms/SplitAuthLayout/SplitAuthLayout";
-import SignInFormWrapper from "@/components/organisms/SignInSection/SignInFormWrapper";
+import LoginFormWrapper from "@/features/Login/LoginFormWrapper";
 
 export default function SignInPage() {
   return (
@@ -12,7 +12,7 @@ export default function SignInPage() {
       coverHeadline="Your business insights, at a glance"
       coverSubtext="Track sales, manage inventory, and grow your revenue — all from one powerful dashboard."
     >
-      <SignInFormWrapper />
+      <LoginFormWrapper />
     </SplitAuthLayout>
   );
 }

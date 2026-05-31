@@ -22,7 +22,7 @@ const baseQueryWithReauth: BaseQueryFn<string | any, unknown, FetchBaseQueryErro
   if (result.error && result.error.status === 401) {
     // Attempt to refresh the access token
     const refreshResult = await baseQuery({
-      url: '/auth/refresh-token',
+      url: '/auth/refresh',
       method: 'POST',
     }, api, extraOptions);
     if (refreshResult.data) {
@@ -50,6 +50,17 @@ export const baseApi = createApi({
     'Testimonials',
     'FAQ',
     'Demo',
+    'SocialProof',
+    'BlogPosts',
+    'BlogCategories',
+    'BlogAuthors',
+    'Industries',
+    'Contact',
+    'Register',
+    'CaseStudies',
+    'Integrations',
+    'Downloads',
+    'HelpCentre',
   ],
   endpoints: (builder) => ({}), // placeholder – add endpoints elsewhere
 });

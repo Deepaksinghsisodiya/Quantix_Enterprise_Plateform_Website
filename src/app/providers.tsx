@@ -1,12 +1,28 @@
 "use client";
 
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "@/redux/store";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import Cookies from "js-cookie";
+import { setCredentials } from "@/redux/slices/authSlice";
+
+function AuthInitializer({ children }: { children: ReactNode }) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = Cookies.get("accessToken");
+    if (token) {
+      dispatch(setCredentials({ token }));
+    }
+  }, [dispatch]);
+
+  return <>{children}</>;
+}
+
 export default function Providers({ children }: { children: ReactNode }) {
   return (
     <Provider store={store}>
-      {children}
+      <AuthInitializer>{children}</AuthInitializer>
     </Provider>
   );
 }

@@ -2,10 +2,16 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Layers } from 'lucide-react';
+import { Layers, LogOut, User } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { useGetMeQuery } from '@/features/Login/Service/LoginService';
+import { logout } from '@/redux/slices/authSlice';
+import Cookies from 'js-cookie';
+import { toast } from 'sonner';
 
 // Nav link definition with description for premium mobile view
 interface NavLink {
@@ -16,8 +22,8 @@ interface NavLink {
 
 const LINKS: NavLink[] = [
   { label: 'FEATURES', href: '/features', desc: 'Smarter retail, restaurant, and cloud POS tools' },
-  { label: 'RESOURCES', href: '/resources', desc: 'Guides, API documentation, and industry insights' },
-  { label: 'SERVICES', href: '/services', desc: 'Enterprise integrations and 24/7 custom support' },
+  { label: 'INTEGRATIONS', href: '/integrations', desc: 'Connect payment terminals, delivery platforms, and tools' },
+  { label: 'DOWNLOADS', href: '/downloads', desc: 'Download register terminals and sync services' },
   { label: 'PRICING', href: '/pricing', desc: 'Flexible plans tailored to your business scale' },
   { label: 'CONTACT SALES', href: '/contact', desc: 'Talk to our retail and billing specialists' },
 ];
@@ -26,6 +32,22 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const token = useSelector((state: RootState) => state.auth.token);
+  const { data: meData } = useGetMeQuery(undefined, { skip: !token });
+
+  const handleLogout = async () => {
+    try {
+      Cookies.remove("accessToken");
+      dispatch(logout());
+      toast.success("Successfully signed out. Have a great day!");
+      router.push("/");
+    } catch (err) {
+      toast.error("Logout failed.");
+    }
+  };
 
 
   // Hide navbar only when scroll reaches the footer area (bottom of page)
@@ -175,23 +197,43 @@ const Navbar = () => {
               })}
             </ul>
 
-            {/* Right side: Ghost Sign In + Blue/Indigo Start Free Trial */}
+            {/* Right side: Auth State check */}
             <div className="hidden md:flex items-center gap-6">
-              <Link
-                href="/sign-in"
-                className={cn(
-                  'text-[13px] font-semibold tracking-[0.08em] uppercase transition-all duration-200 hover:scale-105 active:scale-95',
-                  useWhiteText ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-950'
-                )}
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/sign-up"
-                className="flex items-center justify-center h-9 px-5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:from-blue-700 active:to-indigo-700 text-white font-bold text-[13px] tracking-[0.08em] uppercase transition-all duration-300 hover:scale-[1.06] active:scale-95 shadow-md shadow-indigo-600/10 hover:shadow-lg hover:shadow-indigo-600/30"
-              >
-                Start Free Trial
-              </Link>
+              {token ? (
+                <>
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/5 select-none">
+                    <User size={13} className="text-blue-400" />
+                    <span className="text-[11px] font-bold tracking-[0.08em] uppercase text-slate-200">
+                      {meData?.data?.username || meData?.username || "Admin"}
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center justify-center gap-1.5 h-9 px-4 rounded-lg bg-red-500/10 border border-red-500/20 hover:bg-red-500 text-white font-bold text-[11px] tracking-[0.08em] uppercase transition-all duration-300 hover:scale-[1.04] active:scale-95 cursor-pointer"
+                  >
+                    <LogOut size={13} />
+                    Log Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/sign-in"
+                    className={cn(
+                      'text-[13px] font-semibold tracking-[0.08em] uppercase transition-all duration-200 hover:scale-105 active:scale-95',
+                      useWhiteText ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-950'
+                    )}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="flex items-center justify-center h-9 px-5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:from-blue-700 active:to-indigo-700 text-white font-bold text-[13px] tracking-[0.08em] uppercase transition-all duration-300 hover:scale-[1.06] active:scale-95 shadow-md shadow-indigo-600/10 hover:shadow-lg hover:shadow-indigo-600/30"
+                  >
+                    Start Free Trial
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Morphing Hamburger Menu Trigger for Mobile */}
@@ -274,18 +316,38 @@ const Navbar = () => {
               transition={{ delay: 0.25, duration: 0.4 }}
               className="flex flex-col gap-3 w-full max-w-md mx-auto"
             >
-              <Link
-                href="/sign-in"
-                className="flex items-center justify-center h-11 rounded-xl text-[13px] font-bold uppercase tracking-[0.08em] border border-white/10 text-white bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/sign-up"
-                className="flex items-center justify-center h-11 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:from-blue-700 active:to-indigo-700 text-white font-extrabold text-[13px] uppercase tracking-[0.08em] transition-all duration-200 shadow-lg shadow-blue-600/20"
-              >
-                Start Free Trial
-              </Link>
+              {token ? (
+                <>
+                  <div className="flex items-center gap-2.5 justify-center py-3.5 rounded-xl bg-white/5 border border-white/5 select-none">
+                    <User size={15} className="text-blue-400" />
+                    <span className="text-[13px] font-bold tracking-wider uppercase text-slate-200">
+                      Hi, {meData?.data?.username || meData?.username || "Admin"}
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center justify-center gap-2 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-[13px] uppercase tracking-[0.08em] transition-all duration-200 cursor-pointer shadow-lg shadow-red-600/10"
+                  >
+                    <LogOut size={15} />
+                    Log Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/sign-in"
+                    className="flex items-center justify-center h-11 rounded-xl text-[13px] font-bold uppercase tracking-[0.08em] border border-white/10 text-white bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="flex items-center justify-center h-11 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:from-blue-700 active:to-indigo-700 text-white font-extrabold text-[13px] uppercase tracking-[0.08em] transition-all duration-200 shadow-lg shadow-blue-600/20"
+                  >
+                    Start Free Trial
+                  </Link>
+                </>
+              )}
             </motion.div>
           </motion.div>
         )}

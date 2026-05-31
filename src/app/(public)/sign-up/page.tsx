@@ -2,7 +2,7 @@
 
 import React from "react";
 import SplitAuthLayout from "@/components/organisms/SplitAuthLayout/SplitAuthLayout";
-import SignUpFormWrapper from "@/components/organisms/SignUpSection/SignUpFormWrapper";
+import RegisterFormWrapper from "@/features/Register/RegisterFormWrapper";
 
 export default function SignUpPage() {
   return (
@@ -12,7 +12,7 @@ export default function SignUpPage() {
       coverHeadline="Start selling in minutes"
       coverSubtext="Set up your store, add products, and accept payments — no technical knowledge required."
     >
-      <SignUpFormWrapper />
+      <RegisterFormWrapper />
     </SplitAuthLayout>
   );
 }

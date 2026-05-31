@@ -4,7 +4,7 @@ import React from "react";
 import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 import { PlatformDemoSection } from "@/components/organisms/PlatformDemoSection/PlatformDemoSection";
-import { FeaturesSection } from "@/components/organisms/FeaturesSection/FeaturesSection";
+import FeaturesWrapper from "@/features/Features/FeaturesWrapper";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { cn } from "@/lib/utils";
 
@@ -19,7 +19,7 @@ export default function FeaturesPage() {
         </section>
 
         <section className={cn("bg-gray-50 text-slate-900 border-t border-gray-100")}>
-          <FeaturesSection />
+          <FeaturesWrapper />
         </section>
       </div>
 
