@@ -19,8 +19,12 @@ function ActivateContent() {
   const { data: statusData, refetch } = useGetSignupStatusQuery(merchantId, { skip: !merchantId });
   const [activateMerchant, { isLoading: isActivating, isSuccess }] = useActivateMerchantMutation();
 
+  const isAlreadyActive = statusData?.data?.steps?.find(
+    (st: any) => st.name === 'merchant_activation'
+  )?.status === 'Completed';
+
   useEffect(() => {
-    if (merchantId) {
+    if (merchantId && !isAlreadyActive) {
       // Auto trigger activation logic
       activateMerchant(merchantId)
         .unwrap()
@@ -29,17 +33,19 @@ function ActivateContent() {
           refetch();
         })
         .catch((err) => {
-          toast.error(err?.data?.message || err?.message || 'Activation failed.');
+          if (err?.status !== 401) {
+            toast.error(err?.data?.message || err?.message || 'Activation failed.');
+          }
         });
     }
-  }, [merchantId, activateMerchant, refetch]);
+  }, [merchantId, activateMerchant, refetch, isAlreadyActive]);
 
   // Mock standard timeline checklist if server returns empty steps
-  const steps = statusData?.steps || [
+  const steps = statusData?.data?.steps || [
     { name: 'Register', displayName: 'Registration Profile Creation', status: 'Completed' },
     { name: 'VerifyEmail', displayName: 'Email Verification OTP Verification', status: 'Completed' },
     { name: 'Payment', displayName: 'Merchant Account Deposition & Setup', status: 'Completed' },
-    { name: 'Activate', displayName: 'Global Platform Profile Activation', status: isSuccess ? 'Completed' : 'Pending' }
+    { name: 'Activate', displayName: 'Global Platform Profile Activation', status: (isSuccess || isAlreadyActive) ? 'Completed' : 'Pending' }
   ];
 
   return (
@@ -51,7 +57,7 @@ function ActivateContent() {
       >
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
 
-        {isSuccess ? (
+        {(isSuccess || isAlreadyActive) ? (
           <div className="text-center space-y-6">
             <div className="h-16 w-16 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto text-emerald-600 dark:text-emerald-400">
               <Sparkles size={32} className="animate-pulse" />

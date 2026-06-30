@@ -41,6 +41,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
       dispatch(logout());
       toast.success("Successfully signed out. Have a great day!");
       router.push("/");

@@ -95,6 +95,32 @@ function VerifyContent() {
           </div>
 
           <button
+            type="button"
+            onClick={async () => {
+              if (!merchantId) {
+                toast.error('No merchant ID found to fetch OTP.');
+                return;
+              }
+              try {
+                toast.info('Fetching OTP from local database...');
+                const res = await fetch(`/api/dev/otp?merchantId=${merchantId}`);
+                const data = await res.json();
+                if (data.otp) {
+                  setOtp(data.otp);
+                  toast.success(`OTP Auto-filled: ${data.otp}`);
+                } else {
+                  toast.error(data.error || 'Failed to fetch dev OTP. Make sure backend is running.');
+                }
+              } catch (err) {
+                toast.error('Failed to contact Dev OTP service.');
+              }
+            }}
+            className="w-full text-xs font-bold text-blue-500 hover:text-blue-400 py-2 text-center cursor-pointer border border-dashed border-blue-500/30 rounded-xl hover:bg-blue-500/5 transition-all"
+          >
+            🛠️ Dev Auto-fill OTP (Local Database)
+          </button>
+
+          <button
             type="submit"
             disabled={isVerifying}
             className="w-full rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 py-3.5 text-xs font-bold text-white transition-all duration-200 cursor-pointer shadow-lg shadow-blue-600/20 flex items-center justify-center gap-1.5 hover:scale-[1.02] active:scale-[0.98]"

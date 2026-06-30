@@ -42,11 +42,15 @@ export const LoginFormWrapper: React.FC = () => {
 
         const rawData = (response as any)?.data || response;
         const token = rawData?.token || rawData?.accessToken || response?.token;
+        const refreshToken = rawData?.refreshToken || response?.refreshToken;
         const user = rawData?.user || response?.user;
 
         if (token) {
           Cookies.set("accessToken", token, { expires: values.rememberMe ? 30 : 7 });
-          dispatch(setCredentials({ token, user }));
+          if (refreshToken) {
+            Cookies.set("refreshToken", refreshToken, { expires: values.rememberMe ? 30 : 7 });
+          }
+          dispatch(setCredentials({ token, refreshToken, user }));
           toast.success("Welcome back! Signed in successfully.");
           router.push("/");
         } else {

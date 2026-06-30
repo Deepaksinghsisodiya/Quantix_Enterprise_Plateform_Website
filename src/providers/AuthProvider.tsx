@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     const token = Cookies.get('accessToken');
+    const refreshToken = Cookies.get('refreshToken');
     if (!token) {
       setHydrating(false);
       return;
@@ -40,8 +41,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         });
         if (!res.ok) throw new Error('unauthenticated');
         const data = await res.json();
-        dispatch(setCredentials({ token: token, user: data.user }));
+        dispatch(setCredentials({ token, refreshToken, user: data.user }));
       } catch (e) {
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
         dispatch(logout());
         // optional: redirect to sign‑in page
         router.replace('/sign-in');
