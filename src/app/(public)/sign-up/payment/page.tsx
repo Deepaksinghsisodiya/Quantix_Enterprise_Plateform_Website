@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { CreditCard, CheckCircle2, ArrowRight, ShieldCheck } from 'lucide-react';
+import { CreditCard, ArrowRight, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { useProcessPaymentMutation } from '@/features/Register/Service/RegisterService';
@@ -14,11 +14,12 @@ import { Footer } from '@/components/organisms/Footer/Footer';
 function PaymentContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const merchantId = searchParams.get('id') || '';
+  const merchantId = searchParams.get('id') || searchParams.get('merchantId') || '';
 
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiry, setExpiry] = useState('');
-  const [cvc, setCvc] = useState('');
+  const [paymentToken, setPaymentToken] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('TokenizedCard');
+  const [amount, setAmount] = useState('');
+  const [currencyCode, setCurrencyCode] = useState('USD');
   const [processPayment, { isLoading: isPaying }] = useProcessPaymentMutation();
 
   useEffect(() => {
@@ -33,15 +34,19 @@ function PaymentContent() {
       toast.error('No onboarding ID found. Please try again.');
       return;
     }
-    if (cardNumber.length < 16 || expiry.length < 4 || cvc.length < 3) {
-      toast.error('Please enter valid payment details.');
+    if (paymentToken.trim().length < 8) {
+      toast.error('Please enter a valid token from your payment provider.');
       return;
     }
 
     try {
-      // Simulate Stripe/payment provider token generation and pass to server
-      const paymentToken = `tok_simulated_${Date.now()}`;
-      await processPayment({ merchantId, paymentToken }).unwrap();
+      await processPayment({
+        merchantId,
+        paymentToken: paymentToken.trim(),
+        paymentMethod,
+        amount: amount ? Number(amount) : null,
+        currencyCode,
+      }).unwrap();
       
       toast.success('Payment successfully processed! Setting up subscription...');
       router.push(`/sign-up/activate?id=${merchantId}`);
@@ -68,22 +73,19 @@ function PaymentContent() {
             Checkout setup
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-            Enter card details to verify subscription setup. Your card will only be billed on your next billing cycle.
+            Submit a token from your payment provider to verify subscription setup.
           </p>
         </div>
 
         <form onSubmit={handlePayment} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-400">
-              Card Number
-            </label>
+            <label className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-400">Payment Token</label>
             <input
               type="text"
               required
-              maxLength={16}
-              value={cardNumber}
-              onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, ''))}
-              placeholder="4111 2222 3333 4444"
+              value={paymentToken}
+              onChange={(e) => setPaymentToken(e.target.value)}
+              placeholder="tok_live_or_provider_reference"
               className="w-full rounded-xl border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-950/60 px-4 py-3.5 text-xs text-slate-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-600 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
@@ -91,32 +93,48 @@ function PaymentContent() {
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-400">
-                Expiry Date
+                Payment Method
               </label>
-              <input
-                type="text"
-                required
-                maxLength={4}
-                value={expiry}
-                onChange={(e) => setExpiry(e.target.value.replace(/\D/g, ''))}
-                placeholder="MM/YY"
+              <select
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
                 className="w-full rounded-xl border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-950/60 px-4 py-3.5 text-xs text-slate-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-600 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              />
+              >
+                <option value="TokenizedCard">Tokenized card</option>
+                <option value="UPI">UPI</option>
+                <option value="BankTransfer">Bank transfer</option>
+                <option value="Wallet">Wallet</option>
+              </select>
             </div>
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-400">
-                Security Code (CVC)
+                Currency
               </label>
-              <input
-                type="password"
-                required
-                maxLength={3}
-                value={cvc}
-                onChange={(e) => setCvc(e.target.value.replace(/\D/g, ''))}
-                placeholder="123"
+              <select
+                value={currencyCode}
+                onChange={(e) => setCurrencyCode(e.target.value)}
                 className="w-full rounded-xl border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-950/60 px-4 py-3.5 text-xs text-slate-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-600 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              />
+              >
+                <option value="USD">USD</option>
+                <option value="INR">INR</option>
+                <option value="GBP">GBP</option>
+                <option value="AED">AED</option>
+                <option value="CAD">CAD</option>
+              </select>
             </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-400">Authorized Amount</label>
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="Optional"
+              className="w-full rounded-xl border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-950/60 px-4 py-3.5 text-xs text-slate-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-600 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
           </div>
 
           <button
@@ -130,7 +148,7 @@ function PaymentContent() {
         </form>
 
         <div className="mt-6 flex items-center justify-center gap-1.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 rounded-lg py-2">
-          <ShieldCheck size={14} className="stroke-[2.5]" /> Secure 256-Bit SSL Checkout Encryption
+          <ShieldCheck size={14} className="stroke-[2.5]" /> Tokenized payment capture only
         </div>
       </motion.div>
     </div>

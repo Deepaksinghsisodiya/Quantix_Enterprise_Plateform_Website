@@ -16,6 +16,7 @@ export interface PricingSectionProps {
 const DEFAULT_PLANS: PricingPlan[] = [
   {
     id: 'free',
+    planCode: 'trial',
     name: 'Starter Trial',
     price: 0,
     interval: 'monthly',
@@ -26,6 +27,7 @@ const DEFAULT_PLANS: PricingPlan[] = [
   },
   {
     id: 'pro',
+    planCode: 'pro',
     name: 'Business Pro',
     price: 49,
     interval: 'monthly',
@@ -37,6 +39,7 @@ const DEFAULT_PLANS: PricingPlan[] = [
   },
   {
     id: 'enterprise',
+    planCode: 'enterprise',
     name: 'Enterprise',
     price: 0,
     interval: 'monthly',
@@ -154,6 +157,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
 
             {!isLoading && pricingPlans.map((plan) => {
               const isSelected = selectedPlanId === plan.id;
+              const isTrialPlan = plan.planCode === 'trial';
+
               return (
                 <div
                   key={plan.id}
@@ -195,10 +200,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                       ) : (
                         <div className="flex items-baseline justify-center gap-1.5 h-10 w-full">
                           <span className={cn('text-3xl font-syne font-black text-slate-900 tracking-tight text-center', plan.mostPopular && 'text-white')}>
-                            {plan.id === 'free' ? 'Free' : `$${billing === 'monthly' ? plan.priceMonthly : getAnnualPrice(plan.priceMonthly)}`}
+                            {isTrialPlan ? 'Free' : `$${billing === 'monthly' ? plan.priceMonthly : getAnnualPrice(plan.priceMonthly)}`}
                           </span>
                           <span className={cn('text-xs font-bold text-slate-500 text-center', plan.mostPopular ? 'text-blue-200' : 'text-slate-400')}>
-                            {plan.id === 'free' ? '3 days' : (billing === 'monthly' ? '/mo' : '/yr')}
+                            {isTrialPlan ? '3 days' : (billing === 'monthly' ? '/mo' : '/yr')}
                           </span>
                         </div>
                       )}
@@ -223,7 +228,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
 
                   {/* CTA Button */}
                   <div className="mt-auto">
-                    {plan.id === 'free' ? (
+                    {isTrialPlan ? (
                       <button
                         type="button"
                         onClick={(e) => handleButtonClick(plan, e)}

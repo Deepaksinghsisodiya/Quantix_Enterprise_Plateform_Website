@@ -12,6 +12,14 @@ import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
+const extractMerchantId = (res: any) =>
+  res?.data?.merchantId ||
+  res?.data?.leadId ||
+  res?.data?.id ||
+  res?.merchantId ||
+  res?.leadId ||
+  res?.id;
+
 export default function EnterpriseSignupPage() {
   const [selectedPlan, setSelectedPlan] = useState<'free' | 'basic' | 'pro' | 'enterprise'>('pro');
   const [name, setName] = useState('');
@@ -30,17 +38,16 @@ export default function EnterpriseSignupPage() {
         contactName: name,
         contactEmail: email,
         contactPhone: null,
-        country: 'US',
-        planId: selectedPlan.toUpperCase(),
+        country: 'United States',
+        planId: null,
         billingCycle: 'Monthly',
       }).unwrap();
 
       toast.success('Registration successful! OTP has been dispatched to your email.');
-      const merchantId = res.merchantId || res.id || 'new-merchant';
-      router.push(`/sign-up/verify?merchantId=${merchantId}`);
+      const merchantId = extractMerchantId(res);
+      router.push(merchantId ? `/sign-up/verify?id=${merchantId}` : '/sign-in');
     } catch (err: any) {
-      toast.error(err?.data?.message || 'Onboarding registration failed. Continuing locally...');
-      router.push('/sign-up/verify?merchantId=mch_sandbox');
+      toast.error(err?.data?.message || err?.message || 'Onboarding registration failed. Please check details and try again.');
     }
   };
 

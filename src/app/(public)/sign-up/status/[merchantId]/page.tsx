@@ -1,7 +1,7 @@
 // src/app/(public)/sign-up/status/[merchantId]/page.tsx
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';
@@ -27,10 +27,14 @@ export default function SignupStatusPage() {
   // Map backend status response (e.g. status: 'PENDING', 'PROVISIONED', 'ACTIVE') to step number
   let currentProgress = 1;
   if (statusData) {
-    const rawStatus = statusData.status || statusData.state;
-    if (rawStatus === 'PAYMENT_PENDING') currentProgress = 2;
-    else if (rawStatus === 'PROVISIONING' || rawStatus === 'PENDING') currentProgress = 3;
-    else if (rawStatus === 'ACTIVE' || rawStatus === 'PROVISIONED' || rawStatus === 'SUCCESS') currentProgress = 4;
+    const data = statusData.data || statusData;
+    const rawStatus = String(data.status || data.state || data.onboardingStatus || '').toUpperCase();
+    const steps = data.steps || [];
+    if (steps.some((item: any) => String(item.name || '').toLowerCase().includes('activation') && String(item.status || '').toLowerCase() === 'completed')) {
+      currentProgress = 4;
+    } else if (rawStatus === 'PAYMENT_PENDING' || rawStatus === 'EMAIL_VERIFIED') currentProgress = 2;
+    else if (rawStatus === 'PROVISIONING' || rawStatus === 'PENDING' || rawStatus === 'PROVISIONED') currentProgress = 3;
+    else if (rawStatus === 'ACTIVE' || rawStatus === 'SUCCESS') currentProgress = 4;
   }
 
   return (
@@ -94,7 +98,7 @@ export default function SignupStatusPage() {
                               ? 'bg-blue-600 border-blue-600 text-white shadow-md'
                               : 'bg-white border-slate-200 text-slate-400'
                         }`}>
-                          {isDone ? '✓' : step.step}
+                          {isDone ? <CheckCircle2 size={14} /> : step.step}
                         </div>
 
                         <div className="space-y-0.5">

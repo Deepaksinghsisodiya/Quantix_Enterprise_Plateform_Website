@@ -1,7 +1,17 @@
 // src/features/Register/RegisterForm.tsx
 import React from "react";
 import Link from "next/link";
-import { Lock, Mail, User, Building, Landmark, X, ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  Building,
+  CalendarClock,
+  Globe2,
+  Landmark,
+  Mail,
+  Phone,
+  User,
+  X,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { ATMTextField } from "@/components/atoms/ATMTextField";
 import { ATMSelectField } from "@/components/atoms/ATMSelectField";
@@ -22,11 +32,23 @@ export interface RegisterFormProps {
   onCancel: () => void;
 }
 
-const businessTypeOptions = [
-  { value: "retail", label: "Retail Store" },
-  { value: "restaurant", label: "Restaurant / Cafe" },
-  { value: "grocery", label: "Grocery / Supermarket" },
-  { value: "other", label: "Other Business" },
+const merchantTypeOptions = [
+  { value: "Enterprise", label: "Cloud Enterprise" },
+  { value: "Standalone", label: "Standalone POS" },
+];
+
+const billingCycleOptions = [
+  { value: "Monthly", label: "Monthly billing" },
+  { value: "Annual", label: "Annual billing" },
+  { value: "Daily", label: "Daily trial billing" },
+];
+
+const countryOptions = [
+  { value: "United States", label: "United States" },
+  { value: "India", label: "India" },
+  { value: "United Kingdom", label: "United Kingdom" },
+  { value: "United Arab Emirates", label: "United Arab Emirates" },
+  { value: "Canada", label: "Canada" },
 ];
 
 const fieldClass =
@@ -98,47 +120,74 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             className={fieldClass}
           />
 
-          {/* Company Name */}
           <ATMTextField
-            name="company"
-            label="Company"
-            type="text"
-            placeholder="Acme Corp"
-            value={values.company}
+            name="phone"
+            label="Contact Phone"
+            type="tel"
+            placeholder="+1 555 010 2048"
+            value={values.phone}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.company && errors.company ? errors.company : undefined}
-            leftIcon={<Building size={15} className="text-slate-500" />}
+            error={touched.phone && errors.phone ? errors.phone : undefined}
+            leftIcon={<Phone size={15} className="text-slate-500" />}
             className={fieldClass}
           />
 
-          {/* Business Type */}
-          <ATMSelectField
-            name="businessType"
-            label="Business Type"
-            placeholder="Select your industry"
-            options={businessTypeOptions}
-            value={values.businessType}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.businessType && errors.businessType ? errors.businessType : undefined}
-            leftIcon={<Landmark size={15} className="text-slate-500" />}
-            className={fieldClass}
-          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <ATMTextField
+              name="company"
+              label="Company"
+              type="text"
+              placeholder="Acme Corp"
+              value={values.company}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.company && errors.company ? errors.company : undefined}
+              leftIcon={<Building size={15} className="text-slate-500" />}
+              className={fieldClass}
+            />
 
-          {/* Password */}
-          <ATMTextField
-            name="password"
-            label="Password"
-            type="password"
-            placeholder="Min. 8 characters"
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.password && errors.password ? errors.password : undefined}
-            leftIcon={<Lock size={15} className="text-slate-500" />}
-            className={fieldClass}
-          />
+            <ATMSelectField
+              name="country"
+              label="Country"
+              placeholder="Select country"
+              options={countryOptions}
+              value={values.country}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.country && errors.country ? errors.country : undefined}
+              leftIcon={<Globe2 size={15} className="text-slate-500" />}
+              className={fieldClass}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <ATMSelectField
+              name="merchantType"
+              label="Merchant Type"
+              placeholder="Select onboarding type"
+              options={merchantTypeOptions}
+              value={values.merchantType}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.merchantType && errors.merchantType ? errors.merchantType : undefined}
+              leftIcon={<Landmark size={15} className="text-slate-500" />}
+              className={fieldClass}
+            />
+
+            <ATMSelectField
+              name="billingCycle"
+              label="Billing Cycle"
+              placeholder="Select billing cycle"
+              options={billingCycleOptions}
+              value={values.billingCycle}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.billingCycle && errors.billingCycle ? errors.billingCycle : undefined}
+              leftIcon={<CalendarClock size={15} className="text-slate-500" />}
+              className={fieldClass}
+            />
+          </div>
 
           {/* Action Row */}
           <div className="flex flex-col-reverse sm:flex-row items-center gap-2.5 pt-3">

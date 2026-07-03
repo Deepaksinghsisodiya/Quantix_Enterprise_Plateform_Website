@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Mail, CheckCircle2, AlertTriangle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Mail, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { useVerifyEmailCodeMutation, useSendOtpMutation } from '@/features/Register/Service/RegisterService';
@@ -14,7 +14,8 @@ import { Footer } from '@/components/organisms/Footer/Footer';
 function VerifyContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const merchantId = searchParams.get('id') || '';
+  const merchantId = searchParams.get('id') || searchParams.get('merchantId') || '';
+  const showDevOtp = process.env.NODE_ENV !== 'production';
 
   const [otp, setOtp] = useState('');
   const [verifyEmailCode, { isLoading: isVerifying }] = useVerifyEmailCodeMutation();
@@ -94,7 +95,8 @@ function VerifyContent() {
             />
           </div>
 
-          <button
+          {showDevOtp && (
+            <button
             type="button"
             onClick={async () => {
               if (!merchantId) {
@@ -107,18 +109,19 @@ function VerifyContent() {
                 const data = await res.json();
                 if (data.otp) {
                   setOtp(data.otp);
-                  toast.success(`OTP Auto-filled: ${data.otp}`);
+                  toast.success(`OTP auto-filled: ${data.otp}`);
                 } else {
                   toast.error(data.error || 'Failed to fetch dev OTP. Make sure backend is running.');
                 }
-              } catch (err) {
+              } catch {
                 toast.error('Failed to contact Dev OTP service.');
               }
             }}
             className="w-full text-xs font-bold text-blue-500 hover:text-blue-400 py-2 text-center cursor-pointer border border-dashed border-blue-500/30 rounded-xl hover:bg-blue-500/5 transition-all"
           >
-            🛠️ Dev Auto-fill OTP (Local Database)
-          </button>
+            Dev auto-fill OTP
+            </button>
+          )}
 
           <button
             type="submit"

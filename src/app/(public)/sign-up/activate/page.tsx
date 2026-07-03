@@ -1,12 +1,16 @@
 // src/app/(public)/sign-up/activate/page.tsx
 'use client';
 
-import React, { useEffect, Suspense } from 'react';
+import React, { useEffect, Suspense, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Sparkles, Check, Play, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Check, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import { useActivateMerchantMutation, useGetSignupStatusQuery } from '@/features/Register/Service/RegisterService';
+import {
+  useActivateMerchantMutation,
+  useGetSignupStatusQuery,
+  useProvisionMerchantMutation,
+} from '@/features/Register/Service/RegisterService';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';
@@ -14,20 +18,26 @@ import { Footer } from '@/components/organisms/Footer/Footer';
 function ActivateContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const merchantId = searchParams.get('id') || '';
+  const merchantId = searchParams.get('id') || searchParams.get('merchantId') || '';
+  const [hasStarted, setHasStarted] = useState(false);
 
   const { data: statusData, refetch } = useGetSignupStatusQuery(merchantId, { skip: !merchantId });
   const [activateMerchant, { isLoading: isActivating, isSuccess }] = useActivateMerchantMutation();
+  const [provisionMerchant, { isLoading: isProvisioning }] = useProvisionMerchantMutation();
 
-  const isAlreadyActive = statusData?.data?.steps?.find(
-    (st: any) => st.name === 'merchant_activation'
-  )?.status === 'Completed';
+  const statusSteps = statusData?.data?.steps || statusData?.steps || [];
+  const isAlreadyActive = statusSteps.some((st: any) => {
+    const name = String(st.name || st.stepName || '').toLowerCase();
+    const status = String(st.status || '').toLowerCase();
+    return (name.includes('activation') || name.includes('activate')) && status === 'completed';
+  });
 
   useEffect(() => {
-    if (merchantId && !isAlreadyActive) {
-      // Auto trigger activation logic
-      activateMerchant(merchantId)
+    if (merchantId && !isAlreadyActive && !hasStarted) {
+      setHasStarted(true);
+      provisionMerchant(merchantId)
         .unwrap()
+        .then(() => activateMerchant(merchantId).unwrap())
         .then(() => {
           toast.success('Your merchant account has been activated successfully!');
           refetch();
@@ -38,10 +48,10 @@ function ActivateContent() {
           }
         });
     }
-  }, [merchantId, activateMerchant, refetch, isAlreadyActive]);
+  }, [merchantId, activateMerchant, provisionMerchant, refetch, isAlreadyActive, hasStarted]);
 
   // Mock standard timeline checklist if server returns empty steps
-  const steps = statusData?.data?.steps || [
+  const steps = statusSteps.length ? statusSteps : [
     { name: 'Register', displayName: 'Registration Profile Creation', status: 'Completed' },
     { name: 'VerifyEmail', displayName: 'Email Verification OTP Verification', status: 'Completed' },
     { name: 'Payment', displayName: 'Merchant Account Deposition & Setup', status: 'Completed' },
@@ -103,7 +113,11 @@ function ActivateContent() {
             <div className="h-12 w-12 rounded-full border border-gray-200 dark:border-slate-800 flex items-center justify-center mx-auto text-slate-400 animate-spin border-t-blue-500" />
             <div className="space-y-1">
               <h3 className="text-lg font-bold text-slate-900 dark:text-white uppercase font-syne">Activating Profile...</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Verifying credential tokens and preparing secure billing services.</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                {isProvisioning || isActivating
+                  ? 'Provisioning merchant services and activating the platform profile.'
+                  : 'Verifying credential tokens and preparing secure billing services.'}
+              </p>
             </div>
           </div>
         )}

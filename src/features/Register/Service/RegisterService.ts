@@ -1,6 +1,11 @@
 // src/features/Register/Service/RegisterService.ts
 import { baseApi } from '@/redux/services/baseApi';
-import { MerchantSignupDto, CheckEmailResponse } from '../Types/RegisterTypes';
+import {
+  CheckEmailResponse,
+  MerchantSignupDto,
+  PaymentCaptureDto,
+  SignupValidationResponse,
+} from '../Types/RegisterTypes';
 
 export const registerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,6 +18,15 @@ export const registerApi = baseApi.injectEndpoints({
     }),
     checkEmail: builder.query<CheckEmailResponse, string>({
       query: (email) => `/registration/check-email?email=${encodeURIComponent(email)}`,
+    }),
+    validateSignup: builder.mutation<SignupValidationResponse, { email: string; companyName: string }>({
+      query: ({ email, companyName }) => ({
+        url: `/registration/validate?email=${encodeURIComponent(email)}&companyName=${encodeURIComponent(companyName)}`,
+        method: 'POST',
+      }),
+    }),
+    getRegistrationPricing: builder.query<any, void>({
+      query: () => '/registration/pricing',
     }),
     sendOtp: builder.mutation<any, string>({
       query: (merchantId) => ({
@@ -27,11 +41,17 @@ export const registerApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
-    processPayment: builder.mutation<any, { merchantId: string; paymentToken: string }>({
+    processPayment: builder.mutation<any, PaymentCaptureDto>({
       query: (payload) => ({
         url: '/registration/payment',
         method: 'POST',
         body: payload,
+      }),
+    }),
+    provisionMerchant: builder.mutation<any, string>({
+      query: (merchantId) => ({
+        url: `/registration/${merchantId}/provision`,
+        method: 'POST',
       }),
     }),
     activateMerchant: builder.mutation<any, string>({
@@ -50,9 +70,12 @@ export const registerApi = baseApi.injectEndpoints({
 export const {
   useSignupMutation,
   useCheckEmailQuery,
+  useValidateSignupMutation,
+  useGetRegistrationPricingQuery,
   useSendOtpMutation,
   useVerifyEmailCodeMutation,
   useProcessPaymentMutation,
+  useProvisionMerchantMutation,
   useActivateMerchantMutation,
   useGetSignupStatusQuery,
 } = registerApi;

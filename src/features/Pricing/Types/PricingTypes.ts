@@ -2,6 +2,7 @@
 
 export interface PricingPlan {
   id: string;
+  planCode: string;
   name: string;
   price: number;
   interval: string;
@@ -11,33 +12,22 @@ export interface PricingPlan {
   features: string[];
   mostPopular?: boolean;
   custom?: boolean;
+  isActive?: boolean;
 }
 
-export interface PlanFeature {
-  planFeatureId: string;
+// Matches actual /api/v1/billing/plans response
+export interface ApiBillingPlan {
   planId: string;
-  featureCode: string;
-  featureName: string;
-  featureClass: string;
-  isIncluded: boolean;
-  showOnWebsite: boolean;
-  unitPricePerDay: number;
+  planCode: string;
+  displayName: string;
+  planType: string; // "Trial" | "Basic" | "Pro" | "Enterprise"
+  isActive: boolean;
+  isPublic: boolean;
+  isDeprecated: boolean;
+  planPricePerDay: number;
 }
 
-export interface ApiPricingPlan {
-  id: string;
-  name: string;
-  priceMonthly: number;
-  priceAnnual?: number;
-  description: string;
-  features: PlanFeature[];
-}
-
-export interface ApiPricingResponse {
+export interface ApiBillingPlansResponse {
   success: boolean;
-  data: {
-    plans: ApiPricingPlan[];
-    currencyCode: string;
-    tokenToCurrencyRate: number;
-  };
+  data: ApiBillingPlan[];
 }
