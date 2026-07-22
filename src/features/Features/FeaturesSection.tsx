@@ -128,7 +128,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
   return (
     <section
       ref={ref}
-      className="bg-gradient-to-b from-white via-slate-50/20 to-white py-24 border-b border-slate-100"
+      className="bg-slate-50 py-10 sm:py-12 border-b border-slate-100"
       aria-labelledby="features-section"
     >
       <div className="site-container">
@@ -166,7 +166,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
           {!isLoading && displayFeatures.map((card: Feature, idx: number) => (
             <motion.div
               key={card.id}
-              className="rounded-3xl border border-slate-100 bg-white p-8 text-left hover:border-blue-500/20 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.05)]"
+              className="rounded-3xl border border-slate-200 bg-white p-8 text-left transition-all duration-500 hover:-translate-y-2 relative overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.05)] before:absolute before:top-0 before:left-0 before:right-0 before:h-[2.5px] before:bg-gradient-to-r before:from-blue-600 before:to-indigo-500 before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500"
               initial={{ opacity: 0, translateY: 20 }}
               animate={isInView ? { opacity: 1, translateY: 0 } : {}}
               transition={{ delay: idx * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}

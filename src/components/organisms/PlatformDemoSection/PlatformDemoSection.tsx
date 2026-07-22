@@ -229,7 +229,7 @@ export const PlatformDemoSection = () => {
   };
 
   return (
-    <section className="bg-gradient-to-b from-slate-50 via-white to-slate-50/50 py-20 border-y border-slate-100" ref={ref} id="platform-demo">
+    <section className="bg-white py-10 sm:py-12 border-b border-slate-100" ref={ref} id="platform-demo">
       <div className="site-container">
         {/* Header grid matching PDF Page 4 */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 items-start mb-16">
@@ -245,13 +245,13 @@ export const PlatformDemoSection = () => {
             </p>
             <Link
               href="#features"
-              className="inline-block rounded-full border border-slate-900 px-6 py-2.5 text-xs font-bold text-slate-950 hover:bg-slate-900 hover:text-white transition duration-300 cursor-pointer shadow-sm hover:shadow-md"
+              className="inline-block rounded-full btn-gradient px-6 py-2.5 text-xs font-bold text-white transition duration-300 cursor-pointer shadow-md"
             >
               Explore Features →
             </Link>
           </div>
         </div>
-
+ 
         {/* 4-column cards row below the header */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {CARDS.map((card, idx) => (
@@ -264,7 +264,7 @@ export const PlatformDemoSection = () => {
               className="group flex flex-col justify-between cursor-pointer"
             >
               {/* Mockup wrapper with 3D lift and soft shadows */}
-              <div className="h-64 w-full rounded-2xl shadow-xl overflow-hidden mb-5 border border-slate-100 transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl group-hover:shadow-blue-500/10">
+              <div className="h-64 w-full rounded-2xl overflow-hidden mb-5 border border-slate-200 dark:border-slate-800 transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_-12px_rgba(99,102,241,0.12)] relative before:absolute before:top-0 before:left-0 before:right-0 before:h-[2px] before:bg-gradient-to-r before:from-blue-600 before:to-indigo-500 before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500">
                 {Mockup({ type: card.mockupType })}
               </div>
               {/* Info text */}

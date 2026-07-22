@@ -35,12 +35,14 @@ export const CTAView: React.FC<CTAViewProps> = ({
   return (
     <section
       ref={ref}
-      className="w-full bg-slate-950 py-24 text-center border-t border-slate-900 relative overflow-hidden"
+      className="w-full bg-slate-950 py-12 sm:py-16 text-center border-t border-slate-900 relative overflow-hidden"
     >
       {/* Tech grid overlay */}
       <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
-      {/* Ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+      {/* Ambient glows (mesh-bg) */}
+      <div className="absolute inset-0 mesh-bg opacity-[0.4] pointer-events-none z-0" />
+      <div className="absolute top-0 left-0 w-[450px] h-[450px] bg-blue-600/15 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-indigo-600/15 rounded-full blur-[120px] pointer-events-none opacity-50" />
 
       <div className="site-container relative z-10">
         <motion.div
@@ -65,13 +67,13 @@ export const CTAView: React.FC<CTAViewProps> = ({
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto sm:max-w-none">
             <Link
               href={primaryCta.href}
-              className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-full shadow-lg shadow-blue-500/20 text-xs text-center transition-all duration-200 hover:scale-105 active:scale-95 block sm:inline-block"
+              className="w-full sm:w-auto btn-gradient text-white font-bold px-8 py-3.5 rounded-full text-xs text-center transition-all duration-200 hover:scale-105 active:scale-95 block sm:inline-block"
             >
               {primaryCta.label}
             </Link>
             <Link
               href={secondaryCta.href}
-              className="w-full sm:w-auto border border-slate-800 text-slate-300 hover:bg-slate-900 hover:text-white font-bold px-8 py-4 rounded-full text-xs text-center bg-transparent transition-all duration-200 hover:scale-105 active:scale-95 block sm:inline-block"
+              className="w-full sm:w-auto btn-ghost font-bold px-8 py-3.5 rounded-full text-xs text-center transition-all duration-200 hover:scale-105 active:scale-95 block sm:inline-block"
             >
               {secondaryCta.label}
             </Link>

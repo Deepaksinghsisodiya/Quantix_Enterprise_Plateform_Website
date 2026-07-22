@@ -34,7 +34,7 @@ export default function AboutPage() {
         </section>
 
         {/* Section 2: Numbers/Statistics Grid */}
-        <section className="-mt-10 relative z-20 site-container max-w-5xl">
+        <section className="-mt-10 relative z-20 site-container max-w-7xl">
           <SocialProofStatsWrapper />
         </section>
 

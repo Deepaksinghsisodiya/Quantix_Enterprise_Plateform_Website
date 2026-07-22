@@ -98,7 +98,7 @@ export const TestimonialBanner: React.FC<TestimonialBannerProps> = ({
   }
 
   return (
-    <section className="relative w-full h-[65vh] min-h-[450px] overflow-hidden bg-slate-950">
+    <section className="relative w-full h-[50vh] min-h-[380px] overflow-hidden bg-slate-950">
       {/* Background Image transitions */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -178,8 +178,8 @@ export const TestimonialBanner: React.FC<TestimonialBannerProps> = ({
               type="button"
               onClick={() => setActive(i)}
               className={cn(
-                "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
-                i === active ? "w-8 bg-blue-500" : "w-2 bg-white/30 hover:bg-white/50"
+                "h-2 rounded-full transition-all duration-300 cursor-pointer",
+                i === active ? "w-8 bg-blue-600" : "w-2 bg-white/30 hover:bg-white/50"
               )}
               aria-label={`Go to slide ${i + 1}`}
             />

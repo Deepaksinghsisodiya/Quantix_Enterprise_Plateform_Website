@@ -97,7 +97,7 @@ export default function ContactDemoPage() {
                     <p className="text-xs text-slate-550 font-medium">
                       We have dispatched an invite link to <strong>{email}</strong> for your selected date <strong>{demoDate}</strong>.
                     </p>
-                    <button 
+                    <button
                       onClick={() => setSubmitted(false)}
                       className="text-xs font-bold text-blue-600 hover:text-blue-500 cursor-pointer pt-4 block mx-auto uppercase tracking-wider font-syne"
                     >

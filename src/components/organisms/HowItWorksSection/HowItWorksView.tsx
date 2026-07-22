@@ -30,7 +30,7 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
 
   return (
     <section
-      className="bg-gradient-to-b from-slate-50/50 via-white to-slate-50/50 py-24 border-b border-slate-100"
+      className="bg-white py-10 sm:py-12 border-b border-slate-100"
       ref={ref}
       id="how-it-works"
     >
@@ -57,7 +57,7 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
               variants={cardVariants}
-              className="relative flex flex-col items-start p-8 bg-white border border-slate-100 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.01)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.05)] hover:-translate-y-2 transition-all duration-500 group overflow-hidden cursor-pointer"
+              className="relative flex flex-col items-start p-8 bg-white border border-slate-200 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.01)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.05)] hover:-translate-y-2 transition-all duration-500 group overflow-hidden cursor-pointer before:absolute before:top-0 before:left-0 before:right-0 before:h-[2.5px] before:bg-gradient-to-r before:from-blue-600 before:to-indigo-500 before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500"
             >
               {/* Watermark number */}
               <span className="absolute top-6 right-8 text-6xl sm:text-7xl font-syne font-black text-slate-100/90 group-hover:text-blue-500/8 transition-colors duration-300 pointer-events-none select-none">

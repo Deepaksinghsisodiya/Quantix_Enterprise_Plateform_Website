@@ -70,7 +70,7 @@ export const DemoSection: React.FC<DemoSectionProps> = ({
     : null;
 
   return (
-    <section className="bg-gradient-to-b from-slate-50/50 via-white to-slate-50/50 py-24 relative overflow-hidden border-t border-slate-100" ref={ref} id="resources">
+    <section className="bg-slate-50 py-10 sm:py-12 relative overflow-hidden border-b border-slate-100" ref={ref} id="resources">
       {/* Decorative Blur Blobs */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl pointer-events-none" />

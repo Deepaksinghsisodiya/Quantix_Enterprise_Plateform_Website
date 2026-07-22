@@ -68,7 +68,7 @@ export default function CareersPage() {
         </section>
 
         {/* Benefits Section */}
-        <section className="py-20 site-container max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-8">
+        <section className="py-20 site-container max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-3 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 rounded-2xl p-6 shadow-xs">
             <Globe2 className="h-6 w-6 text-primary" />
             <h3 className="text-base font-syne font-bold text-slate-900 dark:text-white uppercase">Remote-First Culture</h3>

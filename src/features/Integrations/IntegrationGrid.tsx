@@ -177,7 +177,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
       {/* Integration Request Card */}
       <div className="rounded-2xl border border-gray-200 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/20 p-8 sm:p-10 backdrop-blur-md relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
-        
+
         <div className="max-w-xl mx-auto text-center space-y-4">
           <h3 className="text-xl sm:text-2xl font-syne font-black text-slate-900 dark:text-white uppercase tracking-tight">
             Need a custom integration?

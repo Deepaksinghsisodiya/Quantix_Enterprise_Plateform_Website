@@ -58,7 +58,7 @@ export const FooterView: React.FC<FooterViewProps> = ({
   socialLinks,
 }) => {
   return (
-    <footer className="bg-white text-slate-500 pt-16 border-t border-slate-200/60">
+    <footer className="bg-white text-slate-500 pt-10 sm:pt-12 border-t border-slate-200/60">
       <div className="site-container">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-5 md:gap-12">
 
@@ -114,7 +114,7 @@ export const FooterView: React.FC<FooterViewProps> = ({
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 border-t border-slate-100 pt-8 pb-12 flex flex-col gap-4 items-center justify-between text-xs sm:text-sm md:flex-row">
+        <div className="mt-10 border-t border-slate-100 pt-6 pb-8 flex flex-col gap-4 items-center justify-between text-xs sm:text-sm md:flex-row">
           <p className="text-slate-400 font-semibold">{FOOTER_COPYRIGHT}</p>
           <div className="flex items-center gap-2 text-slate-400 font-bold uppercase tracking-wider text-[9px] bg-slate-50 px-3.5 py-1.5 rounded-full border border-slate-100/80 shadow-xs">
             <Lock className="h-3.5 w-3.5 text-emerald-500" />

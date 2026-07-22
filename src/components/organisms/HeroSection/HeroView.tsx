@@ -69,8 +69,12 @@ export const HeroView: React.FC<HeroViewProps> = ({
         )}
       </AnimatePresence>
 
-      {/* Dark gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#06080F]/80 via-[#06080F]/20 to-[#06080F]/95" />
+      {/* Dark gradient overlay + Foretek solutions style mesh-bg and aurora glow layers */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#06080F]/80 via-[#06080F]/20 to-[#06080F]/95 z-0" />
+      <div className="absolute inset-0 mesh-bg opacity-[0.45] pointer-events-none z-0" />
+      {/* Glow orbs */}
+      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none z-0" />
+      <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-indigo-600/30 rounded-full blur-[120px] pointer-events-none z-0 opacity-40" />
 
       {/* Content */}
       <div className="relative z-10 flex h-full w-full flex-col items-center justify-center text-center md:items-start md:text-left site-container pt-20">
@@ -105,13 +109,13 @@ export const HeroView: React.FC<HeroViewProps> = ({
             <div className="flex flex-row items-center justify-center md:justify-start gap-4">
               <Link
                 href={slides[activeIndex].primaryCta.href}
-                className="rounded-full bg-white px-7 py-3.5 text-xs sm:text-sm font-bold text-slate-950 hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                className="rounded-full btn-gradient px-7 py-3.5 text-xs sm:text-sm font-bold text-white hover:scale-105 active:scale-95 transition-all duration-300"
               >
                 {slides[activeIndex].primaryCta.label}
               </Link>
               <Link
                 href={slides[activeIndex].secondaryCta.href}
-                className="rounded-full bg-blue-600 px-7 py-3.5 text-xs sm:text-sm font-bold text-white hover:bg-blue-500 hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-[0_0_25px_rgba(37,99,235,0.4)]"
+                className="rounded-full btn-ghost px-7 py-3.5 text-xs sm:text-sm font-bold active:scale-105 active:scale-95 transition-all duration-300"
               >
                 {slides[activeIndex].secondaryCta.label}
               </Link>

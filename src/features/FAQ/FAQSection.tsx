@@ -43,7 +43,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ faqs, isLoading }) => {
   const displayFAQs = faqs.length > 0 ? faqs : DEFAULT_FAQS;
 
   return (
-    <section className="bg-gradient-to-b from-slate-50/50 via-white to-slate-50/50 py-24 border-t border-slate-100" id="faq">
+    <section className="bg-white py-10 sm:py-12 border-b border-slate-100" id="faq">
       <div className="site-container">
         <div className="max-w-[720px] mx-auto">
           {/* Header */}

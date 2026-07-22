@@ -92,7 +92,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
   return (
     <>
       {/* Main Pricing Cards section */}
-      <section className="py-24 bg-gradient-to-b from-white via-slate-50/20 to-white border-t border-slate-100" ref={ref} id="pricing">
+      <section className="py-10 sm:py-12 bg-gradient-to-b from-white via-slate-50/20 to-white border-t border-slate-100" ref={ref} id="pricing">
         <div className="site-container">
           {/* Header */}
           <div className="text-center mb-12">
@@ -138,7 +138,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
 
           {/* Cards grid */}
           <motion.div
-            className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch justify-center max-w-5xl mx-auto"
+            className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch justify-center max-w-7xl mx-auto"
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
             variants={gridVariants}
@@ -164,14 +164,14 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                   key={plan.id}
                   onClick={() => handleSelectPlan(plan.id)}
                   className={cn(
-                    'rounded-3xl border p-6 flex flex-col justify-between transition-all duration-300 relative cursor-pointer group hover:-translate-y-2',
+                    'rounded-3xl border p-6 flex flex-col justify-between transition-all duration-500 relative cursor-pointer group hover:-translate-y-2 overflow-hidden',
                     plan.mostPopular
                       ? (isSelected
-                        ? 'bg-gradient-to-b from-blue-600 to-indigo-700 text-white border-blue-400 ring-2 ring-blue-400/30 shadow-xl shadow-blue-600/20'
-                        : 'bg-gradient-to-b from-blue-600 to-indigo-700 text-white border-blue-600 shadow-xl shadow-blue-600/10')
+                        ? 'bg-gradient-to-b from-blue-600 to-indigo-700 text-white border-blue-400 ring-2 ring-blue-400/30 shadow-xl shadow-blue-600/20 lg:scale-105'
+                        : 'bg-gradient-to-b from-blue-600 to-indigo-700 text-white border-blue-600 shadow-xl shadow-blue-600/10 lg:scale-105 hover:shadow-[0_25px_50px_-12px_rgba(99,102,241,0.15)]')
                       : (isSelected
-                        ? 'bg-white text-gray-900 border-blue-500 ring-2 ring-blue-500/10 shadow-lg'
-                        : 'bg-white text-gray-900 border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.01)] hover:shadow-md hover:border-blue-200')
+                        ? 'bg-white text-gray-900 border-blue-500 ring-2 ring-blue-500/10 shadow-lg before:absolute before:top-0 before:left-0 before:right-0 before:h-[2.5px] before:bg-gradient-to-r before:from-blue-600 before:to-indigo-500 before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500'
+                        : 'bg-white text-gray-900 border-slate-200 shadow-sm hover:border-blue-200 hover:shadow-md before:absolute before:top-0 before:left-0 before:right-0 before:h-[2.5px] before:bg-gradient-to-r before:from-blue-600 before:to-indigo-500 before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500')
                   )}
                 >
                   <div>
@@ -193,13 +193,13 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                     <div className="mt-3 mb-4 flex justify-center">
                       {plan.custom ? (
                         <div className="flex items-center justify-center h-10 w-full">
-                          <span className={cn('text-3xl font-syne font-black text-slate-900 tracking-tight text-center', plan.mostPopular && 'text-white')}>
+                          <span className={cn('text-4xl font-syne font-black text-slate-900 tracking-tight text-center', plan.mostPopular && 'text-white')}>
                             Custom
                           </span>
                         </div>
                       ) : (
                         <div className="flex items-baseline justify-center gap-1.5 h-10 w-full">
-                          <span className={cn('text-3xl font-syne font-black text-slate-900 tracking-tight text-center', plan.mostPopular && 'text-white')}>
+                          <span className={cn('text-4xl font-syne font-black text-slate-900 tracking-tight text-center', plan.mostPopular && 'text-white')}>
                             {isTrialPlan ? 'Free' : `$${billing === 'monthly' ? plan.priceMonthly : getAnnualPrice(plan.priceMonthly)}`}
                           </span>
                           <span className={cn('text-xs font-bold text-slate-500 text-center', plan.mostPopular ? 'text-blue-200' : 'text-slate-400')}>
@@ -218,7 +218,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                         const featureText = feat.replace(/Custom/g, 'Tailored');
                         return (
                           <li key={idx} className="flex items-start text-xs font-semibold">
-                            <Check className={cn('h-4 w-4 mr-2 shrink-0 stroke-[3]', plan.mostPopular ? 'text-white' : 'text-blue-600')} />
+                            <Check className={cn('h-4 w-4 mr-2 shrink-0 stroke-[3]', plan.mostPopular ? 'text-white' : 'text-emerald-500')} />
                             <span className={cn('text-slate-700', plan.mostPopular && 'text-white')}>{featureText}</span>
                           </li>
                         );
@@ -233,10 +233,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                         type="button"
                         onClick={(e) => handleButtonClick(plan, e)}
                         className={cn(
-                          "w-full text-xs font-bold py-3.5 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer text-center block border",
+                          "w-full text-xs font-bold py-3.5 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-205 cursor-pointer text-center block border",
                           isSelected
                             ? "bg-white text-blue-600 border-white hover:bg-slate-50 shadow-md"
-                            : "border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent"
+                            : "btn-gradient text-white border-transparent"
                         )}
                         aria-label="Start free trial"
                       >
@@ -247,10 +247,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                         type="button"
                         onClick={(e) => handleButtonClick(plan, e)}
                         className={cn(
-                          "w-full text-xs font-bold py-3.5 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer text-center block border border-transparent",
+                          "w-full text-xs font-bold py-3.5 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-205 cursor-pointer text-center block border border-transparent",
                           isSelected
                             ? "bg-white text-slate-950 hover:bg-slate-50 shadow-md"
-                            : "bg-slate-950 hover:bg-slate-900 text-white"
+                            : "btn-gradient text-white"
                         )}
                         aria-label="Contact Sales"
                       >
@@ -261,12 +261,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                         type="button"
                         onClick={(e) => handleButtonClick(plan, e)}
                         className={cn(
-                          "w-full text-xs font-bold py-3.5 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer text-center block border border-transparent",
+                          "w-full text-xs font-bold py-3.5 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-205 cursor-pointer text-center block border border-transparent",
                           plan.mostPopular
                             ? "bg-white text-blue-600 hover:bg-slate-50"
-                            : (isSelected
-                              ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md"
-                              : "bg-blue-600 text-white hover:bg-blue-700")
+                            : "btn-gradient text-white"
                         )}
                         aria-label="Get started"
                       >
@@ -291,7 +289,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
       {/* Need Customization? Contact Sales CTA card (Dark Cinematic Card) */}
       <section
         ref={ctaRef}
-        className="w-full bg-white pb-24"
+        className="w-full bg-white pb-10 sm:pb-12"
       >
         <div className="site-container">
           <motion.div

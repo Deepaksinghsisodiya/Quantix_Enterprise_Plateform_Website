@@ -79,6 +79,8 @@ const Navbar = () => {
   };
 
 
+  const [scrolled, setScrolled] = useState(false);
+
   // Hide navbar only when scroll reaches the footer area (bottom of page)
   useEffect(() => {
     const footerBuffer = 300; // px from bottom where navbar starts hiding
@@ -86,6 +88,12 @@ const Navbar = () => {
     const handleScroll = () => {
       const scrollBottom = window.scrollY + window.innerHeight;
       const pageHeight = document.documentElement.scrollHeight;
+
+      if (window.scrollY > 24) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
 
       // Only hide when user is near the very bottom (footer zone)
       if (pageHeight - scrollBottom < footerBuffer) {
@@ -138,35 +146,42 @@ const Navbar = () => {
   const itemVariants = {
     hidden: { opacity: 0, y: 15 },
     show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 120, damping: 14 } },
-  };
-
-  return (
+  };  return (
     <>
       <nav
         className={cn(
-          'fixed top-0 left-0 z-50 w-full px-0 bg-transparent border-b border-transparent py-3 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]',
+          'fixed top-0 left-0 z-50 w-full px-0 bg-transparent py-3 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]',
           hidden && !mobileOpen ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'
         )}
       >
-        {/* Outer Card — consistent dark frosted glass (readable over any section) */}
         <div
           className={cn(
-            'mx-2 sm:mx-4 lg:mx-8 xl:mx-auto xl:max-w-7xl rounded-2xl transition-all duration-300',
-            mobileOpen
-              ? 'bg-[#06080F] border border-transparent shadow-none'
-              : 'bg-[#0a0e1a]/70 backdrop-blur-xl border border-white/[0.06] shadow-lg shadow-black/10'
+            'mx-2 sm:mx-4 lg:mx-8 xl:mx-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden',
+            scrolled
+              ? 'max-w-[92%] md:max-w-[85%] lg:max-w-[77.5%] xl:max-w-[1440px] rounded-xl bg-[#0a0e1a]/85 border border-white/[0.08] shadow-2xl shadow-black/30 backdrop-blur-2xl py-1.5'
+              : 'max-w-[94%] md:max-w-[88%] lg:max-w-[80%] xl:max-w-[1440px] rounded-2xl bg-[#0a0e1a]/70 border border-white/[0.05] shadow-lg shadow-black/10 backdrop-blur-xl py-2.5',
+            mobileOpen && 'bg-[#06080F] border border-transparent shadow-none max-w-full'
           )}
         >
+          {/* Top gradient line when scrolled */}
+          <div
+            className="absolute top-0 left-0 right-0 h-px transition-opacity duration-300 rounded-t-xl"
+            style={{
+              background: `linear-gradient(90deg, transparent, var(--blue-color), var(--indigo-color), transparent)`,
+              opacity: scrolled ? 1 : 0,
+            }}
+          />
+
           {/* Inner Content */}
-          <div className="w-full mx-auto py-2 px-3 sm:px-4 lg:px-6 xl:max-w-7xl flex items-center justify-between">
-            {/* Left: Smaller Quantix icon */}
+          <div className="w-full mx-auto px-3 sm:px-4 lg:px-6 flex items-center justify-between">
+            {/* Left: Brand icon/text */}
             <Link href="/" onClick={handleBrandClick} className="flex items-center gap-2 z-50 group">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 transition-all duration-300 group-hover:scale-110 group-hover:shadow-indigo-500/40">
-                <Layers className="h-3.5 w-3.5 text-white" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 transition-all duration-300 group-hover:scale-110 group-hover:shadow-indigo-500/40">
+                <Layers className="h-4 w-4 text-white" />
               </div>
               <span
                 className={cn(
-                  'text-base font-bold tracking-tight transition-all duration-300 font-syne uppercase group-hover:scale-[1.03]',
+                  'text-lg font-bold tracking-tight transition-all duration-300 font-syne uppercase group-hover:scale-[1.03]',
                   useWhiteText
                     ? 'text-white group-hover:text-blue-400'
                     : 'text-slate-900 group-hover:text-blue-600'
@@ -177,7 +192,7 @@ const Navbar = () => {
             </Link>
 
             {/* Center: Nav links */}
-            <ul className="hidden space-x-2 md:flex items-center">
+            <ul className="hidden space-x-2 lg:flex items-center">
               {LINKS.map((link) => {
                 const isActive = pathname === link.href;
                 return (
@@ -185,7 +200,7 @@ const Navbar = () => {
                     <Link
                       href={link.href}
                       className={cn(
-                        'relative z-10 text-[13px] font-semibold tracking-[0.08em] uppercase transition-all duration-300 block hover:scale-105 active:scale-95',
+                        'relative z-10 text-sm font-semibold tracking-[0.08em] uppercase transition-all duration-300 block hover:scale-105 active:scale-95',
                         isActive
                           ? (useWhiteText ? 'text-white font-bold' : 'text-blue-600 font-bold')
                           : useWhiteText
@@ -227,7 +242,7 @@ const Navbar = () => {
             </ul>
 
             {/* Right side: Auth State check */}
-            <div className="hidden md:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-3">
               {token ? (
                 <>
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/5 select-none">
@@ -249,7 +264,7 @@ const Navbar = () => {
                   <Link
                     href="/sign-in"
                     className={cn(
-                      'text-[13px] font-semibold tracking-[0.08em] uppercase transition-all duration-200 hover:scale-105 active:scale-95',
+                      'text-sm font-semibold tracking-[0.08em] uppercase transition-all duration-200 hover:scale-105 active:scale-95 mr-2',
                       useWhiteText ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-950'
                     )}
                   >
@@ -257,7 +272,7 @@ const Navbar = () => {
                   </Link>
                   <Link
                     href="/sign-up"
-                    className="flex items-center justify-center h-9 px-5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:from-blue-700 active:to-indigo-700 text-white font-bold text-[13px] tracking-[0.08em] uppercase transition-all duration-300 hover:scale-[1.06] active:scale-95 shadow-md shadow-indigo-600/10 hover:shadow-lg hover:shadow-indigo-600/30"
+                    className="flex items-center justify-center h-9 px-5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:from-blue-700 active:to-indigo-700 text-white font-bold text-[13px] tracking-[0.08em] uppercase transition-all duration-300 hover:scale-[1.06] active:scale-95 shadow-md shadow-indigo-600/15 hover:shadow-lg hover:shadow-indigo-600/35 animate-pulse-subtle"
                   >
                     Start Free Trial
                   </Link>
@@ -266,7 +281,7 @@ const Navbar = () => {
             </div>
 
             {/* Morphing Hamburger Menu Trigger for Mobile */}
-            <div className="flex md:hidden items-center z-50">
+            <div className="flex lg:hidden items-center z-50">
               <button
                 type="button"
                 className={cn(
