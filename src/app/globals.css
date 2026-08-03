@@ -8,13 +8,22 @@
   --color-darkBg: var(--dark-bg);
   --color-darkSurface: var(--dark-surface);
   
-  /* OVERRIDE Tailwind's default blue color palette dynamically */
-  /* This ensures that any hardcoded 'bg-blue-600' or 'text-blue-600' classes */
-  /* across the entire project will update automatically when the theme changes! */
+  /* OVERRIDE Tailwind's default blue, indigo, and violet palettes dynamically */
+  /* This flattens all gradients into a single, solid branded primary color */
   --color-blue-400: var(--primary-light);
   --color-blue-500: var(--primary-light);
   --color-blue-600: var(--primary-color);
   --color-blue-700: var(--primary-dark);
+  
+  --color-indigo-400: var(--primary-light);
+  --color-indigo-500: var(--primary-light);
+  --color-indigo-600: var(--primary-color);
+  --color-indigo-700: var(--primary-dark);
+  
+  --color-violet-400: var(--primary-light);
+  --color-violet-500: var(--primary-light);
+  --color-violet-600: var(--primary-color);
+  --color-violet-700: var(--primary-dark);
   
   /* Additional theme mappings */
   --color-background: var(--bg-color);
@@ -31,7 +40,7 @@
     50% {
       opacity: 0.95;
       transform: scale(1.02);
-      box-shadow: 0 0 15px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 0 15px rgba(37, 99, 235, 0.35);
     }
   }
 }
@@ -44,34 +53,14 @@ html {
   /* ==========================================
      THEME CONFIGURATION - CHANGE COLORS HERE
      ========================================== */
-  /* Theme Option 1: Premium Quantix Blue (Default)
-  --primary-color: #2563EB;
-  --primary-light: #3B82F6;
-  --primary-dark: #1D4ED8;
-  */
-  
-  /* Theme Option 2: Vibrant Indigo/Purple (Uncomment to use) */
-  --primary-color: #6366F1;
-  --primary-light: #818CF8;
-  --primary-dark: #4F46E5;
-  
-  
-
-  /* Theme Option 3: Modern Emerald Green (Uncomment to use)
-  --primary-color: #10B981;
-  --primary-light: #34D399;
-  --primary-dark: #059669;
-  */
-
-  /* Theme Option 4: Cyberpunk Crimson/Rose (Uncomment to use)
-  --primary-color: #F43F5E;
-  --primary-light: #FB7185;
-  --primary-dark: #E11D48;
-  */
+  /* Premium Solid Branded Blue Theme */
+  --primary-color: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1d4ed8;
 
   /* Global Core Colors */
   --bg-color: #ffffff;
-  --text-color: #171717;
+  --text-color: #111827;
   --dark-bg: #0F172A;
   --dark-surface: #1E293B;
 
@@ -85,30 +74,10 @@ html {
 
 /* Centralized container class to align every section's width across the project - aligned to Foretek's 1440px */
 .site-container {
-  width: 100%;
+  width: 95%;
   max-width: var(--site-max-width);
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-@media (min-width: 640px) {
-  .site-container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-@media (min-width: 1024px) {
-  .site-container {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-@media (min-width: 1280px) {
-  .site-container {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-  }
 }
 
 /* Smooth transitions */

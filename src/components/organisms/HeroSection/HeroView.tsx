@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { HeroSlide } from "./HeroData";
@@ -23,150 +23,153 @@ export interface HeroViewProps {
 export const HeroView: React.FC<HeroViewProps> = ({
   slides,
   activeIndex,
-  isPaused,
   onNext,
   onPrev,
   onGoTo,
-  onTogglePause,
   onMouseEnter,
   onMouseLeave,
 }) => {
+  // Helper to split heading text and highlight the last word
+  const formatHeading = (heading: string) => {
+    const words = heading.toLowerCase().split(' ');
+    if (words.length <= 1) return heading;
+    const lastWord = words.pop();
+    const mainText = words.join(' ');
+    
+    // Capitalize first letter of the first word
+    const formattedMainText = mainText.charAt(0).toUpperCase() + mainText.slice(1);
+    
+    return (
+      <>
+        {formattedMainText}{' '}
+        <span className="text-primary font-black lowercase first-letter:uppercase">{lastWord}</span>
+      </>
+    );
+  };
+
   return (
     <section
-      className="relative h-screen w-full overflow-hidden bg-[#06080F]"
+      className="relative min-h-[70vh] lg:min-h-[80vh] w-full bg-white flex items-center pt-16 pb-8 lg:pt-20 lg:pb-12 overflow-hidden border-b border-slate-100"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {/* Background image + Ken Burns zoom */}
-      <AnimatePresence mode="wait">
-        {slides.map((slide, i) =>
-          i === activeIndex ? (
+      {/* Subtle background glow */}
+      <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[100px] pointer-events-none z-0" />
+      <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] bg-primary/10 rounded-full blur-[100px] pointer-events-none z-0 opacity-30" />
+
+      <div className="relative z-10 site-container grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        {/* Left Column: Text & CTAs (6 cols on lg) */}
+        <div className="lg:col-span-6 flex flex-col items-center text-center lg:items-start lg:text-left">
+          <AnimatePresence mode="wait">
             <motion.div
-              key={slide.id}
-              className="absolute inset-0"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
+              key={activeIndex}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col items-center lg:items-start w-full"
             >
+              {/* Badge (Top Tag) */}
+              <span className="text-primary font-bold tracking-widest uppercase text-lg sm:text-xl mb-4">
+                {slides[activeIndex].badge}
+              </span>
+
+              {/* Heading */}
+              <h1 className="mb-4 max-w-2xl text-4xl sm:text-5xl md:text-6xl font-syne font-black text-slate-900 leading-tight tracking-tight">
+                {formatHeading(slides[activeIndex].heading)}
+              </h1>
+
+              {/* Subheading */}
+              <p className="mb-7 max-w-lg text-base sm:text-[17px] text-slate-500 leading-relaxed font-medium">
+                {slides[activeIndex].subheading}
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-row items-center gap-3.5">
+                <Link
+                  href={slides[activeIndex].primaryCta.href}
+                  className="rounded-full bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-extrabold text-sm tracking-wider uppercase px-8 py-3.5 shadow-md shadow-primary/15 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2"
+                >
+                  {slides[activeIndex].primaryCta.label}
+                </Link>
+                <Link
+                  href={slides[activeIndex].secondaryCta.href}
+                  className="rounded-full border border-slate-300 hover:bg-slate-50 text-slate-700 font-extrabold text-sm tracking-wider uppercase px-8 py-3.5 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2"
+                >
+                  {slides[activeIndex].secondaryCta.label}
+                </Link>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Right Column: Interactive Device Mockup Card (6 cols on lg) */}
+        <div className="lg:col-span-6 w-full flex justify-center items-center relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full aspect-[4/3] rounded-[1.75rem] overflow-hidden shadow-xl border border-slate-100/80 bg-slate-50 flex items-center justify-center group"
+            >
+              {/* Ken Burns image slider */}
               <motion.div
                 initial={{ scale: 1 }}
-                animate={{ scale: 1.06 }}
-                transition={{ duration: 5.2, ease: "linear" }}
+                animate={{ scale: 1.04 }}
+                transition={{ duration: 4.8, ease: "linear" }}
                 className="absolute inset-0"
               >
                 <Image
-                  src={slide.backgroundImage}
-                  alt={slide.heading}
+                  src={slides[activeIndex].backgroundImage}
+                  alt={slides[activeIndex].heading}
                   fill
-                  sizes="100vw"
                   priority
+                  sizes="(max-w-768px) 100vw, 50vw"
                   className="object-cover"
                 />
               </motion.div>
+
+              {/* Hover card border overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/25 via-transparent to-transparent pointer-events-none z-10 transition-opacity duration-300 group-hover:opacity-35" />
             </motion.div>
-          ) : null
-        )}
-      </AnimatePresence>
+          </AnimatePresence>
 
-      {/* Dark gradient overlay + Foretek solutions style mesh-bg and aurora glow layers */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#06080F]/80 via-[#06080F]/20 to-[#06080F]/95 z-0" />
-      <div className="absolute inset-0 mesh-bg opacity-[0.45] pointer-events-none z-0" />
-      {/* Glow orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none z-0" />
-      <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-indigo-600/30 rounded-full blur-[120px] pointer-events-none z-0 opacity-40" />
+          {/* Floating Navigation Controls (Chevron arrows on side of image) */}
+          <div className="absolute top-1/2 -translate-y-1/2 -left-3.5 -right-3.5 flex justify-between pointer-events-none z-20">
+            <button
+              type="button"
+              className="pointer-events-auto rounded-full bg-white shadow-md border border-slate-200/60 p-2 text-slate-700 hover:bg-slate-50 hover:scale-110 active:scale-95 transition-all duration-200"
+              onClick={onPrev}
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <button
+              type="button"
+              className="pointer-events-auto rounded-full bg-white shadow-lg border border-slate-200/60 p-2 text-slate-700 hover:bg-slate-50 hover:scale-110 active:scale-95 transition-all duration-200"
+              onClick={onNext}
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
 
-      {/* Content */}
-      <div className="relative z-10 flex h-full w-full flex-col items-center justify-center text-center md:items-start md:text-left site-container pt-20">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-center md:items-start w-full"
-          >
-            {/* Badge */}
-            <div className="mb-4 flex items-center space-x-2 rounded-full bg-white/10 px-3 py-1.5 backdrop-blur-xs border border-white/5">
-              <div className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
-              <span className="text-[10px] font-bold tracking-wider uppercase text-white">
-                {slides[activeIndex].badge}
-              </span>
-            </div>
-
-            {/* Heading */}
-            <h1 className="mb-4 max-w-4xl text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-syne font-extrabold tracking-tight uppercase text-white leading-[1.05]">
-              {slides[activeIndex].heading}
-            </h1>
-
-            {/* Subheading */}
-            <p className="mb-8 max-w-xl text-base sm:text-lg text-slate-200 leading-relaxed font-medium">
-              {slides[activeIndex].subheading}
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-row items-center justify-center md:justify-start gap-4">
-              <Link
-                href={slides[activeIndex].primaryCta.href}
-                className="rounded-full btn-gradient px-7 py-3.5 text-xs sm:text-sm font-bold text-white hover:scale-105 active:scale-95 transition-all duration-300"
-              >
-                {slides[activeIndex].primaryCta.label}
-              </Link>
-              <Link
-                href={slides[activeIndex].secondaryCta.href}
-                className="rounded-full btn-ghost px-7 py-3.5 text-xs sm:text-sm font-bold active:scale-105 active:scale-95 transition-all duration-300"
-              >
-                {slides[activeIndex].secondaryCta.label}
-              </Link>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+          {/* Dot indicators at the bottom of the column */}
+          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                className={cn(
+                  "h-1.5 rounded-full transition-all duration-300",
+                  i === activeIndex ? "bg-primary w-5" : "bg-slate-300 hover:bg-slate-400"
+                )}
+                onClick={() => onGoTo(i)}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-
-      {/* Arrow navigation */}
-      <button
-        type="button"
-        aria-label="Previous slide"
-        className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-1.5 md:p-3 text-white hover:bg-white/30 hover:scale-110 active:scale-95 transition-all duration-200 z-20"
-        onClick={onPrev}
-      >
-        <ChevronLeft className="h-4 w-4 md:h-6 md:w-6" />
-      </button>
-      <button
-        type="button"
-        aria-label="Next slide"
-        className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-1.5 md:p-3 text-white hover:bg-white/30 hover:scale-110 active:scale-95 transition-all duration-200 z-20"
-        onClick={onNext}
-      >
-        <ChevronRight className="h-4 w-4 md:h-6 md:w-6" />
-      </button>
-
-      {/* Dot indicators */}
-      <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            aria-label={`Slide ${i + 1}`}
-            className={cn(
-              "h-2 w-2 rounded-full transition-all duration-300",
-              i === activeIndex ? "bg-white w-8" : "bg-gray-500/80 hover:bg-gray-400"
-            )}
-            onClick={() => onGoTo(i)}
-          />
-        ))}
-      </div>
-
-      {/* Pause/Play */}
-      <button
-        type="button"
-        aria-label={isPaused ? "Play carousel" : "Pause carousel"}
-        className="absolute bottom-4 right-4 md:bottom-8 md:right-8 rounded-full bg-white/20 p-1.5 md:p-3 text-white hover:bg-white/30 transition-all duration-200 z-20"
-        onClick={onTogglePause}
-      >
-        {isPaused ? <Play className="h-4 w-4 md:h-5 md:w-5" /> : <Pause className="h-4 w-4 md:h-5 md:w-5" />}
-      </button>
     </section>
   );
 };

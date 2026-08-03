@@ -72,7 +72,7 @@ export default function HeroSlider() {
         }}
         pagination={{
           clickable: true,
-          bulletActiveClass: "swiper-pagination-bullet-active bg-blue-500 w-8 rounded-full",
+          bulletActiveClass: "swiper-pagination-bullet-active bg-primary w-8 rounded-full",
           bulletClass: "swiper-pagination-bullet bg-slate-500 w-2 h-2 opacity-100 rounded-full inline-block mx-1.5 transition-all duration-300 cursor-pointer hover:bg-slate-300",
         }}
         loop={true}
@@ -92,7 +92,7 @@ export default function HeroSlider() {
               <div className="max-w-4xl text-center flex flex-col items-center">
                 {/* Badge/Subtitle */}
                 <div className="mb-4 inline-flex items-center space-x-2 rounded-full bg-white/10 px-3 py-1.5 backdrop-blur-md border border-white/10">
-                  <div className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+                  <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
                   <span className="text-[10px] font-bold tracking-wider uppercase text-white">
                     {slide.subtitle}
                   </span>
@@ -119,7 +119,7 @@ export default function HeroSlider() {
                   </button>
                   <button
                     type="button"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-8 py-3.5 text-xs sm:text-sm font-bold text-white hover:bg-blue-700 transition-all duration-200 cursor-pointer shadow-lg hover:scale-102"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-xs sm:text-sm font-bold text-white hover:bg-primary-light transition-all duration-200 cursor-pointer shadow-lg hover:scale-102"
                   >
                     <Play className="h-3.5 w-3.5 fill-current" />
                     {slide.secondaryCtaText}
