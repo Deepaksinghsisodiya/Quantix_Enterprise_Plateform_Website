@@ -235,8 +235,8 @@ export const PlatformDemoSection = () => {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 items-start mb-20">
           <div className="space-y-4">
             <p className="text-blue-600 font-extrabold tracking-wider uppercase text-sm">PLATFORM DEMO</p>
-            <h2 className="text-4xl font-syne font-black text-slate-900 md:text-5xl leading-[1.1] tracking-tight uppercase">
-              KEEP THINGS FLOWING WITH THE ALL-IN-ONE POS
+            <h2 className="text-4xl font-syne font-black text-slate-900 md:text-5xl leading-[1.1] tracking-tight">
+              Keep Things Flowing with the All-in-One POS
             </h2>
           </div>
           <div className="space-y-6 lg:pt-4">

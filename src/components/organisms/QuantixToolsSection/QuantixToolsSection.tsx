@@ -110,10 +110,40 @@ export const QuantixToolsSection = () => {
     return () => cancelAnimationFrame(animationFrameId);
   }, [isHovered, singleSetWidth]);
 
+  const animatingRef = useRef(false);
+
+  // Custom smooth easing scroll animation (slow and gentle)
+  const animateScroll = (element: HTMLDivElement, to: number, duration: number) => {
+    if (animatingRef.current) return;
+    animatingRef.current = true;
+
+    const start = element.scrollLeft;
+    const change = to - start;
+    const startTime = performance.now();
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // easeOutQuart easing formula (slows down beautifully at the end)
+      const ease = 1 - Math.pow(1 - progress, 4);
+      
+      element.scrollLeft = start + change * ease;
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        animatingRef.current = false;
+      }
+    };
+
+    requestAnimationFrame(animate);
+  };
+
   // Click handler to slide card-by-card manually
   const handleScroll = (direction: "left" | "right") => {
     const container = scrollRef.current;
-    if (container) {
+    if (container && !animatingRef.current) {
       let currentScroll = container.scrollLeft;
 
       // Normalize scroll position before applying step if it drifts out of bounds
@@ -129,10 +159,8 @@ export const QuantixToolsSection = () => {
         ? currentScroll - cardWidth 
         : currentScroll + cardWidth;
 
-      container.scrollTo({
-        left: target,
-        behavior: "smooth"
-      });
+      // Animates over 1200ms (1.2s) for a very slow, premium transition
+      animateScroll(container, target, 1200);
     }
   };
 

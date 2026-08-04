@@ -15,7 +15,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "retail",
     badge: "RETAIL POS",
-    heading: "SMARTER RETAIL STARTS HERE",
+    heading: "Smarter Retail Starts Here",
     subheading: "Sync inventory, manage staff, and delight customers across every location.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
     secondaryCta: { label: "Explore Retail →", href: "#services" },
@@ -24,7 +24,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "restaurant",
     badge: "RESTAURANT POS",
-    heading: "THE ALL-IN-ONE POS FOR RESTAURANTS",
+    heading: "The All-in-One POS for Restaurants",
     subheading: "Manage tables, orders, and kitchen flow in real time — all from one device.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
     secondaryCta: { label: "Contact Sales →", href: "#contact" },
@@ -33,7 +33,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "cloud",
     badge: "CLOUD POS",
-    heading: "RUN YOUR BUSINESS FROM THE CLOUD",
+    heading: "Run Your Business from the Cloud",
     subheading: "Access real-time sales data, inventory levels, and analytics from anywhere in the world on any device.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
     secondaryCta: { label: "See Pricing →", href: "#pricing" },
@@ -42,7 +42,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "local",
     badge: "LOCAL BILLING POS",
-    heading: "OFFLINE-FIRST LOCAL BILLING TERMINAL",
+    heading: "Offline-First Local Billing Terminal",
     subheading: "Keep selling even when the internet goes down. Seamless local billing with automatic cloud sync when reconnected.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
     secondaryCta: { label: "See Offline Mode →", href: "#services" },

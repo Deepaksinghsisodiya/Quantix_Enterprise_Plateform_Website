@@ -131,7 +131,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
           <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
             INDUSTRIES
           </div>
-          <h2 className="text-3xl font-syne font-black text-gray-900 md:text-5xl uppercase leading-tight">
+          <h2 className="text-3xl font-syne font-black text-gray-900 md:text-5xl leading-tight">
             Tailored for your industry
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-slate-500 font-medium">

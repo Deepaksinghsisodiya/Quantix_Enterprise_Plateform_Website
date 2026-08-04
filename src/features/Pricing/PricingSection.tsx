@@ -99,7 +99,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
             <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
               PRICING
             </div>
-            <h2 className="text-3xl font-syne font-black tracking-tight text-gray-900 sm:text-5xl uppercase leading-tight">
+            <h2 className="text-3xl font-syne font-black tracking-tight text-gray-900 sm:text-5xl leading-tight">
               Simple, transparent pricing
             </h2>
             <p className="mt-4 text-base sm:text-lg text-slate-500 font-medium max-w-2xl mx-auto">

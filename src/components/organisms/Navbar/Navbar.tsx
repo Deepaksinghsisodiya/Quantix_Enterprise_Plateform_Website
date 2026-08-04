@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Layers, LogOut, User, ChevronDown, ChevronRight, Monitor, Tablet, Globe, Tv, Smartphone, CreditCard, Scan, Printer, RefreshCw, BarChart3, MessageSquare, Grid, Award, Store, Utensils, ShoppingBag, Coffee, Truck, Download, Server, Laptop, ShieldCheck, Check, Sparkles, Headset } from 'lucide-react';
+import { Layers, LogOut, User, ChevronDown, ChevronRight, Monitor, Tablet, Globe, Tv, Smartphone, CreditCard, Scan, Printer, RefreshCw, BarChart3, MessageSquare, Grid, Award, Store, Utensils, ShoppingBag, Coffee, Truck, Download, Server, Laptop, ShieldCheck, Check, Sparkles, Headset, LogIn } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
@@ -60,28 +60,14 @@ const SERVICES_LIST = [
   { title: 'Food Trucks & Takeaways', slug: 'food-trucks', desc: 'Queue dispatch, SMS queues', icon: Truck, image: 'https://images.unsplash.com/photo-1565123409695-7b5ef63a24b5?auto=format&fit=crop&w=120&h=120&q=80' },
 ];
 
-const INTEGRATIONS_PAYMENTS = [
-  { title: 'Stripe Payments', desc: 'Secure online & card payments', slug: 'stripe', image: 'https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'PayPal Checkout', desc: 'Global digital wallet sync', slug: 'paypal', image: 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'Adyen Terminal', desc: 'Enterprise card payments', slug: 'adyen', image: 'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=120&h=120&q=80' },
+const INTEGRATIONS_FINANCE = [
+  { title: 'Stripe Payments', desc: 'Secure online & card payments', slug: 'stripe', icon: CreditCard, image: 'https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Xero Accounting', desc: 'Auto-sync invoices & ledger', slug: 'xero', icon: BarChart3, image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=120&h=120&q=80' },
 ];
 
-const INTEGRATIONS_ACCOUNTING = [
-  { title: 'Xero Accounting', desc: 'Auto-sync invoices & ledger', slug: 'xero', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'QuickBooks Online', desc: 'Track sales taxes & books', slug: 'quickbooks', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'Sage Business', desc: 'Automated cash flow reporting', slug: 'sage', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=120&h=120&q=80' },
-];
-
-const INTEGRATIONS_DELIVERY = [
-  { title: 'DoorDash Drive', desc: 'On-demand delivery dispatch', slug: 'doordash', image: 'https://images.unsplash.com/photo-1526367790999-0150786486a9?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'Uber Eats Sync', desc: 'Receive direct platform orders', slug: 'uber-eats', image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'Deliveroo Connect', desc: 'Sync menu and kitchen tickets', slug: 'deliveroo', image: 'https://images.unsplash.com/photo-1565123409695-7b5ef63a24b5?auto=format&fit=crop&w=120&h=120&q=80' },
-];
-
-const INTEGRATIONS_ECOMMERCE = [
-  { title: 'Shopify Sync', desc: 'Bi-directional stock sync', slug: 'shopify', image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'WooCommerce', desc: 'Live WordPress stock hook', slug: 'woocommerce', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'Magento (Adobe)', desc: 'Enterprise catalog & order hub', slug: 'magento', image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=120&h=120&q=80' },
+const INTEGRATIONS_OPERATIONS = [
+  { title: 'Shopify Sync', desc: 'Bi-directional stock sync', slug: 'shopify', icon: Store, image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'DoorDash Drive', desc: 'On-demand delivery dispatch', slug: 'doordash', icon: Truck, image: 'https://images.unsplash.com/photo-1526367790999-0150786486a9?auto=format&fit=crop&w=120&h=120&q=80' },
 ];
 
 const DOWNLOADS_LIST = [
@@ -102,6 +88,15 @@ const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const itemColors = [
+    { bg: 'bg-blue-50/70 border-blue-100/50 text-blue-600', hover: 'group-hover/item:bg-blue-600 group-hover/item:text-white group-hover/item:border-blue-600' },
+    { bg: 'bg-purple-50/70 border-purple-100/50 text-purple-600', hover: 'group-hover/item:bg-purple-600 group-hover/item:text-white group-hover/item:border-purple-600' },
+    { bg: 'bg-emerald-50/70 border-emerald-100/50 text-emerald-600', hover: 'group-hover/item:bg-emerald-600 group-hover/item:text-white group-hover/item:border-emerald-600' },
+    { bg: 'bg-rose-50/70 border-rose-100/50 text-rose-600', hover: 'group-hover/item:bg-rose-600 group-hover/item:text-white group-hover/item:border-rose-600' },
+    { bg: 'bg-amber-50/70 border-amber-100/50 text-amber-600', hover: 'group-hover/item:bg-amber-600 group-hover/item:text-white group-hover/item:border-amber-600' },
+    { bg: 'bg-teal-50/70 border-teal-100/50 text-teal-600', hover: 'group-hover/item:bg-teal-600 group-hover/item:text-white group-hover/item:border-teal-600' },
+  ];
 
   const token = useSelector((state: RootState) => state.auth.token);
   const { data: meData } = useGetMeQuery(undefined, { skip: !token });
@@ -215,7 +210,7 @@ const Navbar = () => {
         </div>
 
         <nav
-          className="w-full bg-white border-b border-slate-200/80 shadow-sm py-3 relative"
+          className="w-full bg-white border-b border-slate-200/80 shadow-sm py-5 relative"
           onMouseLeave={() => setOpenMegaMenu(null)}
         >
           <div
@@ -226,11 +221,11 @@ const Navbar = () => {
             <div className="w-full flex items-center justify-between">
               {/* Left: Brand icon/text */}
               <Link href="/" onClick={handleBrandClick} className="flex items-center gap-2 z-50 group">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white shadow-md shadow-primary/20 transition-all duration-300 group-hover:scale-110 group-hover:shadow-primary/40">
-                  <Layers className="h-4 w-4 text-white" />
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white shadow-md shadow-primary/20 transition-all duration-300 group-hover:scale-110 group-hover:shadow-primary/40">
+                  <Layers className="h-4.5 w-4.5 text-white" />
                 </div>
                 <span
-                  className="text-lg font-bold tracking-tight transition-all duration-300 font-syne uppercase text-slate-900 group-hover:text-primary group-hover:scale-[1.03]"
+                  className="text-xl font-bold tracking-tight transition-all duration-300 font-syne uppercase text-slate-900 group-hover:text-primary group-hover:scale-[1.03]"
                 >
                   Quantix
                 </span>
@@ -257,7 +252,7 @@ const Navbar = () => {
                       <Link
                         href={link.href}
                         className={cn(
-                          'relative z-10 text-[13px] font-semibold transition-all duration-300 block hover:scale-105 active:scale-95',
+                          'relative z-10 text-[15px] font-semibold transition-all duration-300 block hover:scale-105 active:scale-95',
                           isActive || isMenuOpen
                             ? 'text-primary font-bold'
                             : 'text-slate-600 group-hover:text-slate-950'
@@ -313,13 +308,14 @@ const Navbar = () => {
                   <>
                     <Link
                       href="/sign-in"
-                      className="text-xs font-semibold transition-all duration-200 hover:scale-105 active:scale-95 mr-3 text-slate-600 hover:text-slate-950"
+                      className="group flex items-center justify-center gap-1.5 h-10 px-4.5 rounded-lg border border-slate-200 hover:border-slate-300 dark:border-slate-800 bg-white hover:bg-slate-50 text-slate-700 font-extrabold text-[13px] transition-all duration-300 hover:scale-[1.04] active:scale-95 shadow-sm"
                     >
+                      <LogIn size={14} className="text-slate-400 group-hover:text-slate-650 transition-colors" />
                       Sign In
                     </Link>
                     <Link
                       href="/sign-up"
-                      className="flex items-center justify-center h-8 px-4 rounded-lg bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-bold text-xs transition-all duration-300 hover:scale-[1.06] active:scale-95 shadow-md shadow-primary/15 hover:shadow-lg hover:shadow-primary/35 animate-pulse-subtle"
+                      className="flex items-center justify-center h-10 px-5.5 rounded-lg bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-extrabold text-[13px] transition-all duration-300 hover:scale-[1.06] active:scale-95 shadow-md shadow-primary/15 hover:shadow-lg hover:shadow-primary/35 animate-pulse-subtle"
                     >
                       Start Free Trial
                     </Link>
@@ -360,12 +356,11 @@ const Navbar = () => {
           <AnimatePresence>
             {openMegaMenu === 'Features' && (
               <motion.div
-                initial={{ opacity: 0, scaleY: 0.95 }}
-                animate={{ opacity: 1, scaleY: 1 }}
-                exit={{ opacity: 0, scaleY: 0.95 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                style={{ transformOrigin: 'top' }}
-                className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 15 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute top-full left-0 right-0 mt-0 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-2xl py-8 z-50 text-left overflow-hidden"
                 onMouseEnter={() => setOpenMegaMenu('Features')}
                 onMouseLeave={() => setOpenMegaMenu(null)}
               >
@@ -378,124 +373,74 @@ const Navbar = () => {
                     <Link
                       href="/services"
                       onClick={() => setOpenMegaMenu(null)}
-                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                      className="group/card flex flex-col p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-primary/30"
                     >
-                      <div className="h-14 w-14 rounded-xl overflow-hidden shrink-0 border border-slate-200 relative bg-slate-100">
-                        <img src="/images/hero-restaurant.jpg" alt="Restaurant POS" className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Restaurant POS</span>
+                        <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">Speedy</span>
                       </div>
-                      <div>
-                        <div className="flex items-center gap-1">
-                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Restaurant POS</span>
-                          <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">Speedy</span>
-                        </div>
-                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                          Complete restaurant ecosystem for table management, kitchen display sync, and payment splits.
-                        </p>
-                      </div>
+                      <p className="text-[13px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                        Complete restaurant ecosystem for table management, kitchen display sync, and payment splits.
+                      </p>
                     </Link>
 
                     {/* Card 2: Retail POS */}
                     <Link
                       href="/services"
                       onClick={() => setOpenMegaMenu(null)}
-                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                      className="group/card flex flex-col p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-primary/30"
                     >
-                      <div className="h-14 w-14 rounded-xl overflow-hidden shrink-0 border border-slate-200 relative bg-slate-100">
-                        <img src="/images/hero-retail.jpg" alt="Retail POS" className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Retail POS</span>
+                        <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">Smart</span>
                       </div>
-                      <div>
-                        <div className="flex items-center gap-1">
-                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Retail POS</span>
-                          <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">Smart</span>
-                        </div>
-                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                          Smarter retail checkout terminal, barcode scanners support, and multi-store inventory sync.
-                        </p>
-                      </div>
+                      <p className="text-[13px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                        Smarter retail checkout terminal, barcode scanners support, and multi-store inventory sync.
+                      </p>
                     </Link>
                   </div>
 
                   {/* Center Column: Explore Products (4 cols) */}
                   <div className="col-span-4 border-r border-slate-100 pr-8 space-y-4">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Explore Products</span>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1.5">
                       {PRODUCTS_LIST.map((item) => (
                         <Link
                           key={item.title}
                           href={`/features/${item.slug}`}
                           onClick={() => setOpenMegaMenu(null)}
-                          className="group/item flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
+                          className="group/item flex flex-col p-3.5 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-primary/30 transition-all duration-200"
                         >
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
-                            <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
-                          </div>
-                          <div>
-                            <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
-                              {item.title}
-                            </span>
-                            <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
-                              {item.desc}
-                            </span>
-                          </div>
+                          <span className="text-sm font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                            {item.title}
+                          </span>
+                          <span className="text-xs text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-1 leading-tight">
+                            {item.desc}
+                          </span>
                         </Link>
                       ))}
                     </div>
                   </div>
 
-                  {/* Right Column: Hardware & operations */}
-                  <div className="col-span-4 grid grid-cols-2 gap-6">
-                    {/* Column 2: Hardware & Devices */}
-                    <div className="space-y-4">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Hardware & Devices</span>
-                      <div className="flex flex-col gap-1">
-                        {HARDWARE_LIST.map((item) => (
-                          <Link
-                            key={item.title}
-                            href={`/features/${item.slug}`}
-                            onClick={() => setOpenMegaMenu(null)}
-                            className="group/item flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
-                          >
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
-                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
-                            </div>
-                            <div>
-                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
-                                {item.title}
-                              </span>
-                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
-                                {item.desc}
-                              </span>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Column 3: Advanced Operations */}
-                    <div className="space-y-4">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Operations</span>
-                      <div className="flex flex-col gap-1">
-                        {OPERATIONS_LIST.map((item) => (
-                          <Link
-                            key={item.title}
-                            href={`/features/${item.slug}`}
-                            onClick={() => setOpenMegaMenu(null)}
-                            className="group/item flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
-                          >
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
-                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
-                            </div>
-                            <div>
-                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
-                                {item.title}
-                              </span>
-                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
-                                {item.desc}
-                              </span>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
+                  {/* Right Column: Operations */}
+                  <div className="col-span-4 space-y-4">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Operations</span>
+                    <div className="flex flex-col gap-1.5">
+                      {OPERATIONS_LIST.map((item) => (
+                        <Link
+                          key={item.title}
+                          href={`/features/${item.slug}`}
+                          onClick={() => setOpenMegaMenu(null)}
+                          className="group/item flex flex-col p-3.5 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-primary/30 transition-all duration-200"
+                        >
+                          <span className="text-sm font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                            {item.title}
+                          </span>
+                          <span className="text-xs text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-1 leading-tight">
+                            {item.desc}
+                          </span>
+                        </Link>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -505,14 +450,13 @@ const Navbar = () => {
 
           {/* Services Mega Menu Dropdown */}
           <AnimatePresence>
-            {openMegaMenu === 'Services' && (
+             {openMegaMenu === 'Services' && (
               <motion.div
-                initial={{ opacity: 0, scaleY: 0.95 }}
-                animate={{ opacity: 1, scaleY: 1 }}
-                exit={{ opacity: 0, scaleY: 0.95 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                style={{ transformOrigin: 'top' }}
-                className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 15 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute top-full left-0 right-0 mt-0 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-2xl py-8 z-50 text-left overflow-hidden"
                 onMouseEnter={() => setOpenMegaMenu('Services')}
                 onMouseLeave={() => setOpenMegaMenu(null)}
               >
@@ -524,19 +468,14 @@ const Navbar = () => {
                         key={item.title}
                         href={`/solutions/${item.slug}`}
                         onClick={() => setOpenMegaMenu(null)}
-                        className="group/card flex flex-col gap-3 p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                        className="group/card flex flex-col gap-1.5 p-4.5 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-primary/30"
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
-                          <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
-                        </div>
-                        <div>
-                          <span className="text-[13px] font-bold text-slate-800 group-hover/card:text-primary transition-colors block leading-tight">
-                            {item.title}
-                          </span>
-                          <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                            {item.desc}
-                          </p>
-                        </div>
+                        <span className="text-[15px] font-bold text-slate-800 group-hover/card:text-primary transition-colors block leading-tight">
+                          {item.title}
+                        </span>
+                        <p className="text-[13px] text-slate-500 font-medium leading-relaxed">
+                          {item.desc}
+                        </p>
                       </Link>
                     ))}
                   </div>
@@ -549,12 +488,11 @@ const Navbar = () => {
           <AnimatePresence>
             {openMegaMenu === 'Integrations' && (
               <motion.div
-                initial={{ opacity: 0, scaleY: 0.95 }}
-                animate={{ opacity: 1, scaleY: 1 }}
-                exit={{ opacity: 0, scaleY: 0.95 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                style={{ transformOrigin: 'top' }}
-                className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 15 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute top-full left-0 right-0 mt-0 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-2xl py-8 z-50 text-left overflow-hidden"
                 onMouseEnter={() => setOpenMegaMenu('Integrations')}
                 onMouseLeave={() => setOpenMegaMenu(null)}
               >
@@ -567,148 +505,74 @@ const Navbar = () => {
                     <Link
                       href="/api-docs"
                       onClick={() => setOpenMegaMenu(null)}
-                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                      className="group/card flex flex-col p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-primary/30"
                     >
-                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
-                        <Grid className="h-6 w-6" />
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Custom API Docs</span>
+                        <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">REST API</span>
                       </div>
-                      <div>
-                        <div className="flex items-center gap-1">
-                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Custom API Docs</span>
-                          <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">REST API</span>
-                        </div>
-                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                          Connect custom terminals, CRM databases, or e-commerce storefronts using our flexible webhooks.
-                        </p>
-                      </div>
+                      <p className="text-[13px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                        Connect custom terminals, CRM databases, or e-commerce storefronts using our flexible webhooks.
+                      </p>
                     </Link>
 
                     {/* Card 2: Request Integration */}
                     <Link
                       href="/integrations"
                       onClick={() => setOpenMegaMenu(null)}
-                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                      className="group/card flex flex-col p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-primary/30"
                     >
-                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
-                        <RefreshCw className="h-6 w-6" />
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Request a Link</span>
+                        <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">Free</span>
                       </div>
-                      <div>
-                        <div className="flex items-center gap-1">
-                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Request a Link</span>
-                          <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">Free</span>
-                        </div>
-                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                          Tell us which payment processor or platform you use, and our team will build the integration.
-                        </p>
-                      </div>
+                      <p className="text-[13px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                        Tell us which payment processor or platform you use, and our team will build the integration.
+                      </p>
                     </Link>
                   </div>
 
-                  {/* Right Columns (8 cols): 4 columns of categories */}
-                  <div className="col-span-8 grid grid-cols-4 gap-6">
-                    {/* Category 1: Payments */}
+                  {/* Right Columns (8 cols): 2 columns of integrations */}
+                  <div className="col-span-8 grid grid-cols-2 gap-8">
+                    {/* Column 1: Payments & Accounting */}
                     <div className="space-y-4">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Payments & Cards</span>
-                      <div className="flex flex-col gap-1">
-                        {INTEGRATIONS_PAYMENTS.map((item) => (
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Finance & Accounting</span>
+                      <div className="flex flex-col gap-1.5">
+                        {INTEGRATIONS_FINANCE.map((item) => (
                           <Link
                             key={item.title}
                             href="/integrations"
                             onClick={() => setOpenMegaMenu(null)}
-                            className="group/item flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
+                            className="group/item flex flex-col p-3.5 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-primary/30 transition-all duration-200"
                           >
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
-                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
-                            </div>
-                            <div>
-                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
-                                {item.title}
-                              </span>
-                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
-                                {item.desc}
-                              </span>
-                            </div>
+                            <span className="text-sm font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                              {item.title}
+                            </span>
+                            <span className="text-xs text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-1 leading-tight">
+                              {item.desc}
+                            </span>
                           </Link>
                         ))}
                       </div>
                     </div>
 
-                    {/* Category 2: Accounting */}
+                    {/* Column 2: Delivery & Sales */}
                     <div className="space-y-4">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Accounting & ERP</span>
-                      <div className="flex flex-col gap-1">
-                        {INTEGRATIONS_ACCOUNTING.map((item) => (
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Delivery & Sales</span>
+                      <div className="flex flex-col gap-1.5">
+                        {INTEGRATIONS_OPERATIONS.map((item) => (
                           <Link
                             key={item.title}
                             href="/integrations"
                             onClick={() => setOpenMegaMenu(null)}
-                            className="group/item flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
+                            className="group/item flex flex-col p-3.5 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-primary/30 transition-all duration-200"
                           >
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
-                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
-                            </div>
-                            <div>
-                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
-                                {item.title}
-                              </span>
-                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
-                                {item.desc}
-                              </span>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Category 3: Delivery */}
-                    <div className="space-y-4">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Delivery Sync</span>
-                      <div className="flex flex-col gap-1">
-                        {INTEGRATIONS_DELIVERY.map((item) => (
-                          <Link
-                            key={item.title}
-                            href="/integrations"
-                            onClick={() => setOpenMegaMenu(null)}
-                            className="group/item flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
-                          >
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
-                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
-                            </div>
-                            <div>
-                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
-                                {item.title}
-                              </span>
-                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
-                                {item.desc}
-                              </span>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Category 4: E-Commerce */}
-                    <div className="space-y-4">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">E-Commerce</span>
-                      <div className="flex flex-col gap-1">
-                        {INTEGRATIONS_ECOMMERCE.map((item) => (
-                          <Link
-                            key={item.title}
-                            href="/integrations"
-                            onClick={() => setOpenMegaMenu(null)}
-                            className="group/item flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
-                          >
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
-                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
-                            </div>
-                            <div>
-                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
-                                {item.title}
-                              </span>
-                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
-                                {item.desc}
-                              </span>
-                            </div>
+                            <span className="text-sm font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                              {item.title}
+                            </span>
+                            <span className="text-xs text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-1 leading-tight">
+                              {item.desc}
+                            </span>
                           </Link>
                         ))}
                       </div>
@@ -723,12 +587,11 @@ const Navbar = () => {
           <AnimatePresence>
             {openMegaMenu === 'Downloads' && (
               <motion.div
-                initial={{ opacity: 0, scaleY: 0.95 }}
-                animate={{ opacity: 1, scaleY: 1 }}
-                exit={{ opacity: 0, scaleY: 0.95 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                style={{ transformOrigin: 'top' }}
-                className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 15 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute top-full left-0 right-0 mt-0 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-2xl py-8 z-50 text-left overflow-hidden"
                 onMouseEnter={() => setOpenMegaMenu('Downloads')}
                 onMouseLeave={() => setOpenMegaMenu(null)}
               >
@@ -741,40 +604,30 @@ const Navbar = () => {
                     <Link
                       href="/downloads"
                       onClick={() => setOpenMegaMenu(null)}
-                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                      className="group/card flex flex-col p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-primary/30"
                     >
-                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
-                        <ShieldCheck className="h-6 w-6" />
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Setup Guide</span>
+                        <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">Secure</span>
                       </div>
-                      <div>
-                        <div className="flex items-center gap-1">
-                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Setup Guide</span>
-                          <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">Secure</span>
-                        </div>
-                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                          Read hardware compatibility list, scanner setup, and receipt printer driver installation instructions.
-                        </p>
-                      </div>
+                      <p className="text-[13px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                        Read hardware compatibility list, scanner setup, and receipt printer driver installation instructions.
+                      </p>
                     </Link>
 
                     {/* Card 2: Release Notes */}
                     <Link
                       href="/downloads"
                       onClick={() => setOpenMegaMenu(null)}
-                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                      className="group/card flex flex-col p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-primary/30"
                     >
-                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
-                        <Download className="h-6 w-6" />
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Release Notes</span>
+                        <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">v2.1.0</span>
                       </div>
-                      <div>
-                        <div className="flex items-center gap-1">
-                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Release Notes</span>
-                          <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">v2.1.0</span>
-                        </div>
-                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                          View changelogs, database schema migrations, and performance patches in the latest alpha build.
-                        </p>
-                      </div>
+                      <p className="text-[13px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                        View changelogs, database schema migrations, and performance patches in the latest alpha build.
+                      </p>
                     </Link>
                   </div>
 
@@ -785,25 +638,22 @@ const Navbar = () => {
                         key={item.title}
                         href="/downloads"
                         onClick={() => setOpenMegaMenu(null)}
-                        className="group/card flex flex-col justify-between p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                        className="group/card flex flex-col justify-between p-5 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-primary/30"
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
-                          <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
-                        </div>
-                        <div className="mt-4 flex-1">
+                        <div className="flex-1">
                           <div className="flex items-center gap-1.5 flex-wrap">
-                            <span className="text-[13px] font-bold text-slate-800 group-hover/card:text-primary transition-colors block leading-tight">
+                            <span className="text-[15px] font-bold text-slate-800 group-hover/card:text-primary transition-colors block leading-tight">
                               {item.title}
                             </span>
-                            <span className="text-[9px] text-primary font-bold uppercase bg-primary/10 px-1.5 py-0.5 rounded">
+                            <span className="text-[10px] text-primary font-bold uppercase bg-primary/10 px-1.5 py-0.5 rounded">
                               {item.badge}
                             </span>
                           </div>
-                          <p className="text-[11px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                          <p className="text-[13px] text-slate-500 mt-1.5 font-medium leading-relaxed">
                             {item.desc}
                           </p>
                         </div>
-                        <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-400 group-hover/card:text-primary transition-colors">
+                        <div className="mt-6 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-400 group-hover/card:text-primary transition-colors">
                           <span>{item.size}</span>
                           <span>Download &rarr;</span>
                         </div>
@@ -819,12 +669,11 @@ const Navbar = () => {
           <AnimatePresence>
             {openMegaMenu === 'Pricing' && (
               <motion.div
-                initial={{ opacity: 0, scaleY: 0.95 }}
-                animate={{ opacity: 1, scaleY: 1 }}
-                exit={{ opacity: 0, scaleY: 0.95 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                style={{ transformOrigin: 'top' }}
-                className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 15 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute top-full left-0 right-0 mt-0 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-2xl py-8 z-50 text-left overflow-hidden"
                 onMouseEnter={() => setOpenMegaMenu('Pricing')}
                 onMouseLeave={() => setOpenMegaMenu(null)}
               >
@@ -837,40 +686,30 @@ const Navbar = () => {
                     <Link
                       href="/sign-up"
                       onClick={() => setOpenMegaMenu(null)}
-                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                      className="group/card flex flex-col p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-primary/30"
                     >
-                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
-                        <Sparkles className="h-6 w-6" />
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">3-Day Free Trial</span>
+                        <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">No Card</span>
                       </div>
-                      <div>
-                        <div className="flex items-center gap-1">
-                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">3-Day Free Trial</span>
-                          <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">No Card</span>
-                        </div>
-                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                          Get instant access to cloud databases, custom catalog exports, and sync dashboard tools.
-                        </p>
-                      </div>
+                      <p className="text-[13px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                        Get instant access to cloud databases, custom catalog exports, and sync dashboard tools.
+                      </p>
                     </Link>
 
                     {/* Card 2: Contact Sales */}
                     <Link
                       href="/contact/sales"
                       onClick={() => setOpenMegaMenu(null)}
-                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                      className="group/card flex flex-col p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-primary/30"
                     >
-                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
-                        <Headset className="h-6 w-6" />
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Custom Deployment</span>
+                        <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">Enterprise</span>
                       </div>
-                      <div>
-                        <div className="flex items-center gap-1">
-                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Custom Deployment</span>
-                          <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">Enterprise</span>
-                        </div>
-                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                          Need dedicated SLA uptime contracts, custom webhooks, or localized on-site installation help?
-                        </p>
-                      </div>
+                      <p className="text-[13px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                        Need dedicated SLA uptime contracts, custom webhooks, or localized on-site installation help?
+                      </p>
                     </Link>
                   </div>
 
@@ -882,17 +721,14 @@ const Navbar = () => {
                         href="/pricing"
                         onClick={() => setOpenMegaMenu(null)}
                         className={cn(
-                          "group/card flex flex-col justify-between p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50 relative",
-                          item.popular && "bg-blue-50/20 hover:bg-blue-50/30 border-blue-100/30"
+                          "group/card flex flex-col justify-between p-5 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-primary/30 relative",
+                          item.popular && "bg-blue-50/20 hover:bg-blue-50/30 border-blue-100/30 hover:border-primary/40"
                         )}
                       >
                         <div>
                           <div className="flex items-center justify-between">
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
-                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
-                            </div>
                             <span className={cn(
-                              "text-[9px] font-bold uppercase px-1.5 py-0.5 rounded",
+                              "text-[10px] font-bold uppercase px-1.5 py-0.5 rounded",
                               item.popular
                                 ? "text-blue-600 bg-blue-500/10"
                                 : "text-slate-500 bg-slate-100"
@@ -901,17 +737,17 @@ const Navbar = () => {
                             </span>
                           </div>
                           <div className="mt-4">
-                            <span className="text-[13px] font-bold text-slate-800 group-hover/card:text-primary transition-colors block leading-tight">
+                            <span className="text-[15px] font-bold text-slate-800 group-hover/card:text-primary transition-colors block leading-tight">
                               {item.title}
                             </span>
-                            <p className="text-[11px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                            <p className="text-[13px] text-slate-500 mt-1.5 font-medium leading-relaxed">
                               {item.desc}
                             </p>
                           </div>
                         </div>
                         <div className="mt-6 pt-3 border-t border-slate-100 flex items-baseline justify-between">
                           <span className="text-lg font-black text-slate-900">{item.price}</span>
-                          <span className="text-[10px] font-bold text-primary group-hover/card:underline">Select &rarr;</span>
+                          <span className="text-xs font-bold text-primary group-hover/card:underline">Select &rarr;</span>
                         </div>
                       </Link>
                     ))}

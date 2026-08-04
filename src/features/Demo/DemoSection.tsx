@@ -82,7 +82,7 @@ export const DemoSection: React.FC<DemoSectionProps> = ({
             <Sparkles className="h-3.5 w-3.5 fill-blue-100" />
             SEE IT IN ACTION
           </div>
-          <h2 className="text-3xl font-syne font-black text-gray-900 md:text-5xl uppercase leading-tight">
+          <h2 className="text-3xl font-syne font-black text-gray-900 md:text-5xl leading-tight">
             Watch Quantix work for you
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-gray-500 font-medium">

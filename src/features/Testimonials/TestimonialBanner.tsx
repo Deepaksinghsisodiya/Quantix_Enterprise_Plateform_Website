@@ -146,7 +146,7 @@ export const TestimonialBanner: React.FC<TestimonialBannerProps> = ({
             {/* Styled quotes marker */}
             <Quote className="h-10 w-10 text-blue-500/80 mb-2 rotate-180 shrink-0" />
             
-            <h2 className="text-2xl font-syne font-black uppercase md:text-4xl tracking-tight leading-tight max-w-3xl">
+            <h2 className="text-2xl font-syne font-black md:text-4xl tracking-tight leading-tight max-w-3xl">
               {current.quote}
             </h2>
             

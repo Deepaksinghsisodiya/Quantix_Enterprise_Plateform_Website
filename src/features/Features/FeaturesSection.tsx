@@ -138,7 +138,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
           </div>
           <h2
             id="features-section"
-            className="text-4xl font-syne font-black tracking-tight text-slate-900 sm:text-5xl uppercase leading-[1.1]"
+            className="text-4xl font-syne font-black tracking-tight text-slate-900 sm:text-5xl leading-[1.1]"
           >
             Every tool your business needs
           </h2>

@@ -40,7 +40,7 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
           <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
             HOW IT WORKS
           </div>
-          <h2 className="text-4xl font-syne font-black text-slate-900 md:text-5xl uppercase leading-[1.1]">
+          <h2 className="text-4xl font-syne font-black text-slate-900 md:text-5xl leading-[1.1]">
             Up and running in minutes
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-slate-500 font-medium">

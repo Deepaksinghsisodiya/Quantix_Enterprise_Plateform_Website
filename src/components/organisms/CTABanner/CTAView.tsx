@@ -56,7 +56,7 @@ export const CTAView: React.FC<CTAViewProps> = ({
             {badge}
           </div>
 
-          <h2 className="text-4xl font-syne font-black text-white sm:text-5xl uppercase tracking-tight leading-[1.1]">
+          <h2 className="text-4xl font-syne font-black text-white sm:text-5xl tracking-tight leading-[1.1]">
             {heading}
           </h2>
 
