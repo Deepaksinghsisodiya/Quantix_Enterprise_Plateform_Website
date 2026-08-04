@@ -8,6 +8,13 @@
   --color-darkBg: var(--dark-bg);
   --color-darkSurface: var(--dark-surface);
   
+  --color-bg-warm: var(--background-warm);
+  --color-soft-pink: var(--soft-pink);
+  --color-soft-mint: var(--soft-mint);
+  --color-soft-lavender: var(--soft-lavender);
+  --color-soft-yellow: var(--soft-yellow);
+  --color-teal: var(--teal-color);
+  
   /* OVERRIDE Tailwind's default blue, indigo, and violet palettes dynamically */
   /* This flattens all gradients into a single, solid branded primary color */
   --color-blue-400: var(--primary-light);
@@ -40,7 +47,7 @@
     50% {
       opacity: 0.95;
       transform: scale(1.02);
-      box-shadow: 0 0 15px rgba(37, 99, 235, 0.35);
+      box-shadow: 0 0 15px rgba(0, 166, 156, 0.35);
     }
   }
 }
@@ -53,22 +60,30 @@ html {
   /* ==========================================
      THEME CONFIGURATION - CHANGE COLORS HERE
      ========================================== */
-  /* Premium Solid Branded Blue Theme */
-  --primary-color: #2563eb;
-  --primary-light: #3b82f6;
-  --primary-dark: #1d4ed8;
+  /* Premium Solid Branded Emerald Teal Theme */
+  --primary-color: #00a69c;
+  --primary-light: #00c2b6;
+  --primary-dark: #00877f;
 
   /* Global Core Colors */
   --bg-color: #ffffff;
-  --text-color: #111827;
-  --dark-bg: #0F172A;
-  --dark-surface: #1E293B;
+  --text-color: #5f6368;
+  --dark-bg: #171717;
+  --dark-surface: #1e1e1e;
+
+  /* Foodhub design system soft background accents */
+  --background-warm: #fff9f5;
+  --soft-pink: #fbe6e8;
+  --soft-mint: #d3efd8;
+  --soft-lavender: #e7dffc;
+  --soft-yellow: #fff0bd;
+  --teal-color: #00a69c;
 
   --color-primary: var(--primary-color);
   --color-background: var(--bg-color);
   --color-foreground: var(--text-color);
-  --color-surface: #f5f5f5;
-  --color-border: #e5e5e5;
+  --color-surface: #f5f5f3;
+  --color-border: #e4e4e4;
   --site-max-width: 95rem; /* 1520px - Aligned to Foretek Solutions */
 }
 
