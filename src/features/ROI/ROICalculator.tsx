@@ -98,10 +98,10 @@ export const ROICalculator: React.FC = () => {
     <div className="space-y-12 max-w-4xl mx-auto py-12 px-4 sm:px-0">
       {/* Configuration Form Card */}
       <div className="rounded-3xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/40 p-8 sm:p-10 backdrop-blur-md relative overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
         
         <div className="flex items-center gap-3 text-slate-900 dark:text-white mb-8 border-b border-gray-200 dark:border-slate-800/60 pb-4">
-          <Calculator className="text-blue-500" />
+          <Calculator className="text-primary" />
           <h3 className="text-lg font-syne font-bold uppercase tracking-tight">Your Business Profile</h3>
         </div>
 
@@ -118,7 +118,7 @@ export const ROICalculator: React.FC = () => {
                     onClick={() => updateInput('businessType', type)}
                     className={`rounded-xl py-3 text-xs font-bold capitalize transition-all cursor-pointer border ${
                       inputs.businessType === type
-                        ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-600/20'
+                        ? 'bg-primary border-primary text-white shadow-lg shadow-primary/20'
                         : 'bg-gray-200 dark:bg-slate-950/60 border-gray-350 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-gray-300 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-200'
                     }`}
                   >
@@ -139,7 +139,7 @@ export const ROICalculator: React.FC = () => {
                     onClick={() => updateInput('currentSystem', sys)}
                     className={`rounded-xl py-3 text-[10px] font-bold capitalize transition-all cursor-pointer border ${
                       inputs.currentSystem === sys
-                        ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-600/20'
+                        ? 'bg-primary border-primary text-white shadow-lg shadow-primary/20'
                         : 'bg-gray-200 dark:bg-slate-950/60 border-gray-350 dark:border-slate-800 text-slate-650 dark:text-slate-400 hover:bg-gray-300 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-200'
                     }`}
                   >
@@ -163,7 +163,7 @@ export const ROICalculator: React.FC = () => {
                 max={50}
                 value={inputs.locations}
                 onChange={(e) => updateInput('locations', Number(e.target.value))}
-                className="w-full accent-blue-500 cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
+                className="w-full accent-primary cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
               />
             </div>
 
@@ -179,7 +179,7 @@ export const ROICalculator: React.FC = () => {
                 step={10}
                 value={inputs.dailyTransactions}
                 onChange={(e) => updateInput('dailyTransactions', Number(e.target.value))}
-                className="w-full accent-blue-500 cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
+                className="w-full accent-primary cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
               />
             </div>
 
@@ -194,7 +194,7 @@ export const ROICalculator: React.FC = () => {
                 max={100}
                 value={inputs.employees}
                 onChange={(e) => updateInput('employees', Number(e.target.value))}
-                className="w-full accent-blue-500 cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
+                className="w-full accent-primary cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
               />
             </div>
           </div>
@@ -203,13 +203,13 @@ export const ROICalculator: React.FC = () => {
           <div className="flex gap-3 pt-6 border-t border-gray-250 dark:border-slate-800/60 mt-6">
             <button
               onClick={() => setShowResults(true)}
-              className="rounded-xl bg-blue-600 hover:bg-blue-500 py-3.5 px-8 text-xs font-bold text-white transition-all cursor-pointer shadow-lg shadow-blue-600/20"
+              className="rounded-xl bg-primary hover:bg-primary-dark py-3.5 px-8 text-xs font-bold text-white transition-all cursor-pointer shadow-lg shadow-primary/20"
             >
               Analyze Savings ROI &rarr;
             </button>
             <button
               onClick={reset}
-              className="rounded-xl border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 py-3.5 px-6 text-xs font-bold text-slate-600 dark:text-slate-400 transition-all cursor-pointer flex items-center gap-1.5"
+              className="rounded-xl border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 py-3.5 px-6 text-xs font-bold text-slate-650 dark:text-slate-400 transition-all cursor-pointer flex items-center gap-1.5"
             >
               <RotateCcw size={13} /> Reset
             </button>
@@ -237,7 +237,7 @@ export const ROICalculator: React.FC = () => {
               </div>
 
               <div className="bg-gray-50/50 dark:bg-slate-900/20 border border-gray-200 dark:border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
-                <div className="h-8 w-8 rounded-lg bg-blue-500/10 text-blue-500 dark:text-blue-400 flex items-center justify-center mx-auto">
+                <div className="h-8 w-8 rounded-lg bg-primary/10 text-primary dark:text-primary-light flex items-center justify-center mx-auto">
                   <Clock size={16} />
                 </div>
                 <div className="text-xl sm:text-2xl font-mono font-black text-slate-900 dark:text-white">{results.timeSavedPerWeek} hrs</div>
@@ -267,7 +267,7 @@ export const ROICalculator: React.FC = () => {
               
               <div className="space-y-4">
                 {[
-                  { label: 'Labor Cost Optimization', value: results.breakdown.labourSavings, pct: Math.round((results.breakdown.labourSavings / (results.breakdown.labourSavings + results.breakdown.errorReduction + results.breakdown.wasteReduction)) * 100) || 0, color: 'bg-blue-600' },
+                  { label: 'Labor Cost Optimization', value: results.breakdown.labourSavings, pct: Math.round((results.breakdown.labourSavings / (results.breakdown.labourSavings + results.breakdown.errorReduction + results.breakdown.wasteReduction)) * 100) || 0, color: 'bg-primary' },
                   { label: 'Error reduction (80% recovery)', value: results.breakdown.errorReduction, pct: Math.round((results.breakdown.errorReduction / (results.breakdown.labourSavings + results.breakdown.errorReduction + results.breakdown.wasteReduction)) * 100) || 0, color: 'bg-emerald-500' },
                   { label: 'Waste mitigation', value: results.breakdown.wasteReduction, pct: Math.round((results.breakdown.wasteReduction / (results.breakdown.labourSavings + results.breakdown.errorReduction + results.breakdown.wasteReduction)) * 100) || 0, color: 'bg-purple-500' }
                 ].map((item, idx) => (

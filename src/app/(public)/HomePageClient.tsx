@@ -151,7 +151,7 @@ export default function HomePageClient() {
             whileHover={{ scale: 1.1, y: -4 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="fixed bottom-8 right-8 z-50 rounded-2xl bg-blue-600 hover:bg-blue-500 p-4 text-white shadow-2xl shadow-blue-500/20 flex items-center justify-center cursor-pointer transition-all border border-blue-500/30"
+            className="fixed bottom-8 right-8 z-50 rounded-2xl bg-primary hover:bg-primary-dark p-4 text-white shadow-2xl shadow-primary/20 flex items-center justify-center cursor-pointer transition-all border border-primary/30"
             aria-label="Back to top"
           >
             <ArrowUp size={18} className="stroke-[2.5]" />

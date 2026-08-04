@@ -96,7 +96,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
         <div className="site-container">
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary mb-4 shadow-sm">
               PRICING
             </div>
             <h2 className="text-3xl font-syne font-black tracking-tight text-gray-900 sm:text-5xl leading-tight">
@@ -164,14 +164,14 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                   key={plan.id}
                   onClick={() => handleSelectPlan(plan.id)}
                   className={cn(
-                    'rounded-3xl border p-6 flex flex-col justify-between transition-all duration-500 relative cursor-pointer group hover:-translate-y-2 overflow-hidden',
+                    'rounded-3xl border p-6 pt-8 flex flex-col justify-between transition-all duration-500 relative cursor-pointer group hover:-translate-y-2',
                     plan.mostPopular
                       ? (isSelected
-                        ? 'bg-gradient-to-b from-blue-600 to-indigo-700 text-white border-blue-400 ring-2 ring-blue-400/30 shadow-xl shadow-blue-600/20 lg:scale-105'
-                        : 'bg-gradient-to-b from-blue-600 to-indigo-700 text-white border-blue-600 shadow-xl shadow-blue-600/10 lg:scale-105 hover:shadow-[0_25px_50px_-12px_rgba(99,102,241,0.15)]')
+                        ? 'bg-gradient-to-b from-primary to-primary-dark text-white border-primary ring-2 ring-primary/30 shadow-xl shadow-primary/20 lg:scale-105'
+                        : 'bg-gradient-to-b from-primary to-primary-dark text-white border-primary shadow-xl shadow-primary/10 lg:scale-105 hover:shadow-[0_25px_50px_-12px_rgba(0,166,156,0.15)]')
                       : (isSelected
-                        ? 'bg-white text-gray-900 border-blue-500 ring-2 ring-blue-500/10 shadow-lg before:absolute before:top-0 before:left-0 before:right-0 before:h-[2.5px] before:bg-gradient-to-r before:from-blue-600 before:to-indigo-500 before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500'
-                        : 'bg-white text-gray-900 border-slate-200 shadow-sm hover:border-blue-200 hover:shadow-md before:absolute before:top-0 before:left-0 before:right-0 before:h-[2.5px] before:bg-gradient-to-r before:from-blue-600 before:to-indigo-500 before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500')
+                        ? 'bg-white text-gray-900 border-primary ring-2 ring-primary/10 shadow-lg before:absolute before:top-0 before:left-0 before:right-0 before:h-[2.5px] before:bg-gradient-to-r before:from-primary before:to-primary-light before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500'
+                        : 'bg-white text-gray-900 border-slate-200 shadow-sm hover:border-primary/30 hover:shadow-md before:absolute before:top-0 before:left-0 before:right-0 before:h-[2.5px] before:bg-gradient-to-r before:from-primary before:to-primary-light before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500')
                   )}
                 >
                   <div>
@@ -185,7 +185,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                     )}
 
                     {/* Name as small uppercase label */}
-                    <h3 className={cn('text-[10px] font-syne font-bold uppercase tracking-wider text-slate-400 text-center', plan.mostPopular && 'text-blue-200')}>
+                    <h3 className={cn('text-[10px] font-syne font-bold uppercase tracking-wider text-slate-400 text-center', plan.mostPopular && 'text-white/70')}>
                       {plan.name}
                     </h3>
 
@@ -202,7 +202,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                           <span className={cn('text-4xl font-syne font-black text-slate-900 tracking-tight text-center', plan.mostPopular && 'text-white')}>
                             {isTrialPlan ? 'Free' : `$${billing === 'monthly' ? plan.priceMonthly : getAnnualPrice(plan.priceMonthly)}`}
                           </span>
-                          <span className={cn('text-xs font-bold text-slate-500 text-center', plan.mostPopular ? 'text-blue-200' : 'text-slate-400')}>
+                          <span className={cn('text-xs font-bold text-slate-500 text-center', plan.mostPopular ? 'text-white/70' : 'text-slate-400')}>
                             {isTrialPlan ? '3 days' : (billing === 'monthly' ? '/mo' : '/yr')}
                           </span>
                         </div>
@@ -210,7 +210,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                     </div>
 
                     {/* Description */}
-                    <p className={cn('text-xs text-slate-500 mb-6 leading-relaxed font-medium text-center', plan.mostPopular && 'text-blue-100')}>{plan.description}</p>
+                    <p className={cn('text-xs text-slate-500 mb-6 leading-relaxed font-medium text-center', plan.mostPopular && 'text-white/80')}>{plan.description}</p>
 
                     {/* Features list */}
                     <ul className="mb-8 space-y-3">
@@ -235,7 +235,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                         className={cn(
                           "w-full text-xs font-bold py-3.5 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-205 cursor-pointer text-center block border",
                           isSelected
-                            ? "bg-white text-blue-600 border-white hover:bg-slate-50 shadow-md"
+                            ? "bg-white text-primary border-white hover:bg-slate-50 shadow-md"
                             : "btn-gradient text-white border-transparent"
                         )}
                         aria-label="Start free trial"
@@ -263,7 +263,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                         className={cn(
                           "w-full text-xs font-bold py-3.5 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-205 cursor-pointer text-center block border border-transparent",
                           plan.mostPopular
-                            ? "bg-white text-blue-600 hover:bg-slate-50"
+                            ? "bg-white text-primary hover:bg-slate-50"
                             : "btn-gradient text-white"
                         )}
                         aria-label="Get started"
@@ -280,7 +280,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
           {/* Footer note */}
           <div className="mt-12 text-center">
             <p className="text-sm text-slate-500 font-medium">
-              Not sure which setup is right? Take our <Link href="/quiz" className="text-blue-600 font-bold hover:underline">Plan Finder Quiz →</Link> or calculate your returns with our <Link href="/roi-calculator" className="text-blue-600 font-bold hover:underline">ROI Calculator →</Link>
+              Not sure which setup is right? Take our <Link href="/quiz" className="text-primary font-bold hover:underline">Plan Finder Quiz →</Link> or calculate your returns with our <Link href="/roi-calculator" className="text-primary font-bold hover:underline">ROI Calculator →</Link>
             </p>
           </div>
         </div>
@@ -300,11 +300,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
           >
             {/* Grid overlay background */}
             <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
-            <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
             {/* Left side: Icon + Heading + Subtext */}
             <div className="relative z-10 flex flex-col md:flex-row items-center gap-5">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/20">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-primary-dark text-white shadow-lg shadow-primary/20">
                 <Headset className="h-6 w-6" />
               </div>
               <div>
