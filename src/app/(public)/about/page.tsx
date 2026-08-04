@@ -14,7 +14,7 @@ export default function AboutPage() {
     <PublicLayout>
       <Navbar />
 
-      <div className="pt-20 bg-white dark:bg-slate-950 transition-colors duration-300 flex-1">
+      <div className="bg-white dark:bg-slate-950 transition-colors duration-300 flex-1">
         
         {/* Section 1: Hero */}
         <section className="relative py-24 bg-slate-950 overflow-hidden text-center text-white">

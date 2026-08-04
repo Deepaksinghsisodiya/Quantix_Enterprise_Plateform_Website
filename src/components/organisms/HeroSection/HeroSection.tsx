@@ -1,8 +1,9 @@
 // src/components/organisms/HeroSection/HeroSection.tsx
 // Wrapper — owns carousel state + auto-play timer. Passes all state + handlers to HeroView.
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { HERO_SLIDES, HERO_AUTO_PLAY_INTERVAL_MS } from "./HeroData";
 import { HeroView } from "./HeroView";
+import { useIndustry } from "../../../context/IndustryContext";
 
 const HeroSection: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);

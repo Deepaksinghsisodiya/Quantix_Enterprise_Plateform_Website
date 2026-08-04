@@ -55,10 +55,10 @@ const fieldClass =
   "[&>label]:text-slate-400 [&>label]:text-[11px] [&>label]:font-syne [&>label]:font-bold [&>label]:tracking-wider [&>label]:uppercase " +
   "[&_input]:bg-slate-900/60 [&_input]:border-slate-700/50 [&_input]:text-white [&_input]:placeholder-slate-500 " +
   "[&_input]:h-[46px] [&_input]:rounded-xl [&_input]:transition-all [&_input]:duration-200 [&_input]:text-sm " +
-  "[&_input:focus]:border-blue-500/50 [&_input:focus]:ring-2 [&_input:focus]:ring-blue-500/10 [&_input:focus]:bg-slate-900/80 " +
+  "[&_input:focus]:border-primary/50 [&_input:focus]:ring-2 [&_input:focus]:ring-primary/10 [&_input:focus]:bg-slate-900/80 " +
   "[&_select]:bg-slate-900/60 [&_select]:border-slate-700/50 [&_select]:text-slate-400 [&_select]:placeholder-slate-500 " +
   "[&_select]:h-[46px] [&_select]:rounded-xl [&_select]:transition-all [&_select]:duration-200 [&_select]:text-sm " +
-  "[&_select:focus]:border-blue-500/50 [&_select:focus]:ring-2 [&_select:focus]:ring-blue-500/10 [&_select:focus]:bg-slate-900/80";
+  "[&_select:focus]:border-primary/50 [&_select:focus]:ring-2 [&_select:focus]:ring-primary/10 [&_select:focus]:bg-slate-900/80";
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({
   formikProps,
@@ -80,7 +80,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         </h2>
         <p className="text-[13px] text-slate-400 font-medium leading-relaxed">
           Start your 3-day free trial. Already registered?{" "}
-          <Link href="/sign-in" className="font-bold text-blue-400 hover:text-blue-300 transition-colors">
+          <Link href="/sign-in" className="font-bold text-primary hover:text-primary-light transition-colors">
             Sign in
           </Link>
         </p>
@@ -89,7 +89,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
       {/* ── Card ── */}
       <div className="w-full bg-slate-900/30 border border-slate-800/60 backdrop-blur-sm p-6 sm:p-7 shadow-xl rounded-2xl relative overflow-hidden">
         {/* Subtle top accent line */}
-        <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
+        <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
         <form className="space-y-4" onSubmit={handleSubmit} noValidate>
           {/* Full Name */}
@@ -207,7 +207,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               variant="primary"
               isLoading={isLoading}
               disabled={isLoading}
-              className="w-full sm:flex-1 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold py-3 text-sm rounded-xl shadow-lg shadow-blue-600/20 transition-all"
+              className="w-full sm:flex-1 bg-gradient-to-r from-primary to-primary-light hover:from-primary-light hover:to-primary-dark text-white font-bold py-3 text-sm rounded-xl shadow-lg shadow-primary/20 transition-all"
               rightIcon={!isLoading ? <ArrowRight size={15} className="ml-1.5" /> : undefined}
             >
               Create Account
@@ -218,9 +218,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         {/* Terms note */}
         <p className="mt-5 text-[10px] text-slate-500 text-center leading-relaxed">
           By creating an account you agree to our{" "}
-          <a href="#" className="text-slate-400 hover:text-blue-400 underline underline-offset-2 transition-colors">Terms</a>{" "}
+          <a href="#" className="text-slate-400 hover:text-primary-light underline underline-offset-2 transition-colors">Terms</a>{" "}
           and{" "}
-          <a href="#" className="text-slate-400 hover:text-blue-400 underline underline-offset-2 transition-colors">Privacy Policy</a>.
+          <a href="#" className="text-slate-400 hover:text-primary-light underline underline-offset-2 transition-colors">Privacy Policy</a>.
         </p>
       </div>
     </motion.div>

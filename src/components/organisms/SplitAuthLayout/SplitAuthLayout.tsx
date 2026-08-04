@@ -39,13 +39,12 @@ export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
 
         {/* Brand watermark top-left */}
         <div className="absolute top-8 left-10 z-10">
-          <Link href="/" className="inline-flex items-center gap-2.5 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md border border-white/10 text-white shadow-lg transition-transform group-hover:scale-105">
-              <Layers className="h-4.5 w-4.5" />
-            </div>
-            <span className="text-lg font-syne font-black tracking-tight uppercase text-white/90">
-              Quantix
-            </span>
+          <Link href="/" className="inline-flex items-center group">
+            <img
+              src="/images/logo/quantix-logo-full-on-dark.svg"
+              alt="Quantix Logo"
+              className="h-[48px] w-auto transition-transform duration-300 group-hover:scale-[1.02]"
+            />
           </Link>
         </div>
 
@@ -77,13 +76,12 @@ export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
 
         {/* Mobile-only brand header (hidden on lg where logo is on image) */}
         <div className="relative z-10 px-6 pt-7 sm:px-10 lg:hidden">
-          <Link href="/" className="inline-flex items-center gap-2.5 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 transition-transform group-hover:scale-105">
-              <Layers className="h-4.5 w-4.5" />
-            </div>
-            <span className="text-lg font-syne font-black tracking-tight uppercase text-white">
-              Quantix
-            </span>
+          <Link href="/" className="inline-flex items-center group">
+            <img
+              src="/images/logo/quantix-logo-full-on-light.svg"
+              alt="Quantix Logo"
+              className="h-[46px] w-auto transition-transform duration-300 group-hover:scale-[1.02]"
+            />
           </Link>
         </div>
 

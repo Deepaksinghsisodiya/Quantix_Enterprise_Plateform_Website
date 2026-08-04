@@ -64,26 +64,12 @@ export const FooterView: React.FC<FooterViewProps> = ({
 
           {/* Column 1 – Brand */}
           <div className="col-span-2 md:col-span-1 space-y-6">
-            <div className="flex items-center space-x-2 text-slate-900 group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shrink-0 shadow-md shadow-blue-500/20">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5">
-                  <path d="M12 2L3.5 7L12 12L20.5 7L12 2Z" fill="url(#footer-logo-grad-1)" />
-                  <path d="M3.5 7V17L12 22V12L3.5 7Z" fill="url(#footer-logo-grad-2)" />
-                  <path d="M12 12V22L20.5 17V7L12 12Z" fill="url(#footer-logo-grad-3)" />
-                  <defs>
-                    <linearGradient id="footer-logo-grad-1" x1="12" y1="2" x2="12" y2="12" gradientUnits="userSpaceOnUse">
-                      <stop stopColor="#93C5FD" /><stop offset="1" stopColor="#60A5FA" />
-                    </linearGradient>
-                    <linearGradient id="footer-logo-grad-2" x1="3.5" y1="7" x2="12" y2="22" gradientUnits="userSpaceOnUse">
-                      <stop stopColor="#3B82F6" /><stop offset="1" stopColor="#1E3A8A" />
-                    </linearGradient>
-                    <linearGradient id="footer-logo-grad-3" x1="12" y1="12" x2="20.5" y2="17" gradientUnits="userSpaceOnUse">
-                      <stop stopColor="#2563EB" /><stop offset="1" stopColor="#1D4ED8" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-              <span className="text-xl font-syne font-black tracking-tight uppercase">Quantix</span>
+            <div className="flex items-center text-slate-900 group">
+              <img
+                src="/images/logo/quantix-logo-full-on-light.svg"
+                alt="Quantix Logo"
+                className="h-[48px] w-auto"
+              />
             </div>
 
             <p className="text-xs sm:text-sm text-slate-500 max-w-xs leading-relaxed font-medium">

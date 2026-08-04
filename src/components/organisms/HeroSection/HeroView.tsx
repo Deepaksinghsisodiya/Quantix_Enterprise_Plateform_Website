@@ -49,7 +49,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
 
   return (
     <section
-      className="relative min-h-[55vh] lg:min-h-[65vh] w-full bg-white flex items-center pt-32 pb-10 lg:pt-[150px] lg:pb-12 overflow-hidden border-b border-slate-100"
+      className="relative min-h-[60vh] lg:min-h-[70vh] w-full bg-white flex items-center pt-40 pb-20 lg:pt-[180px] lg:pb-28 overflow-hidden border-b border-slate-100"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >

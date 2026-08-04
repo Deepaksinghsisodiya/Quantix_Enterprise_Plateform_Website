@@ -1,0 +1,1 @@
+SVG files are raster-backed wrappers generated from the approved concept image. They are suitable for normal website use, but they are not editable true-vector masters. For very large print/signage, redraw as native vector paths in Figma or Illustrator.

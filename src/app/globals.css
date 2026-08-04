@@ -114,17 +114,21 @@ html {
 
 /* Typography defaults */
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 104px; /* Offset to prevent sticky navbar overlap */
+  }
   body {
     background: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-inter), sans-serif;
-    letter-spacing: -0.01em;
+    font-family: var(--font-jakarta), sans-serif;
+    letter-spacing: -0.015em;
     line-height: 1.6;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-jakarta), sans-serif;
-    letter-spacing: -0.03em;
-    font-weight: 700;
+    font-family: var(--font-lexend), sans-serif;
+    letter-spacing: -0.035em;
+    font-weight: 750;
   }
 }
 

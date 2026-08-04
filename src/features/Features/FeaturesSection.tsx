@@ -18,15 +18,15 @@ export interface FeaturesSectionProps {
 
 // Mapping from icon name to actual component
 const ICON_MAP = {
-  BarChart2: <BarChart2 className="h-5 w-5" />, 
-  Package: <Package className="h-5 w-5" />, 
-  CreditCard: <CreditCard className="h-5 w-5" />, 
-  Users: <Users className="h-5 w-5" />, 
-  Globe: <Globe className="h-5 w-5" />, 
-  Shield: <Shield className="h-5 w-5" />, 
-  Headphones: <Headphones className="h-5 w-5" />, 
-  Lock: <Lock className="h-5 w-5" />, 
-  RefreshCw: <RefreshCw className="h-5 w-5" />, 
+  BarChart2: <BarChart2 className="h-6 w-6 stroke-[2.25]" />, 
+  Package: <Package className="h-6 w-6 stroke-[2.25]" />, 
+  CreditCard: <CreditCard className="h-6 w-6 stroke-[2.25]" />, 
+  Users: <Users className="h-6 w-6 stroke-[2.25]" />, 
+  Globe: <Globe className="h-6 w-6 stroke-[2.25]" />, 
+  Shield: <Shield className="h-6 w-6 stroke-[2.25]" />, 
+  Headphones: <Headphones className="h-6 w-6 stroke-[2.25]" />, 
+  Lock: <Lock className="h-6 w-6 stroke-[2.25]" />, 
+  RefreshCw: <RefreshCw className="h-6 w-6 stroke-[2.25]" />, 
 };
 
 const DEFAULT_FEATURES: Feature[] = [

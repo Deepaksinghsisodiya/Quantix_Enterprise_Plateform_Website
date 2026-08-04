@@ -13,7 +13,7 @@ export default function FeaturesPage() {
     <PublicLayout>
       <Navbar />
 
-      <div className="pt-20 bg-white text-slate-900">
+      <div className="bg-white text-slate-900">
         <section className={cn("bg-white text-slate-900")}>
           <PlatformDemoSection />
         </section>

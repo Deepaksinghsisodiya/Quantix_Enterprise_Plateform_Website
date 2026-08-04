@@ -65,7 +65,7 @@ export default function ChangelogPage() {
     <PublicLayout>
       <Navbar />
 
-      <div className="pt-20 bg-white dark:bg-slate-950 transition-colors duration-300 flex-1">
+      <div className="bg-white dark:bg-slate-950 transition-colors duration-300 flex-1">
         
         {/* Header Hero */}
         <section className="py-20 bg-slate-50 dark:bg-slate-900/60 border-b border-slate-100 dark:border-slate-800/80 transition-colors text-center">

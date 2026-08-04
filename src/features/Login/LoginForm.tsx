@@ -26,7 +26,7 @@ const fieldClass =
   "[&>label]:text-slate-400 [&>label]:text-[11px] [&>label]:font-syne [&>label]:font-bold [&>label]:tracking-wider [&>label]:uppercase " +
   "[&_input]:bg-slate-900/60 [&_input]:border-slate-700/50 [&_input]:text-white [&_input]:placeholder-slate-500 " +
   "[&_input]:h-[46px] [&_input]:rounded-xl [&_input]:transition-all [&_input]:duration-200 [&_input]:text-sm " +
-  "[&_input:focus]:border-blue-500/50 [&_input:focus]:ring-2 [&_input:focus]:ring-blue-500/10 [&_input:focus]:bg-slate-900/80";
+  "[&_input:focus]:border-primary/50 [&_input:focus]:ring-2 [&_input:focus]:ring-primary/10 [&_input:focus]:bg-slate-900/80";
 
 export const LoginForm: React.FC<LoginFormProps> = ({
   formikProps,
@@ -48,7 +48,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </h2>
         <p className="text-[13px] text-slate-400 font-medium leading-relaxed">
           Sign in to your dashboard. Or{" "}
-          <Link href="/sign-up" className="font-bold text-blue-400 hover:text-blue-300 transition-colors">
+          <Link href="/sign-up" className="font-bold text-primary hover:text-primary-light transition-colors">
             create a free account
           </Link>
         </p>
@@ -57,7 +57,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       {/* ── Card ── */}
       <div className="w-full bg-slate-900/30 border border-slate-800/60 backdrop-blur-sm p-6 sm:p-7 shadow-xl rounded-2xl relative overflow-hidden">
         {/* Subtle top accent line */}
-        <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
+        <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
         <form className="space-y-5" onSubmit={handleSubmit} noValidate>
           {/* Work Email / Username */}
@@ -89,7 +89,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               className={fieldClass}
             />
             <div className="flex justify-end">
-              <a href="#" className="text-[11px] font-semibold text-blue-400 hover:text-blue-300 transition-colors">
+              <a href="#" className="text-[11px] font-semibold text-primary hover:text-primary-light transition-colors">
                 Forgot password?
               </a>
             </div>
@@ -102,7 +102,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               label="Keep me signed in"
               checked={values.rememberMe}
               onChange={handleChange}
-              className="h-4 w-4 bg-slate-900/60 border-slate-700/50 rounded text-blue-500 focus:ring-blue-500/20 cursor-pointer"
+              className="h-4 w-4 bg-slate-900/60 border-slate-700/50 rounded text-primary focus:ring-primary/20 cursor-pointer"
             />
           </div>
 
@@ -124,7 +124,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               variant="primary"
               isLoading={isLoading}
               disabled={isLoading}
-              className="w-full sm:flex-1 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold py-3 text-sm rounded-xl shadow-lg shadow-blue-600/20 transition-all"
+              className="w-full sm:flex-1 bg-gradient-to-r from-primary to-primary-light hover:from-primary-light hover:to-primary-dark text-white font-bold py-3 text-sm rounded-xl shadow-lg shadow-primary/20 transition-all"
               rightIcon={!isLoading ? <ArrowRight size={15} className="ml-1.5" /> : undefined}
             >
               Sign In

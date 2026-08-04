@@ -1,0 +1,25 @@
+{
+  "name": "Quantix",
+  "short_name": "Quantix",
+  "icons": [
+    {
+      "src": "/brand/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/brand/favicon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/brand/favicon/maskable-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#00a69c",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}

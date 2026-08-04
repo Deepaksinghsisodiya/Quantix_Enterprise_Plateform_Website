@@ -6,6 +6,8 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+import { useIndustry } from "@/context/IndustryContext";
+
 export interface ToolItem {
   id: string;
   title: string;

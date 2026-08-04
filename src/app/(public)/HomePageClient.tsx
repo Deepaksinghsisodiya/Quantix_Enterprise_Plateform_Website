@@ -15,8 +15,9 @@ import { CTABanner } from "@/components/organisms/CTABanner/CTABanner";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { ATMLoader } from "@/components/atoms/ATMLoader";
 import { cn } from "@/lib/utils";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, Utensils, Store, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useIndustry, IndustryMode } from "@/context/IndustryContext";
 
 import dynamic from "next/dynamic";
 
@@ -81,61 +82,61 @@ export default function HomePageClient() {
 
       <Navbar />
 
-      <section id="home" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+      <section id="home" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <HeroSection />
       </section>
 
-      <section id="features" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+      <section id="features" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <PlatformDemoSection />
       </section>
 
-      <section id="platform" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
+      <section id="platform" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <FeaturesWrapper />
       </section>
 
-      <section id="how-it-works" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+      <section id="how-it-works" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <HowItWorksSection />
       </section>
 
-      <section id="resources" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
+      <section id="resources" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <DemoWrapper />
       </section>
 
-      <section id="services" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+      <section id="services" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <IndustriesSectionWrapper />
       </section>
 
-      <section className={cn("scroll-mt-20 bg-gray-900")}>
+      <section className={cn("scroll-mt-28 bg-gray-900")}>
         <TestimonialBannerWrapper />
       </section>
 
-      <section className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+      <section className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <QuantixToolsSection />
       </section>
 
       {/* Lazy loaded sections */}
-      <section id="pricing" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
+      <section id="pricing" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyPricingWrapper />
         </Suspense>
       </section>
 
-      <section id="testimonials" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+      <section id="testimonials" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyTestimonialsSection />
         </Suspense>
       </section>
 
-      <section id="faq" className={cn("scroll-mt-20 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
+      <section id="faq" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyFAQWrapper />
         </Suspense>
       </section>
-      <section className={cn("scroll-mt-20 bg-slate-900")}>
+      <section className={cn("scroll-mt-28 bg-slate-900")}>
         <CTABanner />
       </section>
 
-      <section id="footer" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+      <section id="footer" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Footer />
       </section>
 

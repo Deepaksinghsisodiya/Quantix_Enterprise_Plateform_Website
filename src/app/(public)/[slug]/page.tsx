@@ -162,7 +162,7 @@ export default function DynamicLegalPage() {
     <PublicLayout>
       <Navbar />
 
-      <div className="pt-24 pb-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 flex-1">
+      <div className="pb-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 flex-1">
         <div className="site-container max-w-5xl">
           {/* Header Area */}
           <div className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 rounded-2xl p-8 md:p-12 mb-8 shadow-sm flex flex-col md:flex-row md:items-center gap-6">
