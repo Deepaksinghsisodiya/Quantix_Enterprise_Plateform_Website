@@ -128,21 +128,21 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
   return (
     <section
       ref={ref}
-      className="bg-slate-50 py-10 sm:py-12 border-b border-slate-100"
+      className="bg-slate-50/50 py-20 sm:py-24 border-b border-slate-100"
       aria-labelledby="features-section"
     >
       <div className="site-container">
-        <div className="text-center">
+        <div className="text-center mb-16">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
             EVERYTHING INCLUDED
           </div>
           <h2
             id="features-section"
-            className="text-3xl font-syne font-black tracking-tight text-gray-900 sm:text-5xl uppercase leading-tight"
+            className="text-4xl font-syne font-black tracking-tight text-slate-900 sm:text-5xl uppercase leading-[1.1]"
           >
             Every tool your business needs
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-gray-600 font-medium">
+          <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-slate-500 font-medium">
             From counter to cloud — Quantix handles every part of your operation.
           </p>
         </div>
@@ -150,12 +150,12 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
         {/* Card Grid */}
         <div
           className={cn(
-            "mt-16 grid gap-8",
+            "grid gap-8",
             "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
           )}
         >
           {isLoading && Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="rounded-3xl border border-slate-100 p-8 animate-pulse bg-white flex flex-col space-y-4">
+            <div key={i} className="rounded-[2rem] border border-slate-100 p-8 animate-pulse bg-white flex flex-col space-y-4">
               <div className="h-12 w-12 bg-gray-200 rounded-xl" />
               <div className="h-6 w-3/4 bg-gray-200 rounded" />
               <div className="h-4 w-full bg-gray-200 rounded" />
@@ -166,17 +166,11 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
           {!isLoading && displayFeatures.map((card: Feature, idx: number) => (
             <motion.div
               key={card.id}
-              className="rounded-3xl border border-slate-200 bg-white p-8 text-left transition-all duration-500 hover:-translate-y-2 relative overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.05)] before:absolute before:top-0 before:left-0 before:right-0 before:h-[2.5px] before:bg-gradient-to-r before:from-blue-600 before:to-indigo-500 before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500"
+              className="rounded-[2rem] border border-slate-100 bg-white p-8 text-left transition-all duration-500 hover:-translate-y-2 relative overflow-hidden group shadow-[0_8px_30px_rgba(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.06)]"
               initial={{ opacity: 0, translateY: 20 }}
               animate={isInView ? { opacity: 1, translateY: 0 } : {}}
               transition={{ delay: idx * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Corner ambient glow */}
-              <div className={cn(
-                "absolute top-0 right-0 w-32 h-32 bg-gradient-to-br to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none",
-                getGlowClass(card.color)
-              )} />
-
               {/* Icon Container */}
               <div
                 className={cn(
@@ -184,13 +178,13 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                   getColorClasses(card.color)
                 )}
               >
-                <div className="transition-transform duration-300 group-hover:scale-115">
+                <div className="transition-transform duration-300 group-hover:scale-110">
                   {/* @ts-ignore – safety fallback */}
                   {ICON_MAP[card.icon] || <Package className="h-5 w-5" />}
                 </div>
               </div>
               
-              <h3 className="mt-6 text-lg font-syne font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+              <h3 className="mt-6 text-lg font-syne font-bold text-slate-900 group-hover:text-primary transition-colors duration-300">
                 {card.title}
               </h3>
               <p className="mt-3 text-sm text-slate-500 leading-relaxed group-hover:text-slate-600 transition-colors duration-300 font-medium">

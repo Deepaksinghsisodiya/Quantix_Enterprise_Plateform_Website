@@ -35,7 +35,7 @@ export const CTAView: React.FC<CTAViewProps> = ({
   return (
     <section
       ref={ref}
-      className="w-full bg-slate-950 py-12 sm:py-16 text-center border-t border-slate-900 relative overflow-hidden"
+      className="w-full bg-slate-950 py-20 sm:py-24 text-center border-t border-slate-900 relative overflow-hidden"
     >
       {/* Tech grid overlay */}
       <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
@@ -56,7 +56,7 @@ export const CTAView: React.FC<CTAViewProps> = ({
             {badge}
           </div>
 
-          <h2 className="text-3xl font-syne font-black text-white sm:text-5xl uppercase tracking-tight leading-tight">
+          <h2 className="text-4xl font-syne font-black text-white sm:text-5xl uppercase tracking-tight leading-[1.1]">
             {heading}
           </h2>
 
@@ -67,13 +67,13 @@ export const CTAView: React.FC<CTAViewProps> = ({
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto sm:max-w-none">
             <Link
               href={primaryCta.href}
-              className="w-full sm:w-auto btn-gradient text-white font-bold px-8 py-3.5 rounded-full text-xs text-center transition-all duration-200 hover:scale-105 active:scale-95 block sm:inline-block"
+              className="w-full sm:w-auto bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-extrabold px-8 py-4 rounded-full text-sm text-center shadow-lg shadow-primary/25 hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 block sm:inline-block"
             >
               {primaryCta.label}
             </Link>
             <Link
               href={secondaryCta.href}
-              className="w-full sm:w-auto btn-ghost font-bold px-8 py-3.5 rounded-full text-xs text-center transition-all duration-200 hover:scale-105 active:scale-95 block sm:inline-block"
+              className="w-full sm:w-auto border border-slate-800 bg-transparent hover:bg-white/5 text-white font-extrabold px-8 py-4 rounded-full text-sm text-center transition-all duration-300 hover:scale-105 active:scale-95 block sm:inline-block"
             >
               {secondaryCta.label}
             </Link>

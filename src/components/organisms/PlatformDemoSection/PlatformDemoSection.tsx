@@ -229,23 +229,23 @@ export const PlatformDemoSection = () => {
   };
 
   return (
-    <section className="bg-white py-10 sm:py-12 border-b border-slate-100" ref={ref} id="platform-demo">
+    <section className="bg-white py-20 sm:py-24 border-b border-slate-100" ref={ref} id="platform-demo">
       <div className="site-container">
         {/* Header grid matching PDF Page 4 */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 items-start mb-16">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 items-start mb-20">
           <div className="space-y-4">
-            <p className="text-blue-600 font-bold tracking-wider uppercase text-sm">PLATFORM DEMO</p>
-            <h2 className="text-3xl font-syne font-black text-gray-900 md:text-5xl leading-tight">
+            <p className="text-blue-600 font-extrabold tracking-wider uppercase text-sm">PLATFORM DEMO</p>
+            <h2 className="text-4xl font-syne font-black text-slate-900 md:text-5xl leading-[1.1] tracking-tight uppercase">
               KEEP THINGS FLOWING WITH THE ALL-IN-ONE POS
             </h2>
           </div>
-          <div className="space-y-6 lg:pt-8">
-            <p className="text-gray-600 text-base md:text-lg leading-relaxed font-medium">
+          <div className="space-y-6 lg:pt-4">
+            <p className="text-slate-600 text-base md:text-lg leading-relaxed font-medium">
               Transform your business with Quantix's integrated software — designed to streamline operations, enhance customer experiences, and boost profitability through real-time insights.
             </p>
             <Link
               href="#features"
-              className="inline-block rounded-full btn-gradient px-6 py-2.5 text-xs font-bold text-white transition duration-300 cursor-pointer shadow-md"
+              className="inline-block rounded-full bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-extrabold text-xs tracking-wider uppercase px-8 py-3.5 shadow-md shadow-primary/15 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
             >
               Explore Features →
             </Link>
@@ -253,7 +253,7 @@ export const PlatformDemoSection = () => {
         </div>
  
         {/* 4-column cards row below the header */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {CARDS.map((card, idx) => (
             <motion.div
               key={card.id}
@@ -264,15 +264,15 @@ export const PlatformDemoSection = () => {
               className="group flex flex-col justify-between cursor-pointer"
             >
               {/* Mockup wrapper with 3D lift and soft shadows */}
-              <div className="h-64 w-full rounded-2xl overflow-hidden mb-5 border border-slate-200 dark:border-slate-800 transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_-12px_rgba(99,102,241,0.12)] relative before:absolute before:top-0 before:left-0 before:right-0 before:h-[2px] before:bg-gradient-to-r before:from-blue-600 before:to-indigo-500 before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500">
+              <div className="h-68 w-full rounded-[2rem] overflow-hidden mb-6 border border-slate-100/90 transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(37,99,235,0.06)] relative bg-white">
                 {Mockup({ type: card.mockupType })}
               </div>
               {/* Info text */}
               <div>
-                <h3 className="text-lg font-syne font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
+                <h3 className="text-lg font-syne font-bold text-slate-900 group-hover:text-primary transition-colors duration-200">
                   {card.title}
                 </h3>
-                <p className="mt-2 text-sm text-gray-500 leading-relaxed font-medium">{card.caption}</p>
+                <p className="mt-3 text-sm text-slate-500 leading-relaxed font-medium">{card.caption}</p>
               </div>
             </motion.div>
           ))}

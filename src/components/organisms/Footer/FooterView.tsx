@@ -41,7 +41,7 @@ const LinkColumn = ({ title, links }: { title: string; links: FooterLink[] }) =>
     <ul className="space-y-3 text-xs sm:text-sm font-medium">
       {links.map((link) => (
         <li key={link.href}>
-          <Link href={link.href} className="text-slate-500 hover:text-blue-600 hover:translate-x-1 transition-all duration-200 block">
+          <Link href={link.href} className="text-slate-500 hover:text-primary transition-colors duration-200 block">
             {link.label}
           </Link>
         </li>
@@ -58,7 +58,7 @@ export const FooterView: React.FC<FooterViewProps> = ({
   socialLinks,
 }) => {
   return (
-    <footer className="bg-white text-slate-500 pt-10 sm:pt-12 border-t border-slate-200/60">
+    <footer className="bg-white text-slate-500 pt-20 pb-12 border-t border-slate-200/80">
       <div className="site-container">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-5 md:gap-12">
 
@@ -114,7 +114,7 @@ export const FooterView: React.FC<FooterViewProps> = ({
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 border-t border-slate-100 pt-6 pb-8 flex flex-col gap-4 items-center justify-between text-xs sm:text-sm md:flex-row">
+        <div className="mt-16 border-t border-slate-200/60 pt-8 flex flex-col gap-4 items-center justify-between text-xs sm:text-sm md:flex-row">
           <p className="text-slate-400 font-semibold">{FOOTER_COPYRIGHT}</p>
           <div className="flex items-center gap-2 text-slate-400 font-bold uppercase tracking-wider text-[9px] bg-slate-50 px-3.5 py-1.5 rounded-full border border-slate-100/80 shadow-xs">
             <Lock className="h-3.5 w-3.5 text-emerald-500" />

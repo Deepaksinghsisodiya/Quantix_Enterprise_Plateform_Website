@@ -10,6 +10,7 @@ import DemoWrapper from "@/features/Demo/DemoWrapper";
 import IndustriesSectionWrapper from "@/features/Industries/IndustriesSectionWrapper";
 import TestimonialBannerWrapper from "@/features/Testimonials/TestimonialBannerWrapper";
 import FeaturesWrapper from "@/features/Features/FeaturesWrapper";
+import { QuantixToolsSection } from "@/components/organisms/QuantixToolsSection/QuantixToolsSection";
 import { CTABanner } from "@/components/organisms/CTABanner/CTABanner";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { ATMLoader } from "@/components/atoms/ATMLoader";
@@ -80,7 +81,7 @@ export default function HomePageClient() {
 
       <Navbar />
 
-      <section id="home" className={cn("scroll-mt-20 bg-gray-900", "min-h-screen")}>
+      <section id="home" className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <HeroSection />
       </section>
 
@@ -106,6 +107,10 @@ export default function HomePageClient() {
 
       <section className={cn("scroll-mt-20 bg-gray-900")}>
         <TestimonialBannerWrapper />
+      </section>
+
+      <section className={cn("scroll-mt-20 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+        <QuantixToolsSection />
       </section>
 
       {/* Lazy loaded sections */}

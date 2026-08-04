@@ -8,6 +8,10 @@ export interface TestimonialDto {
   industry: 'Retail' | 'Restaurant';
   avatarColor?: string;
   initials?: string;
+  avatarUrl?: string;
+  companyName?: string;
+  videoUrl?: string;
+  duration?: string;
 }
 
 export interface ApiTestimonialsResponse {

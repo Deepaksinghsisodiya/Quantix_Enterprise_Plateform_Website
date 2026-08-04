@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Layers, LogOut, User, ChevronDown, Monitor, Tablet, Globe, Tv, Smartphone, CreditCard, Scan, Printer, RefreshCw, BarChart3, MessageSquare, Grid, Award, Store, Utensils, ShoppingBag, Coffee, Truck } from 'lucide-react';
+import { Layers, LogOut, User, ChevronDown, ChevronRight, Monitor, Tablet, Globe, Tv, Smartphone, CreditCard, Scan, Printer, RefreshCw, BarChart3, MessageSquare, Grid, Award, Store, Utensils, ShoppingBag, Coffee, Truck, Download, Server, Laptop, ShieldCheck, Check, Sparkles, Headset } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
@@ -29,35 +29,71 @@ const LINKS: NavLink[] = [
 ];
 
 const PRODUCTS_LIST = [
-  { title: 'Point of Sale (EPOS)', icon: Monitor, desc: 'Offline-first terminal billing', slug: 'offline-registers' },
-  { title: 'Order Kiosks Integration', icon: Tablet, desc: 'Self-checkout guest screens', slug: 'smart-inventory' },
-  { title: 'Online Ordering Portal', icon: Globe, desc: 'Web and mobile customer app', slug: 'table-management' },
-  { title: 'Kitchen Display Systems', icon: Tv, desc: 'Real-time kitchen order sync', slug: 'table-management' },
-  { title: 'Android & iPad POS', icon: Smartphone, desc: 'Handheld tableside ordering', slug: 'offline-registers' }
+  { title: 'Point of Sale (EPOS)', icon: Monitor, desc: 'Offline-first terminal billing', slug: 'offline-registers', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Order Kiosks Integration', icon: Tablet, desc: 'Self-checkout guest screens', slug: 'smart-inventory', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Online Ordering Portal', icon: Globe, desc: 'Web and mobile customer app', slug: 'table-management', image: 'https://images.unsplash.com/photo-1526367790999-0150786486a9?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Kitchen Display Systems', icon: Tv, desc: 'Real-time kitchen order sync', slug: 'table-management', image: 'https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Android & iPad POS', icon: Smartphone, desc: 'Handheld tableside ordering', slug: 'offline-registers', image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=120&h=120&q=80' }
 ];
 
 const HARDWARE_LIST = [
-  { title: 'Touch Terminal Stations', icon: Tv, desc: 'Heavy-duty checkout registers', slug: 'offline-registers' },
-  { title: 'PDQ Payment Terminals', icon: CreditCard, desc: 'Integrated card processors', slug: 'offline-registers' },
-  { title: 'Barcode & QR Scanners', icon: Scan, desc: 'Fast inventory scan units', slug: 'smart-inventory' },
-  { title: 'Thermal Receipt Printers', icon: Printer, desc: 'High-speed billing printer', slug: 'offline-registers' },
-  { title: 'Mobile Billing Terminals', icon: Smartphone, desc: 'All-in-one handheld POS', slug: 'offline-registers' }
+  { title: 'Touch Terminal Stations', icon: Tv, desc: 'Heavy-duty registers', slug: 'offline-registers', image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'PDQ Payment Terminals', icon: CreditCard, desc: 'Integrated processors', slug: 'offline-registers', image: 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Barcode & QR Scanners', icon: Scan, desc: 'Fast stock scanners', slug: 'smart-inventory', image: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Thermal Receipt Printers', icon: Printer, desc: 'High-speed bill printers', slug: 'offline-registers', image: 'https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Mobile Billing Terminals', icon: Smartphone, desc: 'Handheld POS units', slug: 'offline-registers', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=120&h=120&q=80' }
 ];
 
 const OPERATIONS_LIST = [
-  { title: 'Multi-Store Stock Sync', icon: RefreshCw, desc: 'Live inventory sync across hubs', slug: 'smart-inventory' },
-  { title: 'Visual Sales Reports', icon: BarChart3, desc: 'Margins, hourly sales & analytics', slug: 'smart-inventory' },
-  { title: 'SMS Queue Dispatch', icon: MessageSquare, desc: 'Notify customers when ready', slug: 'table-management' },
-  { title: 'Interactive Floor Layouts', icon: Grid, desc: 'Visual table mapping & status', slug: 'table-management' },
-  { title: 'Customer Loyalty Tiers', icon: Award, desc: 'Points, rewards & campaigns', slug: 'smart-inventory' }
+  { title: 'Multi-Store Stock Sync', icon: RefreshCw, desc: 'Live inventory sync hubs', slug: 'smart-inventory', image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Visual Sales Reports', icon: BarChart3, desc: 'Margins, sales & analytics', slug: 'smart-inventory', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'SMS Queue Dispatch', icon: MessageSquare, desc: 'Notify customer queues', slug: 'table-management', image: 'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Interactive Floor Layouts', icon: Grid, desc: 'Visual table mapping stats', slug: 'table-management', image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Customer Loyalty Tiers', icon: Award, desc: 'Points, rewards campaigns', slug: 'smart-inventory', image: 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=120&h=120&q=80' }
 ];
 
 const SERVICES_LIST = [
-  { title: 'Retail Solutions', slug: 'retail', desc: 'Boutiques, multi-branch chains, and inventory sync', icon: Store },
-  { title: 'Restaurant Solutions', slug: 'restaurant', desc: 'Table layout, kitchen display, and online ordering', icon: Utensils },
-  { title: 'Grocery & Supermarket', slug: 'grocery', desc: 'Quick barcode scanning and stock weight scale integration', icon: ShoppingBag },
-  { title: 'Cafes & Coffee Shops', slug: 'cafes', desc: 'Loyalty points, quick modifiers, and speedy billing', icon: Coffee },
-  { title: 'Food Trucks & Takeaways', slug: 'food-trucks', desc: 'Queue dispatch, SMS notifications, and mobile terminals', icon: Truck },
+  { title: 'Retail Solutions', slug: 'retail', desc: 'Boutiques, chain branch sync', icon: Store, image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Restaurant Solutions', slug: 'restaurant', desc: 'Table layout, kitchen display', icon: Utensils, image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Grocery & Supermarket', slug: 'grocery', desc: 'Quick barcode scanners weight', icon: ShoppingBag, image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Cafes & Coffee Shops', slug: 'cafes', desc: 'Loyalty points, modifiers bills', icon: Coffee, image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Food Trucks & Takeaways', slug: 'food-trucks', desc: 'Queue dispatch, SMS queues', icon: Truck, image: 'https://images.unsplash.com/photo-1565123409695-7b5ef63a24b5?auto=format&fit=crop&w=120&h=120&q=80' },
+];
+
+const INTEGRATIONS_PAYMENTS = [
+  { title: 'Stripe Payments', desc: 'Secure online & card payments', slug: 'stripe', image: 'https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'PayPal Checkout', desc: 'Global digital wallet sync', slug: 'paypal', image: 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Adyen Terminal', desc: 'Enterprise card payments', slug: 'adyen', image: 'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=120&h=120&q=80' },
+];
+
+const INTEGRATIONS_ACCOUNTING = [
+  { title: 'Xero Accounting', desc: 'Auto-sync invoices & ledger', slug: 'xero', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'QuickBooks Online', desc: 'Track sales taxes & books', slug: 'quickbooks', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Sage Business', desc: 'Automated cash flow reporting', slug: 'sage', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=120&h=120&q=80' },
+];
+
+const INTEGRATIONS_DELIVERY = [
+  { title: 'DoorDash Drive', desc: 'On-demand delivery dispatch', slug: 'doordash', image: 'https://images.unsplash.com/photo-1526367790999-0150786486a9?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Uber Eats Sync', desc: 'Receive direct platform orders', slug: 'uber-eats', image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Deliveroo Connect', desc: 'Sync menu and kitchen tickets', slug: 'deliveroo', image: 'https://images.unsplash.com/photo-1565123409695-7b5ef63a24b5?auto=format&fit=crop&w=120&h=120&q=80' },
+];
+
+const INTEGRATIONS_ECOMMERCE = [
+  { title: 'Shopify Sync', desc: 'Bi-directional stock sync', slug: 'shopify', image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'WooCommerce', desc: 'Live WordPress stock hook', slug: 'woocommerce', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Magento (Adobe)', desc: 'Enterprise catalog & order hub', slug: 'magento', image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=120&h=120&q=80' },
+];
+
+const DOWNLOADS_LIST = [
+  { title: 'Quantix POS Terminal', desc: 'Windows desktop installer (x64) for cashier desks', icon: Laptop, badge: 'Win x64', size: '45 MB', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Quantix POS (Linux)', desc: 'Linux Debian/Ubuntu installer for registers', icon: Monitor, badge: 'Debian x64', size: '42 MB', image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Quantix Sync Service', desc: 'Local database sync coordinator background app', icon: Server, badge: 'Background', size: '12 MB', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=120&h=120&q=80' },
+];
+
+const PRICING_LIST = [
+  { title: 'Starter Trial', desc: 'Free 3-day test checkout flow and inventory', price: '$0', badge: 'Free Trial', icon: Sparkles, image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Business Pro', desc: 'Complete cashier registers and margins sync', price: '$49', badge: 'Most Popular', icon: Check, popular: true, image: 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Enterprise Plan', desc: 'Custom APIs, dedicated servers & SLA SLA check', price: 'Custom', badge: 'For Corporations', icon: Headset, image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=120&h=120&q=80' },
 ];
 
 const Navbar = () => {
@@ -85,7 +121,7 @@ const Navbar = () => {
   const handleBrandClick = (e: React.MouseEvent) => {
     if (pathname === '/') {
       e.preventDefault();
-      
+
       const start = window.scrollY;
       const startTime = performance.now();
       const duration = 1200; // 1.2s slow-motion duration
@@ -98,7 +134,7 @@ const Navbar = () => {
         const elapsed = timestamp - startTime;
         const progress = Math.min(1, elapsed / duration);
         const ease = easeInOutCubic(progress);
-        
+
         window.scrollTo(0, start * (1 - ease));
 
         if (progress < 1) {
@@ -165,339 +201,727 @@ const Navbar = () => {
 
   return (
     <>
-      <nav
-        className="fixed top-0 left-0 z-50 w-full bg-white border-b border-slate-200/80 shadow-sm py-3 relative"
-        onMouseLeave={() => setOpenMegaMenu(null)}
-      >
-        <div
-          className="site-container"
-        >
-
-          {/* Inner Content */}
-          <div className="w-full flex items-center justify-between">
-            {/* Left: Brand icon/text */}
-            <Link href="/" onClick={handleBrandClick} className="flex items-center gap-2 z-50 group">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white shadow-md shadow-primary/20 transition-all duration-300 group-hover:scale-110 group-hover:shadow-primary/40">
-                <Layers className="h-4 w-4 text-white" />
-              </div>
-              <span
-                className="text-lg font-bold tracking-tight transition-all duration-300 font-syne uppercase text-slate-900 group-hover:text-primary group-hover:scale-[1.03]"
-              >
-                Quantix
-              </span>
-            </Link>
-
-            {/* Center: Nav links */}
-            <ul className="hidden space-x-2 lg:flex items-center font-sans">
-              {LINKS.map((link) => {
-                const isActive = pathname === link.href;
-                const isFeatures = link.label === 'Features';
-                const isServices = link.label === 'Services';
-                return (
-                  <li 
-                    key={link.href} 
-                    className="relative py-2.5 px-3 group"
-                    onMouseEnter={() => {
-                      if (isFeatures) {
-                        setOpenMegaMenu('Features');
-                      } else if (isServices) {
-                        setOpenMegaMenu('Services');
-                      } else {
-                        setOpenMegaMenu(null);
-                      }
-                    }}
-                  >
-                    <Link
-                      href={link.href}
-                      className={cn(
-                        'relative z-10 text-[13px] font-semibold transition-all duration-300 block hover:scale-105 active:scale-95',
-                        isActive || (isFeatures && openMegaMenu === 'Features') || (isServices && openMegaMenu === 'Services')
-                          ? 'text-primary font-bold'
-                          : 'text-slate-600 group-hover:text-slate-950'
-                      )}
-                    >
-                      <span className="inline-flex items-center gap-1">
-                        {link.label}
-                        {(isFeatures || isServices) && (
-                          <ChevronDown 
-                            size={12} 
-                            className={cn(
-                              "transition-transform duration-300 ease-out shrink-0",
-                              (isFeatures && openMegaMenu === 'Features') || (isServices && openMegaMenu === 'Services')
-                                ? "rotate-180 text-primary" 
-                                : "text-slate-400 group-hover:text-slate-900"
-                            )} 
-                          />
-                        )}
-                      </span>
-                    </Link>
-
-                    {/* Bottom border line for active/hover states */}
-                    <span
-                      className={cn(
-                        'absolute bottom-0 left-3 right-3 h-[2px] bg-primary transition-transform duration-300 ease-out origin-left scale-x-0 group-hover:scale-x-100',
-                        (isActive || (isFeatures && openMegaMenu === 'Features') || (isServices && openMegaMenu === 'Services')) && 'scale-x-100'
-                      )}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-
-            {/* Right side: Auth State check */}
-            <div className="hidden lg:flex items-center gap-3">
-              {token ? (
-                <>
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/5 select-none">
-                    <User size={13} className="text-blue-400" />
-                    <span className="text-[11px] font-bold tracking-[0.08em] uppercase text-slate-200">
-                      {meData?.data?.username || meData?.username || "Admin"}
-                    </span>
-                  </div>
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center justify-center gap-1.5 h-9 px-4 rounded-lg bg-red-500/10 border border-red-500/20 hover:bg-red-500 text-white font-bold text-[11px] tracking-[0.08em] uppercase transition-all duration-300 hover:scale-[1.04] active:scale-95 cursor-pointer"
-                  >
-                    <LogOut size={13} />
-                    Log Out
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/sign-in"
-                    className="text-xs font-semibold transition-all duration-200 hover:scale-105 active:scale-95 mr-3 text-slate-600 hover:text-slate-950"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/sign-up"
-                    className="flex items-center justify-center h-8 px-4 rounded-lg bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-bold text-xs transition-all duration-300 hover:scale-[1.06] active:scale-95 shadow-md shadow-primary/15 hover:shadow-lg hover:shadow-primary/35 animate-pulse-subtle"
-                  >
-                    Start Free Trial
-                  </Link>
-                </>
-              )}
-            </div>
-
-            {/* Morphing Hamburger Menu Trigger for Mobile */}
-            <div className="flex lg:hidden items-center z-50">
-              <button
-                type="button"
-                className={cn(
-                  'flex flex-col justify-center items-center w-8 h-8 rounded-full transition-all duration-200 focus:outline-none',
-                  useWhiteText ? 'text-white' : 'text-slate-800'
-                )}
-                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={mobileOpen}
-                onClick={toggleMobile}
-              >
-                <span className={cn(
-                  "w-5 h-[2px] bg-current rounded-full transition-all duration-300 ease-out",
-                  mobileOpen ? "rotate-45 translate-y-[5px]" : ""
-                )} />
-                <span className={cn(
-                  "w-5 h-[2px] bg-current rounded-full my-[3px] transition-all duration-300 ease-out",
-                  mobileOpen ? "opacity-0 scale-x-0" : ""
-                )} />
-                <span className={cn(
-                  "w-5 h-[2px] bg-current rounded-full transition-all duration-300 ease-out",
-                  mobileOpen ? "-rotate-45 -translate-y-[5px]" : ""
-                )} />
-              </button>
-            </div>
-          </div>
+      <div className="fixed top-0 left-0 z-50 w-full flex flex-col">
+        {/* Top Promo Banner */}
+        <div className="w-full bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/80 py-2 text-center text-[13px] font-sans font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-center gap-1 select-none">
+          <span>Get 3 Months FREE Quantix Cloud POS</span>
+          <span className="text-slate-350 dark:text-slate-700 mx-1">|</span>
+          <Link
+            href="/pricing"
+            className="text-blue-500 hover:text-blue-650 dark:text-blue-400 dark:hover:text-blue-300 font-bold inline-flex items-center gap-0.5 hover:underline transition-colors"
+          >
+            Book Now <ChevronRight size={13} className="stroke-[3]" />
+          </Link>
         </div>
 
-        {/* Mega Menu Dropdown */}
-        <AnimatePresence>
-          {openMegaMenu === 'Features' && (
-            <motion.div
-              initial={{ opacity: 0, scaleY: 0.95 }}
-              animate={{ opacity: 1, scaleY: 1 }}
-              exit={{ opacity: 0, scaleY: 0.95 }}
-              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              style={{ transformOrigin: 'top' }}
-              className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
-              onMouseEnter={() => setOpenMegaMenu('Features')}
-              onMouseLeave={() => setOpenMegaMenu(null)}
-            >
-              <div className="site-container grid grid-cols-12 gap-8">
-                {/* Left Column: Featured (4 cols) */}
-                <div className="col-span-4 border-r border-slate-100 pr-8 space-y-6">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Featured Solutions</span>
-                  
-                  {/* Card 1: Restaurant Ecosystem */}
-                  <Link 
-                    href="/services"
-                    onClick={() => setOpenMegaMenu(null)}
-                    className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
-                  >
-                    <div className="h-14 w-14 rounded-xl overflow-hidden shrink-0 border border-slate-200 relative bg-slate-100">
-                      <img src="/images/hero-restaurant.jpg" alt="Restaurant POS" className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1">
-                        <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Restaurant POS</span>
-                        <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">Speedy</span>
-                      </div>
-                      <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                        Complete restaurant ecosystem for table management, kitchen display sync, and payment splits.
-                      </p>
-                    </div>
-                  </Link>
+        <nav
+          className="w-full bg-white border-b border-slate-200/80 shadow-sm py-3 relative"
+          onMouseLeave={() => setOpenMegaMenu(null)}
+        >
+          <div
+            className="site-container"
+          >
 
-                  {/* Card 2: Retail POS */}
-                  <Link 
-                    href="/services"
-                    onClick={() => setOpenMegaMenu(null)}
-                    className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
-                  >
-                    <div className="h-14 w-14 rounded-xl overflow-hidden shrink-0 border border-slate-200 relative bg-slate-100">
-                      <img src="/images/hero-retail.jpg" alt="Retail POS" className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1">
-                        <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Retail POS</span>
-                        <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">Smart</span>
-                      </div>
-                      <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                        Smarter retail checkout terminal, barcode scanners support, and multi-store inventory sync.
-                      </p>
-                    </div>
-                  </Link>
+            {/* Inner Content */}
+            <div className="w-full flex items-center justify-between">
+              {/* Left: Brand icon/text */}
+              <Link href="/" onClick={handleBrandClick} className="flex items-center gap-2 z-50 group">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white shadow-md shadow-primary/20 transition-all duration-300 group-hover:scale-110 group-hover:shadow-primary/40">
+                  <Layers className="h-4 w-4 text-white" />
                 </div>
+                <span
+                  className="text-lg font-bold tracking-tight transition-all duration-300 font-syne uppercase text-slate-900 group-hover:text-primary group-hover:scale-[1.03]"
+                >
+                  Quantix
+                </span>
+              </Link>
 
-                {/* Center Column: Explore Products (4 cols) */}
-                <div className="col-span-4 border-r border-slate-100 pr-8 space-y-4">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Explore Products</span>
-                  <div className="flex flex-col gap-1">
-                    {PRODUCTS_LIST.map((item) => (
-                      <Link 
-                        key={item.title}
-                        href={`/features/${item.slug}`}
-                        onClick={() => setOpenMegaMenu(null)}
-                        className="group/item flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
+              {/* Center: Nav links */}
+              <ul className="hidden space-x-2 lg:flex items-center font-sans">
+                {LINKS.map((link) => {
+                  const isActive = pathname === link.href;
+                  const isDropdown = ['Features', 'Integrations', 'Downloads', 'Pricing', 'Services'].includes(link.label);
+                  const isMenuOpen = openMegaMenu === link.label;
+                  return (
+                    <li
+                      key={link.href}
+                      className="relative py-2.5 px-3 group"
+                      onMouseEnter={() => {
+                        if (isDropdown) {
+                          setOpenMegaMenu(link.label);
+                        } else {
+                          setOpenMegaMenu(null);
+                        }
+                      }}
+                    >
+                      <Link
+                        href={link.href}
+                        className={cn(
+                          'relative z-10 text-[13px] font-semibold transition-all duration-300 block hover:scale-105 active:scale-95',
+                          isActive || isMenuOpen
+                            ? 'text-primary font-bold'
+                            : 'text-slate-600 group-hover:text-slate-950'
+                        )}
                       >
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100/80 text-slate-600 transition-colors group-hover/item:bg-primary/10 group-hover/item:text-primary">
-                          <item.icon size={15} />
+                        <span className="inline-flex items-center gap-1">
+                          {link.label}
+                          {isDropdown && (
+                            <ChevronDown
+                              size={12}
+                              className={cn(
+                                "transition-transform duration-300 ease-out shrink-0",
+                                isMenuOpen
+                                  ? "rotate-180 text-primary"
+                                  : "text-slate-400 group-hover:text-slate-900"
+                              )}
+                            />
+                          )}
+                        </span>
+                      </Link>
+
+                      {/* Bottom border line for active/hover states */}
+                      <span
+                        className={cn(
+                          'absolute bottom-0 left-3 right-3 h-[2px] bg-primary transition-transform duration-300 ease-out origin-left scale-x-0 group-hover:scale-x-100',
+                          (isActive || isMenuOpen) && 'scale-x-100'
+                        )}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+
+              {/* Right side: Auth State check */}
+              <div className="hidden lg:flex items-center gap-3">
+                {token ? (
+                  <>
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/5 select-none">
+                      <User size={13} className="text-blue-400" />
+                      <span className="text-[11px] font-bold tracking-[0.08em] uppercase text-slate-200">
+                        {meData?.data?.username || meData?.username || "Admin"}
+                      </span>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center justify-center gap-1.5 h-9 px-4 rounded-lg bg-red-500/10 border border-red-500/20 hover:bg-red-500 text-white font-bold text-[11px] tracking-[0.08em] uppercase transition-all duration-300 hover:scale-[1.04] active:scale-95 cursor-pointer"
+                    >
+                      <LogOut size={13} />
+                      Log Out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/sign-in"
+                      className="text-xs font-semibold transition-all duration-200 hover:scale-105 active:scale-95 mr-3 text-slate-600 hover:text-slate-950"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/sign-up"
+                      className="flex items-center justify-center h-8 px-4 rounded-lg bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-bold text-xs transition-all duration-300 hover:scale-[1.06] active:scale-95 shadow-md shadow-primary/15 hover:shadow-lg hover:shadow-primary/35 animate-pulse-subtle"
+                    >
+                      Start Free Trial
+                    </Link>
+                  </>
+                )}
+              </div>
+
+              {/* Morphing Hamburger Menu Trigger for Mobile */}
+              <div className="flex lg:hidden items-center z-50">
+                <button
+                  type="button"
+                  className={cn(
+                    'flex flex-col justify-center items-center w-8 h-8 rounded-full transition-all duration-200 focus:outline-none',
+                    useWhiteText ? 'text-white' : 'text-slate-800'
+                  )}
+                  aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                  aria-expanded={mobileOpen}
+                  onClick={toggleMobile}
+                >
+                  <span className={cn(
+                    "w-5 h-[2px] bg-current rounded-full transition-all duration-300 ease-out",
+                    mobileOpen ? "rotate-45 translate-y-[5px]" : ""
+                  )} />
+                  <span className={cn(
+                    "w-5 h-[2px] bg-current rounded-full my-[3px] transition-all duration-300 ease-out",
+                    mobileOpen ? "opacity-0 scale-x-0" : ""
+                  )} />
+                  <span className={cn(
+                    "w-5 h-[2px] bg-current rounded-full transition-all duration-300 ease-out",
+                    mobileOpen ? "-rotate-45 -translate-y-[5px]" : ""
+                  )} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Mega Menu Dropdown */}
+          <AnimatePresence>
+            {openMegaMenu === 'Features' && (
+              <motion.div
+                initial={{ opacity: 0, scaleY: 0.95 }}
+                animate={{ opacity: 1, scaleY: 1 }}
+                exit={{ opacity: 0, scaleY: 0.95 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                style={{ transformOrigin: 'top' }}
+                className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
+                onMouseEnter={() => setOpenMegaMenu('Features')}
+                onMouseLeave={() => setOpenMegaMenu(null)}
+              >
+                <div className="site-container grid grid-cols-12 gap-8">
+                  {/* Left Column: Featured (4 cols) */}
+                  <div className="col-span-4 border-r border-slate-100 pr-8 space-y-6">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Featured Solutions</span>
+
+                    {/* Card 1: Restaurant Ecosystem */}
+                    <Link
+                      href="/services"
+                      onClick={() => setOpenMegaMenu(null)}
+                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                    >
+                      <div className="h-14 w-14 rounded-xl overflow-hidden shrink-0 border border-slate-200 relative bg-slate-100">
+                        <img src="/images/hero-restaurant.jpg" alt="Restaurant POS" className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Restaurant POS</span>
+                          <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">Speedy</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
+                          Complete restaurant ecosystem for table management, kitchen display sync, and payment splits.
+                        </p>
+                      </div>
+                    </Link>
+
+                    {/* Card 2: Retail POS */}
+                    <Link
+                      href="/services"
+                      onClick={() => setOpenMegaMenu(null)}
+                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                    >
+                      <div className="h-14 w-14 rounded-xl overflow-hidden shrink-0 border border-slate-200 relative bg-slate-100">
+                        <img src="/images/hero-retail.jpg" alt="Retail POS" className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Retail POS</span>
+                          <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">Smart</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
+                          Smarter retail checkout terminal, barcode scanners support, and multi-store inventory sync.
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* Center Column: Explore Products (4 cols) */}
+                  <div className="col-span-4 border-r border-slate-100 pr-8 space-y-4">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Explore Products</span>
+                    <div className="flex flex-col gap-1">
+                      {PRODUCTS_LIST.map((item) => (
+                        <Link
+                          key={item.title}
+                          href={`/features/${item.slug}`}
+                          onClick={() => setOpenMegaMenu(null)}
+                          className="group/item flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
+                        >
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
+                            <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
+                          </div>
+                          <div>
+                            <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                              {item.title}
+                            </span>
+                            <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
+                              {item.desc}
+                            </span>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right Column: Hardware & operations */}
+                  <div className="col-span-4 grid grid-cols-2 gap-6">
+                    {/* Column 2: Hardware & Devices */}
+                    <div className="space-y-4">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Hardware & Devices</span>
+                      <div className="flex flex-col gap-1">
+                        {HARDWARE_LIST.map((item) => (
+                          <Link
+                            key={item.title}
+                            href={`/features/${item.slug}`}
+                            onClick={() => setOpenMegaMenu(null)}
+                            className="group/item flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
+                          >
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
+                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
+                            </div>
+                            <div>
+                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                                {item.title}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
+                                {item.desc}
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Column 3: Advanced Operations */}
+                    <div className="space-y-4">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Operations</span>
+                      <div className="flex flex-col gap-1">
+                        {OPERATIONS_LIST.map((item) => (
+                          <Link
+                            key={item.title}
+                            href={`/features/${item.slug}`}
+                            onClick={() => setOpenMegaMenu(null)}
+                            className="group/item flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
+                          >
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
+                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
+                            </div>
+                            <div>
+                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                                {item.title}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
+                                {item.desc}
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Services Mega Menu Dropdown */}
+          <AnimatePresence>
+            {openMegaMenu === 'Services' && (
+              <motion.div
+                initial={{ opacity: 0, scaleY: 0.95 }}
+                animate={{ opacity: 1, scaleY: 1 }}
+                exit={{ opacity: 0, scaleY: 0.95 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                style={{ transformOrigin: 'top' }}
+                className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
+                onMouseEnter={() => setOpenMegaMenu('Services')}
+                onMouseLeave={() => setOpenMegaMenu(null)}
+              >
+                <div className="site-container">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-4">Our Services & Industries</span>
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+                    {SERVICES_LIST.map((item) => (
+                      <Link
+                        key={item.title}
+                        href={`/solutions/${item.slug}`}
+                        onClick={() => setOpenMegaMenu(null)}
+                        className="group/card flex flex-col gap-3 p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                      >
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
+                          <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
                         </div>
                         <div>
-                          <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                          <span className="text-[13px] font-bold text-slate-800 group-hover/card:text-primary transition-colors block leading-tight">
                             {item.title}
                           </span>
-                          <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
+                          <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
                             {item.desc}
-                          </span>
+                          </p>
                         </div>
                       </Link>
                     ))}
                   </div>
                 </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-                {/* Right Column: Hardware & operations */}
-                <div className="col-span-4 grid grid-cols-2 gap-6">
-                  {/* Column 2: Hardware & Devices */}
-                  <div className="space-y-4">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Hardware & Devices</span>
-                    <div className="flex flex-col gap-1">
-                      {HARDWARE_LIST.map((item) => (
-                        <Link 
-                          key={item.title}
-                          href={`/features/${item.slug}`}
-                          onClick={() => setOpenMegaMenu(null)}
-                          className="group/item flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
-                        >
-                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100/80 text-slate-600 transition-colors group-hover/item:bg-primary/10 group-hover/item:text-primary">
-                            <item.icon size={15} />
-                          </div>
-                          <div>
-                            <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
-                              {item.title}
-                            </span>
-                            <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
-                              {item.desc}
-                            </span>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
+          {/* Integrations Mega Menu Dropdown */}
+          <AnimatePresence>
+            {openMegaMenu === 'Integrations' && (
+              <motion.div
+                initial={{ opacity: 0, scaleY: 0.95 }}
+                animate={{ opacity: 1, scaleY: 1 }}
+                exit={{ opacity: 0, scaleY: 0.95 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                style={{ transformOrigin: 'top' }}
+                className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
+                onMouseEnter={() => setOpenMegaMenu('Integrations')}
+                onMouseLeave={() => setOpenMegaMenu(null)}
+              >
+                <div className="site-container grid grid-cols-12 gap-8">
+                  {/* Left Column: Developer Hub (4 cols) */}
+                  <div className="col-span-4 border-r border-slate-100 pr-8 space-y-6">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Developer Hub</span>
 
-                  {/* Column 3: Advanced Operations */}
-                  <div className="space-y-4">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Operations</span>
-                    <div className="flex flex-col gap-1">
-                      {OPERATIONS_LIST.map((item) => (
-                        <Link 
-                          key={item.title}
-                          href={`/features/${item.slug}`}
-                          onClick={() => setOpenMegaMenu(null)}
-                          className="group/item flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
-                        >
-                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100/80 text-slate-600 transition-colors group-hover/item:bg-primary/10 group-hover/item:text-primary">
-                            <item.icon size={15} />
-                          </div>
-                          <div>
-                            <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
-                              {item.title}
-                            </span>
-                            <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
-                              {item.desc}
-                            </span>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Services Mega Menu Dropdown */}
-        <AnimatePresence>
-          {openMegaMenu === 'Services' && (
-            <motion.div
-              initial={{ opacity: 0, scaleY: 0.95 }}
-              animate={{ opacity: 1, scaleY: 1 }}
-              exit={{ opacity: 0, scaleY: 0.95 }}
-              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              style={{ transformOrigin: 'top' }}
-              className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
-              onMouseEnter={() => setOpenMegaMenu('Services')}
-              onMouseLeave={() => setOpenMegaMenu(null)}
-            >
-              <div className="site-container">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-4">Our Services & Industries</span>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-                  {SERVICES_LIST.map((item) => (
-                    <Link 
-                      key={item.title}
-                      href={`/solutions/${item.slug}`}
+                    {/* Card 1: API Docs */}
+                    <Link
+                      href="/api-docs"
                       onClick={() => setOpenMegaMenu(null)}
-                      className="group/card flex flex-col gap-3 p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
                     >
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100/80 text-slate-600 transition-colors group-hover/card:bg-primary/10 group-hover/card:text-primary">
-                        <item.icon size={20} />
+                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
+                        <Grid className="h-6 w-6" />
                       </div>
                       <div>
-                        <span className="text-[13px] font-bold text-slate-800 group-hover/card:text-primary transition-colors block leading-tight">
-                          {item.title}
-                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Custom API Docs</span>
+                          <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">REST API</span>
+                        </div>
                         <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
-                          {item.desc}
+                          Connect custom terminals, CRM databases, or e-commerce storefronts using our flexible webhooks.
                         </p>
                       </div>
                     </Link>
-                  ))}
+
+                    {/* Card 2: Request Integration */}
+                    <Link
+                      href="/integrations"
+                      onClick={() => setOpenMegaMenu(null)}
+                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                    >
+                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
+                        <RefreshCw className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Request a Link</span>
+                          <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">Free</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
+                          Tell us which payment processor or platform you use, and our team will build the integration.
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* Right Columns (8 cols): 4 columns of categories */}
+                  <div className="col-span-8 grid grid-cols-4 gap-6">
+                    {/* Category 1: Payments */}
+                    <div className="space-y-4">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Payments & Cards</span>
+                      <div className="flex flex-col gap-1">
+                        {INTEGRATIONS_PAYMENTS.map((item) => (
+                          <Link
+                            key={item.title}
+                            href="/integrations"
+                            onClick={() => setOpenMegaMenu(null)}
+                            className="group/item flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
+                          >
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
+                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
+                            </div>
+                            <div>
+                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                                {item.title}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
+                                {item.desc}
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Category 2: Accounting */}
+                    <div className="space-y-4">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Accounting & ERP</span>
+                      <div className="flex flex-col gap-1">
+                        {INTEGRATIONS_ACCOUNTING.map((item) => (
+                          <Link
+                            key={item.title}
+                            href="/integrations"
+                            onClick={() => setOpenMegaMenu(null)}
+                            className="group/item flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
+                          >
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
+                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
+                            </div>
+                            <div>
+                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                                {item.title}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
+                                {item.desc}
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Category 3: Delivery */}
+                    <div className="space-y-4">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Delivery Sync</span>
+                      <div className="flex flex-col gap-1">
+                        {INTEGRATIONS_DELIVERY.map((item) => (
+                          <Link
+                            key={item.title}
+                            href="/integrations"
+                            onClick={() => setOpenMegaMenu(null)}
+                            className="group/item flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
+                          >
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
+                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
+                            </div>
+                            <div>
+                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                                {item.title}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
+                                {item.desc}
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Category 4: E-Commerce */}
+                    <div className="space-y-4">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">E-Commerce</span>
+                      <div className="flex flex-col gap-1">
+                        {INTEGRATIONS_ECOMMERCE.map((item) => (
+                          <Link
+                            key={item.title}
+                            href="/integrations"
+                            onClick={() => setOpenMegaMenu(null)}
+                            className="group/item flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 transition-all duration-200"
+                          >
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
+                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110" />
+                            </div>
+                            <div>
+                              <span className="text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors block leading-tight">
+                                {item.title}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-semibold group-hover/item:text-slate-500 transition-colors block mt-0.5 leading-tight">
+                                {item.desc}
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Downloads Mega Menu Dropdown */}
+          <AnimatePresence>
+            {openMegaMenu === 'Downloads' && (
+              <motion.div
+                initial={{ opacity: 0, scaleY: 0.95 }}
+                animate={{ opacity: 1, scaleY: 1 }}
+                exit={{ opacity: 0, scaleY: 0.95 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                style={{ transformOrigin: 'top' }}
+                className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
+                onMouseEnter={() => setOpenMegaMenu('Downloads')}
+                onMouseLeave={() => setOpenMegaMenu(null)}
+              >
+                <div className="site-container grid grid-cols-12 gap-8">
+                  {/* Left Column: Resources / Manuals (4 cols) */}
+                  <div className="col-span-4 border-r border-slate-100 pr-8 space-y-6">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Setup Resources</span>
+
+                    {/* Card 1: Installation Guide */}
+                    <Link
+                      href="/downloads"
+                      onClick={() => setOpenMegaMenu(null)}
+                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                    >
+                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
+                        <ShieldCheck className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Setup Guide</span>
+                          <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">Secure</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
+                          Read hardware compatibility list, scanner setup, and receipt printer driver installation instructions.
+                        </p>
+                      </div>
+                    </Link>
+
+                    {/* Card 2: Release Notes */}
+                    <Link
+                      href="/downloads"
+                      onClick={() => setOpenMegaMenu(null)}
+                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                    >
+                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
+                        <Download className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Release Notes</span>
+                          <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">v2.1.0</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
+                          View changelogs, database schema migrations, and performance patches in the latest alpha build.
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* Right Columns (8 cols): 3 columns of downloads */}
+                  <div className="col-span-8 grid grid-cols-3 gap-6">
+                    {DOWNLOADS_LIST.map((item) => (
+                      <Link
+                        key={item.title}
+                        href="/downloads"
+                        onClick={() => setOpenMegaMenu(null)}
+                        className="group/card flex flex-col justify-between p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                      >
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
+                          <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
+                        </div>
+                        <div className="mt-4 flex-1">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="text-[13px] font-bold text-slate-800 group-hover/card:text-primary transition-colors block leading-tight">
+                              {item.title}
+                            </span>
+                            <span className="text-[9px] text-primary font-bold uppercase bg-primary/10 px-1.5 py-0.5 rounded">
+                              {item.badge}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                            {item.desc}
+                          </p>
+                        </div>
+                        <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-400 group-hover/card:text-primary transition-colors">
+                          <span>{item.size}</span>
+                          <span>Download &rarr;</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Pricing Mega Menu Dropdown */}
+          <AnimatePresence>
+            {openMegaMenu === 'Pricing' && (
+              <motion.div
+                initial={{ opacity: 0, scaleY: 0.95 }}
+                animate={{ opacity: 1, scaleY: 1 }}
+                exit={{ opacity: 0, scaleY: 0.95 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                style={{ transformOrigin: 'top' }}
+                className="absolute top-full left-0 right-0 mt-0 bg-white border border-slate-200/80 rounded-b-2xl shadow-xl py-6 z-50 text-left overflow-hidden"
+                onMouseEnter={() => setOpenMegaMenu('Pricing')}
+                onMouseLeave={() => setOpenMegaMenu(null)}
+              >
+                <div className="site-container grid grid-cols-12 gap-8">
+                  {/* Left Column: Offers & Trial (4 cols) */}
+                  <div className="col-span-4 border-r border-slate-100 pr-8 space-y-6">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Pricing Support</span>
+
+                    {/* Card 1: Start Free Trial */}
+                    <Link
+                      href="/sign-up"
+                      onClick={() => setOpenMegaMenu(null)}
+                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                    >
+                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
+                        <Sparkles className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">3-Day Free Trial</span>
+                          <span className="text-[10px] text-emerald-600 font-bold uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded">No Card</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
+                          Get instant access to cloud databases, custom catalog exports, and sync dashboard tools.
+                        </p>
+                      </div>
+                    </Link>
+
+                    {/* Card 2: Contact Sales */}
+                    <Link
+                      href="/contact/sales"
+                      onClick={() => setOpenMegaMenu(null)}
+                      className="group/card flex gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50"
+                    >
+                      <div className="h-14 w-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 bg-slate-100 text-slate-650 group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors">
+                        <Headset className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs font-bold uppercase text-slate-800 group-hover/card:text-blue-600 transition-colors">Custom Deployment</span>
+                          <span className="text-[10px] text-blue-600 font-bold uppercase bg-blue-500/10 px-1.5 py-0.5 rounded">Enterprise</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
+                          Need dedicated SLA uptime contracts, custom webhooks, or localized on-site installation help?
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* Right Columns (8 cols): 3 columns of pricing plans */}
+                  <div className="col-span-8 grid grid-cols-3 gap-6">
+                    {PRICING_LIST.map((item) => (
+                      <Link
+                        key={item.title}
+                        href="/pricing"
+                        onClick={() => setOpenMegaMenu(null)}
+                        className={cn(
+                          "group/card flex flex-col justify-between p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100/50 relative",
+                          item.popular && "bg-blue-50/20 hover:bg-blue-50/30 border-blue-100/30"
+                        )}
+                      >
+                        <div>
+                          <div className="flex items-center justify-between">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-slate-100 bg-slate-50 relative">
+                              <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
+                            </div>
+                            <span className={cn(
+                              "text-[9px] font-bold uppercase px-1.5 py-0.5 rounded",
+                              item.popular
+                                ? "text-blue-600 bg-blue-500/10"
+                                : "text-slate-500 bg-slate-100"
+                            )}>
+                              {item.badge}
+                            </span>
+                          </div>
+                          <div className="mt-4">
+                            <span className="text-[13px] font-bold text-slate-800 group-hover/card:text-primary transition-colors block leading-tight">
+                              {item.title}
+                            </span>
+                            <p className="text-[11px] text-slate-500 mt-1.5 font-medium leading-relaxed">
+                              {item.desc}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="mt-6 pt-3 border-t border-slate-100 flex items-baseline justify-between">
+                          <span className="text-lg font-black text-slate-900">{item.price}</span>
+                          <span className="text-[10px] font-bold text-primary group-hover/card:underline">Select &rarr;</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </nav>
+      </div>
 
       {/* Full-Screen Slide Overlay for Mobile Menu */}
       <AnimatePresence>

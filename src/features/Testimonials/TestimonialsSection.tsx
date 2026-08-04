@@ -1,10 +1,11 @@
 // src/features/Testimonials/TestimonialsSection.tsx
 'use client';
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Star } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { TestimonialDto } from "./Types/TestimonialsTypes";
+import { motion, AnimatePresence } from "framer-motion";
 
 export interface TestimonialsSectionProps {
   testimonials: TestimonialDto[];
@@ -14,39 +15,39 @@ export interface TestimonialsSectionProps {
 const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
   {
     id: "t1",
-    quote: "Quantix changed how we run our boutique. Offline sync is so smooth, we never worry about losing connection during weekend rushes.",
+    quote: "Quantix changed how we run our boutique. Offline sync is so smooth, we never worry about losing connection during weekend rushes. Real-time stock alerts keep us prepared and customer billing takes half the time.",
     author: "Amanda Sterling",
-    role: "Founder, Bloom Retail",
+    role: "Founder",
+    companyName: "Bloom Retail Boutique",
     industry: "Retail",
-    avatarColor: "bg-blue-600",
-    initials: "AS"
+    avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
     id: "t2",
-    quote: "The restaurant layout mapper is a game-changer. Bill splits take seconds instead of minutes, increasing our seat turnover by 15%.",
+    quote: "The restaurant layout mapper is a total game-changer. Bill splits take seconds instead of minutes, increasing our seat turnover by 15% and saving staff overheads. Best POS decision we've ever made.",
     author: "Chef Giovanni",
-    role: "Owner, Bella Italia Bistro",
+    role: "Owner",
+    companyName: "Bella Italia Bistro",
     industry: "Restaurant",
-    avatarColor: "bg-purple-600",
-    initials: "CG"
+    avatarUrl: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
     id: "t3",
-    quote: "We scaled from 1 store to 5 in less than a year. The unified dashboard is exactly what we needed to monitor stock levels in real-time.",
+    quote: "We scaled from 1 store to 5 in less than a year. The unified dashboard is exactly what we needed to monitor stock levels, sales reports, and employee shifts in real-time across all branches.",
     author: "Marcus Vance",
-    role: "Operations Director, Urban Wear",
+    role: "Operations Director",
+    companyName: "Urban Wear Co.",
     industry: "Retail",
-    avatarColor: "bg-emerald-600",
-    initials: "MV"
+    avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
     id: "t4",
-    quote: "The interface is so clean. It takes less than 10 minutes to train new staff members on our checkout registers.",
+    quote: "The interface is so clean. It takes less than 10 minutes to train new staff members on our checkout registers, saving us massive setup and onboarding time. The support team is also top-notch.",
     author: "Sarah Lindqvist",
-    role: "General Manager, Espresso House",
+    role: "General Manager",
+    companyName: "Espresso House",
     industry: "Restaurant",
-    avatarColor: "bg-amber-600",
-    initials: "SL"
+    avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&h=150&q=80"
   }
 ];
 
@@ -54,147 +55,162 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   testimonials,
   isLoading,
 }) => {
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [showFullQuote, setShowFullQuote] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
 
   const displayTestimonials = testimonials.length > 0 ? testimonials : DEFAULT_TESTIMONIALS;
 
-  const getInitials = (name: string) => {
-    if (!name) return "QT";
-    return name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+  const handleNext = () => {
+    setShowFullQuote(false);
+    setActiveIndex((prev) => (prev + 1) % displayTestimonials.length);
   };
 
-  const getAvatarColor = (index: number) => {
-    const colors = ["bg-purple-600", "bg-blue-600", "bg-emerald-600", "bg-amber-600", "bg-pink-600", "bg-indigo-600"];
-    return colors[index % colors.length];
+  const handlePrev = () => {
+    setShowFullQuote(false);
+    setActiveIndex((prev) => (prev - 1 + displayTestimonials.length) % displayTestimonials.length);
   };
 
-  const retailTestimonials = displayTestimonials.filter(t => t.industry === "Retail");
-  const restaurantTestimonials = displayTestimonials.filter(t => t.industry === "Restaurant");
-
-  // Helper to ensure enough items for continuous marquee scroll
-  const repeatList = (list: TestimonialDto[]) => {
-    if (list.length === 0) return [];
-    let repeated = [...list];
-    while (repeated.length < 10) {
-      repeated = [...repeated, ...list];
-    }
-    return repeated;
+  const handleDotClick = (index: number) => {
+    setShowFullQuote(false);
+    setActiveIndex(index);
   };
 
-  const combinedList = repeatList(displayTestimonials);
+  const current = displayTestimonials[activeIndex];
+  const maxChars = 150;
+  const shouldTruncate = current?.quote.length > maxChars;
+  const displayedQuote = shouldTruncate && !showFullQuote
+    ? `${current.quote.slice(0, maxChars)}...`
+    : current?.quote;
 
   return (
-    <section className="scroll-mt-20 bg-gradient-to-b from-white via-slate-50/10 to-white py-10 sm:py-12 border-b border-slate-100 overflow-hidden" id="testimonials">
-      {/* Style block for continuous marquee */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes marqueeLeft {
-          0% { transform: translate3d(0, 0, 0); }
-          100% { transform: translate3d(-50%, 0, 0); }
-        }
-        .animate-marquee-left-continuous {
-          display: flex;
-          width: max-content;
-          animation: marqueeLeft 45s linear infinite;
-        }
-        .animate-marquee-left-continuous:hover {
-          animation-play-state: paused;
-        }
-      `}} />
-
+    <section className="scroll-mt-20 bg-slate-50 dark:bg-slate-900/40 py-16 sm:py-24 border-b border-slate-100 dark:border-slate-800/80 transition-colors duration-300" id="testimonials">
       <div className="site-container">
         {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
-            TESTIMONIALS
+        <div className="text-center mb-12 lg:mb-16">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 dark:bg-blue-950/40 border border-blue-200/50 dark:border-blue-900/50 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4 shadow-sm select-none">
+            CLIENT TESTIMONIALS
           </div>
-          <h2 className="text-3xl font-syne font-black text-gray-900 md:text-5xl uppercase leading-tight">
-            Businesses love Quantix
+          <h2 className="text-3xl font-syne font-black text-slate-900 dark:text-white md:text-5xl leading-tight select-none">
+            Why Businesses Like Yours <span className="text-primary">Choose Quantix</span>
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-500 font-medium max-w-2xl mx-auto">
-            Real results from real businesses across retail and restaurants. Hover to pause.
-          </p>
         </div>
-      </div>
 
-      {!mounted || isLoading ? (
-        <div className="site-container max-w-5xl text-center py-8">
-          <div className="animate-pulse flex space-x-4 justify-center">
-            <div className="rounded-full bg-slate-200 h-10 w-10"></div>
-            <div className="flex-1 space-y-6 py-1 max-w-md">
-              <div className="h-2 bg-slate-200 rounded"></div>
-              <div className="space-y-3">
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="h-2 bg-slate-200 rounded col-span-2"></div>
-                  <div className="h-2 bg-slate-200 rounded col-span-1"></div>
-                </div>
-                <div className="h-2 bg-slate-200 rounded"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : (
-        /* Infinite Ticker Wrapper */
-        <div className="relative w-full overflow-hidden py-4 flex flex-col gap-6">
-          {/* Side gradient overlays (Wider fades for premium blending) */}
-          <div className="absolute inset-y-0 left-0 w-24 sm:w-48 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-24 sm:w-48 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+        {/* Carousel Layout Wrapper */}
+        <div className="relative max-w-5xl mx-auto px-4 md:px-12 select-none">
+          
+          {/* Navigation Arrows */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-[-10px] md:left-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 shadow-md text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary-light hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200 hover:scale-105 active:scale-95"
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft size={20} />
+          </button>
 
-          {/* Combined Retail & Restaurant Testimonials Row */}
-          {combinedList.length > 0 && (
-            <div className="overflow-hidden">
-              <div className="animate-marquee-left-continuous gap-6 px-3">
-                {combinedList.map((t, i) => (
-                  <div
-                    key={`testimonial-${t.id}-${i}`}
-                    className="w-[320px] sm:w-[400px] shrink-0 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-[0_15px_30px_rgba(37,99,235,0.04)] transition-all duration-300 flex flex-col justify-between select-none hover:scale-[1.01] hover:border-slate-300"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-0.5">
-                          {Array.from({ length: 5 }).map((_, sIdx) => (
-                            <Star
-                              key={sIdx}
-                              className="h-3.5 w-3.5 fill-amber-400 text-amber-400 stroke-none"
-                            />
-                          ))}
+          <button
+            onClick={handleNext}
+            className="absolute right-[-10px] md:right-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 shadow-md text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary-light hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200 hover:scale-105 active:scale-95"
+            aria-label="Next testimonial"
+          >
+            <ChevronRight size={20} />
+          </button>
+
+          {/* Testimonial Active Card Wrapper */}
+          <div className="overflow-hidden min-h-[300px] sm:min-h-[250px] md:min-h-[220px] flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              {mounted && !isLoading && current && (
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-full bg-white dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 p-6 md:p-8 rounded-[2rem] shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col md:flex-row items-center gap-8 relative"
+                >
+                  
+                  {/* Left Column: Avatar */}
+                  <div className="relative shrink-0 select-none">
+                    <div className="h-32 w-32 md:h-36 md:w-36 rounded-full overflow-hidden border-4 border-slate-100 dark:border-slate-700 shadow-md relative group/avatar bg-slate-100 dark:bg-slate-800">
+                      {current.avatarUrl ? (
+                        <img
+                          src={current.avatarUrl}
+                          alt={current.author}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover/avatar:scale-110"
+                        />
+                      ) : (
+                        <div className="h-full w-full flex items-center justify-center text-3xl font-black bg-blue-600 text-white">
+                          {current.initials || current.author.slice(0, 2).toUpperCase()}
                         </div>
-                        <span className="rounded-md bg-blue-50 border border-blue-100/50 px-2 py-0.5 text-[8px] font-extrabold tracking-wider uppercase text-blue-600">
-                          {t.industry}
-                        </span>
-                      </div>
+                      )}
+                    </div>
+                  </div>
 
-                      <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6 font-medium">
-                        "{t.quote}"
+                  {/* Right Column: Quotes & Info */}
+                  <div className="flex-1 text-center md:text-left flex flex-col justify-between h-full space-y-4">
+                    <div className="relative">
+                      {/* Premium Quotes mark */}
+                      <span className="absolute top-[-25px] left-[-15px] text-[70px] font-serif leading-none select-none text-slate-150 dark:text-slate-700 pointer-events-none">
+                        “
+                      </span>
+                      
+                      <p className="text-slate-600 dark:text-slate-300 text-base md:text-lg leading-relaxed font-medium pl-2 italic relative z-10">
+                        {displayedQuote}
+                        {shouldTruncate && (
+                          <button
+                            onClick={() => setShowFullQuote(!showFullQuote)}
+                            className="text-primary hover:text-primary-light font-bold text-xs uppercase ml-2 tracking-wide hover:underline cursor-pointer inline-block"
+                          >
+                            {showFullQuote ? "SHOW LESS" : "SHOW MORE"}
+                          </button>
+                        )}
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-3 border-t border-slate-100 pt-4 mt-auto">
-                      <div className={cn(
-                        "flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold text-white shadow-sm shrink-0",
-                        t.avatarColor || getAvatarColor(i)
-                      )}>
-                        {t.initials || getInitials(t.author)}
-                      </div>
+                    {/* Author & Footer Elements */}
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pt-4 border-t border-slate-100 dark:border-slate-700/80">
                       <div>
-                        <p className="text-xs sm:text-sm font-bold text-gray-900 leading-none">
-                          {t.author}
-                        </p>
-                        <p className="text-[10px] text-slate-400 mt-1 font-medium">
-                          {t.role}
+                        <h4 className="text-base font-extrabold text-slate-900 dark:text-white">
+                          {current.author}
+                          <span className="text-slate-400 dark:text-slate-500 font-medium text-sm ml-2">
+                            — {current.role}
+                          </span>
+                        </h4>
+                        <p className="text-primary dark:text-primary-light font-extrabold uppercase text-[11px] tracking-wider mt-1">
+                          {current.companyName || current.industry}
                         </p>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
+
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Dots Indicator Pagination */}
+          <div className="flex justify-center items-center gap-2 mt-8 select-none">
+            {displayTestimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleDotClick(index)}
+                className={cn(
+                  "h-2 rounded-full transition-all duration-300 cursor-pointer",
+                  index === activeIndex
+                    ? "w-6 bg-primary"
+                    : "w-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400"
+                )}
+                aria-label={`Go to testimonial slide ${index + 1}`}
+              />
+            ))}
+          </div>
+
         </div>
-      )}
+      </div>
     </section>
   );
 };
