@@ -88,7 +88,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
     : current?.quote;
 
   return (
-    <section className="scroll-mt-20 bg-slate-50 dark:bg-slate-900/40 py-16 sm:py-24 border-b border-slate-100 dark:border-slate-800/80 transition-colors duration-300" id="testimonials">
+    <section className="scroll-mt-20 bg-slate-50 dark:bg-slate-900/40 py-10 sm:py-14 lg:py-20 border-b border-slate-100 dark:border-slate-800/80 transition-colors duration-300" id="testimonials">
       <div className="site-container">
         {/* Header */}
         <div className="text-center mb-12 lg:mb-16">

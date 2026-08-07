@@ -218,9 +218,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         {/* Terms note */}
         <p className="mt-5 text-[10px] text-slate-500 text-center leading-relaxed">
           By creating an account you agree to our{" "}
-          <a href="#" className="text-slate-400 hover:text-primary-light underline underline-offset-2 transition-colors">Terms</a>{" "}
+          <Link href="/terms" className="text-slate-400 hover:text-primary-light underline underline-offset-2 transition-colors">Terms</Link>{" "}
           and{" "}
-          <a href="#" className="text-slate-400 hover:text-primary-light underline underline-offset-2 transition-colors">Privacy Policy</a>.
+          <Link href="/privacy" className="text-slate-400 hover:text-primary-light underline underline-offset-2 transition-colors">Privacy Policy</Link>.
         </p>
       </div>
     </motion.div>

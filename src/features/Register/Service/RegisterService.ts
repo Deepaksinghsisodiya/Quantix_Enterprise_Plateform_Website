@@ -11,7 +11,7 @@ export const registerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     signup: builder.mutation<any, MerchantSignupDto>({
       query: (payload) => ({
-        url: '/registration/signup',
+        url: '/api/v1/tenants/register',
         method: 'POST',
         body: payload,
       }),
@@ -36,14 +36,14 @@ export const registerApi = baseApi.injectEndpoints({
     }),
     verifyEmailCode: builder.mutation<any, { merchantId: string; otpCode: string }>({
       query: (payload) => ({
-        url: '/registration/verify-email',
+        url: '/api/v1/tenants/verify-email',
         method: 'POST',
         body: payload,
       }),
     }),
     processPayment: builder.mutation<any, PaymentCaptureDto>({
       query: (payload) => ({
-        url: '/registration/payment',
+        url: `/api/v1/tenants/${payload.merchantId}/payment`,
         method: 'POST',
         body: payload,
       }),
@@ -56,7 +56,7 @@ export const registerApi = baseApi.injectEndpoints({
     }),
     activateMerchant: builder.mutation<any, string>({
       query: (merchantId) => ({
-        url: `/registration/${merchantId}/activate`,
+        url: `/api/v1/tenants/${merchantId}/activate`,
         method: 'POST',
       }),
     }),

@@ -12,7 +12,7 @@ export const contactApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     submitContactForm: builder.mutation<void, ContactFormPayload>({
       query: (payload) => ({
-        url: '/contact/form',
+        url: '/api/v1/contacts/inquiries',
         method: 'POST',
         body: payload,
       }),

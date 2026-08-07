@@ -94,11 +94,11 @@ export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
         <div className="relative z-10 px-6 pb-6 sm:px-10">
           <p className="text-[10px] text-slate-600 font-medium leading-relaxed">
             © {new Date().getFullYear()} Quantix Inc. All rights reserved.{" "}
-            <Link href="#" className="text-slate-500 hover:text-slate-400 underline underline-offset-2">
+            <Link href="/privacy" className="text-slate-500 hover:text-slate-400 underline underline-offset-2">
               Privacy Policy
             </Link>{" "}
             &{" "}
-            <Link href="#" className="text-slate-500 hover:text-slate-400 underline underline-offset-2">
+            <Link href="/terms" className="text-slate-500 hover:text-slate-400 underline underline-offset-2">
               Terms of Service
             </Link>
           </p>

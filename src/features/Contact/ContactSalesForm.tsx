@@ -122,6 +122,24 @@ export const ContactSalesForm: React.FC<ContactSalesFormProps> = ({
             }
           />
 
+          {/* Anti-spam Check */}
+          <div className="flex gap-4 items-end">
+            <ATMTextField
+              name="captcha"
+              label="Anti-spam: What is 3 + 4?"
+              placeholder="e.g. 7"
+              value={values.captcha}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={
+                touched.captcha && errors.captcha
+                  ? errors.captcha
+                  : undefined
+              }
+              className={fieldClass + " flex-1"}
+            />
+          </div>
+
           {/* Action Row */}
           <div className="flex flex-col-reverse sm:flex-row items-center gap-2.5 pt-3">
             <ATMButton

@@ -38,5 +38,6 @@ export interface ContactSalesFormValues {
   fullName: string;
   workEmail: string;
   message: string;
+  captcha: string;
 }
 

@@ -229,10 +229,10 @@ export const PlatformDemoSection = () => {
   };
 
   return (
-    <section className="bg-white py-20 sm:py-24 border-b border-slate-100" ref={ref} id="platform-demo">
+    <section className="bg-white py-10 sm:py-14 lg:py-20 border-b border-slate-100" ref={ref} id="platform-demo">
       <div className="site-container">
         {/* Header grid matching PDF Page 4 */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 items-start mb-20">
+        <div className="grid grid-cols-1 gap-6 lg:gap-8 lg:grid-cols-2 items-start mb-10 sm:mb-14">
           <div className="space-y-4">
             <p className="text-blue-600 font-extrabold tracking-wider uppercase text-sm">PLATFORM DEMO</p>
             <h2 className="text-4xl font-syne font-black text-slate-900 md:text-5xl leading-[1.1] tracking-tight">
@@ -244,7 +244,7 @@ export const PlatformDemoSection = () => {
               Transform your business with Quantix's integrated software — designed to streamline operations, enhance customer experiences, and boost profitability through real-time insights.
             </p>
             <Link
-              href="#features"
+              href="/features"
               className="inline-block rounded-full bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-extrabold text-xs tracking-wider uppercase px-8 py-3.5 shadow-md shadow-primary/15 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
             >
               Explore Features →

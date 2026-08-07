@@ -30,7 +30,7 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
 
   return (
     <section
-      className="bg-white py-20 sm:py-24 border-b border-slate-100"
+      className="bg-white py-10 sm:py-14 lg:py-20 border-b border-slate-100"
       ref={ref}
       id="how-it-works"
     >

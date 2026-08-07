@@ -35,7 +35,7 @@ export const CTAView: React.FC<CTAViewProps> = ({
   return (
     <section
       ref={ref}
-      className="w-full bg-slate-950 py-20 sm:py-24 text-center border-t border-slate-900 relative overflow-hidden"
+      className="w-full bg-slate-950 py-10 sm:py-14 lg:py-20 text-center border-t border-slate-900 relative overflow-hidden"
     >
       {/* Tech grid overlay */}
       <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />

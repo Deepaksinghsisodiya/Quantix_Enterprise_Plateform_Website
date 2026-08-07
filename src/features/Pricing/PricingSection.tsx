@@ -51,10 +51,28 @@ const DEFAULT_PLANS: PricingPlan[] = [
   }
 ];
 
+export interface StandaloneTier {
+  id: string;
+  name: string;
+  prices: Record<string, number>;
+  features: string[];
+}
+
+const STANDALONE_TIERS: StandaloneTier[] = [
+  { id: 'basic', name: 'Basic Token', prices: { '30': 15, '60': 28, '90': 40, '180': 75, '365': 140 }, features: ['Single register', 'Offline sales', 'Local receipt printing'] },
+  { id: 'standard', name: 'Standard Token', prices: { '30': 25, '60': 48, '90': 70, '180': 130, '365': 250 }, features: ['Up to 3 registers', 'Local network sync', 'Basic inventory'] },
+  { id: 'advance', name: 'Advance Token', prices: { '30': 45, '60': 85, '90': 120, '180': 225, '365': 420 }, features: ['Unlimited registers', 'Advanced local reports', 'Customer management'] },
+  { id: 'premium', name: 'Premium Token', prices: { '30': 65, '60': 120, '90': 175, '180': 325, '365': 600 }, features: ['All Advance features', 'API Bridge plugin', 'Priority phone support'] },
+];
+
 export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading }) => {
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<'enterprise' | 'standalone'>('enterprise');
   const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly');
   const [selectedPlanId, setSelectedPlanId] = useState<string>('pro');
+  const [standaloneValidity, setStandaloneValidity] = useState<Record<string, string>>({
+    basic: '30', standard: '30', advance: '30', premium: '30'
+  });
 
   const handleSelectPlan = (planId: string) => {
     setSelectedPlanId(planId);
@@ -107,24 +125,51 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
             </p>
           </div>
 
-          {/* Billing toggle */}
-          <div className="flex justify-center mb-16">
-            <div className="inline-flex items-center rounded-full bg-slate-100/60 p-1 border border-slate-200/40 shadow-inner">
+          {/* Tab Selection */}
+          <div className="flex justify-center mb-8">
+            <div className="inline-flex items-center rounded-lg bg-slate-100 p-1 border border-slate-200">
               <button
                 type="button"
-                onClick={() => setBilling('monthly')}
+                onClick={() => setActiveTab('enterprise')}
                 className={cn(
-                  'rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer',
-                  billing === 'monthly' ? 'bg-white text-gray-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                  'rounded-md px-6 py-2.5 text-sm font-bold transition-all duration-200 cursor-pointer',
+                  activeTab === 'enterprise' ? 'bg-white text-primary shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-900'
                 )}
               >
-                Monthly
+                Enterprise Plans
               </button>
               <button
                 type="button"
-                onClick={() => setBilling('annual')}
+                onClick={() => setActiveTab('standalone')}
                 className={cn(
-                  'rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer',
+                  'rounded-md px-6 py-2.5 text-sm font-bold transition-all duration-200 cursor-pointer',
+                  activeTab === 'standalone' ? 'bg-white text-primary shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-900'
+                )}
+              >
+                Standalone Tokens
+              </button>
+            </div>
+          </div>
+
+          {/* Billing toggle (Only show for Enterprise) */}
+          {activeTab === 'enterprise' && (
+            <div className="flex justify-center mb-16">
+              <div className="inline-flex items-center rounded-full bg-slate-100/60 p-1 border border-slate-200/40 shadow-inner">
+                <button
+                  type="button"
+                  onClick={() => setBilling('monthly')}
+                  className={cn(
+                    'rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer',
+                    billing === 'monthly' ? 'bg-white text-gray-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                  )}
+                >
+                  Monthly
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBilling('annual')}
+                  className={cn(
+                    'rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer',
                   billing === 'annual' ? 'bg-white text-gray-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'
                 )}
               >
@@ -135,15 +180,19 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
               </button>
             </div>
           </div>
+          )}
 
           {/* Cards grid */}
           <motion.div
-            className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch justify-center max-w-7xl mx-auto"
+            className={cn(
+              "grid gap-6 items-stretch justify-center max-w-7xl mx-auto",
+              activeTab === 'enterprise' ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+            )}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
             variants={gridVariants}
           >
-            {isLoading && Array.from({ length: 3 }).map((_, i) => (
+            {isLoading && activeTab === 'enterprise' && Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="rounded-3xl border border-slate-100 p-6 animate-pulse bg-white flex flex-col justify-between">
                 <div className="space-y-4">
                   <div className="h-6 w-3/4 bg-gray-200 rounded" />
@@ -153,9 +202,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                 </div>
                 <div className="h-10 w-full bg-gray-200 rounded mt-8" />
               </div>
+
             ))}
 
-            {!isLoading && pricingPlans.map((plan) => {
+            {!isLoading && activeTab === 'enterprise' && pricingPlans.map((plan) => {
               const isSelected = selectedPlanId === plan.id;
               const isTrialPlan = plan.planCode === 'trial';
 
@@ -275,6 +325,49 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                 </div>
               );
             })}
+
+            {!isLoading && activeTab === 'standalone' && STANDALONE_TIERS.map((tier) => {
+              const validity = standaloneValidity[tier.id] || '30';
+              const price = tier.prices[validity];
+              return (
+                <div key={tier.id} className="rounded-3xl border border-slate-200 p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-lg bg-white relative">
+                  <div>
+                    <h3 className="text-sm font-syne font-bold uppercase tracking-wider text-slate-700">{tier.name}</h3>
+                    <div className="mt-4 mb-2">
+                      <select 
+                        value={validity} 
+                        onChange={(e) => setStandaloneValidity(prev => ({...prev, [tier.id]: e.target.value}))}
+                        className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none cursor-pointer text-slate-700 bg-slate-50"
+                      >
+                        <option value="30">30 Days</option>
+                        <option value="60">60 Days</option>
+                        <option value="90">90 Days</option>
+                        <option value="180">180 Days</option>
+                        <option value="365">365 Days</option>
+                      </select>
+                    </div>
+                    <div className="mt-4 mb-4">
+                      <span className="text-3xl font-syne font-black text-slate-900">${price}</span>
+                      <span className="text-xs font-medium text-slate-500"> / {validity} days</span>
+                    </div>
+                    <ul className="mb-6 space-y-3">
+                      {tier.features.map((feat, idx) => (
+                        <li key={idx} className="flex items-start text-xs font-medium text-slate-600">
+                          <Check className="h-4 w-4 mr-2 shrink-0 stroke-[2.5] text-emerald-500" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-auto flex flex-col gap-3">
+                    <button onClick={(e) => { e.stopPropagation(); router.push('/sign-up/standalone'); }} className="w-full text-xs font-bold py-3 rounded-full transition-all text-white bg-slate-900 hover:bg-slate-800 shadow-md">
+                      Buy Token
+                    </button>
+                    <span className="text-center text-[10px] text-slate-400 font-medium">10+? <Link href="/contact" className="hover:text-primary">Contact sales</Link></span>
+                  </div>
+                </div>
+              );
+            })}
           </motion.div>
 
           {/* Footer note */}
@@ -327,7 +420,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
                   Contact Sales
                 </button>
               </Link>
-              <Link href="/#resources" className="w-full sm:w-auto">
+              <Link href="/contact/demo" className="w-full sm:w-auto">
                 <button
                   type="button"
                   className="w-full sm:w-auto text-xs font-bold border border-white/20 hover:bg-white/5 text-white bg-transparent py-3.5 px-6 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer"

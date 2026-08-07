@@ -1,3 +1,5 @@
+'use client';
+
 // src/components/organisms/Footer/FooterView.tsx
 // Pure UI component — receives all data as props, renders nothing on its own.
 import React from "react";
@@ -58,7 +60,7 @@ export const FooterView: React.FC<FooterViewProps> = ({
   socialLinks,
 }) => {
   return (
-    <footer className="bg-white text-slate-500 pt-20 pb-12 border-t border-slate-200/80">
+    <footer className="bg-white text-slate-500 pt-10 pb-8 sm:pt-14 sm:pb-10 border-t border-slate-200/80 mt-auto w-full">
       <div className="site-container">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-5 md:gap-12">
 
@@ -91,6 +93,22 @@ export const FooterView: React.FC<FooterViewProps> = ({
                 </a>
               ))}
             </div>
+
+            {/* Newsletter Subscription */}
+            <div className="pt-4 border-t border-slate-200/60 mt-4 max-w-xs">
+              <h3 className="mb-3 font-syne font-bold text-slate-900 text-[11px] uppercase tracking-wider">Subscribe to our newsletter</h3>
+              <form className="flex" onSubmit={(e) => { e.preventDefault(); alert('Subscribed!'); }}>
+                <input 
+                  type="email" 
+                  placeholder="name@business.com" 
+                  required
+                  className="w-full bg-slate-100 border-transparent focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary rounded-l-lg py-2 px-3 text-xs outline-none transition-colors text-slate-800 placeholder-slate-400"
+                />
+                <button type="submit" className="bg-primary hover:bg-primary-dark text-white text-xs font-bold px-3 py-2 rounded-r-lg transition-colors cursor-pointer">
+                  Join
+                </button>
+              </form>
+            </div>
           </div>
 
           <LinkColumn title="Product" links={productLinks} />
@@ -100,11 +118,26 @@ export const FooterView: React.FC<FooterViewProps> = ({
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 border-t border-slate-200/60 pt-8 flex flex-col gap-4 items-center justify-between text-xs sm:text-sm md:flex-row">
-          <p className="text-slate-400 font-semibold">{FOOTER_COPYRIGHT}</p>
-          <div className="flex items-center gap-2 text-slate-400 font-bold uppercase tracking-wider text-[9px] bg-slate-50 px-3.5 py-1.5 rounded-full border border-slate-100/80 shadow-xs">
-            <Lock className="h-3.5 w-3.5 text-emerald-500" />
-            <span>{FOOTER_COMPLIANCE}</span>
+        <div className="mt-8 sm:mt-14 border-t border-slate-200/60 pt-6 sm:pt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between text-xs text-center lg:text-left">
+          <p className="text-slate-400 font-semibold text-xs order-2 lg:order-1">{FOOTER_COPYRIGHT}</p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 order-1 lg:order-2 w-full lg:w-auto">
+            <Link
+              href="/status"
+              className="inline-flex items-center justify-center gap-1.5 text-emerald-600 font-bold uppercase tracking-wider text-[10px] sm:text-[11px] bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-full border border-emerald-200/80 transition-colors shadow-2xs cursor-pointer"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              All Systems Operational
+            </Link>
+            <Link
+              href="/pci"
+              className="inline-flex items-center justify-center gap-1.5 text-slate-500 font-bold uppercase tracking-wider text-[9px] sm:text-[10px] bg-slate-50 hover:bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200/80 transition-colors shadow-2xs cursor-pointer max-w-full"
+            >
+              <Lock className="h-3 w-3 text-emerald-500 shrink-0" />
+              <span>{FOOTER_COMPLIANCE}</span>
+            </Link>
           </div>
         </div>
       </div>

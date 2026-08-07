@@ -1,13 +1,15 @@
 // src/app/(public)/blog/page.tsx
-"use client";
-
 import React from "react";
 import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 import { Footer } from "@/components/organisms/Footer/Footer";
-import { BookOpen, Calendar, User, ArrowRight } from "lucide-react";
-import Link from "next/link";
 import BlogPostsWrapper from "@/features/Blog/BlogPostsWrapper";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog | Quantix Platform",
+  description: "Read up on industry checkout optimization guides, restaurant matrix configurations, and modern REST API payment engineering.",
+};
 
 export default function BlogPage() {
   return (

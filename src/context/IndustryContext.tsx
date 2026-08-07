@@ -1,7 +1,7 @@
 // src/context/IndustryContext.tsx
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, useMemo, useEffect } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
 export type IndustryMode = 'all' | 'restaurant' | 'retail';
@@ -16,37 +16,44 @@ interface IndustryContextValue {
 
 const IndustryContext = createContext<IndustryContextValue | undefined>(undefined);
 
-export const IndustryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+function SearchParamsHandler({ onSync }: { onSync: (queryIndustry: IndustryMode | null) => void }) {
   const searchParams = useSearchParams();
+  const queryIndustry = searchParams.get('industry') as IndustryMode | null;
+
+  useEffect(() => {
+    onSync(queryIndustry);
+  }, [queryIndustry, onSync]);
+
+  return null;
+}
+
+export const IndustryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const [mode, setModeState] = useState<IndustryMode>('all');
 
-  const queryIndustry = searchParams.get('industry') as IndustryMode | null;
-  const initialMode: IndustryMode = (queryIndustry === 'restaurant' || queryIndustry === 'retail') ? queryIndustry : 'all';
-
-  const [mode, setModeState] = useState<IndustryMode>(initialMode);
-
-  // Sync state with URL search params when URL changes directly
-  useEffect(() => {
+  const handleSync = useCallback((queryIndustry: IndustryMode | null) => {
     if (queryIndustry === 'restaurant' || queryIndustry === 'retail') {
       setModeState(queryIndustry);
-    } else if (!queryIndustry && mode !== 'all') {
+    } else if (!queryIndustry) {
       setModeState('all');
     }
-  }, [queryIndustry]);
+  }, []);
 
   const setMode = useCallback((newMode: IndustryMode) => {
     setModeState(newMode);
-    const params = new URLSearchParams(searchParams.toString());
-    if (newMode === 'all') {
-      params.delete('industry');
-    } else {
-      params.set('industry', newMode);
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (newMode === 'all') {
+        params.delete('industry');
+      } else {
+        params.set('industry', newMode);
+      }
+      const queryString = params.toString();
+      const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
+      router.push(newUrl, { scroll: false });
     }
-    const queryString = params.toString();
-    const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
-    router.push(newUrl, { scroll: false });
-  }, [searchParams, pathname, router]);
+  }, [pathname, router]);
 
   const toggleMode = useCallback((targetMode: IndustryMode) => {
     setMode(mode === targetMode ? 'all' : targetMode);
@@ -77,6 +84,9 @@ export const IndustryProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   return (
     <IndustryContext.Provider value={value}>
+      <Suspense fallback={null}>
+        <SearchParamsHandler onSync={handleSync} />
+      </Suspense>
       {children}
     </IndustryContext.Provider>
   );
@@ -91,3 +101,4 @@ export const useIndustry = (): IndustryContextValue => {
 };
 
 export default IndustryContext;
+

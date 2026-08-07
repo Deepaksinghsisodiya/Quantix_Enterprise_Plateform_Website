@@ -168,7 +168,7 @@ export const QuantixToolsSection = () => {
 
   return (
     <section 
-      className="w-full bg-white dark:bg-slate-950 py-16 sm:py-24 border-b border-slate-100 dark:border-slate-800/80 overflow-hidden relative transition-colors duration-300"
+      className="w-full bg-white dark:bg-slate-950 py-10 sm:py-14 lg:py-20 border-b border-slate-100 dark:border-slate-800/80 overflow-hidden relative transition-colors duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

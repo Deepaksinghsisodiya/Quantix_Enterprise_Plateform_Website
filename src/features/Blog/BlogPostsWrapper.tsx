@@ -1,3 +1,5 @@
+'use client';
+
 // src/features/Blog/BlogPostsWrapper.tsx
 import React from 'react';
 import { useGetBlogPostsQuery } from './Service/BlogService';

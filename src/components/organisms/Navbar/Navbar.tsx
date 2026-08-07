@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Layers, LogOut, User, ChevronDown, ChevronRight, Monitor, Tablet, Globe, Tv, Smartphone, CreditCard, Scan, Printer, RefreshCw, BarChart3, MessageSquare, Grid, Award, Store, Utensils, ShoppingBag, Coffee, Truck, Download, Server, Laptop, ShieldCheck, Check, Sparkles, Headset, LogIn } from 'lucide-react';
+import { Layers, LogOut, User, ChevronDown, ChevronRight, ArrowLeft, ArrowRight, Monitor, Tablet, Globe, Tv, Smartphone, CreditCard, Scan, Printer, RefreshCw, BarChart3, MessageSquare, Grid, Award, Store, Utensils, ShoppingBag, Coffee, Truck, Download, Server, Laptop, ShieldCheck, Check, Sparkles, Headset, LogIn } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
@@ -85,6 +85,7 @@ const PRICING_LIST = [
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileSubMenu, setMobileSubMenu] = useState<string | null>(null);
   const [openMegaMenu, setOpenMegaMenu] = useState<string | null>(null);
   const pathname = usePathname();
   const router = useRouter();
@@ -157,7 +158,10 @@ const Navbar = () => {
   }, []);
 
   const toggleMobile = useCallback(() => {
-    setMobileOpen((prev) => !prev);
+    setMobileOpen((prev) => {
+      if (prev) setMobileSubMenu(null);
+      return !prev;
+    });
   }, []);
 
   // Prevent background scrolling when mobile overlay is open
@@ -178,6 +182,7 @@ const Navbar = () => {
   // Close mobile menu on path changes
   useEffect(() => {
     setMobileOpen(false);
+    setMobileSubMenu(null);
   }, [pathname]);
 
   // Animation variants for Staggered Mobile Menu links
@@ -200,19 +205,19 @@ const Navbar = () => {
     <>
       <div className="fixed top-0 left-0 z-50 w-full flex flex-col">
         {/* Top Promo Banner */}
-        <div className="w-full bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/80 py-2 text-center text-[13px] font-sans font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-center gap-1 select-none">
-          <span>Get 3 Months FREE Quantix Cloud POS</span>
-          <span className="text-slate-350 dark:text-slate-700 mx-1">|</span>
+        <div className="w-full bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/80 py-1.5 px-3 text-center text-[11px] sm:text-[13px] font-sans font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-center gap-1 select-none">
+          <span className="truncate max-w-[220px] sm:max-w-none">Get 3 Months FREE Quantix Cloud POS</span>
+          <span className="text-slate-350 dark:text-slate-700 mx-0.5 sm:mx-1">|</span>
           <Link
             href="/pricing"
-            className="text-blue-500 hover:text-blue-650 dark:text-blue-400 dark:hover:text-blue-300 font-bold inline-flex items-center gap-0.5 hover:underline transition-colors"
+            className="text-blue-600 hover:text-blue-700 dark:text-blue-400 font-bold inline-flex items-center gap-0.5 hover:underline transition-colors shrink-0"
           >
-            Book Now <ChevronRight size={13} className="stroke-[3]" />
+            Book Now <ChevronRight size={12} className="stroke-[3]" />
           </Link>
         </div>
 
         <nav
-          className="w-full bg-white border-b border-slate-200/80 shadow-sm py-3 relative"
+          className="w-full bg-white border-b border-slate-200/80 shadow-sm py-2.5 sm:py-3 relative"
           onMouseLeave={() => setOpenMegaMenu(null)}
         >
           <div
@@ -227,13 +232,13 @@ const Navbar = () => {
                 <img
                   src="/images/logo/quantix-logo-full-on-light.svg"
                   alt="Quantix Logo"
-                  className="hidden lg:block h-[48px] w-auto transition-all duration-300 group-hover:scale-[1.02]"
+                  className="hidden lg:block h-[44px] w-auto transition-all duration-300 group-hover:scale-[1.02]"
                 />
-                {/* Mobile/Tablet Logo (always full size) */}
+                {/* Mobile/Tablet Logo */}
                 <img
                   src="/images/logo/quantix-logo-full-on-light.svg"
                   alt="Quantix Logo"
-                  className="block lg:hidden h-[38px] w-auto transition-all duration-300 group-hover:scale-[1.02]"
+                  className="block lg:hidden h-[30px] sm:h-[34px] w-auto transition-all duration-300 group-hover:scale-[1.02]"
                 />
               </Link>
 
@@ -865,82 +870,274 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-[#06080F] flex flex-col justify-between pt-24 pb-8 px-6 md:hidden"
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-40 bg-white flex flex-col justify-between pt-[68px] sm:pt-20 pb-5 px-5 lg:hidden overflow-y-auto max-h-screen"
           >
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="show"
-              className="flex flex-col gap-1.5 w-full max-w-md mx-auto"
-            >
-              {LINKS.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <motion.div key={link.href} variants={itemVariants}>
-                    <Link
-                      href={link.href}
-                      className={cn(
-                        'flex flex-col gap-0.5 py-3 px-4 rounded-xl transition-all duration-200',
-                        isActive
-                          ? 'bg-white/10 border border-white/5'
-                          : 'hover:bg-white/5 border border-transparent'
-                      )}
-                    >
-                      <span className={cn(
-                        'text-[14px] font-bold tracking-wider uppercase transition-colors duration-200',
-                        isActive ? 'text-blue-400' : 'text-white'
-                      )}>
-                        {link.label}
-                      </span>
-                      <span className="text-[11px] text-slate-400 font-medium tracking-normal normal-case">
-                        {link.desc}
-                      </span>
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
+            {mobileSubMenu ? (
+              /* Drill-down Sub-Menu View */
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.25 }}
+                className="flex flex-col gap-3.5 w-full max-w-md mx-auto pt-1 pb-3"
+              >
+                {/* Back Button */}
+                <button
+                  type="button"
+                  onClick={() => setMobileSubMenu(null)}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 hover:bg-blue-100 px-3.5 py-2 rounded-xl w-fit transition-colors cursor-pointer"
+                >
+                  <ArrowLeft size={14} /> Back to Main Menu
+                </button>
 
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25, duration: 0.4 }}
-              className="flex flex-col gap-3 w-full max-w-md mx-auto"
-            >
-              {token ? (
-                <>
-                  <div className="flex items-center gap-2.5 justify-center py-3.5 rounded-xl bg-white/5 border border-white/5 select-none">
-                    <User size={15} className="text-primary" />
-                    <span className="text-[13px] font-bold tracking-wider uppercase text-slate-200">
-                      Hi, {meData?.data?.username || meData?.username || "Admin"}
-                    </span>
+                {/* Drill-down Header */}
+                <div className="space-y-0.5">
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-blue-500">
+                    EXPLORE CATEGORY
+                  </span>
+                  <h3 className="text-xl font-syne font-black uppercase text-slate-900">
+                    {mobileSubMenu}
+                  </h3>
+                </div>
+
+                {/* Sub-items List per Category */}
+                <div className="space-y-2.5 max-h-[50vh] overflow-y-auto pr-1">
+                  {mobileSubMenu === 'Features' && (
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 block">Products & Terminals</span>
+                        {PRODUCTS_LIST.map((item) => (
+                          <Link
+                            key={item.title}
+                            href={`/features/${item.slug}`}
+                            onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
+                            className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-blue-300 transition-all"
+                          >
+                            <span className="text-xs font-bold text-slate-900 uppercase font-syne">{item.title}</span>
+                            <span className="text-[11px] text-slate-500 font-medium">{item.desc}</span>
+                          </Link>
+                        ))}
+                      </div>
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 block">Operations & Control</span>
+                        {OPERATIONS_LIST.map((item) => (
+                          <Link
+                            key={item.title}
+                            href={`/features/${item.slug}`}
+                            onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
+                            className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-blue-300 transition-all"
+                          >
+                            <span className="text-xs font-bold text-slate-900 uppercase font-syne">{item.title}</span>
+                            <span className="text-[11px] text-slate-500 font-medium">{item.desc}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {mobileSubMenu === 'Integrations' && (
+                    <div className="space-y-2.5">
+                      {[...INTEGRATIONS_FINANCE, ...INTEGRATIONS_OPERATIONS].map((item) => (
+                        <Link
+                          key={item.title}
+                          href="/integrations"
+                          onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
+                          className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-blue-300 transition-all"
+                        >
+                          <span className="text-xs font-bold text-slate-900 uppercase font-syne">{item.title}</span>
+                          <span className="text-[11px] text-slate-500 font-medium">{item.desc}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                  {mobileSubMenu === 'Services' && (
+                    <div className="space-y-2.5">
+                      {SERVICES_LIST.map((item) => (
+                        <Link
+                          key={item.title}
+                          href={`/solutions/${item.slug}`}
+                          onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
+                          className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-blue-300 transition-all"
+                        >
+                          <span className="text-xs font-bold text-slate-900 uppercase font-syne">{item.title}</span>
+                          <span className="text-[11px] text-slate-500 font-medium">{item.desc}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                  {mobileSubMenu === 'Downloads' && (
+                    <div className="space-y-2.5">
+                      {DOWNLOADS_LIST.map((item) => (
+                        <Link
+                          key={item.title}
+                          href="/downloads"
+                          onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
+                          className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-blue-300 transition-all"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-bold text-slate-900 uppercase font-syne">{item.title}</span>
+                            <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">{item.badge}</span>
+                          </div>
+                          <span className="text-[11px] text-slate-500 font-medium mt-1">{item.desc}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                  {mobileSubMenu === 'Pricing' && (
+                    <div className="space-y-2.5">
+                      {PRICING_LIST.map((item) => (
+                        <Link
+                          key={item.title}
+                          href="/pricing"
+                          onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
+                          className="flex flex-col p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-blue-300 transition-all"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-bold text-slate-900 uppercase font-syne">{item.title}</span>
+                            <span className="text-xs font-black text-blue-600">{item.price}</span>
+                          </div>
+                          <span className="text-[11px] text-slate-500 font-medium mt-1">{item.desc}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Primary Category Page Link Button */}
+                <Link
+                  href={
+                    mobileSubMenu === 'Features' ? '/features' :
+                    mobileSubMenu === 'Integrations' ? '/integrations' :
+                    mobileSubMenu === 'Services' ? '/services' :
+                    mobileSubMenu === 'Downloads' ? '/downloads' : '/pricing'
+                  }
+                  onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
+                  className="flex items-center justify-center gap-2 h-11 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs uppercase tracking-wider shadow-md shadow-blue-500/20 transition-all mt-2"
+                >
+                  View Main {mobileSubMenu} Page <ArrowRight size={14} />
+                </Link>
+              </motion.div>
+            ) : (
+              /* Main Mobile Menu */
+              <>
+                <motion.div
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="show"
+                  className="flex flex-col gap-1 w-full max-w-md mx-auto pt-1 pb-3"
+                >
+                  <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1 px-1">
+                    Navigation
                   </div>
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center justify-center gap-2 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-[13px] uppercase tracking-[0.08em] transition-all duration-200 cursor-pointer shadow-lg shadow-red-600/10"
-                  >
-                    <LogOut size={15} />
-                    Log Out
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/sign-in"
-                    className="flex items-center justify-center h-11 rounded-xl text-[13px] font-bold uppercase tracking-[0.08em] border border-white/10 text-white bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/sign-up"
-                    className="flex items-center justify-center h-11 rounded-xl bg-primary hover:bg-primary-dark text-white font-extrabold text-[13px] uppercase tracking-[0.08em] transition-all duration-200 shadow-lg shadow-primary/25"
-                  >
-                    Start Free Trial
-                  </Link>
-                </>
-              )}
-            </motion.div>
+
+                  {LINKS.map((link) => {
+                    const isActive = pathname === link.href;
+                    return (
+                      <motion.div key={link.href} variants={itemVariants}>
+                        <button
+                          type="button"
+                          onClick={() => setMobileSubMenu(link.label)}
+                          className={cn(
+                            'w-full text-left flex flex-col gap-0.5 py-2.5 px-3.5 rounded-xl transition-all duration-200 cursor-pointer',
+                            isActive
+                              ? 'bg-blue-50 border border-blue-100 text-blue-600'
+                              : 'hover:bg-slate-50 border border-transparent'
+                          )}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className={cn(
+                              'text-[15px] font-syne font-bold tracking-tight uppercase transition-colors duration-200',
+                              isActive ? 'text-blue-600' : 'text-slate-900'
+                            )}>
+                              {link.label}
+                            </span>
+                            <ChevronRight size={14} className={cn("transition-transform", isActive ? "text-blue-600" : "text-slate-400")} />
+                          </div>
+                          <span className="text-[12px] text-slate-500 font-medium tracking-normal normal-case">
+                            {link.desc}
+                          </span>
+                        </button>
+                      </motion.div>
+                    );
+                  })}
+
+                  {/* Quick Tools Grid */}
+                  <motion.div variants={itemVariants} className="pt-3 border-t border-slate-100 mt-2 space-y-2">
+                    <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 px-1">
+                      Tools & Resources
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        { label: 'ROI Calculator', href: '/roi-calculator' },
+                        { label: 'Solution Quiz', href: '/quiz' },
+                        { label: 'Product Tour', href: '/product-tour' },
+                        { label: 'Help Centre', href: '/help' },
+                      ].map((tool, idx) => (
+                        <Link
+                          key={idx}
+                          href={tool.href}
+                          onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
+                          className="text-[11px] font-bold uppercase tracking-wider text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 rounded-xl py-2.5 px-3 text-center transition-all"
+                        >
+                          {tool.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                </motion.div>
+
+                {/* Bottom Actions */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.3 }}
+                  className="flex flex-col gap-2.5 w-full max-w-md mx-auto pt-3 border-t border-slate-100"
+                >
+                  {token ? (
+                    <>
+                      <div className="flex items-center gap-2.5 justify-center py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 select-none">
+                        <User size={15} className="text-blue-600" />
+                        <span className="text-[13px] font-bold tracking-wider uppercase text-slate-800">
+                          Hi, {meData?.data?.username || meData?.username || "Admin"}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setMobileOpen(false);
+                          setMobileSubMenu(null);
+                          handleLogout();
+                        }}
+                        className="flex items-center justify-center gap-2 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-[13px] uppercase tracking-[0.08em] transition-all duration-200 cursor-pointer shadow-md shadow-red-600/15"
+                      >
+                        <LogOut size={15} />
+                        Log Out
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        href="/sign-up"
+                        onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
+                        className="flex items-center justify-center h-11 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-extrabold text-[13px] uppercase tracking-[0.08em] transition-all duration-200 shadow-lg shadow-blue-600/20"
+                      >
+                        Start Free Trial
+                      </Link>
+                      <Link
+                        href="/sign-in"
+                        onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
+                        className="flex items-center justify-center h-11 rounded-xl text-[13px] font-bold uppercase tracking-[0.08em] border border-slate-200 text-slate-800 bg-white hover:bg-slate-50 active:bg-slate-100 transition-all duration-200 shadow-xs"
+                      >
+                        Sign In
+                      </Link>
+                    </>
+                  )}
+                </motion.div>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

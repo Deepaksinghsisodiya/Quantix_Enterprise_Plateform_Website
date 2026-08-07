@@ -19,12 +19,16 @@ const contactSchema = Yup.object<ContactSalesFormValues>({
     .min(20, "Message must be at least 20 characters")
     .max(1000, "Message cannot exceed 1000 characters")
     .required("Message is required"),
+  captcha: Yup.string()
+    .test('is-correct', 'Incorrect answer', value => value === '7' || value?.toLowerCase() === 'seven')
+    .required("Please answer the anti-spam question"),
 });
 
 const initialValues: ContactSalesFormValues = {
   fullName: "",
   workEmail: "",
   message: "",
+  captcha: "",
 };
 
 export const ContactSalesFormWrapper: React.FC = () => {

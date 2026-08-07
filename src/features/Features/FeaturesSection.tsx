@@ -128,11 +128,11 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
   return (
     <section
       ref={ref}
-      className="bg-slate-50/50 py-20 sm:py-24 border-b border-slate-100"
+      className="bg-slate-50/50 py-10 sm:py-14 lg:py-20 border-b border-slate-100"
       aria-labelledby="features-section"
     >
       <div className="site-container">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
             EVERYTHING INCLUDED
           </div>

@@ -124,7 +124,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
   } as const;
 
   return (
-    <section className="bg-slate-50/30 py-24 border-y border-slate-100" id="industries">
+    <section className="bg-slate-50/30 py-10 sm:py-14 lg:py-20 border-y border-slate-100" id="industries">
       <div className="site-container">
         {/* Header */}
         <div className="text-center mb-12">

@@ -89,9 +89,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               className={fieldClass}
             />
             <div className="flex justify-end">
-              <a href="#" className="text-[11px] font-semibold text-primary hover:text-primary-light transition-colors">
+              <Link href="/contact" className="text-[11px] font-semibold text-primary hover:text-primary-light transition-colors">
                 Forgot password?
-              </a>
+              </Link>
             </div>
           </div>
 
