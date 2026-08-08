@@ -51,7 +51,7 @@ const Mockup = ({ type }: { type: DemoCard["mockupType"] }) => {
           
           <div className="relative z-10 flex justify-between items-center">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Live Analytics</span>
-            <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-ping" />
           </div>
 
           {/* Bar Chart with peak indicator */}
@@ -59,16 +59,19 @@ const Mockup = ({ type }: { type: DemoCard["mockupType"] }) => {
             {[35, 55, 45, 90, 60].map((val, i) => (
               <div key={i} className="flex flex-col items-center w-5 relative group/bar">
                 {i === 3 && (
-                  <span className="absolute -top-6 text-[8px] bg-blue-500 text-white px-1.5 py-0.5 rounded font-extrabold animate-bounce shadow">
+                  <span className="absolute -top-6 text-[8px] bg-primary text-white px-1.5 py-0.5 rounded font-extrabold animate-bounce shadow">
                     Peak
                   </span>
                 )}
-                <div 
-                  style={{ height: `${val}%` }} 
+                <motion.div 
+                  initial={{ height: 0 }}
+                  whileInView={{ height: `${val}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
                   className={cn(
-                    "w-full rounded-t transition-all duration-300",
+                    "w-full rounded-t transition-colors duration-300",
                     i === 3 
-                      ? "bg-gradient-to-t from-blue-600 to-indigo-400 shadow-[0_0_15px_rgba(59,130,246,0.5)]" 
+                      ? "bg-gradient-to-t from-primary to-primary-light shadow-[0_0_15px_rgba(0,166,156,0.5)]" 
                       : "bg-slate-800 hover:bg-slate-700"
                   )}
                 />
@@ -82,7 +85,7 @@ const Mockup = ({ type }: { type: DemoCard["mockupType"] }) => {
               <div className="text-[9px] text-slate-400 uppercase tracking-wider font-bold">Weekly Revenue</div>
               <div className="text-xl font-extrabold font-mono mt-0.5 tracking-tight flex items-baseline gap-1.5">
                 $24,812
-                <span className="text-[10px] text-emerald-400 font-bold flex items-center">↑ 18.4%</span>
+                <span className="text-[10px] text-primary-light font-bold flex items-center">↑ 18.4%</span>
               </div>
             </div>
           </div>
@@ -93,7 +96,7 @@ const Mockup = ({ type }: { type: DemoCard["mockupType"] }) => {
         <div className="flex flex-col justify-between h-full p-5 bg-[#070D19] rounded-2xl text-white border border-white/5 relative overflow-hidden">
           <div className="relative z-10 flex justify-between items-center mb-1">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Shift Roster</span>
-            <span className="text-[8px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full font-extrabold uppercase">
+            <span className="text-[8px] text-primary-light bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-full font-extrabold uppercase">
               3 Active
             </span>
           </div>
@@ -101,8 +104,8 @@ const Mockup = ({ type }: { type: DemoCard["mockupType"] }) => {
           {/* Active staff roster list */}
           <div className="relative z-10 flex flex-col gap-2.5 my-2">
             {[
-              { name: "Maria K.", role: "Manager", status: "Active", time: "9:15 AM", color: "bg-blue-600" },
-              { name: "James R.", role: "Cashier", status: "Active", time: "10:00 AM", color: "bg-indigo-600" },
+              { name: "Maria K.", role: "Manager", status: "Active", time: "9:15 AM", color: "bg-primary" },
+              { name: "James R.", role: "Cashier", status: "Active", time: "10:00 AM", color: "bg-primary-dark" },
               { name: "Sofia M.", role: "Chef", status: "Break", time: "11:30 AM", color: "bg-amber-600" },
             ].map((staff, i) => (
               <div key={i} className="flex justify-between items-center bg-slate-900/60 border border-white/5 p-2 rounded-xl">
@@ -119,7 +122,7 @@ const Mockup = ({ type }: { type: DemoCard["mockupType"] }) => {
                   <span className={cn(
                     "text-[8px] px-1.5 py-0.5 rounded-full font-extrabold uppercase tracking-wide",
                     staff.status === "Active" 
-                      ? "bg-emerald-500/15 text-emerald-400" 
+                      ? "bg-primary/15 text-primary-light" 
                       : "bg-amber-500/15 text-amber-400"
                   )}>
                     {staff.status}
@@ -156,7 +159,7 @@ const Mockup = ({ type }: { type: DemoCard["mockupType"] }) => {
                 <span className={cn(
                   "h-4 w-4 rounded-full flex items-center justify-center text-[8px] border font-extrabold",
                   order.done 
-                    ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400" 
+                    ? "bg-primary/15 text-primary-light" 
                     : "bg-transparent border-slate-700 text-slate-500"
                 )}>
                   {order.done ? "✓" : "○"}

@@ -5,7 +5,7 @@ import React from "react";
 import { useInView } from "framer-motion";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { BarChart2, Package, CreditCard, Users, Globe, Shield, Headphones, Lock, RefreshCw } from "lucide-react";
+import { BarChart2, Package, CreditCard, Users, Globe, Shield, Headphones, Lock, RefreshCw, ChefHat, Building, Zap } from "lucide-react";
 import { ATMButton } from "@/components/atoms/ATMButton";
 import { Feature } from "./Types/FeaturesTypes";
 
@@ -17,7 +17,7 @@ export interface FeaturesSectionProps {
 }
 
 // Mapping from icon name to actual component
-const ICON_MAP = {
+const ICON_MAP: Record<string, React.ReactNode> = {
   BarChart2: <BarChart2 className="h-6 w-6 stroke-[2.25]" />, 
   Package: <Package className="h-6 w-6 stroke-[2.25]" />, 
   CreditCard: <CreditCard className="h-6 w-6 stroke-[2.25]" />, 
@@ -27,50 +27,97 @@ const ICON_MAP = {
   Headphones: <Headphones className="h-6 w-6 stroke-[2.25]" />, 
   Lock: <Lock className="h-6 w-6 stroke-[2.25]" />, 
   RefreshCw: <RefreshCw className="h-6 w-6 stroke-[2.25]" />, 
+  ChefHat: <ChefHat className="h-6 w-6 stroke-[2.25]" />, 
+  Building: <Building className="h-6 w-6 stroke-[2.25]" />, 
+  Zap: <Zap className="h-6 w-6 stroke-[2.25]" />, 
 };
 
-const DEFAULT_FEATURES: Feature[] = [
+export interface ExtendedFeature extends Feature {
+  category?: 'counter' | 'inventory' | 'kitchen' | 'enterprise';
+  tag?: string;
+}
+
+const DEFAULT_FEATURES: ExtendedFeature[] = [
   {
     id: "inventory",
-    title: "Dynamic Matrix Stock",
-    description: "Manage variant items (sizes, colors, barcodes) in absolute real-time without inventory mismatch.",
+    title: "Dynamic Matrix Stock & Batches",
+    description: "Manage variant items (sizes, colors, barcodes, expiry dates) in absolute real-time without stock discrepancy across stores.",
     icon: "Package",
-    color: "blue-500"
+    color: "blue-500",
+    category: "inventory",
+    tag: "Stock & Warehouse"
   },
   {
     id: "analytics",
-    title: "Visual Sales Reporting",
-    description: "Keep track of hourly sales, top items, and profit margin analysis in one simple dashboard.",
+    title: "Visual BI Sales Analytics",
+    description: "Keep track of hourly sales velocity, top-performing SKUs, staff productivity, and profit margins in one live portal.",
     icon: "BarChart2",
-    color: "purple-500"
+    color: "purple-500",
+    category: "counter",
+    tag: "Real-Time BI"
   },
   {
     id: "payments",
-    title: "Universal Card Terminals",
-    description: "Swipe, dip, or tap. Process major credit cards and mobile wallets with local-offline fallback speed.",
+    title: "Omni Card & Contactless Checkout",
+    description: "Swipe, dip, or tap. Accept major credit cards, QR codes, split bills, and mobile wallets with sub-second checkout.",
     icon: "CreditCard",
-    color: "teal-500"
+    color: "teal-500",
+    category: "counter",
+    tag: "Payments"
   },
   {
     id: "loyalty",
-    title: "Custom Customer Profiles",
-    description: "Reward recurring buyers automatically using tier points, gift codes, and checkout discounts.",
+    title: "Custom CRM & Customer Loyalty",
+    description: "Reward recurring shoppers automatically using tier points, custom gift vouchers, and checkout automated discounts.",
     icon: "Users",
-    color: "indigo-500"
+    color: "indigo-500",
+    category: "counter",
+    tag: "CRM & Retention"
   },
   {
     id: "cloud",
-    title: "Multi-Store Cloud Sync",
-    description: "Unify remote warehouses, suppliers, stock allocations, and employee log lists in the cloud.",
+    title: "Multi-Store Cloud Sync Engine",
+    description: "Unify remote warehouses, suppliers, stock allocations, and employee shifts centrally from any browser.",
     icon: "Globe",
-    color: "green-500"
+    color: "green-500",
+    category: "enterprise",
+    tag: "Cloud Telemetry"
+  },
+  {
+    id: "kitchen",
+    title: "Kitchen Display (KDS) & Floor Maps",
+    description: "Course-by-course prep timers, visual table layouts, split bills, and instant order dispatch for fast-paced kitchens.",
+    icon: "ChefHat",
+    color: "orange-500",
+    category: "kitchen",
+    tag: "Restaurant Ops"
+  },
+  {
+    id: "enterprise-isolation",
+    title: "Multi-Tenant Enterprise Isolation",
+    description: "Isolate franchise branches, global catalogs, regional tax rules, and role-based cluster admin rights securely.",
+    icon: "Building",
+    color: "violet-500",
+    category: "enterprise",
+    tag: "Multi-Tenant"
+  },
+  {
+    id: "offline",
+    title: "Offline-First Local Terminal Billing",
+    description: "Keep selling uninterrupted even during internet outages. Transactions queue locally and auto-sync when reconnected.",
+    icon: "RefreshCw",
+    color: "cyan-500",
+    category: "counter",
+    tag: "Zero Downtime"
   },
   {
     id: "security",
-    title: "Encrypted Data Vault",
-    description: "Bank-level encryption (SSL & PCI Compliant) keeping your receipts and sales audits safe.",
+    title: "Bank-Grade Encryption Vault",
+    description: "PCI DSS Level 1 compliant, SOC 2 Type II certified, with end-to-end encryption and audit trail logs out of the box.",
     icon: "Shield",
-    color: "orange-500"
+    color: "red-500",
+    category: "enterprise",
+    tag: "Bank Security"
   }
 ];
 
@@ -122,8 +169,21 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
 }) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [activeTab, setActiveTab] = React.useState<string>("all");
 
-  const displayFeatures = features.length > 0 ? features : DEFAULT_FEATURES;
+  const rawFeatures = (features.length > 0 ? features : DEFAULT_FEATURES) as ExtendedFeature[];
+
+  const filteredFeatures = activeTab === "all" 
+    ? rawFeatures 
+    : rawFeatures.filter(f => f.category === activeTab);
+
+  const TABS = [
+    { id: "all", label: "All Modules" },
+    { id: "counter", label: "Counter & Checkout" },
+    { id: "inventory", label: "Inventory & Warehouses" },
+    { id: "kitchen", label: "Kitchen & Floor Ops" },
+    { id: "enterprise", label: "Enterprise & Security" },
+  ];
 
   return (
     <section
@@ -132,7 +192,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
       aria-labelledby="features-section"
     >
       <div className="site-container">
-        <div className="text-center mb-10 sm:mb-14">
+        <div className="text-center mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
             EVERYTHING INCLUDED
           </div>
@@ -145,6 +205,24 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
           <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-slate-500 font-medium">
             From counter to cloud — Quantix handles every part of your operation.
           </p>
+
+          {/* Interactive Category Filter Tabs */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto">
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={cn(
+                  "px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all duration-300 border cursor-pointer",
+                  activeTab === tab.id
+                    ? "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/20 scale-105"
+                    : "bg-white text-slate-600 border-slate-200/80 hover:bg-slate-100 hover:text-slate-900"
+                )}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Card Grid */}
@@ -163,33 +241,42 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
             </div>
           ))}
 
-          {!isLoading && displayFeatures.map((card: Feature, idx: number) => (
+          {!isLoading && filteredFeatures.map((card: ExtendedFeature, idx: number) => (
             <motion.div
               key={card.id}
-              className="rounded-[2rem] border border-slate-100 bg-white p-8 text-left transition-all duration-500 hover:-translate-y-2 relative overflow-hidden group shadow-[0_8px_30px_rgba(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.06)]"
+              className="rounded-[2rem] border border-slate-100 bg-white p-8 text-left transition-all duration-500 hover:-translate-y-2 relative overflow-hidden group shadow-[0_8px_30px_rgba(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.06)] flex flex-col justify-between"
               initial={{ opacity: 0, translateY: 20 }}
               animate={isInView ? { opacity: 1, translateY: 0 } : {}}
-              transition={{ delay: idx * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ delay: idx * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Icon Container */}
-              <div
-                className={cn(
-                  "flex h-12 w-12 items-center justify-center rounded-xl text-sm transition-all duration-300",
-                  getColorClasses(card.color)
-                )}
-              >
-                <div className="transition-transform duration-300 group-hover:scale-110">
-                  {/* @ts-ignore – safety fallback */}
-                  {ICON_MAP[card.icon] || <Package className="h-5 w-5" />}
+              <div>
+                <div className="flex items-center justify-between">
+                  {/* Icon Container */}
+                  <div
+                    className={cn(
+                      "flex h-12 w-12 items-center justify-center rounded-xl text-sm transition-all duration-300",
+                      getColorClasses(card.color)
+                    )}
+                  >
+                    <div className="transition-transform duration-300 group-hover:scale-110">
+                      {ICON_MAP[card.icon] || <Package className="h-5 w-5" />}
+                    </div>
+                  </div>
+
+                  {card.tag && (
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                      {card.tag}
+                    </span>
+                  )}
                 </div>
+
+                <h3 className="mt-6 text-lg font-syne font-bold text-slate-900 group-hover:text-primary transition-colors duration-300">
+                  {card.title}
+                </h3>
+                <p className="mt-3 text-sm text-slate-500 leading-relaxed group-hover:text-slate-600 transition-colors duration-300 font-medium">
+                  {card.description}
+                </p>
               </div>
-              
-              <h3 className="mt-6 text-lg font-syne font-bold text-slate-900 group-hover:text-primary transition-colors duration-300">
-                {card.title}
-              </h3>
-              <p className="mt-3 text-sm text-slate-500 leading-relaxed group-hover:text-slate-600 transition-colors duration-300 font-medium">
-                {card.description}
-              </p>
             </motion.div>
           ))}
         </div>

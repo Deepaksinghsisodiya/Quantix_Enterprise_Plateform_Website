@@ -184,15 +184,15 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                     {activeIndustry.description}
                   </p>
                   <Checklist left={leftFeatures} right={rightFeatures} />
-                  
-                  <a 
+
+                  <a
                     href="/sign-up"
                     className="mt-6 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-3.5 px-7 shadow-md shadow-blue-600/10 hover:shadow-lg hover:shadow-blue-600/20 active:scale-[0.98] transition-all duration-200 inline-block text-center cursor-pointer"
                   >
                     Get Started →
                   </a>
                 </div>
-                
+
                 {/* Right column with image */}
                 <div className="relative order-1 lg:order-2 mb-8 lg:mb-0">
                   <div className="relative aspect-[4/3] w-full rounded-3xl overflow-hidden shadow-2xl border border-slate-100">

@@ -16,7 +16,11 @@ const config: Config = {
         syne: ['var(--font-lexend)', 'system-ui', 'sans-serif'],
       },
       colors: {
-        primary: '#2563EB',
+        primary: {
+          DEFAULT: 'var(--primary-color, #E90C0C)',
+          light: 'var(--primary-light, #FF2F2F)',
+          dark: 'var(--primary-dark, #CD0808)',
+        },
         darkBg: '#0F172A',
         darkSurface: '#1E293B',
       },

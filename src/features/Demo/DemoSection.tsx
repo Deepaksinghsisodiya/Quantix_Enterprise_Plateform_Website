@@ -5,7 +5,24 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Play, ArrowUpRight, Maximize2, Volume2, Sparkles, Film, Image as ImageIcon, Bell } from "lucide-react";
+import {
+  Play,
+  ArrowUpRight,
+  Maximize2,
+  Volume2,
+  Sparkles,
+  Film,
+  Image as ImageIcon,
+  Bell,
+  Monitor,
+  LayoutGrid,
+  Package,
+  ChevronRight,
+  Eye,
+  Clock,
+  Users,
+  Zap,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ATMModal } from "@/components/atoms/ATMModal";
 import { Formik, Form } from "formik";
@@ -28,6 +45,18 @@ const DEFAULT_DEMO: DemoMedia = {
   ],
 };
 
+const SCREENSHOT_META: Record<string, { icon: React.ElementType; category: string; color: string; bgColor: string }> = {
+  "Dashboard Overview": { icon: Monitor, category: "ANALYTICS", color: "text-primary", bgColor: "bg-primary/10" },
+  "Table Management": { icon: LayoutGrid, category: "OPERATIONS", color: "text-emerald-600", bgColor: "bg-emerald-100" },
+  "Inventory Control": { icon: Package, category: "LOGISTICS", color: "text-amber-600", bgColor: "bg-amber-100" },
+};
+
+const LIVE_STATS = [
+  { label: "Active Users", value: "12,847", icon: Users, color: "from-primary to-blue-400" },
+  { label: "Avg. Response", value: "0.8s", icon: Zap, color: "from-emerald-500 to-teal-400" },
+  { label: "Uptime", value: "99.99%", icon: Clock, color: "from-violet-500 to-purple-400" },
+];
+
 export const DemoSection: React.FC<DemoSectionProps> = ({
   demoMedia,
   onSubscribeNewsletter,
@@ -40,315 +69,401 @@ export const DemoSection: React.FC<DemoSectionProps> = ({
   });
   const [isPlaying, setIsPlaying] = useState(false);
   const [openScreenshotModal, setOpenScreenshotModal] = useState<string | null>(null);
+  const [hoveredShot, setHoveredShot] = useState<string | null>(null);
 
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const containerVariants = {
-    hidden: { opacity: 0, y: 25 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
-    }),
-  };
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   const handleNotify = async (values: { email: string }, { resetForm }: any) => {
     await onSubscribeNewsletter(values.email);
     resetForm();
   };
 
-  const getCategory = (title: string) => {
-    if (title.toLowerCase().includes("dashboard") || title.toLowerCase().includes("overview")) return "ADMIN PORTAL";
-    if (title.toLowerCase().includes("table") || title.toLowerCase().includes("order")) return "OPERATIONS";
-    if (title.toLowerCase().includes("inventory") || title.toLowerCase().includes("control")) return "LOGISTICS & STOCK";
-    return "PLATFORM FEATURE";
-  };
-
-  const activeScreenshot = activeMedia.type === 'screenshot' 
+  const activeScreenshot = activeMedia.type === 'screenshot'
     ? demo.screenshots.find(s => s.id === activeMedia.id)
     : null;
 
   return (
-    <section className="bg-slate-50 py-10 sm:py-12 relative overflow-hidden border-b border-slate-100" ref={ref} id="resources">
-      {/* Decorative Blur Blobs */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl pointer-events-none" />
+    <section
+      className="relative overflow-hidden py-20 sm:py-28 bg-white"
+      ref={ref}
+      id="resources"
+    >
+      {/* === Background Effects === */}
+      {/* Subtle grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.35]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+        }}
+      />
+      {/* Soft radial glow top-center */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] rounded-full bg-blue-100/50 blur-[120px] pointer-events-none" />
+      {/* Side accent orbs */}
+      <div className="absolute top-40 -left-32 w-80 h-80 rounded-full bg-violet-100/40 blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-20 -right-32 w-80 h-80 rounded-full bg-cyan-100/40 blur-[100px] pointer-events-none" />
 
-      <div className="site-container relative z-10">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
-            <Sparkles className="h-3.5 w-3.5 fill-blue-100" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        {/* ── Section Header ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 border border-primary/20 px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-primary mb-5">
+            <Sparkles className="h-3.5 w-3.5" />
             SEE IT IN ACTION
           </div>
-          <h2 className="text-3xl font-syne font-black text-gray-900 md:text-5xl leading-tight">
-            Watch Quantix work for you
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-syne font-black text-gray-900 leading-tight">
+            Watch Quantix{" "}
+            <span className="text-primary">
+              work for you
+            </span>
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-gray-500 font-medium">
+          <p className="mt-5 max-w-2xl mx-auto text-base sm:text-lg text-gray-500 font-medium leading-relaxed">
             Take a guided tour of the tools powering modern restaurants and retailers worldwide.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Content grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
-          {/* Left column – media player (7 cols) */}
+        {/* ── Main Content Grid ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+
+          {/* ════════ LEFT: Cinematic Media Player (8 cols) ════════ */}
           <motion.div
-            custom={0}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={containerVariants}
-            className="lg:col-span-7 flex flex-col justify-between"
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-8 flex flex-col"
           >
-            <div>
-              {/* Media Container Frame */}
-              <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-slate-200/60 border border-slate-200/80 bg-[#0B1528] group">
-                
-                <AnimatePresence mode="wait">
-                  {/* Video Walkthrough View */}
-                  {activeMedia.type === 'video' ? (
-                    <motion.div
-                      key="video-media"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="w-full h-full relative"
-                    >
-                      {isPlaying ? (
-                        <iframe
-                          src={`${demo.videoUrl}?autoplay=1`}
-                          title="Quantix demo"
-                          className="w-full h-full rounded-2xl border-none"
-                          allow="autoplay; fullscreen"
+            {/* Player Frame */}
+            <div className="relative aspect-video rounded-2xl overflow-hidden border border-gray-200 bg-gray-950 shadow-2xl shadow-primary/10 group">
+              {/* Inner glow ring */}
+              <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/5 pointer-events-none z-20" />
+
+              <AnimatePresence mode="wait">
+                {/* ── Video View ── */}
+                {activeMedia.type === 'video' ? (
+                  <motion.div
+                    key="video-media"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="w-full h-full relative"
+                  >
+                    {isPlaying ? (
+                      <iframe
+                        src={`${demo.videoUrl}?autoplay=1`}
+                        title="Quantix demo"
+                        className="w-full h-full border-none"
+                        allow="autoplay; fullscreen"
+                      />
+                    ) : (
+                      <>
+                        <Image
+                          src={demo.videoThumbnail}
+                          alt="Demo thumbnail"
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 66vw"
+                          className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
                         />
-                      ) : (
-                        <>
-                          <Image
-                            src={demo.videoThumbnail}
-                            alt="Demo thumbnail"
-                            fill
-                            sizes="(max-width: 1024px) 100vw, 58vw"
-                            className="object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
-                          />
-                          {/* Play button overlay */}
-                          <button
-                            type="button"
-                            aria-label="Play demo video"
-                            className="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/30 transition duration-300 cursor-pointer"
-                            onClick={() => setIsPlaying(true)}
-                          >
-                            <div className="relative flex items-center justify-center">
-                              <span className="absolute inline-flex h-20 w-20 rounded-full bg-blue-500/30 animate-ping opacity-75" />
-                              <span className="absolute inline-flex h-24 w-24 rounded-full bg-blue-500/10 animate-pulse" />
-                              <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white shadow-xl shadow-blue-600/40 group-hover:scale-110 group-hover:bg-blue-500 transition-all duration-300">
-                                <Play className="h-6 w-6 fill-white text-white ml-1" />
-                              </div>
+                        {/* Dark vignette overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30 pointer-events-none" />
+
+                        {/* ── Play Button ── */}
+                        <button
+                          type="button"
+                          aria-label="Play demo video"
+                          className="absolute inset-0 flex items-center justify-center cursor-pointer z-10"
+                          onClick={() => setIsPlaying(true)}
+                        >
+                          <div className="relative flex items-center justify-center">
+                            <span className="absolute inline-flex h-24 w-24 rounded-full bg-primary/20 animate-ping opacity-60" />
+                            <span className="absolute inline-flex h-28 w-28 rounded-full bg-primary/10 animate-pulse" />
+                            <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-primary text-white shadow-2xl shadow-primary/30 group-hover:scale-110 transition-transform duration-500">
+                              <Play className="h-8 w-8 fill-white text-white ml-1" />
                             </div>
-                          </button>
+                          </div>
+                        </button>
 
-                          {/* Top Badges */}
-                          <span className="absolute left-4 top-4 rounded-full bg-red-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                            VIDEO TOUR
+                        {/* Top-left badge */}
+                        <div className="absolute left-5 top-5 z-20 flex items-center gap-2">
+                          <span className="rounded-full bg-red-500/90 backdrop-blur-sm px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg flex items-center gap-1.5">
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+                            </span>
+                            LIVE TOUR
                           </span>
-                        </>
-                      )}
-                    </motion.div>
-                  ) : (
-                    /* Screenshot Preview View */
-                    <motion.div
-                      key={`screenshot-${activeMedia.id}`}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.3 }}
-                      className="w-full h-full relative flex items-center justify-center bg-[#070D19]"
-                    >
-                      {activeScreenshot && (
-                        <>
-                          <Image
-                            src={activeScreenshot.src}
-                            alt={activeScreenshot.title}
-                            fill
-                            sizes="(max-width: 1024px) 100vw, 58vw"
-                            className="object-contain"
-                          />
-                          
-                          {/* Badge indicating viewing screenshot */}
-                          <span className="absolute left-4 top-4 rounded-full bg-blue-600 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm flex items-center gap-1">
-                            <ImageIcon className="h-3 w-3" />
-                            SCREENSHOT PREVIEW
+                          <span className="rounded-full bg-white/15 backdrop-blur-sm border border-white/15 px-3 py-1.5 text-[10px] font-bold text-white/80">
+                            HD · 2:47
                           </span>
+                        </div>
 
-                          {/* Quick action buttons on player */}
-                          <div className="absolute right-4 top-4 flex items-center gap-2">
+                        {/* Bottom control bar */}
+                        <div className="absolute inset-x-0 bottom-0 z-20">
+                          <div className="bg-gradient-to-t from-black/90 to-transparent p-5 pt-10 flex items-end justify-between">
+                            <div className="flex items-center gap-3 flex-1">
+                              <Volume2 className="w-4 h-4 text-white/60" />
+                              <div className="flex-1 h-1 bg-white/20 rounded-full relative max-w-md">
+                                <div className="absolute inset-y-0 left-0 w-[65%] bg-primary rounded-full" />
+                                <div className="absolute top-1/2 left-[65%] -translate-y-1/2 -translate-x-1/2 h-3 w-3 rounded-full bg-white shadow-md shadow-primary/30" />
+                              </div>
+                              <span className="font-mono text-[11px] text-white/50 font-medium ml-1">2:47</span>
+                            </div>
+                            <Maximize2 className="w-4 h-4 text-white/40 hover:text-white transition cursor-pointer ml-4" />
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </motion.div>
+                ) : (
+                  /* ── Screenshot Preview View ── */
+                  <motion.div
+                    key={`screenshot-${activeMedia.id}`}
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.97 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full h-full relative flex items-center justify-center bg-gray-100"
+                  >
+                    {activeScreenshot && (
+                      <>
+                        <Image
+                          src={activeScreenshot.src}
+                          alt={activeScreenshot.title}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 66vw"
+                          className="object-cover"
+                        />
+                        {/* Top bar */}
+                        <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between p-5">
+                          <span className="rounded-full bg-white/80 backdrop-blur-md border border-gray-200 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-700 shadow-sm flex items-center gap-1.5">
+                            <Eye className="h-3 w-3" />
+                            {activeScreenshot.title}
+                          </span>
+                          <div className="flex items-center gap-2">
                             <button
                               type="button"
-                              className="rounded-full bg-black/60 backdrop-blur-md border border-white/10 p-2 text-white hover:bg-black/80 transition-all cursor-pointer"
+                              className="rounded-full bg-white/80 backdrop-blur-md border border-gray-200 p-2 text-gray-600 hover:bg-white transition-all cursor-pointer"
                               title="Expand screenshot"
                               onClick={() => setOpenScreenshotModal(activeScreenshot.id)}
                             >
-                              <Maximize2 className="h-3.5 w-3.5" />
+                              <Maximize2 className="h-4 w-4" />
                             </button>
                             <button
                               type="button"
-                              className="rounded-full bg-blue-600 px-3 py-1 text-[10px] font-bold text-white hover:bg-blue-700 transition-all cursor-pointer"
+                              className="rounded-full bg-primary hover:bg-primary/90 px-4 py-2 text-[11px] font-bold text-white transition-all cursor-pointer flex items-center gap-1.5"
                               onClick={() => {
                                 setActiveMedia({ type: 'video', id: null });
                                 setIsPlaying(false);
                               }}
                             >
+                              <Play className="h-3 w-3 fill-white" />
                               Back to Video
                             </button>
                           </div>
-                        </>
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* Control bar overlay */}
-                {activeMedia.type === 'video' && !isPlaying && (
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 flex items-center justify-between text-white text-[10px] opacity-90 transition duration-300">
-                    <div className="flex items-center gap-3 w-full px-2">
-                      <Volume2 className="w-3.5 h-3.5 text-slate-200 cursor-pointer hover:text-white" />
-                      <div className="flex-1 h-1 bg-slate-700/80 rounded-full relative cursor-pointer">
-                        <div className="absolute inset-y-0 left-0 w-2/3 bg-blue-500 rounded-full" />
-                        <div className="absolute top-1/2 left-2/3 -translate-y-1/2 -translate-x-1/2 h-2.5 w-2.5 rounded-full bg-blue-50 shadow-md" />
-                      </div>
-                      <span className="font-mono text-slate-300 font-medium">2:47 / HD</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Title & Description Below Media Player */}
-              <div className="mt-5 flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-xl font-syne font-bold text-gray-900 flex items-center gap-2">
-                    {activeMedia.type === 'video' ? (
-                      <>
-                        <Film className="h-5 w-5 text-blue-600" />
-                        Quantix Full Platform Walkthrough
-                      </>
-                    ) : (
-                      <>
-                        <ImageIcon className="h-5 w-5 text-blue-600" />
-                        {activeScreenshot?.title}
+                        </div>
                       </>
                     )}
-                  </h3>
-                  <p className="mt-1 text-sm text-slate-500 font-medium">
-                    {activeMedia.type === 'video' 
-                      ? "See how restaurant and retail workflows come together seamlessly."
-                      : `Detailed close-up on the ${activeScreenshot?.title.toLowerCase()} page details.`
-                    }
-                  </p>
-                </div>
-                <Link
-                  href="https://example.com/full-demo"
-                  target="_blank"
-                  className="text-blue-600 hover:text-blue-700 font-bold text-sm flex items-center shrink-0 cursor-pointer group border-b border-transparent hover:border-blue-600 pb-0.5 transition-all"
-                >
-                  <span className="mr-1">Full Guide</span>
-                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* ── Below Player: Title + Stats ── */}
+            <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="text-lg font-syne font-bold text-gray-900 flex items-center gap-2.5">
+                  {activeMedia.type === 'video' ? (
+                    <>
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
+                        <Film className="h-4 w-4 text-primary" />
+                      </div>
+                      Quantix Full Platform Walkthrough
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
+                        <ImageIcon className="h-4 w-4 text-primary" />
+                      </div>
+                      {activeScreenshot?.title}
+                    </>
+                  )}
+                </h3>
+                <p className="mt-1.5 text-sm text-gray-500 font-medium">
+                  {activeMedia.type === 'video'
+                    ? "See how restaurant and retail workflows come together seamlessly."
+                    : `Explore the ${activeScreenshot?.title.toLowerCase()} interface in detail.`
+                  }
+                </p>
               </div>
+              <Link
+                href="/product-tour"
+                className="text-primary hover:text-primary/80 font-bold text-sm flex items-center gap-1 shrink-0 cursor-pointer group transition-all"
+              >
+                Full Guide
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </div>
+
+            {/* ── Live Platform Stats Row ── */}
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              {LIVE_STATS.map((stat) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="rounded-xl bg-gray-50 border border-gray-100 p-3.5 flex items-center gap-3 hover:bg-gray-100/70 hover:border-gray-200 transition-colors duration-300"
+                >
+                  <div className={cn("flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br", stat.color)}>
+                    <stat.icon className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-gray-900 font-bold text-sm">{stat.value}</p>
+                    <p className="text-gray-400 text-[10px] font-semibold uppercase tracking-wider">{stat.label}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
 
-          {/* Right column – screenshots & newsletter form (5 cols) */}
+          {/* ════════ RIGHT: Interface Explorer + Newsletter (4 cols) ════════ */}
           <motion.div
-            custom={1}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={containerVariants}
-            className="lg:col-span-5 flex flex-col justify-between gap-6"
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-4 flex flex-col gap-5"
           >
-            {/* Interactive Screenshots list */}
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-4">
-                EXPLORE PLATFORM INTERFACES
+            {/* ── Explorer Card ── */}
+            <div className="rounded-2xl bg-white border border-gray-200 shadow-sm p-5 flex-1">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
+                <span className="w-4 h-px bg-gray-300" />
+                EXPLORE INTERFACES
               </p>
-              <div className="space-y-3">
-                {/* Walkthrough Video Tab Option */}
+
+              <div className="space-y-2.5">
+                {/* Video Tour Tab */}
                 <button
                   type="button"
                   className={cn(
-                    "flex w-full items-center gap-3 sm:gap-4 text-left p-2.5 sm:p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer hover:scale-[1.01]",
+                    "flex w-full items-center gap-3 text-left p-3 rounded-xl border transition-all duration-300 cursor-pointer group/tab",
                     activeMedia.type === 'video'
-                      ? "border-blue-500 bg-blue-50/40 shadow-sm shadow-blue-500/5 ring-1 ring-blue-500"
-                      : "border-slate-100 bg-white hover:border-slate-200 hover:bg-slate-50/50 hover:shadow-xs"
+                      ? "border-primary/30 bg-primary/5 shadow-sm shadow-primary/10"
+                      : "border-gray-100 bg-gray-50/50 hover:bg-gray-50 hover:border-gray-200"
                   )}
                   onClick={() => {
                     setActiveMedia({ type: 'video', id: null });
                     setIsPlaying(false);
                   }}
                 >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-blue-600 text-white shrink-0 shadow-sm">
-                    <Film className="h-5 w-5" />
+                  <div className={cn(
+                    "flex h-11 w-11 items-center justify-center rounded-xl shrink-0 transition-all duration-300",
+                    activeMedia.type === 'video'
+                      ? "bg-primary shadow-md shadow-primary/20"
+                      : "bg-gray-100"
+                  )}>
+                    <Film className={cn("h-5 w-5", activeMedia.type === 'video' ? "text-white" : "text-gray-400")} />
                   </div>
-                  <div className="flex-1">
-                    <span className="inline-block rounded-md bg-red-100 text-red-600 text-[8px] font-extrabold px-1.5 py-0.5 mb-1 tracking-wide uppercase">
-                      VIDEO
-                    </span>
-                    <p className="font-bold text-gray-900 text-sm">Play Platform Video Tour</p>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="rounded-md bg-red-100 text-red-600 text-[8px] font-extrabold px-1.5 py-0.5 tracking-wide uppercase">
+                        VIDEO
+                      </span>
+                    </div>
+                    <p className={cn("font-bold text-sm truncate", activeMedia.type === 'video' ? "text-gray-900" : "text-gray-600")}>
+                      Platform Video Tour
+                    </p>
                   </div>
-                  <ArrowUpRight className={cn("h-4 w-4 transition-all duration-300", activeMedia.type === 'video' ? "text-blue-600 translate-x-0.5 -translate-y-0.5" : "text-gray-400")} />
+                  <ChevronRight className={cn(
+                    "h-4 w-4 shrink-0 transition-all duration-300",
+                    activeMedia.type === 'video' ? "text-primary translate-x-0.5" : "text-gray-300 group-hover/tab:text-gray-400"
+                  )} />
                 </button>
 
-                {/* Individual Screenshots */}
+                {/* Screenshot Tabs */}
                 {demo.screenshots.map((shot) => {
                   const isActive = activeMedia.type === 'screenshot' && activeMedia.id === shot.id;
+                  const meta = SCREENSHOT_META[shot.title] || { icon: ImageIcon, category: "FEATURE", color: "text-blue-600", bgColor: "bg-blue-100" };
+                  const MetaIcon = meta.icon;
+
                   return (
                     <button
                       key={shot.id}
                       type="button"
                       className={cn(
-                        "flex w-full items-center gap-3 sm:gap-4 text-left p-2.5 sm:p-3 rounded-2xl border transition-all duration-300 cursor-pointer hover:scale-[1.01]",
+                        "flex w-full items-center gap-3 text-left p-3 rounded-xl border transition-all duration-300 cursor-pointer group/tab",
                         isActive
-                          ? "border-blue-500 bg-blue-50/40 shadow-sm shadow-blue-500/5 ring-1 ring-blue-500"
-                          : "border-slate-100 bg-white hover:border-slate-200 hover:bg-slate-50 hover:shadow-xs"
+                          ? "border-primary/30 bg-primary/5 shadow-sm shadow-primary/10"
+                          : "border-gray-100 bg-gray-50/50 hover:bg-gray-50 hover:border-gray-200"
                       )}
-                      onClick={() => {
-                        setActiveMedia({ type: 'screenshot', id: shot.id });
-                      }}
+                      onClick={() => setActiveMedia({ type: 'screenshot', id: shot.id })}
+                      onMouseEnter={() => setHoveredShot(shot.id)}
+                      onMouseLeave={() => setHoveredShot(null)}
                     >
-                      <div className="relative h-11 w-11 shrink-0 rounded-lg overflow-hidden border border-slate-200 bg-slate-100">
+                      <div className={cn(
+                        "relative h-11 w-11 shrink-0 rounded-xl overflow-hidden border transition-all duration-300",
+                        isActive ? "border-blue-200" : "border-gray-200"
+                      )}>
                         <Image
                           src={shot.src}
                           alt={shot.title}
                           fill
                           sizes="44px"
-                          className="object-cover"
+                          className={cn(
+                            "object-cover transition-transform duration-500",
+                            (hoveredShot === shot.id || isActive) ? "scale-110" : ""
+                          )}
                         />
+                        {isActive && (
+                          <div className="absolute inset-0 bg-blue-500/10" />
+                        )}
                       </div>
-                      <div className="flex-1">
-                        <span className="inline-block rounded-md bg-blue-100/80 text-blue-700 text-[8px] font-extrabold px-1.5 py-0.5 mb-1 tracking-wide uppercase">
-                          {getCategory(shot.title)}
-                        </span>
-                        <p className="font-bold text-gray-900 text-sm">{shot.title}</p>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className={cn("rounded-md text-[8px] font-extrabold px-1.5 py-0.5 tracking-wide uppercase", meta.bgColor, meta.color)}>
+                            {meta.category}
+                          </span>
+                        </div>
+                        <p className={cn("font-bold text-sm truncate", isActive ? "text-gray-900" : "text-gray-600")}>
+                          {shot.title}
+                        </p>
                       </div>
-                      <ArrowUpRight className={cn("h-4 w-4 transition-all duration-300", isActive ? "text-blue-600 translate-x-0.5 -translate-y-0.5" : "text-gray-400")} />
+                      <ChevronRight className={cn(
+                        "h-4 w-4 shrink-0 transition-all duration-300",
+                        isActive ? "text-primary translate-x-0.5" : "text-gray-300 group-hover/tab:text-gray-400"
+                      )} />
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Notification Card */}
-            <div className="rounded-3xl border border-slate-900 bg-slate-950 p-6 text-white shadow-xl relative overflow-hidden group/card">
-              <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:14px_24px]" />
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
-              
-              <div className="flex items-center gap-4 relative z-10">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white shrink-0 shadow-md shadow-blue-600/20">
+            {/* ── Newsletter CTA Card ── */}
+            <div className="rounded-2xl border border-gray-900 bg-gray-950 p-6 relative overflow-hidden">
+              {/* Background decorations */}
+              <div className="absolute inset-0 opacity-[0.04]" style={{
+                backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+                backgroundSize: "20px 20px",
+              }} />
+              <div className="absolute -top-8 -right-8 w-32 h-32 bg-blue-500/15 rounded-full blur-2xl pointer-events-none" />
+              <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="flex items-start gap-3.5 relative z-10">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-white shrink-0 shadow-lg shadow-primary/20">
                   <Bell className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="font-syne font-bold text-white text-base">New Demos & Walkthroughs</p>
-                  <p className="text-xs text-slate-400 mt-0.5 font-medium leading-relaxed">Subscribe to get notified as soon as new modules are released.</p>
+                  <p className="font-syne font-bold text-white text-sm leading-snug">
+                    New Demos & Walkthroughs
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1 font-medium leading-relaxed">
+                    Get notified when new modules are released.
+                  </p>
                 </div>
               </div>
 
@@ -361,23 +476,23 @@ export const DemoSection: React.FC<DemoSectionProps> = ({
               >
                 {({ isSubmitting, getFieldProps, errors, touched }) => (
                   <Form className="mt-5 w-full relative z-10">
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0 bg-transparent sm:bg-slate-900 border-none sm:border sm:border-slate-800 rounded-none sm:rounded-full p-0 sm:p-1 sm:pl-4 w-full focus-within:ring-2 focus-within:ring-blue-500/30 focus-within:border-blue-500 transition-all">
+                    <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl p-1.5 focus-within:ring-2 focus-within:ring-primary/30 focus-within:border-primary/40 transition-all">
                       <input
                         type="email"
                         placeholder="your@email.com"
                         {...getFieldProps("email")}
-                        className="bg-slate-900 sm:bg-transparent border border-slate-800 sm:border-none outline-none text-slate-200 text-xs w-full sm:mr-2 placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 sm:focus:ring-0 rounded-full sm:rounded-none px-4 py-3 sm:px-0 sm:py-1 font-semibold"
+                        className="bg-transparent outline-none text-slate-200 text-xs w-full placeholder:text-slate-600 focus:outline-none px-3 py-2.5 font-semibold"
                       />
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-full font-bold px-6 py-3 sm:py-2 text-xs transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-blue-600/25 cursor-pointer shrink-0"
+                        className="bg-primary hover:bg-primary/90 disabled:opacity-50 text-white rounded-lg font-bold px-5 py-2.5 text-xs transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-primary/25 cursor-pointer shrink-0"
                       >
                         Notify me
                       </button>
                     </div>
                     {touched.email && errors.email && (
-                      <div className="text-[10px] text-red-400 mt-1.5 ml-4 font-semibold">{errors.email}</div>
+                      <div className="text-[10px] text-red-400 mt-1.5 ml-3 font-semibold">{errors.email}</div>
                     )}
                   </Form>
                 )}

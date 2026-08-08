@@ -9,44 +9,49 @@ export interface HeroSlide {
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
   backgroundImage: string;
+  featureHighlights: string[];
 }
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
-    id: "retail",
-    badge: "RETAIL POS",
-    heading: "Smarter Retail Starts Here",
-    subheading: "Sync inventory, manage staff, and delight customers across every location.",
-    primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "Explore Retail →", href: "#services" },
-    backgroundImage: "/images/hero-retail.jpg",
-  },
-  {
     id: "restaurant",
-    badge: "RESTAURANT POS",
+    badge: "RESTAURANT POS & KITCHEN KDS",
     heading: "The All-in-One POS for Restaurants",
-    subheading: "Manage tables, orders, and kitchen flow in real time — all from one device.",
+    subheading: "Manage tableside orders, real-time kitchen ticket routing, and floor plans — all from one fast device.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "Contact Sales →", href: "#contact" },
-    backgroundImage: "/images/hero-restaurant.jpg",
+    secondaryCta: { label: "Request Demo →", href: "/contact/demo" },
+    backgroundImage: "/images/kitchen_display_3d.png",
+    featureHighlights: ["Kitchen Ticket Routing", "Visual Floor Maps", "Tableside Tablets"],
   },
   {
-    id: "cloud",
-    badge: "CLOUD POS",
-    heading: "Run Your Business from the Cloud",
-    subheading: "Access real-time sales data, inventory levels, and analytics from anywhere in the world on any device.",
+    id: "retail",
+    badge: "RETAIL POS & BARCODE REGISTER",
+    heading: "Smarter Retail Starts Here",
+    subheading: "Offline-first barcode registers, live stock deductions, and customer rewards across every store branch.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "See Pricing →", href: "#pricing" },
-    backgroundImage: "/images/hero-cafe.jpg",
+    secondaryCta: { label: "Explore Retail →", href: "/features" },
+    backgroundImage: "/images/pos_counter_3d.png",
+    featureHighlights: ["Offline Local Till", "Barcode Fast Lookup", "Line Discounts"],
   },
   {
-    id: "local",
-    badge: "LOCAL BILLING POS",
-    heading: "Offline-First Local Billing Terminal",
-    subheading: "Keep selling even when the internet goes down. Seamless local billing with automatic cloud sync when reconnected.",
+    id: "online",
+    badge: "ONLINE ORDERING PORTAL",
+    heading: "Commission-Free Direct Online Sales",
+    subheading: "Launch a custom web ordering app for direct customer orders with instant register and kitchen dispatch.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "See Offline Mode →", href: "#services" },
-    backgroundImage: "/images/hero-local.png",
+    secondaryCta: { label: "See Online Portal →", href: "/features" },
+    backgroundImage: "/images/online_ordering_3d.png",
+    featureHighlights: ["0% Commission Fees", "Branded Web Portal", "Auto Order Dispatch"],
+  },
+  {
+    id: "enterprise",
+    badge: "ENTERPRISE MULTI-STORE HUB",
+    heading: "Run Your Business Across Multi-Stores",
+    subheading: "Bank-grade encrypted multi-tenant cloud dashboard with global menu updates and warehouse stock transfers.",
+    primaryCta: { label: "Start Free Trial", href: "/sign-up" },
+    secondaryCta: { label: "Enterprise Hub →", href: "/solutions/franchise" },
+    backgroundImage: "/images/enterprise_hub_3d.png",
+    featureHighlights: ["Multi-Tenant Isolation", "Global Menu Push", "Warehouse Sync"],
   },
 ];
 

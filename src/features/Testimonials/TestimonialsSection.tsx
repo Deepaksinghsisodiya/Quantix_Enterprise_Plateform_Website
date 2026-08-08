@@ -15,6 +15,15 @@ export interface TestimonialsSectionProps {
 const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
   {
     id: "t1",
+    quote: "With over 100 outlets synced to a single Cloud Ledger, Quantix is the backbone of our restaurant empire. Real-time analytics and centralized control have transformed our operations.",
+    author: "Elena Rostova",
+    role: "VP Operations",
+    companyName: "FoodFlow Group",
+    industry: "Restaurant",
+    avatarUrl: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=150&h=150&q=80"
+  },
+  {
+    id: "t2",
     quote: "Quantix changed how we run our boutique. Offline sync is so smooth, we never worry about losing connection during weekend rushes. Real-time stock alerts keep us prepared and customer billing takes half the time.",
     author: "Amanda Sterling",
     role: "Founder",
@@ -23,7 +32,7 @@ const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
     avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
-    id: "t2",
+    id: "t3",
     quote: "The restaurant layout mapper is a total game-changer. Bill splits take seconds instead of minutes, increasing our seat turnover by 15% and saving staff overheads. Best POS decision we've ever made.",
     author: "Chef Giovanni",
     role: "Owner",
@@ -32,8 +41,8 @@ const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
     avatarUrl: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
-    id: "t3",
-    quote: "We scaled from 1 store to 5 in less than a year. The unified dashboard is exactly what we needed to monitor stock levels, sales reports, and employee shifts in real-time across all branches.",
+    id: "t4",
+    quote: "Offline checkout queues are non-existent now. Cashiers scan and bill customers continuously even during network outages. We scaled from 1 store to 5 in less than a year with the unified dashboard.",
     author: "Marcus Vance",
     role: "Operations Director",
     companyName: "Urban Wear Co.",
@@ -41,7 +50,7 @@ const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
     avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
-    id: "t4",
+    id: "t5",
     quote: "The interface is so clean. It takes less than 10 minutes to train new staff members on our checkout registers, saving us massive setup and onboarding time. The support team is also top-notch.",
     author: "Sarah Lindqvist",
     role: "General Manager",

@@ -3,26 +3,27 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import HeroSection from "@/components/organisms/HeroSection/HeroSection";
+import MainProductsShowcaseSection from "@/components/organisms/MainProductsShowcaseSection/MainProductsShowcaseSection";
 import Navbar from "@/components/organisms/Navbar/Navbar";
-import { PlatformDemoSection } from "@/components/organisms/PlatformDemoSection/PlatformDemoSection";
-import { HowItWorksSection } from "@/components/organisms/HowItWorksSection/HowItWorksSection";
+
 import DemoWrapper from "@/features/Demo/DemoWrapper";
-import IndustriesSectionWrapper from "@/features/Industries/IndustriesSectionWrapper";
-import TestimonialBannerWrapper from "@/features/Testimonials/TestimonialBannerWrapper";
-import FeaturesWrapper from "@/features/Features/FeaturesWrapper";
 import { QuantixToolsSection } from "@/components/organisms/QuantixToolsSection/QuantixToolsSection";
 import { CTABanner } from "@/components/organisms/CTABanner/CTABanner";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { ATMLoader } from "@/components/atoms/ATMLoader";
 import { cn } from "@/lib/utils";
-import { ArrowUp, Utensils, Store, X } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useIndustry, IndustryMode } from "@/context/IndustryContext";
+
+// PFD Compliant Sections
+import ValuePropositionsSection from "@/components/organisms/ValuePropositions/ValuePropositionsSection";
+import IntegrationsTickerSection from "@/components/organisms/IntegrationsTicker/IntegrationsTickerSection";
+import MerchantTypeExplainerSection from "@/components/organisms/MerchantExplainer/MerchantTypeExplainerSection";
+import ROICalculatorSection from "@/components/organisms/ROICalculator/ROICalculatorSection";
 
 import dynamic from "next/dynamic";
 
 // Dynamic loaded sections (below the fold) optimized for Next.js
-const LazyPricingWrapper = dynamic(() => import("@/features/Pricing/PricingWrapper"), { ssr: false });
 const LazyTestimonialsSection = dynamic(() => import("@/features/Testimonials/TestimonialsSectionWrapper"), { ssr: false });
 const LazyFAQWrapper = dynamic(() => import("@/features/FAQ/FAQWrapper"), { ssr: false });
 
@@ -82,60 +83,66 @@ export default function HomePageClient() {
 
       <Navbar />
 
+      {/* 1. Hero Section */}
       <section id="home" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <HeroSection />
       </section>
 
-      <section id="features" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
-        <PlatformDemoSection />
+      {/* 2. Main Products Showcase (Point of Sale & KDS) */}
+      <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+        <MainProductsShowcaseSection />
       </section>
 
-      <section id="platform" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
-        <FeaturesWrapper />
+      {/* 3. Integrations Partner Logo Ticker (PFD Section 7) */}
+      <section id="integrations-ticker">
+        <IntegrationsTickerSection />
       </section>
 
-      <section id="how-it-works" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
-        <HowItWorksSection />
+      {/* 4. Value Propositions Glassmorphism Cards (Moved below Products & Integrations per user request) */}
+      <section id="value-propositions">
+        <ValuePropositionsSection />
       </section>
 
+      {/* 5. Live Interactive Demo Wrapper */}
       <section id="resources" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <DemoWrapper />
       </section>
 
-      <section id="services" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
-        <IndustriesSectionWrapper />
+      {/* 6. Merchant Type Explainer: Cloud Enterprise vs Standalone (PFD Section 8) */}
+      <section id="merchant-explainer">
+        <MerchantTypeExplainerSection />
       </section>
 
-      <section className={cn("scroll-mt-28 bg-gray-900")}>
-        <TestimonialBannerWrapper />
-      </section>
-
+      {/* 7. Quantix Tools Section */}
       <section className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <QuantixToolsSection />
       </section>
 
-      {/* Lazy loaded sections */}
-      <section id="pricing" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
-        <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
-          <LazyPricingWrapper />
-        </Suspense>
+      {/* 8. Interactive ROI & Savings Calculator (PFD Section 6) */}
+      <section id="roi-calculator">
+        <ROICalculatorSection />
       </section>
 
+      {/* 9. Testimonials Carousel */}
       <section id="testimonials" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyTestimonialsSection />
         </Suspense>
       </section>
 
+      {/* 10. FAQ Accordion */}
       <section id="faq" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyFAQWrapper />
         </Suspense>
       </section>
+
+      {/* 11. Final CTA Banner */}
       <section className={cn("scroll-mt-28 bg-slate-900")}>
         <CTABanner />
       </section>
 
+      {/* 12. Footer */}
       <section id="footer" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Footer />
       </section>
@@ -152,10 +159,10 @@ export default function HomePageClient() {
             whileHover={{ scale: 1.1, y: -4 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="fixed bottom-8 right-8 z-50 rounded-2xl bg-primary hover:bg-primary-dark p-4 text-white shadow-2xl shadow-primary/20 flex items-center justify-center cursor-pointer transition-all border border-primary/30"
+            className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 rounded-full sm:rounded-2xl bg-white dark:bg-slate-800 text-primary border border-slate-200 dark:border-slate-700 p-2.5 sm:p-3.5 shadow-xl flex items-center justify-center cursor-pointer transition-all hover:scale-110 active:scale-95"
             aria-label="Back to top"
           >
-            <ArrowUp size={18} className="stroke-[2.5]" />
+            <ArrowUp className="h-4 w-4 sm:h-5 sm:w-5 stroke-[2.5]" />
           </motion.button>
         )}
       </AnimatePresence>

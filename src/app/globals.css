@@ -1,37 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  /* Dynamic Custom Variables mapping to Tailwind */
-  --color-primary: var(--primary-color);
-  --color-primary-light: var(--primary-light);
-  --color-primary-dark: var(--primary-dark);
-  --color-darkBg: var(--dark-bg);
-  --color-darkSurface: var(--dark-surface);
-  
-  --color-bg-warm: var(--background-warm);
-  --color-soft-pink: var(--soft-pink);
-  --color-soft-mint: var(--soft-mint);
-  --color-soft-lavender: var(--soft-lavender);
-  --color-soft-yellow: var(--soft-yellow);
-  --color-teal: var(--teal-color);
-  
-  /* OVERRIDE Tailwind's default blue, indigo, and violet palettes dynamically */
-  /* This flattens all gradients into a single, solid branded primary color */
-  --color-blue-400: var(--primary-light);
-  --color-blue-500: var(--primary-light);
-  --color-blue-600: var(--primary-color);
-  --color-blue-700: var(--primary-dark);
-  
-  --color-indigo-400: var(--primary-light);
-  --color-indigo-500: var(--primary-light);
-  --color-indigo-600: var(--primary-color);
-  --color-indigo-700: var(--primary-dark);
-  
-  --color-violet-400: var(--primary-light);
-  --color-violet-500: var(--primary-light);
-  --color-violet-600: var(--primary-color);
-  --color-violet-700: var(--primary-dark);
-  
+  /* Dynamic Custom Variables mapping to Tailwind - Pure Red Palette */
+  --color-primary: #E90C0C;
+  --color-primary-light: #FF2F2F;
+  --color-primary-dark: #CD0808;
+  --color-darkBg: #0F172A;
+  --color-darkSurface: #1E293B;
+
+  --color-bg-warm: #FFF1F1;
+  --color-soft-pink: #FFDFDF;
+  --color-soft-mint: #FFDFDF;
+  --color-soft-lavender: #FF9A9A;
+  --color-soft-yellow: #FFC4C4;
+  --color-teal: #E90C0C;
+
+  /* OVERRIDE Tailwind's default blue, indigo, and violet palettes dynamically to Pure Red */
+  --color-blue-400: #FF2F2F;
+  --color-blue-500: #FF2F2F;
+  --color-blue-600: #E90C0C;
+  --color-blue-700: #CD0808;
+
+  --color-indigo-400: #FF2F2F;
+  --color-indigo-500: #FF2F2F;
+  --color-indigo-600: #E90C0C;
+  --color-indigo-700: #CD0808;
+
+  --color-violet-400: #FF2F2F;
+  --color-violet-500: #FF2F2F;
+  --color-violet-600: #E90C0C;
+  --color-violet-700: #CD0808;
+
   /* Additional theme mappings */
   --color-background: var(--bg-color);
   --color-foreground: var(--text-color);
@@ -40,14 +39,16 @@
   --animate-pulse-subtle: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
   @keyframes pulse-subtle {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 1;
       transform: scale(1);
     }
+
     50% {
       opacity: 0.95;
       transform: scale(1.02);
-      box-shadow: 0 0 15px rgba(0, 166, 156, 0.35);
+      box-shadow: 0 0 15px rgba(233, 12, 12, 0.35);
     }
   }
 }
@@ -58,62 +59,61 @@ html {
 
 :root {
   /* ==========================================
-     THEME CONFIGURATION - CHANGE COLORS HERE
+     THEME CONFIGURATION - PURE RED PALETTE
      ========================================== */
-  /* Premium Solid Branded Emerald Teal Theme */
-  --primary-color: #00a69c;
-  --primary-light: #00c2b6;
-  --primary-dark: #00877f;
+  --primary-color: #E90C0C;
+  --primary-light: #FF2F2F;
+  --primary-dark: #CD0808;
 
   /* Global Core Colors */
   --bg-color: #ffffff;
   --text-color: #5f6368;
-  --dark-bg: #171717;
-  --dark-surface: #1e1e1e;
+  --dark-bg: #0F172A;
+  --dark-surface: #1E293B;
 
-  /* Foodhub design system soft background accents */
-  --background-warm: #fff9f5;
-  --soft-pink: #fbe6e8;
-  --soft-mint: #d3efd8;
-  --soft-lavender: #e7dffc;
-  --soft-yellow: #fff0bd;
-  --teal-color: #00a69c;
+  /* Pure Red soft background accents */
+  --background-warm: #FFF1F1;
+  --soft-pink: #FFDFDF;
+  --soft-mint: #FFDFDF;
+  --soft-lavender: #FF9A9A;
+  --soft-yellow: #FFC4C4;
+  --teal-color: #E90C0C;
 
   --color-primary: var(--primary-color);
   --color-background: var(--bg-color);
   --color-foreground: var(--text-color);
-  --color-surface: #f5f5f3;
-  --color-border: #e4e4e4;
-  --site-max-width: 95rem; /* 1520px - Aligned to Foretek Solutions */
+  --color-surface: #FFF1F1;
+  --color-border: #FFC4C4;
+  --site-max-width: 95rem;
 }
 
-/* Centralized container class to align every section's width across the project - aligned to Foretek's 1520px */
+/* Centralized container class to align every section's width across the project */
 .site-container {
   width: 100%;
   max-width: var(--site-max-width);
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.25rem; /* 20px on mobile */
+  padding-left: 1.25rem;
   padding-right: 1.25rem;
 }
 
 @media (min-width: 640px) {
   .site-container {
-    padding-left: 1.5rem; /* 24px on tablet */
+    padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   .site-container {
-    padding-left: 2rem; /* 32px on desktop */
+    padding-left: 2rem;
     padding-right: 2rem;
   }
 }
 
 @media (min-width: 1280px) {
   .site-container {
-    padding-left: 2.5rem; /* 40px on xl */
+    padding-left: 2.5rem;
     padding-right: 2.5rem;
   }
 }
@@ -127,11 +127,13 @@ html {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--color-surface);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
+  background: #E90C0C;
   border-radius: 4px;
 }
 
@@ -139,11 +141,12 @@ html {
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 104px; /* Offset to prevent sticky navbar overlap */
+    scroll-padding-top: 104px;
     overflow-x: hidden;
     width: 100%;
     max-width: 100vw;
   }
+
   body {
     background: var(--color-background);
     color: var(--color-foreground);
@@ -154,54 +157,63 @@ html {
     width: 100%;
     max-width: 100vw;
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-lexend), sans-serif;
     letter-spacing: -0.035em;
     font-weight: 750;
   }
-  img, video, canvas {
+
+  img,
+  video,
+  canvas {
     max-width: 100%;
     height: auto;
   }
 }
 
-
-
-/* Centralized section header bottom margin utility */
 .section-header-mb {
   margin-bottom: 2rem;
 }
+
 @media (min-width: 640px) {
   .section-header-mb {
     margin-bottom: 2.5rem;
   }
 }
+
 @media (min-width: 1024px) {
   .section-header-mb {
     margin-bottom: 3.5rem;
   }
 }
 
-/* ─── FORETEK SOLUTIONS PREMIUM VISUAL CLASSES ─── */
+/* ─── PREMIUM VISUAL CLASSES ─── */
 :root {
-  --blue-color: #3b82f6;
-  --indigo-color: #6366f1;
-  --violet-color: #8b5cf6;
-  --cyan-color: #22d3ee;
-  --emerald-color: #10b981;
-  --rose-color: #ef4444;
-  --gold-color: #f97316;
+  --blue-color: #E90C0C;
+  --indigo-color: #FF2F2F;
+  --violet-color: #CD0808;
+  --cyan-color: #FF9A9A;
+  --emerald-color: #E90C0C;
+  --rose-color: #E90C0C;
+  --gold-color: #FF2F2F;
 }
 
 /* Gradient Sheen Button */
 .btn-gradient {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  background: linear-gradient(135deg, #E90C0C 0%, #CD0808 100%);
   background-size: 200% 200%;
   background-position: left center;
   transition: background-position 0.45s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
+
 .btn-gradient::after {
   content: '';
   position: absolute;
@@ -209,23 +221,24 @@ html {
   left: -75%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%);
   transform: skewX(-25deg);
   transition: 0.75s;
 }
+
 .btn-gradient:hover::after {
   left: 125%;
 }
+
 .btn-gradient:hover {
   background-position: right center;
-  box-shadow: 0 8px 32px rgba(0, 166, 156, 0.4), 0 2px 8px rgba(0, 166, 156, 0.2);
+  box-shadow: 0 8px 32px rgba(233, 12, 12, 0.4), 0 2px 8px rgba(233, 12, 12, 0.2);
   transform: translateY(-1px);
 }
+
 .btn-gradient:active {
   transform: translateY(0px);
 }
@@ -237,9 +250,10 @@ html {
   color: white;
   transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
+
 .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(0, 166, 156, 0.35);
+  border-color: rgba(233, 12, 12, 0.35);
   transform: translateY(-1px);
 }
 
@@ -251,6 +265,7 @@ html {
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
+
 .dark .glass-card {
   background: rgba(17, 24, 39, 0.6);
   border-color: rgba(255, 255, 255, 0.08);
@@ -261,6 +276,7 @@ html {
   position: relative;
   overflow: hidden;
 }
+
 .aurora-bg::before {
   content: "";
   position: absolute;
@@ -271,11 +287,12 @@ html {
   pointer-events: none;
   z-index: 0;
   will-change: transform;
-  background: radial-gradient(circle, rgba(0, 166, 156, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(233, 12, 12, 0.14) 0%, transparent 70%);
   top: -120px;
   left: -80px;
   animation: auroraDrift1 18s ease-in-out infinite alternate;
 }
+
 .aurora-bg::after {
   content: "";
   position: absolute;
@@ -286,68 +303,85 @@ html {
   pointer-events: none;
   z-index: 0;
   will-change: transform;
-  background: radial-gradient(circle, rgba(0, 135, 127, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(205, 8, 8, 0.12) 0%, transparent 70%);
   bottom: -100px;
   right: -60px;
   animation: auroraDrift2 22s ease-in-out infinite alternate;
 }
 
 @keyframes auroraDrift1 {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(60px, 40px) scale(1.12); }
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(60px, 40px) scale(1.12);
+  }
 }
+
 @keyframes auroraDrift2 {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(-50px, -30px) scale(1.1); }
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(-50px, -30px) scale(1.1);
+  }
 }
 
 /* Static mesh background gradients */
 .mesh-bg {
   background:
-    radial-gradient(ellipse at 20% 20%, rgba(0, 166, 156, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 10%, rgba(0, 135, 127, 0.05) 0%, transparent 45%),
-    radial-gradient(ellipse at 60% 80%, rgba(34, 211, 238, 0.04) 0%, transparent 45%),
-    radial-gradient(ellipse at 10% 90%, rgba(0, 194, 182, 0.04) 0%, transparent 40%);
+    radial-gradient(ellipse at 20% 20%, rgba(233, 12, 12, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 10%, rgba(205, 8, 8, 0.06) 0%, transparent 45%),
+    radial-gradient(ellipse at 60% 80%, rgba(255, 47, 47, 0.05) 0%, transparent 45%),
+    radial-gradient(ellipse at 10% 90%, rgba(233, 12, 12, 0.06) 0%, transparent 40%);
 }
 
 /* ─── Global Padding-Y Reductions for Tighter Layout Spacing ─── */
 .py-24 {
-  padding-top: 2.5rem !important; /* ~40px */
+  padding-top: 2.5rem !important;
   padding-bottom: 2.5rem !important;
 }
+
 .py-20 {
-  padding-top: 2rem !important; /* ~32px */
+  padding-top: 2rem !important;
   padding-bottom: 2rem !important;
 }
+
 .py-16 {
-  padding-top: 1.75rem !important; /* ~28px */
+  padding-top: 1.75rem !important;
   padding-bottom: 1.75rem !important;
 }
 
 @media (min-width: 640px) {
   .sm\:py-24 {
-    padding-top: 3.5rem !important; /* ~56px */
+    padding-top: 3.5rem !important;
     padding-bottom: 3.5rem !important;
   }
+
   .sm\:py-20 {
-    padding-top: 3rem !important; /* ~48px */
+    padding-top: 3rem !important;
     padding-bottom: 3rem !important;
   }
+
   .sm\:py-16 {
-    padding-top: 2.5rem !important; /* ~40px */
+    padding-top: 2.5rem !important;
     padding-bottom: 2.5rem !important;
   }
 }
 
 @media (min-width: 768px) {
   .md\:py-24 {
-    padding-top: 4rem !important; /* ~64px */
+    padding-top: 4rem !important;
     padding-bottom: 4rem !important;
   }
+
   .md\:py-20 {
     padding-top: 3.5rem !important;
     padding-bottom: 3.5rem !important;
   }
+
   .md\:py-16 {
     padding-top: 3rem !important;
     padding-bottom: 3rem !important;
@@ -356,16 +390,17 @@ html {
 
 @media (min-width: 1024px) {
   .lg\:py-24 {
-    padding-top: 4.5rem !important; /* ~72px */
+    padding-top: 4.5rem !important;
     padding-bottom: 4.5rem !important;
   }
+
   .lg\:py-20 {
     padding-top: 4rem !important;
     padding-bottom: 4rem !important;
   }
+
   .lg\:py-16 {
     padding-top: 3.5rem !important;
     padding-bottom: 3.5rem !important;
   }
 }
-
