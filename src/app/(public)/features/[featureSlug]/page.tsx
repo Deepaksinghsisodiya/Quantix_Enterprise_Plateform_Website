@@ -34,26 +34,98 @@ const FEATURES_DATA: Record<string, FeatureData> = {
   },
   'offline-registers': {
     slug: 'offline-registers',
-    title: 'Offline Standalone Register database',
+    title: 'Offline Standalone Register POS',
     tagline: 'Process sales and print thermal bills completely without internet.',
     desc: 'Secure continuous billing operations even during network failovers. The register utilizes a secure local IndexedDB database on your hard drive to record sales, authorize PIN access, and print thermal receipt papers natively, backing up logs upon connection restores.',
     benefits: ['No server connectivity dependencies', 'High-speed local IndexedDB lookups', 'Encrypted local cache storage logs'],
     techSpec: 'Utilizes high-performance local SQLite / IndexedDB databases with local course-pacing backup buffers.',
     relatedFeatures: [
       { title: 'Smart inventory metrics', slug: 'smart-inventory' },
-      { title: 'Multi-location telemetry central dashboard', slug: 'cloud-telemetry' }
+      { title: 'Kitchen Display System (KDS)', slug: 'kitchen-display' }
     ]
   },
   'table-management': {
     slug: 'table-management',
-    title: 'Table Management & Course Pacing',
+    title: 'Table Management & Floor Layouts',
     tagline: 'Interactive floor layouts, visual course alerts, and split checks.',
     desc: 'Maximize table turn velocities. Design interactive custom floor layouts, fire courses course pacing directly to different KDS screens, and handle complex customer check splits instantly at the terminal register.',
     benefits: ['Drag & drop floor builder layouts', 'Dynamic multi-course KDS routing triggers', 'Instant check splitting modules'],
     techSpec: 'Interactive HTML5 canvas grids connected directly to state telemetry handlers.',
     relatedFeatures: [
       { title: 'Offline Registers database', slug: 'offline-registers' },
-      { title: 'Smart inventory metrics', slug: 'smart-inventory' }
+      { title: 'Kitchen Display System (KDS)', slug: 'kitchen-display' }
+    ]
+  },
+  'online-ordering': {
+    slug: 'online-ordering',
+    title: 'Direct Online Ordering Portal',
+    tagline: 'Branded commission-free web ordering for pickup & delivery.',
+    desc: 'Eliminate third-party commission fees. Launch a custom-branded web storefront and mobile web app where customers order directly. Orders route directly into your POS register and Kitchen Display System.',
+    benefits: ['0% commission fee direct orders', 'Real-time menu stock availability sync', 'Automated SMS order status updates'],
+    techSpec: 'High-speed Server-Side Rendered ordering portal with instant WebSocket POS notification dispatch.',
+    relatedFeatures: [
+      { title: 'Delivery Management', slug: 'delivery-management' },
+      { title: 'Kitchen Display System (KDS)', slug: 'kitchen-display' }
+    ]
+  },
+  'self-service-kiosk': {
+    slug: 'self-service-kiosk',
+    title: 'Self-Service Checkout Kiosks',
+    tagline: 'Accelerate line throughput with guest self-ordering touchscreens.',
+    desc: 'Empower guests to browse visual menus, customize items, and pay using integrated card terminals. Self-service kiosks reduce queue wait times and boost average check sizes by 20% through automated upsell prompts.',
+    benefits: ['Interactive high-definition visual menus', 'Automated modifier & add-on upsell prompts', 'Integrated contactless card payments'],
+    techSpec: 'Hardened kiosk mode application supporting thermal bill printers and EMV chip readers.',
+    relatedFeatures: [
+      { title: 'Direct Online Ordering Portal', slug: 'online-ordering' },
+      { title: 'Kitchen Display System (KDS)', slug: 'kitchen-display' }
+    ]
+  },
+  'qr-code-ordering': {
+    slug: 'qr-code-ordering',
+    title: 'Tableside QR Code Ordering & Pay',
+    tagline: 'Contactless digital menus for instant guest self-service at table.',
+    desc: 'Allow guests to scan a table QR code, browse rich visual menus, place orders, and pay directly from their mobile browser without downloading any application or waiting for a server.',
+    benefits: ['Zero app installation required for guests', 'Instant table-to-kitchen ticket firing', 'Split bill & digital tip checkout'],
+    techSpec: 'Web-native PWA client leveraging dynamic QR token validation for secure table sessions.',
+    relatedFeatures: [
+      { title: 'Table Management & Floor Layouts', slug: 'table-management' },
+      { title: 'Direct Online Ordering Portal', slug: 'online-ordering' }
+    ]
+  },
+  'kitchen-display': {
+    slug: 'kitchen-display',
+    title: 'Kitchen Display System (KDS)',
+    tagline: 'Replace paper tickets with real-time digital kitchen order screens.',
+    desc: 'Eliminate lost paper tickets and miscommunications. KDS screens color-code order prep times, organize tickets by station (Grill, Fryer, Assembly), and notify front-of-house staff when orders are ready.',
+    benefits: ['Color-coded order prep timer alerts', 'Multi-station ticket routing & bump bars', 'Real-time kitchen order status sync'],
+    techSpec: 'Low-latency WebSockets with local subnet fallback to ensure zero order loss.',
+    relatedFeatures: [
+      { title: 'Table Management & Floor Layouts', slug: 'table-management' },
+      { title: 'Offline Standalone Register POS', slug: 'offline-registers' }
+    ]
+  },
+  'delivery-management': {
+    slug: 'delivery-management',
+    title: 'Delivery Management & Dispatch Hub',
+    tagline: 'Manage in-house drivers and third-party delivery dispatch in one view.',
+    desc: 'Consolidate incoming delivery orders from your website, DoorDash, and Uber Eats into a single dispatch dashboard. Assign drivers, track real-time GPS locations, and send automated SMS updates to customers.',
+    benefits: ['Single screen for all delivery orders', 'Driver assignment & route optimization', 'Customer live SMS tracking links'],
+    techSpec: 'Integrated REST API bridge connecting DoorDash Drive and mapping services directly into POS dispatch.',
+    relatedFeatures: [
+      { title: 'Direct Online Ordering Portal', slug: 'online-ordering' },
+      { title: 'Kitchen Display System (KDS)', slug: 'kitchen-display' }
+    ]
+  },
+  'marketing-loyalty': {
+    slug: 'marketing-loyalty',
+    title: 'Customer Loyalty & Marketing Engine',
+    tagline: 'Turn one-time diners into loyal repeat customers with automated rewards.',
+    desc: 'Build automated customer profiles, track purchasing habits, issue digital loyalty points, and send targeted SMS/email promotion campaigns directly from your POS control panel.',
+    benefits: ['Automated points earning & redemption', 'Targeted customer segment SMS campaigns', 'Digital gift cards & promo coupons'],
+    techSpec: 'Real-time customer profile database with automated behavioral campaign triggers.',
+    relatedFeatures: [
+      { title: 'Smart Inventory & Recipe Costing', slug: 'smart-inventory' },
+      { title: 'Direct Online Ordering Portal', slug: 'online-ordering' }
     ]
   }
 };

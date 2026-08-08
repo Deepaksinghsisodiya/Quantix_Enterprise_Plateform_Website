@@ -36,12 +36,12 @@ export interface DemoSectionProps {
 }
 
 const DEFAULT_DEMO: DemoMedia = {
-  videoThumbnail: "/images/demo-thumb.jpg",
+  videoThumbnail: "/images/demo-thumb-ai.png",
   videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
   screenshots: [
-    { id: "1", src: "/images/ss1.jpg", title: "Dashboard Overview" },
-    { id: "2", src: "/images/ss2.jpg", title: "Table Management" },
-    { id: "3", src: "/images/ss3.jpg", title: "Inventory Control" },
+    { id: "1", src: "/images/ss1-ai.png", title: "Dashboard Overview" },
+    { id: "2", src: "/images/ss2-ai.png", title: "Table Management" },
+    { id: "3", src: "/images/ss3-ai.png", title: "Inventory Control" },
   ],
 };
 

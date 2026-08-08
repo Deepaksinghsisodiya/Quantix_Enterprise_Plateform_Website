@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Check, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight, Sparkles, ShieldCheck, Cpu, Code2 } from 'lucide-react';
 
 interface ProductRowProps {
   tagline: string;
@@ -16,6 +16,7 @@ interface ProductRowProps {
   topBadge?: string;
   bottomBadge?: string;
   demoHref?: string;
+  ctaText?: string;
   imagePosition?: 'left' | 'right';
 }
 
@@ -29,6 +30,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
   topBadge,
   bottomBadge,
   demoHref = '/contact/demo',
+  ctaText = 'REQUEST A DEMO',
   imagePosition = 'right',
 }) => {
   const isRight = imagePosition === 'right';
@@ -78,7 +80,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
               href={demoHref}
               className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full border-2 border-primary text-primary dark:text-primary-light hover:bg-primary hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-2xs hover:shadow-md group/btn"
             >
-              REQUEST A DEMO
+              {ctaText}
               <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white group-hover/btn:bg-white group-hover/btn:text-primary transition-colors">
                 <ArrowRight className="h-3 w-3 stroke-[3]" />
               </div>
@@ -86,7 +88,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
           </div>
         </motion.div>
 
-        {/* Ultra-Wide Full Bleed 3D Image Card */}
+        {/* Ultra-Wide 3D Image Card */}
         <motion.div
           initial={{ opacity: 0, x: isRight ? 30 : -30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -96,10 +98,10 @@ const ProductRow: React.FC<ProductRowProps> = ({
         >
           <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/10] rounded-3xl overflow-hidden border border-slate-200/90 dark:border-slate-800 bg-gradient-to-br from-primary/10 via-slate-50 to-primary-dark/10 dark:from-slate-900 dark:via-slate-900 dark:to-primary-dark/20 p-0 shadow-2xl shadow-slate-200/60 dark:shadow-none hover:shadow-3xl transition-all duration-500 group/imgCard flex items-center justify-center">
             
-            {/* Ambient Background Radial Glow */}
+            {/* Ambient Background Glow */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent opacity-90 group-hover/imgCard:opacity-100 transition-opacity pointer-events-none z-0" />
 
-            {/* 3D Image Graphic - Ultra Wide */}
+            {/* 3D Image Graphic */}
             <div className="relative w-full h-full overflow-hidden z-10">
               <Image
                 src={imageSrc}
@@ -141,109 +143,101 @@ const ProductRow: React.FC<ProductRowProps> = ({
 export const MainProductsShowcaseSection: React.FC = () => {
   return (
     <section className="py-16 md:py-24 bg-white dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
-      {/* Ultra-Wide Container: Expands beyond standard navbar width to screen ends */}
+      {/* Ultra-Wide Container */}
       <div className="max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 md:mb-20 space-y-3">
           <span className="text-[11px] font-black uppercase tracking-widest text-primary dark:text-primary-light bg-primary/10 dark:bg-primary/20 px-3 py-1 rounded-full inline-block">
-            COMPLETE POS ECOSYSTEM
+            OUR 4 MAIN POS PRODUCT LINES
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white font-syne tracking-tight">
-            Everything Your Business Needs to Trade & Scale
+            Built for Restaurants, Retail, Enterprise & Custom Scale
           </h2>
           <p className="text-base text-slate-500 dark:text-slate-400 font-medium">
-            From busy restaurant kitchens and fast retail counters to handheld tableside ordering, direct online customer portals, and multi-tenant enterprise cloud hubs.
+            Explore our specialized product solutions designed to transform checkout speed, kitchen routing, chain management, and custom integrations.
           </p>
         </div>
 
-        {/* Ultra-Wide Product Rows */}
+        {/* 4 Main Products Rows */}
         <div className="space-y-4">
-          {/* Row 1: Restaurant POS & Kitchen Display */}
+          
+          {/* Product 1: Restaurant POS */}
           <ProductRow
-            tagline="FOR DINERS, CAFES & BUSTLING KITCHENS"
+            tagline="MAIN PRODUCT 1 • DINING, CAFES & KITCHENS"
             title="Restaurant POS & Kitchen System"
-            description="Runs in a browser or native register with real-time kitchen ticket routing, interactive table layouts, and instant modifier management."
+            description="Runs in a browser or native register with real-time kitchen ticket routing, interactive table layouts, tableside tablets, and instant modifier management."
             points={[
-              { title: 'Prep routing', desc: 'Send grill tickets to the kitchen display and bar orders to the bar terminal.' },
-              { title: 'Visual table mapping', desc: 'Real-time floor layout status, open bills, and course timing.' },
-              { title: 'Flexible modifiers', desc: 'Custom cooking preferences, add-ons, and instant bill splitting.' },
+              { title: 'Kitchen KDS routing', desc: 'Fire grill tickets to kitchen displays and beverage tickets to bar terminals.' },
+              { title: 'Visual floor mapping', desc: 'Drag-and-drop table layouts, live table status alerts, and split bill controls.' },
+              { title: 'Tableside & QR ordering', desc: 'Handheld server tablets and contactless QR code ordering at the table.' },
             ]}
             imageSrc="/images/kitchen_display_3d.png"
             imageAlt="Restaurant POS and Kitchen Display System"
             topBadge="⚡ Real-Time Kitchen Ticket Routing"
             bottomBadge="Order Dispatch Speed < 1.2s"
             imagePosition="right"
+            demoHref="/features/table-management"
+            ctaText="EXPLORE RESTAURANT POS"
           />
 
-          {/* Row 2: Retail Store & Register Counter */}
+          {/* Product 2: Retail POS */}
           <ProductRow
-            tagline="LIGHTNING FAST CHECKOUT & BARCODES"
-            title="Retail Store & Register Counter"
-            description="A complete counter station built for boutiques, supermarkets, and retail shops. Offline-first design guarantees your register never closes."
+            tagline="MAIN PRODUCT 2 • COUNTERS, STORES & SUPERMARKETS"
+            title="Retail POS & Inventory Register"
+            description="A complete counter billing station built for retail shops, boutiques, and supermarkets. Offline-first architecture guarantees your registers never close."
             points={[
-              { title: 'Touch-first interface', desc: 'Product grid with categories, instant barcode lookup, and item photos.' },
-              { title: 'Granular controls', desc: 'Line-level & bill-level discounts, voids, and recorded reason tracking.' },
-              { title: 'Hardware flexibility', desc: 'Connect barcode scanners, thermal receipt printers, and cash drawers.' },
+              { title: 'Touch-first barcode checkout', desc: 'Instant barcode scanning, photo grids, and fast item category lookups.' },
+              { title: 'Granular cashier controls', desc: 'Line & bill discounts, voids, return tracking, and manager PIN overrides.' },
+              { title: 'Hardware flexibility', desc: 'Connect receipt printers, barcode scanners, cash drawers, and PDQ card terminals.' },
             ]}
             imageSrc="/images/pos_counter_3d.png"
             imageAlt="Retail Store Counter POS Station"
-            topBadge="🛡️ 100% Offline Local Register"
+            topBadge="🛡️ 100% Offline Standalone Till"
             bottomBadge="Thermal Printer & Scanner Ready"
             imagePosition="left"
+            demoHref="/features/offline-registers"
+            ctaText="EXPLORE RETAIL POS"
           />
 
-          {/* Row 3: Mobile Tableside & Handheld App */}
+          {/* Product 3: Enterprise POS */}
           <ProductRow
-            tagline="TABLESIDE BILLING & QR ORDERING"
-            title="Mobile Tableside & Handheld App"
-            description="Equip your servers with handheld Android & iPad POS tablets for mobile order taking, guest self-ordering QR codes, and instant bill settlement."
-            points={[
-              { title: 'Tableside order firing', desc: 'Send food orders straight to the kitchen from the guest table.' },
-              { title: 'Integrated PDQ payments', desc: 'Accept contactless card payments right at the customer table.' },
-              { title: 'QR Code guest ordering', desc: 'Let guests scan table QR codes to view digital menus and order.' },
-            ]}
-            imageSrc="/images/mobile_app_3d.png"
-            imageAlt="Mobile Tableside POS App"
-            topBadge="📱 Handheld Android & iPad POS"
-            bottomBadge="Contactless Card & QR Ready"
-            imagePosition="right"
-          />
-
-          {/* Row 4: Branded Online Ordering Website */}
-          <ProductRow
-            tagline="COMMISSION-FREE DIRECT SALES"
-            title="Branded Online Ordering Website"
-            description="Launch a custom web ordering portal for your customers to place pickup and delivery orders directly without third-party commission cuts."
-            points={[
-              { title: 'Branded web portal', desc: 'Custom domain, store logo, and instant menu item sync.' },
-              { title: 'Zero commission fees', desc: 'Keep 100% of your order profit margins on direct online orders.' },
-              { title: 'Auto-dispatch routing', desc: 'Incoming online orders flow straight into POS registers and KDS screens.' },
-            ]}
-            imageSrc="/images/online_ordering_3d.png"
-            imageAlt="Branded Online Ordering Website"
-            topBadge="🌐 0% Commission Direct Sales"
-            bottomBadge="Instant Menu & Price Sync"
-            imagePosition="left"
-          />
-
-          {/* Row 5: Enterprise Multi-Store Cloud Hub */}
-          <ProductRow
-            tagline="MULTI-TENANT & FRANCHISE CONTROL"
-            title="Enterprise Multi-Store Cloud Hub"
-            description="Centralized cloud dashboard built for multi-location chain franchises, multi-tenant databases, centralized menu rollouts, and warehouse stock transfers."
+            tagline="MAIN PRODUCT 3 • MULTI-STORE FRANCHISE CHAINS"
+            title="Enterprise POS Cloud Platform"
+            description="Centralized cloud control dashboard built for multi-location chain franchises, multi-tenant databases, centralized menu rollouts, and warehouse stock transfers."
             points={[
               { title: 'Multi-tenant isolation', desc: 'Bank-grade encrypted tenant partition for branch stores and franchises.' },
-              { title: 'Global menu rollout', desc: 'Push menu updates, prices, and promotions to 100+ stores instantly.' },
-              { title: 'Executive analytics', desc: 'Consolidated real-time profit margins, branch sales, and stock audits.' },
+              { title: 'Global menu push', desc: 'Push price updates, menus, and promotions to 100+ stores simultaneously.' },
+              { title: 'Consolidated telemetry', desc: 'Real-time corporate profit margins, store branch sales, and inventory audits.' },
             ]}
             imageSrc="/images/enterprise_hub_3d.png"
             imageAlt="Enterprise Multi-Store Cloud Hub"
             topBadge="🏢 Multi-Tenant Enterprise Cloud"
             bottomBadge="100+ Franchise Stores Connected"
             imagePosition="right"
-            demoHref="/sign-up/enterprise"
+            demoHref="/enterprise-vs-standalone"
+            ctaText="EXPLORE ENTERPRISE POS"
           />
+
+          {/* Product 4: Custom POS */}
+          <ProductRow
+            tagline="MAIN PRODUCT 4 • TAILORED SOFTWARE & API BRIDGES"
+            title="Custom POS Solutions & Integrations"
+            description="Tailored software architecture, custom ERP/API gateways, proprietary hardware driver bridges, white-label branding, and dedicated corporate SLA lines."
+            points={[
+              { title: 'Custom API & webhooks', desc: 'Bi-directional integration with SAP, QuickBooks, Salesforce, and custom ERPs.' },
+              { title: 'White-label POS client', desc: 'Rebrand POS terminals and web portals with your corporate logo and theme.' },
+              { title: 'Dedicated SLA & engineer', desc: 'Direct access to senior engineers with 99.99% uptime guarantee.' },
+            ]}
+            imageSrc="/images/ss1-ai.png"
+            imageAlt="Custom POS Solutions & Integrations"
+            topBadge="⚡ Tailored Workflows & Custom APIs"
+            bottomBadge="Dedicated SLA Support Line"
+            imagePosition="left"
+            demoHref="/contact"
+            ctaText="TALK TO CUSTOM TEAM"
+          />
+
         </div>
       </div>
     </section>

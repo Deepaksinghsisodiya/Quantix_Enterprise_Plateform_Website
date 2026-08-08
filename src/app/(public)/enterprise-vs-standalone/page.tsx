@@ -26,13 +26,13 @@ export default function EnterpriseVsStandalonePage() {
   return (
     <PublicLayout>
       <Navbar />
-      <main className="pt-24 bg-slate-950 min-h-screen text-white pb-16">
+      <main className="pt-32 sm:pt-40 bg-slate-950 min-h-screen text-white pb-16">
         <div className="site-container text-center mb-16 space-y-4">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-400 shadow-sm">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary shadow-sm">
             DEPLOYMENT BLUEPRINTS
           </div>
           <h1 className="text-3xl sm:text-5xl font-syne font-black tracking-tight uppercase leading-tight">
-            Cloud vs Offline
+            Cloud vs <span className="text-primary">Offline</span>
           </h1>
           <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-400 font-medium leading-relaxed">
             Choose the deployment architecture designed for your operations. Scale with Cloud Enterprise or run standalone offline terminals.

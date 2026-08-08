@@ -110,7 +110,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
   return (
     <>
       {/* Main Pricing Cards section */}
-      <section className="py-10 sm:py-12 bg-gradient-to-b from-white via-slate-50/20 to-white border-t border-slate-100" ref={ref} id="pricing">
+      <section className="pt-32 sm:pt-40 pb-16 bg-gradient-to-b from-white via-slate-50/20 to-white border-t border-slate-100" ref={ref} id="pricing">
         <div className="site-container">
           {/* Header */}
           <div className="text-center mb-12">

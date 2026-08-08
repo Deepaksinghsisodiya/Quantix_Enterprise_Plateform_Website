@@ -1,5 +1,9 @@
 // src/components/organisms/HeroSection/HeroData.ts
-// All static slide data for the Hero carousel.
+// All static slide data for the Hero carousel mapped to the 4 main product lines:
+// 1. Restaurant POS
+// 2. Retail POS
+// 3. Enterprise POS
+// 4. Custom POS
 
 export interface HeroSlide {
   id: string;
@@ -16,42 +20,42 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "restaurant",
     badge: "RESTAURANT POS & KITCHEN KDS",
-    heading: "The All-in-One POS for Restaurants",
-    subheading: "Manage tableside orders, real-time kitchen ticket routing, and floor plans — all from one fast device.",
+    heading: "The All-in-One Restaurant POS",
+    subheading: "Manage tableside orders, real-time kitchen ticket routing, split bills, and visual floor plans — all from one fast device.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
     secondaryCta: { label: "Request Demo →", href: "/contact/demo" },
     backgroundImage: "/images/kitchen_display_3d.png",
-    featureHighlights: ["Kitchen Ticket Routing", "Visual Floor Maps", "Tableside Tablets"],
+    featureHighlights: ["Kitchen Ticket Routing", "Visual Floor Maps", "Tableside Ordering"],
   },
   {
     id: "retail",
     badge: "RETAIL POS & BARCODE REGISTER",
-    heading: "Smarter Retail Starts Here",
-    subheading: "Offline-first barcode registers, live stock deductions, and customer rewards across every store branch.",
+    heading: "Smarter Retail & Inventory POS",
+    subheading: "Offline-first barcode checkout, live stock deductions, matrix inventory, and customer rewards across every store branch.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "Explore Retail →", href: "/features" },
+    secondaryCta: { label: "Explore Retail POS →", href: "/features/offline-registers" },
     backgroundImage: "/images/pos_counter_3d.png",
-    featureHighlights: ["Offline Local Till", "Barcode Fast Lookup", "Line Discounts"],
-  },
-  {
-    id: "online",
-    badge: "ONLINE ORDERING PORTAL",
-    heading: "Commission-Free Direct Online Sales",
-    subheading: "Launch a custom web ordering app for direct customer orders with instant register and kitchen dispatch.",
-    primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "See Online Portal →", href: "/features" },
-    backgroundImage: "/images/online_ordering_3d.png",
-    featureHighlights: ["0% Commission Fees", "Branded Web Portal", "Auto Order Dispatch"],
+    featureHighlights: ["Offline Local Till", "Fast Barcode Lookup", "Stock Level Sync"],
   },
   {
     id: "enterprise",
-    badge: "ENTERPRISE MULTI-STORE HUB",
-    heading: "Run Your Business Across Multi-Stores",
-    subheading: "Bank-grade encrypted multi-tenant cloud dashboard with global menu updates and warehouse stock transfers.",
+    badge: "ENTERPRISE POS PLATFORM",
+    heading: "Multi-Store Enterprise POS Cloud",
+    subheading: "Bank-grade encrypted multi-tenant cloud dashboard with global menu updates, multi-store stock sync, and central analytics.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "Enterprise Hub →", href: "/solutions/franchise" },
+    secondaryCta: { label: "Enterprise Hub →", href: "/enterprise-vs-standalone" },
     backgroundImage: "/images/enterprise_hub_3d.png",
-    featureHighlights: ["Multi-Tenant Isolation", "Global Menu Push", "Warehouse Sync"],
+    featureHighlights: ["Multi-Tenant Isolation", "Global Menu Push", "Central Analytics"],
+  },
+  {
+    id: "custom",
+    badge: "CUSTOM POS SOLUTIONS",
+    heading: "Tailored Custom POS Architecture",
+    subheading: "Custom software workflows, proprietary hardware API bridges, white-label branding, and dedicated corporate SLA support.",
+    primaryCta: { label: "Contact Custom Team", href: "/contact" },
+    secondaryCta: { label: "Request Quote →", href: "/contact" },
+    backgroundImage: "/images/online_ordering_3d.png",
+    featureHighlights: ["Custom Workflows", "API & Webhook Bridge", "Dedicated SLA Line"],
   },
 ];
 

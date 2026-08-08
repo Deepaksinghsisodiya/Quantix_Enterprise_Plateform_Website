@@ -442,53 +442,71 @@ const Navbar = () => {
                     </Link>
                   </div>
 
-                  {/* Right Columns: 3 Categorized Columns (8 cols) */}
-                  <div className="col-span-8 grid grid-cols-3 gap-6">
-                    {/* Column 1: ORDERING CHANNELS */}
+                  {/* Right Columns: 4 Categorized Columns (8 cols) */}
+                  <div className="col-span-8 grid grid-cols-4 gap-5">
+                    {/* Column 1: OUR PRODUCTS */}
+                    <div className="space-y-3">
+                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary block mb-2 select-none px-1">
+                        OUR PRODUCTS
+                      </span>
+                      <div className="flex flex-col space-y-2.5">
+                        <Link href="/features/table-management" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
+                          <Utensils size={14} className="text-primary shrink-0" /> Restaurant POS
+                        </Link>
+                        <Link href="/features/offline-registers" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
+                          <Store size={14} className="text-emerald-600 shrink-0" /> Retail POS
+                        </Link>
+                        <Link href="/enterprise-vs-standalone" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
+                          <Server size={14} className="text-blue-600 shrink-0" /> Enterprise POS
+                        </Link>
+                        <Link href="/contact" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
+                          <Headset size={14} className="text-amber-600 shrink-0" /> Custom POS
+                        </Link>
+                      </div>
+                    </div>
+
+                    {/* Column 2: ORDERING CHANNELS */}
                     <div className="space-y-3">
                       <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary block mb-2 select-none px-1">
                         ORDERING CHANNELS
                       </span>
                       <div className="flex flex-col space-y-2.5">
-                        <Link href="/features/offline-registers" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-primary hover:text-primary-dark transition-colors block">
-                          Point of Sale (POS)
-                        </Link>
-                        <Link href="/features/table-management" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-primary hover:text-primary-dark transition-colors block">
+                        <Link href="/features/online-ordering" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
                           Online Ordering
                         </Link>
-                        <Link href="/features/smart-inventory" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
+                        <Link href="/features/self-service-kiosk" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
                           Self-Service Kiosk
                         </Link>
-                        <Link href="/features/table-management" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
+                        <Link href="/features/qr-code-ordering" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
                           QR Code Ordering
                         </Link>
                       </div>
                     </div>
 
-                    {/* Column 2: MANAGEMENT & OPS */}
+                    {/* Column 3: MANAGEMENT & OPS */}
                     <div className="space-y-3">
                       <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary block mb-2 select-none px-1">
                         MANAGEMENT & OPS
                       </span>
                       <div className="flex flex-col space-y-2.5">
-                        <Link href="/features/table-management" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
+                        <Link href="/features/kitchen-display" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
                           Kitchen Display System
                         </Link>
-                        <Link href="/features/smart-inventory" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
+                        <Link href="/features/delivery-management" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
                           Delivery Management
                         </Link>
                         <div className="flex items-center justify-between gap-1">
-                          <span className="text-[13px] font-bold text-slate-500">Restaurant Owner App</span>
-                          <span className="text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">COMING SOON</span>
+                          <span className="text-[13px] font-bold text-slate-500">Owner App</span>
+                          <span className="text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">SOON</span>
                         </div>
                         <div className="flex items-center justify-between gap-1">
-                          <span className="text-[13px] font-bold text-slate-500">Digital Menu Boards</span>
-                          <span className="text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">COMING SOON</span>
+                          <span className="text-[13px] font-bold text-slate-500">Menu Boards</span>
+                          <span className="text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">SOON</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Column 3: GROWTH SERVICES */}
+                    {/* Column 4: GROWTH SERVICES */}
                     <div className="space-y-3">
                       <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary block mb-2 select-none px-1">
                         GROWTH SERVICES
@@ -497,10 +515,10 @@ const Navbar = () => {
                         <Link href="/pci" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
                           Secure Payments
                         </Link>
-                        <Link href="/features/smart-inventory" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
+                        <Link href="/features/marketing-loyalty" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
                           Marketing & Loyalty
                         </Link>
-                        <Link href="/solutions/franchise" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
+                        <Link href="/enterprise-vs-standalone" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
                           Multi-Tenant Enterprise
                         </Link>
                       </div>

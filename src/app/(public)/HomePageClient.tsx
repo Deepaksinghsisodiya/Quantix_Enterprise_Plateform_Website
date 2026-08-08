@@ -98,10 +98,6 @@ export default function HomePageClient() {
         <IntegrationsTickerSection />
       </section>
 
-      {/* 4. Value Propositions Glassmorphism Cards (Moved below Products & Integrations per user request) */}
-      <section id="value-propositions">
-        <ValuePropositionsSection />
-      </section>
 
       {/* 5. Live Interactive Demo Wrapper */}
       <section id="resources" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>

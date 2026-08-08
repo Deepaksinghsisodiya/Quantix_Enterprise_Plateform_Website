@@ -2,10 +2,10 @@
 import React from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Check, Zap } from "lucide-react";
+import { ChevronLeft, ChevronRight, Check, Zap, Sparkles, ArrowRight, ShieldCheck, Star, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { HeroSlide } from "./HeroData";
+import { useContactModal } from "@/context/ContactModalContext";
 
 export interface HeroViewProps {
   slides: HeroSlide[];
@@ -29,6 +29,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
   onMouseLeave,
 }) => {
   const slide = slides[activeIndex];
+  const { openModal } = useContactModal();
 
   const formatHeading = (heading: string) => {
     const words = heading.split(' ');
@@ -39,7 +40,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
     return (
       <>
         {mainText}{' '}
-        <span className="text-primary dark:text-primary-light font-black">
+        <span className="text-primary font-black">
           {lastWord}
         </span>
       </>
@@ -48,24 +49,26 @@ export const HeroView: React.FC<HeroViewProps> = ({
 
   return (
     <section
-      className="relative w-full bg-white dark:bg-slate-950 pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 overflow-hidden border-b border-slate-100 dark:border-slate-800/80 transition-colors"
+      className="relative w-full bg-gradient-to-b from-slate-50/80 via-white to-slate-50/60 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 overflow-hidden border-b border-slate-200/80 dark:border-slate-800/80 transition-colors"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {/* Background glow graphics */}
-      <div className="absolute top-1/4 left-1/4 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] bg-primary/10 dark:bg-primary/5 rounded-full blur-[120px] pointer-events-none z-0" />
-      <div className="absolute bottom-1/4 right-1/4 w-[250px] sm:w-[350px] h-[250px] sm:h-[350px] bg-primary-dark/10 dark:bg-primary-dark/5 rounded-full blur-[120px] pointer-events-none z-0" />
+      {/* Background Soft Glow Ambience */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/5 dark:bg-primary/10 rounded-full blur-[160px] pointer-events-none z-0" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-primary/5 dark:bg-primary/10 rounded-full blur-[160px] pointer-events-none z-0" />
 
-      <div className="relative z-10 site-container grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-        {/* Left Column: Rich Content, Features & CTAs (7 cols on lg) */}
+      {/* Subtle Background Grid Pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+
+      <div className="relative z-10 site-container grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+        
+        {/* Left Column: Headline, Description, Features, CTAs & Micro-Trust (7 cols on lg) */}
         <div className="lg:col-span-7 flex flex-col items-center text-center lg:items-start lg:text-left space-y-6">
           
-          {/* Top Announcement Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/5 dark:bg-primary/10 border border-primary/20 dark:border-primary/30 shadow-2xs">
-            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-[11px] font-black uppercase tracking-widest text-primary-dark dark:text-primary-light">
-              Next-Gen POS Platform • Offline-First + Multi-Tenant Cloud
-            </span>
+          {/* Top Category Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[11px] font-black uppercase tracking-widest text-primary shadow-2xs">
+            <Sparkles size={13} />
+            <span>NEXT-GEN POS PLATFORM • OFFLINE-FIRST + CLOUD</span>
           </div>
 
           <AnimatePresence mode="wait">
@@ -77,12 +80,12 @@ export const HeroView: React.FC<HeroViewProps> = ({
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col items-center lg:items-start w-full space-y-5"
             >
-              {/* Category Tag */}
-              <span className="text-primary dark:text-primary-light font-extrabold tracking-widest uppercase text-xs">
+              {/* Badge Tag */}
+              <span className="text-primary font-extrabold tracking-widest uppercase text-xs">
                 {slide.badge}
               </span>
 
-              {/* Heading */}
+              {/* Headline */}
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-syne font-black text-slate-900 dark:text-white leading-[1.15] tracking-tight">
                 {formatHeading(slide.heading)}
               </h1>
@@ -92,116 +95,160 @@ export const HeroView: React.FC<HeroViewProps> = ({
                 {slide.subheading}
               </p>
 
-              {/* Rich Feature Highlights List (3 Cards) */}
+              {/* Feature Highlight Pills */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full pt-1">
                 {slide.featureHighlights.map((feat, idx) => (
-                  <motion.div
+                  <div
                     key={idx}
-                    whileHover={{ scale: 1.03, y: -2 }}
-                    className="flex items-center gap-2.5 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 transition-all duration-200"
+                    className="flex items-center gap-2.5 p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-2xs"
                   >
-                    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/15 text-primary dark:text-primary-light">
-                      <Check className="h-3.5 w-3.5 stroke-[3]" />
+                    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <Check className="h-3 w-3 stroke-[3]" />
                     </div>
                     <span className="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">
                       {feat}
                     </span>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 w-full sm:w-auto pt-3">
-                <Link
-                  href={slide.primaryCta.href}
-                  className="w-full sm:w-auto rounded-full bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-extrabold text-xs tracking-wider uppercase px-8 py-4 shadow-lg shadow-primary/25 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 w-full sm:w-auto pt-3">
+                <button
+                  type="button"
+                  onClick={() => openModal("Start Free Trial", "HERO_FREE_TRIAL")}
+                  className="w-full sm:w-auto rounded-xl bg-primary hover:bg-primary-dark text-white font-syne font-bold text-xs tracking-wider uppercase px-8 py-4 shadow-lg shadow-primary/25 transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Zap size={15} className="fill-white" />
-                  {slide.primaryCta.label}
-                </Link>
-                <Link
-                  href={slide.secondaryCta.href}
-                  className="w-full sm:w-auto rounded-full border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 font-extrabold text-xs tracking-wider uppercase px-8 py-4 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-2xs"
+                  <Zap size={16} className="fill-white" />
+                  <span>Start Free Trial</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => openModal("Request Live Demo", "HERO_REQUEST_DEMO")}
+                  className="w-full sm:w-auto rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 font-syne font-bold text-xs tracking-wider uppercase px-8 py-4 transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-2xs cursor-pointer"
                 >
-                  {slide.secondaryCta.label}
-                </Link>
+                  <span>Request Demo</span>
+                  <ArrowRight size={16} />
+                </button>
+              </div>
+
+              {/* Micro-Trust Social Proof Bar */}
+              <div className="flex items-center gap-3 pt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <div className="flex items-center text-amber-500">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={14} className="fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <span>4.9/5 Rating (2,400+ Merchant Reviews)</span>
+                <span className="hidden sm:inline">• 50,000+ Active Registers</span>
               </div>
             </motion.div>
           </AnimatePresence>
 
         </div>
 
-        {/* Right Column: Floating 3D Device Artwork Card with levitation animation */}
-        <div className="lg:col-span-5 w-full flex flex-col items-center justify-center relative mt-4 lg:mt-0">
+        {/* Right Column: High-Tech Enterprise Terminal Device Frame Mockup */}
+        <div className="lg:col-span-5 w-full flex flex-col items-center justify-center relative mt-6 lg:mt-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: [0, -10, 0] }}
-              exit={{ opacity: 0, scale: 0.95, y: -10 }}
-              transition={{
-                opacity: { duration: 0.4 },
-                scale: { duration: 0.4 },
-                y: { repeat: Infinity, repeatType: "mirror", duration: 4, ease: "easeInOut" }
-              }}
-              className="relative w-full aspect-[16/10] rounded-3xl overflow-hidden shadow-2xl border border-slate-200/90 dark:border-slate-800 bg-gradient-to-br from-primary/5 via-slate-50 to-primary-dark/5 dark:from-slate-900 dark:to-primary-dark/10 flex items-center justify-center group"
+              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: -10 }}
+              transition={{ duration: 0.4 }}
+              className="relative w-full rounded-3xl p-3 sm:p-4 bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden group"
             >
-              {/* Ken Burns image slider */}
-              <motion.div
-                initial={{ scale: 1 }}
-                animate={{ scale: 1.04 }}
-                transition={{ duration: 4.8, ease: "linear" }}
-                className="absolute inset-0"
-              >
+              {/* Mockup Window Top Header Dots */}
+              <div className="flex items-center justify-between px-3 py-2 border-b border-slate-800/80 mb-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">QUANTIX POS • SYSTEM READY</span>
+                </div>
+              </div>
+
+              {/* Main Image Screen Container */}
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-950 border border-slate-800">
                 <Image
                   src={slide.backgroundImage}
                   alt={slide.heading}
                   fill
                   priority
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-              </motion.div>
+                
+                {/* Subtle Image Vignette Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
 
-              {/* Hover card border overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 via-transparent to-transparent pointer-events-none z-10" />
+                {/* Floating Micro Live Status Badges */}
+                <div className="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-md border border-slate-700 text-white px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center gap-1.5 shadow-lg z-20">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>100% Offline Mode Active</span>
+                </div>
+
+                <div className="absolute bottom-3 left-3 bg-slate-900/90 backdrop-blur-md border border-slate-700 text-white px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center gap-1.5 shadow-lg z-20">
+                  <ShieldCheck size={12} className="text-primary" />
+                  <span>PCI-DSS Tier 1 Encrypted</span>
+                </div>
+              </div>
             </motion.div>
           </AnimatePresence>
 
-          {/* Floating Navigation Controls (Chevron arrows on side of image) */}
-          <div className="absolute top-1/2 -translate-y-1/2 -left-3 -right-3 sm:-left-4 sm:-right-4 flex justify-between pointer-events-none z-20">
-            <button
-              type="button"
-              className="pointer-events-auto rounded-full bg-white dark:bg-slate-900 shadow-xl border border-slate-200/80 dark:border-slate-800 p-2.5 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
-              onClick={onPrev}
-            >
-              <ChevronLeft size={18} className="stroke-[2.5]" />
-            </button>
-            <button
-              type="button"
-              className="pointer-events-auto rounded-full bg-white dark:bg-slate-900 shadow-xl border border-slate-200/80 dark:border-slate-800 p-2.5 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
-              onClick={onNext}
-            >
-              <ChevronRight size={18} className="stroke-[2.5]" />
-            </button>
+          {/* Navigation Controls & Dots */}
+          <div className="flex items-center justify-between w-full mt-4 px-2">
+            {/* Dots */}
+            <div className="flex space-x-2">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  aria-label={`Go to slide ${i + 1}`}
+                  className={cn(
+                    "h-2 rounded-full transition-all duration-300 cursor-pointer",
+                    i === activeIndex ? "bg-primary w-8" : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 w-2"
+                  )}
+                  onClick={() => onGoTo(i)}
+                />
+              ))}
+            </div>
+
+            {/* Arrows */}
+            <div className="flex items-center space-x-2">
+              <button
+                type="button"
+                aria-label="Previous Slide"
+                className="rounded-full bg-white dark:bg-slate-900 shadow-md border border-slate-200 dark:border-slate-800 p-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer"
+                onClick={onPrev}
+              >
+                <ChevronLeft size={16} className="stroke-[2.5]" />
+              </button>
+              <button
+                type="button"
+                aria-label="Next Slide"
+                className="rounded-full bg-white dark:bg-slate-900 shadow-md border border-slate-200 dark:border-slate-800 p-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer"
+                onClick={onNext}
+              >
+                <ChevronRight size={16} className="stroke-[2.5]" />
+              </button>
+            </div>
           </div>
 
-          {/* Dot indicators cleanly positioned below the image card */}
-          <div className="flex space-x-2.5 z-20 mt-4 sm:mt-5">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                className={cn(
-                  "h-2 rounded-full transition-all duration-300 cursor-pointer",
-                  i === activeIndex ? "bg-primary dark:bg-primary-light w-7" : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 w-2"
-                )}
-                onClick={() => onGoTo(i)}
-              />
-            ))}
-          </div>
         </div>
       </div>
+
+      {/* Animated Scroll Down Indicator (FRS-SPW-101) */}
+      <a
+        href="#products-showcase"
+        className="absolute bottom-3 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-pointer z-20"
+      >
+        <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 dark:text-slate-400">Scroll to Explore</span>
+        <ChevronDown className="h-4 w-4 text-primary animate-bounce" />
+      </a>
     </section>
   );
 };
