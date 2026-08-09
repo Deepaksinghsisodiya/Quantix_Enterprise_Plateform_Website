@@ -87,10 +87,6 @@ const TickerTrack = ({ isDuplicate = false }: { isDuplicate?: boolean }) => (
     aria-hidden={isDuplicate}
     className={`flex min-w-max shrink-0 items-center ${isDuplicate ? "ticker-track-copy" : ""}`}
   >
-    <span
-      aria-hidden="true"
-      className="block w-screen shrink-0"
-    />
     {tickerItems.map((item) => {
       const Icon = item.icon;
 
@@ -127,21 +123,24 @@ export default function NewsTickerMarquee() {
   return (
     <section
       aria-label="Quantix latest platform updates"
-      className="quantix-news-ticker relative h-11 w-full overflow-hidden border-y border-white/10 bg-darkBg text-white sm:h-12 md:h-[50px]"
+      className="quantix-news-ticker w-full overflow-hidden border-y border-white/10 bg-darkBg text-white"
     >
-      <Link
-        href="/changelog"
-        className="absolute inset-y-0 left-0 z-20 flex items-center gap-2 border-r border-white/10 bg-darkBg px-3 text-[11px] font-black uppercase tracking-normal text-white outline-none transition-colors hover:text-primary-light focus-visible:ring-2 focus-visible:ring-primary/70 sm:px-5 sm:text-xs"
-      >
-        <Newspaper className="h-3.5 w-3.5 shrink-0 text-primary-light" />
-        <span className="hidden sm:inline">Latest News</span>
-        <span className="sm:hidden">Latest</span>
-      </Link>
+      <div className="flex h-11 w-full items-center sm:h-12 md:h-[50px]">
+        <Link
+          href="/changelog"
+          className="relative z-10 flex h-full shrink-0 items-center gap-2 border-r border-white/10 bg-white/[0.12] px-3 text-[11px] font-black uppercase tracking-normal text-white outline-none transition-colors hover:text-primary-light focus-visible:ring-2 focus-visible:ring-primary/70 sm:px-5 sm:text-xs"
+        >
+          <Newspaper className="h-3.5 w-3.5 shrink-0 text-primary-light" />
+          <span className="hidden sm:inline">Latest News</span>
+          <span className="sm:hidden">Latest</span>
+        </Link>
 
-      <div className="absolute inset-0 min-w-0 overflow-hidden">
-        <div className="quantix-news-ticker-track flex h-full w-max items-center">
-          <TickerTrack />
-          <TickerTrack isDuplicate />
+        <div className="min-w-0 flex-1 overflow-hidden">
+          <div className="quantix-news-ticker-track flex w-max items-center">
+            <TickerTrack />
+            <TickerTrack isDuplicate />
+            <TickerTrack isDuplicate />
+          </div>
         </div>
       </div>
 
@@ -152,13 +151,12 @@ export default function NewsTickerMarquee() {
           }
 
           to {
-            transform: translate3d(-50%, 0, 0);
+            transform: translate3d(-33.333333%, 0, 0);
           }
         }
 
         .quantix-news-ticker-track {
-          animation: quantixTickerSlide 38s linear infinite;
-          animation-delay: -8s;
+          animation: quantixTickerSlide 24s linear infinite;
           will-change: transform;
         }
 
