@@ -82,19 +82,21 @@ const tickerItems: NewsTickerItem[] = [
   },
 ];
 
+const tickerLoopItems = [...tickerItems, ...tickerItems];
+
 const TickerTrack = ({ isDuplicate = false }: { isDuplicate?: boolean }) => (
   <div
     aria-hidden={isDuplicate}
     className={`flex min-w-max shrink-0 items-center ${isDuplicate ? "ticker-track-copy" : ""}`}
   >
-    {tickerItems.map((item) => {
+    {tickerLoopItems.map((item, index) => {
       const Icon = item.icon;
 
       return (
-        <React.Fragment key={`${item.id}-${isDuplicate ? "copy" : "main"}`}>
+        <React.Fragment key={`${item.id}-${index}-${isDuplicate ? "copy" : "main"}`}>
           <Link
             href={item.href}
-            className="group inline-flex h-11 shrink-0 items-center gap-2 px-5 text-[12px] font-semibold text-slate-200 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-primary/70 sm:h-12 sm:px-6 sm:text-[13px] md:h-[50px]"
+            className="group inline-flex h-11 shrink-0 items-center gap-2 px-4 text-[12px] font-semibold text-slate-200 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-primary/70 sm:h-12 sm:px-5 sm:text-[13px] md:h-[50px]"
           >
             <Icon className="h-3.5 w-3.5 shrink-0 text-primary transition-colors group-hover:text-primary-light" />
             <span className="whitespace-nowrap">
@@ -139,7 +141,6 @@ export default function NewsTickerMarquee() {
           <div className="quantix-news-ticker-track flex w-max items-center">
             <TickerTrack />
             <TickerTrack isDuplicate />
-            <TickerTrack isDuplicate />
           </div>
         </div>
       </div>
@@ -151,12 +152,12 @@ export default function NewsTickerMarquee() {
           }
 
           to {
-            transform: translate3d(-33.333333%, 0, 0);
+            transform: translate3d(-50%, 0, 0);
           }
         }
 
         .quantix-news-ticker-track {
-          animation: quantixTickerSlide 24s linear infinite;
+          animation: quantixTickerSlide 42s linear infinite;
           will-change: transform;
         }
 
