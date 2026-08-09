@@ -1,135 +1,185 @@
-// src/components/organisms/NewsTickerMarquee/NewsTickerMarquee.tsx
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import Link from "next/link";
 import {
-  Rocket,
-  TrendingUp,
-  Trophy,
-  Shield,
-  Zap,
-  Globe,
-  Star,
-  Bell,
+  Boxes,
+  ChefHat,
+  Cloud,
+  Code2,
+  Globe2,
+  Headphones,
+  Newspaper,
+  Store,
+  type LucideIcon,
 } from "lucide-react";
 
-interface NewsItem {
-  icon: React.ReactNode;
-  text: string;
-  highlight?: string;
-  isNew?: boolean;
-}
+type NewsTickerItem = {
+  id: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  href: string;
+  isNew: boolean;
+};
 
-const NEWS_ITEMS: NewsItem[] = [
+const tickerItems: NewsTickerItem[] = [
   {
-    icon: <Rocket size={14} className="text-red-400" />,
-    text: "Kitchen Display System v3.0 Released",
-    highlight: "NEW",
-    isNew: true,
+    id: "restaurant-pos",
+    title: "Restaurant POS",
+    description: "Tableside orders and kitchen ticket routing",
+    icon: ChefHat,
+    href: "/features/table-management",
+    isNew: false,
   },
   {
-    icon: <TrendingUp size={14} className="text-emerald-400" />,
-    text: "50,000+ Active Terminals Worldwide",
+    id: "retail-pos",
+    title: "Retail POS",
+    description: "Offline checkout with barcode inventory",
+    icon: Store,
+    href: "/features/offline-registers",
+    isNew: false,
   },
   {
-    icon: <Trophy size={14} className="text-amber-400" />,
-    text: "Best POS Platform Award 2024",
-    highlight: "AWARD",
+    id: "cloud-management",
+    title: "Cloud Management",
+    description: "Live inventory and sales dashboards",
+    icon: Cloud,
+    href: "/sign-up/enterprise",
+    isNew: false,
   },
   {
-    icon: <Shield size={14} className="text-blue-400" />,
-    text: "PCI-DSS Level 1 Certified",
+    id: "online-ordering",
+    title: "Online Ordering",
+    description: "Customer orders flow into POS and KDS",
+    icon: Globe2,
+    href: "/features/online-ordering",
+    isNew: false,
   },
   {
-    icon: <Zap size={14} className="text-yellow-400" />,
-    text: "99.99% Uptime SLA Guaranteed",
+    id: "smart-inventory",
+    title: "Smart Inventory",
+    description: "Recipe costing, stock sync and supplier tools",
+    icon: Boxes,
+    href: "/features/smart-inventory",
+    isNew: false,
   },
   {
-    icon: <Globe size={14} className="text-cyan-400" />,
-    text: "Now Available in 12+ Countries",
-    highlight: "EXPANDED",
+    id: "custom-platform",
+    title: "Custom POS Platform",
+    description: "API bridges, white-label flows and ERP workflows",
+    icon: Code2,
+    href: "/contact",
+    isNew: false,
   },
   {
-    icon: <Star size={14} className="text-orange-400" />,
-    text: "4.9/5 Average Merchant Rating",
-  },
-  {
-    icon: <Bell size={14} className="text-purple-400" />,
-    text: "Enterprise Multi-Store Hub Launched",
-    highlight: "NEW",
-    isNew: true,
+    id: "sla-support",
+    title: "Dedicated SLA Support",
+    description: "Rollout support for enterprise deployments",
+    icon: Headphones,
+    href: "/sla",
+    isNew: false,
   },
 ];
 
-export default function NewsTickerMarquee() {
-  // Double the items for seamless infinite loop
-  const duplicatedItems = [...NEWS_ITEMS, ...NEWS_ITEMS];
+const TickerTrack = ({ isDuplicate = false }: { isDuplicate?: boolean }) => (
+  <div
+    aria-hidden={isDuplicate}
+    className={`flex shrink-0 items-center ${isDuplicate ? "ticker-track-copy" : ""}`}
+  >
+    {tickerItems.map((item) => {
+      const Icon = item.icon;
 
-  return (
-    <div className="relative w-full overflow-hidden bg-slate-950 border-y border-slate-800/60">
-      {/* Left fade gradient */}
-      <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-32 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent z-10 pointer-events-none" />
-      {/* Right fade gradient */}
-      <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-32 bg-gradient-to-l from-slate-950 via-slate-950/80 to-transparent z-10 pointer-events-none" />
-
-      {/* Top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-red-500/40 to-transparent" />
-
-      <div className="py-3 sm:py-3.5">
-        <motion.div
-          className="flex items-center gap-6 sm:gap-10 whitespace-nowrap"
-          animate={{
-            x: ["0%", "-50%"],
-          }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 35,
-              ease: "linear",
-            },
-          }}
-        >
-          {duplicatedItems.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-2 sm:gap-2.5 shrink-0"
-            >
-              {/* Separator dot (not on first item) */}
-              {index > 0 && (
-                <span className="w-1 h-1 rounded-full bg-slate-600 mr-2 sm:mr-4 shrink-0" />
-              )}
-
-              {/* Highlight badge */}
-              {item.highlight && (
-                <span
-                  className={`text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded shrink-0 ${
-                    item.isNew
-                      ? "bg-red-500/20 text-red-400 border border-red-500/30"
-                      : item.highlight === "AWARD"
-                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                      : "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30"
-                  }`}
-                >
-                  {item.highlight}
-                </span>
-              )}
-
-              {/* Icon */}
-              <span className="shrink-0">{item.icon}</span>
-
-              {/* Text */}
-              <span className="text-[12px] sm:text-[13px] font-semibold text-slate-300 tracking-wide">
-                {item.text}
+      return (
+        <React.Fragment key={`${item.id}-${isDuplicate ? "copy" : "main"}`}>
+          <Link
+            href={item.href}
+            className="group inline-flex h-11 shrink-0 items-center gap-2 px-4 text-[12px] font-semibold text-slate-200 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-primary/70 sm:h-12 sm:px-5 sm:text-[13px] md:h-[50px]"
+          >
+            <Icon className="h-3.5 w-3.5 shrink-0 text-primary transition-colors group-hover:text-primary-light" />
+            <span className="whitespace-nowrap">
+              <span className="font-bold text-white transition-colors group-hover:text-primary-light">
+                {item.title}
               </span>
-            </div>
-          ))}
-        </motion.div>
+              <span className="mx-1.5 text-slate-500">-</span>
+              <span className="text-slate-300 transition-colors group-hover:text-white">
+                {item.description}
+              </span>
+            </span>
+          </Link>
+          <span
+            aria-hidden="true"
+            className="inline-flex h-11 shrink-0 items-center px-2 text-sm font-black text-slate-500 sm:h-12 md:h-[50px]"
+          >
+            /
+          </span>
+        </React.Fragment>
+      );
+    })}
+  </div>
+);
+
+export default function NewsTickerMarquee() {
+  return (
+    <section
+      aria-label="Quantix latest platform updates"
+      className="quantix-news-ticker w-full overflow-hidden border-y border-white/10 bg-darkBg text-white"
+    >
+      <div className="flex h-11 w-full items-center sm:h-12 md:h-[50px]">
+        <Link
+          href="/changelog"
+          className="relative z-10 flex h-full shrink-0 items-center gap-2 border-r border-white/10 bg-white/[0.12] px-3 text-[11px] font-black uppercase tracking-normal text-white outline-none transition-colors hover:text-primary-light focus-visible:ring-2 focus-visible:ring-primary/70 sm:px-5 sm:text-xs"
+        >
+          <Newspaper className="h-3.5 w-3.5 shrink-0 text-primary-light" />
+          <span className="hidden sm:inline">Latest Updates</span>
+          <span className="sm:hidden">Latest</span>
+        </Link>
+
+        <div className="min-w-0 flex-1 overflow-hidden">
+          <div className="quantix-news-ticker-track flex w-max items-center">
+            <TickerTrack />
+            <TickerTrack isDuplicate />
+          </div>
+        </div>
       </div>
 
-      {/* Bottom accent line */}
-      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-red-500/40 to-transparent" />
-    </div>
+      <style jsx>{`
+        @keyframes quantixTickerSlide {
+          from {
+            transform: translate3d(0, 0, 0);
+          }
+
+          to {
+            transform: translate3d(-50%, 0, 0);
+          }
+        }
+
+        .quantix-news-ticker-track {
+          animation: quantixTickerSlide 34s linear infinite;
+          will-change: transform;
+        }
+
+        .quantix-news-ticker:hover .quantix-news-ticker-track {
+          animation-play-state: paused;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .quantix-news-ticker-track {
+            animation: none;
+            max-width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+          }
+
+          .quantix-news-ticker-track::-webkit-scrollbar {
+            display: none;
+          }
+
+          .ticker-track-copy {
+            display: none;
+          }
+        }
+      `}</style>
+    </section>
   );
 }

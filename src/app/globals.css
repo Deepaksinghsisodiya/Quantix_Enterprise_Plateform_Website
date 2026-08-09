@@ -1,35 +1,62 @@
 @import "tailwindcss";
 
 @theme {
-  /* Dynamic Custom Variables mapping to Tailwind - Pure Red Palette */
-  --color-primary: #E90C0C;
-  --color-primary-light: #FF2F2F;
-  --color-primary-dark: #CD0808;
-  --color-darkBg: #0F172A;
-  --color-darkSurface: #1E293B;
+  /* Dynamic Custom Variables mapping to Tailwind - Quantix Robin's Egg Blue Palette */
+  --color-primary: #089699;
+  --color-primary-light: #24D6D3;
+  --color-primary-dark: #0B777A;
+  --color-darkBg: #022D31;
+  --color-darkSurface: #114D50;
 
-  --color-bg-warm: #FFF1F1;
-  --color-soft-pink: #FFDFDF;
-  --color-soft-mint: #FFDFDF;
-  --color-soft-lavender: #FF9A9A;
-  --color-soft-yellow: #FFC4C4;
-  --color-teal: #E90C0C;
+  --color-bg-warm: #EFFEFC;
+  --color-soft-pink: #CAFEF8;
+  --color-soft-mint: #95FAF1;
+  --color-soft-lavender: #58F0E9;
+  --color-soft-yellow: #CAFEF8;
+  --color-teal: #0EBEBE;
 
-  /* OVERRIDE Tailwind's default blue, indigo, and violet palettes dynamically to Pure Red */
-  --color-blue-400: #FF2F2F;
-  --color-blue-500: #FF2F2F;
-  --color-blue-600: #E90C0C;
-  --color-blue-700: #CD0808;
+  --color-robin-50: #EFFEFC;
+  --color-robin-100: #CAFEF8;
+  --color-robin-200: #95FAF1;
+  --color-robin-300: #58F0E9;
+  --color-robin-400: #24D6D3;
+  --color-robin-500: #0EBEBE;
+  --color-robin-600: #089699;
+  --color-robin-700: #0B777A;
+  --color-robin-800: #0E5D61;
+  --color-robin-900: #114D50;
+  --color-robin-950: #022D31;
 
-  --color-indigo-400: #FF2F2F;
-  --color-indigo-500: #FF2F2F;
-  --color-indigo-600: #E90C0C;
-  --color-indigo-700: #CD0808;
+  /* OVERRIDE Tailwind's cool palettes dynamically to Quantix teal */
+  --color-blue-400: #24D6D3;
+  --color-blue-500: #0EBEBE;
+  --color-blue-600: #089699;
+  --color-blue-700: #0B777A;
 
-  --color-violet-400: #FF2F2F;
-  --color-violet-500: #FF2F2F;
-  --color-violet-600: #E90C0C;
-  --color-violet-700: #CD0808;
+  --color-cyan-400: #58F0E9;
+  --color-cyan-500: #24D6D3;
+  --color-cyan-600: #0EBEBE;
+  --color-cyan-700: #089699;
+
+  --color-teal-400: #24D6D3;
+  --color-teal-500: #0EBEBE;
+  --color-teal-600: #089699;
+  --color-teal-700: #0B777A;
+
+  --color-emerald-400: #24D6D3;
+  --color-emerald-500: #0EBEBE;
+  --color-emerald-600: #089699;
+  --color-emerald-700: #0B777A;
+
+  --color-indigo-400: #58F0E9;
+  --color-indigo-500: #24D6D3;
+  --color-indigo-600: #0EBEBE;
+  --color-indigo-700: #089699;
+
+  --color-violet-400: #58F0E9;
+  --color-violet-500: #24D6D3;
+  --color-violet-600: #0EBEBE;
+  --color-violet-700: #089699;
 
   /* Additional theme mappings */
   --color-background: var(--bg-color);
@@ -48,7 +75,7 @@
     50% {
       opacity: 0.95;
       transform: scale(1.02);
-      box-shadow: 0 0 15px rgba(233, 12, 12, 0.35);
+      box-shadow: 0 0 15px rgba(8, 150, 153, 0.35);
     }
   }
 }
@@ -59,31 +86,43 @@ html {
 
 :root {
   /* ==========================================
-     THEME CONFIGURATION - PURE RED PALETTE
+     THEME CONFIGURATION - QUANTIX ROBIN'S EGG BLUE PALETTE
      ========================================== */
-  --primary-color: #E90C0C;
-  --primary-light: #FF2F2F;
-  --primary-dark: #CD0808;
+  --primary-color: #089699;
+  --primary-light: #24D6D3;
+  --primary-dark: #0B777A;
 
   /* Global Core Colors */
   --bg-color: #ffffff;
   --text-color: #5f6368;
-  --dark-bg: #0F172A;
-  --dark-surface: #1E293B;
+  --dark-bg: #022D31;
+  --dark-surface: #114D50;
 
-  /* Pure Red soft background accents */
-  --background-warm: #FFF1F1;
-  --soft-pink: #FFDFDF;
-  --soft-mint: #FFDFDF;
-  --soft-lavender: #FF9A9A;
-  --soft-yellow: #FFC4C4;
-  --teal-color: #E90C0C;
+  /* Robin's Egg Blue soft background accents */
+  --background-warm: #EFFEFC;
+  --soft-pink: #CAFEF8;
+  --soft-mint: #95FAF1;
+  --soft-lavender: #58F0E9;
+  --soft-yellow: #CAFEF8;
+  --teal-color: #0EBEBE;
+
+  --robin-50: #EFFEFC;
+  --robin-100: #CAFEF8;
+  --robin-200: #95FAF1;
+  --robin-300: #58F0E9;
+  --robin-400: #24D6D3;
+  --robin-500: #0EBEBE;
+  --robin-600: #089699;
+  --robin-700: #0B777A;
+  --robin-800: #0E5D61;
+  --robin-900: #114D50;
+  --robin-950: #022D31;
 
   --color-primary: var(--primary-color);
   --color-background: var(--bg-color);
   --color-foreground: var(--text-color);
-  --color-surface: #FFF1F1;
-  --color-border: #FFC4C4;
+  --color-surface: #EFFEFC;
+  --color-border: #CAFEF8;
   --site-max-width: 95rem;
 }
 
@@ -133,7 +172,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E90C0C;
+  background: #089699;
   border-radius: 4px;
 }
 
@@ -195,20 +234,20 @@ html {
 
 /* ─── PREMIUM VISUAL CLASSES ─── */
 :root {
-  --blue-color: #E90C0C;
-  --indigo-color: #FF2F2F;
-  --violet-color: #CD0808;
-  --cyan-color: #FF9A9A;
-  --emerald-color: #E90C0C;
-  --rose-color: #E90C0C;
-  --gold-color: #FF2F2F;
+  --blue-color: #089699;
+  --indigo-color: #24D6D3;
+  --violet-color: #0B777A;
+  --cyan-color: #58F0E9;
+  --emerald-color: #0EBEBE;
+  --rose-color: #089699;
+  --gold-color: #24D6D3;
 }
 
 /* Gradient Sheen Button */
 .btn-gradient {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #E90C0C 0%, #CD0808 100%);
+  background: linear-gradient(135deg, #089699 0%, #0B777A 100%);
   background-size: 200% 200%;
   background-position: left center;
   transition: background-position 0.45s ease, box-shadow 0.3s ease, transform 0.2s ease;
@@ -235,7 +274,7 @@ html {
 
 .btn-gradient:hover {
   background-position: right center;
-  box-shadow: 0 8px 32px rgba(233, 12, 12, 0.4), 0 2px 8px rgba(233, 12, 12, 0.2);
+  box-shadow: 0 8px 32px rgba(8, 150, 153, 0.4), 0 2px 8px rgba(8, 150, 153, 0.2);
   transform: translateY(-1px);
 }
 
@@ -253,7 +292,7 @@ html {
 
 .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(233, 12, 12, 0.35);
+  border-color: rgba(8, 150, 153, 0.35);
   transform: translateY(-1px);
 }
 
@@ -287,7 +326,7 @@ html {
   pointer-events: none;
   z-index: 0;
   will-change: transform;
-  background: radial-gradient(circle, rgba(233, 12, 12, 0.14) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(36, 214, 211, 0.14) 0%, transparent 70%);
   top: -120px;
   left: -80px;
   animation: auroraDrift1 18s ease-in-out infinite alternate;
@@ -303,7 +342,7 @@ html {
   pointer-events: none;
   z-index: 0;
   will-change: transform;
-  background: radial-gradient(circle, rgba(205, 8, 8, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(8, 150, 153, 0.12) 0%, transparent 70%);
   bottom: -100px;
   right: -60px;
   animation: auroraDrift2 22s ease-in-out infinite alternate;
@@ -332,10 +371,10 @@ html {
 /* Static mesh background gradients */
 .mesh-bg {
   background:
-    radial-gradient(ellipse at 20% 20%, rgba(233, 12, 12, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 10%, rgba(205, 8, 8, 0.06) 0%, transparent 45%),
-    radial-gradient(ellipse at 60% 80%, rgba(255, 47, 47, 0.05) 0%, transparent 45%),
-    radial-gradient(ellipse at 10% 90%, rgba(233, 12, 12, 0.06) 0%, transparent 40%);
+    radial-gradient(ellipse at 20% 20%, rgba(36, 214, 211, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 10%, rgba(8, 150, 153, 0.06) 0%, transparent 45%),
+    radial-gradient(ellipse at 60% 80%, rgba(88, 240, 233, 0.05) 0%, transparent 45%),
+    radial-gradient(ellipse at 10% 90%, rgba(14, 190, 190, 0.06) 0%, transparent 40%);
 }
 
 /* ─── Global Padding-Y Reductions for Tighter Layout Spacing ─── */

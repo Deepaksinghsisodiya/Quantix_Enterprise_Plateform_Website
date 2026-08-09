@@ -17,12 +17,12 @@ const config: Config = {
       },
       colors: {
         primary: {
-          DEFAULT: 'var(--primary-color, #E90C0C)',
-          light: 'var(--primary-light, #FF2F2F)',
-          dark: 'var(--primary-dark, #CD0808)',
+          DEFAULT: 'var(--primary-color, #089699)',
+          light: 'var(--primary-light, #24D6D3)',
+          dark: 'var(--primary-dark, #0B777A)',
         },
-        darkBg: '#0F172A',
-        darkSurface: '#1E293B',
+        darkBg: '#022D31',
+        darkSurface: '#114D50',
       },
       spacing: {
         // custom spacing can be added here
