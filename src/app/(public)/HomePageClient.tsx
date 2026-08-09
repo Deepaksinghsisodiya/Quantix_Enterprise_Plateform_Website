@@ -92,12 +92,15 @@ export default function HomePageClient() {
       {/* 1.5 News Ticker Marquee */}
       <NewsTickerMarquee />
 
-      {/* 2. Main Products Showcase (Point of Sale & KDS) */}
+      {/* 2. Value Propositions */}
+      <ValuePropositionsSection />
+
+      {/* 3. Main Products Showcase (Point of Sale & KDS) */}
       <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <MainProductsShowcaseSection />
       </section>
 
-      {/* 3. Integrations Partner Logo Ticker (PFD Section 7) */}
+      {/* 4. Integrations Partner Logo Ticker (PFD Section 7) */}
       <section id="integrations-ticker">
         <IntegrationsTickerSection />
       </section>

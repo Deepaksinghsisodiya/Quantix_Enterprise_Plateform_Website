@@ -83,6 +83,10 @@ const tickerItems: NewsTickerItem[] = [
 ];
 
 const tickerLoopItems = [...tickerItems, ...tickerItems];
+const marqueeAnimation: React.CSSProperties = {
+  animation: "quantixTickerSlide 16s linear infinite",
+  willChange: "transform",
+};
 
 const TickerTrack = ({ isDuplicate = false }: { isDuplicate?: boolean }) => (
   <div
@@ -138,14 +142,17 @@ export default function NewsTickerMarquee() {
         </Link>
 
         <div className="min-w-0 flex-1 overflow-hidden">
-          <div className="quantix-news-ticker-track flex w-max items-center">
+          <div
+            className="quantix-news-ticker-track flex w-max items-center"
+            style={marqueeAnimation}
+          >
             <TickerTrack />
             <TickerTrack isDuplicate />
           </div>
         </div>
       </div>
 
-      <style jsx>{`
+      <style jsx global>{`
         @keyframes quantixTickerSlide {
           from {
             transform: translate3d(0, 0, 0);
@@ -157,8 +164,7 @@ export default function NewsTickerMarquee() {
         }
 
         .quantix-news-ticker-track {
-          animation: quantixTickerSlide 42s linear infinite;
-          will-change: transform;
+          display: flex;
         }
 
         .quantix-news-ticker:hover .quantix-news-ticker-track {
