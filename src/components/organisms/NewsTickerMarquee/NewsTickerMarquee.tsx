@@ -85,7 +85,7 @@ const tickerItems: NewsTickerItem[] = [
 const TickerTrack = ({ isDuplicate = false }: { isDuplicate?: boolean }) => (
   <div
     aria-hidden={isDuplicate}
-    className={`flex shrink-0 items-center ${isDuplicate ? "ticker-track-copy" : ""}`}
+    className={`flex min-w-max shrink-0 items-center ${isDuplicate ? "ticker-track-copy" : ""}`}
   >
     {tickerItems.map((item) => {
       const Icon = item.icon;
@@ -94,7 +94,7 @@ const TickerTrack = ({ isDuplicate = false }: { isDuplicate?: boolean }) => (
         <React.Fragment key={`${item.id}-${isDuplicate ? "copy" : "main"}`}>
           <Link
             href={item.href}
-            className="group inline-flex h-11 shrink-0 items-center gap-2 px-4 text-[12px] font-semibold text-slate-200 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-primary/70 sm:h-12 sm:px-5 sm:text-[13px] md:h-[50px]"
+            className="group inline-flex h-11 shrink-0 items-center gap-2 px-5 text-[12px] font-semibold text-slate-200 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-primary/70 sm:h-12 sm:px-6 sm:text-[13px] md:h-[50px]"
           >
             <Icon className="h-3.5 w-3.5 shrink-0 text-primary transition-colors group-hover:text-primary-light" />
             <span className="whitespace-nowrap">
@@ -109,7 +109,7 @@ const TickerTrack = ({ isDuplicate = false }: { isDuplicate?: boolean }) => (
           </Link>
           <span
             aria-hidden="true"
-            className="inline-flex h-11 shrink-0 items-center px-2 text-sm font-black text-slate-500 sm:h-12 md:h-[50px]"
+            className="inline-flex h-11 shrink-0 items-center px-2 text-sm font-black text-slate-500 sm:h-12 sm:px-3 md:h-[50px]"
           >
             /
           </span>
@@ -131,13 +131,14 @@ export default function NewsTickerMarquee() {
           className="relative z-10 flex h-full shrink-0 items-center gap-2 border-r border-white/10 bg-white/[0.12] px-3 text-[11px] font-black uppercase tracking-normal text-white outline-none transition-colors hover:text-primary-light focus-visible:ring-2 focus-visible:ring-primary/70 sm:px-5 sm:text-xs"
         >
           <Newspaper className="h-3.5 w-3.5 shrink-0 text-primary-light" />
-          <span className="hidden sm:inline">Latest Updates</span>
+          <span className="hidden sm:inline">Latest News</span>
           <span className="sm:hidden">Latest</span>
         </Link>
 
         <div className="min-w-0 flex-1 overflow-hidden">
           <div className="quantix-news-ticker-track flex w-max items-center">
             <TickerTrack />
+            <TickerTrack isDuplicate />
             <TickerTrack isDuplicate />
           </div>
         </div>
@@ -150,12 +151,12 @@ export default function NewsTickerMarquee() {
           }
 
           to {
-            transform: translate3d(-50%, 0, 0);
+            transform: translate3d(-33.333333%, 0, 0);
           }
         }
 
         .quantix-news-ticker-track {
-          animation: quantixTickerSlide 34s linear infinite;
+          animation: quantixTickerSlide 26s linear infinite;
           will-change: transform;
         }
 
