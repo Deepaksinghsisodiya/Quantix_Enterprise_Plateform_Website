@@ -3,6 +3,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import HeroSection from "@/components/organisms/HeroSection/HeroSection";
+import NewsTickerMarquee from "@/components/organisms/NewsTickerMarquee/NewsTickerMarquee";
 import MainProductsShowcaseSection from "@/components/organisms/MainProductsShowcaseSection/MainProductsShowcaseSection";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 
@@ -88,6 +89,9 @@ export default function HomePageClient() {
         <HeroSection />
       </section>
 
+      {/* 1.5 News Ticker Marquee */}
+      <NewsTickerMarquee />
+
       {/* 2. Main Products Showcase (Point of Sale & KDS) */}
       <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <MainProductsShowcaseSection />
@@ -133,10 +137,7 @@ export default function HomePageClient() {
         </Suspense>
       </section>
 
-      {/* 11. Final CTA Banner */}
-      <section className={cn("scroll-mt-28 bg-slate-900")}>
-        <CTABanner />
-      </section>
+
 
       {/* 12. Footer */}
       <section id="footer" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
