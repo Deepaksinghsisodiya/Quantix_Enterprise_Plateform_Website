@@ -70,7 +70,6 @@ export const baseApi = createApi({
     'Features',
     'Testimonials',
     'FAQ',
-    'Demo',
     'SocialProof',
     'BlogPosts',
     'BlogCategories',

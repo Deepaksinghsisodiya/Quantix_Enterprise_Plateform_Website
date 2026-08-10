@@ -1,138 +1,382 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Check, ArrowRight, Sparkles, ShieldCheck, Cpu, Code2 } from 'lucide-react';
+import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  ChefHat,
+  Check,
+  Cloud,
+  Code2,
+  Coffee,
+  Globe2,
+  ShieldCheck,
+  Smartphone,
+  Sparkles,
+  Store,
+  ShoppingBag,
+  Tv,
+  type LucideIcon,
+} from "lucide-react";
 
-interface ProductRowProps {
-  tagline: string;
+type PlatformModule = {
   title: string;
   description: string;
-  points: { title: string; desc: string }[];
+  badge: string;
+  href: string;
   imageSrc: string;
   imageAlt: string;
-  topBadge?: string;
-  bottomBadge?: string;
-  demoHref?: string;
-  ctaText?: string;
-  imagePosition?: 'left' | 'right';
-}
+  icon: LucideIcon;
+};
 
-const ProductRow: React.FC<ProductRowProps> = ({
-  tagline,
-  title,
-  description,
-  points,
-  imageSrc,
-  imageAlt,
-  topBadge,
-  bottomBadge,
-  demoHref = '/contact/demo',
-  ctaText = 'REQUEST A DEMO',
-  imagePosition = 'right',
-}) => {
-  const isRight = imagePosition === 'right';
+type ProductPoint = {
+  title: string;
+  desc: string;
+};
+
+type ProductLine = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  points: ProductPoint[];
+  imageSrc: string;
+  imageAlt: string;
+  topBadge: string;
+  bottomBadge: string;
+  href: string;
+  ctaText: string;
+  icon: LucideIcon;
+  imagePosition?: "left" | "right";
+};
+
+const PLATFORM_MODULES: PlatformModule[] = [
+  {
+    title: "Restaurant POS",
+    description: "Tables, KDS, QR orders, split bills, and modifier workflows.",
+    badge: "Dining",
+    href: "/products/restaurant-pos",
+    imageSrc: "/images/hero-restaurant.jpg",
+    imageAlt: "Restaurant POS dining room workflow",
+    icon: ChefHat,
+  },
+  {
+    title: "Retail POS",
+    description: "Barcode checkout, cashier controls, returns, and stock sync.",
+    badge: "Stores",
+    href: "/products/retail-pos",
+    imageSrc: "/images/pos_counter_3d.png",
+    imageAlt: "Retail POS counter register",
+    icon: Store,
+  },
+  {
+    title: "Cloud Service",
+    description: "Live dashboards, branch visibility, and multi-location control.",
+    badge: "Cloud",
+    href: "/products/cloud-pos",
+    imageSrc: "/images/inventory_sync_3d.png",
+    imageAlt: "Cloud POS inventory management",
+    icon: Cloud,
+  },
+  {
+    title: "Websites",
+    description: "Online menus, customer ordering, delivery, and pickup flows.",
+    badge: "Web",
+    href: "/products/websites",
+    imageSrc: "/images/online_ordering_3d.png",
+    imageAlt: "Online ordering website application",
+    icon: Globe2,
+  },
+  {
+    title: "Mobile Application",
+    description: "Handheld ordering, mobile billing, and customer app workflows.",
+    badge: "Mobile",
+    href: "/products/mobile-application",
+    imageSrc: "/images/mobile_app_3d.png",
+    imageAlt: "Mobile POS application screens",
+    icon: Smartphone,
+  },
+  {
+    title: "Custom Service",
+    description: "White-label POS, API bridges, ERP sync, and dedicated SLA builds.",
+    badge: "Custom",
+    href: "/products/custom-service",
+    imageSrc: "/images/ss1-ai.png",
+    imageAlt: "Custom POS platform dashboard",
+    icon: Code2,
+  },
+  {
+    title: "Kitchen Display",
+    description: "Prep routing, station tickets, course timing, and kitchen order flow.",
+    badge: "KDS",
+    href: "/features/kitchen-display",
+    imageSrc: "/images/kitchen_display_3d.png",
+    imageAlt: "Kitchen display system order routing workflow",
+    icon: Tv,
+  },
+  {
+    title: "Grocery & Mart",
+    description: "Barcode scanning, weight items, batch stock, and quick checkout.",
+    badge: "Grocery",
+    href: "/solutions/grocery",
+    imageSrc: "/images/hero-retail.jpg",
+    imageAlt: "Grocery and supermarket POS checkout workflow",
+    icon: ShoppingBag,
+  },
+  {
+    title: "Cafe Systems",
+    description: "Counter service, modifiers, loyalty, pickup, and quick-serve flow.",
+    badge: "Cafe",
+    href: "/solutions/cafe-bakery",
+    imageSrc: "/images/hero-cafe.jpg",
+    imageAlt: "Cafe POS counter service workflow",
+    icon: Coffee,
+  },
+];
+
+const SLIDER_MODULES = Array.from({ length: 6 }, () => PLATFORM_MODULES).flat();
+
+const PRODUCT_LINES: ProductLine[] = [
+  {
+    eyebrow: "Restaurant POS - dining, cafes and kitchens",
+    title: "Restaurant POS & Kitchen System",
+    description:
+      "Run table service, kitchen ticket routing, QR ordering, modifiers, and payment workflows from one restaurant-ready POS stack.",
+    points: [
+      { title: "Kitchen KDS routing", desc: "Send grill, bar, and prep tickets to the right display in real time." },
+      { title: "Visual floor mapping", desc: "Track table status, split bills, and course-paced service from one view." },
+      { title: "Tableside and QR ordering", desc: "Serve faster through handheld tablets and customer self-ordering flows." },
+    ],
+    imageSrc: "/images/kitchen_display_3d.png",
+    imageAlt: "Restaurant POS and kitchen display system",
+    topBadge: "Kitchen-ready workflow",
+    bottomBadge: "Built for dining operations",
+    href: "/products/restaurant-pos",
+    ctaText: "Explore Restaurant POS",
+    icon: ChefHat,
+    imagePosition: "right",
+  },
+  {
+    eyebrow: "Retail POS - counters, stores and supermarkets",
+    title: "Retail POS & Inventory Register",
+    description:
+      "A fast retail checkout system for barcode billing, cashier permissions, stock deductions, returns, and offline counter sales.",
+    points: [
+      { title: "Barcode checkout", desc: "Scan products quickly with category lookup and item-level controls." },
+      { title: "Cashier governance", desc: "Handle discounts, voids, returns, and manager approvals with confidence." },
+      { title: "Inventory sync", desc: "Keep stock movement connected across counters, stores, and cloud reports." },
+    ],
+    imageSrc: "/images/pos_counter_3d.png",
+    imageAlt: "Retail POS and inventory register",
+    topBadge: "Retail-ready register",
+    bottomBadge: "Scanner and printer ready",
+    href: "/products/retail-pos",
+    ctaText: "Explore Retail POS",
+    icon: Store,
+    imagePosition: "left",
+  },
+  {
+    eyebrow: "Cloud POS - branches, teams and enterprise control",
+    title: "Cloud POS & Multi-Location Management",
+    description:
+      "Give owners and enterprise teams a single cloud control layer for branch performance, inventory visibility, staff access, and reporting.",
+    points: [
+      { title: "Branch visibility", desc: "Monitor sales, stock, and operating signals across every location." },
+      { title: "Central controls", desc: "Push menu, price, role, and workflow updates from one dashboard." },
+      { title: "Live analytics", desc: "Track performance trends with connected sales and inventory reporting." },
+    ],
+    imageSrc: "/images/inventory_sync_3d.png",
+    imageAlt: "Cloud POS multi-location inventory dashboard",
+    topBadge: "Cloud command center",
+    bottomBadge: "Multi-location ready",
+    href: "/products/cloud-pos",
+    ctaText: "Explore Cloud POS",
+    icon: Cloud,
+    imagePosition: "right",
+  },
+  {
+    eyebrow: "Web, mobile and custom - online ordering and API builds",
+    title: "Website, Mobile App & Custom POS Solutions",
+    description:
+      "Launch customer ordering websites, mobile workflows, white-label experiences, custom integrations, and API bridges around your operating model.",
+    points: [
+      { title: "Website ordering", desc: "Connect branded web menus, pickup, delivery, and order routing into POS." },
+      { title: "Mobile application", desc: "Support handheld ordering, customer apps, and mobile-first workflows." },
+      { title: "Custom integrations", desc: "Build API bridges, ERP sync, hardware drivers, and white-label portals." },
+    ],
+    imageSrc: "/images/mobile_app_3d.png",
+    imageAlt: "Website and mobile POS application workflow",
+    topBadge: "Custom digital workflows",
+    bottomBadge: "Web, mobile and API ready",
+    href: "/products/custom-service",
+    ctaText: "Talk to Custom Team",
+    icon: Code2,
+    imagePosition: "left",
+  },
+];
+
+const PlatformModuleCard: React.FC<{
+  module: PlatformModule;
+  index: number;
+  isDuplicate?: boolean;
+}> = ({ module, index, isDuplicate = false }) => {
+  const Icon = module.icon;
 
   return (
-    <div className="py-12 md:py-20 border-b border-slate-100 dark:border-slate-800/60 last:border-0">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-        {/* Text Block */}
+    <motion.div
+      aria-hidden={isDuplicate}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.45, delay: index * 0.04, ease: [0.16, 1, 0.3, 1] }}
+      className="w-[76vw] max-w-[280px] shrink-0 sm:w-[300px] lg:w-[318px]"
+    >
+      <Link
+        href={module.href}
+        tabIndex={isDuplicate ? -1 : undefined}
+        className="group/module block h-full overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-lg hover:shadow-slate-200/70 dark:border-slate-800/90 dark:bg-slate-900/70 dark:hover:shadow-none"
+      >
+        <div className="relative aspect-[4/3] overflow-hidden bg-slate-50 dark:bg-slate-950">
+          <Image
+            src={module.imageSrc}
+            alt={module.imageAlt}
+            fill
+            sizes="(max-width: 640px) 76vw, (max-width: 1024px) 300px, 318px"
+            className="object-cover transition-transform duration-700 group-hover/module:scale-[1.04]"
+          />
+          <div className="absolute left-2.5 top-2.5 inline-flex items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-primary shadow-xs dark:border-slate-800 dark:bg-slate-900/95 dark:text-primary-light">
+            <Icon className="h-3 w-3 stroke-[2.5]" />
+            {module.badge}
+          </div>
+        </div>
+
+        <div className="p-3.5 sm:p-4">
+          <h3 className="font-syne text-sm font-black leading-tight text-slate-950 transition-colors group-hover/module:text-primary dark:text-white dark:group-hover/module:text-primary-light sm:text-base">
+            {module.title}
+          </h3>
+          <p className="mt-2 text-[12px] font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-[13px]">
+            {module.description}
+          </p>
+        </div>
+      </Link>
+    </motion.div>
+  );
+};
+
+const PlatformModulesSlider: React.FC = () => {
+  const [isPaused, setIsPaused] = useState(false);
+
+  return (
+    <div
+      className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-y border-slate-200/80 bg-white/70 py-4 dark:border-slate-800/80 dark:bg-slate-950/70 sm:py-5"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-20 w-16 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-slate-950 dark:via-slate-950/80 sm:w-32 lg:w-48" />
+      <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-20 w-16 bg-gradient-to-l from-white via-white/80 to-transparent dark:from-slate-950 dark:via-slate-950/80 sm:w-32 lg:w-48" />
+
+      <motion.div
+        animate={isPaused ? { x: undefined } : { x: ["0%", "-50%"] }}
+        transition={isPaused ? { duration: 0 } : { duration: 42, ease: "linear", repeat: Infinity }}
+        className="flex w-max shrink-0 items-stretch gap-3 px-3 sm:gap-4 sm:px-4 lg:px-5"
+      >
+        {SLIDER_MODULES.map((module, index) => (
+          <PlatformModuleCard
+            key={`${module.title}-${index}`}
+            module={module}
+            index={index % PLATFORM_MODULES.length}
+            isDuplicate={index >= SLIDER_MODULES.length / 2}
+          />
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+const ProductRow: React.FC<{ product: ProductLine }> = ({ product }) => {
+  const isRight = product.imagePosition !== "left";
+  const Icon = product.icon;
+
+  return (
+    <div className="border-t border-slate-200/80 py-10 dark:border-slate-800/80 sm:py-12 lg:py-16">
+      <div className="grid grid-cols-1 items-center gap-7 lg:grid-cols-12 lg:gap-12 xl:gap-16">
         <motion.div
-          initial={{ opacity: 0, x: isRight ? -30 : 30 }}
+          initial={{ opacity: 0, x: isRight ? -24 : 24 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className={`lg:col-span-6 space-y-6 ${!isRight ? 'lg:order-2' : 'lg:order-1'}`}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className={`space-y-5 lg:col-span-6 ${!isRight ? "lg:order-2" : "lg:order-1"}`}
         >
           <div>
-            <span className="text-[11px] font-black uppercase tracking-widest text-primary dark:text-primary-light mb-2 block">
-              {tagline}
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white font-syne tracking-tight leading-tight">
-              {title}
-            </h2>
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light sm:text-[11px]">
+              <Icon className="h-3.5 w-3.5 stroke-[2.4]" />
+              {product.eyebrow}
+            </div>
+            <h3 className="max-w-2xl font-syne text-[1.75rem] font-black leading-[1.08] tracking-normal text-slate-950 dark:text-white sm:text-4xl sm:tracking-tight lg:text-[2.65rem]">
+              {product.title}
+            </h3>
           </div>
 
-          <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-xl">
-            {description}
+          <p className="max-w-xl text-[13px] font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
+            {product.description}
           </p>
 
-          {/* Checklist Points */}
-          <div className="space-y-3.5 pt-2">
-            {points.map((pt, idx) => (
-              <div key={idx} className="flex items-start gap-3">
-                <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light mt-0.5">
+          <div className="grid gap-2.5 pt-1">
+            {product.points.map((point) => (
+              <div
+                key={point.title}
+                className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900/70"
+              >
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary-light">
                   <Check className="h-3.5 w-3.5 stroke-[3]" />
-                </div>
-                <div className="text-sm leading-snug">
-                  <strong className="font-extrabold text-slate-900 dark:text-white mr-1.5">{pt.title}:</strong>
-                  <span className="text-slate-600 dark:text-slate-300 font-medium">{pt.desc}</span>
-                </div>
+                </span>
+                <span className="text-[13px] leading-relaxed sm:text-sm">
+                  <strong className="font-extrabold text-slate-950 dark:text-white">{point.title}:</strong>{" "}
+                  <span className="font-medium text-slate-600 dark:text-slate-300">{point.desc}</span>
+                </span>
               </div>
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="pt-4">
-            <Link
-              href={demoHref}
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full border-2 border-primary text-primary dark:text-primary-light hover:bg-primary hover:text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-2xs hover:shadow-md group/btn"
-            >
-              {ctaText}
-              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white group-hover/btn:bg-white group-hover/btn:text-primary transition-colors">
-                <ArrowRight className="h-3 w-3 stroke-[3]" />
-              </div>
-            </Link>
-          </div>
+          <Link
+            href={product.href}
+            className="group/cta inline-flex h-11 items-center gap-2.5 rounded-full border border-primary/25 bg-white px-5 font-syne text-[11px] font-extrabold uppercase tracking-wider text-primary shadow-xs transition-all duration-200 hover:border-primary hover:bg-primary hover:text-white hover:shadow-lg hover:shadow-primary/20 active:scale-95 dark:bg-slate-900 dark:text-primary-light dark:hover:bg-primary dark:hover:text-white sm:h-12 sm:px-6 sm:text-xs"
+          >
+            {product.ctaText}
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white transition-colors group-hover/cta:bg-white group-hover/cta:text-primary">
+              <ArrowRight className="h-3 w-3 stroke-[3]" />
+            </span>
+          </Link>
         </motion.div>
 
-        {/* Ultra-Wide 3D Image Card */}
         <motion.div
-          initial={{ opacity: 0, x: isRight ? 30 : -30 }}
+          initial={{ opacity: 0, x: isRight ? 24 : -24 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className={`lg:col-span-6 ${!isRight ? 'lg:order-1' : 'lg:order-2'}`}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className={`lg:col-span-6 ${!isRight ? "lg:order-1" : "lg:order-2"}`}
         >
-          <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/10] rounded-3xl overflow-hidden border border-slate-200/90 dark:border-slate-800 bg-gradient-to-br from-primary/10 via-slate-50 to-primary-dark/10 dark:from-slate-900 dark:via-slate-900 dark:to-primary-dark/20 p-0 shadow-2xl shadow-slate-200/60 dark:shadow-none hover:shadow-3xl transition-all duration-500 group/imgCard flex items-center justify-center">
-            
-            {/* Ambient Background Glow */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent opacity-90 group-hover/imgCard:opacity-100 transition-opacity pointer-events-none z-0" />
-
-            {/* 3D Image Graphic */}
-            <div className="relative w-full h-full overflow-hidden z-10">
+          <div className="group/image relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none">
+            <div className="relative aspect-[16/11] overflow-hidden rounded-xl bg-slate-50 dark:bg-slate-950 sm:aspect-[16/10]">
               <Image
-                src={imageSrc}
-                alt={imageAlt}
+                src={product.imageSrc}
+                alt={product.imageAlt}
                 fill
-                priority
-                className="object-cover w-full h-full group-hover/imgCard:scale-105 transition-transform duration-700 ease-out"
+                sizes="(max-width: 1024px) 92vw, 44vw"
+                className="object-cover transition-transform duration-700 group-hover/image:scale-[1.03]"
               />
             </div>
 
-            {/* Floating Top Badge */}
-            {topBadge && (
-              <div className="absolute top-4 right-4 z-20 flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-md">
-                <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-[11px] font-extrabold text-slate-800 dark:text-slate-100">
-                  {topBadge}
-                </span>
-              </div>
-            )}
+            <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/95 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-800 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              {product.topBadge}
+            </div>
 
-            {/* Floating Bottom Badge */}
-            {bottomBadge && (
-              <div className="absolute bottom-4 left-4 z-20 flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-lg">
-                <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light font-black text-xs">
-                  ✓
-                </div>
-                <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200">
-                  {bottomBadge}
-                </span>
-              </div>
-            )}
+            <div className="absolute bottom-4 left-4 z-20 inline-flex max-w-[80%] items-center gap-2 rounded-full border border-white/80 bg-white/95 px-3 py-1.5 text-[10px] font-extrabold text-slate-700 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200 sm:text-[11px]">
+              <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
+              {product.bottomBadge}
+            </div>
           </div>
         </motion.div>
       </div>
@@ -142,102 +386,28 @@ const ProductRow: React.FC<ProductRowProps> = ({
 
 export const MainProductsShowcaseSection: React.FC = () => {
   return (
-    <section className="py-16 md:py-24 bg-white dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
-      {/* Ultra-Wide Container */}
-      <div className="max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14 md:mb-20 space-y-3">
-          <span className="text-[11px] font-black uppercase tracking-widest text-primary dark:text-primary-light bg-primary/10 dark:bg-primary/20 px-3 py-1 rounded-full inline-block">
-            OUR 4 MAIN POS PRODUCT LINES
+    <section className="relative overflow-hidden border-y border-slate-200/80 bg-slate-50/70 py-12 text-slate-900 transition-colors duration-300 dark:border-slate-800/80 dark:bg-slate-900/45 dark:text-white sm:py-16">
+      <div className="site-container relative z-10">
+        <div className="mx-auto mb-8 max-w-3xl text-center sm:mb-10">
+          <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light sm:text-[11px]">
+            <Sparkles className="h-3 w-3 stroke-[2.4]" />
+            Platform modules
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white font-syne tracking-tight">
-            Built for Restaurants, Retail, Enterprise & Custom Scale
+          <h2 className="font-syne text-[1.8rem] font-black leading-[1.08] tracking-normal text-slate-950 dark:text-white sm:text-4xl sm:tracking-tight lg:text-5xl">
+            Built for POS, cloud, web, mobile and custom workflows
           </h2>
-          <p className="text-base text-slate-500 dark:text-slate-400 font-medium">
-            Explore our specialized product solutions designed to transform checkout speed, kitchen routing, chain management, and custom integrations.
+          <p className="mx-auto mt-3 max-w-2xl text-[13px] font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
+            Explore the core Quantix modules for restaurants, retail stores, cloud teams, kitchen
+            displays, grocery counters, cafes, websites, mobile apps, and custom business platforms.
           </p>
         </div>
 
-        {/* 4 Main Products Rows */}
-        <div className="space-y-4">
-          
-          {/* Product 1: Restaurant POS */}
-          <ProductRow
-            tagline="MAIN PRODUCT 1 • DINING, CAFES & KITCHENS"
-            title="Restaurant POS & Kitchen System"
-            description="Runs in a browser or native register with real-time kitchen ticket routing, interactive table layouts, tableside tablets, and instant modifier management."
-            points={[
-              { title: 'Kitchen KDS routing', desc: 'Fire grill tickets to kitchen displays and beverage tickets to bar terminals.' },
-              { title: 'Visual floor mapping', desc: 'Drag-and-drop table layouts, live table status alerts, and split bill controls.' },
-              { title: 'Tableside & QR ordering', desc: 'Handheld server tablets and contactless QR code ordering at the table.' },
-            ]}
-            imageSrc="/images/kitchen_display_3d.png"
-            imageAlt="Restaurant POS and Kitchen Display System"
-            topBadge="⚡ Real-Time Kitchen Ticket Routing"
-            bottomBadge="Order Dispatch Speed < 1.2s"
-            imagePosition="right"
-            demoHref="/features/table-management"
-            ctaText="EXPLORE RESTAURANT POS"
-          />
+        <PlatformModulesSlider />
 
-          {/* Product 2: Retail POS */}
-          <ProductRow
-            tagline="MAIN PRODUCT 2 • COUNTERS, STORES & SUPERMARKETS"
-            title="Retail POS & Inventory Register"
-            description="A complete counter billing station built for retail shops, boutiques, and supermarkets. Offline-first architecture guarantees your registers never close."
-            points={[
-              { title: 'Touch-first barcode checkout', desc: 'Instant barcode scanning, photo grids, and fast item category lookups.' },
-              { title: 'Granular cashier controls', desc: 'Line & bill discounts, voids, return tracking, and manager PIN overrides.' },
-              { title: 'Hardware flexibility', desc: 'Connect receipt printers, barcode scanners, cash drawers, and PDQ card terminals.' },
-            ]}
-            imageSrc="/images/pos_counter_3d.png"
-            imageAlt="Retail Store Counter POS Station"
-            topBadge="🛡️ 100% Offline Standalone Till"
-            bottomBadge="Thermal Printer & Scanner Ready"
-            imagePosition="left"
-            demoHref="/features/offline-registers"
-            ctaText="EXPLORE RETAIL POS"
-          />
-
-          {/* Product 3: Enterprise POS */}
-          <ProductRow
-            tagline="MAIN PRODUCT 3 • MULTI-STORE FRANCHISE CHAINS"
-            title="Enterprise POS Cloud Platform"
-            description="Centralized cloud control dashboard built for multi-location chain franchises, multi-tenant databases, centralized menu rollouts, and warehouse stock transfers."
-            points={[
-              { title: 'Multi-tenant isolation', desc: 'Bank-grade encrypted tenant partition for branch stores and franchises.' },
-              { title: 'Global menu push', desc: 'Push price updates, menus, and promotions to 100+ stores simultaneously.' },
-              { title: 'Consolidated telemetry', desc: 'Real-time corporate profit margins, store branch sales, and inventory audits.' },
-            ]}
-            imageSrc="/images/enterprise_hub_3d.png"
-            imageAlt="Enterprise Multi-Store Cloud Hub"
-            topBadge="🏢 Multi-Tenant Enterprise Cloud"
-            bottomBadge="100+ Franchise Stores Connected"
-            imagePosition="right"
-            demoHref="/enterprise-vs-standalone"
-            ctaText="EXPLORE ENTERPRISE POS"
-          />
-
-          {/* Product 4: Custom POS */}
-          <ProductRow
-            tagline="MAIN PRODUCT 4 • TAILORED SOFTWARE & API BRIDGES"
-            title="Custom POS Solutions & Integrations"
-            description="Tailored software architecture, custom ERP/API gateways, proprietary hardware driver bridges, white-label branding, and dedicated corporate SLA lines."
-            points={[
-              { title: 'Custom API & webhooks', desc: 'Bi-directional integration with SAP, QuickBooks, Salesforce, and custom ERPs.' },
-              { title: 'White-label POS client', desc: 'Rebrand POS terminals and web portals with your corporate logo and theme.' },
-              { title: 'Dedicated SLA & engineer', desc: 'Direct access to senior engineers with 99.99% uptime guarantee.' },
-            ]}
-            imageSrc="/images/ss1-ai.png"
-            imageAlt="Custom POS Solutions & Integrations"
-            topBadge="⚡ Tailored Workflows & Custom APIs"
-            bottomBadge="Dedicated SLA Support Line"
-            imagePosition="left"
-            demoHref="/contact"
-            ctaText="TALK TO CUSTOM TEAM"
-          />
-
+        <div className="mt-8 sm:mt-10">
+          {PRODUCT_LINES.map((product) => (
+            <ProductRow key={product.title} product={product} />
+          ))}
         </div>
       </div>
     </section>

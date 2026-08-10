@@ -41,13 +41,15 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ faqs, isLoading }) => {
   };
 
   const displayFAQs = faqs.length > 0 ? faqs : DEFAULT_FAQS;
+  const isSingleFAQ = !isLoading && displayFAQs.length === 1;
+  const useTwoColumnLayout = isLoading || displayFAQs.length > 1;
 
   return (
     <section className="bg-white py-10 sm:py-12 border-b border-slate-100" id="faq">
       <div className="site-container">
-        <div className="max-w-[720px] mx-auto">
+        <div className={cn("mx-auto", isSingleFAQ ? "max-w-[720px]" : "max-w-6xl")}>
           {/* Header */}
-          <div className="text-center mb-16">
+          <div className="mx-auto mb-10 max-w-[720px] text-center sm:mb-12">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
               FAQ
             </div>
@@ -63,7 +65,12 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ faqs, isLoading }) => {
           </div>
 
           {/* FAQ list */}
-          <div className="w-full space-y-3.5">
+          <div
+            className={cn(
+              "w-full",
+              useTwoColumnLayout ? "grid gap-3.5 md:grid-cols-2 md:items-start" : "space-y-3.5"
+            )}
+          >
             {isLoading
               ? Array.from({ length: 4 }).map((_, i) => (
                   <div key={i} className="p-5 animate-pulse rounded-2xl border border-slate-100 bg-white">

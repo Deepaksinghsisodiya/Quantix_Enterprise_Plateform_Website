@@ -127,8 +127,6 @@ export const TestimonialBanner: React.FC<TestimonialBannerProps> = ({
           {/* Top-and-Bottom blending gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-slate-950/20" />
           
-          {/* High-tech engineering grid overlay */}
-          <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
         </motion.div>
       </AnimatePresence>
 

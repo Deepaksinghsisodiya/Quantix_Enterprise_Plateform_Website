@@ -8,9 +8,6 @@ import MainProductsShowcaseSection from "@/components/organisms/MainProductsShow
 import HowItWorksSection from "@/components/organisms/HowItWorksSection/HowItWorksSection";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 
-import DemoWrapper from "@/features/Demo/DemoWrapper";
-import { QuantixToolsSection } from "@/components/organisms/QuantixToolsSection/QuantixToolsSection";
-import { CTABanner } from "@/components/organisms/CTABanner/CTABanner";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { ATMLoader } from "@/components/atoms/ATMLoader";
 import { cn } from "@/lib/utils";
@@ -21,7 +18,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import ValuePropositionsSection from "@/components/organisms/ValuePropositions/ValuePropositionsSection";
 import IntegrationsTickerSection from "@/components/organisms/IntegrationsTicker/IntegrationsTickerSection";
 import MerchantTypeExplainerSection from "@/components/organisms/MerchantExplainer/MerchantTypeExplainerSection";
-import ROICalculatorSection from "@/components/organisms/ROICalculator/ROICalculatorSection";
 
 import dynamic from "next/dynamic";
 
@@ -99,46 +95,31 @@ export default function HomePageClient() {
       {/* 3. How It Works */}
       <HowItWorksSection />
 
-      {/* 4. Main Products Showcase (Point of Sale & KDS) */}
-      <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+      {/* 4. Platform Modules */}
+      <section id="products-showcase" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/45 transition-colors duration-300")}>
         <MainProductsShowcaseSection />
       </section>
 
       {/* 5. Integrations Partner Logo Ticker (PFD Section 7) */}
-      <section id="integrations-ticker">
+      <section id="integrations-ticker" className={cn("bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <IntegrationsTickerSection />
       </section>
 
 
-      {/* 6. Live Interactive Demo Wrapper */}
-      <section id="resources" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
-        <DemoWrapper />
-      </section>
-
-      {/* 7. Merchant Type Explainer: Cloud Enterprise vs Standalone (PFD Section 8) */}
-      <section id="merchant-explainer">
+      {/* 6. Merchant Type Explainer: Cloud Enterprise vs Standalone (PFD Section 8) */}
+      <section id="merchant-explainer" className={cn("bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <MerchantTypeExplainerSection />
       </section>
 
-      {/* 8. Quantix Tools Section */}
-      <section className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
-        <QuantixToolsSection />
-      </section>
-
-      {/* 9. Interactive ROI & Savings Calculator (PFD Section 6) */}
-      <section id="roi-calculator">
-        <ROICalculatorSection />
-      </section>
-
-      {/* 10. Testimonials Carousel */}
-      <section id="testimonials" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+      {/* 7. Testimonials Carousel */}
+      <section id="testimonials" className={cn("scroll-mt-28 bg-slate-50 dark:bg-slate-900/40 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyTestimonialsSection />
         </Suspense>
       </section>
 
-      {/* 11. FAQ Accordion */}
-      <section id="faq" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
+      {/* 8. FAQ Accordion */}
+      <section id="faq" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyFAQWrapper />
         </Suspense>
@@ -146,7 +127,7 @@ export default function HomePageClient() {
 
 
 
-      {/* 12. Footer */}
+      {/* 9. Footer */}
       <section id="footer" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Footer />
       </section>

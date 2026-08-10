@@ -32,11 +32,11 @@ const LINKS: NavLink[] = [
 ];
 
 const PRODUCTS_LIST = [
-  { title: 'Point of Sale (EPOS)', icon: Monitor, desc: 'Offline-first terminal billing', slug: 'offline-registers', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Point of Sale (EPOS)', icon: Monitor, desc: 'Offline-first terminal billing', slug: 'offline-registers', href: '/products/retail-pos', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=120&h=120&q=80' },
   { title: 'Order Kiosks Integration', icon: Tablet, desc: 'Self-checkout guest screens', slug: 'self-service-kiosk', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'Online Ordering Portal', icon: Globe, desc: 'Web and mobile customer app', slug: 'online-ordering', image: 'https://images.unsplash.com/photo-1526367790999-0150786486a9?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Online Ordering Portal', icon: Globe, desc: 'Web and mobile customer app', slug: 'online-ordering', href: '/products/websites', image: 'https://images.unsplash.com/photo-1526367790999-0150786486a9?auto=format&fit=crop&w=120&h=120&q=80' },
   { title: 'Kitchen Display Systems', icon: Tv, desc: 'Real-time kitchen order sync', slug: 'kitchen-display', image: 'https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'Android & iPad POS', icon: Smartphone, desc: 'Handheld tableside ordering', slug: 'offline-registers', image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=120&h=120&q=80' }
+  { title: 'Android & iPad POS', icon: Smartphone, desc: 'Handheld tableside ordering', slug: 'offline-registers', href: '/products/mobile-application', image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=120&h=120&q=80' }
 ];
 
 const HARDWARE_LIST = [
@@ -106,10 +106,10 @@ interface MobileMenuSection extends NavLink {
   groups: MobileMenuGroup[];
 }
 
-const featureLink = (item: { title: string; desc: string; slug: string; icon: MobileMenuIcon }): MobileMenuItem => ({
+const featureLink = (item: { title: string; desc: string; slug: string; href?: string; icon: MobileMenuIcon }): MobileMenuItem => ({
   title: item.title,
   desc: item.desc,
-  href: `/features/${item.slug}`,
+  href: item.href ?? `/features/${item.slug}`,
   icon: item.icon,
 });
 
@@ -381,7 +381,7 @@ const Navbar = () => {
         <nav
           className={cn(
             "w-full bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800 relative transition-all duration-300",
-            scrolled ? "shadow-md shadow-slate-900/5 py-1.5 sm:py-2.5" : "shadow-sm py-2 sm:py-3"
+            scrolled ? "shadow-md shadow-slate-900/5 py-2 sm:py-2.5" : "shadow-sm py-2.5 sm:py-3"
           )}
           onMouseLeave={() => setOpenMegaMenu(null)}
         >
@@ -505,8 +505,12 @@ const Navbar = () => {
                 <button
                   type="button"
                   className={cn(
-                    'flex flex-col justify-center items-center w-7 h-7 sm:w-8 sm:h-8 rounded-full transition-all duration-200 focus:outline-none',
-                    useWhiteText ? 'text-white' : 'text-slate-800'
+                    'flex h-9 w-9 flex-col items-center justify-center rounded-lg border shadow-xs transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/25',
+                    mobileOpen
+                      ? 'border-primary/30 bg-primary/10 text-primary'
+                      : useWhiteText
+                        ? 'border-white/20 bg-white/10 text-white'
+                        : 'border-slate-200/80 bg-white text-slate-800 hover:border-primary/25 hover:bg-primary/5 hover:text-primary'
                   )}
                   aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
                   aria-expanded={mobileOpen}
@@ -544,7 +548,7 @@ const Navbar = () => {
                   <div className="col-span-4 border-r border-slate-200/80 dark:border-slate-800 pr-6 flex flex-col gap-4 justify-between">
                     {/* Featured Card 1 */}
                     <Link
-                      href="/features/offline-registers"
+                      href="/products/retail-pos"
                       onClick={() => setOpenMegaMenu(null)}
                       className="group/card flex items-start gap-3.5 p-3 rounded-2xl bg-slate-50/70 hover:bg-primary/5 border border-slate-200/60 hover:border-primary/40 transition-all duration-300 cursor-pointer shadow-2xs hover:shadow-sm"
                     >
@@ -571,7 +575,7 @@ const Navbar = () => {
 
                     {/* Featured Card 2 */}
                     <Link
-                      href="/features/table-management"
+                      href="/products/websites"
                       onClick={() => setOpenMegaMenu(null)}
                       className="group/card flex items-start gap-3.5 p-3 rounded-2xl bg-slate-50/70 hover:bg-primary/5 border border-slate-200/60 hover:border-primary/40 transition-all duration-300 cursor-pointer shadow-2xs hover:shadow-sm"
                     >
@@ -605,16 +609,16 @@ const Navbar = () => {
                         OUR PRODUCTS
                       </span>
                       <div className="flex flex-col space-y-2.5">
-                        <Link href="/features/table-management" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
+                        <Link href="/products/restaurant-pos" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
                           <Utensils size={14} className="text-primary shrink-0" /> Restaurant POS
                         </Link>
-                        <Link href="/features/offline-registers" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
+                        <Link href="/products/retail-pos" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
                           <Store size={14} className="text-emerald-600 shrink-0" /> Retail POS
                         </Link>
-                        <Link href="/enterprise-vs-standalone" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
+                        <Link href="/products/enterprise-pos" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
                           <Server size={14} className="text-blue-600 shrink-0" /> Enterprise POS
                         </Link>
-                        <Link href="/contact" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
+                        <Link href="/products/custom-service" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
                           <Headset size={14} className="text-amber-600 shrink-0" /> Custom Solutions
                         </Link>
                       </div>
@@ -626,7 +630,7 @@ const Navbar = () => {
                         ORDERING CHANNELS
                       </span>
                       <div className="flex flex-col space-y-2.5">
-                        <Link href="/features/online-ordering" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
+                        <Link href="/products/websites" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
                           Online Ordering
                         </Link>
                         <Link href="/features/self-service-kiosk" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
@@ -673,7 +677,7 @@ const Navbar = () => {
                         <Link href="/features/marketing-loyalty" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
                           Marketing & Loyalty
                         </Link>
-                        <Link href="/enterprise-vs-standalone" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
+                        <Link href="/products/enterprise-pos" onClick={() => setOpenMegaMenu(null)} className="group/link text-[13px] font-bold text-slate-700 hover:text-primary transition-colors block">
                           Multi-Tenant Enterprise
                         </Link>
                       </div>
@@ -1009,8 +1013,8 @@ const Navbar = () => {
             role="dialog"
             aria-modal="true"
             className={cn(
-              "fixed inset-x-0 bottom-0 z-40 overflow-hidden border-t border-slate-200/80 bg-slate-50 lg:hidden",
-              scrolled ? "top-[44px] sm:top-[58px]" : "top-[70px] sm:top-[96px]"
+              "fixed inset-x-0 bottom-0 z-40 overflow-hidden border-t border-slate-200/80 bg-slate-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] lg:hidden",
+              scrolled ? "top-[42px] sm:top-[58px]" : "top-[74px] sm:top-[96px]"
             )}
           >
             {activeMobileSection ? (
@@ -1020,29 +1024,29 @@ const Navbar = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.25 }}
-                className="flex h-full w-full flex-col overflow-y-auto overscroll-contain px-3.5 pt-3 pb-[calc(env(safe-area-inset-bottom)+112px)] min-[380px]:px-4 sm:px-5"
+                className="flex h-full w-full flex-col overflow-y-auto overscroll-contain px-3.5 pt-3.5 pb-[calc(env(safe-area-inset-bottom)+112px)] min-[380px]:px-4 sm:px-5"
               >
-                <div className="mx-auto flex w-full max-w-md flex-col gap-3.5">
+                <div className="mx-auto flex w-full max-w-md flex-col gap-3">
                   {/* Back Button */}
                   <button
                     type="button"
                     onClick={() => setMobileSubMenu(null)}
-                    className="inline-flex w-fit cursor-pointer items-center gap-1.5 rounded-full border border-primary/10 bg-white px-3.5 py-2 text-[11px] font-extrabold uppercase tracking-wider text-primary shadow-xs transition-colors hover:bg-primary/10"
+                    className="inline-flex h-9 w-fit cursor-pointer items-center gap-1.5 rounded-full border border-primary/15 bg-white px-3.5 text-[11px] font-extrabold uppercase tracking-normal text-primary shadow-xs transition-all hover:border-primary/25 hover:bg-primary/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
                   >
                     <ArrowLeft size={14} /> Back to Main Menu
                   </button>
 
                   {/* Drill-down Header */}
-                  <div className="rounded-lg border border-slate-200/80 bg-white p-3 shadow-xs">
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary">
+                  <div className="rounded-lg border border-slate-200/80 bg-white px-3.5 py-3 shadow-xs">
+                    <span className="text-[10px] font-extrabold uppercase tracking-normal text-primary">
                       Explore Category
                     </span>
-                    <div className="mt-2 flex items-center gap-2.5">
+                    <div className="mt-2.5 flex items-center gap-3">
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-primary/15 bg-primary/10 text-primary">
                         {React.createElement(activeMobileSection.icon, { size: 17 })}
                       </span>
-                      <div>
-                        <h3 className="font-syne text-xl font-black uppercase leading-none text-slate-900">
+                      <div className="min-w-0">
+                        <h3 className="font-syne text-[19px] font-black uppercase leading-none tracking-normal text-slate-900">
                           {activeMobileSection.label}
                         </h3>
                         <p className="mt-1 text-xs font-medium leading-snug text-slate-500">
@@ -1056,32 +1060,38 @@ const Navbar = () => {
                   <div className="space-y-4">
                     {activeMobileSection.groups.map((group) => (
                       <div key={group.title} className="space-y-2">
-                        <span className="block px-1 text-[10px] font-extrabold uppercase tracking-widest text-primary">
+                        <span className="block px-1 text-[10px] font-extrabold uppercase tracking-normal text-primary">
                           {group.title}
                         </span>
-                        <div className="grid grid-cols-2 gap-2">
-                          {group.items.map((item) => {
+                        <div className="grid auto-rows-fr grid-cols-2 gap-2.5">
+                          {group.items.map((item, index) => {
                             const ItemIcon = item.icon;
                             const isItemActive = isMenuHrefActive(item.href);
+                            const isWideItem = group.items.length % 2 === 1 && index === group.items.length - 1;
 
                             return (
                               <Link
                                 key={`${group.title}-${item.title}`}
                                 href={item.href}
                                 onClick={closeMobileMenu}
+                                aria-current={isItemActive ? "page" : undefined}
                                 className={cn(
-                                  "group/item relative flex min-h-[108px] flex-col justify-between rounded-lg border p-3 text-left shadow-xs transition-all hover:border-primary/35 hover:bg-primary/5 active:scale-[0.99]",
+                                  "group/item relative flex flex-col justify-between overflow-hidden rounded-lg border px-3 py-3.5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:bg-primary/5 hover:shadow-sm active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25",
+                                  isWideItem ? "col-span-2 min-h-[92px] min-[390px]:min-h-[96px]" : "min-h-[110px] min-[390px]:min-h-[116px]",
                                   isItemActive
-                                    ? "border-primary/40 bg-primary/10 text-primary"
+                                    ? "border-primary bg-primary text-white shadow-md shadow-primary/20"
                                     : "border-slate-200/80 bg-white text-slate-900"
                                 )}
                               >
+                                {isItemActive && (
+                                  <span className="absolute inset-x-3 top-0 h-0.5 rounded-b-full bg-white/65" />
+                                )}
                                 <span className="flex items-start justify-between gap-2">
                                   <span
                                     className={cn(
                                       "flex h-8 w-8 shrink-0 items-center justify-center rounded-md border transition-colors group-hover/item:bg-primary group-hover/item:text-white",
                                       isItemActive
-                                        ? "border-primary bg-primary text-white"
+                                        ? "border-white/20 bg-white/15 text-white"
                                         : "border-primary/15 bg-primary/10 text-primary"
                                     )}
                                   >
@@ -1091,24 +1101,30 @@ const Navbar = () => {
                                     size={14}
                                     className={cn(
                                       "shrink-0 transition-transform group-hover/item:translate-x-0.5",
-                                      isItemActive ? "text-primary" : "text-slate-300 group-hover/item:text-primary"
+                                      isItemActive ? "text-white/80" : "text-slate-300 group-hover/item:text-primary"
                                     )}
                                   />
                                 </span>
                                 <span className="mt-2 block min-w-0">
                                   <span
                                     className={cn(
-                                      "block font-syne text-[11px] font-black uppercase leading-tight",
-                                      isItemActive ? "text-primary" : "text-slate-900"
+                                      "block font-syne text-[11px] font-black uppercase leading-[1.12] tracking-normal",
+                                      isItemActive ? "text-white" : "text-slate-900"
                                     )}
                                   >
                                     {item.title}
                                   </span>
-                                  <span className="mt-1 block text-[10px] font-medium leading-snug text-slate-500 line-clamp-2">
+                                  <span className={cn(
+                                    "mt-1 block text-[10px] font-medium leading-snug line-clamp-2",
+                                    isItemActive ? "text-white/80" : "text-slate-500"
+                                  )}>
                                     {item.desc}
                                   </span>
                                   {item.badge && (
-                                    <span className="mt-2 inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-black text-primary">
+                                    <span className={cn(
+                                      "mt-2 inline-flex rounded-full px-2 py-0.5 text-[10px] font-black",
+                                      isItemActive ? "bg-white/15 text-white" : "bg-primary/10 text-primary"
+                                    )}>
                                       {item.badge}
                                     </span>
                                   )}
@@ -1125,7 +1141,7 @@ const Navbar = () => {
                 <Link
                   href={activeMobileSection.href}
                   onClick={closeMobileMenu}
-                  className="mt-1 flex h-11 items-center justify-center gap-2 rounded-lg bg-primary text-xs font-extrabold uppercase tracking-wider text-white shadow-md shadow-primary/20 transition-all hover:bg-primary-light"
+                  className="mt-1 flex h-11 items-center justify-center gap-2 rounded-lg bg-primary text-xs font-extrabold uppercase tracking-normal text-white shadow-md shadow-primary/20 transition-all hover:bg-primary-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
                 >
                   View Main {activeMobileSection.label} Page <ArrowRight size={14} />
                 </Link>
@@ -1133,49 +1149,55 @@ const Navbar = () => {
               </motion.div>
             ) : (
               /* Main Mobile Menu */
-              <div className="h-full overflow-y-auto overscroll-contain px-3.5 pt-3 pb-[calc(env(safe-area-inset-bottom)+112px)] min-[380px]:px-4 sm:px-5">
+              <div className="h-full overflow-y-auto overscroll-contain px-3.5 pt-3.5 pb-[calc(env(safe-area-inset-bottom)+112px)] min-[380px]:px-4 sm:px-5">
                 <motion.div
                   variants={containerVariants}
                   initial="hidden"
                   animate="show"
-                  className="mx-auto flex w-full max-w-md flex-col gap-2.5"
+                  className="mx-auto flex w-full max-w-md flex-col gap-3"
                 >
-                  <div className="mb-0.5 flex items-center justify-between px-1">
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
+                  <div className="flex items-center justify-between px-1">
+                    <span className="text-[10px] font-extrabold uppercase tracking-normal text-slate-400">
                       Navigation
                     </span>
-                    <span className="rounded-full border border-primary/10 bg-white px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-primary shadow-xs">
+                    <span className="rounded-full border border-primary/10 bg-white px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-normal text-primary shadow-xs">
                       POS Platform
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid auto-rows-fr grid-cols-2 gap-2.5">
                     {MOBILE_MENU_SECTIONS.map((link, index) => {
                       const isActive = isMobileSectionActive(link);
                       const LinkIcon = link.icon;
+                      const isWideSection = MOBILE_MENU_SECTIONS.length % 2 === 1 && index === MOBILE_MENU_SECTIONS.length - 1;
 
                       return (
                         <motion.div
                           key={link.href}
                           variants={itemVariants}
-                          className={cn(index === MOBILE_MENU_SECTIONS.length - 1 && "col-span-2")}
+                          className={cn(isWideSection && "col-span-2")}
                         >
                           <button
                             type="button"
                             onClick={() => setMobileSubMenu(link.label)}
                             aria-label={`Open ${link.label} menu`}
+                            aria-pressed={isActive}
                             className={cn(
-                              'group/nav relative flex min-h-[112px] w-full cursor-pointer flex-col justify-between overflow-hidden rounded-lg border p-3 text-left shadow-xs transition-all duration-200 active:scale-[0.99]',
+                              'group/nav relative flex w-full cursor-pointer flex-col justify-between overflow-hidden rounded-lg border px-3 py-3.5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25',
+                              isWideSection ? "min-h-[92px] min-[390px]:min-h-[98px]" : "min-h-[110px] min-[390px]:min-h-[116px]",
                               isActive
-                                ? 'border-primary/45 bg-primary/10 text-primary shadow-primary/10'
+                                ? 'border-primary bg-primary text-white shadow-md shadow-primary/20'
                                 : 'border-slate-200/80 bg-white text-slate-900 hover:border-primary/30 hover:bg-primary/5'
                             )}
                           >
+                            {isActive && (
+                              <span className="absolute inset-x-3 top-0 h-0.5 rounded-b-full bg-white/65" />
+                            )}
                             <span className="flex items-start justify-between gap-2">
                               <span className={cn(
                                 "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors",
                                 isActive
-                                  ? "border-primary bg-primary text-white"
+                                  ? "border-white/20 bg-white/15 text-white"
                                   : "border-primary/15 bg-primary/10 text-primary group-hover/nav:bg-primary group-hover/nav:text-white"
                               )}>
                                 <LinkIcon size={17} />
@@ -1183,7 +1205,7 @@ const Navbar = () => {
                               <span className={cn(
                                 "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all",
                                 isActive
-                                  ? "border-primary/25 bg-white/80 text-primary"
+                                  ? "border-white/20 bg-white/15 text-white"
                                   : "border-slate-200 text-slate-400 group-hover/nav:border-primary/20 group-hover/nav:text-primary"
                               )}>
                                 <ChevronRight size={14} className="transition-transform group-hover/nav:translate-x-0.5" />
@@ -1191,12 +1213,15 @@ const Navbar = () => {
                             </span>
                             <span className="mt-3 block min-w-0">
                               <span className={cn(
-                                'block font-syne text-[13px] font-black uppercase leading-tight tracking-tight transition-colors duration-200',
-                                isActive ? 'text-primary' : 'text-slate-900'
+                                'block font-syne text-[13px] font-black uppercase leading-[1.12] tracking-normal transition-colors duration-200',
+                                isActive ? 'text-white' : 'text-slate-900'
                               )}>
                                 {link.label}
                               </span>
-                              <span className="mt-1 block text-[10px] font-medium leading-snug tracking-normal text-slate-500 normal-case line-clamp-2">
+                              <span className={cn(
+                                "mt-1 block text-[10px] font-medium leading-snug tracking-normal normal-case line-clamp-2",
+                                isActive ? "text-white/80" : "text-slate-500"
+                              )}>
                                 {link.desc}
                               </span>
                             </span>
@@ -1207,11 +1232,11 @@ const Navbar = () => {
                   </div>
 
                   {/* Quick Tools Grid */}
-                  <motion.div variants={itemVariants} className="mt-1 space-y-2 border-t border-slate-200/70 pt-3">
-                    <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 px-1">
+                  <motion.div variants={itemVariants} className="space-y-2 border-t border-slate-200/70 pt-3">
+                    <div className="px-1 text-[10px] font-extrabold uppercase tracking-normal text-slate-400">
                       Tools & Resources
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-2.5">
                       {QUICK_MOBILE_TOOLS.map((tool) => {
                         const ToolIcon = tool.icon;
 
@@ -1220,7 +1245,7 @@ const Navbar = () => {
                             key={tool.href}
                             href={tool.href}
                             onClick={closeMobileMenu}
-                            className="flex min-h-10 items-center justify-center gap-1.5 rounded-lg border border-slate-200/80 bg-white px-2.5 py-2 text-center text-[10px] font-extrabold uppercase tracking-wider text-slate-700 shadow-xs transition-all hover:border-primary/25 hover:bg-primary/5 hover:text-primary min-[380px]:text-[11px]"
+                            className="flex min-h-10 items-center justify-center gap-1.5 rounded-lg border border-slate-200/80 bg-white px-2.5 py-2.5 text-center text-[10px] font-extrabold uppercase tracking-normal text-slate-700 shadow-xs transition-all hover:-translate-y-0.5 hover:border-primary/25 hover:bg-primary/5 hover:text-primary hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 min-[380px]:text-[11px]"
                           >
                             <ToolIcon size={13} className="shrink-0 text-primary" />
                             {tool.label}
@@ -1236,13 +1261,13 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.3 }}
-                  className="mx-auto mt-4 flex w-full max-w-md flex-col gap-2.5 border-t border-slate-200/70 pt-3"
+                  className="sticky bottom-0 z-10 mx-auto mt-3 flex w-full max-w-md flex-col gap-2.5 border-t border-slate-200/70 bg-slate-50 py-3.5"
                 >
                   {token ? (
                     <>
                       <div className="flex items-center gap-2.5 justify-center rounded-lg border border-slate-200/80 bg-white py-2.5 shadow-xs select-none">
                         <User size={15} className="text-primary" />
-                        <span className="text-[13px] font-bold tracking-wider uppercase text-slate-800">
+                        <span className="text-[13px] font-bold uppercase tracking-normal text-slate-800">
                           Hi, {meData?.data?.username || meData?.username || "Admin"}
                         </span>
                       </div>
@@ -1251,7 +1276,7 @@ const Navbar = () => {
                           closeMobileMenu();
                           handleLogout();
                         }}
-                        className="flex h-11 cursor-pointer items-center justify-center gap-2 rounded-lg bg-red-600 text-[13px] font-extrabold uppercase tracking-[0.08em] text-white shadow-md shadow-red-600/15 transition-all duration-200 hover:bg-red-700"
+                        className="flex h-11 cursor-pointer items-center justify-center gap-2 rounded-lg bg-red-600 text-[13px] font-extrabold uppercase tracking-normal text-white shadow-md shadow-red-600/15 transition-all duration-200 hover:bg-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/25"
                       >
                         <LogOut size={15} />
                         Log Out
@@ -1262,7 +1287,7 @@ const Navbar = () => {
                       <Link
                         href="/sign-up"
                         onClick={closeMobileMenu}
-                        className="flex h-11 items-center justify-center rounded-lg bg-primary text-[13px] font-extrabold uppercase tracking-[0.08em] text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-light"
+                        className="flex h-11 items-center justify-center rounded-lg bg-primary text-[13px] font-extrabold uppercase tracking-normal text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
                       >
                         Start Free Trial
                       </Link>
@@ -1270,7 +1295,7 @@ const Navbar = () => {
                         <Link
                           href="/sign-in"
                           onClick={closeMobileMenu}
-                          className="flex h-11 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white text-[12px] font-extrabold uppercase tracking-[0.08em] text-slate-800 shadow-xs transition-all duration-200 hover:bg-slate-50 active:bg-slate-100"
+                          className="flex h-11 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white text-[12px] font-extrabold uppercase tracking-normal text-slate-800 shadow-xs transition-all duration-200 hover:bg-slate-50 active:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
                         >
                           <LogIn size={14} /> Sign In
                         </Link>
@@ -1280,7 +1305,7 @@ const Navbar = () => {
                             closeMobileMenu();
                             openModal();
                           }}
-                          className="flex h-11 items-center justify-center gap-1.5 rounded-lg border border-primary/20 bg-primary/10 text-[12px] font-extrabold uppercase tracking-[0.08em] text-primary shadow-xs transition-all duration-200 hover:bg-primary/15"
+                          className="flex h-11 items-center justify-center gap-1.5 rounded-lg border border-primary/20 bg-primary/10 text-[12px] font-extrabold uppercase tracking-normal text-primary shadow-xs transition-all duration-200 hover:bg-primary/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
                         >
                           <Headset size={14} /> Contact
                         </button>

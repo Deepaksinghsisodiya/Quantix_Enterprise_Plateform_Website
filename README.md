@@ -256,31 +256,6 @@ Contains subscription plans, billing toggle, and customization banner.
 
 ---
 
-## 5. Resources Page (`/resources`)
-
-Acts as the walkthrough and media demonstration center.
-
-*   **Header Section:**
-    *   **Badge:** `SEE IT IN ACTION` (with Sparkle icon)
-    *   **Heading:** "Watch Quantix work for you"
-    *   **Subheading:** "Take a guided tour of the tools powering modern restaurants and retailers worldwide."
-*   **Walkthrough Player:**
-    *   *Title:* "Quantix Full Platform Walkthrough"
-    *   *Subheading:* "See how restaurant and retail workflows come together seamlessly."
-    *   *Quick link:* "Full Guide" (links to custom external walkthrough page)
-    *   *Video details:* Renders 2:47 duration HD video.
-*   **Interface Screenshots Catalog:**
-    *   *Dashboard Overview* (Category: `ADMIN PORTAL`)
-    *   *Table Management* (Category: `OPERATIONS`)
-    *   *Inventory Control* (Category: `LOGISTICS & STOCK`)
-*   **Notification Card:**
-    *   *Heading:* "New Demos & Walkthroughs"
-    *   *Subtext:* "Subscribe to get notified as soon as new modules are released."
-    *   *Input Field:* `your@email.com` (Requires valid email verification).
-    *   *Action Button:* "Notify me"
-
----
-
 ## 6. Testimonials Page (`/testimonials`)
 
 A comprehensive compilation page containing:

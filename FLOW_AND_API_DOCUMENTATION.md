@@ -76,11 +76,11 @@ This document provides a comprehensive overview of the **User Flows**, **Routes*
   - `/contact` (Contact Us page)
   - `/product-tour` (Interactive Product Tour / Demo)
   - `/roi-calculator` (ROI Calculator)
-- **Feature Location**: `src/features/Contact`, `src/features/Demo`, `src/features/ROI`
-- **RTK Query Services**: `contactApi`, `demoApi`
+- **Feature Location**: `src/features/Contact`, `src/features/ROI`
+- **RTK Query Services**: `contactApi`
 - **API Endpoints**:
   - `POST /api/v1/contact/submit` - Send contact inquiry form details.
-  - `POST /api/v1/demo/request` - Schedule/request a product demo.
+  - `POST /contact/demo-request` - Schedule/request a product demo.
 
 ---
 

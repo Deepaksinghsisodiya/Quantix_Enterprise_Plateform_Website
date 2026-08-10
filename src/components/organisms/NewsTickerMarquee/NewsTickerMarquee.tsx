@@ -29,7 +29,7 @@ const tickerItems: NewsTickerItem[] = [
     title: "Restaurant POS",
     description: "Tableside orders and kitchen ticket routing",
     icon: ChefHat,
-    href: "/features/table-management",
+    href: "/products/restaurant-pos",
     isNew: false,
   },
   {
@@ -37,7 +37,7 @@ const tickerItems: NewsTickerItem[] = [
     title: "Retail POS",
     description: "Offline checkout with barcode inventory",
     icon: Store,
-    href: "/features/offline-registers",
+    href: "/products/retail-pos",
     isNew: false,
   },
   {
@@ -45,7 +45,7 @@ const tickerItems: NewsTickerItem[] = [
     title: "Cloud Management",
     description: "Live inventory and sales dashboards",
     icon: Cloud,
-    href: "/sign-up/enterprise",
+    href: "/products/cloud-pos",
     isNew: false,
   },
   {
@@ -53,7 +53,7 @@ const tickerItems: NewsTickerItem[] = [
     title: "Online Ordering",
     description: "Customer orders flow into POS and KDS",
     icon: Globe2,
-    href: "/features/online-ordering",
+    href: "/products/websites",
     isNew: false,
   },
   {
@@ -69,7 +69,7 @@ const tickerItems: NewsTickerItem[] = [
     title: "Custom POS Platform",
     description: "API bridges, white-label flows and ERP workflows",
     icon: Code2,
-    href: "/contact",
+    href: "/products/custom-service",
     isNew: false,
   },
   {
@@ -83,7 +83,7 @@ const tickerItems: NewsTickerItem[] = [
 ];
 
 const marqueeAnimation: React.CSSProperties = {
-  animation: "quantixTickerSlide 96s linear infinite",
+  animation: "quantixTickerSlide 220s linear infinite",
   willChange: "transform",
 };
 

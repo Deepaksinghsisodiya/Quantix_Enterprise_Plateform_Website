@@ -31,7 +31,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     subheading:
       "Run barcode checkout, local billing, stock deductions, customer rewards, and cashier workflows across every store branch.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "Explore Retail POS", href: "/features/offline-registers" },
+    secondaryCta: { label: "Explore Retail POS", href: "/products/retail-pos" },
     backgroundImage: "/images/ss3-ai.png",
     featureHighlights: ["Offline Local Till", "Fast Barcode Lookup", "Stock Level Sync"],
   },
@@ -43,7 +43,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     subheading:
       "Centralize branch operations with menu rollouts, staff controls, inventory visibility, and reporting for growing chains.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "Enterprise Hub", href: "/enterprise-vs-standalone" },
+    secondaryCta: { label: "Enterprise Hub", href: "/products/enterprise-pos" },
     backgroundImage: "/images/ss1-ai.png",
     featureHighlights: ["Branch Controls", "Menu Rollouts", "Central Analytics"],
   },
@@ -55,7 +55,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     subheading:
       "Track sales, inventory, staff activity, and operational reports from anywhere your business needs visibility.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "Explore Cloud POS", href: "/enterprise-vs-standalone" },
+    secondaryCta: { label: "Explore Cloud POS", href: "/products/cloud-pos" },
     backgroundImage: "/images/inventory_sync_3d.png",
     featureHighlights: ["Live Dashboards", "Inventory Sync", "Remote Management"],
   },
@@ -66,7 +66,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     mobileHeadingLines: ["Custom POS", "Solutions for", "Complex Workflows"],
     subheading:
       "Build tailored workflows, API bridges, white-label experiences, and hardware integrations around your operating model.",
-    primaryCta: { label: "Contact Custom Team", href: "/contact" },
+    primaryCta: { label: "Contact Custom Team", href: "/products/custom-service" },
     secondaryCta: { label: "Request Quote", href: "/contact" },
     backgroundImage: "/images/online_ordering_3d.png",
     featureHighlights: ["Custom Workflows", "API Bridges", "White-Label Options"],

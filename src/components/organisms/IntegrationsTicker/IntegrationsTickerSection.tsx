@@ -65,7 +65,7 @@ export const IntegrationsTickerSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-slate-50/60 dark:bg-slate-950 text-slate-900 dark:text-white border-t border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden relative select-none transition-colors">
+    <section className="py-16 sm:py-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-t border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden relative select-none transition-colors">
       {/* Header Container */}
       <div className="site-container mb-10 sm:mb-14 text-center relative z-10">
         {/* Top Category Badge */}
@@ -92,8 +92,8 @@ export const IntegrationsTickerSection: React.FC = () => {
         onMouseLeave={() => setIsPaused(false)}
       >
         {/* Left & Right Edge Soft Fade Masks */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-56 bg-gradient-to-r from-slate-50/90 via-slate-50/70 to-transparent dark:from-slate-950 dark:via-slate-950/80 z-20 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-56 bg-gradient-to-l from-slate-50/90 via-slate-50/70 to-transparent dark:from-slate-950 dark:via-slate-950/80 z-20 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-56 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-slate-950 dark:via-slate-950/80 z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-56 bg-gradient-to-l from-white via-white/80 to-transparent dark:from-slate-950 dark:via-slate-950/80 z-20 pointer-events-none" />
 
         {/* Continuous Marquee Track */}
         <motion.div

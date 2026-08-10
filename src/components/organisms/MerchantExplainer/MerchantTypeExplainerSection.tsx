@@ -9,10 +9,7 @@ export const MerchantTypeExplainerSection: React.FC = () => {
   const { openModal } = useContactModal();
 
   return (
-    <section className="py-20 sm:py-28 bg-gradient-to-b from-slate-50/60 via-white to-slate-50/60 dark:from-slate-950 dark:via-slate-900/80 dark:to-slate-950 text-slate-900 dark:text-white border-t border-b border-slate-200/80 dark:border-slate-800/80 relative overflow-hidden transition-colors">
-      {/* Soft Ambient Radial Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/5 dark:bg-primary/10 rounded-full blur-[150px] pointer-events-none" />
-
+    <section className="relative overflow-hidden border-t border-b border-slate-200/80 bg-white py-20 text-slate-900 transition-colors dark:border-slate-800/80 dark:bg-slate-950 dark:text-white sm:py-28">
       <div className="site-container relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
