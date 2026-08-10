@@ -5,6 +5,7 @@ import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import HeroSection from "@/components/organisms/HeroSection/HeroSection";
 import NewsTickerMarquee from "@/components/organisms/NewsTickerMarquee/NewsTickerMarquee";
 import MainProductsShowcaseSection from "@/components/organisms/MainProductsShowcaseSection/MainProductsShowcaseSection";
+import HowItWorksSection from "@/components/organisms/HowItWorksSection/HowItWorksSection";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 
 import DemoWrapper from "@/features/Demo/DemoWrapper";
@@ -95,45 +96,48 @@ export default function HomePageClient() {
       {/* 2. Value Propositions */}
       <ValuePropositionsSection />
 
-      {/* 3. Main Products Showcase (Point of Sale & KDS) */}
+      {/* 3. How It Works */}
+      <HowItWorksSection />
+
+      {/* 4. Main Products Showcase (Point of Sale & KDS) */}
       <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <MainProductsShowcaseSection />
       </section>
 
-      {/* 4. Integrations Partner Logo Ticker (PFD Section 7) */}
+      {/* 5. Integrations Partner Logo Ticker (PFD Section 7) */}
       <section id="integrations-ticker">
         <IntegrationsTickerSection />
       </section>
 
 
-      {/* 5. Live Interactive Demo Wrapper */}
+      {/* 6. Live Interactive Demo Wrapper */}
       <section id="resources" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <DemoWrapper />
       </section>
 
-      {/* 6. Merchant Type Explainer: Cloud Enterprise vs Standalone (PFD Section 8) */}
+      {/* 7. Merchant Type Explainer: Cloud Enterprise vs Standalone (PFD Section 8) */}
       <section id="merchant-explainer">
         <MerchantTypeExplainerSection />
       </section>
 
-      {/* 7. Quantix Tools Section */}
+      {/* 8. Quantix Tools Section */}
       <section className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <QuantixToolsSection />
       </section>
 
-      {/* 8. Interactive ROI & Savings Calculator (PFD Section 6) */}
+      {/* 9. Interactive ROI & Savings Calculator (PFD Section 6) */}
       <section id="roi-calculator">
         <ROICalculatorSection />
       </section>
 
-      {/* 9. Testimonials Carousel */}
+      {/* 10. Testimonials Carousel */}
       <section id="testimonials" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyTestimonialsSection />
         </Suspense>
       </section>
 
-      {/* 10. FAQ Accordion */}
+      {/* 11. FAQ Accordion */}
       <section id="faq" className={cn("scroll-mt-28 bg-gray-50 dark:bg-slate-900 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyFAQWrapper />

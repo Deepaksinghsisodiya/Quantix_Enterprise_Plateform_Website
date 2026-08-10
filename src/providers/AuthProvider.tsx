@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { setCredentials, logout } from '../redux/slices/authSlice';
 import { ATMLoader } from '../components/atoms/ATMLoader';
-import { baseApi } from '../redux/services/baseApi';
+import { getApiBaseUrl } from '@/lib/apiBaseUrl';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     // Use the baseApi's raw fetch to avoid circular hook usage
     const fetchMe = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/me`, {
+        const res = await fetch(`${getApiBaseUrl()}/auth/me`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,

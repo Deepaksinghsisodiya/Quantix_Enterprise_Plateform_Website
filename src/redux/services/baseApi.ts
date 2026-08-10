@@ -3,10 +3,11 @@ import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import Cookies from 'js-cookie';
 import type { RootState } from '../store';
 import { logout, setCredentials } from '../slices/authSlice';
+import { getApiBaseUrl } from '@/lib/apiBaseUrl';
 
 // Base query with Authorization header
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseUrl: getApiBaseUrl(),
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {

@@ -1,5 +1,5 @@
-// src/components/organisms/HowItWorksSection/HowItWorksSection.tsx
-// Wrapper — provides static step data (or future API data) to HowItWorksView.
+"use client";
+
 import React from "react";
 import { HOW_IT_WORKS_STEPS } from "./HowItWorksData";
 import { HowItWorksView } from "./HowItWorksView";
