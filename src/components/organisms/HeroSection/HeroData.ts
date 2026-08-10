@@ -1,14 +1,8 @@
-// src/components/organisms/HeroSection/HeroData.ts
-// All static slide data for the Hero carousel mapped to the 4 main product lines:
-// 1. Restaurant POS
-// 2. Retail POS
-// 3. Enterprise POS
-// 4. Custom POS
-
 export interface HeroSlide {
   id: string;
   badge: string;
   heading: string;
+  mobileHeadingLines: [string, string, string];
   subheading: string;
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
@@ -19,43 +13,63 @@ export interface HeroSlide {
 export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "restaurant",
-    badge: "RESTAURANT POS & KITCHEN KDS",
+    badge: "RESTAURANT POS",
     heading: "The All-in-One Restaurant POS",
-    subheading: "Manage tableside orders, real-time kitchen ticket routing, split bills, and visual floor plans — all from one fast device.",
+    mobileHeadingLines: ["The All-in-One", "Restaurant", "POS"],
+    subheading:
+      "Manage tableside orders, kitchen ticket routing, split bills, and visual floor plans from one restaurant-ready POS.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "Request Demo →", href: "/contact/demo" },
-    backgroundImage: "/images/kitchen_display_3d.png",
+    secondaryCta: { label: "Request Demo", href: "/contact/demo" },
+    backgroundImage: "/images/ss2-ai.png",
     featureHighlights: ["Kitchen Ticket Routing", "Visual Floor Maps", "Tableside Ordering"],
   },
   {
     id: "retail",
-    badge: "RETAIL POS & BARCODE REGISTER",
+    badge: "RETAIL POS",
     heading: "Smarter Retail & Inventory POS",
-    subheading: "Offline-first barcode checkout, live stock deductions, matrix inventory, and customer rewards across every store branch.",
+    mobileHeadingLines: ["Smarter Retail", "& Inventory", "POS"],
+    subheading:
+      "Run barcode checkout, local billing, stock deductions, customer rewards, and cashier workflows across every store branch.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "Explore Retail POS →", href: "/features/offline-registers" },
-    backgroundImage: "/images/pos_counter_3d.png",
+    secondaryCta: { label: "Explore Retail POS", href: "/features/offline-registers" },
+    backgroundImage: "/images/ss3-ai.png",
     featureHighlights: ["Offline Local Till", "Fast Barcode Lookup", "Stock Level Sync"],
   },
   {
     id: "enterprise",
-    badge: "ENTERPRISE POS PLATFORM",
-    heading: "Multi-Store Enterprise POS Cloud",
-    subheading: "Bank-grade encrypted multi-tenant cloud dashboard with global menu updates, multi-store stock sync, and central analytics.",
+    badge: "ENTERPRISE POS",
+    heading: "Enterprise POS for Multi-Store Teams",
+    mobileHeadingLines: ["Enterprise POS", "for Multi-Store", "Teams"],
+    subheading:
+      "Centralize branch operations with menu rollouts, staff controls, inventory visibility, and reporting for growing chains.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-    secondaryCta: { label: "Enterprise Hub →", href: "/enterprise-vs-standalone" },
-    backgroundImage: "/images/enterprise_hub_3d.png",
-    featureHighlights: ["Multi-Tenant Isolation", "Global Menu Push", "Central Analytics"],
+    secondaryCta: { label: "Enterprise Hub", href: "/enterprise-vs-standalone" },
+    backgroundImage: "/images/ss1-ai.png",
+    featureHighlights: ["Branch Controls", "Menu Rollouts", "Central Analytics"],
+  },
+  {
+    id: "cloud",
+    badge: "CLOUD POS",
+    heading: "Run Every Location From the Cloud",
+    mobileHeadingLines: ["Run Every", "Location From the", "Cloud"],
+    subheading:
+      "Track sales, inventory, staff activity, and operational reports from anywhere your business needs visibility.",
+    primaryCta: { label: "Start Free Trial", href: "/sign-up" },
+    secondaryCta: { label: "Explore Cloud POS", href: "/enterprise-vs-standalone" },
+    backgroundImage: "/images/inventory_sync_3d.png",
+    featureHighlights: ["Live Dashboards", "Inventory Sync", "Remote Management"],
   },
   {
     id: "custom",
-    badge: "CUSTOM POS SOLUTIONS",
-    heading: "Tailored Custom POS Architecture",
-    subheading: "Custom software workflows, proprietary hardware API bridges, white-label branding, and dedicated corporate SLA support.",
+    badge: "CUSTOM SOLUTIONS",
+    heading: "Custom POS Solutions for Complex Workflows",
+    mobileHeadingLines: ["Custom POS", "Solutions for", "Complex Workflows"],
+    subheading:
+      "Build tailored workflows, API bridges, white-label experiences, and hardware integrations around your operating model.",
     primaryCta: { label: "Contact Custom Team", href: "/contact" },
-    secondaryCta: { label: "Request Quote →", href: "/contact" },
+    secondaryCta: { label: "Request Quote", href: "/contact" },
     backgroundImage: "/images/online_ordering_3d.png",
-    featureHighlights: ["Custom Workflows", "API & Webhook Bridge", "Dedicated SLA Line"],
+    featureHighlights: ["Custom Workflows", "API Bridges", "White-Label Options"],
   },
 ];
 

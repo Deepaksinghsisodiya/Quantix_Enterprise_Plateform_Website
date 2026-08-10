@@ -82,46 +82,68 @@ const tickerItems: NewsTickerItem[] = [
   },
 ];
 
-const tickerLoopItems = [...tickerItems, ...tickerItems];
 const marqueeAnimation: React.CSSProperties = {
-  animation: "quantixTickerSlide 16s linear infinite",
+  animation: "quantixTickerSlide 96s linear infinite",
   willChange: "transform",
 };
 
-const TickerTrack = ({ isDuplicate = false }: { isDuplicate?: boolean }) => (
-  <div
-    aria-hidden={isDuplicate}
-    className={`flex min-w-max shrink-0 items-center ${isDuplicate ? "ticker-track-copy" : ""}`}
-  >
-    {tickerLoopItems.map((item, index) => {
-      const Icon = item.icon;
+const tickerGroupItems = Array.from({ length: 8 }, () => tickerItems).flat();
 
-      return (
-        <React.Fragment key={`${item.id}-${index}-${isDuplicate ? "copy" : "main"}`}>
-          <Link
-            href={item.href}
-            className="group inline-flex h-11 shrink-0 items-center gap-2 px-4 text-[12px] font-semibold text-slate-200 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-primary/70 sm:h-12 sm:px-5 sm:text-[13px] md:h-[50px]"
-          >
-            <Icon className="h-3.5 w-3.5 shrink-0 text-primary transition-colors group-hover:text-primary-light" />
-            <span className="whitespace-nowrap">
-              <span className="font-bold text-white transition-colors group-hover:text-primary-light">
-                {item.title}
-              </span>
-              <span className="mx-1.5 text-slate-500">-</span>
-              <span className="text-slate-300 transition-colors group-hover:text-white">
-                {item.description}
-              </span>
-            </span>
-          </Link>
-          <span
-            aria-hidden="true"
-            className="inline-flex h-11 shrink-0 items-center px-2 text-sm font-black text-slate-500 sm:h-12 sm:px-3 md:h-[50px]"
-          >
-            /
+const TickerItem = ({
+  item,
+  tabIndex,
+}: {
+  item: NewsTickerItem;
+  tabIndex?: number;
+}) => {
+  const Icon = item.icon;
+
+  return (
+    <span className="inline-flex w-max shrink-0 items-center whitespace-nowrap">
+      <Link
+        href={item.href}
+        tabIndex={tabIndex}
+        className="group inline-flex h-11 w-max shrink-0 items-center gap-2 whitespace-nowrap px-4 text-[12px] font-semibold text-slate-200 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-primary/70 sm:h-12 sm:px-5 sm:text-[13px] md:h-[50px]"
+      >
+        <Icon className="h-3.5 w-3.5 shrink-0 text-primary transition-colors group-hover:text-primary-light" />
+        <span className="inline-flex w-max shrink-0 whitespace-nowrap">
+          <span className="font-bold text-white transition-colors group-hover:text-primary-light">
+            {item.title}
           </span>
-        </React.Fragment>
-      );
-    })}
+          <span className="mx-1.5 text-slate-500">-</span>
+          <span className="text-slate-300 transition-colors group-hover:text-white">
+            {item.description}
+          </span>
+        </span>
+      </Link>
+      <span
+        aria-hidden="true"
+        className="inline-flex h-11 shrink-0 items-center px-2 text-sm font-black text-slate-500 sm:h-12 sm:px-3 md:h-[50px]"
+      >
+        /
+      </span>
+    </span>
+  );
+};
+
+const TickerGroup = ({
+  groupIndex = 0,
+  groupItems,
+}: {
+  groupIndex?: number;
+  groupItems: NewsTickerItem[];
+}) => (
+  <div
+    aria-hidden={groupIndex > 0}
+    className={`quantix-news-ticker-group flex w-max shrink-0 items-center ${groupIndex > 0 ? "ticker-track-copy" : ""}`}
+  >
+    {groupItems.map((item, index) => (
+      <TickerItem
+        key={`${item.id}-${index}-${groupIndex}`}
+        item={item}
+        tabIndex={groupIndex > 0 ? -1 : undefined}
+      />
+    ))}
   </div>
 );
 
@@ -143,11 +165,11 @@ export default function NewsTickerMarquee() {
 
         <div className="min-w-0 flex-1 overflow-hidden">
           <div
-            className="quantix-news-ticker-track flex w-max items-center"
+            className="quantix-news-ticker-track flex w-max min-w-max items-center"
             style={marqueeAnimation}
           >
-            <TickerTrack />
-            <TickerTrack isDuplicate />
+            <TickerGroup groupItems={tickerGroupItems} />
+            <TickerGroup groupIndex={1} groupItems={tickerGroupItems} />
           </div>
         </div>
       </div>
@@ -165,10 +187,21 @@ export default function NewsTickerMarquee() {
 
         .quantix-news-ticker-track {
           display: flex;
+          width: max-content;
+          min-width: max-content;
         }
 
-        .quantix-news-ticker:hover .quantix-news-ticker-track {
-          animation-play-state: paused;
+        .quantix-news-ticker-group {
+          display: flex;
+          width: max-content;
+          min-width: max-content;
+          flex-shrink: 0;
+          white-space: nowrap;
+        }
+
+        .quantix-news-ticker-group > * {
+          flex-shrink: 0;
+          white-space: nowrap;
         }
 
         @media (prefers-reduced-motion: reduce) {

@@ -33,9 +33,9 @@ const LINKS: NavLink[] = [
 
 const PRODUCTS_LIST = [
   { title: 'Point of Sale (EPOS)', icon: Monitor, desc: 'Offline-first terminal billing', slug: 'offline-registers', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'Order Kiosks Integration', icon: Tablet, desc: 'Self-checkout guest screens', slug: 'smart-inventory', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'Online Ordering Portal', icon: Globe, desc: 'Web and mobile customer app', slug: 'table-management', image: 'https://images.unsplash.com/photo-1526367790999-0150786486a9?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'Kitchen Display Systems', icon: Tv, desc: 'Real-time kitchen order sync', slug: 'table-management', image: 'https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Order Kiosks Integration', icon: Tablet, desc: 'Self-checkout guest screens', slug: 'self-service-kiosk', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Online Ordering Portal', icon: Globe, desc: 'Web and mobile customer app', slug: 'online-ordering', image: 'https://images.unsplash.com/photo-1526367790999-0150786486a9?auto=format&fit=crop&w=120&h=120&q=80' },
+  { title: 'Kitchen Display Systems', icon: Tv, desc: 'Real-time kitchen order sync', slug: 'kitchen-display', image: 'https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&w=120&h=120&q=80' },
   { title: 'Android & iPad POS', icon: Smartphone, desc: 'Handheld tableside ordering', slug: 'offline-registers', image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=120&h=120&q=80' }
 ];
 
@@ -52,7 +52,7 @@ const OPERATIONS_LIST = [
   { title: 'Visual Sales Reports', icon: BarChart3, desc: 'Margins, sales & analytics', slug: 'smart-inventory', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=120&h=120&q=80' },
   { title: 'SMS Queue Dispatch', icon: MessageSquare, desc: 'Notify customer queues', slug: 'table-management', image: 'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=120&h=120&q=80' },
   { title: 'Interactive Floor Layouts', icon: Grid, desc: 'Visual table mapping stats', slug: 'table-management', image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=120&h=120&q=80' },
-  { title: 'Customer Loyalty Tiers', icon: Award, desc: 'Points, rewards campaigns', slug: 'smart-inventory', image: 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=120&h=120&q=80' }
+  { title: 'Customer Loyalty Tiers', icon: Award, desc: 'Points, rewards campaigns', slug: 'marketing-loyalty', image: 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=120&h=120&q=80' }
 ];
 
 const SERVICES_LIST = [
@@ -84,6 +84,151 @@ const PRICING_LIST = [
   { title: 'Starter Trial', desc: 'Free 3-day test checkout flow and inventory', price: '$0', badge: 'Free Trial', icon: Sparkles, image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=120&h=120&q=80' },
   { title: 'Business Pro', desc: 'Complete cashier registers and margins sync', price: '$49', badge: 'Most Popular', icon: Check, popular: true, image: 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=120&h=120&q=80' },
   { title: 'Enterprise Plan', desc: 'Custom APIs, dedicated servers & SLA SLA check', price: 'Custom', badge: 'For Corporations', icon: Headset, image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=120&h=120&q=80' },
+];
+
+type MobileMenuIcon = React.ComponentType<{ size?: number; className?: string }>;
+
+interface MobileMenuItem {
+  title: string;
+  desc: string;
+  href: string;
+  icon: MobileMenuIcon;
+  badge?: string;
+}
+
+interface MobileMenuGroup {
+  title: string;
+  items: MobileMenuItem[];
+}
+
+interface MobileMenuSection extends NavLink {
+  icon: MobileMenuIcon;
+  groups: MobileMenuGroup[];
+}
+
+const featureLink = (item: { title: string; desc: string; slug: string; icon: MobileMenuIcon }): MobileMenuItem => ({
+  title: item.title,
+  desc: item.desc,
+  href: `/features/${item.slug}`,
+  icon: item.icon,
+});
+
+const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
+  {
+    ...LINKS[0],
+    icon: Layers,
+    groups: [
+      {
+        title: 'POS Products',
+        items: PRODUCTS_LIST.map(featureLink),
+      },
+      {
+        title: 'Hardware & Registers',
+        items: HARDWARE_LIST.map(featureLink),
+      },
+      {
+        title: 'Operations Tools',
+        items: OPERATIONS_LIST.map(featureLink),
+      },
+    ],
+  },
+  {
+    ...LINKS[1],
+    icon: Store,
+    groups: [
+      {
+        title: 'Restaurant Solutions',
+        items: [
+          { title: 'Quick Service Restaurants', desc: 'Fast checkout, kiosks, and KDS queues', href: '/solutions/quick-service', icon: Utensils },
+          { title: 'Fine Dining', desc: 'Table mapping and course-paced service', href: '/solutions/fine-dining', icon: Coffee },
+          { title: 'Cafes & Bakeries', desc: 'Recipe costing and digital menu boards', href: '/solutions/cafe-bakery', icon: Coffee },
+          { title: 'Franchise & Multi-Location', desc: 'Central controls for branch operations', href: '/solutions/franchise', icon: Server },
+        ],
+      },
+      {
+        title: 'Retail Solutions',
+        items: [
+          { title: 'Fashion & Apparel', desc: 'Size, color, collection, and store sync', href: '/solutions/fashion-retail', icon: ShoppingBag },
+          { title: 'Grocery & Convenience', desc: 'Barcode, scale, batch, and stock controls', href: '/solutions/grocery', icon: Store },
+          { title: 'Enterprise Setup', desc: 'Dedicated SLA, rollout, and custom setup', href: '/sign-up/enterprise', icon: ShieldCheck },
+        ],
+      },
+    ],
+  },
+  {
+    ...LINKS[2],
+    icon: RefreshCw,
+    groups: [
+      {
+        title: 'Payment & Finance',
+        items: [
+          { title: 'Stripe Payments', desc: 'Secure card and online payments', href: '/integrations/stripe', icon: CreditCard },
+          { title: 'Xero Accounting', desc: 'Invoice and ledger sync workflows', href: '/integrations/xero', icon: BarChart3 },
+        ],
+      },
+      {
+        title: 'Ordering & Delivery',
+        items: [
+          { title: 'Shopify Sync', desc: 'Retail inventory and e-commerce sync', href: '/integrations/shopify', icon: Store },
+          { title: 'DoorDash Drive', desc: 'Delivery dispatch into POS operations', href: '/integrations/doordash', icon: Truck },
+          { title: 'Integration Directory', desc: 'Browse all supported connectors', href: '/integrations', icon: Layers },
+        ],
+      },
+    ],
+  },
+  {
+    ...LINKS[3],
+    icon: Download,
+    groups: [
+      {
+        title: 'Help & Learning',
+        items: [
+          { title: 'Help Centre', desc: 'Setup guides and support articles', href: '/help', icon: Headset },
+          { title: 'Frequently Asked Questions', desc: 'Common setup and pricing answers', href: '/faq', icon: MessageSquare },
+          { title: 'Product Tour', desc: 'Explore the platform walkthrough', href: '/product-tour', icon: Sparkles },
+          { title: 'API Documentation', desc: 'Developer docs and API examples', href: '/api-docs', icon: Server },
+        ],
+      },
+      {
+        title: 'Downloads & Status',
+        items: [
+          { title: 'App Downloads & Drivers', desc: 'POS terminal installers and sync tools', href: '/downloads', icon: Download },
+          { title: 'System Status', desc: 'Live service and API status', href: '/status', icon: ShieldCheck },
+          { title: 'Resources Hub', desc: 'All guides, tools, and documents', href: '/resources', icon: Layers },
+        ],
+      },
+    ],
+  },
+  {
+    ...LINKS[4],
+    icon: Award,
+    groups: [
+      {
+        title: 'Plans',
+        items: PRICING_LIST.map((item) => ({
+          title: item.title,
+          desc: item.desc,
+          href: '/pricing',
+          icon: item.icon,
+          badge: item.price,
+        })),
+      },
+      {
+        title: 'Decision Tools',
+        items: [
+          { title: 'ROI Calculator', desc: 'Estimate savings for your operations', href: '/roi-calculator', icon: BarChart3 },
+          { title: 'Solution Quiz', desc: 'Find the right setup for your business', href: '/quiz', icon: Sparkles },
+        ],
+      },
+    ],
+  },
+];
+
+const QUICK_MOBILE_TOOLS = [
+  { label: 'ROI Calculator', href: '/roi-calculator', icon: BarChart3 },
+  { label: 'Solution Quiz', href: '/quiz', icon: Sparkles },
+  { label: 'Product Tour', href: '/product-tour', icon: Monitor },
+  { label: 'Help Centre', href: '/help', icon: Headset },
 ];
 
 const Navbar = () => {
@@ -205,13 +350,23 @@ const Navbar = () => {
     show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 120, damping: 14 } },
   };
 
+  const activeMobileSection = MOBILE_MENU_SECTIONS.find((section) => section.label === mobileSubMenu);
+  const closeMobileMenu = () => {
+    setMobileOpen(false);
+    setMobileSubMenu(null);
+  };
+  const isMenuHrefActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const isMobileSectionActive = (section: MobileMenuSection) =>
+    isMenuHrefActive(section.href) ||
+    section.groups.some((group) => group.items.some((item) => isMenuHrefActive(item.href)));
+
   return (
     <>
       <div className="fixed top-0 left-0 z-50 w-full flex flex-col">
         {/* Top Promo Banner - Smooth CSS Collapse on Scroll */}
         <div className={cn(
-          "w-full bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/80 text-center text-[11px] sm:text-[13px] font-sans font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-center gap-1 select-none transition-all duration-300 ease-out overflow-hidden",
-          scrolled ? "max-h-0 opacity-0 py-0 border-b-0" : "max-h-10 py-1.5 px-3 opacity-100"
+          "w-full bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/80 text-center text-[10px] sm:text-[13px] font-sans font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-center gap-1 select-none transition-all duration-300 ease-out overflow-hidden",
+          scrolled ? "max-h-0 opacity-0 py-0 border-b-0" : "max-h-8 py-1 px-3 opacity-100 sm:max-h-10 sm:py-1.5"
         )}>
           <span className="truncate max-w-[220px] sm:max-w-none">Get 3 Months FREE Quantix Cloud POS</span>
           <span className="text-slate-350 dark:text-slate-700 mx-0.5 sm:mx-1">|</span>
@@ -226,7 +381,7 @@ const Navbar = () => {
         <nav
           className={cn(
             "w-full bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800 relative transition-all duration-300",
-            scrolled ? "shadow-md shadow-slate-900/5 py-2 sm:py-2.5" : "shadow-sm py-2.5 sm:py-3"
+            scrolled ? "shadow-md shadow-slate-900/5 py-1.5 sm:py-2.5" : "shadow-sm py-2 sm:py-3"
           )}
           onMouseLeave={() => setOpenMegaMenu(null)}
         >
@@ -248,7 +403,7 @@ const Navbar = () => {
                 <img
                   src="/images/logo/quantix-logo-full-on-light.svg"
                   alt="Quantix Logo"
-                  className="block lg:hidden h-[30px] sm:h-[34px] w-auto transition-all duration-300 group-hover:scale-[1.02]"
+                  className="block lg:hidden h-[26px] sm:h-[34px] w-auto transition-all duration-300 group-hover:scale-[1.02]"
                 />
               </Link>
 
@@ -350,7 +505,7 @@ const Navbar = () => {
                 <button
                   type="button"
                   className={cn(
-                    'flex flex-col justify-center items-center w-8 h-8 rounded-full transition-all duration-200 focus:outline-none',
+                    'flex flex-col justify-center items-center w-7 h-7 sm:w-8 sm:h-8 rounded-full transition-all duration-200 focus:outline-none',
                     useWhiteText ? 'text-white' : 'text-slate-800'
                   )}
                   aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
@@ -358,15 +513,15 @@ const Navbar = () => {
                   onClick={toggleMobile}
                 >
                   <span className={cn(
-                    "w-5 h-[2px] bg-current rounded-full transition-all duration-300 ease-out",
+                    "w-[18px] h-[2px] sm:w-5 bg-current rounded-full transition-all duration-300 ease-out",
                     mobileOpen ? "rotate-45 translate-y-[5px]" : ""
                   )} />
                   <span className={cn(
-                    "w-5 h-[2px] bg-current rounded-full my-[3px] transition-all duration-300 ease-out",
+                    "w-[18px] h-[2px] sm:w-5 bg-current rounded-full my-[3px] transition-all duration-300 ease-out",
                     mobileOpen ? "opacity-0 scale-x-0" : ""
                   )} />
                   <span className={cn(
-                    "w-5 h-[2px] bg-current rounded-full transition-all duration-300 ease-out",
+                    "w-[18px] h-[2px] sm:w-5 bg-current rounded-full transition-all duration-300 ease-out",
                     mobileOpen ? "-rotate-45 -translate-y-[5px]" : ""
                   )} />
                 </button>
@@ -460,7 +615,7 @@ const Navbar = () => {
                           <Server size={14} className="text-blue-600 shrink-0" /> Enterprise POS
                         </Link>
                         <Link href="/contact" onClick={() => setOpenMegaMenu(null)} className="group/link flex items-center gap-2 text-[13px] font-bold text-primary hover:text-primary-dark transition-colors">
-                          <Headset size={14} className="text-amber-600 shrink-0" /> Custom POS
+                          <Headset size={14} className="text-amber-600 shrink-0" /> Custom Solutions
                         </Link>
                       </div>
                     </div>
@@ -851,215 +1006,227 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-white flex flex-col justify-between pt-[68px] sm:pt-20 pb-5 px-5 lg:hidden overflow-y-auto max-h-screen"
+            role="dialog"
+            aria-modal="true"
+            className={cn(
+              "fixed inset-x-0 bottom-0 z-40 overflow-hidden border-t border-slate-200/80 bg-slate-50 lg:hidden",
+              scrolled ? "top-[44px] sm:top-[58px]" : "top-[70px] sm:top-[96px]"
+            )}
           >
-            {mobileSubMenu ? (
+            {activeMobileSection ? (
               /* Drill-down Sub-Menu View */
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.25 }}
-                className="flex flex-col gap-3.5 w-full max-w-md mx-auto pt-1 pb-3"
+                className="flex h-full w-full flex-col overflow-y-auto overscroll-contain px-3.5 pt-3 pb-[calc(env(safe-area-inset-bottom)+112px)] min-[380px]:px-4 sm:px-5"
               >
-                {/* Back Button */}
-                <button
-                  type="button"
-                  onClick={() => setMobileSubMenu(null)}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 hover:bg-blue-100 px-3.5 py-2 rounded-xl w-fit transition-colors cursor-pointer"
-                >
-                  <ArrowLeft size={14} /> Back to Main Menu
-                </button>
+                <div className="mx-auto flex w-full max-w-md flex-col gap-3.5">
+                  {/* Back Button */}
+                  <button
+                    type="button"
+                    onClick={() => setMobileSubMenu(null)}
+                    className="inline-flex w-fit cursor-pointer items-center gap-1.5 rounded-full border border-primary/10 bg-white px-3.5 py-2 text-[11px] font-extrabold uppercase tracking-wider text-primary shadow-xs transition-colors hover:bg-primary/10"
+                  >
+                    <ArrowLeft size={14} /> Back to Main Menu
+                  </button>
 
-                {/* Drill-down Header */}
-                <div className="space-y-0.5">
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-blue-500">
-                    EXPLORE CATEGORY
-                  </span>
-                  <h3 className="text-xl font-syne font-black uppercase text-slate-900">
-                    {mobileSubMenu}
-                  </h3>
-                </div>
-
-                {/* Sub-items List per Category */}
-                <div className="space-y-2.5 max-h-[50vh] overflow-y-auto pr-1">
-                  {(mobileSubMenu === 'Products' || mobileSubMenu === 'Features') && (
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary block">Ordering Channels</span>
-                        <Link href="/features/offline-registers" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                          <span className="text-xs font-bold text-slate-900 uppercase font-syne">Point of Sale (POS)</span>
-                          <span className="text-[11px] text-slate-500 font-medium">Offline-first register billing</span>
-                        </Link>
-                        <Link href="/features/table-management" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                          <span className="text-xs font-bold text-slate-900 uppercase font-syne">Online Ordering</span>
-                          <span className="text-[11px] text-slate-500 font-medium">Branded web and mobile app</span>
-                        </Link>
-                      </div>
-                      <div className="space-y-2">
-                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary block">Management & Ops</span>
-                        <Link href="/features/table-management" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                          <span className="text-xs font-bold text-slate-900 uppercase font-syne">Kitchen Display System</span>
-                          <span className="text-[11px] text-slate-500 font-medium">Real-time order sync</span>
-                        </Link>
-                        <Link href="/features/smart-inventory" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                          <span className="text-xs font-bold text-slate-900 uppercase font-syne">Delivery Management</span>
-                          <span className="text-[11px] text-slate-500 font-medium">Live order tracking</span>
-                        </Link>
+                  {/* Drill-down Header */}
+                  <div className="rounded-lg border border-slate-200/80 bg-white p-3 shadow-xs">
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary">
+                      Explore Category
+                    </span>
+                    <div className="mt-2 flex items-center gap-2.5">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-primary/15 bg-primary/10 text-primary">
+                        {React.createElement(activeMobileSection.icon, { size: 17 })}
+                      </span>
+                      <div>
+                        <h3 className="font-syne text-xl font-black uppercase leading-none text-slate-900">
+                          {activeMobileSection.label}
+                        </h3>
+                        <p className="mt-1 text-xs font-medium leading-snug text-slate-500">
+                          {activeMobileSection.desc}
+                        </p>
                       </div>
                     </div>
-                  )}
+                  </div>
 
-                  {mobileSubMenu === 'Integrations' && (
-                    <div className="space-y-2.5">
-                      <Link href="/integrations" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                        <span className="text-xs font-bold text-slate-900 uppercase font-syne">POS Integrations (EPX, Keptu, Pine Labs)</span>
-                        <span className="text-[11px] text-slate-500 font-medium">Hardware terminal sync</span>
-                      </Link>
-                      <Link href="/integrations" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                        <span className="text-xs font-bold text-slate-900 uppercase font-syne">Ordering Integrations (WooCommerce, Shopify)</span>
-                        <span className="text-[11px] text-slate-500 font-medium">E-Commerce channel sync</span>
-                      </Link>
-                      <Link href="/integrations" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                        <span className="text-xs font-bold text-slate-900 uppercase font-syne">Delivery Partners (DoorDash Drive)</span>
-                        <span className="text-[11px] text-slate-500 font-medium">Automatic delivery dispatch</span>
-                      </Link>
-                    </div>
-                  )}
+                  {/* Sub-items List per Category */}
+                  <div className="space-y-4">
+                    {activeMobileSection.groups.map((group) => (
+                      <div key={group.title} className="space-y-2">
+                        <span className="block px-1 text-[10px] font-extrabold uppercase tracking-widest text-primary">
+                          {group.title}
+                        </span>
+                        <div className="grid grid-cols-2 gap-2">
+                          {group.items.map((item) => {
+                            const ItemIcon = item.icon;
+                            const isItemActive = isMenuHrefActive(item.href);
 
-                  {(mobileSubMenu === 'Solutions' || mobileSubMenu === 'Services') && (
-                    <div className="space-y-2.5">
-                      <Link href="/solutions/quick-service" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                        <span className="text-xs font-bold text-slate-900 uppercase font-syne">Quick Service Restaurants</span>
-                        <span className="text-[11px] text-slate-500 font-medium">Fast billing & kiosks</span>
-                      </Link>
-                      <Link href="/solutions/fine-dining" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                        <span className="text-xs font-bold text-slate-900 uppercase font-syne">Full Service Diners</span>
-                        <span className="text-[11px] text-slate-500 font-medium">Visual table mapping</span>
-                      </Link>
-                      <Link href="/solutions/franchise" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                        <span className="text-xs font-bold text-slate-900 uppercase font-syne">Multi-Location Chains</span>
-                        <span className="text-[11px] text-slate-500 font-medium">Enterprise multi-tenant hub</span>
-                      </Link>
-                    </div>
-                  )}
-
-                  {(mobileSubMenu === 'Resources' || mobileSubMenu === 'Downloads') && (
-                    <div className="space-y-2.5">
-                      <Link href="/faq" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                        <span className="text-xs font-bold text-slate-900 uppercase font-syne">Frequently Asked Questions</span>
-                        <span className="text-[11px] text-slate-500 font-medium">Common questions & answers</span>
-                      </Link>
-                      <Link href="/help" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                        <span className="text-xs font-bold text-slate-900 uppercase font-syne">Help Guides & Documentation</span>
-                        <span className="text-[11px] text-slate-500 font-medium">Setup guides & API specs</span>
-                      </Link>
-                      <Link href="/downloads" onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }} className="flex flex-col p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all">
-                        <span className="text-xs font-bold text-slate-900 uppercase font-syne">App Downloads & Drivers</span>
-                        <span className="text-[11px] text-slate-500 font-medium">POS terminal installers</span>
-                      </Link>
-                    </div>
-                  )}
-
-                  {(mobileSubMenu === 'Pricing' || mobileSubMenu === 'Pricing Plans') && (
-                    <div className="space-y-2.5">
-                      {PRICING_LIST.map((item) => (
-                        <Link
-                          key={item.title}
-                          href="/pricing"
-                          onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
-                          className="flex flex-col p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 transition-all"
-                        >
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-slate-900 uppercase font-syne">{item.title}</span>
-                            <span className="text-xs font-black text-primary">{item.price}</span>
-                          </div>
-                          <span className="text-[11px] text-slate-500 font-medium mt-1">{item.desc}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                            return (
+                              <Link
+                                key={`${group.title}-${item.title}`}
+                                href={item.href}
+                                onClick={closeMobileMenu}
+                                className={cn(
+                                  "group/item relative flex min-h-[108px] flex-col justify-between rounded-lg border p-3 text-left shadow-xs transition-all hover:border-primary/35 hover:bg-primary/5 active:scale-[0.99]",
+                                  isItemActive
+                                    ? "border-primary/40 bg-primary/10 text-primary"
+                                    : "border-slate-200/80 bg-white text-slate-900"
+                                )}
+                              >
+                                <span className="flex items-start justify-between gap-2">
+                                  <span
+                                    className={cn(
+                                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-md border transition-colors group-hover/item:bg-primary group-hover/item:text-white",
+                                      isItemActive
+                                        ? "border-primary bg-primary text-white"
+                                        : "border-primary/15 bg-primary/10 text-primary"
+                                    )}
+                                  >
+                                    <ItemIcon size={15} />
+                                  </span>
+                                  <ChevronRight
+                                    size={14}
+                                    className={cn(
+                                      "shrink-0 transition-transform group-hover/item:translate-x-0.5",
+                                      isItemActive ? "text-primary" : "text-slate-300 group-hover/item:text-primary"
+                                    )}
+                                  />
+                                </span>
+                                <span className="mt-2 block min-w-0">
+                                  <span
+                                    className={cn(
+                                      "block font-syne text-[11px] font-black uppercase leading-tight",
+                                      isItemActive ? "text-primary" : "text-slate-900"
+                                    )}
+                                  >
+                                    {item.title}
+                                  </span>
+                                  <span className="mt-1 block text-[10px] font-medium leading-snug text-slate-500 line-clamp-2">
+                                    {item.desc}
+                                  </span>
+                                  {item.badge && (
+                                    <span className="mt-2 inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-black text-primary">
+                                      {item.badge}
+                                    </span>
+                                  )}
+                                </span>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
 
                 {/* Primary Category Page Link Button */}
                 <Link
-                  href={
-                    (mobileSubMenu === 'Products' || mobileSubMenu === 'Features') ? '/features' :
-                      mobileSubMenu === 'Integrations' ? '/integrations' :
-                        (mobileSubMenu === 'Solutions' || mobileSubMenu === 'Services') ? '/services' :
-                          (mobileSubMenu === 'Resources' || mobileSubMenu === 'Downloads') ? '/resources' : '/pricing'
-                  }
-                  onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
-                  className="flex items-center justify-center gap-2 h-11 rounded-xl bg-primary hover:bg-primary-light text-white font-extrabold text-xs uppercase tracking-wider shadow-md shadow-primary/20 transition-all mt-2"
+                  href={activeMobileSection.href}
+                  onClick={closeMobileMenu}
+                  className="mt-1 flex h-11 items-center justify-center gap-2 rounded-lg bg-primary text-xs font-extrabold uppercase tracking-wider text-white shadow-md shadow-primary/20 transition-all hover:bg-primary-light"
                 >
-                  View Main {mobileSubMenu} Page <ArrowRight size={14} />
+                  View Main {activeMobileSection.label} Page <ArrowRight size={14} />
                 </Link>
+                </div>
               </motion.div>
             ) : (
               /* Main Mobile Menu */
-              <>
+              <div className="h-full overflow-y-auto overscroll-contain px-3.5 pt-3 pb-[calc(env(safe-area-inset-bottom)+112px)] min-[380px]:px-4 sm:px-5">
                 <motion.div
                   variants={containerVariants}
                   initial="hidden"
                   animate="show"
-                  className="flex flex-col gap-1 w-full max-w-md mx-auto pt-1 pb-3"
+                  className="mx-auto flex w-full max-w-md flex-col gap-2.5"
                 >
-                  <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1 px-1">
-                    Navigation
+                  <div className="mb-0.5 flex items-center justify-between px-1">
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
+                      Navigation
+                    </span>
+                    <span className="rounded-full border border-primary/10 bg-white px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-primary shadow-xs">
+                      POS Platform
+                    </span>
                   </div>
 
-                  {LINKS.map((link) => {
-                    const isActive = pathname === link.href;
-                    return (
-                      <motion.div key={link.href} variants={itemVariants}>
-                        <button
-                          type="button"
-                          onClick={() => setMobileSubMenu(link.label)}
-                          className={cn(
-                            'w-full text-left flex flex-col gap-0.5 py-2.5 px-3.5 rounded-xl transition-all duration-200 cursor-pointer',
-                            isActive
-                              ? 'bg-blue-50 border border-blue-100 text-blue-600'
-                              : 'hover:bg-slate-50 border border-transparent'
-                          )}
+                  <div className="grid grid-cols-2 gap-2">
+                    {MOBILE_MENU_SECTIONS.map((link, index) => {
+                      const isActive = isMobileSectionActive(link);
+                      const LinkIcon = link.icon;
+
+                      return (
+                        <motion.div
+                          key={link.href}
+                          variants={itemVariants}
+                          className={cn(index === MOBILE_MENU_SECTIONS.length - 1 && "col-span-2")}
                         >
-                          <div className="flex items-center justify-between">
-                            <span className={cn(
-                              'text-[15px] font-syne font-bold tracking-tight uppercase transition-colors duration-200',
-                              isActive ? 'text-blue-600' : 'text-slate-900'
-                            )}>
-                              {link.label}
+                          <button
+                            type="button"
+                            onClick={() => setMobileSubMenu(link.label)}
+                            aria-label={`Open ${link.label} menu`}
+                            className={cn(
+                              'group/nav relative flex min-h-[112px] w-full cursor-pointer flex-col justify-between overflow-hidden rounded-lg border p-3 text-left shadow-xs transition-all duration-200 active:scale-[0.99]',
+                              isActive
+                                ? 'border-primary/45 bg-primary/10 text-primary shadow-primary/10'
+                                : 'border-slate-200/80 bg-white text-slate-900 hover:border-primary/30 hover:bg-primary/5'
+                            )}
+                          >
+                            <span className="flex items-start justify-between gap-2">
+                              <span className={cn(
+                                "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors",
+                                isActive
+                                  ? "border-primary bg-primary text-white"
+                                  : "border-primary/15 bg-primary/10 text-primary group-hover/nav:bg-primary group-hover/nav:text-white"
+                              )}>
+                                <LinkIcon size={17} />
+                              </span>
+                              <span className={cn(
+                                "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all",
+                                isActive
+                                  ? "border-primary/25 bg-white/80 text-primary"
+                                  : "border-slate-200 text-slate-400 group-hover/nav:border-primary/20 group-hover/nav:text-primary"
+                              )}>
+                                <ChevronRight size={14} className="transition-transform group-hover/nav:translate-x-0.5" />
+                              </span>
                             </span>
-                            <ChevronRight size={14} className={cn("transition-transform", isActive ? "text-blue-600" : "text-slate-400")} />
-                          </div>
-                          <span className="text-[12px] text-slate-500 font-medium tracking-normal normal-case">
-                            {link.desc}
-                          </span>
-                        </button>
-                      </motion.div>
-                    );
-                  })}
+                            <span className="mt-3 block min-w-0">
+                              <span className={cn(
+                                'block font-syne text-[13px] font-black uppercase leading-tight tracking-tight transition-colors duration-200',
+                                isActive ? 'text-primary' : 'text-slate-900'
+                              )}>
+                                {link.label}
+                              </span>
+                              <span className="mt-1 block text-[10px] font-medium leading-snug tracking-normal text-slate-500 normal-case line-clamp-2">
+                                {link.desc}
+                              </span>
+                            </span>
+                          </button>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
 
                   {/* Quick Tools Grid */}
-                  <motion.div variants={itemVariants} className="pt-3 border-t border-slate-100 mt-2 space-y-2">
+                  <motion.div variants={itemVariants} className="mt-1 space-y-2 border-t border-slate-200/70 pt-3">
                     <div className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 px-1">
                       Tools & Resources
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                      {[
-                        { label: 'ROI Calculator', href: '/roi-calculator' },
-                        { label: 'Solution Quiz', href: '/quiz' },
-                        { label: 'Product Tour', href: '/product-tour' },
-                        { label: 'Help Centre', href: '/help' },
-                      ].map((tool, idx) => (
-                        <Link
-                          key={idx}
-                          href={tool.href}
-                          onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
-                          className="text-[11px] font-bold uppercase tracking-wider text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 rounded-xl py-2.5 px-3 text-center transition-all"
-                        >
-                          {tool.label}
-                        </Link>
-                      ))}
+                      {QUICK_MOBILE_TOOLS.map((tool) => {
+                        const ToolIcon = tool.icon;
+
+                        return (
+                          <Link
+                            key={tool.href}
+                            href={tool.href}
+                            onClick={closeMobileMenu}
+                            className="flex min-h-10 items-center justify-center gap-1.5 rounded-lg border border-slate-200/80 bg-white px-2.5 py-2 text-center text-[10px] font-extrabold uppercase tracking-wider text-slate-700 shadow-xs transition-all hover:border-primary/25 hover:bg-primary/5 hover:text-primary min-[380px]:text-[11px]"
+                          >
+                            <ToolIcon size={13} className="shrink-0 text-primary" />
+                            {tool.label}
+                          </Link>
+                        );
+                      })}
                     </div>
                   </motion.div>
                 </motion.div>
@@ -1069,23 +1236,22 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.3 }}
-                  className="flex flex-col gap-2.5 w-full max-w-md mx-auto pt-3 border-t border-slate-100"
+                  className="mx-auto mt-4 flex w-full max-w-md flex-col gap-2.5 border-t border-slate-200/70 pt-3"
                 >
                   {token ? (
                     <>
-                      <div className="flex items-center gap-2.5 justify-center py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 select-none">
-                        <User size={15} className="text-blue-600" />
+                      <div className="flex items-center gap-2.5 justify-center rounded-lg border border-slate-200/80 bg-white py-2.5 shadow-xs select-none">
+                        <User size={15} className="text-primary" />
                         <span className="text-[13px] font-bold tracking-wider uppercase text-slate-800">
                           Hi, {meData?.data?.username || meData?.username || "Admin"}
                         </span>
                       </div>
                       <button
                         onClick={() => {
-                          setMobileOpen(false);
-                          setMobileSubMenu(null);
+                          closeMobileMenu();
                           handleLogout();
                         }}
-                        className="flex items-center justify-center gap-2 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-[13px] uppercase tracking-[0.08em] transition-all duration-200 cursor-pointer shadow-md shadow-red-600/15"
+                        className="flex h-11 cursor-pointer items-center justify-center gap-2 rounded-lg bg-red-600 text-[13px] font-extrabold uppercase tracking-[0.08em] text-white shadow-md shadow-red-600/15 transition-all duration-200 hover:bg-red-700"
                       >
                         <LogOut size={15} />
                         Log Out
@@ -1095,22 +1261,34 @@ const Navbar = () => {
                     <>
                       <Link
                         href="/sign-up"
-                        onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
-                        className="flex items-center justify-center h-11 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-extrabold text-[13px] uppercase tracking-[0.08em] transition-all duration-200 shadow-lg shadow-blue-600/20"
+                        onClick={closeMobileMenu}
+                        className="flex h-11 items-center justify-center rounded-lg bg-primary text-[13px] font-extrabold uppercase tracking-[0.08em] text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-light"
                       >
                         Start Free Trial
                       </Link>
-                      <Link
-                        href="/sign-in"
-                        onClick={() => { setMobileOpen(false); setMobileSubMenu(null); }}
-                        className="flex items-center justify-center h-11 rounded-xl text-[13px] font-bold uppercase tracking-[0.08em] border border-slate-200 text-slate-800 bg-white hover:bg-slate-50 active:bg-slate-100 transition-all duration-200 shadow-xs"
-                      >
-                        Sign In
-                      </Link>
+                      <div className="grid grid-cols-2 gap-2">
+                        <Link
+                          href="/sign-in"
+                          onClick={closeMobileMenu}
+                          className="flex h-11 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white text-[12px] font-extrabold uppercase tracking-[0.08em] text-slate-800 shadow-xs transition-all duration-200 hover:bg-slate-50 active:bg-slate-100"
+                        >
+                          <LogIn size={14} /> Sign In
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            closeMobileMenu();
+                            openModal();
+                          }}
+                          className="flex h-11 items-center justify-center gap-1.5 rounded-lg border border-primary/20 bg-primary/10 text-[12px] font-extrabold uppercase tracking-[0.08em] text-primary shadow-xs transition-all duration-200 hover:bg-primary/15"
+                        >
+                          <Headset size={14} /> Contact
+                        </button>
+                      </div>
                     </>
                   )}
                 </motion.div>
-              </>
+              </div>
             )}
           </motion.div>
         )}
