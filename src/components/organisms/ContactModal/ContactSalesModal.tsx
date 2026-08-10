@@ -10,6 +10,7 @@ export interface ContactSalesModalProps {
   onClose: () => void;
   title?: string;
   subtitle?: string;
+  badgeText?: string;
   buttonText?: string;
 }
 
@@ -36,6 +37,7 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
   onClose,
   title = "We've got the right solution for you!",
   subtitle = "Tell us about your business and our solution specialist will build your custom setup within 1 hour.",
+  badgeText = "SOLUTIONS EXPERT",
   buttonText = "GET STARTED TODAY",
 }) => {
   const [formData, setFormData] = useState({
@@ -170,6 +172,11 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
 
             {/* Header Content */}
             <div className="flex flex-col items-center text-center space-y-1.5 mb-4 pt-2">
+              {badgeText && (
+                <span className="mb-1 inline-flex items-center gap-1 rounded-md border border-primary/20 bg-primary/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-primary dark:text-primary-light">
+                  {badgeText}
+                </span>
+              )}
               <h3 className="text-base sm:text-lg font-syne font-black text-slate-900 dark:text-white leading-snug tracking-tight max-w-[270px]">
                 {title}
               </h3>
