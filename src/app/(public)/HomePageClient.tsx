@@ -14,8 +14,6 @@ import { cn } from "@/lib/utils";
 import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// PFD Compliant Sections
-import ValuePropositionsSection from "@/components/organisms/ValuePropositions/ValuePropositionsSection";
 import IntegrationsTickerSection from "@/components/organisms/IntegrationsTicker/IntegrationsTickerSection";
 import MerchantTypeExplainerSection from "@/components/organisms/MerchantExplainer/MerchantTypeExplainerSection";
 
@@ -89,36 +87,33 @@ export default function HomePageClient() {
       {/* 1.5 News Ticker Marquee */}
       <NewsTickerMarquee />
 
-      {/* 2. Value Propositions */}
-      <ValuePropositionsSection />
-
-      {/* 3. How It Works */}
+      {/* 2. How It Works */}
       <HowItWorksSection />
 
-      {/* 4. Platform Modules */}
+      {/* 3. Platform Modules */}
       <section id="products-showcase" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/45 transition-colors duration-300")}>
         <MainProductsShowcaseSection />
       </section>
 
-      {/* 5. Integrations Partner Logo Ticker (PFD Section 7) */}
+      {/* 4. Integrations Partner Logo Ticker (PFD Section 7) */}
       <section id="integrations-ticker" className={cn("bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <IntegrationsTickerSection />
       </section>
 
 
-      {/* 6. Merchant Type Explainer: Cloud Enterprise vs Standalone (PFD Section 8) */}
+      {/* 5. Merchant Type Explainer: Cloud Enterprise vs Standalone (PFD Section 8) */}
       <section id="merchant-explainer" className={cn("bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <MerchantTypeExplainerSection />
       </section>
 
-      {/* 7. Testimonials Carousel */}
+      {/* 6. Testimonials Carousel */}
       <section id="testimonials" className={cn("scroll-mt-28 bg-slate-50 dark:bg-slate-900/40 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyTestimonialsSection />
         </Suspense>
       </section>
 
-      {/* 8. FAQ Accordion */}
+      {/* 7. FAQ Accordion */}
       <section id="faq" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyFAQWrapper />
@@ -127,7 +122,7 @@ export default function HomePageClient() {
 
 
 
-      {/* 9. Footer */}
+      {/* 8. Footer */}
       <section id="footer" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Footer />
       </section>

@@ -278,7 +278,7 @@ const PlatformModulesSlider: React.FC = () => {
 
       <motion.div
         animate={isPaused ? { x: undefined } : { x: ["0%", "-50%"] }}
-        transition={isPaused ? { duration: 0 } : { duration: 42, ease: "linear", repeat: Infinity }}
+        transition={isPaused ? { duration: 0 } : { duration: 72, ease: "linear", repeat: Infinity }}
         className="flex w-max shrink-0 items-stretch gap-3 px-3 sm:gap-4 sm:px-4 lg:px-5"
       >
         {SLIDER_MODULES.map((module, index) => (
