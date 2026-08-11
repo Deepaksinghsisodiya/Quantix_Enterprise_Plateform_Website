@@ -4,7 +4,7 @@ import React from "react";
 import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 import { PlatformDemoSection } from "@/components/organisms/PlatformDemoSection/PlatformDemoSection";
-import FeaturesWrapper from "@/features/Features/FeaturesWrapper";
+import FeaturesWrapper from "@/features/Features/components/FeaturesWrapper";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { cn } from "@/lib/utils";
 

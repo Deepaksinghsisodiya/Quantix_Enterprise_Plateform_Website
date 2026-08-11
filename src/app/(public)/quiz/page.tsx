@@ -4,7 +4,7 @@
 import React from 'react';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
-import SolutionQuiz from '@/features/Quiz/SolutionQuiz';
+import SolutionQuiz from '@/features/Quiz/components/Quiz';
 import { Footer } from '@/components/organisms/Footer/Footer';
 
 export default function SolutionQuizPage() {

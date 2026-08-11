@@ -53,7 +53,7 @@ import {
 import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 import { Footer } from "@/components/organisms/Footer/Footer";
-import FAQSection from "@/features/FAQ/FAQSection";
+import FAQSection from "@/features/FAQ/components/FAQ";
 import type { FAQItem } from "@/features/FAQ/Types/FAQTypes";
 
 type ProductPoint = {
@@ -119,6 +119,23 @@ const fadeSide = (x: number) => ({
 const motionTransition = {
   duration: 0.55,
   ease: [0.16, 1, 0.3, 1] as const,
+};
+
+const PRODUCT_CARD_IMAGES: Array<{ keywords: string[]; src: string; alt: string }> = [
+  { keywords: ["kitchen", "grill", "bar", "prep", "recipe"], src: "/images/kitchen_display_3d.png", alt: "Kitchen operations workflow" },
+  { keywords: ["table", "dine", "restaurant", "cafe", "floor"], src: "/images/hero-restaurant.jpg", alt: "Restaurant floor workflow" },
+  { keywords: ["delivery", "pickup", "takeaway", "order", "ordering", "curbside"], src: "/images/online_ordering_3d.png", alt: "Ordering and fulfillment workflow" },
+  { keywords: ["stock", "inventory", "supplier", "catalog", "barcode", "shelf", "product"], src: "/images/inventory_sync_3d.png", alt: "Inventory and catalog workflow" },
+  { keywords: ["mobile", "handheld", "app", "customer"], src: "/images/mobile_app_3d.png", alt: "Mobile POS workflow" },
+  { keywords: ["payment", "receipt", "cash", "bill", "refund", "discount", "loyalty", "gift"], src: "/images/pos_counter_3d.png", alt: "POS checkout workflow" },
+];
+
+const getProductCardImage = (title: string) => {
+  const normalizedTitle = title.toLowerCase();
+  return PRODUCT_CARD_IMAGES.find(({ keywords }) => keywords.some((keyword) => normalizedTitle.includes(keyword))) ?? {
+    src: "/images/demo-thumb-ai.png",
+    alt: "Quantix platform workflow",
+  };
 };
 
 const WORKFLOW_IMAGE_MAP: Record<string, { src: string; alt: string; badge: string }> = {
@@ -1255,11 +1272,78 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
       { title: "Direct ordering", desc: "Route commission-free orders into POS and kitchen workflows." },
       { title: "Order status updates", desc: "Keep customers informed through clean web ordering flows." },
     ],
+    orderModesContent: {
+      badge: "Ordering channels",
+      title: "Give customers a polished ordering path from any device",
+      description:
+        "Pickup, delivery, scheduled orders, curbside handoff, QR menu links, loyalty offers, and mobile browser checkout all stay connected to the same POS and menu rules.",
+      imageSrc: "/images/online_ordering_3d.png",
+      imageAlt: "Online ordering channels across mobile and web",
+      topBadge: "Mobile-first ordering",
+      bottomBadge: "Pickup, delivery and QR-ready",
+      icon: Globe2,
+    },
+    orderModes: [
+      { title: "Pickup ordering", desc: "Let customers order ahead with clear pickup windows and ready status.", icon: ShoppingBag },
+      { title: "Local delivery", desc: "Capture delivery details, zones, notes, and fulfillment timing.", icon: Truck },
+      { title: "Scheduled orders", desc: "Support future pickup and delivery windows for planned service.", icon: CalendarClock },
+      { title: "Curbside handoff", desc: "Collect handoff notes and customer references for faster pickup.", icon: Truck },
+      { title: "QR menu links", desc: "Share digital menu links for table, counter, and promotional ordering.", icon: QrCode },
+      { title: "Mobile checkout", desc: "Keep customer checkout readable and quick on phone browsers.", icon: Smartphone },
+      { title: "Guest reorder", desc: "Support repeat customers with familiar item and contact flows.", icon: Users },
+      { title: "Multi-branch menus", desc: "Show the right branch menu, pricing, timing, and availability.", icon: Store },
+    ],
+    billingHardwareContent: {
+      badge: "Checkout & fulfillment",
+      title: "Connect payment, receipt, kitchen and handoff status",
+      description:
+        "Online orders become operational tickets with payment context, customer details, prep routing, receipt records, pickup references, and dispatch status.",
+      imageSrc: "/images/kitchen_display_3d.png",
+      imageAlt: "Online ordering routed into kitchen display and checkout workflow",
+      topBadge: "Checkout to KDS",
+      bottomBadge: "Payment, prep and handoff synced",
+      icon: CreditCard,
+    },
+    billingHardware: [
+      { title: "Online payments", desc: "Connect payment status to each customer order before prep or handoff.", icon: CreditCard },
+      { title: "Cash on pickup", desc: "Support unpaid pickup rules where staff close payment at the counter.", icon: Banknote },
+      { title: "Kitchen routing", desc: "Send confirmed online orders into KDS stations and prep queues.", icon: ChefHat },
+      { title: "Receipt records", desc: "Keep customer receipt, tax, discount, and tender context attached.", icon: ReceiptText },
+      { title: "Pickup labels", desc: "Generate clear customer references for shelves and counter handoff.", icon: Printer },
+      { title: "Delivery dispatch", desc: "Move delivery orders into assignment and ready-for-driver workflows.", icon: Truck },
+      { title: "Order status", desc: "Track accepted, preparing, ready, dispatched, and completed states.", icon: Timer },
+      { title: "Refund visibility", desc: "Keep cancellations and refunds connected to the original POS order.", icon: RotateCcw },
+    ],
+    advancedControlsContent: {
+      badge: "Operator controls",
+      title: "Manage menus, channels, offers and branch rules without chaos",
+      description:
+        "Operators can control availability, channel visibility, order timing, delivery boundaries, loyalty offers, customer messaging, and reporting from one ordering layer.",
+      imageSrc: "/images/ss1-ai.png",
+      imageAlt: "Online ordering operator controls and reporting dashboard",
+      topBadge: "Operator control",
+      bottomBadge: "Menus, offers and channels governed",
+      icon: ShieldCheck,
+    },
+    advancedControls: [
+      { title: "Menu availability", desc: "Hide sold-out items and keep channel menus aligned with stock and prep capacity.", icon: PackageCheck },
+      { title: "Modifier rules", desc: "Control required choices, add-ons, sizes, combos, notes, and item limits.", icon: Tags },
+      { title: "Delivery zones", desc: "Set service areas, timing, pickup windows, and fulfillment rules.", icon: Truck },
+      { title: "Customer messaging", desc: "Keep customers informed around accepted, ready, delayed, and completed states.", icon: Smartphone },
+      { title: "Promo controls", desc: "Run channel offers, loyalty rewards, coupons, and limited-time campaigns.", icon: Gift },
+      { title: "Branch governance", desc: "Separate branch menus, taxes, hours, prep rules, and fulfillment settings.", icon: Store },
+      { title: "Order analytics", desc: "Review channel revenue, popular items, fulfillment pressure, and customer behavior.", icon: BarChart3 },
+      { title: "API handoff", desc: "Support integrations with payment, delivery, marketing, and reporting systems.", icon: Webhook },
+    ],
     workflows: [
       { title: "Branded storefront", desc: "Use your brand for direct online ordering instead of marketplace-only ordering." },
       { title: "Pickup and delivery", desc: "Support ordering flows for customer pickup and delivery operations." },
       { title: "POS and KDS routing", desc: "Send online orders into register and kitchen display workflows." },
       { title: "Mobile web experience", desc: "Give customers a responsive ordering experience from any phone browser." },
+      { title: "Delivery dispatch", desc: "Move delivery orders into assignment, readiness, and handoff status." },
+      { title: "Loyalty workflows", desc: "Connect repeat customers, coupons, rewards, and purchase history." },
+      { title: "Menu & modifier management", desc: "Control categories, pricing, add-ons, notes, availability, and channel menus." },
+      { title: "Payments & split bills", desc: "Keep tender, refund, tax, discount, and receipt context tied to orders." },
     ],
     imageSrc: "/images/online_ordering_3d.png",
     imageAlt: "Online ordering website application",
@@ -1286,6 +1370,24 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
         question: "Does it work on mobile browsers?",
         answer:
           "Yes. Customer ordering pages are designed for responsive mobile web usage without requiring a downloaded app.",
+      },
+      {
+        id: "website-delivery",
+        question: "Can it support pickup, delivery, and scheduled orders?",
+        answer:
+          "Yes. Website ordering can support pickup windows, delivery fulfillment, scheduled orders, curbside notes, and branch-specific operating rules.",
+      },
+      {
+        id: "website-payments",
+        question: "Can online payment status control order release?",
+        answer:
+          "Yes. Online payment confirmation can stay tied to each order and can be used before routing orders into kitchen or dispatch workflows.",
+      },
+      {
+        id: "website-menu-control",
+        question: "Can menus differ by branch or channel?",
+        answer:
+          "Yes. Menus can support branch-specific pricing, availability, hours, fulfillment rules, and channel visibility.",
       },
     ],
   },
@@ -1659,6 +1761,7 @@ const OrderModesSection: React.FC<{
           <div className="grid max-w-xl grid-cols-1 gap-2 min-[430px]:grid-cols-2">
             {orderModes.map((mode, index) => {
               const ModeIcon = mode.icon;
+              const modeImage = getProductCardImage(mode.title);
 
               return (
                 <motion.div
@@ -1668,10 +1771,13 @@ const OrderModesSection: React.FC<{
                   whileInView="visible"
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ ...motionTransition, delay: index * 0.04 }}
-                  className="group/mode flex items-start gap-2.5 border-t border-slate-200/90 pt-2.5 transition-colors hover:border-primary/35 dark:border-slate-800"
+                  className="group/mode flex items-start gap-2.5 rounded-xl border border-slate-200/90 bg-white p-2.5 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md hover:shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none"
                 >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover/mode:bg-primary group-hover/mode:text-white dark:bg-primary/15 dark:text-primary-light">
-                    <ModeIcon className="h-4 w-4 stroke-[2.4]" />
+                  <span className="relative h-11 w-11 shrink-0 overflow-visible rounded-lg">
+                    <Image src={modeImage.src} alt={modeImage.alt} fill sizes="44px" className="rounded-lg object-cover" />
+                    <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-md border border-white bg-primary text-white shadow-sm dark:border-slate-900">
+                      <ModeIcon className="h-3 w-3 stroke-[2.4]" />
+                    </span>
                   </span>
                   <span className="min-w-0">
                     <span className="block font-syne text-[12px] font-black leading-tight text-slate-950 dark:text-white sm:text-sm">
@@ -1759,6 +1865,7 @@ const BillingHardwareSection: React.FC<{
             <div className="grid max-w-xl grid-cols-1 gap-2 min-[430px]:grid-cols-2">
               {items.map((item, index) => {
                 const ItemIcon = item.icon;
+                const itemImage = getProductCardImage(item.title);
 
                 return (
                   <motion.div
@@ -1768,10 +1875,13 @@ const BillingHardwareSection: React.FC<{
                     whileInView="visible"
                     viewport={{ once: true, margin: "-60px" }}
                     transition={{ ...motionTransition, delay: index * 0.04 }}
-                    className="group/hardware flex items-start gap-2.5 border-t border-slate-200/90 pt-2.5 transition-colors hover:border-primary/35 dark:border-slate-800"
+                    className="group/hardware flex items-start gap-2.5 rounded-xl border border-slate-200/90 bg-white p-2.5 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md hover:shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none"
                   >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover/hardware:bg-primary group-hover/hardware:text-white dark:bg-primary/15 dark:text-primary-light">
-                      <ItemIcon className="h-4 w-4 stroke-[2.4]" />
+                    <span className="relative h-11 w-11 shrink-0 overflow-visible rounded-lg">
+                      <Image src={itemImage.src} alt={itemImage.alt} fill sizes="44px" className="rounded-lg object-cover" />
+                      <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-md border border-white bg-primary text-white shadow-sm dark:border-slate-900">
+                        <ItemIcon className="h-3 w-3 stroke-[2.4]" />
+                      </span>
                     </span>
                     <span className="min-w-0">
                       <span className="block font-syne text-[12px] font-black leading-tight text-slate-950 dark:text-white sm:text-sm">
@@ -1859,6 +1969,7 @@ const AdvancedControlsSection: React.FC<{
           <div className="grid max-w-xl grid-cols-1 gap-2 min-[430px]:grid-cols-2">
             {items.map((item, index) => {
               const ItemIcon = item.icon;
+              const itemImage = getProductCardImage(item.title);
 
               return (
                 <motion.div
@@ -1868,10 +1979,13 @@ const AdvancedControlsSection: React.FC<{
                   whileInView="visible"
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ ...motionTransition, delay: index * 0.035 }}
-                  className="group/control flex items-start gap-2.5 border-t border-slate-200/90 pt-2.5 transition-colors hover:border-primary/35 dark:border-slate-800"
+                  className="group/control flex items-start gap-2.5 rounded-xl border border-slate-200/90 bg-white p-2.5 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md hover:shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none"
                 >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover/control:bg-primary group-hover/control:text-white dark:bg-primary/15 dark:text-primary-light">
-                    <ItemIcon className="h-4 w-4 stroke-[2.4]" />
+                  <span className="relative h-11 w-11 shrink-0 overflow-visible rounded-lg">
+                    <Image src={itemImage.src} alt={itemImage.alt} fill sizes="44px" className="rounded-lg object-cover" />
+                    <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-md border border-white bg-primary text-white shadow-sm dark:border-slate-900">
+                      <ItemIcon className="h-3 w-3 stroke-[2.4]" />
+                    </span>
                   </span>
                   <span className="min-w-0">
                     <span className="block font-syne text-[12px] font-black leading-tight text-slate-950 dark:text-white sm:text-sm">

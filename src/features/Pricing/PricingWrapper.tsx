@@ -1,6 +1,6 @@
 // src/features/Pricing/PricingWrapper.tsx
 import React from 'react';
-import { useGetPricingPlansQuery } from './Service/PricingService';
+import { useGetPricingPlansQuery } from './services/PricingServices';
 import PricingSection from './PricingSection';
 
 export const PricingWrapper: React.FC = () => {

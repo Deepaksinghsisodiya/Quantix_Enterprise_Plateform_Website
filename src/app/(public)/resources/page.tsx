@@ -5,7 +5,7 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';
-import { useGetResourcesQuery, ResourceDto } from '@/features/Downloads/Service/ResourcesService';
+import { useGetResourcesQuery, ResourceDto } from '@/features/Downloads/services/DownloadsServices';
 import { Search, Download, Lock, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 

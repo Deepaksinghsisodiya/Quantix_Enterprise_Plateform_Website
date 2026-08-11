@@ -5,23 +5,36 @@ import React, { useState } from 'react';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';
-import { useSignupMutation } from '@/features/Register/Service/RegisterService';
+import { useSignupMutation } from '@/features/Register/services/RegisterServices';
 import { ChevronRight, ArrowRight, ShieldCheck, CreditCard, Sparkles, Building2, User, Mail, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-const extractMerchantId = (res: any) =>
-  res?.data?.merchantId ||
-  res?.data?.leadId ||
-  res?.data?.id ||
-  res?.merchantId ||
-  res?.leadId ||
+type EnterprisePlanId = 'free' | 'basic' | 'pro' | 'enterprise';
+
+interface SignupResponseShape {
+  data?: {
+    merchantId?: string;
+    leadId?: string;
+    id?: string;
+  };
+  merchantId?: string;
+  leadId?: string;
+  id?: string;
+}
+
+const extractMerchantId = (res: SignupResponseShape | null | undefined) =>
+  res?.data?.merchantId ??
+  res?.data?.leadId ??
+  res?.data?.id ??
+  res?.merchantId ??
+  res?.leadId ??
   res?.id;
 
 export default function EnterpriseSignupPage() {
-  const [selectedPlan, setSelectedPlan] = useState<'free' | 'basic' | 'pro' | 'enterprise'>('pro');
+  const [selectedPlan, setSelectedPlan] = useState<EnterprisePlanId>('pro');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
@@ -46,7 +59,8 @@ export default function EnterpriseSignupPage() {
       toast.success('Registration successful! OTP has been dispatched to your email.');
       const merchantId = extractMerchantId(res);
       router.push(merchantId ? `/sign-up/verify?id=${merchantId}` : '/sign-in');
-    } catch (err: any) {
+    } catch (error: unknown) {
+      const err = error as { data?: { message?: string }; message?: string };
       toast.error(err?.data?.message || err?.message || 'Onboarding registration failed. Please check details and try again.');
     }
   };
@@ -92,7 +106,7 @@ export default function EnterpriseSignupPage() {
                   <button
                     key={plan.id}
                     type="button"
-                    onClick={() => setSelectedPlan(plan.id as any)}
+                    onClick={() => setSelectedPlan(plan.id as EnterprisePlanId)}
                     className={cn(
                       "w-full text-left rounded-2xl p-4 border transition-all cursor-pointer flex justify-between items-center",
                       selectedPlan === plan.id

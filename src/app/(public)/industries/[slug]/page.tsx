@@ -11,7 +11,7 @@ import {
   ArrowLeft, CheckCircle2, ChevronRight, Settings, Award 
 } from "lucide-react";
 import Link from "next/link";
-import IndustryDetailWrapper from "@/features/Industries/IndustryDetailWrapper";
+import IndustryDetailWrapper from "@/features/Industries/components/IndustryDetailWrapper";
 
 export default function IndustryDetailPage() {
   return (

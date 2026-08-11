@@ -20,8 +20,8 @@ import MerchantTypeExplainerSection from "@/components/organisms/MerchantExplain
 import dynamic from "next/dynamic";
 
 // Dynamic loaded sections (below the fold) optimized for Next.js
-const LazyTestimonialsSection = dynamic(() => import("@/features/Testimonials/TestimonialsSectionWrapper"), { ssr: false });
-const LazyFAQWrapper = dynamic(() => import("@/features/FAQ/FAQWrapper"), { ssr: false });
+const LazyTestimonialsSection = dynamic(() => import("@/features/Testimonials/components/TestimonialsWrapper"), { ssr: false });
+const LazyFAQWrapper = dynamic(() => import("@/features/FAQ/components/FAQWrapper"), { ssr: false });
 
 export default function HomePageClient() {
   const [showTopBtn, setShowTopBtn] = useState(false);

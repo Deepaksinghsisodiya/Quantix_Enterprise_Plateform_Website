@@ -3,7 +3,7 @@
 import React from "react";
 import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import Navbar from "@/components/organisms/Navbar/Navbar";
-import FAQWrapper from "@/features/FAQ/FAQWrapper";
+import FAQWrapper from "@/features/FAQ/components/FAQWrapper";
 import { Footer } from "@/components/organisms/Footer/Footer";
 
 export default function FAQPage() {

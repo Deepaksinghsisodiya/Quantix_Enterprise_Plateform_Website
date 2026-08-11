@@ -1,6 +1,6 @@
 // src/features/Integrations/Service/IntegrationsService.ts
 import { baseApi } from '@/redux/services/baseApi';
-import { IntegrationDto, ApiIntegrationsResponse } from '../Types/IntegrationsTypes';
+import type { IntegrationDto, ApiIntegrationsResponse } from '../Types/IntegrationsType';
 
 export const integrationsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

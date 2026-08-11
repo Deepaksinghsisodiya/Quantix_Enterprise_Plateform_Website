@@ -238,15 +238,15 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
             </div>
 
             {/* 3. Phone (with country code selector) */}
-            <div className="flex gap-2">
-              <div className="relative shrink-0">
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="relative w-full shrink-0 sm:w-auto">
                 <label htmlFor="lead-country-code" className="sr-only">Country Code</label>
                 <select
                   id="lead-country-code"
                   name="countryCode"
                   value={formData.countryCode}
                   onChange={handleChange}
-                  className="appearance-none bg-slate-50/80 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 text-slate-900 dark:text-slate-100 font-bold rounded-xl pl-3 pr-7 py-2.5 text-xs outline-none focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all cursor-pointer"
+                  className="w-full appearance-none rounded-xl border border-slate-200/80 bg-slate-50/80 py-2.5 pl-3 pr-7 text-xs font-bold text-slate-900 outline-none transition-all cursor-pointer focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary/20 dark:border-slate-700/80 dark:bg-slate-800/90 dark:text-slate-100 dark:focus:bg-slate-800 sm:w-auto"
                 >
                   {COUNTRY_CODES.map((item) => (
                     <option key={item.code} value={item.code}>
@@ -256,7 +256,7 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
                 </select>
                 <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-400 pointer-events-none" />
               </div>
-              <div className="flex-1">
+              <div className="min-w-0 flex-1">
                 <label htmlFor="lead-phone" className="sr-only">Phone Number</label>
                 <input
                   id="lead-phone"

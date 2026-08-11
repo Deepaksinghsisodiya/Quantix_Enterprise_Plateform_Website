@@ -1,6 +1,6 @@
 // src/features/Testimonials/TestimonialsSectionWrapper.tsx
 import React from 'react';
-import { useGetTestimonialsQuery } from './Service/TestimonialsService';
+import { useGetTestimonialsQuery } from './services/TestimonialsServices';
 import TestimonialsSection from './TestimonialsSection';
 
 export const TestimonialsSectionWrapper: React.FC = () => {

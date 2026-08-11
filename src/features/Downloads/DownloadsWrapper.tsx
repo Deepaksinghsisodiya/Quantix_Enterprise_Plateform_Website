@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import { useGetDownloadsQuery } from './Service/DownloadsService';
+import { useGetDownloadsQuery } from './services/DownloadsServices';
 import DownloadsList from './DownloadsList';
 
 export const DownloadsWrapper: React.FC = () => {

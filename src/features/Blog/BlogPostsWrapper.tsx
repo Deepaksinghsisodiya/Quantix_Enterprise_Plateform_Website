@@ -2,7 +2,7 @@
 
 // src/features/Blog/BlogPostsWrapper.tsx
 import React from 'react';
-import { useGetBlogPostsQuery } from './Service/BlogService';
+import { useGetBlogPostsQuery } from './services/BlogServices';
 import BlogPostsSection from './BlogPostsSection';
 
 export const BlogPostsWrapper: React.FC = () => {

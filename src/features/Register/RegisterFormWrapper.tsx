@@ -1,35 +1,42 @@
 // src/features/Register/RegisterFormWrapper.tsx
 import React from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useSignupMutation, useValidateSignupMutation } from "./Service/RegisterService";
+import { useSignupMutation, useValidateSignupMutation } from "./services/RegisterServices";
 import { SignUpFormValues } from "./Types/RegisterTypes";
 import { RegisterForm } from "./RegisterForm";
+import { registerValidationSchema } from "./validation/RegisterValidation";
 
-const signUpSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, "Name must be at least 2 characters")
-    .required("Full name is required"),
-  email: Yup.string()
-    .email("Please enter a valid work email")
-    .required("Work email is required"),
-  company: Yup.string()
-    .min(2, "Company name must be at least 2 characters")
-    .required("Company name is required"),
-  phone: Yup.string()
-    .matches(/^[+\d][\d\s().-]{6,20}$/, "Please enter a valid phone number")
-    .required("Contact phone is required"),
-  country: Yup.string()
-    .required("Country is required"),
-  merchantType: Yup.string()
-    .oneOf(["Enterprise", "Standalone"], "Please select a valid merchant type")
-    .required("Merchant type is required"),
-  billingCycle: Yup.string()
-    .oneOf(["Daily", "Monthly", "Annual"], "Please select a valid billing cycle")
-    .required("Billing cycle is required"),
-});
+type SignupResponseLike = {
+  data?: {
+    merchantId?: string;
+    leadId?: string;
+    id?: string;
+    message?: string;
+    errors?: string[];
+  };
+  merchantId?: string;
+  leadId?: string;
+  id?: string;
+  message?: string;
+  errors?: string[];
+};
+
+type ValidationResponseLike = {
+  data?: {
+    isValid?: boolean;
+    valid?: boolean;
+    available?: boolean;
+    message?: string;
+    errors?: string[];
+  };
+  isValid?: boolean;
+  valid?: boolean;
+  available?: boolean;
+  message?: string;
+  errors?: string[];
+};
 
 const initialValues: SignUpFormValues = {
   name: "",
@@ -42,7 +49,7 @@ const initialValues: SignUpFormValues = {
   billingCycle: "Monthly",
 };
 
-const extractMerchantId = (res: any) =>
+const extractMerchantId = (res: SignupResponseLike) =>
   res?.data?.merchantId ||
   res?.data?.leadId ||
   res?.data?.id ||
@@ -50,13 +57,13 @@ const extractMerchantId = (res: any) =>
   res?.leadId ||
   res?.id;
 
-const isValidationRejected = (res: any) => {
+const isValidationRejected = (res: ValidationResponseLike) => {
   const data = res?.data ?? res;
   const validity = data?.isValid ?? data?.valid ?? data?.available;
   return validity === false;
 };
 
-const getApiMessage = (payload: any, fallback: string) =>
+const getApiMessage = (payload: ValidationResponseLike | SignupResponseLike, fallback: string) =>
   payload?.data?.message ||
   payload?.message ||
   payload?.data?.errors?.[0] ||
@@ -70,7 +77,7 @@ export const RegisterFormWrapper: React.FC = () => {
 
   const formik = useFormik<SignUpFormValues>({
     initialValues,
-    validationSchema: signUpSchema,
+    validationSchema: registerValidationSchema,
     onSubmit: async (values, { setFieldError, setSubmitting }) => {
       try {
         const cleaned = {
@@ -112,8 +119,9 @@ export const RegisterFormWrapper: React.FC = () => {
         } else {
           router.push("/sign-in");
         }
-      } catch (err: any) {
-        const message = err?.data?.message || err?.message || "Failed to register. Please check details and try again.";
+      } catch (err: unknown) {
+        const error = err as { data?: { message?: string }; message?: string };
+        const message = error?.data?.message || error?.message || "Failed to register. Please check details and try again.";
         toast.error(message);
       } finally {
         setSubmitting(false);

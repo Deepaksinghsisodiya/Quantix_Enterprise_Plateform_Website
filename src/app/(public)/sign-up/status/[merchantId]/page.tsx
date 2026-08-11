@@ -5,10 +5,15 @@ import React from 'react';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';
-import { useGetSignupStatusQuery } from '@/features/Register/Service/RegisterService';
+import { useGetSignupStatusQuery } from '@/features/Register/services/RegisterServices';
 import { ChevronRight, ShieldCheck, Clock, CheckCircle2, Loader2, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+
+interface StatusStep {
+  name?: string;
+  status?: string;
+}
 
 export default function SignupStatusPage() {
   const params = useParams();
@@ -29,8 +34,8 @@ export default function SignupStatusPage() {
   if (statusData) {
     const data = statusData.data || statusData;
     const rawStatus = String(data.status || data.state || data.onboardingStatus || '').toUpperCase();
-    const steps = data.steps || [];
-    if (steps.some((item: any) => String(item.name || '').toLowerCase().includes('activation') && String(item.status || '').toLowerCase() === 'completed')) {
+    const steps = (data.steps || []) as StatusStep[];
+    if (steps.some((item) => String(item.name || '').toLowerCase().includes('activation') && String(item.status || '').toLowerCase() === 'completed')) {
       currentProgress = 4;
     } else if (rawStatus === 'PAYMENT_PENDING' || rawStatus === 'EMAIL_VERIFIED') currentProgress = 2;
     else if (rawStatus === 'PROVISIONING' || rawStatus === 'PENDING' || rawStatus === 'PROVISIONED') currentProgress = 3;

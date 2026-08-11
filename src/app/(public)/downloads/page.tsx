@@ -4,7 +4,7 @@
 import React from 'react';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
-import DownloadsWrapper from '@/features/Downloads/DownloadsWrapper';
+import DownloadsWrapper from '@/features/Downloads/components/DownloadsWrapper';
 import { Footer } from '@/components/organisms/Footer/Footer';
 
 export default function DownloadsPage() {

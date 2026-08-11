@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { useParams } from 'next/navigation';
-import { useGetBlogPostBySlugQuery } from './Service/BlogService';
+import { useGetBlogPostBySlugQuery } from './services/BlogServices';
 import BlogPostDetail from './BlogPostDetail';
 
 export const BlogPostDetailWrapper: React.FC = () => {

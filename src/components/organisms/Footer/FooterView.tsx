@@ -12,9 +12,16 @@ import Link from "next/link";
 import {
   FooterLink,
   SocialLink,
+} from "./types/FooterTypes";
+import {
+  PRODUCT_LINKS,
+  COMPANY_LINKS,
+  INDUSTRY_LINKS,
+  LEGAL_LINKS,
+  SOCIAL_LINKS,
   FOOTER_COPYRIGHT,
   FOOTER_COMPLIANCE,
-} from "./FooterData";
+} from "./dummyData/FooterData";
 import { LeadFormCard } from "./LeadFormCard";
 import { useContactModal } from "@/context/ContactModalContext";
 
@@ -39,26 +46,26 @@ const SOCIAL_HOVER: Record<SocialLink['icon'], string> = {
 };
 
 const LinkColumn = ({ title, links, onOpenContact }: { title: string; links: FooterLink[]; onOpenContact: () => void }) => (
-  <div className="col-span-1 min-w-[120px]">
+  <div className="col-span-1 min-w-0">
     <h3 className="mb-3.5 font-syne font-black text-slate-900 dark:text-white text-xs sm:text-sm uppercase tracking-wider">{title}</h3>
     <ul className="space-y-2 text-xs sm:text-[13px] font-semibold">
       {links.map((link) => (
-        <li key={`${title}-${link.label}`} className="flex items-center gap-1.5">
+        <li key={`${title}-${link.label}`} className="flex items-start gap-1.5">
           {link.href.startsWith('/contact') ? (
             <button
               type="button"
               onClick={onOpenContact}
-              className="text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary-light transition-colors duration-200 block text-left cursor-pointer font-semibold"
+              className="text-left cursor-pointer font-semibold leading-snug text-slate-600 transition-colors duration-200 hover:text-primary dark:text-slate-300 dark:hover:text-primary-light"
             >
               {link.label}
             </button>
           ) : (
-            <Link href={link.href} className="text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary-light transition-colors duration-200 block">
+            <Link href={link.href} className="block leading-snug text-slate-600 transition-colors duration-200 hover:text-primary dark:text-slate-300 dark:hover:text-primary-light">
               {link.label}
             </Link>
           )}
           {link.badge && (
-            <span className="text-[9px] font-black uppercase tracking-wider bg-primary/10 text-primary-dark dark:text-primary-light px-1.5 py-0.2 rounded-md">
+            <span className="rounded-md bg-primary/10 px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-primary-dark dark:text-primary-light">
               {link.badge}
             </span>
           )}
@@ -129,7 +136,7 @@ export const FooterView: React.FC<FooterViewProps> = ({
             </div>
 
             {/* Link Columns Grid (Stretched 4 columns filling horizontal space) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-x-12 lg:gap-x-16 xl:gap-x-20 pt-6 border-t border-slate-200/70 dark:border-slate-800/70 w-full justify-between">
+            <div className="grid grid-cols-2 gap-6 pt-6 border-t border-slate-200/70 dark:border-slate-800/70 w-full sm:grid-cols-4 sm:gap-x-12 lg:gap-x-16 xl:gap-x-20">
               <LinkColumn title="Product" links={productLinks} onOpenContact={() => openModal()} />
               <LinkColumn title="Company" links={companyLinks} onOpenContact={() => openModal()} />
               <LinkColumn title="Industries" links={industryLinks} onOpenContact={() => openModal()} />
@@ -141,16 +148,16 @@ export const FooterView: React.FC<FooterViewProps> = ({
               <h3 className="mb-2 font-syne font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider text-center sm:text-left">
                 Subscribe to Quantix Product Updates
               </h3>
-              <form className="flex flex-col sm:flex-row gap-2" onSubmit={(e) => { e.preventDefault(); alert('Subscribed to newsletter updates!'); }}>
+              <form className="flex flex-col gap-2 sm:flex-row" onSubmit={(e) => { e.preventDefault(); alert('Subscribed to newsletter updates!'); }}>
                 <input 
                   type="email" 
                   placeholder="name@business.com" 
                   required
-                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-primary focus:ring-1 focus:ring-primary/20 rounded-xl py-2.5 px-3.5 text-xs outline-none transition-all text-slate-800 dark:text-slate-100 placeholder-slate-400"
+                  className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs outline-none transition-all placeholder-slate-400 text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary/20 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100"
                 />
                 <button 
                   type="submit" 
-                  className="bg-primary hover:bg-primary-light active:bg-primary-dark text-white text-xs font-syne font-bold px-5 py-2.5 rounded-xl transition-all cursor-pointer shrink-0 shadow-sm"
+                  className="shrink-0 rounded-xl bg-primary px-5 py-2.5 text-xs font-syne font-bold text-white transition-all cursor-pointer hover:bg-primary-light active:bg-primary-dark shadow-sm"
                 >
                   Join
                 </button>
@@ -176,10 +183,10 @@ export const FooterView: React.FC<FooterViewProps> = ({
             </Link>
             <Link
               href="/pci"
-              className="inline-flex items-center justify-center gap-1.5 text-slate-500 font-bold uppercase tracking-wider text-[9px] sm:text-[10px] bg-white dark:bg-slate-900 hover:bg-slate-50 px-3 py-1 rounded-full border border-slate-200/80 dark:border-slate-800 transition-colors shadow-2xs cursor-pointer max-w-full"
+              className="inline-flex max-w-full items-center justify-center gap-1.5 rounded-full border border-slate-200/80 bg-white px-3 py-1 text-[9px] font-bold uppercase tracking-wider text-slate-500 transition-colors shadow-2xs cursor-pointer hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 sm:text-[10px]"
             >
               <Lock className="h-3 w-3 text-primary shrink-0" />
-              <span>{FOOTER_COMPLIANCE}</span>
+              <span className="max-w-[18rem] text-center sm:text-left">{FOOTER_COMPLIANCE}</span>
             </Link>
           </div>
         </div>

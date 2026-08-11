@@ -1,7 +1,7 @@
 // src/features/Industries/IndustryDetailWrapper.tsx
 import React from 'react';
 import { useParams } from 'next/navigation';
-import { useGetIndustryBySlugQuery } from './Service/IndustriesService';
+import { useGetIndustryBySlugQuery } from './services/IndustriesServices';
 import IndustryDetail from './IndustryDetail';
 
 export const IndustryDetailWrapper: React.FC = () => {

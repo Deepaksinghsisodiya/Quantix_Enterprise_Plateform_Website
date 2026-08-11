@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';
-import { useRequestDemoMutation } from '@/features/Contact/Service/ContactService';
+import { useRequestDemoMutation } from '@/features/Contact/services/ContactServices';
 import { ChevronRight, ArrowLeft, Calendar, User, Mail, Store, Sparkles, Star, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';

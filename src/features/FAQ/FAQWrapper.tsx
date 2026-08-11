@@ -1,6 +1,6 @@
 // src/features/FAQ/FAQWrapper.tsx
 import React from 'react';
-import { useGetFAQsQuery } from './Service/FAQService';
+import { useGetFAQsQuery } from './services/FAQServices';
 import FAQSection from './FAQSection';
 
 export const FAQWrapper: React.FC = () => {

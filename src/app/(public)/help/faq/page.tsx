@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';
-import { useGetFAQsQuery } from '@/features/FAQ/Service/FAQService';
+import { useGetFAQsQuery } from '@/features/FAQ/services/FAQServices';
 import { ChevronDown, ChevronUp, ChevronRight, HelpCircle, ArrowLeft, Search } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';

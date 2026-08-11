@@ -5,20 +5,15 @@ import React, { useState, useMemo } from 'react';
 import { Search, Send, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { IntegrationDto } from './Types/IntegrationsTypes';
+import type { IntegrationDto } from './Types/IntegrationsType';
+import { DEFAULT_INTEGRATIONS } from './dummyData/integrationCatalog';
+import IntegrationCard from './components/IntegrationCard';
 import { toast } from 'sonner';
 
 interface IntegrationGridProps {
   integrations: IntegrationDto[];
   isLoading: boolean;
 }
-
-const DEFAULT_INTEGRATIONS: IntegrationDto[] = [
-  { id: '1', slug: 'stripe', name: 'Stripe Payments', description: 'Process online and in-person card payments seamlessly.', category: 'payments', isPopular: true },
-  { id: '2', slug: 'xero', name: 'Xero Accounting', description: 'Automatically sync sales invoice records to your ledger.', category: 'accounting', isPopular: true },
-  { id: '3', slug: 'doordash', name: 'DoorDash Delivery', description: 'Import delivery orders directly to your kitchen display.', category: 'delivery', isPopular: false },
-  { id: '4', slug: 'shopify', name: 'Shopify Sync', description: 'Synchronize inventory catalog between retail stores and e-commerce.', category: 'e-commerce', isPopular: true }
-];
 
 export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, isLoading }) => {
   const [search, setSearch] = useState('');
@@ -117,52 +112,8 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
       ) : filtered.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((integration) => (
-            <motion.div
-              layout
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              key={integration.id}
-              className="group flex flex-col justify-between rounded-2xl border border-gray-200 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/20 p-6 transition-all duration-300 hover:border-blue-500/50 hover:bg-white dark:hover:bg-slate-900/40 relative overflow-hidden"
-            >
-              {integration.isPopular && (
-                <span className="absolute top-0 right-0 rounded-bl-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-3 py-1 text-[9px] font-extrabold uppercase tracking-wider text-white shadow-md">
-                  Popular
-                </span>
-              )}
-
-              <div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-slate-900/80 border border-gray-200 dark:border-slate-800/80 mb-5 group-hover:border-blue-500/30 transition-colors">
-                  {integration.logoUrl ? (
-                    <img src={integration.logoUrl} alt={integration.name} className="h-8 w-8 object-contain" />
-                  ) : (
-                    <span className="text-xl font-syne font-black text-slate-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
-                      {integration.name.charAt(0)}
-                    </span>
-                  )}
-                </div>
-
-                <h3 className="text-base font-syne font-bold text-slate-900 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
-                  {integration.name}
-                </h3>
-                <p className="mt-2 text-xs text-slate-550 dark:text-slate-400 leading-relaxed font-medium">
-                  {integration.description}
-                </p>
-              </div>
-
-              <div className="mt-6 flex items-center justify-between border-t border-gray-200 dark:border-slate-800/60 pt-4">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-450 bg-gray-100 dark:bg-slate-905 px-2.5 py-1 rounded-md border border-gray-250 dark:border-slate-800/50 capitalize">
-                  {integration.category}
-                </span>
-
-                <a
-                  href={integration.websiteUrl || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-bold text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors flex items-center gap-1"
-                >
-                  Configure &rarr;
-                </a>
-              </div>
+            <motion.div key={integration.id} layout initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+              <IntegrationCard integration={integration} />
             </motion.div>
           ))}
         </div>

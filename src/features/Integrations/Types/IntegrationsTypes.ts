@@ -1,17 +1,2 @@
-// src/features/Integrations/Types/IntegrationsTypes.ts
-
-export interface IntegrationDto {
-  id: string;
-  slug: string;
-  name: string;
-  description: string;
-  category: string;
-  logoUrl?: string;
-  websiteUrl?: string;
-  isPopular?: boolean;
-}
-
-export interface ApiIntegrationsResponse {
-  success: boolean;
-  data: IntegrationDto[];
-}
+// Backward-compatible export. New code should import from ../Types/IntegrationsType.
+export type { IntegrationDto, ApiIntegrationsResponse } from '../Types/IntegrationsType';

@@ -3,7 +3,7 @@ import React from "react";
 import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 import { Footer } from "@/components/organisms/Footer/Footer";
-import BlogPostsWrapper from "@/features/Blog/BlogPostsWrapper";
+import BlogPostsWrapper from "@/features/Blog/components/BlogPostsWrapper";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -1,6 +1,6 @@
 // src/features/SocialProof/SocialProofStatsWrapper.tsx
 import React from 'react';
-import { useGetSocialProofQuery } from './Service/SocialProofService';
+import { useGetSocialProofQuery } from './services/SocialProofServices';
 import SocialProofStats from './SocialProofStats';
 
 export const SocialProofStatsWrapper: React.FC = () => {

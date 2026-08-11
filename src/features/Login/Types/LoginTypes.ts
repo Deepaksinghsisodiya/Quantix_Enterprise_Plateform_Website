@@ -20,5 +20,5 @@ export interface LoginResponse {
   token: string;
   refreshToken?: string | null;
   accessToken?: string | null;
-  user?: any;
+  user?: Record<string, unknown> | null;
 }

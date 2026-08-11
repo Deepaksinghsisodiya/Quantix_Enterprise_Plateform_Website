@@ -1,6 +1,6 @@
 // src/features/Industries/IndustriesSectionWrapper.tsx
 import React from 'react';
-import { useGetIndustriesQuery } from './Service/IndustriesService';
+import { useGetIndustriesQuery } from './services/IndustriesServices';
 import IndustriesSection from './IndustriesSection';
 
 export const IndustriesSectionWrapper: React.FC = () => {

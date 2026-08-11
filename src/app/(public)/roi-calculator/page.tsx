@@ -4,7 +4,7 @@
 import React from 'react';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
-import ROICalculator from '@/features/ROI/ROICalculator';
+import ROICalculator from '@/features/ROI/components/ROI';
 import { Footer } from '@/components/organisms/Footer/Footer';
 
 export default function ROICalculatorPage() {

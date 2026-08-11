@@ -6,7 +6,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { CreditCard, ArrowRight, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import { useProcessPaymentMutation } from '@/features/Register/Service/RegisterService';
+import { useProcessPaymentMutation } from '@/features/Register/services/RegisterServices';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';

@@ -10,10 +10,17 @@ import {
   useActivateMerchantMutation,
   useGetSignupStatusQuery,
   useProvisionMerchantMutation,
-} from '@/features/Register/Service/RegisterService';
+} from '@/features/Register/services/RegisterServices';
 import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';
+
+interface OnboardingStep {
+  name?: string;
+  stepName?: string;
+  status?: string;
+  displayName?: string;
+}
 
 function ActivateContent() {
   const searchParams = useSearchParams();
@@ -25,8 +32,8 @@ function ActivateContent() {
   const [activateMerchant, { isLoading: isActivating, isSuccess }] = useActivateMerchantMutation();
   const [provisionMerchant, { isLoading: isProvisioning }] = useProvisionMerchantMutation();
 
-  const statusSteps = statusData?.data?.steps || statusData?.steps || [];
-  const isAlreadyActive = statusSteps.some((st: any) => {
+  const statusSteps = (statusData?.data?.steps || statusData?.steps || []) as OnboardingStep[];
+  const isAlreadyActive = statusSteps.some((st) => {
     const name = String(st.name || st.stepName || '').toLowerCase();
     const status = String(st.status || '').toLowerCase();
     return (name.includes('activation') || name.includes('activate')) && status === 'completed';
@@ -88,7 +95,7 @@ function ActivateContent() {
                 Onboarding Steps Status
               </h4>
               <div className="space-y-3">
-                {steps.map((st: any, idx: number) => (
+                {steps.map((st: OnboardingStep, idx: number) => (
                   <div key={idx} className="flex items-center gap-3">
                     <div className="h-5 w-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 flex-shrink-0">
                       <Check size={11} className="stroke-[3]" />

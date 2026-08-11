@@ -2,7 +2,7 @@
 
 import React from "react";
 import SplitAuthLayout from "@/components/organisms/SplitAuthLayout/SplitAuthLayout";
-import LoginFormWrapper from "@/features/Login/LoginFormWrapper";
+import LoginFormWrapper from "@/features/Login/components/LoginWrapper";
 
 export default function SignInPage() {
   return (

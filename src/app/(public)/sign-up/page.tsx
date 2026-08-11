@@ -2,7 +2,7 @@
 
 import React from "react";
 import SplitAuthLayout from "@/components/organisms/SplitAuthLayout/SplitAuthLayout";
-import RegisterFormWrapper from "@/features/Register/RegisterFormWrapper";
+import RegisterFormWrapper from "@/features/Register/components/RegisterWrapper";
 
 export default function SignUpPage() {
   return (

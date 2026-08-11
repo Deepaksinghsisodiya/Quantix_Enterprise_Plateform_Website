@@ -6,7 +6,7 @@ import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { Award, Users, Globe, Target, Flame } from "lucide-react";
-import SocialProofStatsWrapper from "@/features/SocialProof/SocialProofStatsWrapper";
+import SocialProofStatsWrapper from "@/features/SocialProof/components/SocialProofWrapper";
 import Link from "next/link";
 
 export default function AboutPage() {
