@@ -140,66 +140,32 @@ const getProductCardImage = (title: string) => {
 };
 
 const WORKFLOW_IMAGE_MAP: Record<string, { src: string; alt: string; badge: string }> = {
-  "Table management": {
-    src: "/images/ss2.jpg",
-    alt: "Restaurant table management POS screen",
-    badge: "Floor workflow",
-  },
-  "Kitchen display system": {
-    src: "/images/hero-restaurant.jpg",
-    alt: "Kitchen display system workflow",
-    badge: "Kitchen routing",
-  },
-  "Direct online ordering": {
-    src: "/images/online_ordering_3d.png",
-    alt: "Online ordering workflow",
-    badge: "Web ordering",
-  },
-  "QR code ordering": {
-    src: "/images/mobile_app_3d.png",
-    alt: "Mobile QR ordering workflow",
-    badge: "QR ordering",
-  },
-  "Delivery dispatch": {
-    src: "/images/hero-local.png",
-    alt: "Delivery dispatch workflow",
-    badge: "Delivery flow",
-  },
-  "Loyalty workflows": {
-    src: "/images/demo-thumb-ai.png",
-    alt: "Customer loyalty workflow",
-    badge: "Customer growth",
-  },
-  "Menu & modifier management": {
-    src: "/images/hero-cafe.jpg",
-    alt: "Restaurant menu modifier management workflow",
-    badge: "Menu controls",
-  },
-  "Payments & split bills": {
-    src: "/images/demo-thumb.jpg",
-    alt: "Restaurant split bill and payment workflow",
-    badge: "Bill splitting",
-  },
-  "Staff & shift controls": {
-    src: "/images/ss3-ai.png",
-    alt: "Restaurant staff shift controls dashboard",
-    badge: "Staff controls",
-  },
-  "Inventory & recipe costing": {
-    src: "/images/inventory_sync_3d.png",
-    alt: "Restaurant inventory and recipe costing workflow",
-    badge: "Recipe costing",
-  },
-  "Reservations & waitlist": {
-    src: "/images/enterprise_hub_3d.png",
-    alt: "Restaurant reservations and waitlist workflow",
-    badge: "Guest flow",
-  },
-  "Restaurant analytics": {
-    src: "/images/ss1.jpg",
-    alt: "Restaurant analytics dashboard workflow",
-    badge: "Analytics",
-  },
+  "Table management": { src: "/images/ss2.jpg", alt: "Restaurant table management POS screen", badge: "Floor workflow" },
+  "Kitchen display system": { src: "/images/hero-restaurant.jpg", alt: "Kitchen display system workflow", badge: "Kitchen routing" },
+  "Direct online ordering": { src: "/images/online_ordering_3d.png", alt: "Online ordering workflow", badge: "Web ordering" },
+  "QR code ordering": { src: "/images/mobile_app_3d.png", alt: "Mobile QR ordering workflow", badge: "QR ordering" },
+  "Delivery dispatch": { src: "/images/hero-local.png", alt: "Delivery dispatch workflow", badge: "Delivery flow" },
+  "Loyalty workflows": { src: "/images/demo-thumb-ai.png", alt: "Customer loyalty workflow", badge: "Customer growth" },
+  "Menu & modifier management": { src: "/images/hero-cafe.jpg", alt: "Restaurant menu modifier management workflow", badge: "Menu controls" },
+  "Payments & split bills": { src: "/images/demo-thumb.jpg", alt: "Restaurant split bill and payment workflow", badge: "Bill splitting" },
+  "Staff & shift controls": { src: "/images/ss3-ai.png", alt: "Restaurant staff shift controls dashboard", badge: "Staff controls" },
+  "Inventory & recipe costing": { src: "/images/inventory_sync_3d.png", alt: "Restaurant inventory and recipe costing workflow", badge: "Recipe costing" },
+  "Reservations & waitlist": { src: "/images/enterprise_hub_3d.png", alt: "Restaurant reservations and waitlist workflow", badge: "Guest flow" },
+  "Restaurant analytics": { src: "/images/ss1.jpg", alt: "Restaurant analytics dashboard workflow", badge: "Analytics" },
+  "Offline register": { src: "/images/pos_counter_3d.png", alt: "Offline retail register workflow", badge: "Offline till" },
+  "Smart inventory": { src: "/images/inventory_sync_3d.png", alt: "Smart inventory sync workflow", badge: "Inventory sync" },
+  "Barcode lookup": { src: "/images/ss2-ai.png", alt: "Barcode lookup retail POS workflow", badge: "Fast barcode" },
+  "Returns and discounts": { src: "/images/ss1.jpg", alt: "Retail returns and discounts workflow", badge: "Cashier control" },
+  "Product catalog & variants": { src: "/images/hero-local.png", alt: "Retail product catalog and variants workflow", badge: "Catalog control" },
+  "Purchase orders": { src: "/images/enterprise_hub_3d.png", alt: "Retail purchase order workflow", badge: "Supplier ordering" },
+  "Multi-location dashboards": { src: "/images/enterprise_hub_3d.png", alt: "Multi-location dashboard workflow", badge: "Branch dashboards" },
+  "Central menu control": { src: "/images/ss2-ai.png", alt: "Central menu control dashboard", badge: "Central controls" },
+  "Cloud reporting": { src: "/images/demo-thumb-ai.png", alt: "Cloud reporting workflow", badge: "Live reporting" },
+  "Branded storefront": { src: "/images/online_ordering_3d.png", alt: "Branded online storefront workflow", badge: "Storefront" },
+  "Pickup and delivery": { src: "/images/demo-thumb-ai.png", alt: "Pickup and delivery ordering workflow", badge: "Order channels" },
+  "Server handhelds": { src: "/images/mobile_app_3d.png", alt: "Server handheld POS workflow", badge: "Handheld POS" },
+  "Custom workflow design": { src: "/images/ss2-ai.png", alt: "Custom POS workflow design dashboard", badge: "Workflow design" },
+  "API bridge development": { src: "/images/ss1.jpg", alt: "Custom API bridge and middleware workflow", badge: "API bridge" },
 };
 
 const WORKFLOW_DETAIL_MAP: Record<string, string[]> = {
@@ -222,16 +188,6 @@ const WORKFLOW_DETAIL_MAP: Record<string, string[]> = {
     "Let guests browse menus and place table orders from their phone without installing a separate application.",
     "Connect self-ordering with table service so staff can focus on service quality and order accuracy.",
     "Support quick updates to menu items, modifiers, and availability for high-change restaurant operations.",
-  ],
-  "Delivery dispatch": [
-    "Bring delivery orders into a focused queue for assignment, preparation status, and customer updates.",
-    "Support pickup, delivery, and third-party-style dispatch workflows around one POS operating layer.",
-    "Help teams avoid missed handoffs by keeping driver, order, and kitchen status in one workflow.",
-  ],
-  "Loyalty workflows": [
-    "Build customer profiles around ordering history, rewards, and repeat-visit opportunities.",
-    "Support offers, loyalty points, digital rewards, and targeted customer communication workflows.",
-    "Give restaurants a path to grow repeat business without bolting on a disconnected marketing tool.",
   ],
   "Menu & modifier management": [
     "Manage menu items, variants, add-ons, spice levels, combo meals, prep notes, and availability from one control layer.",
@@ -262,6 +218,62 @@ const WORKFLOW_DETAIL_MAP: Record<string, string[]> = {
     "Track item performance, peak hours, table turn time, staff activity, discounts, voids, and sales trends.",
     "Give owners a clearer view of what is selling, when teams are busiest, and where operations slow down.",
     "Connect reporting with POS activity so decisions are based on live restaurant workflows, not manual summaries.",
+  ],
+  "Offline register": [
+    "Process sales, barcode scans, receipts, and cash drawer actions completely offline during internet outages.",
+    "Local SQLite/IndexedDB queue buffers transactions and syncs automatically when network returns.",
+  ],
+  "Smart inventory": [
+    "Real-time stock deduction on every transaction, low-stock threshold triggers, and supplier PO generation.",
+    "Barcode tag scanning and multi-location warehouse stock transfers.",
+  ],
+  "Barcode lookup": [
+    "Instant barcode scanner integration for fast items lookup, weight scale integration, and serial number validation.",
+    "Support 1D/2D barcodes, custom shelf labels, and price embedded barcodes.",
+  ],
+  "Returns and discounts": [
+    "Manager PIN overrides for cash refunds, item exchanges, damaged goods logging, and promotional discounts.",
+    "Audit trail logging for all refund transactions and cashier drawer variances.",
+  ],
+  "Product catalog & variants": [
+    "Manage matrix items (size, color, material), bundle packs, volume discounts, and supplier SKU mappings.",
+    "Central catalog updates pushed instantly across physical registers and web channels.",
+  ],
+  "Purchase orders": [
+    "Generate purchase orders from reorder points, receive stock against POs, and update inventory valuation.",
+    "Track supplier lead times, partial shipments, and cost price histories.",
+  ],
+  "Multi-location dashboards": [
+    "Consolidated real-time revenue performance, hourly sales telemetry, and stock levels across all branches.",
+    "Branch vs branch comparisons, manager performance metrics, and centralized reporting exports.",
+  ],
+  "Central menu control": [
+    "Push prices, new items, promotional combos, and tax rules to all store registers from a central dashboard.",
+    "Schedule menu changes and time-based happy-hour price tiers.",
+  ],
+  "Cloud reporting": [
+    "Access P&L reports, gross profit margin analysis, staff shift audits, and tax summaries on phone or desktop.",
+    "Export clean accounting files for QuickBooks, Xero, and CSV reporting tools.",
+  ],
+  "Branded storefront": [
+    "Publish a mobile-friendly web storefront with custom branding, item photos, and zero marketplace commission.",
+    "Integrated web checkout with Stripe, card terminals, and mobile wallets.",
+  ],
+  "Pickup and delivery": [
+    "Support pickup time windows, delivery zones, order status tracking, and kitchen ticket injection.",
+    "Connect direct customer web orders directly to KDS displays and register queues.",
+  ],
+  "Server handhelds": [
+    "Equip servers with mobile handheld tablets for tableside ordering, ticket firing, and mobile card payment collection.",
+    "Reduce server trips to counter registers and speed up table turn times.",
+  ],
+  "Custom workflow design": [
+    "Tailor order states, cashier screens, KDS routing rules, and terminal UX to fit non-standard business models.",
+    "Dedicated technical onboarding and custom workflow configuration.",
+  ],
+  "API bridge development": [
+    "Open REST/GraphQL APIs, webhooks, and middleware connectors to bridge Quantix POS with custom ERPs and legacy tools.",
+    "Developer sandbox, webhook logs, and dedicated integration engineering support.",
   ],
 };
 
@@ -324,48 +336,174 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
     ctaHref: "/sign-up",
     icon: ChefHat,
     faqs: [
-      {
-        id: "restaurant-kds",
-        question: "Does Restaurant POS include kitchen display routing?",
-        answer:
-          "Yes. Restaurant POS includes KDS routing for prep stations, bar tickets, grill tickets, and front-of-house status updates.",
-      },
-      {
-        id: "restaurant-qr",
-        question: "Can guests place orders with QR codes?",
-        answer:
-          "Yes. Guests can scan a table QR code, browse the menu, place orders, and send them into the POS and KDS workflow.",
-      },
-      {
-        id: "restaurant-floor",
-        question: "Can it manage tables and split bills?",
-        answer:
-          "Yes. The restaurant workflow supports visual floor mapping, table status, split checks, modifiers, and course-paced service.",
-      },
-      {
-        id: "restaurant-menu-modifiers",
-        question: "Can menus, modifiers, and combos be managed?",
-        answer:
-          "Yes. Restaurant POS can support menu items, add-ons, variants, combo meals, spice levels, availability, and kitchen notes.",
-      },
-      {
-        id: "restaurant-recipe-costing",
-        question: "Can it track recipe costing and inventory?",
-        answer:
-          "Yes. Restaurant workflows can connect menu sales with ingredient usage, stock deduction, wastage, recipe cost, and margin visibility.",
-      },
-      {
-        id: "restaurant-receipt-hardware",
-        question: "Does it support receipt printing and checkout hardware?",
-        answer:
-          "Yes. Restaurant POS can support customer receipt printing, kitchen ticket printing, cash drawer workflows, card terminal payments, tax, tips, service charge, refunds, voids, and shift close reports.",
-      },
-      {
-        id: "restaurant-offline-z-reports",
-        question: "Does it include offline billing and end-of-day reports?",
-        answer:
-          "Yes. Restaurant POS can support offline billing mode, shift close reports, end-of-day Z reports, cash/card totals, tax summaries, discounts, refunds, voids, and cashier activity.",
-      },
+      { id: "restaurant-kds", question: "Does Restaurant POS include kitchen display routing?", answer: "Yes. Restaurant POS includes KDS routing for prep stations, bar tickets, grill tickets, and front-of-house status updates." },
+      { id: "restaurant-qr", question: "Can guests place orders with QR codes?", answer: "Yes. Guests can scan a table QR code, browse the menu, place orders, and send them into the POS and KDS workflow." },
+      { id: "restaurant-floor", question: "Can it manage tables and split bills?", answer: "Yes. The restaurant workflow supports visual floor mapping, table status, split checks, modifiers, and course-paced service." },
+    ],
+  },
+  "retail-pos": {
+    slug: "retail-pos",
+    eyebrow: "Retail POS & Barcode Register",
+    title: "Retail POS & Inventory Register",
+    description:
+      "Rapid barcode billing, stock deductions, cashier drawer controls, shelf label printing, and offline till continuity for retail stores.",
+    points: [
+      { title: "Barcode Checkout Speed", desc: "Scan items instantly with handheld or USB barcode readers." },
+      { title: "Offline Till Continuity", desc: "Process checkout and print receipts even during internet dropouts." },
+      { title: "Real-time Stock Control", desc: "Track stock levels, matrix items (size/color), and automatic low-stock alerts." },
+    ],
+    workflows: [
+      { title: "Offline register", desc: "Process sales, receipts, and cash drawers offline during network outages." },
+      { title: "Smart inventory", desc: "Real-time inventory deduction, PO generation, and stock level tracking." },
+      { title: "Barcode lookup", desc: "High-speed 1D/2D barcode scanning and price lookup." },
+      { title: "Returns and discounts", desc: "Manager PIN overrides, item exchanges, and promotional discounts." },
+      { title: "Product catalog & variants", desc: "Manage item matrices, variants, supplier SKUs, and bundle pricing." },
+      { title: "Purchase orders", desc: "Automated reorder triggers, PO creation, and stock receiving." },
+    ],
+    imageSrc: "/images/pos_counter_3d.png",
+    imageAlt: "Retail POS checkout register",
+    topBadge: "Barcode ready",
+    bottomBadge: "Built for retail checkout",
+    ctaLabel: "Start Retail POS Trial",
+    ctaHref: "/sign-up",
+    icon: Store,
+    faqs: [
+      { id: "retail-offline", question: "Does Retail POS work when internet is down?", answer: "Yes. Local register sync allows continuous barcode checkout, receipt printing, and drawer access during network outages." },
+      { id: "retail-barcodes", question: "Can it print barcode shelf labels?", answer: "Yes. Quantix supports printing barcode stickers, shelf tags, and custom price labels directly from inventory." },
+    ],
+  },
+  "cloud-pos": {
+    slug: "cloud-pos",
+    eyebrow: "Cloud Back-Office Hub & Analytics",
+    title: "Cloud POS & Multi-Store Telemetry",
+    description:
+      "Centralized cloud hub to control pricing, menus, live inventory sync, employee shift permissions, and consolidated branch analytics.",
+    points: [
+      { title: "Central Store Control", desc: "Manage catalog pricing, store menus, and promos across all branches." },
+      { title: "Live Branch Telemetry", desc: "View real-time sales revenue, cashier performance, and hourly footfall." },
+      { title: "Cloud Accounting Sync", desc: "Automated daily financial exports for QuickBooks, Xero, and CSV files." },
+    ],
+    workflows: [
+      { title: "Multi-location dashboards", desc: "Consolidated sales telemetry, revenue breakdown, and branch comparison." },
+      { title: "Central menu control", desc: "Instant pricing, menu item, and tax updates pushed across all store registers." },
+      { title: "Cloud reporting", desc: "Real-time P&L analytics, inventory valuation, and accounting exports." },
+    ],
+    imageSrc: "/images/inventory_sync_3d.png",
+    imageAlt: "Cloud POS back-office dashboard",
+    topBadge: "Multi-store cloud hub",
+    bottomBadge: "Real-time store telemetry",
+    ctaLabel: "Explore Cloud POS Hub",
+    ctaHref: "/sign-up",
+    icon: Cloud,
+    faqs: [
+      { id: "cloud-sync", question: "How fast is store data updated in the cloud?", answer: "Register transactions sync to your cloud dashboard in sub-second real time." },
+    ],
+  },
+  "enterprise-pos": {
+    slug: "enterprise-pos",
+    eyebrow: "Enterprise Multi-Location Networks",
+    title: "Enterprise POS for Large Scale Chains",
+    description:
+      "Role permission matrices, central catalog rollouts, regional dashboards, ERP integrations, and 24/7 dedicated SLA operations.",
+    points: [
+      { title: "Role Permission Governance", desc: "Granular access control for cashiers, managers, regional leads, and admins." },
+      { title: "Custom ERP & API Middleware", desc: "Connect Quantix with SAP, Oracle, NetSuite, and enterprise ERP systems." },
+      { title: "Dedicated SLA Support", desc: "Priority 24/7 technical hotline and dedicated rollout account manager." },
+    ],
+    workflows: [
+      { title: "Multi-location dashboards", desc: "Regional enterprise views, consolidated financial audits, and multi-branch control." },
+      { title: "Central menu control", desc: "Enterprise rollout controls for catalog updates across franchise branches." },
+      { title: "Cloud reporting", desc: "Custom BI dashboards, enterprise tax reporting, and automated payout ledger exports." },
+    ],
+    imageSrc: "/images/enterprise_hub_3d.png",
+    imageAlt: "Enterprise POS network management hub",
+    topBadge: "Enterprise SLA",
+    bottomBadge: "Multi-branch governance",
+    ctaLabel: "Contact Enterprise Sales",
+    ctaHref: "/contact/sales",
+    icon: Server,
+    faqs: [
+      { id: "enterprise-sla", question: "Do you offer custom SLA support for franchises?", answer: "Yes. Enterprise plans include 24/7 dedicated support phone lines, custom SLA agreements, and dedicated engineering." },
+    ],
+  },
+  "websites": {
+    slug: "websites",
+    eyebrow: "Direct Online Ordering & Web Storefront",
+    title: "Website Ordering & Online Storefront",
+    description:
+      "Commission-free branded web ordering for pickup and delivery, QR code menus, and direct order injection into POS and kitchen KDS.",
+    points: [
+      { title: "Zero App Commission", desc: "Keep 100% of your online food and retail sales without third-party fees." },
+      { title: "Direct POS & KDS Routing", desc: "Online orders bypass manual entry and print straight to kitchen screens." },
+      { title: "Mobile Responsive Portal", desc: "Stunning web storefront that works seamlessly on customer mobile browsers." },
+    ],
+    workflows: [
+      { title: "Branded storefront", desc: "Custom web ordering site with branded logo, menu categories, and checkout." },
+      { title: "Pickup and delivery", desc: "Delivery radius controls, pickup time windows, and live order status messaging." },
+      { title: "Direct online ordering", desc: "Connected online ordering with POS pricing, tax, and stock availability." },
+    ],
+    imageSrc: "/images/online_ordering_3d.png",
+    imageAlt: "Online ordering website storefront",
+    topBadge: "Zero commission",
+    bottomBadge: "Direct POS + KDS sync",
+    ctaLabel: "Launch Online Storefront",
+    ctaHref: "/sign-up",
+    icon: Globe2,
+    faqs: [
+      { id: "website-commission", question: "Are there third-party order commissions?", answer: "No. Quantix online ordering is 100% commission-free." },
+    ],
+  },
+  "mobile-application": {
+    slug: "mobile-application",
+    eyebrow: "Handheld Server POS & Mobile Apps",
+    title: "Mobile Application & Server Handhelds",
+    description:
+      "Handheld waiter tablets for tableside ordering, mobile payment processing, and customer self-service mobile app experiences.",
+    points: [
+      { title: "Tableside Server Ordering", desc: "Take orders right at the table and fire tickets instantly to kitchen displays." },
+      { title: "Mobile Payment Checkout", desc: "Process contactless cards, Apple Pay, and tip entry on handheld terminals." },
+      { title: "Faster Table Turnover", desc: "Reduce server trip times and speed up dining room service speed." },
+    ],
+    workflows: [
+      { title: "Server handhelds", desc: "Mobile server POS tablets for ordering, modifiers, and payment collection." },
+      { title: "Table management", desc: "Live table status and seating timers updated right on handheld server devices." },
+      { title: "Payments & split bills", desc: "Split checks tableside and process mobile payment transactions." },
+    ],
+    imageSrc: "/images/mobile_app_3d.png",
+    imageAlt: "Mobile waiter handheld POS tablet app",
+    topBadge: "Handheld POS",
+    bottomBadge: "Tableside order + pay",
+    ctaLabel: "Explore Handheld POS",
+    ctaHref: "/sign-up",
+    icon: Smartphone,
+    faqs: [
+      { id: "mobile-hardware", question: "What devices run the handheld server app?", answer: "Quantix handheld POS runs on standard Android tablets, mobile POS terminals, and iOS devices." },
+    ],
+  },
+  "custom-service": {
+    slug: "custom-service",
+    eyebrow: "Custom POS Development & API Platform",
+    title: "Custom POS Solutions & API Platform",
+    description:
+      "White-label POS customization, custom API middleware bridges, ERP integration engineering, and non-standard workflow design.",
+    points: [
+      { title: "White-Label Customization", desc: "Tailor branding, register screens, and terminal UX to your exact specifications." },
+      { title: "Open API & Webhooks", desc: "REST & GraphQL APIs to bridge Quantix POS with custom web applications and ERPs." },
+      { title: "Custom Integration Engineering", desc: "Dedicated engineering team to build custom hardware and payment drivers." },
+    ],
+    workflows: [
+      { title: "Custom workflow design", desc: "Tailored cashier UI, custom receipt formats, and non-standard register logic." },
+      { title: "API bridge development", desc: "Custom middleware connectors, webhook endpoints, and ERP synchronization." },
+    ],
+    imageSrc: "/images/demo-thumb-ai.png",
+    imageAlt: "Custom POS development and API platform",
+    topBadge: "White-label & API",
+    bottomBadge: "Custom engineering",
+    ctaLabel: "Request Custom Proposal",
+    ctaHref: "/contact/sales",
+    icon: Wrench,
+    faqs: [
+      { id: "custom-api", question: "Do you provide developer API access?", answer: "Yes. We provide full API keys, developer sandboxes, and webhook documentation for custom integrations." },
     ],
   },
 };
@@ -467,12 +605,12 @@ const WorkflowRow: React.FC<{
 
 const DEFAULT_ORDER_MODES_CONTENT: FeaturePanelContent = {
   badge: "Order modes",
-  title: "Serve every restaurant order type from one POS flow",
+  title: "Serve every order type from one POS flow",
   description:
     "Dine-in, counter service, pickup, takeaway, delivery, curbside, QR, online, and scheduled orders stay connected to kitchen, billing, and handoff workflows.",
   imageSrc: "/images/ss2-ai.png",
-  imageAlt: "Restaurant POS order modes and table workflow",
-  topBadge: "Dine-in to delivery",
+  imageAlt: "POS order modes and workflow",
+  topBadge: "Multi-channel ordering",
   bottomBadge: "Connected order workflow",
   icon: Sparkles,
 };
@@ -481,9 +619,9 @@ const DEFAULT_BILLING_HARDWARE_CONTENT: FeaturePanelContent = {
   badge: "Billing & hardware",
   title: "Print receipts and close every bill cleanly",
   description:
-    "Receipt printers, kitchen tickets, cash drawer, card terminals, tax, tips, discounts, and shift-close reports stay connected to the same POS order.",
+    "Receipt printers, tickets, cash drawer, card terminals, tax, tips, discounts, and shift-close reports stay connected to the same POS order.",
   imageSrc: "/images/pos_counter_3d.png",
-  imageAlt: "Restaurant POS receipt printing and checkout hardware workflow",
+  imageAlt: "POS receipt printing and checkout hardware workflow",
   topBadge: "Receipt + payments",
   bottomBadge: "Printer, drawer and terminal ready",
   icon: ReceiptText,
@@ -491,13 +629,13 @@ const DEFAULT_BILLING_HARDWARE_CONTENT: FeaturePanelContent = {
 
 const DEFAULT_ADVANCED_CONTROLS_CONTENT: FeaturePanelContent = {
   badge: "Advanced controls",
-  title: "Add the controls busy restaurants actually ask for",
+  title: "Add the controls busy operations actually ask for",
   description:
-    "Offline billing, guest-facing display, promos, approvals, prep timers, scheduled menus, delivery integrations, and end-of-day reporting stay inside the same restaurant POS workflow.",
+    "Offline billing, guest-facing display, promos, approvals, prep timers, scheduled menus, delivery integrations, and end-of-day reporting stay inside the same POS workflow.",
   imageSrc: "/images/ss1-ai.png",
-  imageAlt: "Advanced restaurant POS controls dashboard",
+  imageAlt: "Advanced POS controls dashboard",
   topBadge: "Manager controls",
-  bottomBadge: "Built for real restaurant operations",
+  bottomBadge: "Built for real operations",
   icon: Sparkles,
 };
 
