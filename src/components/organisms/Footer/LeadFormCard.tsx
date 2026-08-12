@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, ChevronDown, PhoneCall } from 'lucide-react';
+import { CheckCircle2, ChevronDown, PhoneCall, Zap } from 'lucide-react';
 
 export interface LeadFormCardProps {
   heading?: string;
@@ -144,12 +144,13 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
       {/* Top Header & Branding */}
       <div className="flex flex-col items-center text-center space-y-2 mb-4">
         {/* Brand Logo */}
-        <div className="flex items-center justify-center gap-1.5">
-          <img
-            src={logoSrc}
-            alt="Quantix Logo"
-            className="h-7 sm:h-8 w-auto object-contain"
-          />
+        <div className="flex items-center justify-center gap-1.5 select-none">
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-tr from-primary to-primary-dark text-white shadow-xs">
+            <Zap className="h-3.5 w-3.5 fill-white stroke-[2.5]" />
+          </div>
+          <span className="font-syne text-sm font-black text-slate-900 dark:text-white">
+            Quantix <span className="text-primary">Enterprise</span>
+          </span>
           {badgeText && (
             <span className="text-[9px] font-black uppercase tracking-wider bg-primary/10 text-primary-dark dark:text-primary-light px-1.5 py-0.5 rounded-md border border-primary/20">
               {badgeText}
