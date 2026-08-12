@@ -1,2 +1,0 @@
-import {QuantixLogo} from "./QuantixLogo";
-export function NavbarBrand({isScrolled=false}:{isScrolled?:boolean}){return <a href="/" aria-label="Quantix home" className="inline-flex items-center shrink-0">{!isScrolled&&<QuantixLogo variant="full" priority className="hidden lg:inline-flex quantix-nav-full max-w-[360px]"/>}<QuantixLogo variant="compact" priority className={`inline-flex quantix-nav-compact max-w-[180px] sm:max-w-[220px] ${!isScrolled?"lg:hidden":""}`}/></a>}

@@ -11,7 +11,7 @@ export const PRODUCT_LINKS: FooterLink[] = [
 ];
 
 export const COMPANY_LINKS: FooterLink[] = [
-  { href: "/about", label: "About Quantix" },
+  { href: "/about", label: "About Quantix Enterprise" },
   { href: "/careers", label: "Careers", badge: "Hiring" },
   { href: "/blog", label: "Industry Insights & Blog" },
   { href: "/press", label: "Press Kit & Media" },
@@ -43,5 +43,5 @@ export const SOCIAL_LINKS: SocialLink[] = [
   { href: "https://github.com/quantix", ariaLabel: "GitHub", icon: "github" },
 ];
 
-export const FOOTER_COPYRIGHT = "© 2025 Quantix Platform Inc. All rights reserved.";
+export const FOOTER_COPYRIGHT = "© 2025 Quantix Enterprise Inc. All rights reserved.";
 export const FOOTER_COMPLIANCE = "PCI-DSS Tier 1 Certified · SOC 2 Type II · 256-bit Encrypted";

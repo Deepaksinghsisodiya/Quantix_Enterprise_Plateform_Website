@@ -49,7 +49,6 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
   subheading,
   badgeText = "FOR BUSINESS",
   buttonText = "SPEAK WITH OUR TEAM",
-  logoSrc = "/images/logo/quantix-logo-full-on-light.svg",
   privacyPolicyHref = "/privacy",
   className = "",
   onSubmitSuccess,

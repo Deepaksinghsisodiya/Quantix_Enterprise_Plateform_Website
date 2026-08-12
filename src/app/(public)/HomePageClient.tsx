@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils";
 import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import IntegrationsTickerSection from "@/components/organisms/IntegrationsTicker/IntegrationsTickerSection";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 
 import dynamic from "next/dynamic";
@@ -67,7 +66,7 @@ export default function HomePageClient() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
-            name: "Quantix",
+            name: "Quantix Enterprise",
             operatingSystem: "Web",
             applicationCategory: "BusinessApplication",
             description: "All‑in‑One POS platform for retail and restaurant businesses.",
@@ -94,12 +93,6 @@ export default function HomePageClient() {
       <section id="products-showcase" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/45 transition-colors duration-300")}>
         <MainProductsShowcaseSection />
       </section>
-
-      {/* 4. Integrations Partner Logo Ticker (PFD Section 7) */}
-      <section id="integrations-ticker" className={cn("bg-white dark:bg-slate-950 transition-colors duration-300")}>
-        <IntegrationsTickerSection />
-      </section>
-
 
       {/* 5. Testimonials Carousel */}
       <section id="testimonials" className={cn("scroll-mt-28 bg-slate-50 dark:bg-slate-900/40 transition-colors duration-300")}>

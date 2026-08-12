@@ -24,23 +24,23 @@ const lexend = Lexend({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
   title: {
-    default: "Quantix — The All‑in‑One POS Platform",
-    template: "%s | Quantix",
+    default: "Quantix Enterprise — The All‑in‑One POS Platform",
+    template: "%s | Quantix Enterprise",
   },
   description:
     "Enterprise‑grade POS for retail and restaurant businesses. Streamline orders, inventory, staff, and analytics.",
   openGraph: {
-    title: "Quantix POS Platform",
+    title: "Quantix Enterprise POS Platform",
     description:
       "All‑in‑One POS solution for modern businesses. Free trial, no credit card required.",
     url: process.env.NEXT_PUBLIC_APP_URL,
-    siteName: "Quantix",
+    siteName: "Quantix Enterprise",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Quantix dashboard screenshot",
+        alt: "Quantix Enterprise dashboard screenshot",
       },
     ],
     locale: "en_US",

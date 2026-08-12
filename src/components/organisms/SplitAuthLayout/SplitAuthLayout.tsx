@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Layers } from "lucide-react";
+import { ArrowLeft, Zap } from 'lucide-react';
 
 export interface SplitAuthLayoutProps {
   children: React.ReactNode;
@@ -39,12 +39,13 @@ export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
 
         {/* Brand watermark top-left */}
         <div className="absolute top-8 left-10 z-10">
-          <Link href="/" className="inline-flex items-center group">
-            <img
-              src="/images/logo/quantix-logo-full-on-dark.svg"
-              alt="Quantix Logo"
-              className="h-[48px] w-auto transition-transform duration-300 group-hover:scale-[1.02]"
-            />
+          <Link href="/" className="inline-flex items-center gap-2.5 group select-none">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-primary-dark text-white shadow-md shadow-primary/20">
+              <Zap className="h-5 w-5 fill-white stroke-[2.5]" />
+            </div>
+            <span className="font-syne text-xl font-black tracking-tight text-white">
+              Quantix <span className="text-primary-light">Enterprise</span>
+            </span>
           </Link>
         </div>
 
@@ -76,12 +77,13 @@ export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
 
         {/* Mobile-only brand header (hidden on lg where logo is on image) */}
         <div className="relative z-10 px-6 pt-7 sm:px-10 lg:hidden">
-          <Link href="/" className="inline-flex items-center group">
-            <img
-              src="/images/logo/quantix-logo-full-on-light.svg"
-              alt="Quantix Logo"
-              className="h-[46px] w-auto transition-transform duration-300 group-hover:scale-[1.02]"
-            />
+          <Link href="/" className="inline-flex items-center gap-2 group select-none">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-primary-dark text-white shadow-md">
+              <Zap className="h-4.5 w-4.5 fill-white stroke-[2.5]" />
+            </div>
+            <span className="font-syne text-lg font-black tracking-tight text-slate-900 dark:text-white">
+              Quantix <span className="text-primary">Enterprise</span>
+            </span>
           </Link>
         </div>
 

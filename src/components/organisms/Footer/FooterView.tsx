@@ -7,7 +7,7 @@ import {
   RiLinkedinFill,
   RiGithubFill,
 } from "react-icons/ri";
-import { Lock } from "lucide-react";
+import { Lock, Zap } from "lucide-react";
 import Link from "next/link";
 import {
   FooterLink,
@@ -106,16 +106,22 @@ export const FooterView: React.FC<FooterViewProps> = ({
             
             {/* Top Brand Info + Socials */}
             <div className="space-y-3.5 text-center sm:text-left flex flex-col items-center sm:items-start">
-              <div className="flex items-center text-slate-900 group">
-                <img
-                  src="/images/logo/quantix-logo-full-on-light.svg"
-                  alt="Quantix Logo"
-                  className="h-10 sm:h-11 w-auto"
-                />
-              </div>
+              <Link href="/" className="flex items-center gap-2.5 group select-none">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-primary-dark text-white shadow-md shadow-primary/20 transition-transform duration-300 group-hover:scale-105">
+                  <Zap className="h-5 w-5 fill-white stroke-[2.5]" />
+                </div>
+                <div className="flex flex-col text-left leading-none">
+                  <span className="font-syne text-xl font-black tracking-tight text-slate-900 dark:text-white">
+                    Quantix <span className="text-primary">Enterprise</span>
+                  </span>
+                  <span className="text-[9px] font-extrabold uppercase tracking-widest text-slate-400 dark:text-slate-500 mt-0.5">
+                    POS Ecosystem
+                  </span>
+                </div>
+              </Link>
 
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
-                Quantix is the next-gen EPOS & Cloud management platform for restaurants, retail, and franchise chains. Built for speed, offline reliability, and effortless growth.
+                Quantix Enterprise is the next-gen EPOS & Cloud management platform for restaurants, retail, and franchise chains. Built for speed, offline reliability, and effortless growth.
               </p>
 
               {/* Social icons */}
@@ -146,7 +152,7 @@ export const FooterView: React.FC<FooterViewProps> = ({
             {/* Newsletter Subscription */}
             <div className="pt-6 border-t border-slate-200/70 dark:border-slate-800/70 max-w-lg">
               <h3 className="mb-2 font-syne font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider text-center sm:text-left">
-                Subscribe to Quantix Product Updates
+                Subscribe to Quantix Enterprise Product Updates
               </h3>
               <form className="flex flex-col gap-2 sm:flex-row" onSubmit={(e) => { e.preventDefault(); alert('Subscribed to newsletter updates!'); }}>
                 <input 

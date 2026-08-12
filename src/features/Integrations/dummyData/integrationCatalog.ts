@@ -7,7 +7,6 @@ export const DEFAULT_INTEGRATIONS: IntegrationDto[] = [
     name: 'Stripe Payments',
     description: 'Process online and in-person card payments with terminal and payout sync.',
     category: 'payments',
-    logoUrl: '/brands/integrations/stripe.png',
     isPopular: true,
   },
   {
@@ -16,15 +15,13 @@ export const DEFAULT_INTEGRATIONS: IntegrationDto[] = [
     name: 'Authorize.Net',
     description: 'Secure enterprise Visa gateway with batch settlement and card vaulting.',
     category: 'payments',
-    logoUrl: '/brands/integrations/authorize.png',
   },
   {
     id: '3',
     slug: 'square',
     name: 'Square POS',
-    description: 'Bridge Square terminals with Quantix catalog, inventory, and reporting.',
+    description: 'Bridge Square terminals with Quantix Enterprise catalog, inventory, and reporting.',
     category: 'pos & inventory',
-    logoUrl: '/brands/integrations/square.png',
     isPopular: true,
   },
   {
@@ -33,7 +30,6 @@ export const DEFAULT_INTEGRATIONS: IntegrationDto[] = [
     name: 'PayPal Checkout',
     description: 'Connect Express Checkout, Venmo wallet payments, refunds, and payouts.',
     category: 'payments',
-    logoUrl: '/brands/integrations/paypal.png',
   },
   {
     id: '5',
@@ -41,7 +37,6 @@ export const DEFAULT_INTEGRATIONS: IntegrationDto[] = [
     name: 'DoorDash Drive',
     description: 'Send delivery orders to POS and kitchen workflows with dispatch status.',
     category: 'delivery',
-    logoUrl: '/brands/integrations/doordash.png',
     isPopular: true,
   },
   {
@@ -50,7 +45,6 @@ export const DEFAULT_INTEGRATIONS: IntegrationDto[] = [
     name: 'Uber Eats',
     description: 'Sync delivery menus, modifiers, prep timing, and courier-ready tickets.',
     category: 'delivery',
-    logoUrl: '/brands/integrations/ubereats.png',
   },
 ];
 
