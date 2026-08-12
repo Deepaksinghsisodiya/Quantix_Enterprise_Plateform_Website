@@ -42,7 +42,7 @@ export default function PressKitPage() {
               <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl text-xs font-bold text-slate-700 dark:text-slate-300">
                 <span>Core Logo Mark (SVG)</span>
                 <a
-                  href="/favicon.ico"
+                  href="/favicon.svg"
                   download
                   className="flex items-center gap-1 text-primary hover:underline cursor-pointer"
                 >
@@ -54,7 +54,7 @@ export default function PressKitPage() {
               <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl text-xs font-bold text-slate-700 dark:text-slate-300">
                 <span>Horizontal Lockup (HD PNG)</span>
                 <a
-                  href="/favicon.ico"
+                  href="/favicon.svg"
                   download
                   className="flex items-center gap-1 text-primary hover:underline cursor-pointer"
                 >
