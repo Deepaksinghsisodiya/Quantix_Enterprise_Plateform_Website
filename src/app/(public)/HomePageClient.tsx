@@ -15,7 +15,7 @@ import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import IntegrationsTickerSection from "@/components/organisms/IntegrationsTicker/IntegrationsTickerSection";
-import MerchantTypeExplainerSection from "@/components/organisms/MerchantExplainer/MerchantTypeExplainerSection";
+import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 
 import dynamic from "next/dynamic";
 
@@ -101,12 +101,7 @@ export default function HomePageClient() {
       </section>
 
 
-      {/* 5. Merchant Type Explainer: Cloud Enterprise vs Standalone (PFD Section 8) */}
-      <section id="merchant-explainer" className={cn("bg-white dark:bg-slate-950 transition-colors duration-300")}>
-        <MerchantTypeExplainerSection />
-      </section>
-
-      {/* 6. Testimonials Carousel */}
+      {/* 5. Testimonials Carousel */}
       <section id="testimonials" className={cn("scroll-mt-28 bg-slate-50 dark:bg-slate-900/40 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}> 
           <LazyTestimonialsSection />
@@ -120,9 +115,12 @@ export default function HomePageClient() {
         </Suspense>
       </section>
 
+      {/* 8. CTA Banner — Call to Action */}
+      <section id="cta" className={cn("scroll-mt-28 transition-colors duration-300")}>
+        <CTABanner />
+      </section>
 
-
-      {/* 8. Footer */}
+      {/* 9. Footer */}
       <section id="footer" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Footer />
       </section>

@@ -58,7 +58,7 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Tableside ordering, floor maps, KDS routing & split check payments.',
       ctaText: 'Explore Restaurant POS',
       href: '/products/restaurant-pos',
-      imageSrc: '/images/kitchen_display_3d.png',
+      imageSrc: '/images/nav_restaurant_pos.png',
       badgeColor: 'text-amber-700 dark:text-amber-400 bg-amber-100/90 dark:bg-amber-900/30 border border-amber-300/40',
     },
     {
@@ -67,7 +67,7 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Barcode checkout, cashier permissions, inventory sync & offline till.',
       ctaText: 'Explore Retail Register',
       href: '/products/retail-pos',
-      imageSrc: '/images/pos_counter_3d.png',
+      imageSrc: '/images/nav_retail_register.png',
       badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-900/30 border border-emerald-300/40',
     },
   ],

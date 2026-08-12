@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -231,50 +231,51 @@ const PlatformModuleCard: React.FC<{
   const Icon = module.icon;
 
   return (
-    <div className="w-[310px] shrink-0 px-2 sm:w-[330px] sm:px-2.5 lg:w-[350px]">
+    <div className="w-[270px] shrink-0 px-1.5 sm:w-[290px] sm:px-2 lg:w-[310px]">
       <Link
         href={module.href}
         tabIndex={isDuplicate ? -1 : undefined}
-        className="group/module relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/45 hover:shadow-xl hover:shadow-primary/10 dark:border-slate-800/90 dark:bg-slate-900/80 dark:hover:shadow-none sm:p-5"
+        className="group/module relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-slate-200/90 bg-white p-3 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg dark:border-slate-800/90 dark:bg-slate-900/85 dark:hover:border-primary/50 sm:p-3.5"
       >
-        {/* Ambient Hover Glow Effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-amber-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover/module:opacity-100 pointer-events-none" />
+        {/* Ambient Hover Glow Background Effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-emerald-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover/module:opacity-100 pointer-events-none" />
 
         <div>
-          {/* Module Image Container */}
-          <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-slate-50 dark:bg-slate-950">
+          {/* Module Compact Image Container */}
+          <div className="relative aspect-[16/8.5] w-full overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-950">
             <Image
               src={module.imageSrc}
               alt={module.imageAlt}
               fill
-              sizes="(max-width: 640px) 310px, (max-width: 1024px) 330px, 350px"
+              sizes="(max-width: 640px) 270px, (max-width: 1024px) 290px, 310px"
               className="object-cover transition-transform duration-700 group-hover/module:scale-105"
             />
-            <div className="absolute left-2.5 top-2.5 inline-flex items-center gap-1.5 rounded-full border border-white/90 bg-white/95 px-2.5 py-1 text-[9.5px] font-black uppercase tracking-wider text-primary shadow-xs backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-primary-light">
-              <Icon className="h-3 w-3 stroke-[2.5]" />
+            {/* Category Badge Tag */}
+            <div className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full border border-slate-200/90 bg-white/95 px-2 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider text-primary shadow-2xs backdrop-blur-md dark:border-slate-800/90 dark:bg-slate-900/95 dark:text-primary-light">
+              <Icon className="h-2.5 w-2.5 stroke-[2.5]" />
               {module.badge}
             </div>
           </div>
 
           {/* Title & Description */}
-          <div className="relative z-10 mt-3.5 space-y-1.5">
-            <h3 className="font-syne text-lg font-black text-slate-950 transition-colors duration-300 group-hover/module:text-primary dark:text-white dark:group-hover/module:text-primary-light sm:text-xl">
+          <div className="relative z-10 mt-2.5 space-y-0.5">
+            <h3 className="font-syne text-sm font-extrabold text-slate-950 transition-colors duration-300 group-hover/module:text-primary dark:text-white dark:group-hover/module:text-primary-light sm:text-base">
               {module.title}
             </h3>
-            <p className="text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300">
+            <p className="text-[11px] font-medium leading-normal text-slate-600 dark:text-slate-300 sm:text-xs">
               {module.description}
             </p>
           </div>
         </div>
 
         {/* Action Link Footer */}
-        <div className="relative z-10 mt-4 flex items-center justify-between border-t border-slate-100 pt-3 dark:border-slate-800/80">
-          <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-primary group-hover/module:text-primary-dark transition-colors">
-            <span>Explore Module</span>
-            <ArrowRight className="h-3.5 w-3.5 stroke-[2.5] transition-transform duration-300 group-hover/module:translate-x-1" />
+        <div className="relative z-10 mt-2.5 flex items-center justify-between border-t border-slate-100 pt-2 dark:border-slate-800/80">
+          <span className="inline-flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-wider text-primary group-hover/module:text-primary-dark transition-colors sm:text-[11px]">
+            <span>Explore</span>
+            <ArrowRight className="h-3 w-3 stroke-[2.5] transition-transform duration-300 group-hover/module:translate-x-0.5" />
           </span>
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover/module:bg-primary group-hover/module:text-white">
-            <Icon className="h-3.5 w-3.5 stroke-[2.5]" />
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover/module:bg-primary group-hover/module:text-white">
+            <Icon className="h-3 w-3 stroke-[2.5]" />
           </span>
         </div>
       </Link>
@@ -284,48 +285,53 @@ const PlatformModuleCard: React.FC<{
 
 export const MainProductsShowcaseSection: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleScrollLeft = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -350, behavior: "smooth" });
+      scrollContainerRef.current.scrollBy({ left: -300, behavior: "smooth" });
     }
   };
 
   const handleScrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 350, behavior: "smooth" });
+      scrollContainerRef.current.scrollBy({ left: 300, behavior: "smooth" });
     }
   };
 
   return (
-    <section className="relative overflow-hidden py-10 text-slate-900 transition-colors dark:text-white sm:py-14 lg:py-16">
-      {/* 1. SECTION HEADER (Reduced Gaps) */}
-      <div className="site-container relative z-10 mb-6 text-center sm:mb-7">
-        <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1.5 text-xs font-black uppercase tracking-wider text-primary shadow-2xs dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
-          <Sparkles className="h-3.5 w-3.5 stroke-[2.4]" />
+    <section className="relative overflow-hidden py-5 text-slate-900 transition-colors dark:text-white sm:py-7 lg:py-8">
+      {/* 1. SECTION HEADER (Reduced Title Font Size) */}
+      <div className="site-container relative z-10 mb-4 text-center sm:mb-5">
+        <span className="mb-1.5 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-primary shadow-2xs dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
+          <Sparkles className="h-3 w-3 stroke-[2.4]" />
           PLATFORM MODULES
         </span>
-        <h2 className="mx-auto max-w-4xl font-syne text-2xl font-black leading-tight tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
-          Complete POS Ecosystem
-          <span className="mt-1 block font-bold text-slate-800 dark:text-slate-200">
+        <h2 className="mx-auto max-w-3xl font-syne text-xl font-black leading-tight tracking-tight text-slate-950 dark:text-white sm:text-3xl lg:text-4xl">
+          Complete POS Ecosystem{" "}
+          <span className="mt-0.5 block font-bold text-slate-800 dark:text-slate-200 sm:inline sm:mt-0">
             For Every Business Model
           </span>
         </h2>
-        <p className="mx-auto mt-2 max-w-2xl text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+        <p className="mx-auto mt-1.5 max-w-xl text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-xs">
           From dining tableside terminals and retail barcode registers to cloud hubs and mobile waiter tablets.
         </p>
       </div>
 
-      {/* 2. INFINITE CONTINUOUS MARQUEE SLIDER WITH HOVER CONTROLS & PAUSE */}
-      <div className="group/marquee relative mb-10 w-full overflow-hidden sm:mb-14">
+      {/* 2. INFINITE CONTINUOUS MARQUEE SLIDER (Full Width, Zero Side Padding, Pause on Hover State) */}
+      <div
+        className="group/marquee relative mb-6 w-full overflow-hidden px-0 sm:mb-8"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         {/* Left Floating Navigation Arrow (Fades in on Hover) */}
         <button
           type="button"
           aria-label="Scroll Previous Module"
           onClick={handleScrollLeft}
-          className="absolute left-3 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/90 bg-white/95 text-slate-800 shadow-xl opacity-0 transition-all duration-300 group-hover/marquee:opacity-100 hover:scale-110 hover:bg-primary hover:text-white active:scale-95 dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 sm:left-6 sm:h-12 sm:w-12"
+          className="absolute left-2 top-1/2 z-30 flex h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/90 bg-white/95 text-slate-800 shadow-lg opacity-0 transition-all duration-300 group-hover/marquee:opacity-100 hover:scale-110 hover:bg-primary hover:text-white active:scale-95 dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 sm:left-4 sm:h-10 sm:w-10"
         >
-          <ChevronLeft className="h-6 w-6 stroke-[2.5]" />
+          <ChevronLeft className="h-4.5 w-4.5 stroke-[2.5]" />
         </button>
 
         {/* Right Floating Navigation Arrow (Fades in on Hover) */}
@@ -333,19 +339,22 @@ export const MainProductsShowcaseSection: React.FC = () => {
           type="button"
           aria-label="Scroll Next Module"
           onClick={handleScrollRight}
-          className="absolute right-3 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/90 bg-white/95 text-slate-800 shadow-xl opacity-0 transition-all duration-300 group-hover/marquee:opacity-100 hover:scale-110 hover:bg-primary hover:text-white active:scale-95 dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 sm:right-6 sm:h-12 sm:w-12"
+          className="absolute right-2 top-1/2 z-30 flex h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/90 bg-white/95 text-slate-800 shadow-lg opacity-0 transition-all duration-300 group-hover/marquee:opacity-100 hover:scale-110 hover:bg-primary hover:text-white active:scale-95 dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 sm:right-4 sm:h-10 sm:w-10"
         >
-          <ChevronRight className="h-6 w-6 stroke-[2.5]" />
+          <ChevronRight className="h-4.5 w-4.5 stroke-[2.5]" />
         </button>
 
         {/* Side Fading Gradients */}
-        <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-12 bg-gradient-to-r from-slate-50 via-slate-50/70 to-transparent dark:from-slate-950 dark:via-slate-950/70 sm:w-24 lg:w-36" />
-        <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-12 bg-gradient-to-l from-slate-50 via-slate-50/70 to-transparent dark:from-slate-950 dark:via-slate-950/70 sm:w-24 lg:w-36" />
+        <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-10 bg-gradient-to-r from-slate-50 via-slate-50/70 to-transparent dark:from-slate-950 dark:via-slate-950/70 sm:w-20 lg:w-28" />
+        <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-10 bg-gradient-to-l from-slate-50 via-slate-50/70 to-transparent dark:from-slate-950 dark:via-slate-950/70 sm:w-20 lg:w-28" />
 
-        <div ref={scrollContainerRef} className="min-w-0 flex-1 overflow-x-auto scrollbar-none py-2">
+        <div ref={scrollContainerRef} className="min-w-0 flex-1 overflow-x-auto scrollbar-none py-1">
           <div
-            className="quantix-modules-marquee-track flex w-max min-w-max items-center group-hover/marquee:[animation-play-state:paused]"
-            style={marqueeAnimation}
+            className="quantix-modules-marquee-track flex w-max min-w-max items-center"
+            style={{
+              ...marqueeAnimation,
+              animationPlayState: isHovered ? "paused" : "running",
+            }}
           >
             <div className="flex w-max shrink-0 items-center">
               {moduleGroupItems.map((module, idx) => (
@@ -382,7 +391,7 @@ export const MainProductsShowcaseSection: React.FC = () => {
       </div>
 
       {/* 3. PRODUCT LINES DEEP SHOWCASE */}
-      <div className="site-container relative z-10 space-y-14 sm:space-y-20">
+      <div className="site-container relative z-10 space-y-10 sm:space-y-14">
         {PRODUCT_LINES.map((line, index) => {
           const Icon = line.icon;
           const isRight = line.imagePosition === "right";
@@ -390,39 +399,39 @@ export const MainProductsShowcaseSection: React.FC = () => {
           return (
             <div
               key={line.title}
-              className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-16"
+              className="grid grid-cols-1 items-center gap-5 lg:grid-cols-12 lg:gap-8 xl:gap-12"
             >
               <motion.div
-                initial={{ opacity: 0, x: isRight ? -25 : 25 }}
+                initial={{ opacity: 0, x: isRight ? -20 : 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className={`space-y-4 lg:col-span-6 ${!isRight ? "lg:order-2" : "lg:order-1"}`}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className={`space-y-3 lg:col-span-6 ${!isRight ? "lg:order-2" : "lg:order-1"}`}
               >
                 <div>
-                  <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1.5 text-xs font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
-                    <Icon className="h-3.5 w-3.5 stroke-[2.4]" />
+                  <div className="mb-1.5 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
+                    <Icon className="h-3 w-3 stroke-[2.4]" />
                     {line.eyebrow}
                   </div>
-                  <h3 className="font-syne text-2xl font-black leading-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
+                  <h3 className="font-syne text-xl font-black leading-tight text-slate-950 dark:text-white sm:text-2xl lg:text-3xl">
                     {line.title}
                   </h3>
                 </div>
 
-                <p className="text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
+                <p className="text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-xs">
                   {line.description}
                 </p>
 
-                <div className="grid gap-2.5 pt-2">
+                <div className="grid gap-2 pt-1">
                   {line.points.map((point) => (
                     <div
                       key={point.title}
-                      className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900/70"
+                      className="flex items-start gap-2 rounded-lg border border-slate-200/80 bg-white p-2 shadow-2xs dark:border-slate-800 dark:bg-slate-900/70"
                     >
-                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary-light">
-                        <Check className="h-3.5 w-3.5 stroke-[3]" />
+                      <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary-light">
+                        <Check className="h-2.5 w-2.5 stroke-[3]" />
                       </span>
-                      <span className="text-xs sm:text-sm">
+                      <span className="text-xs sm:text-xs">
                         <strong className="font-extrabold text-slate-950 dark:text-white">
                           {point.title}:
                         </strong>{" "}
@@ -434,25 +443,25 @@ export const MainProductsShowcaseSection: React.FC = () => {
                   ))}
                 </div>
 
-                <div className="pt-3">
+                <div className="pt-1.5">
                   <Link
                     href={line.href}
-                    className="inline-flex h-12 items-center justify-center gap-2.5 rounded-full bg-primary px-7 font-syne text-xs font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-dark active:scale-95 sm:h-13 sm:text-sm"
+                    className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-primary px-5 font-syne text-xs font-extrabold uppercase tracking-wider text-white shadow-md shadow-primary/20 transition-all duration-200 hover:bg-primary-dark active:scale-95 sm:h-11"
                   >
                     <span>{line.ctaText}</span>
-                    <ArrowRight className="h-4 w-4 stroke-[2.5]" />
+                    <ArrowRight className="h-3.5 w-3.5 stroke-[2.5]" />
                   </Link>
                 </div>
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, x: isRight ? 25 : -25 }}
+                initial={{ opacity: 0, x: isRight ? 20 : -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className={`lg:col-span-6 ${!isRight ? "lg:order-1" : "lg:order-2"}`}
               >
-                <div className="group/image relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-2 shadow-xl shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/35 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:p-3">
+                <div className="group/image relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-2 shadow-md shadow-slate-200/40 transition-all duration-500 hover:-translate-y-1 hover:border-primary/35 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:p-2">
                   <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-slate-50 dark:bg-slate-950">
                     <Image
                       src={line.imageSrc}
@@ -463,13 +472,13 @@ export const MainProductsShowcaseSection: React.FC = () => {
                     />
                   </div>
 
-                  <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/95 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-800 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100">
+                  <div className="absolute right-3 top-3 z-20 inline-flex items-center gap-1 rounded-full border border-white/80 bg-white/95 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wider text-slate-800 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100">
                     <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                     {line.topBadge}
                   </div>
 
-                  <div className="absolute bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/95 px-3 py-1.5 text-[11px] font-extrabold leading-none text-slate-700 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200">
-                    <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
+                  <div className="absolute bottom-3 left-3 z-20 inline-flex items-center gap-1 rounded-full border border-white/80 bg-white/95 px-2.5 py-1 text-[9.5px] font-extrabold leading-none text-slate-700 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200">
+                    <ShieldCheck className="h-3 w-3 shrink-0 text-primary" />
                     {line.bottomBadge}
                   </div>
                 </div>

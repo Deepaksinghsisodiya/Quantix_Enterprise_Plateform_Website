@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useInView } from 'framer-motion';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Check, Headset, Sparkles } from 'lucide-react';
+import { Check, Headset, Sparkles, Zap, ArrowRight } from 'lucide-react';
 import { PricingPlan } from './Types/PricingTypes';
 
 export interface PricingSectionProps {
@@ -13,28 +13,66 @@ export interface PricingSectionProps {
   isLoading: boolean;
 }
 
+/* ─── README-spec plans ─── */
 const DEFAULT_PLANS: PricingPlan[] = [
   {
     id: 'free',
     planCode: 'trial',
-    name: 'Starter Trial',
+    name: 'Free Trial',
     price: 0,
     interval: 'monthly',
     priceMonthly: 0,
-    priceSuffix: ' 3 days, no card',
-    description: 'Perfect for testing our checkout flow and local inventory setup.',
-    features: ['Single register terminal', 'Basic inventory listings', 'Offline-first sales caching', 'Email receipt routing'],
+    priceSuffix: '3 days, no card',
+    description: 'Full access to all features. No credit card required.',
+    features: [
+      'Full platform access',
+      '1 location',
+      '2 staff accounts',
+      '100 transactions',
+      'Basic analytics',
+      'Email support',
+    ],
   },
   {
-    id: 'pro',
-    planCode: 'pro',
-    name: 'Business Pro',
-    price: 49,
+    id: 'starter',
+    planCode: 'starter',
+    name: 'Starter',
+    price: 50,
     interval: 'monthly',
-    priceMonthly: 49,
+    priceMonthly: 50,
     priceSuffix: '/month',
-    description: 'Complete checkout control for growing retail stores and cafes.',
-    features: ['Up to 3 active registers', 'Omnichannel matrix stock', 'Discount & coupon engine', '24/7 priority help desk'],
+    description: 'Perfect for small retailers and single-location restaurants.',
+    features: [
+      'Everything in Free Trial',
+      '1 location',
+      '5 staff accounts',
+      'Unlimited transactions',
+      'Inventory management',
+      'Loyalty program',
+      'Standard reports',
+      'Email & chat support',
+    ],
+  },
+  {
+    id: 'professional',
+    planCode: 'professional',
+    name: 'Professional',
+    price: 100,
+    interval: 'monthly',
+    priceMonthly: 100,
+    priceSuffix: '/month',
+    description: 'For growing businesses with multiple staff and advanced needs.',
+    features: [
+      'Everything in Starter',
+      'Up to 3 locations',
+      'Unlimited staff',
+      'Advanced analytics & BI',
+      'Kitchen Display System',
+      'Online ordering sync',
+      'API access',
+      'Tailored receipt branding',
+      'Priority 24/7 support',
+    ],
     mostPopular: true,
   },
   {
@@ -45,38 +83,25 @@ const DEFAULT_PLANS: PricingPlan[] = [
     interval: 'monthly',
     priceMonthly: 0,
     priceSuffix: '',
-    description: 'Custom scale setups, API gateways, and dedicated support lines.',
-    features: ['Unlimited checkout registers', 'Custom integrations API', 'Dedicated account manager', '99.9% uptime SLA guarantee'],
+    description: 'For large chains, franchises, and businesses with unique needs.',
+    features: [
+      'Everything in Professional',
+      'Unlimited locations',
+      'Dedicated account manager',
+      'Enterprise integrations',
+      'White-label options',
+      'SLA guarantee',
+      'On-site training',
+      'Tailored contracts & billing',
+    ],
     custom: true,
-  }
-];
-
-export interface StandaloneTier {
-  id: string;
-  name: string;
-  prices: Record<string, number>;
-  features: string[];
-}
-
-const STANDALONE_TIERS: StandaloneTier[] = [
-  { id: 'basic', name: 'Basic Token', prices: { '30': 15, '60': 28, '90': 40, '180': 75, '365': 140 }, features: ['Single register', 'Offline sales', 'Local receipt printing'] },
-  { id: 'standard', name: 'Standard Token', prices: { '30': 25, '60': 48, '90': 70, '180': 130, '365': 250 }, features: ['Up to 3 registers', 'Local network sync', 'Basic inventory'] },
-  { id: 'advance', name: 'Advance Token', prices: { '30': 45, '60': 85, '90': 120, '180': 225, '365': 420 }, features: ['Unlimited registers', 'Advanced local reports', 'Customer management'] },
-  { id: 'premium', name: 'Premium Token', prices: { '30': 65, '60': 120, '90': 175, '180': 325, '365': 600 }, features: ['All Advance features', 'API Bridge plugin', 'Priority phone support'] },
+  },
 ];
 
 export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading }) => {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'enterprise' | 'standalone'>('enterprise');
   const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly');
-  const [selectedPlanId, setSelectedPlanId] = useState<string>('pro');
-  const [standaloneValidity, setStandaloneValidity] = useState<Record<string, string>>({
-    basic: '30', standard: '30', advance: '30', premium: '30'
-  });
-
-  const handleSelectPlan = (planId: string) => {
-    setSelectedPlanId(planId);
-  };
+  const [selectedPlanId, setSelectedPlanId] = useState<string>('professional');
 
   const handleButtonClick = (plan: PricingPlan, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -88,342 +113,315 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ plans, isLoading
   };
 
   const ref = React.useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-100px' });
+  const inView = useInView(ref, { once: true, margin: '-80px' });
   const ctaRef = React.useRef(null);
-  const ctaInView = useInView(ctaRef, { once: true, margin: '-100px' });
+  const ctaInView = useInView(ctaRef, { once: true, margin: '-80px' });
 
-  // Use API plans if available, otherwise fall back to dummy/default plans
   const pricingPlans = plans.length > 0 ? plans : DEFAULT_PLANS;
 
-  // calculate annual price if not provided (16% discount)
+  // 16% discount on annual
   const getAnnualPrice = (monthly: number) => Math.round(monthly * 12 * 0.84);
 
-  const gridVariants = {
-    hidden: { opacity: 0, y: 25 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }
-    }
+  const getDisplayPrice = (plan: PricingPlan) => {
+    if (plan.custom) return 'Custom';
+    if (plan.planCode === 'trial') return 'Free';
+    if (billing === 'annual') return `$${getAnnualPrice(plan.priceMonthly)}`;
+    return `$${plan.priceMonthly}`;
+  };
+
+  const getPriceSuffix = (plan: PricingPlan) => {
+    if (plan.custom) return 'Tailored pricing';
+    if (plan.planCode === 'trial') return '3 days, no card';
+    return billing === 'monthly' ? '/month' : '/year';
+  };
+
+  const getCtaLabel = (plan: PricingPlan) => {
+    if (plan.planCode === 'trial') return 'Start Free Trial';
+    if (plan.custom) return 'Contact Sales';
+    return 'Get Started';
   };
 
   return (
     <>
-      {/* Main Pricing Cards section */}
-      <section className="pt-32 sm:pt-40 pb-16 bg-gradient-to-b from-white via-slate-50/20 to-white border-t border-slate-100" ref={ref} id="pricing">
+      {/* ─── Main Pricing Section ─── */}
+      <section
+        className="relative pt-32 sm:pt-40 pb-16 sm:pb-20 bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-900 overflow-hidden transition-colors"
+        ref={ref}
+        id="pricing"
+      >
+        {/* Background decorations */}
+        <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+
         <div className="site-container">
           {/* Header */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary mb-4 shadow-sm">
+          <motion.div
+            className="text-center mb-10 sm:mb-14"
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-primary mb-4 shadow-sm dark:bg-primary/15 dark:border-primary/30 dark:text-primary-light">
+              <Sparkles className="h-3 w-3 stroke-[2.5]" />
               PRICING
             </div>
-            <h2 className="text-3xl font-syne font-black tracking-tight text-gray-900 sm:text-5xl leading-tight">
+            <h1 className="text-3xl font-syne font-black tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl leading-tight">
               Simple, transparent pricing
-            </h2>
-            <p className="mt-4 text-base sm:text-lg text-slate-500 font-medium max-w-2xl mx-auto">
+            </h1>
+            <p className="mt-3 text-sm sm:text-base text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto leading-relaxed">
               Start free. Scale as you grow. No hidden fees, ever.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Tab Selection */}
-          <div className="flex justify-center mb-8">
-            <div className="inline-flex items-center rounded-lg bg-slate-100 p-1 border border-slate-200">
+          {/* Billing Toggle */}
+          <motion.div
+            className="flex justify-center mb-10 sm:mb-14"
+            initial={{ opacity: 0, y: 15 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="inline-flex items-center rounded-full bg-slate-100 dark:bg-slate-800/80 p-1 border border-slate-200/60 dark:border-slate-700/60 shadow-inner">
               <button
                 type="button"
-                onClick={() => setActiveTab('enterprise')}
+                onClick={() => setBilling('monthly')}
                 className={cn(
-                  'rounded-md px-6 py-2.5 text-sm font-bold transition-all duration-200 cursor-pointer',
-                  activeTab === 'enterprise' ? 'bg-white text-primary shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-900'
+                  'rounded-full px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer',
+                  billing === 'monthly'
+                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm ring-1 ring-slate-200/60 dark:ring-slate-600'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 )}
               >
-                Enterprise Plans
+                Monthly
               </button>
               <button
                 type="button"
-                onClick={() => setActiveTab('standalone')}
+                onClick={() => setBilling('annual')}
                 className={cn(
-                  'rounded-md px-6 py-2.5 text-sm font-bold transition-all duration-200 cursor-pointer',
-                  activeTab === 'standalone' ? 'bg-white text-primary shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-900'
-                )}
-              >
-                Standalone Tokens
-              </button>
-            </div>
-          </div>
-
-          {/* Billing toggle (Only show for Enterprise) */}
-          {activeTab === 'enterprise' && (
-            <div className="flex justify-center mb-16">
-              <div className="inline-flex items-center rounded-full bg-slate-100/60 p-1 border border-slate-200/40 shadow-inner">
-                <button
-                  type="button"
-                  onClick={() => setBilling('monthly')}
-                  className={cn(
-                    'rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer',
-                    billing === 'monthly' ? 'bg-white text-gray-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'
-                  )}
-                >
-                  Monthly
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBilling('annual')}
-                  className={cn(
-                    'rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer',
-                  billing === 'annual' ? 'bg-white text-gray-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                  'rounded-full px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer',
+                  billing === 'annual'
+                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm ring-1 ring-slate-200/60 dark:ring-slate-600'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 )}
               >
                 Annual
-                <span className="rounded bg-emerald-50 px-1.5 py-0.5 text-[9px] font-extrabold text-emerald-600 uppercase tracking-wide">
+                <span className="rounded-full bg-emerald-50 dark:bg-emerald-500/15 px-2 py-0.5 text-[9px] font-extrabold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">
                   Save 16%
                 </span>
               </button>
             </div>
-          </div>
-          )}
+          </motion.div>
 
-          {/* Cards grid */}
+          {/* Plans Grid — 4 columns */}
           <motion.div
-            className={cn(
-              "grid gap-6 items-stretch justify-center max-w-7xl mx-auto",
-              activeTab === 'enterprise' ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
-            )}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            variants={gridVariants}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch max-w-7xl mx-auto"
+            initial={{ opacity: 0, y: 25 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           >
-            {isLoading && activeTab === 'enterprise' && Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="rounded-3xl border border-slate-100 p-6 animate-pulse bg-white flex flex-col justify-between">
-                <div className="space-y-4">
-                  <div className="h-6 w-3/4 bg-gray-200 rounded" />
-                  <div className="h-8 w-1/2 bg-gray-200 rounded" />
-                  <div className="h-4 w-full bg-gray-200 rounded" />
-                  <div className="h-4 w-5/6 bg-gray-200 rounded" />
-                </div>
-                <div className="h-10 w-full bg-gray-200 rounded mt-8" />
-              </div>
-
-            ))}
-
-            {!isLoading && activeTab === 'enterprise' && pricingPlans.map((plan) => {
-              const isSelected = selectedPlanId === plan.id;
-              const isTrialPlan = plan.planCode === 'trial';
-
-              return (
+            {isLoading &&
+              Array.from({ length: 4 }).map((_, i) => (
                 <div
-                  key={plan.id}
-                  onClick={() => handleSelectPlan(plan.id)}
-                  className={cn(
-                    'rounded-3xl border p-6 pt-8 flex flex-col justify-between transition-all duration-500 relative cursor-pointer group hover:-translate-y-2',
-                    plan.mostPopular
-                      ? (isSelected
-                        ? 'bg-gradient-to-b from-primary to-primary-dark text-white border-primary ring-2 ring-primary/30 shadow-xl shadow-primary/20 lg:scale-105'
-                        : 'bg-gradient-to-b from-primary to-primary-dark text-white border-primary shadow-xl shadow-primary/10 lg:scale-105 hover:shadow-[0_25px_50px_-12px_rgba(0,166,156,0.15)]')
-                      : (isSelected
-                        ? 'bg-white text-gray-900 border-primary ring-2 ring-primary/10 shadow-lg before:absolute before:top-0 before:left-0 before:right-0 before:h-[2.5px] before:bg-gradient-to-r before:from-primary before:to-primary-light before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500'
-                        : 'bg-white text-gray-900 border-slate-200 shadow-sm hover:border-primary/30 hover:shadow-md before:absolute before:top-0 before:left-0 before:right-0 before:h-[2.5px] before:bg-gradient-to-r before:from-primary before:to-primary-light before:scale-x-0 before:origin-left group-hover:before:scale-x-100 before:transition-transform before:duration-500')
-                  )}
+                  key={i}
+                  className="rounded-2xl border border-slate-100 dark:border-slate-800 p-6 animate-pulse bg-white dark:bg-slate-900 flex flex-col justify-between"
                 >
-                  <div>
-                    {plan.mostPopular && (
-                      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 shrink-0">
-                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-3.5 py-1 text-[9px] font-extrabold uppercase tracking-wider text-gray-950 shadow-md whitespace-nowrap">
-                          <Sparkles className="h-3 w-3 fill-gray-950" />
+                  <div className="space-y-4">
+                    <div className="h-5 w-3/4 bg-slate-200 dark:bg-slate-700 rounded" />
+                    <div className="h-8 w-1/2 bg-slate-200 dark:bg-slate-700 rounded" />
+                    <div className="h-4 w-full bg-slate-200 dark:bg-slate-700 rounded" />
+                    <div className="h-4 w-5/6 bg-slate-200 dark:bg-slate-700 rounded" />
+                  </div>
+                  <div className="h-10 w-full bg-slate-200 dark:bg-slate-700 rounded mt-8" />
+                </div>
+              ))}
+
+            {!isLoading &&
+              pricingPlans.map((plan) => {
+                const isSelected = selectedPlanId === plan.id;
+                const isPopular = plan.mostPopular;
+                const isTrial = plan.planCode === 'trial';
+
+                return (
+                  <div
+                    key={plan.id}
+                    onClick={() => setSelectedPlanId(plan.id)}
+                    className={cn(
+                      'relative rounded-2xl border p-5 pt-7 flex flex-col justify-between transition-all duration-300 cursor-pointer group',
+                      'hover:-translate-y-1 hover:shadow-lg',
+                      isPopular
+                        ? 'bg-gradient-to-b from-primary via-primary to-primary-dark text-white border-primary shadow-xl shadow-primary/15 lg:scale-[1.03] z-10'
+                        : isSelected
+                          ? 'bg-white dark:bg-slate-900 border-primary/50 ring-2 ring-primary/15 shadow-md dark:border-primary/40'
+                          : 'bg-white dark:bg-slate-900/80 border-slate-200 dark:border-slate-800 shadow-sm hover:border-primary/30 dark:hover:border-primary/40'
+                    )}
+                  >
+                    {/* Most Popular Badge */}
+                    {isPopular && (
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-3 py-1 text-[9px] font-extrabold uppercase tracking-wider text-slate-950 shadow-md whitespace-nowrap">
+                          <Sparkles className="h-3 w-3 fill-slate-950" />
                           Most Popular
                         </span>
                       </div>
                     )}
 
-                    {/* Name as small uppercase label */}
-                    <h3 className={cn('text-[10px] font-syne font-bold uppercase tracking-wider text-slate-400 text-center', plan.mostPopular && 'text-white/70')}>
-                      {plan.name}
-                    </h3>
-
-                    {/* Price */}
-                    <div className="mt-3 mb-4 flex justify-center">
-                      {plan.custom ? (
-                        <div className="flex items-center justify-center h-10 w-full">
-                          <span className={cn('text-4xl font-syne font-black text-slate-900 tracking-tight text-center', plan.mostPopular && 'text-white')}>
-                            Custom
-                          </span>
-                        </div>
-                      ) : (
-                        <div className="flex items-baseline justify-center gap-1.5 h-10 w-full">
-                          <span className={cn('text-4xl font-syne font-black text-slate-900 tracking-tight text-center', plan.mostPopular && 'text-white')}>
-                            {isTrialPlan ? 'Free' : `$${billing === 'monthly' ? plan.priceMonthly : getAnnualPrice(plan.priceMonthly)}`}
-                          </span>
-                          <span className={cn('text-xs font-bold text-slate-500 text-center', plan.mostPopular ? 'text-white/70' : 'text-slate-400')}>
-                            {isTrialPlan ? '3 days' : (billing === 'monthly' ? '/mo' : '/yr')}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Description */}
-                    <p className={cn('text-xs text-slate-500 mb-6 leading-relaxed font-medium text-center', plan.mostPopular && 'text-white/80')}>{plan.description}</p>
-
-                    {/* Features list */}
-                    <ul className="mb-8 space-y-3">
-                      {plan.features.map((feat, idx) => {
-                        const featureText = feat.replace(/Custom/g, 'Tailored');
-                        return (
-                          <li key={idx} className="flex items-start text-xs font-semibold">
-                            <Check className={cn('h-4 w-4 mr-2 shrink-0 stroke-[3]', plan.mostPopular ? 'text-white' : 'text-emerald-500')} />
-                            <span className={cn('text-slate-700', plan.mostPopular && 'text-white')}>{featureText}</span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-
-                  {/* CTA Button */}
-                  <div className="mt-auto">
-                    {isTrialPlan ? (
-                      <button
-                        type="button"
-                        onClick={(e) => handleButtonClick(plan, e)}
-                        className={cn(
-                          "w-full text-xs font-bold py-3.5 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-205 cursor-pointer text-center block border",
-                          isSelected
-                            ? "bg-white text-primary border-white hover:bg-slate-50 shadow-md"
-                            : "btn-gradient text-white border-transparent"
-                        )}
-                        aria-label="Start free trial"
-                      >
-                        Start Free Trial
-                      </button>
-                    ) : plan.custom ? (
-                      <button
-                        type="button"
-                        onClick={(e) => handleButtonClick(plan, e)}
-                        className={cn(
-                          "w-full text-xs font-bold py-3.5 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-205 cursor-pointer text-center block border border-transparent",
-                          isSelected
-                            ? "bg-white text-slate-950 hover:bg-slate-50 shadow-md"
-                            : "btn-gradient text-white"
-                        )}
-                        aria-label="Contact Sales"
-                      >
-                        Contact Sales
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={(e) => handleButtonClick(plan, e)}
-                        className={cn(
-                          "w-full text-xs font-bold py-3.5 px-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-205 cursor-pointer text-center block border border-transparent",
-                          plan.mostPopular
-                            ? "bg-white text-primary hover:bg-slate-50"
-                            : "btn-gradient text-white"
-                        )}
-                        aria-label="Get started"
-                      >
-                        Get Started
-                      </button>
+                    {/* Top accent line for non-popular cards */}
+                    {!isPopular && (
+                      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary/0 via-primary to-primary/0 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center rounded-t-2xl" />
                     )}
-                  </div>
-                </div>
-              );
-            })}
 
-            {!isLoading && activeTab === 'standalone' && STANDALONE_TIERS.map((tier) => {
-              const validity = standaloneValidity[tier.id] || '30';
-              const price = tier.prices[validity];
-              return (
-                <div key={tier.id} className="rounded-3xl border border-slate-200 p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-lg bg-white relative">
-                  <div>
-                    <h3 className="text-sm font-syne font-bold uppercase tracking-wider text-slate-700">{tier.name}</h3>
-                    <div className="mt-4 mb-2">
-                      <select 
-                        value={validity} 
-                        onChange={(e) => setStandaloneValidity(prev => ({...prev, [tier.id]: e.target.value}))}
-                        className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none cursor-pointer text-slate-700 bg-slate-50"
+                    <div>
+                      {/* Plan Name */}
+                      <h3
+                        className={cn(
+                          'text-[10px] font-syne font-bold uppercase tracking-widest',
+                          isPopular ? 'text-white/70' : 'text-slate-400 dark:text-slate-500'
+                        )}
                       >
-                        <option value="30">30 Days</option>
-                        <option value="60">60 Days</option>
-                        <option value="90">90 Days</option>
-                        <option value="180">180 Days</option>
-                        <option value="365">365 Days</option>
-                      </select>
+                        {plan.name}
+                      </h3>
+
+                      {/* Price */}
+                      <div className="mt-3 mb-1 flex items-baseline gap-1">
+                        <span
+                          className={cn(
+                            'text-3xl sm:text-4xl font-syne font-black tracking-tight',
+                            isPopular ? 'text-white' : 'text-slate-950 dark:text-white'
+                          )}
+                        >
+                          {getDisplayPrice(plan)}
+                        </span>
+                        <span
+                          className={cn(
+                            'text-xs font-semibold',
+                            isPopular ? 'text-white/60' : 'text-slate-400 dark:text-slate-500'
+                          )}
+                        >
+                          {getPriceSuffix(plan)}
+                        </span>
+                      </div>
+
+                      {/* Description */}
+                      <p
+                        className={cn(
+                          'text-[11px] sm:text-xs leading-relaxed font-medium mb-5',
+                          isPopular ? 'text-white/75' : 'text-slate-500 dark:text-slate-400'
+                        )}
+                      >
+                        {plan.description}
+                      </p>
+
+                      {/* Divider */}
+                      <div
+                        className={cn(
+                          'h-px w-full mb-5',
+                          isPopular ? 'bg-white/15' : 'bg-slate-100 dark:bg-slate-800'
+                        )}
+                      />
+
+                      {/* Features */}
+                      <ul className="space-y-2.5">
+                        {plan.features.map((feat, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-[11px] sm:text-xs font-medium">
+                            <Check
+                              className={cn(
+                                'h-3.5 w-3.5 mt-0.5 shrink-0 stroke-[3]',
+                                isPopular ? 'text-white' : 'text-emerald-500 dark:text-emerald-400'
+                              )}
+                            />
+                            <span className={cn(isPopular ? 'text-white/90' : 'text-slate-700 dark:text-slate-300')}>
+                              {feat}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <div className="mt-4 mb-4">
-                      <span className="text-3xl font-syne font-black text-slate-900">${price}</span>
-                      <span className="text-xs font-medium text-slate-500"> / {validity} days</span>
+
+                    {/* CTA Button */}
+                    <div className="mt-6">
+                      <button
+                        type="button"
+                        onClick={(e) => handleButtonClick(plan, e)}
+                        className={cn(
+                          'w-full text-xs font-bold py-3 px-4 rounded-full transition-all duration-200 cursor-pointer text-center flex items-center justify-center gap-1.5',
+                          'hover:scale-[1.02] active:scale-[0.98]',
+                          isPopular
+                            ? 'bg-white text-primary hover:bg-slate-50 shadow-md'
+                            : isTrial
+                              ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 shadow-md'
+                              : 'bg-primary text-white hover:bg-primary-dark shadow-md shadow-primary/15'
+                        )}
+                        aria-label={getCtaLabel(plan)}
+                      >
+                        {getCtaLabel(plan)}
+                        <ArrowRight className="h-3.5 w-3.5 stroke-[2.5]" />
+                      </button>
                     </div>
-                    <ul className="mb-6 space-y-3">
-                      {tier.features.map((feat, idx) => (
-                        <li key={idx} className="flex items-start text-xs font-medium text-slate-600">
-                          <Check className="h-4 w-4 mr-2 shrink-0 stroke-[2.5] text-emerald-500" />
-                          <span>{feat}</span>
-                        </li>
-                      ))}
-                    </ul>
                   </div>
-                  <div className="mt-auto flex flex-col gap-3">
-                    <button onClick={(e) => { e.stopPropagation(); router.push('/sign-up/standalone'); }} className="w-full text-xs font-bold py-3 rounded-full transition-all text-white bg-slate-900 hover:bg-slate-800 shadow-md">
-                      Buy Token
-                    </button>
-                    <span className="text-center text-[10px] text-slate-400 font-medium">10+? <Link href="/contact" className="hover:text-primary">Contact sales</Link></span>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </motion.div>
 
           {/* Footer note */}
-          <div className="mt-12 text-center">
-            <p className="text-sm text-slate-500 font-medium">
-              Not sure which setup is right? Take our <Link href="/quiz" className="text-primary font-bold hover:underline">Plan Finder Quiz →</Link> or calculate your returns with our <Link href="/roi-calculator" className="text-primary font-bold hover:underline">ROI Calculator →</Link>
+          <motion.div
+            className="mt-10 sm:mt-14 text-center"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <p className="text-xs sm:text-sm text-slate-400 dark:text-slate-500 font-medium">
+              All plans include SSL security, automatic backups, and software updates.{' '}
+              <Link href="/contact" className="text-primary font-bold hover:underline">
+                Questions? Talk to us →
+              </Link>
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Need Customization? Contact Sales CTA card (Dark Cinematic Card) */}
-      <section
-        ref={ctaRef}
-        className="w-full bg-white pb-10 sm:pb-12"
-      >
+      {/* ─── Need Customization? CTA Card ─── */}
+      <section ref={ctaRef} className="w-full bg-white dark:bg-slate-950 pb-10 sm:pb-14 transition-colors">
         <div className="site-container">
           <motion.div
-            className="relative flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left bg-slate-950 text-white rounded-3xl border border-slate-900 p-8 sm:p-12 shadow-2xl overflow-hidden"
+            className="relative flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left bg-slate-950 dark:bg-slate-900 text-white rounded-2xl border border-slate-800 dark:border-slate-700 p-8 sm:p-10 shadow-2xl overflow-hidden"
             initial={{ opacity: 0, y: 25 }}
             animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Grid overlay background */}
+            {/* Background effects */}
             <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
-            <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-72 h-72 bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/8 rounded-full blur-[60px] pointer-events-none" />
 
-            {/* Left side: Icon + Heading + Subtext */}
-            <div className="relative z-10 flex flex-col md:flex-row items-center gap-5">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-primary-dark text-white shadow-lg shadow-primary/20">
-                <Headset className="h-6 w-6" />
+            {/* Left: Icon + Text */}
+            <div className="relative z-10 flex flex-col md:flex-row items-center gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-primary-dark text-white shadow-lg shadow-primary/20">
+                <Headset className="h-5.5 w-5.5" />
               </div>
               <div>
-                <h3 className="text-2xl sm:text-3xl font-syne font-black uppercase tracking-tight text-white">
+                <h3 className="text-xl sm:text-2xl font-syne font-black tracking-tight text-white">
                   Need a Custom Plan?
                 </h3>
-                <p className="mt-2 text-sm text-slate-400 max-w-md font-medium leading-relaxed">
+                <p className="mt-1 text-xs sm:text-sm text-slate-400 max-w-md font-medium leading-relaxed">
                   Talk to our sales team and get a tailored solution for your business.
                 </p>
               </div>
             </div>
 
-            {/* Right side: Two CTA Buttons */}
-            <div className="relative z-10 flex flex-wrap items-center justify-center gap-4 shrink-0">
-              <Link href="/contact" className="w-full sm:w-auto">
+            {/* Right: Buttons */}
+            <div className="relative z-10 flex flex-wrap items-center justify-center gap-3 shrink-0">
+              <Link href="/contact">
                 <button
                   type="button"
-                  className="w-full sm:w-auto text-xs font-bold bg-white hover:bg-slate-100 text-slate-950 py-3.5 px-6 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer shadow-md"
+                  className="text-xs font-bold bg-white hover:bg-slate-100 text-slate-950 py-3 px-6 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer shadow-md flex items-center gap-1.5"
                 >
                   Contact Sales
+                  <ArrowRight className="h-3.5 w-3.5 stroke-[2.5]" />
                 </button>
               </Link>
-              <Link href="/contact/demo" className="w-full sm:w-auto">
+              <Link href="/contact/demo">
                 <button
                   type="button"
-                  className="w-full sm:w-auto text-xs font-bold border border-white/20 hover:bg-white/5 text-white bg-transparent py-3.5 px-6 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer"
+                  className="text-xs font-bold border border-white/20 hover:bg-white/5 text-white bg-transparent py-3 px-6 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer"
                 >
                   Schedule a Demo
                 </button>
