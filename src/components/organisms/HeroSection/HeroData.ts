@@ -56,7 +56,7 @@ export const HERO_SLIDES: HeroSlide[] = [
       "Track sales, inventory, staff activity, and operational reports from anywhere your business needs visibility.",
     primaryCta: { label: "Start Free Trial", href: "/sign-up" },
     secondaryCta: { label: "Explore Cloud POS", href: "/products/cloud-pos" },
-    backgroundImage: "/images/inventory_sync_3d.png",
+    backgroundImage: "/images/demo-thumb-ai.png",
     featureHighlights: ["Live Dashboards", "Inventory Sync", "Remote Management"],
   },
   {
@@ -68,7 +68,7 @@ export const HERO_SLIDES: HeroSlide[] = [
       "Build tailored workflows, API bridges, white-label experiences, and hardware integrations around your operating model.",
     primaryCta: { label: "Contact Custom Team", href: "/products/custom-service" },
     secondaryCta: { label: "Request Quote", href: "/contact" },
-    backgroundImage: "/images/online_ordering_3d.png",
+    backgroundImage: "/images/ss2-ai.png",
     featureHighlights: ["Custom Workflows", "API Bridges", "White-Label Options"],
   },
 ];

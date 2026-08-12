@@ -95,24 +95,6 @@ export const HeroView: React.FC<HeroViewProps> = ({
                 {slide.badge}
               </span>
 
-              <div className="grid w-full grid-cols-3 items-center gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-2 lg:justify-start">
-                {slides.map((item, index) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => onGoTo(index)}
-                    className={cn(
-                      "min-h-6 min-w-0 whitespace-nowrap rounded-full border px-2 py-1.5 text-[6.5px] font-extrabold uppercase leading-none tracking-normal transition-all min-[380px]:text-[7px] sm:px-3 sm:text-[11px] sm:tracking-wide",
-                      index === activeIndex
-                        ? "border-primary bg-primary text-white shadow-sm shadow-primary/20"
-                        : "border-slate-200 bg-white text-slate-600 hover:border-primary/40 hover:text-primary dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:text-primary-light"
-                    )}
-                  >
-                    {item.badge}
-                  </button>
-                ))}
-              </div>
-
               <h1 className="font-syne text-[1.82rem] font-black leading-[1.06] tracking-normal text-slate-900 dark:text-white min-[380px]:text-[2.02rem] sm:max-w-[16ch] sm:text-5xl sm:leading-[1.03] sm:tracking-tight md:text-5xl lg:max-w-[17ch] lg:text-[3.25rem]">
                 <span className="block sm:hidden">
                   {slide.mobileHeadingLines.map((line, index) => (
