@@ -1,68 +1,65 @@
 @import "tailwindcss";
 
 @theme {
-  /* Dynamic Custom Variables mapping to Tailwind - Quantix Robin's Egg Blue Palette */
-  --color-primary: #089699;
-  --color-primary-light: #24D6D3;
-  --color-primary-dark: #0B777A;
-  --color-darkBg: #022D31;
-  --color-darkSurface: #114D50;
+  /* Dynamic Custom Variables mapping to Tailwind - Vibrant Culinary Flame Orange & Paprika Palette */
+  --color-primary: #FF4D00;
+  --color-primary-light: #FF7332;
+  --color-primary-dark: #E03E00;
+  --color-darkBg: #180D08;
+  --color-darkSurface: #2B170E;
 
-  --color-bg-warm: #EFFEFC;
-  --color-soft-pink: #CAFEF8;
-  --color-soft-mint: #95FAF1;
-  --color-soft-lavender: #58F0E9;
-  --color-soft-yellow: #CAFEF8;
-  --color-teal: #0EBEBE;
+  --color-bg-warm: #FFF7F2;
+  --color-soft-pink: #FFEAE0;
+  --color-soft-mint: #FFD4C2;
+  --color-soft-lavender: #FFB394;
+  --color-soft-yellow: #FEF3C7;
+  --color-teal: #FF4D00;
 
-  --color-robin-50: #EFFEFC;
-  --color-robin-100: #CAFEF8;
-  --color-robin-200: #95FAF1;
-  --color-robin-300: #58F0E9;
-  --color-robin-400: #24D6D3;
-  --color-robin-500: #0EBEBE;
-  --color-robin-600: #089699;
-  --color-robin-700: #0B777A;
-  --color-robin-800: #0E5D61;
-  --color-robin-900: #114D50;
-  --color-robin-950: #022D31;
+  --color-robin-50: #FFF7F2;
+  --color-robin-100: #FFEAE0;
+  --color-robin-200: #FFD4C2;
+  --color-robin-300: #FFB394;
+  --color-robin-400: #FF8F61;
+  --color-robin-500: #FF7332;
+  --color-robin-600: #FF4D00;
+  --color-robin-700: #E03E00;
+  --color-robin-800: #B83200;
+  --color-robin-900: #8F2700;
+  --color-robin-950: #421000;
 
-  /* OVERRIDE Tailwind's cool palettes dynamically to Quantix teal */
-  --color-blue-400: #24D6D3;
-  --color-blue-500: #0EBEBE;
-  --color-blue-600: #089699;
-  --color-blue-700: #0B777A;
+  --color-blue-400: #FF7332;
+  --color-blue-500: #FF4D00;
+  --color-blue-600: #E03E00;
+  --color-blue-700: #B83200;
 
-  --color-cyan-400: #58F0E9;
-  --color-cyan-500: #24D6D3;
-  --color-cyan-600: #0EBEBE;
-  --color-cyan-700: #089699;
+  --color-cyan-400: #FFB394;
+  --color-cyan-500: #FF7332;
+  --color-cyan-600: #FF4D00;
+  --color-cyan-700: #E03E00;
 
-  --color-teal-400: #24D6D3;
-  --color-teal-500: #0EBEBE;
-  --color-teal-600: #089699;
-  --color-teal-700: #0B777A;
+  --color-teal-400: #FF7332;
+  --color-teal-500: #FF4D00;
+  --color-teal-600: #E03E00;
+  --color-teal-700: #B83200;
 
-  --color-emerald-400: #24D6D3;
-  --color-emerald-500: #0EBEBE;
-  --color-emerald-600: #089699;
-  --color-emerald-700: #0B777A;
+  --color-emerald-400: #F59E0B;
+  --color-emerald-500: #D97706;
+  --color-emerald-600: #B45309;
+  --color-emerald-700: #78350F;
 
-  --color-indigo-400: #58F0E9;
-  --color-indigo-500: #24D6D3;
-  --color-indigo-600: #0EBEBE;
-  --color-indigo-700: #089699;
+  --color-indigo-400: #FFB394;
+  --color-indigo-500: #FF4D00;
+  --color-indigo-600: #E03E00;
+  --color-indigo-700: #B83200;
 
-  --color-violet-400: #58F0E9;
-  --color-violet-500: #24D6D3;
-  --color-violet-600: #0EBEBE;
-  --color-violet-700: #089699;
+  --color-violet-400: #FFB394;
+  --color-violet-500: #FF4D00;
+  --color-violet-600: #E03E00;
+  --color-violet-700: #B83200;
 
-  /* Additional theme mappings */
   --color-background: var(--bg-color);
   --color-foreground: var(--text-color);
 
-  /* Custom subtle pulse animation */
   --animate-pulse-subtle: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
   @keyframes pulse-subtle {
@@ -75,7 +72,7 @@
     50% {
       opacity: 0.95;
       transform: scale(1.02);
-      box-shadow: 0 0 15px rgba(8, 150, 153, 0.35);
+      box-shadow: 0 0 15px rgba(255, 77, 0, 0.35);
     }
   }
 }
@@ -85,48 +82,42 @@ html {
 }
 
 :root {
-  /* ==========================================
-     THEME CONFIGURATION - QUANTIX ROBIN'S EGG BLUE PALETTE
-     ========================================== */
-  --primary-color: #089699;
-  --primary-light: #24D6D3;
-  --primary-dark: #0B777A;
+  --primary-color: #FF4D00;
+  --primary-light: #FF7332;
+  --primary-dark: #E03E00;
 
-  /* Global Core Colors */
   --bg-color: #ffffff;
   --text-color: #5f6368;
-  --dark-bg: #022D31;
-  --dark-surface: #114D50;
+  --dark-bg: #180D08;
+  --dark-surface: #2B170E;
 
-  /* Robin's Egg Blue soft background accents */
-  --background-warm: #EFFEFC;
-  --soft-pink: #CAFEF8;
-  --soft-mint: #95FAF1;
-  --soft-lavender: #58F0E9;
-  --soft-yellow: #CAFEF8;
-  --teal-color: #0EBEBE;
+  --background-warm: #FFF7F2;
+  --soft-pink: #FFEAE0;
+  --soft-mint: #FFD4C2;
+  --soft-lavender: #FFB394;
+  --soft-yellow: #FEF3C7;
+  --teal-color: #FF4D00;
 
-  --robin-50: #EFFEFC;
-  --robin-100: #CAFEF8;
-  --robin-200: #95FAF1;
-  --robin-300: #58F0E9;
-  --robin-400: #24D6D3;
-  --robin-500: #0EBEBE;
-  --robin-600: #089699;
-  --robin-700: #0B777A;
-  --robin-800: #0E5D61;
-  --robin-900: #114D50;
-  --robin-950: #022D31;
+  --robin-50: #FFF7F2;
+  --robin-100: #FFEAE0;
+  --robin-200: #FFD4C2;
+  --robin-300: #FFB394;
+  --robin-400: #FF8F61;
+  --robin-500: #FF7332;
+  --robin-600: #FF4D00;
+  --robin-700: #E03E00;
+  --robin-800: #B83200;
+  --robin-900: #8F2700;
+  --robin-950: #421000;
 
   --color-primary: var(--primary-color);
   --color-background: var(--bg-color);
   --color-foreground: var(--text-color);
-  --color-surface: #EFFEFC;
-  --color-border: #CAFEF8;
+  --color-surface: #FFF7F2;
+  --color-border: #FFEAE0;
   --site-max-width: 95rem;
 }
 
-/* Centralized container class to align every section's width across the project */
 .site-container {
   width: 85%;
   max-width: var(--site-max-width);
@@ -134,12 +125,10 @@ html {
   margin-right: auto;
 }
 
-/* Smooth transitions */
 * {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -149,11 +138,10 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #089699;
+  background: #FF4D00;
   border-radius: 4px;
 }
 
-/* Typography defaults */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -209,22 +197,20 @@ html {
   }
 }
 
-/* ─── PREMIUM VISUAL CLASSES ─── */
 :root {
-  --blue-color: #089699;
-  --indigo-color: #24D6D3;
-  --violet-color: #0B777A;
-  --cyan-color: #58F0E9;
-  --emerald-color: #0EBEBE;
-  --rose-color: #089699;
-  --gold-color: #24D6D3;
+  --blue-color: #FF4D00;
+  --indigo-color: #FF7332;
+  --violet-color: #E03E00;
+  --cyan-color: #FFB394;
+  --emerald-color: #F59E0B;
+  --rose-color: #FF4D00;
+  --gold-color: #F59E0B;
 }
 
-/* Gradient Sheen Button */
 .btn-gradient {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #089699 0%, #0B777A 100%);
+  background: linear-gradient(135deg, #FF4D00 0%, #E03E00 100%);
   background-size: 200% 200%;
   background-position: left center;
   transition: background-position 0.45s ease, box-shadow 0.3s ease, transform 0.2s ease;
@@ -251,7 +237,7 @@ html {
 
 .btn-gradient:hover {
   background-position: right center;
-  box-shadow: 0 8px 32px rgba(8, 150, 153, 0.4), 0 2px 8px rgba(8, 150, 153, 0.2);
+  box-shadow: 0 8px 32px rgba(255, 77, 0, 0.4), 0 2px 8px rgba(255, 77, 0, 0.2);
   transform: translateY(-1px);
 }
 
@@ -259,7 +245,6 @@ html {
   transform: translateY(0px);
 }
 
-/* Glass Outline Button */
 .btn-ghost {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -269,11 +254,10 @@ html {
 
 .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(8, 150, 153, 0.35);
+  border-color: rgba(255, 77, 0, 0.35);
   transform: translateY(-1px);
 }
 
-/* Glass Card */
 .glass-card {
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(12px);
@@ -283,11 +267,10 @@ html {
 }
 
 .dark .glass-card {
-  background: rgba(17, 24, 39, 0.6);
+  background: rgba(43, 23, 14, 0.6);
   border-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Drifting Aurora backgrounds */
 .aurora-bg {
   position: relative;
   overflow: hidden;
@@ -303,7 +286,7 @@ html {
   pointer-events: none;
   z-index: 0;
   will-change: transform;
-  background: radial-gradient(circle, rgba(36, 214, 211, 0.14) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 115, 50, 0.14) 0%, transparent 70%);
   top: -120px;
   left: -80px;
   animation: auroraDrift1 18s ease-in-out infinite alternate;
@@ -319,7 +302,7 @@ html {
   pointer-events: none;
   z-index: 0;
   will-change: transform;
-  background: radial-gradient(circle, rgba(8, 150, 153, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 77, 0, 0.12) 0%, transparent 70%);
   bottom: -100px;
   right: -60px;
   animation: auroraDrift2 22s ease-in-out infinite alternate;
@@ -345,16 +328,14 @@ html {
   }
 }
 
-/* Static mesh background gradients */
 .mesh-bg {
   background:
-    radial-gradient(ellipse at 20% 20%, rgba(36, 214, 211, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 10%, rgba(8, 150, 153, 0.06) 0%, transparent 45%),
-    radial-gradient(ellipse at 60% 80%, rgba(88, 240, 233, 0.05) 0%, transparent 45%),
-    radial-gradient(ellipse at 10% 90%, rgba(14, 190, 190, 0.06) 0%, transparent 40%);
+    radial-gradient(ellipse at 20% 20%, rgba(255, 115, 50, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 10%, rgba(255, 77, 0, 0.06) 0%, transparent 45%),
+    radial-gradient(ellipse at 60% 80%, rgba(255, 179, 148, 0.05) 0%, transparent 45%),
+    radial-gradient(ellipse at 10% 90%, rgba(245, 158, 11, 0.06) 0%, transparent 40%);
 }
 
-/* Global section padding rhythm */
 :root {
   --section-py-mobile: 2.75rem;
   --section-py-sm: 3.5rem;

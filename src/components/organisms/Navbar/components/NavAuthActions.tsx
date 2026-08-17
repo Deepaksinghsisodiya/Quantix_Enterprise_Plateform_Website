@@ -60,13 +60,12 @@ export const NavAuthActions: React.FC = () => {
         <Phone size={14} className="text-primary dark:text-primary-light" />
         Call Now
       </a>
-      <button
-        type="button"
-        onClick={() => openModal()}
+      <Link
+        href="/sign-up"
         className="flex items-center justify-center h-10 px-5.5 rounded-xl bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-extrabold text-[13px] transition-all duration-300 hover:scale-[1.06] active:scale-95 shadow-md shadow-primary/20 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
       >
-        Contact sales
-      </button>
+        Sign up
+      </Link>
     </div>
   );
 };
