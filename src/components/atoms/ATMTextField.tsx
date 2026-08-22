@@ -1,82 +1,82 @@
-import React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../../lib/utils';
+'use client';
 
-export interface ATMTextFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>, VariantProps<typeof inputVariants> {
+import React from 'react';
+import { useField } from 'formik';
+import { cn } from '@/lib/utils';
+
+export interface ATMTextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
-  error?: string;
-  helperText?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  error?: string;
+  helperText?: string;
 }
 
-const inputVariants = cva('block w-full rounded-md border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500', {
-  variants: {
-    size: {
-      sm: 'px-2 py-1 text-sm',
-      md: 'px-3 py-2 text-base',
-      lg: 'px-4 py-3 text-lg',
-    },
-  },
-  defaultVariants: { size: 'md' },
-});
-
 export const ATMTextField: React.FC<ATMTextFieldProps> = ({
-  name,
   label,
-  placeholder,
-  value,
-  onChange,
-  onBlur,
-  error,
-  helperText,
-  disabled,
-  required,
   leftIcon,
   rightIcon,
-  size,
-  className,
-  ...rest
+  error: explicitError,
+  helperText,
+  ...props
 }) => {
+  let formikField: any = null;
+  let formikMeta: any = null;
+
+  try {
+    const [field, meta] = useField(props.name);
+    formikField = field;
+    formikMeta = meta;
+  } catch {
+    // Graceful fallback when outside Formik context
+  }
+
+  const errorMessage = explicitError !== undefined 
+    ? explicitError 
+    : (formikMeta?.touched && formikMeta?.error ? formikMeta.error : undefined);
+
+  const isError = Boolean(errorMessage);
+
+  const inputProps = formikField
+    ? { ...formikField, ...props }
+    : props;
+
   return (
-    <div className={cn('flex flex-col space-y-1', className)}>
+    <div>
       {label && (
-        <label htmlFor={name} className="text-sm font-medium text-gray-700 dark:text-gray-200">
-          {label}{required && <span className="ml-0.5 text-red-600">*</span>}
+        <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+          {label}
         </label>
       )}
-      <div className="relative flex items-center">
-        {leftIcon && <span className="absolute left-3 pointer-events-none">{leftIcon}</span>}
+      <div className="relative">
         <input
-          id={name}
-          name={name}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          disabled={disabled}
-          required={required}
+          {...inputProps}
           className={cn(
-            inputVariants({ size }),
-            leftIcon ? 'pl-10' : '',
-            rightIcon ? 'pr-10' : '',
-            error ? 'border-red-600 focus:border-red-600 focus:ring-red-600' : ''
+            'w-full rounded-xl border py-3.5 pr-4 text-base sm:text-sm font-medium outline-none transition-all text-white',
+            leftIcon ? 'pl-11' : 'pl-4',
+            rightIcon ? 'pr-11' : '',
+            isError
+              ? 'border-red-500 bg-red-500/10 placeholder-red-400 focus:ring-1 focus:ring-red-500'
+              : 'border-slate-800 bg-slate-900/50 placeholder-slate-500 focus:ring-1 focus:ring-primary',
+            props.className
           )}
-          aria-invalid={!!error}
-          aria-describedby={error ? `${name}-error` : helperText ? `${name}-helper` : undefined}
-          {...rest}
         />
-        {rightIcon && <span className="absolute right-3 pointer-events-none">{rightIcon}</span>}
+        {leftIcon && (
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-500 pointer-events-none">
+            {leftIcon}
+          </span>
+        )}
+        {rightIcon && (
+          <span className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-500 pointer-events-none">
+            {rightIcon}
+          </span>
+        )}
       </div>
-      {error ? (
-        <p id={`${name}-error`} className="mt-1 text-sm text-red-600">
-          {error}
-        </p>
+      {isError ? (
+        <div className="mt-1.5 text-xs text-red-500 font-medium">{errorMessage}</div>
       ) : helperText ? (
-        <p id={`${name}-helper`} className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          {helperText}
-        </p>
+        <div className="mt-1.5 text-xs text-slate-500 font-medium">{helperText}</div>
       ) : null}
     </div>
   );

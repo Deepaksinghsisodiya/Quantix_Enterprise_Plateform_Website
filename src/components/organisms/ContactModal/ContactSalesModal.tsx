@@ -15,12 +15,7 @@ export interface ContactSalesModalProps {
 }
 
 const COUNTRY_CODES = [
-  { code: '+44', country: 'UK' },
   { code: '+1', country: 'US/CA' },
-  { code: '+91', country: 'IN' },
-  { code: '+61', country: 'AU' },
-  { code: '+971', country: 'UAE' },
-  { code: '+49', country: 'DE' },
 ];
 
 const BUSINESS_CATEGORIES = [
@@ -43,7 +38,7 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    countryCode: '+44',
+    countryCode: '+1',
     phone: '',
     businessName: '',
     businessCategory: '',
@@ -79,7 +74,16 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    let newValue = value;
+
+    if (name === 'phone' && formData.countryCode === '+1') {
+      const x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+      if (x) {
+        newValue = !x[2] ? x[1] : `(${x[1]}) ${x[2]}` + (x[3] ? `-${x[3]}` : '');
+      }
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: newValue }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: false }));
     }
@@ -91,7 +95,14 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
     const newErrors: { [key: string]: boolean } = {};
     if (!formData.fullName.trim()) newErrors.fullName = true;
     if (!formData.email.trim() || !formData.email.includes('@')) newErrors.email = true;
-    if (!formData.phone.trim()) newErrors.phone = true;
+
+    let isPhoneValid = formData.phone.trim().length > 0;
+    if (formData.countryCode === '+1') {
+      const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+      isPhoneValid = phoneRegex.test(formData.phone) || formData.phone.trim().length >= 7;
+    }
+    if (!isPhoneValid) newErrors.phone = true;
+
     if (!formData.businessName.trim()) newErrors.businessName = true;
     if (!formData.businessCategory.trim()) newErrors.businessCategory = true;
 
@@ -119,7 +130,7 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
     setFormData({
       fullName: '',
       email: '',
-      countryCode: '+44',
+      countryCode: '+1',
       phone: '',
       businessName: '',
       businessCategory: '',

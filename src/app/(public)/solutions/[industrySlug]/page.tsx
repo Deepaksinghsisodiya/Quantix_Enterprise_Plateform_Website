@@ -55,7 +55,7 @@ const INDUSTRIES_DATA: Record<string, Industry> = {
   'fine-dining': {
     slug: 'fine-dining',
     name: 'Fine Dining',
-    heroImage: '/images/industries/fine-dining.jpg',
+    heroImage: '/images/solution_fine_dining.jpg',
     pricingNote: 'Most fine dining restaurants choose our Enterprise Pro Plan.',
     features: [
       { id: 'tables', icon: <Layout size={20} />, title: 'Table Management', description: 'Interactive floor plan editor, table reservations, and course-paced service flows.' },
@@ -73,7 +73,7 @@ const INDUSTRIES_DATA: Record<string, Industry> = {
   'quick-service': {
     slug: 'quick-service',
     name: 'Quick Service Restaurants',
-    heroImage: '/images/industries/qsr.jpg',
+    heroImage: '/images/solution_qsr_kiosk.jpg',
     pricingNote: 'QSR chains benefit most from our high-throughput Enterprise plans.',
     features: [
       { id: 'speed', icon: <Zap size={20} />, title: 'Speed Checkout', description: 'Quick-order grids, combo builders, and one-tap favorites for rapid checkout lines.' },
@@ -91,7 +91,7 @@ const INDUSTRIES_DATA: Record<string, Industry> = {
   'fashion-retail': {
     slug: 'fashion-retail',
     name: 'Fashion & Apparel',
-    heroImage: '/images/industries/fashion.jpg',
+    heroImage: '/images/retail_fashion_boutique.jpg',
     pricingNote: 'Fashion retailers typically choose Enterprise Basic or Pro plans.',
     features: [
       { id: 'sizes', icon: <Ruler size={20} />, title: 'Size & Color Matrix', description: 'High-performance variant management with a simple size/color grid interface.' },
@@ -109,7 +109,7 @@ const INDUSTRIES_DATA: Record<string, Industry> = {
   'grocery': {
     slug: 'grocery',
     name: 'Grocery & Convenience',
-    heroImage: '/images/industries/grocery.jpg',
+    heroImage: '/images/retail_grocery_scale.jpg',
     pricingNote: 'Grocery stores benefit from our Advance or Premium standalone token licenses.',
     features: [
       { id: 'barcode', icon: <Scan size={20} />, title: 'Barcode Scanning', description: 'High-speed barcode scanner compatibility and PLU price lookups in milliseconds.' },
@@ -127,7 +127,7 @@ const INDUSTRIES_DATA: Record<string, Industry> = {
   'cafe-bakery': {
     slug: 'cafe-bakery',
     name: 'Cafés & Bakeries',
-    heroImage: '/images/industries/cafe.jpg',
+    heroImage: '/images/solution_cafe_bakery.jpg',
     pricingNote: 'Small cafés and retail bakeries typically start with Standalone Standard.',
     features: [
       { id: 'recipes', icon: <Book size={20} />, title: 'Recipe Costing', description: 'Track raw ingredient costs to calculate exact menu item gross profit margins.' },
@@ -145,7 +145,7 @@ const INDUSTRIES_DATA: Record<string, Industry> = {
   'fast-casual': {
     slug: 'fast-casual',
     name: 'Fast Casual',
-    heroImage: '/images/industries/fast-casual.jpg',
+    heroImage: '/images/hero_pos_terminal.jpg',
     pricingNote: 'Fast casual restaurants thrive on Enterprise Basic or Pro subscription plans.',
     features: [
       { id: 'combos', icon: <Layers size={20} />, title: 'Combo Builder', description: 'Create dynamic combos (Main + Side + Drink) with smart upsell prompts.' },
@@ -163,7 +163,7 @@ const INDUSTRIES_DATA: Record<string, Industry> = {
   'electronics': {
     slug: 'electronics',
     name: 'Electronics & Tech',
-    heroImage: '/images/industries/electronics.jpg',
+    heroImage: '/images/retail_electronics_pos.jpg',
     pricingNote: 'Electronics retailers benefit from Enterprise Pro with serial number sync.',
     features: [
       { id: 'serial', icon: <Hash size={20} />, title: 'Serial Number Sync', description: 'Register serial numbers during checkout for foolproof warranty and return audits.' },
@@ -181,7 +181,7 @@ const INDUSTRIES_DATA: Record<string, Industry> = {
   'franchise': {
     slug: 'franchise',
     name: 'Franchise & Multi-Location',
-    heroImage: '/images/industries/franchise.jpg',
+    heroImage: '/images/hero_multi_location_hq.jpg',
     pricingNote: 'Multi-location operations leverage centralized Cloud Telemetry dashboards.',
     features: [
       { id: 'central', icon: <Server size={20} />, title: 'Central Management Hub', description: 'Manage employee shifts, terminal setups, and tax brackets for all locations at once.' },

@@ -27,12 +27,7 @@ export interface LeadFormData {
 }
 
 const COUNTRY_CODES = [
-  { code: '+44', country: 'UK' },
   { code: '+1', country: 'US/CA' },
-  { code: '+91', country: 'IN' },
-  { code: '+61', country: 'AU' },
-  { code: '+971', country: 'UAE' },
-  { code: '+49', country: 'DE' },
 ];
 
 const BUSINESS_CATEGORIES = [
@@ -56,7 +51,7 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
   const [formData, setFormData] = useState<LeadFormData>({
     fullName: '',
     email: '',
-    countryCode: '+44',
+    countryCode: '+1',
     phone: '',
     businessName: '',
     businessCategory: '',
@@ -68,7 +63,16 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    let newValue = value;
+
+    if (name === 'phone' && formData.countryCode === '+1') {
+      const x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+      if (x) {
+        newValue = !x[2] ? x[1] : `(${x[1]}) ${x[2]}` + (x[3] ? `-${x[3]}` : '');
+      }
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: newValue }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: false }));
     }
@@ -85,9 +89,16 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
     if (!formData.email.trim() || !formData.email.includes('@')) {
       newErrors.email = true;
     }
-    if (!formData.phone.trim()) {
+    
+    let isPhoneValid = formData.phone.trim().length > 0;
+    if (formData.countryCode === '+1') {
+      const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+      isPhoneValid = phoneRegex.test(formData.phone) || formData.phone.trim().length >= 7;
+    }
+    if (!isPhoneValid) {
       newErrors.phone = true;
     }
+
     if (!formData.businessName.trim()) {
       newErrors.businessName = true;
     }
@@ -121,7 +132,7 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
     setFormData({
       fullName: '',
       email: '',
-      countryCode: '+44',
+      countryCode: '+1',
       phone: '',
       businessName: '',
       businessCategory: '',

@@ -221,16 +221,6 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
                 >
                   <LogIn size={14} /> Sign In
                 </Link>
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose();
-                    openModal();
-                  }}
-                  className="flex h-11 items-center justify-center gap-1.5 rounded-xl border border-primary/20 bg-primary/10 text-[12px] font-extrabold uppercase tracking-normal text-primary shadow-xs transition-all duration-200 hover:bg-primary/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
-                >
-                  <Headset size={14} /> Contact
-                </button>
               </div>
             </>
           )}

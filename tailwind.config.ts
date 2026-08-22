@@ -11,9 +11,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-jakarta)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-lexend)', 'system-ui', 'sans-serif'],
-        syne: ['var(--font-lexend)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-lato)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-lato)', 'system-ui', 'sans-serif'],
+        syne: ['var(--font-lato)', 'system-ui', 'sans-serif'],
       },
       colors: {
         primary: {

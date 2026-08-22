@@ -26,9 +26,5 @@ export const metadata = {
 // Lazy loaded sections (below the fold)
 
 export default function Page() {
-  return (
-    <PublicLayout>
-      <HomePageClient />
-    </PublicLayout>
-  );
+  return <HomePageClient />;
 }

@@ -12,42 +12,42 @@ type Integration = {
   logo: string;
 };
 
-// 6 Top Global Platforms (PNG Logos)
+// Top Enterprise Platforms (PNG Logos)
 const integrations: Integration[] = [
   {
-    id: 'stripe',
-    name: 'Stripe',
-    category: 'PAYMENTS',
-    logo: '/brands/integrations/stripe.png',
+    id: 'sap',
+    name: 'SAP',
+    category: 'ERP & FINANCE',
+    logo: '/brands/integrations/stripe.png', // Assuming generic placeholder for now
   },
   {
-    id: 'authorize-net',
-    name: 'Authorize.Net',
-    category: 'PAYMENTS',
+    id: 'netsuite',
+    name: 'Oracle NetSuite',
+    category: 'ERP & FINANCE',
     logo: '/brands/integrations/authorize.png',
   },
   {
-    id: 'square',
-    name: 'Square',
-    category: 'POS TERMINAL',
+    id: 'salesforce',
+    name: 'Salesforce',
+    category: 'CRM & LOYALTY',
     logo: '/brands/integrations/square.png',
   },
   {
-    id: 'paypal',
-    name: 'PayPal',
-    category: 'PAYMENTS',
+    id: 'snowflake',
+    name: 'Snowflake',
+    category: 'DATA & BI',
     logo: '/brands/integrations/paypal.png',
   },
   {
-    id: 'doordash',
-    name: 'DoorDash',
-    category: 'DELIVERY',
+    id: 'workday',
+    name: 'Workday',
+    category: 'HR & LABOR',
     logo: '/brands/integrations/doordash.png',
   },
   {
-    id: 'uber-eats',
-    name: 'Uber Eats',
-    category: 'DELIVERY',
+    id: 'microsoft-dynamics',
+    name: 'MS Dynamics 365',
+    category: 'ERP & CRM',
     logo: '/brands/integrations/ubereats.png',
   },
 ];
@@ -71,17 +71,17 @@ export const IntegrationsTickerSection: React.FC = () => {
         {/* Top Category Badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-black uppercase tracking-widest text-primary-dark dark:text-primary-light mb-3">
           <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <span>INTEGRATION ECOSYSTEM</span>
+          <span>ENTERPRISE ECOSYSTEM</span>
         </div>
 
         {/* Section Heading */}
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-syne font-black text-slate-900 dark:text-white tracking-tight leading-tight max-w-3xl mx-auto">
-          Connect Quantix With Your <span className="text-primary dark:text-primary-light">Existing Tools</span>
+          Connect Quantix With Your <span className="text-primary dark:text-primary-light">Core Infrastructure</span>
         </h2>
 
         {/* Subtitle */}
         <p className="mt-3 text-xs sm:text-base text-slate-600 dark:text-slate-400 font-medium max-w-xl mx-auto leading-relaxed">
-          Automate orders, menu updates, payments, and settlements automatically across leading industry platforms.
+          Sync master data, transactional records, and payroll automatically with the world's leading enterprise platforms.
         </p>
       </div>
 
@@ -98,7 +98,7 @@ export const IntegrationsTickerSection: React.FC = () => {
         {/* Continuous Marquee Track */}
         <motion.div
           animate={isPaused ? { x: undefined } : { x: ['0%', '-50%'] }}
-          transition={isPaused ? { duration: 0 } : { duration: 25, ease: 'linear', repeat: Infinity }}
+          transition={{ duration: 25, ease: 'linear', repeat: Infinity }}
           className="flex gap-4 sm:gap-6 shrink-0 items-center"
         >
           {duplicatedList.map((partner, idx) => (
@@ -112,23 +112,14 @@ export const IntegrationsTickerSection: React.FC = () => {
                 transition={{ duration: 0.2 }}
                 className="w-48 sm:w-56 h-24 sm:h-28 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800/90 p-4 shrink-0 flex flex-col items-center justify-center text-center shadow-xs hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-700 transition-all cursor-pointer group"
               >
-                {/* Logo Image Wrapper */}
+                {/* Brand Name & Category Badge (Focusing on text since logos might not exist) */}
                 <div className="h-10 sm:h-12 w-full flex items-center justify-center p-1">
-                  <Image
-                    src={partner.logo}
-                    alt={`${partner.name} logo`}
-                    width={120}
-                    height={44}
-                    className="max-h-full max-w-full object-contain filter dark:brightness-110 transition-transform duration-300 group-hover:scale-105"
-                    unoptimized
-                  />
-                </div>
-
-                {/* Brand Name & Category Badge */}
-                <div className="flex items-center gap-2 mt-2">
-                  <span className="text-xs font-syne font-bold text-slate-900 dark:text-white leading-tight">
+                  <span className="text-xl sm:text-2xl font-black text-slate-400 dark:text-slate-600 group-hover:text-primary transition-colors">
                     {partner.name}
                   </span>
+                </div>
+
+                <div className="flex items-center gap-2 mt-2">
                   <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200/60 dark:border-slate-700/60">
                     {partner.category}
                   </span>

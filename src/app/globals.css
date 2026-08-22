@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: var(--font-lato), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-lato), system-ui, -apple-system, sans-serif;
+  --font-syne: var(--font-lato), system-ui, -apple-system, sans-serif;
+
   /* Dynamic Custom Variables mapping to Tailwind - Vibrant Culinary Flame Orange & Paprika Palette */
   --color-primary: #FF4D00;
   --color-primary-light: #FF7332;
@@ -63,6 +67,7 @@
   --animate-pulse-subtle: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
   @keyframes pulse-subtle {
+
     0%,
     100% {
       opacity: 1;
@@ -119,10 +124,34 @@ html {
 }
 
 .site-container {
-  width: 85%;
+  width: 100%;
   max-width: var(--site-max-width);
   margin-left: auto;
   margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .site-container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .site-container {
+    width: min(92%, var(--site-max-width));
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-container {
+    width: min(85%, var(--site-max-width));
+  }
 }
 
 * {
@@ -154,7 +183,7 @@ html {
   body {
     background: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-jakarta), sans-serif;
+    font-family: var(--font-lato), sans-serif;
     letter-spacing: -0.015em;
     line-height: 1.6;
     overflow-x: hidden;
@@ -168,9 +197,9 @@ html {
   h4,
   h5,
   h6 {
-    font-family: var(--font-lexend), sans-serif;
-    letter-spacing: -0.035em;
-    font-weight: 750;
+    font-family: var(--font-lato), sans-serif;
+    letter-spacing: -0.015em;
+    font-weight: 700;
   }
 
   img,
@@ -194,6 +223,46 @@ html {
 @media (min-width: 1024px) {
   .section-header-mb {
     margin-bottom: 3.5rem;
+  }
+}
+
+/* Public Page Hero Spacing - Clean, compact mobile spacing & spacious desktop header */
+.page-hero-header {
+  padding-top: 6.25rem; /* ~100px on mobile -> ~10-12px sleek clearance under 88-90px fixed navbar */
+  padding-bottom: 1.25rem; /* ~20px on mobile */
+}
+
+@media (min-width: 640px) {
+  .page-hero-header {
+    padding-top: 7.75rem;
+    padding-bottom: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-hero-header {
+    padding-top: 9.25rem;
+    padding-bottom: 2.75rem;
+  }
+}
+
+/* Standard Section Vertical Spacing - Compact & proportional on mobile, spacious on desktop */
+.section-py {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .section-py {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-py {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
   }
 }
 
@@ -279,8 +348,8 @@ html {
 .aurora-bg::before {
   content: "";
   position: absolute;
-  width: 600px;
-  height: 500px;
+  width: min(600px, 90vw);
+  height: min(500px, 70vw);
   border-radius: 50%;
   filter: blur(90px);
   pointer-events: none;
@@ -295,8 +364,8 @@ html {
 .aurora-bg::after {
   content: "";
   position: absolute;
-  width: 500px;
-  height: 500px;
+  width: min(500px, 85vw);
+  height: min(500px, 70vw);
   border-radius: 50%;
   filter: blur(90px);
   pointer-events: none;
@@ -355,6 +424,7 @@ html {
 }
 
 @media (min-width: 640px) {
+
   .sm\:py-10,
   .sm\:py-12,
   .sm\:py-14,
@@ -368,6 +438,7 @@ html {
 }
 
 @media (min-width: 768px) {
+
   .md\:py-10,
   .md\:py-12,
   .md\:py-14,
@@ -381,6 +452,7 @@ html {
 }
 
 @media (min-width: 1024px) {
+
   .lg\:py-10,
   .lg\:py-12,
   .lg\:py-14,
@@ -391,4 +463,14 @@ html {
     padding-top: var(--section-py-lg) !important;
     padding-bottom: var(--section-py-lg) !important;
   }
+}
+
+/* Global Font & Weight Overrides to match Restaurant design layout */
+*, ::before, ::after {
+  font-family: var(--font-lato), system-ui, -apple-system, sans-serif !important;
+}
+
+.font-black,
+.font-extrabold {
+  font-weight: 700 !important;
 }
