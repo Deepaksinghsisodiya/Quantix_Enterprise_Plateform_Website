@@ -565,44 +565,51 @@ const WorkflowRow: React.FC<{
   ];
 
   return (
-    <div className="border-t border-slate-200/80 py-10 dark:border-slate-800/80 sm:py-14">
-      <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-12">
+    <div className="border-t border-slate-200/80 py-12 dark:border-slate-800/80 sm:py-16">
+      <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-16">
         <motion.div
           variants={fadeSide(isRight ? -18 : 18)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           transition={{ ...motionTransition, delay: 0.04 }}
-          className={`space-y-3.5 lg:col-span-7 ${!isRight ? "lg:order-2" : "lg:order-1"}`}
+          className={`space-y-4 lg:col-span-6 ${!isRight ? "lg:order-2" : "lg:order-1"}`}
         >
-          <div>
-            <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
-              <Icon className="h-3 w-3 stroke-[2.4]" />
-              Workflow {String(index + 1).padStart(2, "0")}
-            </div>
-            <h3 className="font-syne text-2xl sm:text-3xl lg:text-[2rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-tight">
+          <div className="space-y-2">
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-syne font-black uppercase tracking-widest text-primary">
+              <Icon className="h-3.5 w-3.5 stroke-[2.5]" />
+              THE ONE PLATFORM TO MANAGE IT ALL · WORKFLOW {String(index + 1).padStart(2, "0")}
+            </span>
+            <h3 className="font-syne text-2xl sm:text-3xl lg:text-[2.2rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-tight">
               {workflow.title}
             </h3>
+            <p className="text-xs sm:text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-400">
+              {workflow.desc}
+            </p>
           </div>
 
-          <p className="max-w-xl text-xs sm:text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-400">
-            {workflow.desc}
-          </p>
-
-          <div className="grid grid-cols-1 gap-2 pt-1 max-w-xl">
-            {details.map((detail) => (
+          <div className="space-y-2.5 pt-1">
+            {details.map((detail, dIdx) => (
               <div
-                key={detail}
-                className="flex items-start gap-3 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-darkSurface/60 px-3.5 py-2.5 shadow-2xs hover:border-primary/30 dark:hover:border-primary/30 transition-all duration-200"
+                key={dIdx}
+                className="flex items-start gap-3 text-xs sm:text-[13px] text-slate-700 dark:text-slate-300 font-medium leading-relaxed"
               >
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light">
-                  <Check className="h-3 w-3 stroke-3" />
+                <span className="mt-0.5 flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light">
+                  <Check className="h-3 w-3 stroke-[3]" />
                 </span>
-                <span className="text-xs sm:text-[13px] font-medium leading-relaxed text-slate-700 dark:text-slate-300">
-                  {detail}
-                </span>
+                <span>{detail}</span>
               </div>
             ))}
+          </div>
+
+          <div className="pt-3">
+            <Link
+              href="/sign-up"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all duration-200 text-xs font-syne font-extrabold uppercase tracking-wider shadow-xs hover:shadow-primary/20 hover:scale-105 active:scale-95"
+            >
+              <span>Request a Demo</span>
+              <ArrowRight size={13} className="stroke-[2.5]" />
+            </Link>
           </div>
         </motion.div>
 
@@ -612,32 +619,40 @@ const WorkflowRow: React.FC<{
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           transition={{ ...motionTransition, delay: 0.1 }}
-          className={`lg:col-span-5 ${!isRight ? "lg:order-1" : "lg:order-2"}`}
+          className={`lg:col-span-6 ${!isRight ? "lg:order-1" : "lg:order-2"}`}
         >
-          <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white/70 p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/50 dark:shadow-none sm:p-2.5">
-            <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
-              <Image
-                src={visual.src}
-                alt={visual.alt}
-                fill
-                sizes="(max-width: 1024px) 92vw, 40vw"
-                className="object-cover transition-transform duration-700 group-hover/image:scale-[1.02]"
-              />
-            </div>
+          <div className="relative">
+            {/* Ambient soft studio aura */}
+            <div className="absolute -inset-3 rounded-3xl bg-linear-to-tr from-primary/10 via-orange-500/5 to-purple-500/5 blur-xl pointer-events-none" />
 
-            <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
-              {visual.badge}
-            </div>
+            <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-2.5 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/60 dark:shadow-none">
+              <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-950">
+                <Image
+                  src={visual.src}
+                  alt={visual.alt}
+                  fill
+                  sizes="(max-width: 1024px) 92vw, 45vw"
+                  className="object-cover transition-transform duration-700 group-hover/image:scale-[1.03]"
+                />
+              </div>
 
-            <div className="absolute bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
-              <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
-              Built into Quantix workflow
+              {/* Floating Foodhub style badge */}
+              <div className="absolute top-5 right-5 z-20 inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 dark:border-slate-700 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3.5 py-1.5 text-[10px] font-syne font-black uppercase tracking-wider text-slate-900 dark:text-white shadow-lg">
+                <span className="h-2 w-2 shrink-0 rounded-full bg-primary animate-pulse" />
+                {visual.badge}
+              </div>
+
+              <div className="absolute bottom-5 left-5 z-20 inline-flex max-w-[85%] items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3.5 py-1.5 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-lg">
+                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
+                <span className="truncate">Certified Quantix Ecosystem</span>
+              </div>
             </div>
           </div>
         </motion.div>
       </div>
     </div>
+  );
+};
   );
 };
 
@@ -1356,6 +1371,54 @@ export default function ProductSolutionPage() {
                   fallbackAlt={solution.imageAlt}
                   icon={solution.icon}
                 />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* --- 5.5 FOODHUB STYLE TOOLS ECOSYSTEM SECTION --- */}
+        <section className="border-b border-slate-200/80 bg-white py-14 sm:py-20 dark:border-slate-800/80 dark:bg-slate-950">
+          <div className="site-container">
+            <div className="mx-auto mb-10 max-w-3xl text-center">
+              <h2 className="font-syne text-2xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-tight">
+                Power your restaurant with more Quantix tools
+              </h2>
+              <p className="mt-3 text-xs sm:text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-400">
+                From ordering and payments to kitchen routing and telemetry, explore a complete ecosystem designed to streamline operations.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
+              {[
+                { title: "PDQ Terminal", desc: "Wireless EMV tap-to-pay", img: "/images/retail_hardware_peripherals.jpg", bg: "bg-amber-50/70 dark:bg-amber-950/20 border-amber-200/60 dark:border-amber-900/30" },
+                { title: "Self-Order Kiosk", desc: "Line-busting touchscreen", img: "/images/solution_qsr_kiosk.jpg", bg: "bg-teal-50/70 dark:bg-teal-950/20 border-teal-200/60 dark:border-teal-900/30" },
+                { title: "Kitchen Display", desc: "Prep tickets & routing", img: "/images/hero_kitchen_kds.jpg", bg: "bg-slate-50/80 dark:bg-slate-900/50 border-slate-200/80 dark:border-slate-800" },
+                { title: "Digital Board", desc: "4K live menu signage", img: "/images/product_menu_board.jpg", bg: "bg-purple-50/70 dark:bg-purple-950/20 border-purple-200/60 dark:border-purple-900/30" },
+                { title: "Management App", desc: "Shift & sales telemetry", img: "/images/rest_staff_shifts.jpg", bg: "bg-emerald-50/70 dark:bg-emerald-950/20 border-emerald-200/60 dark:border-emerald-900/30" },
+                { title: "Online Storefront", desc: "Direct branded web store", img: "/images/rest_online_ordering.jpg", bg: "bg-rose-50/70 dark:bg-rose-950/20 border-rose-200/60 dark:border-rose-900/30" },
+              ].map((tool) => (
+                <div
+                  key={tool.title}
+                  className={`group rounded-2xl border p-3 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg ${tool.bg}`}
+                >
+                  <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-white/80 dark:bg-darkSurface/60 mb-3 border border-slate-200/50 dark:border-slate-800/50">
+                    <Image
+                      src={tool.img}
+                      alt={tool.title}
+                      fill
+                      sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 15vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="text-center">
+                    <h4 className="font-syne text-xs sm:text-[13px] font-extrabold text-slate-900 dark:text-white">
+                      {tool.title}
+                    </h4>
+                    <p className="mt-0.5 text-[10.5px] font-medium text-slate-500 dark:text-slate-400">
+                      {tool.desc}
+                    </p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
