@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   BadgePercent,
@@ -123,37 +123,39 @@ const motionTransition = {
 };
 
 const PRODUCT_CARD_IMAGES: Array<{ keywords: string[]; src: string; alt: string }> = [
-  { keywords: ["kitchen", "grill", "bar", "prep", "kds"], src: "/images/rest_kds_kitchen.jpg", alt: "Kitchen operations KDS screen" },
-  { keywords: ["table", "dine", "floor", "counter"], src: "/images/rest_pos_floor_plan.jpg", alt: "Restaurant floor plan management" },
-  { keywords: ["delivery", "dispatch", "courier", "route"], src: "/images/rest_delivery_dispatch.jpg", alt: "Food delivery dispatch live tracking" },
+  { keywords: ["table", "dine", "floor", "counter", "pos", "terminal"], src: "/images/foodhub_pos_terminal.jpg", alt: "Foodhub-style commercial dual-screen restaurant POS countertop terminal" },
+  { keywords: ["kitchen", "grill", "bar", "prep", "kds"], src: "/images/hero_kitchen_kds.jpg", alt: "Commercial stainless steel mounted kitchen display KDS system" },
+  { keywords: ["handheld", "waiter", "card terminal", "terminal", "pay"], src: "/images/retail_hardware_peripherals.jpg", alt: "POS card reader and billing peripherals" },
+  { keywords: ["delivery", "dispatch", "courier", "route"], src: "/images/product_delivery_driver.jpg", alt: "Food delivery management and courier dispatch tracking" },
   { keywords: ["stock", "inventory", "recipe", "costing", "cost"], src: "/images/rest_recipe_costing.jpg", alt: "Recipe costing and inventory control" },
-  { keywords: ["qr", "mobile", "handheld", "phone"], src: "/images/rest_qr_table_ordering.jpg", alt: "Mobile QR code ordering interface" },
+  { keywords: ["qr", "mobile", "phone"], src: "/images/hero_qr_ordering.jpg", alt: "Mobile QR code ordering interface on restaurant table" },
   { keywords: ["online", "web", "storefront", "pickup"], src: "/images/rest_online_ordering.jpg", alt: "Online web ordering portal" },
-  { keywords: ["menu", "modifier", "topping", "variant", "scheduled"], src: "/images/rest_menu_modifiers.jpg", alt: "Menu and modifier builder interface" },
+  { keywords: ["kiosk", "self-service"], src: "/images/solution_qsr_kiosk.jpg", alt: "Restaurant free-standing self-ordering kiosk" },
+  { keywords: ["menu", "modifier", "topping", "variant", "scheduled", "board"], src: "/images/product_menu_board.jpg", alt: "Restaurant digital menu board and modifier management" },
   { keywords: ["staff", "shift", "permission", "drawer", "roster"], src: "/images/rest_staff_shifts.jpg", alt: "Staff roster and shift scheduling dashboard" },
   { keywords: ["reservation", "waitlist", "booking", "guest queue"], src: "/images/rest_reservations_waitlist.jpg", alt: "Table reservations and waitlist host stand" },
   { keywords: ["loyalty", "crm", "rewards", "vip"], src: "/images/rest_loyalty_crm.jpg", alt: "Customer loyalty and dining CRM" },
   { keywords: ["analytics", "telemetry", "reports", "margin", "p&l"], src: "/images/rest_analytics_inventory.jpg", alt: "Restaurant revenue analytics and telemetry" },
-  { keywords: ["payment", "receipt", "cash", "bill", "split", "tip", "terminal", "card"], src: "/images/rest_checkout_payments.jpg", alt: "POS checkout and split check terminal" },
+  { keywords: ["payment", "receipt", "cash", "bill", "split", "tip"], src: "/images/retail_hardware_peripherals.jpg", alt: "POS checkout and split check terminal" },
 ];
 
 const getProductCardImage = (title: string) => {
   const normalizedTitle = title.toLowerCase();
   return PRODUCT_CARD_IMAGES.find(({ keywords }) => keywords.some((keyword) => normalizedTitle.includes(keyword))) ?? {
-    src: "/images/rest_pos_floor_plan.jpg",
+    src: "/images/foodhub_pos_terminal.jpg",
     alt: "Quantix restaurant platform workflow",
   };
 };
 
 const WORKFLOW_IMAGE_MAP: Record<string, { src: string; alt: string; badge: string }> = {
-  "Table management": { src: "/images/rest_pos_floor_plan.jpg", alt: "Restaurant live table management POS interface", badge: "Floor workflow" },
-  "Kitchen display system": { src: "/images/rest_kds_kitchen.jpg", alt: "Restaurant kitchen display system KDS workflow", badge: "Kitchen routing" },
+  "Table management": { src: "/images/foodhub_pos_terminal.jpg", alt: "Commercial dual-screen restaurant POS countertop terminal", badge: "Floor hardware" },
+  "Kitchen display system": { src: "/images/hero_kitchen_kds.jpg", alt: "Commercial kitchen display system KDS workflow", badge: "Kitchen routing" },
   "Direct online ordering": { src: "/images/rest_online_ordering.jpg", alt: "Online ordering web storefront workflow", badge: "Web ordering" },
-  "QR code ordering": { src: "/images/rest_qr_table_ordering.jpg", alt: "Mobile QR code self-ordering workflow", badge: "QR ordering" },
-  "Delivery dispatch": { src: "/images/rest_delivery_dispatch.jpg", alt: "Delivery dispatch and courier route workflow", badge: "Delivery dispatch" },
+  "QR code ordering": { src: "/images/hero_qr_ordering.jpg", alt: "Mobile QR code self-ordering workflow", badge: "QR ordering" },
+  "Delivery dispatch": { src: "/images/product_delivery_driver.jpg", alt: "Delivery dispatch and courier route workflow", badge: "Delivery dispatch" },
   "Loyalty workflows": { src: "/images/rest_loyalty_crm.jpg", alt: "Customer dining CRM and loyalty workflow", badge: "Customer loyalty" },
-  "Menu & modifier management": { src: "/images/rest_menu_modifiers.jpg", alt: "Restaurant menu builder and modifier workflow", badge: "Menu controls" },
-  "Payments & split bills": { src: "/images/rest_checkout_payments.jpg", alt: "Restaurant split bill and contactless payment workflow", badge: "Bill splitting" },
+  "Menu & modifier management": { src: "/images/product_menu_board.jpg", alt: "Restaurant digital menu and modifier workflow", badge: "Menu controls" },
+  "Payments & split bills": { src: "/images/retail_hardware_peripherals.jpg", alt: "Clean POS billing terminal and receipt peripherals", badge: "Payment hardware" },
   "Staff & shift controls": { src: "/images/rest_staff_shifts.jpg", alt: "Restaurant staff roster and shift scheduling dashboard", badge: "Staff controls" },
   "Inventory & recipe costing": { src: "/images/rest_recipe_costing.jpg", alt: "Restaurant recipe ingredient costing and inventory workflow", badge: "Recipe costing" },
   "Reservations & waitlist": { src: "/images/rest_reservations_waitlist.jpg", alt: "Restaurant host stand reservations and waitlist workflow", badge: "Guest flow" },
@@ -165,11 +167,11 @@ const WORKFLOW_IMAGE_MAP: Record<string, { src: string; alt: string; badge: stri
   "Product catalog & variants": { src: "/images/hero-local.png", alt: "Retail product catalog and variants workflow", badge: "Catalog control" },
   "Purchase orders": { src: "/images/prod_enterprise_hub.png", alt: "Retail purchase order workflow", badge: "Supplier ordering" },
   "Multi-location dashboards": { src: "/images/prod_enterprise_hub.png", alt: "Multi-location dashboard workflow", badge: "Branch dashboards" },
-  "Central menu control": { src: "/images/ss2-ai.png", alt: "Central menu control dashboard", badge: "Central controls" },
-  "Cloud reporting": { src: "/images/demo-thumb-ai.png", alt: "Cloud reporting workflow", badge: "Live reporting" },
+  "Central menu control": { src: "/images/product_menu_board.jpg", alt: "Central menu control dashboard", badge: "Central controls" },
+  "Cloud reporting": { src: "/images/rest_analytics_inventory.jpg", alt: "Cloud reporting workflow", badge: "Live reporting" },
   "Branded storefront": { src: "/images/rest_online_ordering.jpg", alt: "Branded online storefront workflow", badge: "Storefront" },
-  "Pickup and delivery": { src: "/images/rest_delivery_dispatch.jpg", alt: "Pickup and delivery ordering workflow", badge: "Order channels" },
-  "Server handhelds": { src: "/images/prod_mobile_app.png", alt: "Server handheld POS workflow", badge: "Handheld POS" },
+  "Pickup and delivery": { src: "/images/product_delivery_driver.jpg", alt: "Pickup and delivery ordering workflow", badge: "Order channels" },
+  "Server handhelds": { src: "/images/foodhub_pos_terminal.jpg", alt: "Server handheld POS workflow", badge: "Handheld POS" },
   "Custom workflow design": { src: "/images/ss2-ai.png", alt: "Custom POS workflow design dashboard", badge: "Workflow design" },
   "API bridge development": { src: "/images/ss1.jpg", alt: "Custom API bridge and middleware workflow", badge: "API bridge" },
 };
@@ -364,10 +366,10 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
       { title: "Reservations & waitlist", desc: "Coordinate bookings, walk-ins, queue status, seating, and table handoff." },
       { title: "Restaurant analytics", desc: "Track table turns, item sales, staff performance, voids, discounts, and peak hours." },
     ],
-    imageSrc: "/images/rest_pos_floor_plan.jpg",
-    imageAlt: "Restaurant POS interactive floor plan and table management system",
-    topBadge: "Live Floor & Table Management",
-    bottomBadge: "Built for High-Volume Dining",
+    imageSrc: "/images/foodhub_pos_terminal.jpg",
+    imageAlt: "Foodhub-style commercial dual-screen restaurant POS countertop terminal with receipt printer and PDQ card reader",
+    topBadge: "Commercial EPOS Hardware",
+    bottomBadge: "Dual-Screen Countertop POS",
     ctaLabel: "Start Restaurant POS Trial",
     ctaHref: "/sign-up",
     icon: ChefHat,
@@ -680,6 +682,18 @@ const OrderModesSection: React.FC<{
   content?: FeaturePanelContent;
 }> = ({ orderModes, content = DEFAULT_ORDER_MODES_CONTENT }) => {
   const BadgeIcon = content.icon ?? Sparkles;
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const activeItem = orderModes[activeIdx] || orderModes[0];
+  const activeVisual = getProductCardImage(activeItem.title);
+
+  useEffect(() => {
+    if (isPaused || orderModes.length <= 1) return;
+    const interval = setInterval(() => {
+      setActiveIdx((prev) => (prev + 1) % orderModes.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isPaused, orderModes.length]);
 
   return (
     <section className="border-b border-slate-200/80 bg-slate-50/50 py-10 sm:py-14 dark:border-slate-800/80 dark:bg-slate-900/30">
@@ -692,12 +706,20 @@ const OrderModesSection: React.FC<{
             viewport={{ once: true, margin: "-80px" }}
             transition={motionTransition}
             className="space-y-4 lg:col-span-7"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
             <div>
-              <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
-                <BadgeIcon className="h-3 w-3 stroke-[2.4]" />
-                {content.badge}
-              </span>
+              <div className="flex items-center gap-2 mb-2.5">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
+                  <BadgeIcon className="h-3 w-3 stroke-[2.4]" />
+                  {content.badge}
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-slate-200/70 dark:border-slate-800 bg-white/80 dark:bg-darkSurface/60 px-2.5 py-0.5 text-[9px] font-bold text-slate-500 dark:text-slate-400">
+                  <span className={`h-1.5 w-1.5 rounded-full ${isPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse"}`} />
+                  {isPaused ? "Paused" : "Auto demo"}
+                </span>
+              </div>
               <h2 className="font-syne text-2xl sm:text-3xl lg:text-[2rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-tight">
                 {content.title}
               </h2>
@@ -709,29 +731,63 @@ const OrderModesSection: React.FC<{
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
               {orderModes.map((mode, index) => {
                 const ModeIcon = mode.icon;
+                const isActive = activeIdx === index;
 
                 return (
-                  <motion.div
+                  <button
+                    type="button"
                     key={mode.title}
-                    variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ ...motionTransition, delay: index * 0.025 }}
-                    className="group/mode flex flex-col justify-between gap-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-darkSurface/60 p-2.5 shadow-2xs hover:border-primary/40 dark:hover:border-primary/40 hover:bg-slate-50/80 dark:hover:bg-darkSurface hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+                    onClick={() => {
+                      setActiveIdx(index);
+                      setIsPaused(true);
+                    }}
+                    onMouseEnter={() => {
+                      setActiveIdx(index);
+                      setIsPaused(true);
+                    }}
+                    className={`group/mode text-left flex flex-col justify-between rounded-xl border p-2.5 transition-all duration-200 cursor-pointer relative overflow-hidden ${
+                      isActive
+                        ? "border-primary bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/40 shadow-md shadow-primary/10 -translate-y-0.5"
+                        : "border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-darkSurface/60 hover:border-primary/40 hover:bg-slate-50/80 dark:hover:bg-darkSurface"
+                    }`}
                   >
-                    <div className="flex items-center gap-2">
-                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light border border-primary/20 group-hover/mode:bg-primary group-hover/mode:text-white transition-all duration-200 shadow-2xs">
-                        <ModeIcon className="h-3.5 w-3.5 stroke-[2.2]" />
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-all duration-200 ${
+                            isActive
+                              ? "bg-primary text-white border-primary shadow-xs scale-105"
+                              : "bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light border-primary/20 group-hover/mode:bg-primary group-hover/mode:text-white"
+                          }`}
+                        >
+                          <ModeIcon className="h-3.5 w-3.5 stroke-[2.2]" />
+                        </div>
+                        <span
+                          className={`font-syne text-[11.5px] truncate transition-colors ${
+                            isActive ? "font-black text-primary dark:text-primary-light" : "font-bold text-slate-900 dark:text-white group-hover/mode:text-primary"
+                          }`}
+                        >
+                          {mode.title}
+                        </span>
                       </div>
-                      <span className="font-syne font-bold text-[11.5px] text-slate-900 dark:text-white group-hover/mode:text-primary transition-colors truncate">
-                        {mode.title}
-                      </span>
+                      <p className="mt-1.5 text-[10px] font-medium leading-snug text-slate-500 dark:text-slate-400 line-clamp-2">
+                        {mode.desc}
+                      </p>
                     </div>
-                    <p className="text-[10px] font-medium leading-snug text-slate-500 dark:text-slate-400 line-clamp-2">
-                      {mode.desc}
-                    </p>
-                  </motion.div>
+
+                    {/* Auto-advancing linear progress bar */}
+                    {isActive && (
+                      <div className="mt-2.5 h-1 w-full overflow-hidden rounded-full bg-primary/20 dark:bg-primary/30">
+                        <motion.div
+                          key={`progress-ordermodes-${activeIdx}-${isPaused}`}
+                          initial={{ width: "0%" }}
+                          animate={{ width: isPaused ? "100%" : "100%" }}
+                          transition={{ duration: isPaused ? 0.2 : 4.5, ease: "linear" }}
+                          className="h-full rounded-full bg-primary"
+                        />
+                      </div>
+                    )}
+                  </button>
                 );
               })}
             </div>
@@ -744,26 +800,44 @@ const OrderModesSection: React.FC<{
             viewport={{ once: true, margin: "-80px" }}
             transition={{ ...motionTransition, delay: 0.1 }}
             className="lg:col-span-5"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
-            <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white/70 p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/50 dark:shadow-none sm:p-2.5">
-              <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
-                <Image
-                  src={content.imageSrc}
-                  alt={content.imageAlt}
-                  fill
-                  sizes="(max-width: 1024px) 92vw, 40vw"
-                  className="object-cover transition-transform duration-700 group-hover/image:scale-[1.02]"
-                />
-              </div>
+            <div className="relative">
+              {/* Ambient radial gradient aura */}
+              <div className="absolute -inset-4 rounded-3xl bg-linear-to-r from-primary/15 via-orange-500/10 to-purple-500/10 blur-2xl dark:from-primary/25 dark:via-orange-500/15 dark:to-purple-500/15" />
 
-              <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
-                {content.topBadge}
-              </div>
+              <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white/80 p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/60 dark:shadow-none sm:p-2.5 backdrop-blur-xs">
+                <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeItem.title}
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.98 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      className="absolute inset-0 h-full w-full"
+                    >
+                      <Image
+                        src={activeVisual.src}
+                        alt={activeVisual.alt}
+                        fill
+                        sizes="(max-width: 1024px) 92vw, 40vw"
+                        className="object-cover"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
 
-              <div className="absolute bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
-                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
-                {content.bottomBadge}
+                <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
+                  Live: {activeItem.title}
+                </div>
+
+                <div className="absolute bottom-4 left-4 z-20 inline-flex max-w-[85%] items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
+                  <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
+                  <span className="truncate">{activeItem.desc}</span>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -778,6 +852,18 @@ const BillingCheckoutSection: React.FC<{
   content?: FeaturePanelContent;
 }> = ({ items, content = DEFAULT_BILLING_CHECKOUT_CONTENT }) => {
   const BadgeIcon = content.icon ?? ReceiptText;
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const activeItem = items[activeIdx] || items[0];
+  const activeVisual = getProductCardImage(activeItem.title);
+
+  useEffect(() => {
+    if (isPaused || items.length <= 1) return;
+    const interval = setInterval(() => {
+      setActiveIdx((prev) => (prev + 1) % items.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isPaused, items.length]);
 
   return (
     <section className="border-b border-slate-200/80 bg-white py-10 sm:py-14 dark:border-slate-800/80 dark:bg-darkBg">
@@ -790,12 +876,20 @@ const BillingCheckoutSection: React.FC<{
             viewport={{ once: true, margin: "-80px" }}
             transition={motionTransition}
             className="space-y-4 lg:col-span-7 lg:order-2"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
             <div>
-              <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
-                <BadgeIcon className="h-3 w-3 stroke-[2.4]" />
-                {content.badge}
-              </span>
+              <div className="flex items-center gap-2 mb-2.5">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
+                  <BadgeIcon className="h-3 w-3 stroke-[2.4]" />
+                  {content.badge}
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-slate-200/70 dark:border-slate-800 bg-slate-50 dark:bg-darkSurface/60 px-2.5 py-0.5 text-[9px] font-bold text-slate-500 dark:text-slate-400">
+                  <span className={`h-1.5 w-1.5 rounded-full ${isPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse"}`} />
+                  {isPaused ? "Paused" : "Auto demo"}
+                </span>
+              </div>
               <h2 className="font-syne text-2xl sm:text-3xl lg:text-[2rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-tight">
                 {content.title}
               </h2>
@@ -807,29 +901,63 @@ const BillingCheckoutSection: React.FC<{
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
               {items.map((item, index) => {
                 const ItemIcon = item.icon;
+                const isActive = activeIdx === index;
 
                 return (
-                  <motion.div
+                  <button
+                    type="button"
                     key={item.title}
-                    variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ ...motionTransition, delay: index * 0.025 }}
-                    className="group/billing flex flex-col justify-between gap-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/70 dark:bg-darkSurface/60 p-2.5 shadow-2xs hover:border-primary/40 dark:hover:border-primary/40 hover:bg-slate-100/80 dark:hover:bg-darkSurface hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+                    onClick={() => {
+                      setActiveIdx(index);
+                      setIsPaused(true);
+                    }}
+                    onMouseEnter={() => {
+                      setActiveIdx(index);
+                      setIsPaused(true);
+                    }}
+                    className={`group/billing text-left flex flex-col justify-between rounded-xl border p-2.5 transition-all duration-200 cursor-pointer relative overflow-hidden ${
+                      isActive
+                        ? "border-primary bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/40 shadow-md shadow-primary/10 -translate-y-0.5"
+                        : "border-slate-200/80 dark:border-slate-800/80 bg-slate-50/70 dark:bg-darkSurface/60 hover:border-primary/40 hover:bg-slate-100/80 dark:hover:bg-darkSurface"
+                    }`}
                   >
-                    <div className="flex items-center gap-2">
-                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light border border-primary/20 group-hover/billing:bg-primary group-hover/billing:text-white transition-all duration-200 shadow-2xs">
-                        <ItemIcon className="h-3.5 w-3.5 stroke-[2.2]" />
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-all duration-200 ${
+                            isActive
+                              ? "bg-primary text-white border-primary shadow-xs scale-105"
+                              : "bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light border-primary/20 group-hover/billing:bg-primary group-hover/billing:text-white"
+                          }`}
+                        >
+                          <ItemIcon className="h-3.5 w-3.5 stroke-[2.2]" />
+                        </div>
+                        <span
+                          className={`font-syne text-[11.5px] truncate transition-colors ${
+                            isActive ? "font-black text-primary dark:text-primary-light" : "font-bold text-slate-900 dark:text-white group-hover/billing:text-primary"
+                          }`}
+                        >
+                          {item.title}
+                        </span>
                       </div>
-                      <span className="font-syne font-bold text-[11.5px] text-slate-900 dark:text-white group-hover/billing:text-primary transition-colors truncate">
-                        {item.title}
-                      </span>
+                      <p className="mt-1.5 text-[10px] font-medium leading-snug text-slate-500 dark:text-slate-400 line-clamp-2">
+                        {item.desc}
+                      </p>
                     </div>
-                    <p className="text-[10px] font-medium leading-snug text-slate-500 dark:text-slate-400 line-clamp-2">
-                      {item.desc}
-                    </p>
-                  </motion.div>
+
+                    {/* Auto-advancing linear progress bar */}
+                    {isActive && (
+                      <div className="mt-2.5 h-1 w-full overflow-hidden rounded-full bg-primary/20 dark:bg-primary/30">
+                        <motion.div
+                          key={`progress-billing-${activeIdx}-${isPaused}`}
+                          initial={{ width: "0%" }}
+                          animate={{ width: isPaused ? "100%" : "100%" }}
+                          transition={{ duration: isPaused ? 0.2 : 4.5, ease: "linear" }}
+                          className="h-full rounded-full bg-primary"
+                        />
+                      </div>
+                    )}
+                  </button>
                 );
               })}
             </div>
@@ -842,26 +970,44 @@ const BillingCheckoutSection: React.FC<{
             viewport={{ once: true, margin: "-80px" }}
             transition={{ ...motionTransition, delay: 0.1 }}
             className="lg:col-span-5 lg:order-1"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
-            <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-slate-50/80 p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/50 dark:shadow-none sm:p-2.5">
-              <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
-                <Image
-                  src={content.imageSrc}
-                  alt={content.imageAlt}
-                  fill
-                  sizes="(max-width: 1024px) 92vw, 40vw"
-                  className="object-cover transition-transform duration-700 group-hover/image:scale-[1.02]"
-                />
-              </div>
+            <div className="relative">
+              {/* Ambient radial gradient aura */}
+              <div className="absolute -inset-4 rounded-3xl bg-linear-to-r from-primary/15 via-orange-500/10 to-purple-500/10 blur-2xl dark:from-primary/25 dark:via-orange-500/15 dark:to-purple-500/15" />
 
-              <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
-                {content.topBadge}
-              </div>
+              <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-slate-50/80 p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/60 dark:shadow-none sm:p-2.5 backdrop-blur-xs">
+                <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeItem.title}
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.98 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      className="absolute inset-0 h-full w-full"
+                    >
+                      <Image
+                        src={activeVisual.src}
+                        alt={activeVisual.alt}
+                        fill
+                        sizes="(max-width: 1024px) 92vw, 40vw"
+                        className="object-cover"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
 
-              <div className="absolute bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
-                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
-                {content.bottomBadge}
+                <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
+                  Live: {activeItem.title}
+                </div>
+
+                <div className="absolute bottom-4 left-4 z-20 inline-flex max-w-[85%] items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
+                  <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
+                  <span className="truncate">{activeItem.desc}</span>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -876,6 +1022,18 @@ const AdvancedControlsSection: React.FC<{
   content?: FeaturePanelContent;
 }> = ({ items, content = DEFAULT_ADVANCED_CONTROLS_CONTENT }) => {
   const BadgeIcon = content.icon ?? Sparkles;
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const activeItem = items[activeIdx] || items[0];
+  const activeVisual = getProductCardImage(activeItem.title);
+
+  useEffect(() => {
+    if (isPaused || items.length <= 1) return;
+    const interval = setInterval(() => {
+      setActiveIdx((prev) => (prev + 1) % items.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isPaused, items.length]);
 
   return (
     <section className="border-b border-slate-200/80 bg-slate-50/50 py-10 sm:py-14 dark:border-slate-800/80 dark:bg-slate-900/30">
@@ -888,12 +1046,20 @@ const AdvancedControlsSection: React.FC<{
             viewport={{ once: true, margin: "-80px" }}
             transition={motionTransition}
             className="space-y-4 lg:col-span-7"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
             <div>
-              <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
-                <BadgeIcon className="h-3 w-3 stroke-[2.4]" />
-                {content.badge}
-              </span>
+              <div className="flex items-center gap-2 mb-2.5">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
+                  <BadgeIcon className="h-3 w-3 stroke-[2.4]" />
+                  {content.badge}
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-slate-200/70 dark:border-slate-800 bg-white/80 dark:bg-darkSurface/60 px-2.5 py-0.5 text-[9px] font-bold text-slate-500 dark:text-slate-400">
+                  <span className={`h-1.5 w-1.5 rounded-full ${isPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse"}`} />
+                  {isPaused ? "Paused" : "Auto demo"}
+                </span>
+              </div>
               <h2 className="font-syne text-2xl sm:text-3xl lg:text-[2rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-tight">
                 {content.title}
               </h2>
@@ -905,29 +1071,63 @@ const AdvancedControlsSection: React.FC<{
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
               {items.map((item, index) => {
                 const ItemIcon = item.icon;
+                const isActive = activeIdx === index;
 
                 return (
-                  <motion.div
+                  <button
+                    type="button"
                     key={item.title}
-                    variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ ...motionTransition, delay: index * 0.025 }}
-                    className="group/control flex flex-col justify-between gap-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-darkSurface/60 p-2.5 shadow-2xs hover:border-primary/40 dark:hover:border-primary/40 hover:bg-slate-50/80 dark:hover:bg-darkSurface hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+                    onClick={() => {
+                      setActiveIdx(index);
+                      setIsPaused(true);
+                    }}
+                    onMouseEnter={() => {
+                      setActiveIdx(index);
+                      setIsPaused(true);
+                    }}
+                    className={`group/control text-left flex flex-col justify-between rounded-xl border p-2.5 transition-all duration-200 cursor-pointer relative overflow-hidden ${
+                      isActive
+                        ? "border-primary bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/40 shadow-md shadow-primary/10 -translate-y-0.5"
+                        : "border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-darkSurface/60 hover:border-primary/40 hover:bg-slate-50/80 dark:hover:bg-darkSurface"
+                    }`}
                   >
-                    <div className="flex items-center gap-2">
-                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light border border-primary/20 group-hover/control:bg-primary group-hover/control:text-white transition-all duration-200 shadow-2xs">
-                        <ItemIcon className="h-3.5 w-3.5 stroke-[2.2]" />
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-all duration-200 ${
+                            isActive
+                              ? "bg-primary text-white border-primary shadow-xs scale-105"
+                              : "bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light border-primary/20 group-hover/control:bg-primary group-hover/control:text-white"
+                          }`}
+                        >
+                          <ItemIcon className="h-3.5 w-3.5 stroke-[2.2]" />
+                        </div>
+                        <span
+                          className={`font-syne text-[11.5px] truncate transition-colors ${
+                            isActive ? "font-black text-primary dark:text-primary-light" : "font-bold text-slate-900 dark:text-white group-hover/control:text-primary"
+                          }`}
+                        >
+                          {item.title}
+                        </span>
                       </div>
-                      <span className="font-syne font-bold text-[11.5px] text-slate-900 dark:text-white group-hover/control:text-primary transition-colors truncate">
-                        {item.title}
-                      </span>
+                      <p className="mt-1.5 text-[10px] font-medium leading-snug text-slate-500 dark:text-slate-400 line-clamp-2">
+                        {item.desc}
+                      </p>
                     </div>
-                    <p className="text-[10px] font-medium leading-snug text-slate-500 dark:text-slate-400 line-clamp-2">
-                      {item.desc}
-                    </p>
-                  </motion.div>
+
+                    {/* Auto-advancing linear progress bar */}
+                    {isActive && (
+                      <div className="mt-2.5 h-1 w-full overflow-hidden rounded-full bg-primary/20 dark:bg-primary/30">
+                        <motion.div
+                          key={`progress-controls-${activeIdx}-${isPaused}`}
+                          initial={{ width: "0%" }}
+                          animate={{ width: isPaused ? "100%" : "100%" }}
+                          transition={{ duration: isPaused ? 0.2 : 4.5, ease: "linear" }}
+                          className="h-full rounded-full bg-primary"
+                        />
+                      </div>
+                    )}
+                  </button>
                 );
               })}
             </div>
@@ -940,26 +1140,44 @@ const AdvancedControlsSection: React.FC<{
             viewport={{ once: true, margin: "-80px" }}
             transition={{ ...motionTransition, delay: 0.1 }}
             className="lg:col-span-5"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
-            <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white/70 p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/50 dark:shadow-none sm:p-2.5">
-              <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
-                <Image
-                  src={content.imageSrc}
-                  alt={content.imageAlt}
-                  fill
-                  sizes="(max-width: 1024px) 92vw, 40vw"
-                  className="object-cover transition-transform duration-700 group-hover/image:scale-[1.02]"
-                />
-              </div>
+            <div className="relative">
+              {/* Ambient radial gradient aura */}
+              <div className="absolute -inset-4 rounded-3xl bg-linear-to-r from-primary/15 via-orange-500/10 to-purple-500/10 blur-2xl dark:from-primary/25 dark:via-orange-500/15 dark:to-purple-500/15" />
 
-              <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
-                {content.topBadge}
-              </div>
+              <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white/80 p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/60 dark:shadow-none sm:p-2.5 backdrop-blur-xs">
+                <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeItem.title}
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.98 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      className="absolute inset-0 h-full w-full"
+                    >
+                      <Image
+                        src={activeVisual.src}
+                        alt={activeVisual.alt}
+                        fill
+                        sizes="(max-width: 1024px) 92vw, 40vw"
+                        className="object-cover"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
 
-              <div className="absolute bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
-                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
-                {content.bottomBadge}
+                <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
+                  Live: {activeItem.title}
+                </div>
+
+                <div className="absolute bottom-4 left-4 z-20 inline-flex max-w-[85%] items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
+                  <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
+                  <span className="truncate">{activeItem.desc}</span>
+                </div>
               </div>
             </div>
           </motion.div>

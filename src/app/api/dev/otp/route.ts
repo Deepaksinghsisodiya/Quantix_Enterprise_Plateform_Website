@@ -3,6 +3,10 @@ import { execSync } from 'child_process';
 import path from 'path';
 
 export async function GET(request: NextRequest) {
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Endpoint disabled in production' }, { status: 403 });
+  }
+
   const { searchParams } = new URL(request.url);
   const merchantId = searchParams.get('merchantId');
   if (!merchantId) {

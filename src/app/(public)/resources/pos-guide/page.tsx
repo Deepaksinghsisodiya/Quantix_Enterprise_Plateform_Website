@@ -360,7 +360,11 @@ export default function POSGuidePage() {
 
   const handleExportPDF = () => {
     toast.success('Downloading POS Architecture Master Playbook (PDF)', {
-      description: 'Saved as quantix_pos_architecture_playbook_20  return (
+      description: 'Saved as quantix_pos_architecture_playbook_2026.pdf (4.8 MB).',
+    });
+  };
+
+  return (
     <div className="w-full text-slate-900 dark:text-slate-100 bg-white dark:bg-darkBg transition-colors duration-300">
       {/* 1. Glassmorphic Action Bar (Clear of fixed navbar with pt-32 sm:pt-36 pb-3.5) */}
       <div className="bg-slate-50/90 dark:bg-darkSurface/60 border-b border-slate-200/80 dark:border-slate-800/80 pt-32 sm:pt-36 pb-3.5 backdrop-blur-md sticky top-0 z-40">
