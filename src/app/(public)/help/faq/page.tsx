@@ -69,7 +69,7 @@ export default function HelpFAQPage() {
               placeholder="Search specific questions..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-900/40 py-3.5 pl-11 pr-4 text-xs text-slate-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-600 focus:border-blue-500 focus:outline-none"
+              className="w-full rounded-xl border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-900/40 py-3.5 pl-11 pr-4 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
             />
           </div>
 

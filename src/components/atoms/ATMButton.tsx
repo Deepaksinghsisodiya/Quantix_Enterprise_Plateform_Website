@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
@@ -14,16 +16,18 @@ export interface ATMButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButt
 const buttonVariants = cva('flex items-center justify-center font-semibold transition-all duration-200 active:scale-[0.97] hover:scale-[1.03] focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none cursor-pointer', {
   variants: {
     variant: {
-      primary: 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/25',
-      secondary: 'bg-slate-900 text-white hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-950/20',
-      outline: 'border border-slate-200 bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-300 hover:shadow-sm',
-      ghost: 'bg-transparent text-slate-700 hover:bg-slate-50',
+      primary: 'bg-primary text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/25',
+      secondary: 'bg-slate-900 text-white hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-950/20 dark:bg-slate-800 dark:hover:bg-slate-700',
+      outline: 'border border-slate-200 bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800',
+      ghost: 'bg-transparent text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800',
       danger: 'bg-rose-600 text-white hover:bg-rose-700 hover:shadow-lg hover:shadow-rose-600/20',
+      form: 'bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-syne font-extrabold uppercase tracking-wider shadow-lg shadow-primary/20 hover:scale-[1.02] rounded-xl',
     },
     size: {
-      sm: 'px-4 py-2 text-xs rounded-full',
-      md: 'px-5 py-2.5 text-sm rounded-full',
-      lg: 'px-7 py-3.5 text-base rounded-full',
+      sm: 'px-4 py-2 text-xs',
+      md: 'px-5 py-2.5 text-sm',
+      lg: 'px-7 py-3.5 text-base',
+      form: 'py-4 text-sm',
     },
     fullWidth: {
       true: 'w-full',
@@ -43,31 +47,34 @@ export const ATMButton: React.FC<ATMButtonProps> = ({
   type = 'button',
   variant,
   size,
-  isLoading = false,
-  disabled,
-  leftIcon,
-  rightIcon,
   fullWidth,
   className,
-  ...rest
+  leftIcon,
+  rightIcon,
+  isLoading = false,
+  disabled,
+  ...props
 }) => {
-  const isDisabled = disabled || isLoading;
   return (
     <button
       type={type}
       onClick={onClick}
-      disabled={isDisabled}
-      className={cn(buttonVariants({ variant, size, fullWidth }), className)}
-      aria-busy={isLoading}
-      {...rest}
+      disabled={disabled || isLoading}
+      className={cn(buttonVariants({ variant, size, fullWidth, className }))}
+      {...props}
     >
       {isLoading ? (
-        <span className="animate-spin border-2 border-current border-t-transparent rounded-full w-4 h-4 mr-2" />
+        <div className="flex items-center gap-2">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+          <span>Processing...</span>
+        </div>
       ) : (
-        leftIcon
+        <div className="flex items-center gap-2">
+          {leftIcon && <span className="flex items-center">{leftIcon}</span>}
+          {label ? <span>{label}</span> : children}
+          {rightIcon && <span className="flex items-center">{rightIcon}</span>}
+        </div>
       )}
-      {label || children}
-      {rightIcon && !isLoading && rightIcon}
     </button>
   );
 };

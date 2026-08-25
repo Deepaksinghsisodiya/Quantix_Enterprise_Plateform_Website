@@ -2,12 +2,31 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Calculator, DollarSign, Clock, TrendingUp, Calendar, RotateCcw, ShieldCheck, Share2 } from 'lucide-react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import {
+  Calculator,
+  DollarSign,
+  Clock,
+  TrendingUp,
+  Calendar,
+  RotateCcw,
+  ShieldCheck,
+  Share2,
+  Sparkles,
+  Building2,
+  Layers,
+  ArrowRight,
+  CheckCircle2,
+  Download,
+  Flame,
+  Check,
+  Zap,
+} from 'lucide-react';
 import { toast } from 'sonner';
 
 export type BusinessType = 'restaurant' | 'retail';
-export type CurrentSystem = 'manual' | 'competitor' | 'none';
+export type CurrentSystem = 'legacy' | 'cloud' | 'manual';
 
 interface ROIInputs {
   businessType: BusinessType;
@@ -19,23 +38,22 @@ interface ROIInputs {
 
 const DEFAULT_INPUTS: ROIInputs = {
   businessType: 'restaurant',
-  locations: 1,
-  dailyTransactions: 100,
-  currentSystem: 'manual',
-  employees: 5,
+  locations: 5,
+  dailyTransactions: 180,
+  currentSystem: 'legacy',
+  employees: 12,
 };
 
-const AVG_MINUTES_SAVED_PER_DAY: Record<CurrentSystem, number> = {
-  manual: 45,
-  competitor: 20,
-  none: 60,
+const SYSTEM_COMPARISONS: Record<CurrentSystem, { label: string; legacyCostPerStore: number; laborLagMins: number }> = {
+  legacy: { label: 'Legacy Enterprise (Aloha / Micros / NCR)', legacyCostPerStore: 190, laborLagMins: 45 },
+  cloud: { label: 'Generic Cloud POS (Toast / Square / Lightspeed)', legacyCostPerStore: 140, laborLagMins: 25 },
+  manual: { label: 'Manual / Basic Cash Register', legacyCostPerStore: 80, laborLagMins: 60 },
 };
 
-const AVG_HOURLY_RATE = 18;
+const AVG_HOURLY_RATE = 20;
 
 export const ROICalculator: React.FC = () => {
   const [inputs, setInputs] = useState<ROIInputs>(DEFAULT_INPUTS);
-  const [showResults, setShowResults] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const updateInput = <K extends keyof ROIInputs>(key: K, value: ROIInputs[K]) => {
@@ -44,265 +62,313 @@ export const ROICalculator: React.FC = () => {
 
   const reset = () => {
     setInputs(DEFAULT_INPUTS);
-    setShowResults(false);
+    toast.info('ROI Forecaster reset to default parameters.');
   };
 
   const results = useMemo(() => {
     const { businessType, locations, dailyTransactions, currentSystem, employees } = inputs;
-    const subscriptionPrice = locations <= 1 ? 49 : locations <= 5 ? 99 : 249;
+    const systemMeta = SYSTEM_COMPARISONS[currentSystem];
 
-    const minutesSaved = AVG_MINUTES_SAVED_PER_DAY[currentSystem];
-    const timeSavedMinutes = employees * minutesSaved * 30;
-    const timeSavedHours = timeSavedMinutes / 60;
-    const labourSavings = timeSavedHours * AVG_HOURLY_RATE;
+    // Monthly subscription with Quantix
+    const quantixMonthlyPerStore = locations >= 10 ? 69 : locations >= 3 ? 79 : 89;
+    const quantixTotalMonthly = quantixMonthlyPerStore * locations;
+    const legacyTotalMonthly = systemMeta.legacyCostPerStore * locations;
+    const softwareSavingsMonthly = Math.max(0, legacyTotalMonthly - quantixTotalMonthly);
 
-    const errorRate = currentSystem === 'manual' ? 0.03 : currentSystem === 'none' ? 0.05 : 0.01;
-    const avgOrderValue = businessType === 'restaurant' ? 22 : 35;
-    const errorReduction = dailyTransactions * 30 * avgOrderValue * errorRate * 0.8;
+    // Labor Savings Calculation
+    const timeSavedMinutesPerEmpPerDay = systemMeta.laborLagMins;
+    const totalTimeSavedHoursMonth = (employees * timeSavedMinutesPerEmpPerDay * 30) / 60;
+    const laborSavingsMonthly = totalTimeSavedHoursMonth * AVG_HOURLY_RATE;
 
-    const wasteMultiplier = businessType === 'restaurant' ? 0.04 : 0.02;
-    const revenue = dailyTransactions * avgOrderValue * 30;
-    const wasteReduction = revenue * wasteMultiplier * locations;
+    // Error & Void Shrinkage Reduction
+    const avgOrderValue = businessType === 'restaurant' ? 28 : 42;
+    const monthlyGrossRevenue = dailyTransactions * avgOrderValue * 30 * locations;
+    const shrinkageRecoveryPct = currentSystem === 'legacy' ? 0.012 : currentSystem === 'manual' ? 0.025 : 0.008;
+    const shrinkageSavingsMonthly = monthlyGrossRevenue * shrinkageRecoveryPct;
 
-    const costSaved = labourSavings + errorReduction + wasteReduction;
-    const monthlySavings = Math.max(0, costSaved - subscriptionPrice);
-    const roiPercentage = subscriptionPrice > 0 ? Math.round((monthlySavings / subscriptionPrice) * 100) : 0;
-    const paybackDays = monthlySavings > 0 ? Math.ceil(subscriptionPrice / (monthlySavings / 30)) : 0;
-    const timeSavedWeek = Math.round((timeSavedHours / 30) * 7 * 10) / 10;
+    // Total Monthly & Annual Savings
+    const totalMonthlySavings = softwareSavingsMonthly + laborSavingsMonthly + shrinkageSavingsMonthly;
+    const totalAnnualSavings = totalMonthlySavings * 12;
+
+    // ROI Multiplier & Payback
+    const roiPercentage = quantixTotalMonthly > 0 ? Math.round((totalMonthlySavings / quantixTotalMonthly) * 100) : 0;
+    const paybackDays = totalMonthlySavings > 0 ? Math.max(7, Math.ceil(quantixTotalMonthly / (totalMonthlySavings / 30))) : 12;
+    const timeSavedPerWeekHours = Math.round((totalTimeSavedHoursMonth / 4.33) * 10) / 10;
 
     return {
-      monthlySavings: Math.round(monthlySavings),
-      timeSavedPerWeek: timeSavedWeek,
+      totalMonthlySavings: Math.round(totalMonthlySavings),
+      totalAnnualSavings: Math.round(totalAnnualSavings),
+      softwareSavingsMonthly: Math.round(softwareSavingsMonthly),
+      laborSavingsMonthly: Math.round(laborSavingsMonthly),
+      shrinkageSavingsMonthly: Math.round(shrinkageSavingsMonthly),
+      timeSavedPerWeekHours,
       roiPercentage,
-      paybackDays: Math.max(1, paybackDays),
-      subscriptionPrice,
-      breakdown: {
-        labourSavings: Math.round(labourSavings),
-        errorReduction: Math.round(errorReduction),
-        wasteReduction: Math.round(wasteReduction),
-      }
+      paybackDays,
+      quantixTotalMonthly,
+      legacyTotalMonthly,
     };
   }, [inputs]);
 
   const handleShare = () => {
-    const shareUrl = `${window.location.origin}/roi-calculator?biz=${inputs.businessType}&loc=${inputs.locations}&txn=${inputs.dailyTransactions}`;
-    navigator.clipboard.writeText(shareUrl)
-      .then(() => {
+    if (typeof window !== 'undefined') {
+      const shareUrl = `${window.location.origin}/roi-calculator?type=${inputs.businessType}&loc=${inputs.locations}&txn=${inputs.dailyTransactions}`;
+      navigator.clipboard.writeText(shareUrl).then(() => {
         setCopied(true);
-        toast.success('ROI Share link copied to clipboard!');
+        toast.success('ROI calculation link copied to clipboard!');
         setTimeout(() => setCopied(false), 2000);
       });
+    }
   };
 
   return (
-    <div className="space-y-12 max-w-4xl mx-auto py-12 px-4 sm:px-0">
-      {/* Configuration Form Card */}
-      <div className="rounded-3xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/40 p-8 sm:p-10 backdrop-blur-md relative overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+    <div className="w-full space-y-10">
+      {/* 2-Column Split: Controls on Left, Live KPI Dash on Right */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <div className="flex items-center gap-3 text-slate-900 dark:text-white mb-8 border-b border-gray-200 dark:border-slate-800/60 pb-4">
-          <Calculator className="text-primary" />
-          <h3 className="text-lg font-syne font-bold uppercase tracking-tight">Your Business Profile</h3>
+        {/* Left Column (5.5 Cols): Interactive Sliders & Inputs */}
+        <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-white dark:bg-darkSurface/70 border border-slate-200/90 dark:border-slate-800 shadow-md space-y-6 relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-primary via-primary-light to-amber-500" />
+
+          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+            <div className="flex items-center gap-2 text-slate-900 dark:text-white">
+              <Calculator size={18} className="text-primary" />
+              <h2 className="font-syne text-base sm:text-lg font-bold">Store Parameters</h2>
+            </div>
+            <button
+              type="button"
+              onClick={reset}
+              className="text-xs text-slate-400 hover:text-primary font-bold flex items-center gap-1 transition-colors cursor-pointer"
+            >
+              <RotateCcw size={12} />
+              <span>Reset</span>
+            </button>
+          </div>
+
+          {/* Business Sector Toggle */}
+          <div className="space-y-2">
+            <label className="text-[11px] font-syne font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Business Sector
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => updateInput('businessType', 'restaurant')}
+                className={`py-2.5 px-4 rounded-xl text-xs font-syne font-bold transition-all border cursor-pointer ${
+                  inputs.businessType === 'restaurant'
+                    ? 'bg-primary border-primary text-white shadow-xs'
+                    : 'bg-slate-50 dark:bg-darkBg/60 border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary/40'
+                }`}
+              >
+                🍽️ Food & Restaurant
+              </button>
+              <button
+                type="button"
+                onClick={() => updateInput('businessType', 'retail')}
+                className={`py-2.5 px-4 rounded-xl text-xs font-syne font-bold transition-all border cursor-pointer ${
+                  inputs.businessType === 'retail'
+                    ? 'bg-primary border-primary text-white shadow-xs'
+                    : 'bg-slate-50 dark:bg-darkBg/60 border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary/40'
+                }`}
+              >
+                🛍️ Retail & Grocery
+              </button>
+            </div>
+          </div>
+
+          {/* Current POS System Baseline */}
+          <div className="space-y-2">
+            <label className="text-[11px] font-syne font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Current POS Vendor Baseline
+            </label>
+            <div className="grid grid-cols-3 gap-2">
+              {(['legacy', 'cloud', 'manual'] as CurrentSystem[]).map((sys) => (
+                <button
+                  key={sys}
+                  type="button"
+                  onClick={() => updateInput('currentSystem', sys)}
+                  className={`py-2.5 px-2 rounded-xl text-[11px] font-syne font-bold capitalize transition-all border cursor-pointer text-center ${
+                    inputs.currentSystem === sys
+                      ? 'bg-primary border-primary text-white shadow-xs'
+                      : 'bg-slate-50 dark:bg-darkBg/60 border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary/40'
+                  }`}
+                >
+                  {sys === 'legacy' ? 'Legacy POS' : sys === 'cloud' ? 'Other Cloud' : 'Manual Tills'}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Slider 1: Locations */}
+          <div className="space-y-2 pt-2">
+            <div className="flex justify-between items-center text-xs font-bold">
+              <span className="text-slate-600 dark:text-slate-400">Store Locations:</span>
+              <span className="text-primary font-mono font-black text-sm">{inputs.locations} Locations</span>
+            </div>
+            <input
+              type="range"
+              min={1}
+              max={100}
+              value={inputs.locations}
+              onChange={(e) => updateInput('locations', Number(e.target.value))}
+              className="w-full accent-primary cursor-pointer h-2 bg-slate-200 dark:bg-darkBg rounded-lg appearance-none"
+            />
+            <div className="flex justify-between text-[10px] text-slate-400 font-mono">
+              <span>1 Store</span>
+              <span>50 Stores</span>
+              <span>100+ Stores</span>
+            </div>
+          </div>
+
+          {/* Slider 2: Daily Transactions Per Store */}
+          <div className="space-y-2 pt-1">
+            <div className="flex justify-between items-center text-xs font-bold">
+              <span className="text-slate-600 dark:text-slate-400">Daily Txns per Store:</span>
+              <span className="text-primary font-mono font-black text-sm">{inputs.dailyTransactions} Txns / day</span>
+            </div>
+            <input
+              type="range"
+              min={20}
+              max={1000}
+              step={20}
+              value={inputs.dailyTransactions}
+              onChange={(e) => updateInput('dailyTransactions', Number(e.target.value))}
+              className="w-full accent-primary cursor-pointer h-2 bg-slate-200 dark:bg-darkBg rounded-lg appearance-none"
+            />
+            <div className="flex justify-between text-[10px] text-slate-400 font-mono">
+              <span>20 / day</span>
+              <span>500 / day</span>
+              <span>1,000+ / day</span>
+            </div>
+          </div>
+
+          {/* Slider 3: Total Employees across network */}
+          <div className="space-y-2 pt-1">
+            <div className="flex justify-between items-center text-xs font-bold">
+              <span className="text-slate-600 dark:text-slate-400">Total Staff / Cashiers:</span>
+              <span className="text-primary font-mono font-black text-sm">{inputs.employees} Staff</span>
+            </div>
+            <input
+              type="range"
+              min={2}
+              max={250}
+              value={inputs.employees}
+              onChange={(e) => updateInput('employees', Number(e.target.value))}
+              className="w-full accent-primary cursor-pointer h-2 bg-slate-200 dark:bg-darkBg rounded-lg appearance-none"
+            />
+            <div className="flex justify-between text-[10px] text-slate-400 font-mono">
+              <span>2 Staff</span>
+              <span>100 Staff</span>
+              <span>250+ Staff</span>
+            </div>
+          </div>
         </div>
 
-        <div className="space-y-6">
-          {/* Business Type Selector */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Business Type</label>
-              <div className="grid grid-cols-2 gap-2">
-                {(['restaurant', 'retail'] as BusinessType[]).map((type) => (
-                  <button
-                    key={type}
-                    type="button"
-                    onClick={() => updateInput('businessType', type)}
-                    className={`rounded-xl py-3 text-xs font-bold capitalize transition-all cursor-pointer border ${
-                      inputs.businessType === type
-                        ? 'bg-primary border-primary text-white shadow-lg shadow-primary/20'
-                        : 'bg-gray-200 dark:bg-slate-950/60 border-gray-350 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-gray-300 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-200'
-                    }`}
-                  >
-                    {type}
-                  </button>
-                ))}
-              </div>
+        {/* Right Column (7 Cols): Real-time KPI Dash & Savings Breakdown */}
+        <div className="lg:col-span-7 space-y-6">
+          
+          {/* Main Hero Metric Box */}
+          <div className="p-6 sm:p-8 rounded-3xl bg-linear-to-br from-primary/15 via-primary/5 to-transparent dark:from-primary/20 dark:via-darkSurface/70 dark:to-darkBg border border-primary/30 shadow-xl space-y-4 relative overflow-hidden">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-syne font-black uppercase tracking-wider text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
+                PROIECTED ANNUAL BOTTOM-LINE SAVINGS
+              </span>
+              <span className="text-xs font-mono font-bold text-emerald-500 bg-emerald-500/10 px-2.5 py-1 rounded-md">
+                ⚡ {results.roiPercentage}% ROI
+              </span>
             </div>
 
-            {/* Current Setup System */}
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Current POS setup</label>
-              <div className="grid grid-cols-3 gap-2">
-                {(['manual', 'competitor', 'none'] as CurrentSystem[]).map((sys) => (
-                  <button
-                    key={sys}
-                    type="button"
-                    onClick={() => updateInput('currentSystem', sys)}
-                    className={`rounded-xl py-3 text-[10px] font-bold capitalize transition-all cursor-pointer border ${
-                      inputs.currentSystem === sys
-                        ? 'bg-primary border-primary text-white shadow-lg shadow-primary/20'
-                        : 'bg-gray-200 dark:bg-slate-950/60 border-gray-350 dark:border-slate-800 text-slate-650 dark:text-slate-400 hover:bg-gray-300 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-200'
-                    }`}
-                  >
-                    {sys === 'competitor' ? 'Other POS' : sys}
-                  </button>
-                ))}
+            <div className="space-y-1">
+              <p className="text-xs font-mono uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+                Total Estimated Annual Net Benefit
+              </p>
+              <h3 className="font-syne text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 dark:text-white tracking-tight">
+                ${results.totalAnnualSavings.toLocaleString()}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
+                Equivalent to <strong className="text-primary font-mono">${results.totalMonthlySavings.toLocaleString()} / month</strong> in recurring operational & software savings.
+              </p>
+            </div>
+
+            {/* 4 Mini KPI Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-primary/20">
+              <div className="p-3 rounded-2xl bg-white dark:bg-darkBg border border-slate-200/80 dark:border-slate-800 text-center">
+                <p className="text-[10px] text-slate-400 font-bold uppercase">Time Saved</p>
+                <p className="text-sm sm:text-base font-mono font-black text-primary mt-0.5">{results.timeSavedPerWeekHours} hrs/wk</p>
+              </div>
+              <div className="p-3 rounded-2xl bg-white dark:bg-darkBg border border-slate-200/80 dark:border-slate-800 text-center">
+                <p className="text-[10px] text-slate-400 font-bold uppercase">Payback Window</p>
+                <p className="text-sm sm:text-base font-mono font-black text-slate-900 dark:text-white mt-0.5">{results.paybackDays} Days</p>
+              </div>
+              <div className="p-3 rounded-2xl bg-white dark:bg-darkBg border border-slate-200/80 dark:border-slate-800 text-center">
+                <p className="text-[10px] text-slate-400 font-bold uppercase">Software Cost</p>
+                <p className="text-sm sm:text-base font-mono font-black text-emerald-500 mt-0.5">-${results.softwareSavingsMonthly}/mo</p>
+              </div>
+              <div className="p-3 rounded-2xl bg-white dark:bg-darkBg border border-slate-200/80 dark:border-slate-800 text-center">
+                <p className="text-[10px] text-slate-400 font-bold uppercase">ROI Multiplier</p>
+                <p className="text-sm sm:text-base font-mono font-black text-primary mt-0.5">{results.roiPercentage}%</p>
               </div>
             </div>
           </div>
 
-          {/* Location / Volume Sliders */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
-                <span>Locations</span>
-                <span className="text-slate-900 dark:text-white font-mono font-bold">{inputs.locations}</span>
+          {/* Breakdown Progress Bars */}
+          <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-darkSurface/60 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+            <h3 className="text-xs font-syne font-black uppercase text-slate-400 dark:text-slate-500 tracking-wider">
+              Where Your Savings Come From:
+            </h3>
+
+            <div className="space-y-3.5">
+              {/* Labor */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs font-bold">
+                  <span className="text-slate-700 dark:text-slate-300">Staff Labor & Shift Settlement Efficiency</span>
+                  <span className="text-primary font-mono">${results.laborSavingsMonthly.toLocaleString()} / mo</span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-darkBg overflow-hidden">
+                  <div className="h-full bg-primary rounded-full" style={{ width: '65%' }} />
+                </div>
               </div>
-              <input
-                type="range"
-                min={1}
-                max={50}
-                value={inputs.locations}
-                onChange={(e) => updateInput('locations', Number(e.target.value))}
-                className="w-full accent-primary cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
-              />
+
+              {/* Software */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs font-bold">
+                  <span className="text-slate-700 dark:text-slate-300">Software License Elimination vs Legacy POS</span>
+                  <span className="text-emerald-500 font-mono">${results.softwareSavingsMonthly.toLocaleString()} / mo</span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-darkBg overflow-hidden">
+                  <div className="h-full bg-emerald-500 rounded-full" style={{ width: '45%' }} />
+                </div>
+              </div>
+
+              {/* Shrinkage */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs font-bold">
+                  <span className="text-slate-700 dark:text-slate-300">Order Void Error & Ingredient Shrinkage Recovery</span>
+                  <span className="text-amber-500 font-mono">${results.shrinkageSavingsMonthly.toLocaleString()} / mo</span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-darkBg overflow-hidden">
+                  <div className="h-full bg-amber-500 rounded-full" style={{ width: '35%' }} />
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
-                <span>Daily Transactions</span>
-                <span className="text-slate-900 dark:text-white font-mono font-bold">{inputs.dailyTransactions}</span>
+            {/* Bottom Actions */}
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
+                <ShieldCheck size={14} className="text-primary" />
+                <span>Model calculated for {inputs.locations} locations</span>
               </div>
-              <input
-                type="range"
-                min={10}
-                max={500}
-                step={10}
-                value={inputs.dailyTransactions}
-                onChange={(e) => updateInput('dailyTransactions', Number(e.target.value))}
-                className="w-full accent-primary cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
-              />
+              <button
+                type="button"
+                onClick={handleShare}
+                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-darkBg hover:border-primary/40 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+              >
+                <Share2 size={12} />
+                <span>{copied ? 'Link Copied!' : 'Share ROI Model'}</span>
+              </button>
             </div>
-
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
-                <span>Employees count</span>
-                <span className="text-slate-900 dark:text-white font-mono font-bold">{inputs.employees}</span>
-              </div>
-              <input
-                type="range"
-                min={1}
-                max={100}
-                value={inputs.employees}
-                onChange={(e) => updateInput('employees', Number(e.target.value))}
-                className="w-full accent-primary cursor-pointer h-1.5 bg-gray-200 dark:bg-slate-950 rounded-lg appearance-none"
-              />
-            </div>
-          </div>
-
-          {/* Action triggers */}
-          <div className="flex gap-3 pt-6 border-t border-gray-250 dark:border-slate-800/60 mt-6">
-            <button
-              onClick={() => setShowResults(true)}
-              className="rounded-xl bg-primary hover:bg-primary-dark py-3.5 px-8 text-xs font-bold text-white transition-all cursor-pointer shadow-lg shadow-primary/20"
-            >
-              Analyze Savings ROI &rarr;
-            </button>
-            <button
-              onClick={reset}
-              className="rounded-xl border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 py-3.5 px-6 text-xs font-bold text-slate-650 dark:text-slate-400 transition-all cursor-pointer flex items-center gap-1.5"
-            >
-              <RotateCcw size={13} /> Reset
-            </button>
           </div>
         </div>
       </div>
-
-      {/* ROI Results Panels */}
-      <AnimatePresence>
-        {showResults && (
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 15 }}
-            className="space-y-6"
-          >
-            {/* KPI Cards Row */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-gray-50/50 dark:bg-slate-900/20 border border-gray-200 dark:border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
-                <div className="h-8 w-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
-                  <DollarSign size={16} />
-                </div>
-                <div className="text-xl sm:text-2xl font-mono font-black text-slate-900 dark:text-white">${results.monthlySavings.toLocaleString()}</div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-500">Monthly Savings</div>
-              </div>
-
-              <div className="bg-gray-50/50 dark:bg-slate-900/20 border border-gray-200 dark:border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
-                <div className="h-8 w-8 rounded-lg bg-primary/10 text-primary dark:text-primary-light flex items-center justify-center mx-auto">
-                  <Clock size={16} />
-                </div>
-                <div className="text-xl sm:text-2xl font-mono font-black text-slate-900 dark:text-white">{results.timeSavedPerWeek} hrs</div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-500">Time Saved / Wk</div>
-              </div>
-
-              <div className="bg-gray-50/50 dark:bg-slate-900/20 border border-gray-200 dark:border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
-                <div className="h-8 w-8 rounded-lg bg-purple-500/10 text-purple-500 dark:text-purple-400 flex items-center justify-center mx-auto">
-                  <TrendingUp size={16} />
-                </div>
-                <div className="text-xl sm:text-2xl font-mono font-black text-slate-900 dark:text-white">{results.roiPercentage}%</div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-500">Projected ROI</div>
-              </div>
-
-              <div className="bg-gray-50/50 dark:bg-slate-900/20 border border-gray-200 dark:border-slate-800 p-5 rounded-2xl text-center space-y-1 backdrop-blur-sm">
-                <div className="h-8 w-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mx-auto">
-                  <Calendar size={16} />
-                </div>
-                <div className="text-xl sm:text-2xl font-mono font-black text-slate-900 dark:text-white">{results.paybackDays} days</div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-450 dark:text-slate-500">Payback Period</div>
-              </div>
-            </div>
-
-            {/* Visual breakdown progress metrics */}
-            <div className="rounded-3xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/40 p-8 backdrop-blur-md space-y-6">
-              <h4 className="text-xs font-syne font-bold uppercase text-slate-500 dark:text-slate-400 tracking-wider">Estimated Savings Breakdown</h4>
-              
-              <div className="space-y-4">
-                {[
-                  { label: 'Labor Cost Optimization', value: results.breakdown.labourSavings, pct: Math.round((results.breakdown.labourSavings / (results.breakdown.labourSavings + results.breakdown.errorReduction + results.breakdown.wasteReduction)) * 100) || 0, color: 'bg-primary' },
-                  { label: 'Error reduction (80% recovery)', value: results.breakdown.errorReduction, pct: Math.round((results.breakdown.errorReduction / (results.breakdown.labourSavings + results.breakdown.errorReduction + results.breakdown.wasteReduction)) * 100) || 0, color: 'bg-emerald-500' },
-                  { label: 'Waste mitigation', value: results.breakdown.wasteReduction, pct: Math.round((results.breakdown.wasteReduction / (results.breakdown.labourSavings + results.breakdown.errorReduction + results.breakdown.wasteReduction)) * 100) || 0, color: 'bg-purple-500' }
-                ].map((item, idx) => (
-                  <div key={idx} className="space-y-1">
-                    <div className="flex justify-between text-xs font-semibold">
-                      <span className="text-slate-500 dark:text-slate-400">{item.label}</span>
-                      <span className="text-slate-900 dark:text-white font-mono">${item.value.toLocaleString()}/mo ({item.pct}%)</span>
-                    </div>
-                    <div className="h-2.5 w-full bg-gray-200 dark:bg-slate-950 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${item.pct}%` }}
-                        className={`h-full rounded-full ${item.color}`}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Secure verification footers */}
-              <div className="pt-6 border-t border-gray-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase">
-                  <ShieldCheck size={14} className="text-emerald-500" /> Based on benchmark average POS rates
-                </div>
-                <button
-                  onClick={handleShare}
-                  className="rounded-xl border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 py-2.5 px-4 text-xs font-bold text-slate-650 dark:text-slate-300 transition-all cursor-pointer flex items-center gap-1.5"
-                >
-                  <Share2 size={13} /> {copied ? 'Copied!' : 'Share ROI Results'}
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

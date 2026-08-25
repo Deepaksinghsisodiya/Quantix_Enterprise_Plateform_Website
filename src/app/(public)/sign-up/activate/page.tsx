@@ -49,7 +49,7 @@ function ActivateContent() {
           toast.success('Your merchant account has been activated successfully!');
           refetch();
         })
-        .catch((err) => {
+        .catch((err: any) => {
           if (err?.status !== 401) {
             toast.error(err?.data?.message || err?.message || 'Activation failed.');
           }
@@ -72,7 +72,7 @@ function ActivateContent() {
         animate={{ opacity: 1, scale: 1 }}
         className="rounded-3xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/40 p-8 sm:p-10 backdrop-blur-md relative overflow-hidden"
       >
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-blue-500/40 to-transparent" />
 
         {(isSuccess || isAlreadyActive) ? (
           <div className="text-center space-y-6">
@@ -97,8 +97,8 @@ function ActivateContent() {
               <div className="space-y-3">
                 {steps.map((st: OnboardingStep, idx: number) => (
                   <div key={idx} className="flex items-center gap-3">
-                    <div className="h-5 w-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 flex-shrink-0">
-                      <Check size={11} className="stroke-[3]" />
+                    <div className="h-5 w-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0">
+                      <Check size={11} className="stroke-3" />
                     </div>
                     <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                       {st.displayName}

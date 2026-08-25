@@ -24,7 +24,7 @@ const COMPETITORS = [
     slug: 'toast',
     offlineMode: '24hr caching limit',
     multiLocation: 'Yes (Cloud only)',
-    kds: 'Yes (Proprietary hardware)',
+    kds: 'Yes (Proprietary terminals)',
     tokenOption: 'Subscription Only',
     api: 'Yes (Highly restricted)',
     pricing: '$79+/mo + transaction fees',
@@ -227,7 +227,7 @@ export default function CompareCompetitorsPage() {
               </div>
               <h4 className="text-sm font-syne font-bold uppercase text-white">Windows & Linux Compatibility</h4>
               <p className="text-xs text-slate-400 leading-relaxed font-medium">
-                Run on your existing terminal hardware. No overpriced proprietary tablet setups required.
+                Run on your existing terminal devices. No overpriced proprietary tablet setups required.
               </p>
             </div>
           </div>

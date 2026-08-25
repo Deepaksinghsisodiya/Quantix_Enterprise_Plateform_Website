@@ -38,9 +38,9 @@ const ROADMAP_QUARTERS: {
       },
       {
         title: "Stripe Reader Autodiscover QR",
-        desc: "Plug-and-play network scanning and link integration setup using physical hardware QR triggers.",
+        desc: "Plug-and-play network scanning and link integration setup using physical POS QR triggers.",
         status: "progress",
-        category: "Hardware Integration"
+        category: "Device Integration"
       }
     ]
   },

@@ -6,7 +6,7 @@ import { ShieldCheck, CreditCard, Monitor, Truck, ArrowRight } from 'lucide-reac
 
 const RETAIL_INTEGRATIONS = [
   { name: 'Stripe Payments', desc: 'Card readers & payouts', icon: CreditCard },
-  { name: 'Square Terminal', desc: 'Hardware register bridge', icon: Monitor },
+  { name: 'Square Terminal', desc: 'Terminal register bridge', icon: Monitor },
   { name: 'Authorize.Net', desc: 'Merchant gateway', icon: ShieldCheck },
   { name: 'PayPal Express', desc: 'Digital wallet checkout', icon: CreditCard },
 ];
@@ -18,7 +18,7 @@ export const IntegrationsTicker: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary">CONNECTED ECOSYSTEM</span>
-            <h3 className="font-syne font-black text-xl text-slate-900 dark:text-white">Seamless Payment & Hardware Integrations</h3>
+            <h3 className="font-syne font-black text-xl text-slate-900 dark:text-white">Seamless Payment & System Integrations</h3>
           </div>
 
           <div className="flex items-center gap-4 flex-wrap justify-center">

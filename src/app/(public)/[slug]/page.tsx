@@ -115,7 +115,7 @@ const LEGAL_PAGES: Record<
     sections: [
       {
         heading: "1. Zero Cardholder Data Retention",
-        content: "Our billing POS terminal never stores raw magnetic stripe, CVV, or card PIN numbers in our local offline database. Card swipe data is encrypted directly on certified terminal hardware.",
+        content: "Our billing POS terminal never stores raw magnetic stripe, CVV, or card PIN numbers in our local offline database. Card swipe data is encrypted directly on certified terminal systems.",
       },
       {
         heading: "2. Secure Payment Gateways",

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { MegaMenuWrapper } from './MegaMenuWrapper';
-import { COMPANY_MEGA_CONFIG } from '../../../config/navConfig';
+import { RESOURCES_MEGA_CONFIG } from '../../../config/navConfig';
 
 interface CompanyMegaMenuProps {
   onClose: () => void;
@@ -18,7 +18,7 @@ export const CompanyMegaMenu: React.FC<CompanyMegaMenuProps> = ({
   onMouseEnter,
   onMouseLeave,
 }) => {
-  const { promoCards, categories } = COMPANY_MEGA_CONFIG;
+  const { promoCards, categories } = RESOURCES_MEGA_CONFIG;
 
   return (
     <MegaMenuWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
@@ -26,12 +26,12 @@ export const CompanyMegaMenu: React.FC<CompanyMegaMenuProps> = ({
         {/* Left Column: 2 Ultra-Modern Featured Cards (4 cols) */}
         {promoCards && promoCards.length > 0 && (
           <div className="col-span-4 border-r border-slate-200/80 dark:border-slate-800/80 pr-8 flex flex-col gap-4 justify-between">
-            {promoCards.map((card, idx) => (
+            {promoCards.map((card: any, idx: number) => (
               <Link
                 key={idx}
                 href={card.href || '/about'}
                 onClick={onClose}
-                className="group/card relative flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-br from-slate-50/90 via-slate-50/40 to-rose-500/[0.03] dark:from-slate-900/60 dark:via-slate-900/30 dark:to-rose-500/[0.05] border border-slate-200/80 dark:border-slate-800/80 hover:border-rose-500/40 transition-all duration-300 shadow-2xs hover:shadow-lg overflow-hidden"
+                className="group/card relative flex items-center gap-4 p-4 rounded-2xl bg-linear-to-br from-slate-50/90 via-slate-50/40 to-rose-500/3 dark:from-slate-900/60 dark:via-slate-900/30 dark:to-rose-500/5 border border-slate-200/80 dark:border-slate-800/80 hover:border-rose-500/40 transition-all duration-300 shadow-2xs hover:shadow-lg overflow-hidden"
               >
                 <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0 border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
                   <Image
@@ -64,7 +64,7 @@ export const CompanyMegaMenu: React.FC<CompanyMegaMenuProps> = ({
 
         {/* Right Columns: Clean 2-Column Grid (8 cols) */}
         <div className="col-span-8 space-y-3">
-          {categories.map((cat) => (
+          {categories.map((cat: any) => (
             <div key={cat.categoryTitle} className="space-y-3">
               <div className="flex items-center gap-2 text-[10px] font-syne font-black uppercase tracking-widest text-primary select-none px-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
@@ -72,7 +72,7 @@ export const CompanyMegaMenu: React.FC<CompanyMegaMenuProps> = ({
               </div>
 
               <div className="grid grid-cols-2 gap-4 max-w-2xl">
-                {cat.items.map((item) => {
+                {cat.items.map((item: any) => {
                   const ItemIcon = item.icon;
                   return (
                     <Link
@@ -81,7 +81,7 @@ export const CompanyMegaMenu: React.FC<CompanyMegaMenuProps> = ({
                       onClick={onClose}
                       className="group/item flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-100/80 dark:hover:bg-slate-900/80 border border-transparent hover:border-slate-200/80 dark:hover:border-slate-800 transition-all duration-200"
                     >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-slate-100 to-slate-200/60 dark:from-slate-900 dark:to-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 group-hover/item:border-primary/40 group-hover/item:bg-primary/10 group-hover/item:scale-110 transition-all duration-200 shadow-2xs mt-0.5">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-slate-100 to-slate-200/60 dark:from-slate-900 dark:to-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 group-hover/item:border-primary/40 group-hover/item:bg-primary/10 group-hover/item:scale-110 transition-all duration-200 shadow-2xs mt-0.5">
                         <ItemIcon size={16} className={item.iconColor || 'text-primary'} />
                       </span>
                       <div className="min-w-0 flex-1">

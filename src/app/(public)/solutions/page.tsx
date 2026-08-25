@@ -89,7 +89,7 @@ const SECTORS = [
   },
   {
     slug: "electronics",
-    name: "Electronics & Hardware Retail",
+    name: "Electronics & Specialty Retail",
     category: "Specialty Retail",
     desc: "Serial number tracking for warranty audits, trade-in credit valuation, variant management, and extended warranty prompts.",
     href: "/solutions/electronics",
@@ -113,12 +113,9 @@ const SECTORS = [
 
 export default function SolutionsOverviewPage() {
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="bg-slate-50/60 dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white transition-colors duration-300">
+    <main className="bg-slate-50/60 dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white transition-colors duration-300">
         {/* Hero Section */}
-        <section className="relative pt-32 sm:pt-40 pb-16 sm:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 bg-gradient-to-b from-white via-slate-50/60 to-slate-50/80 dark:from-slate-950 dark:via-slate-900/80 dark:to-slate-950 overflow-hidden">
+        <section className="relative pt-32 sm:pt-40 pb-16 sm:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 bg-linear-to-b from-white via-slate-50/60 to-slate-50/80 dark:from-slate-950 dark:via-slate-900/80 dark:to-slate-950 overflow-hidden">
           <div className="site-container relative z-10 text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-black uppercase tracking-widest text-primary-dark dark:text-primary-light mb-6 shadow-2xs">
               <Sparkles size={13} />
@@ -149,7 +146,7 @@ export default function SolutionsOverviewPage() {
                     transition={{ duration: 0.25 }}
                     className="group relative flex flex-col justify-between rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 shadow-md hover:shadow-2xl transition-all overflow-hidden"
                   >
-                    <div className={`absolute top-0 left-0 right-0 h-32 bg-gradient-to-b ${sec.color} opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none`} />
+                    <div className={`absolute top-0 left-0 right-0 h-32 bg-linear-to-b ${sec.color} opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none`} />
 
                     <div>
                       <div className="flex items-center justify-between gap-3 mb-6 relative z-10">
@@ -195,7 +192,7 @@ export default function SolutionsOverviewPage() {
               Ready to Upgrade Your Business Workflow?
             </h2>
             <p className="text-white/80 text-sm sm:text-base font-medium max-w-xl mx-auto">
-              Start your 14-day free trial today. Connect your local hardware registers and experience 2-way cloud telemetry.
+              Start your 14-day free trial today. Connect your local POS registers and experience 2-way cloud telemetry.
             </p>
             <div className="pt-2 flex flex-wrap justify-center gap-4">
               <Link
@@ -214,8 +211,5 @@ export default function SolutionsOverviewPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
-    </PublicLayout>
   );
 }

@@ -20,45 +20,39 @@ export default function IntegrationDetailPage() {
 
   if (!data) {
     return (
-      <PublicLayout>
-        <Navbar />
-        <main className="min-h-[75vh] flex flex-col items-center justify-center pt-36 pb-20 text-center px-4">
-          <div className="h-16 w-16 rounded-2xl bg-rose-500/10 text-rose-500 flex items-center justify-center font-bold text-2xl mb-4">
-            !
-          </div>
-          <h1 className="text-4xl font-syne font-black mb-3 text-slate-900 dark:text-white">Integration Not Found</h1>
-          <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-md text-sm font-medium">
-            The integration platform you requested is unavailable or has been relocated.
-          </p>
-          <Link
-            href="/integrations"
-            className="px-6 py-3.5 rounded-xl bg-primary text-white font-syne font-bold text-sm shadow-lg shadow-primary/25"
-          >
-            Explore Integration Ecosystem →
-          </Link>
-        </main>
-        <Footer />
-      </PublicLayout>
+      <main className="min-h-[75vh] flex flex-col items-center justify-center pt-36 pb-20 text-center px-4">
+        <div className="h-16 w-16 rounded-2xl bg-rose-500/10 text-rose-500 flex items-center justify-center font-bold text-2xl mb-4">
+          !
+        </div>
+        <h1 className="text-4xl font-syne font-black mb-3 text-slate-900 dark:text-white">Integration Not Found</h1>
+        <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-md text-sm font-medium">
+          The integration platform you requested is unavailable or has been relocated.
+        </p>
+        <Link
+          href="/integrations"
+          className="px-6 py-3.5 rounded-xl bg-primary text-white font-syne font-bold text-sm shadow-lg shadow-primary/25"
+        >
+          Explore Integration Ecosystem →
+        </Link>
+      </main>
     );
   }
 
   return (
-    <PublicLayout>
-      <Navbar />
-      <main className="bg-slate-50/60 dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white transition-colors duration-300">
+    <main className="bg-slate-50/60 dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white transition-colors duration-300">
         
         {/* ========================================================================= */}
         {/* 1. HERO SECTION (Clear of Navbar with pt-32 sm:pt-40) */}
         {/* ========================================================================= */}
-        <section className="relative pt-32 sm:pt-40 pb-20 sm:pb-28 overflow-hidden border-b border-slate-200/80 dark:border-slate-800/80 bg-gradient-to-b from-white via-slate-50/60 to-slate-50/80 dark:from-slate-950 dark:via-slate-900/80 dark:to-slate-950">
+        <section className="relative pt-32 sm:pt-40 pb-20 sm:pb-28 overflow-hidden border-b border-slate-200/80 dark:border-slate-800/80 bg-linear-to-b from-white via-slate-50/60 to-slate-50/80 dark:from-slate-950 dark:via-slate-900/80 dark:to-slate-950">
           {/* Ambient Background Radial Glow */}
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[480px] rounded-full blur-[170px] pointer-events-none opacity-20 dark:opacity-30"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-225 h-120 rounded-full blur-[170px] pointer-events-none opacity-20 dark:opacity-30"
             style={{ backgroundColor: data.accent }}
           />
 
           {/* Micro Background Grid Pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[24px_24px] pointer-events-none" />
 
           <div className="site-container relative z-10">
             {/* Breadcrumb Navigation */}
@@ -405,7 +399,5 @@ export default function IntegrationDetailPage() {
         </section>
 
       </main>
-      <Footer />
-    </PublicLayout>
   );
 }

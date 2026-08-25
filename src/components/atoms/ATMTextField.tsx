@@ -57,8 +57,8 @@ export const ATMTextField: React.FC<ATMTextFieldProps> = ({
             leftIcon ? 'pl-11' : 'pl-4',
             rightIcon ? 'pr-11' : '',
             isError
-              ? 'border-red-500 bg-red-500/10 placeholder-red-400 focus:ring-1 focus:ring-red-500'
-              : 'border-slate-800 bg-slate-900/50 placeholder-slate-500 focus:ring-1 focus:ring-primary',
+              ? 'border-red-500 bg-red-500/10 placeholder:text-red-400 focus:ring-1 focus:ring-red-500'
+              : 'border-slate-800 bg-slate-900/50 placeholder:text-slate-500 focus:ring-1 focus:ring-primary',
             props.className
           )}
         />

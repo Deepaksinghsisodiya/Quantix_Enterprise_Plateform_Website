@@ -14,10 +14,10 @@ const VIDEO_TUTORIALS = [
   {
     id: 'vid-1',
     title: 'POS Terminal Initialization',
-    desc: 'Unboxing hardware, connecting the POS, and running the setup wizard.',
+    desc: 'Unboxing terminals, connecting the POS, and running the setup wizard.',
     duration: '3:45',
     level: 'beginner',
-    category: 'Hardware',
+    category: 'Device Setup',
   },
   {
     id: 'vid-2',

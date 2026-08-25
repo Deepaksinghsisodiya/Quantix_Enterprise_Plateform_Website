@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" fill="none">
+  <!-- Square icon -->
+  <rect x="10" y="8" width="24" height="24" rx="6" fill="#000000" />
+  <rect x="16" y="14" width="12" height="12" rx="3" fill="#FFFFFF" />
+  <rect x="20" y="18" width="4" height="4" rx="1" fill="#000000" />
+  <!-- Square text -->
+  <text x="44" y="26" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="bold" font-size="16" fill="#000000" letter-spacing="-0.5">Square</text>
+</svg>

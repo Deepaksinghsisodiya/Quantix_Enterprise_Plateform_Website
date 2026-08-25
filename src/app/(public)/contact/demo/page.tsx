@@ -65,7 +65,7 @@ export default function ContactDemoPage() {
                 iPad POS demo
               </h1>
               <p className="text-slate-555 text-xs sm:text-sm font-medium leading-relaxed max-w-lg">
-                Book a customized 15-minute live screen share with our hardware specialists. See courses course pacing, local offline databases backup logs, and global billing telemetry in real-time.
+                Book a customized 15-minute live screen share with our POS specialists. See courses course pacing, local offline databases backup logs, and global billing telemetry in real-time.
               </p>
 
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-3">

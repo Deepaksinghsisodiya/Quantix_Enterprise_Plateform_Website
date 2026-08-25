@@ -22,13 +22,15 @@ import {
   Zap,
 } from "lucide-react";
 
+import { RESTAURANT_SITE_URL, RETAIL_SITE_URL } from '@/components/organisms/Navbar/config/navConfig';
+
 const PRODUCTS = [
   {
     slug: "restaurant-pos",
     title: "Restaurant POS & Kitchen System",
     eyebrow: "Restaurant & Dining",
     desc: "Tableside ordering, visual floor mapping, course pacing, KDS ticket routing, and split-check management.",
-    href: "/products/restaurant-pos",
+    href: RESTAURANT_SITE_URL,
     icon: Utensils,
     badge: "Most Popular",
     color: "from-amber-500/20 via-orange-500/10 to-transparent",
@@ -40,7 +42,7 @@ const PRODUCTS = [
     title: "Retail POS & Inventory Register",
     eyebrow: "Retail & Supermarkets",
     desc: "Barcode scanner billing, cashier permissions, offline registers, stock deductions, returns, and shelf label printing.",
-    href: "/products/retail-pos",
+    href: RETAIL_SITE_URL,
     icon: Store,
     badge: "Scanner Ready",
     color: "from-emerald-500/20 via-teal-500/10 to-transparent",
@@ -111,12 +113,9 @@ const PRODUCTS = [
 
 export default function ProductsPage() {
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="bg-slate-50/60 dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white transition-colors duration-300">
+    <main className="bg-slate-50/60 dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white transition-colors duration-300">
         {/* Hero Section */}
-        <section className="relative pt-32 sm:pt-40 pb-16 sm:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 bg-gradient-to-b from-white via-slate-50/60 to-slate-50/80 dark:from-slate-950 dark:via-slate-900/80 dark:to-slate-950 overflow-hidden">
+        <section className="relative pt-32 sm:pt-40 pb-16 sm:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 bg-linear-to-b from-white via-slate-50/60 to-slate-50/80 dark:from-slate-950 dark:via-slate-900/80 dark:to-slate-950 overflow-hidden">
           <div className="site-container relative z-10 text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-black uppercase tracking-widest text-primary-dark dark:text-primary-light mb-6 shadow-2xs">
               <Sparkles size={13} />
@@ -147,7 +146,7 @@ export default function ProductsPage() {
                     transition={{ duration: 0.25 }}
                     className="group relative flex flex-col justify-between rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 shadow-md hover:shadow-2xl transition-all overflow-hidden"
                   >
-                    <div className={`absolute top-0 left-0 right-0 h-32 bg-gradient-to-b ${prod.color} opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none`} />
+                    <div className={`absolute top-0 left-0 right-0 h-32 bg-linear-to-b ${prod.color} opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none`} />
 
                     <div>
                       <div className="flex items-center justify-between gap-3 mb-6 relative z-10">
@@ -206,8 +205,5 @@ export default function ProductsPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
-    </PublicLayout>
   );
 }

@@ -228,8 +228,10 @@ html {
 
 /* Public Page Hero Spacing - Clean, compact mobile spacing & spacious desktop header */
 .page-hero-header {
-  padding-top: 6.25rem; /* ~100px on mobile -> ~10-12px sleek clearance under 88-90px fixed navbar */
-  padding-bottom: 1.25rem; /* ~20px on mobile */
+  padding-top: 6.25rem;
+  /* ~100px on mobile -> ~10-12px sleek clearance under 88-90px fixed navbar */
+  padding-bottom: 1.25rem;
+  /* ~20px on mobile */
 }
 
 @media (min-width: 640px) {
@@ -466,7 +468,9 @@ html {
 }
 
 /* Global Font & Weight Overrides to match Restaurant design layout */
-*, ::before, ::after {
+*,
+::before,
+::after {
   font-family: var(--font-lato), system-ui, -apple-system, sans-serif !important;
 }
 

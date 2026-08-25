@@ -34,7 +34,7 @@ export default function PCIPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { title: 'Tokenized Payments', desc: 'Card payloads are instantly exchanged for secure provider tokens prior to reaching POS registers.' },
-              { title: 'End-to-End Encryption', desc: 'Hardware PDQ terminals communicate over TLS 1.3 encrypted channels with zero plain-text leaks.' },
+              { title: 'End-to-End Encryption', desc: 'Payment PDQ terminals communicate over TLS 1.3 encrypted channels with zero plain-text leaks.' },
               { title: 'SOC 2 & PCI Audited', desc: 'Annual third-party penetration tests and security audit verification.' },
             ].map((item, idx) => (
               <div key={idx} className="bg-gray-50/50 dark:bg-slate-900/40 border border-gray-200 dark:border-slate-800 p-6 rounded-2xl space-y-3">

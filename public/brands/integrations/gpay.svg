@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" fill="none">
+  <!-- GPay logo representation -->
+  <path d="M18.2 18.2h-7.3v3.1h4.8c-.1 2.3-2 3.7-4.8 3.7-2.9 0-5.3-2.4-5.3-5.3s2.4-5.3 5.3-5.3c1.3 0 2.4.5 3.3 1.3l2.3-2.3C14.7 11.5 12.5 10.5 10.9 10.5 6.5 10.5 3 14 3 18.4s3.5 7.9 7.9 7.9c4.6 0 7.6-3.2 7.6-7.7 0-.4 0-.8-.1-1.2z" fill="#4285F4"/>
+  <text x="24" y="24" font-family="Arial, sans-serif" font-weight="900" font-size="14" fill="#4285F4">G</text>
+  <text x="36" y="24" font-family="Arial, sans-serif" font-weight="bold" font-size="14" fill="#5F6368">Pay</text>
+</svg>

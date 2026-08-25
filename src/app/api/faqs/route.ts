@@ -9,7 +9,7 @@ export async function GET() {
     },
     {
       id: "2",
-      question: "What hardware does Quantix support?",
+      question: "What terminals and devices does Quantix support?",
       answer: "Quantix works on iPad, Android tablets, and any web browser. We support receipt printers, barcode scanners, cash drawers, and card readers via integrations.",
     },
     {

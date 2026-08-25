@@ -92,8 +92,8 @@ type ProductSolution = {
   points: ProductPoint[];
   orderModes?: OrderMode[];
   orderModesContent?: FeaturePanelContent;
-  billingHardware?: OrderMode[];
-  billingHardwareContent?: FeaturePanelContent;
+  billingCheckout?: OrderMode[];
+  billingCheckoutContent?: FeaturePanelContent;
   advancedControls?: OrderMode[];
   advancedControlsContent?: FeaturePanelContent;
   workflows: IncludedWorkflow[];
@@ -298,7 +298,7 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
       { title: "Online ordering", desc: "Branded web orders routed into POS and KDS.", icon: Globe2 },
       { title: "Scheduled orders", desc: "Advance orders for pickup windows, parties, and planned service.", icon: Smartphone },
     ],
-    billingHardware: [
+    billingCheckout: [
       { title: "Guest receipt printing", desc: "Print table receipts, reprint guest bills, and counter invoices from checkout.", icon: ReceiptText },
       { title: "Kitchen ticket printing", desc: "Route prep tickets to kitchen, bar, grill, and expo printers.", icon: Printer },
       { title: "Dining cash drawer", desc: "Track server and cashier cash payments, drawer openings, shifts, and close-out totals.", icon: Banknote },
@@ -477,7 +477,7 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
     ctaHref: "/sign-up",
     icon: Smartphone,
     faqs: [
-      { id: "mobile-hardware", question: "What devices run the handheld server app?", answer: "Quantix handheld POS runs on standard Android tablets, mobile POS terminals, and iOS devices." },
+      { id: "mobile-devices", question: "What devices run the handheld server app?", answer: "Quantix handheld POS runs on standard Android tablets, mobile POS terminals, and iOS devices." },
     ],
   },
   "custom-service": {
@@ -489,7 +489,7 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
     points: [
       { title: "White-Label Customization", desc: "Tailor branding, register screens, and terminal UX to your exact specifications." },
       { title: "Open API & Webhooks", desc: "REST & GraphQL APIs to bridge Quantix POS with custom web applications and ERPs." },
-      { title: "Custom Integration Engineering", desc: "Dedicated engineering team to build custom hardware and payment drivers." },
+      { title: "Custom Integration Engineering", desc: "Dedicated engineering team to build custom system and payment drivers." },
     ],
     workflows: [
       { title: "Custom workflow design", desc: "Tailored cashier UI, custom receipt formats, and non-standard register logic." },
@@ -558,7 +558,7 @@ const WorkflowRow: React.FC<{
                 className="flex items-start gap-2 rounded-lg border border-slate-200/80 bg-white px-2.5 py-2 shadow-xs dark:border-slate-800 dark:bg-slate-900/70 sm:gap-3 sm:rounded-xl sm:px-3 sm:py-2.5"
               >
                 <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary-light sm:h-5 sm:w-5">
-                  <Check className="h-3 w-3 stroke-[3] sm:h-3.5 sm:w-3.5" />
+                  <Check className="h-3 w-3 stroke-3 sm:h-3.5 sm:w-3.5" />
                 </span>
                 <span className="text-[11.5px] font-medium leading-relaxed text-slate-600 dark:text-slate-300 min-[380px]:text-xs sm:text-sm">
                   {detail}
@@ -577,7 +577,7 @@ const WorkflowRow: React.FC<{
           className={`lg:col-span-6 ${!isRight ? "lg:order-1" : "lg:order-2"}`}
         >
           <div className="group/image relative overflow-hidden rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:rounded-2xl sm:p-2 sm:shadow-xl">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-[16/11] sm:rounded-xl sm:aspect-[16/10]">
+            <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-16/11 sm:rounded-xl sm:aspect-16/10">
               <Image
                 src={visual.src}
                 alt={visual.alt}
@@ -615,13 +615,13 @@ const DEFAULT_ORDER_MODES_CONTENT: FeaturePanelContent = {
   icon: Sparkles,
 };
 
-const DEFAULT_BILLING_HARDWARE_CONTENT: FeaturePanelContent = {
-  badge: "Billing & hardware",
+const DEFAULT_BILLING_CHECKOUT_CONTENT: FeaturePanelContent = {
+  badge: "Billing & checkout",
   title: "Print receipts and close every bill cleanly",
   description:
     "Receipt printers, tickets, cash drawer, card terminals, tax, tips, discounts, and shift-close reports stay connected to the same POS order.",
   imageSrc: "/images/pos_counter_3d.png",
-  imageAlt: "POS receipt printing and checkout hardware workflow",
+  imageAlt: "POS receipt printing and checkout system workflow",
   topBadge: "Receipt + payments",
   bottomBadge: "Printer, drawer and terminal ready",
   icon: ReceiptText,
@@ -715,7 +715,7 @@ const OrderModesSection: React.FC<{
             className="lg:col-span-6"
           >
             <div className="group/image relative overflow-hidden rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:rounded-2xl sm:p-2 sm:shadow-xl">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-[16/11] sm:rounded-xl sm:aspect-[16/10]">
+              <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-16/11 sm:rounded-xl sm:aspect-16/10">
                 <Image
                   src={content.imageSrc}
                   alt={content.imageAlt}
@@ -742,10 +742,10 @@ const OrderModesSection: React.FC<{
   );
 };
 
-const BillingHardwareSection: React.FC<{
+const BillingCheckoutSection: React.FC<{
   items: OrderMode[];
   content?: FeaturePanelContent;
-}> = ({ items, content = DEFAULT_BILLING_HARDWARE_CONTENT }) => {
+}> = ({ items, content = DEFAULT_BILLING_CHECKOUT_CONTENT }) => {
   const BadgeIcon = content.icon ?? ReceiptText;
 
   return (
@@ -788,7 +788,7 @@ const BillingHardwareSection: React.FC<{
                       whileInView="visible"
                       viewport={{ once: true, margin: "-60px" }}
                       transition={{ ...motionTransition, delay: index * 0.04 }}
-                      className="group/hardware flex items-start gap-2.5 rounded-xl border border-slate-200/90 bg-white p-2.5 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md hover:shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none"
+                      className="group/billing flex items-start gap-2.5 rounded-xl border border-slate-200/90 bg-white p-2.5 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md hover:shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none"
                     >
                       <span className="relative h-11 w-11 shrink-0 overflow-visible rounded-lg">
                         <Image src={itemImage.src} alt={itemImage.alt} fill sizes="44px" className="rounded-lg object-cover" />
@@ -820,7 +820,7 @@ const BillingHardwareSection: React.FC<{
             className="lg:col-span-6 lg:order-1"
           >
             <div className="group/image relative overflow-hidden rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:rounded-2xl sm:p-2 sm:shadow-xl">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-[16/11] sm:rounded-xl sm:aspect-[16/10]">
+              <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-16/11 sm:rounded-xl sm:aspect-16/10">
                 <Image
                   src={content.imageSrc}
                   alt={content.imageAlt}
@@ -923,7 +923,7 @@ const AdvancedControlsSection: React.FC<{
             className="lg:col-span-6"
           >
             <div className="group/image relative overflow-hidden rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:rounded-2xl sm:p-2 sm:shadow-xl">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-[16/11] sm:rounded-xl sm:aspect-[16/10]">
+              <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-16/11 sm:rounded-xl sm:aspect-16/10">
                 <Image
                   src={content.imageSrc}
                   alt={content.imageAlt}
@@ -962,10 +962,7 @@ export default function ProductSolutionPage() {
   const Icon = solution.icon;
 
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="min-h-screen bg-white pt-[5.75rem] text-slate-900 transition-colors dark:bg-slate-950 dark:text-white sm:pt-24 lg:pt-24">
+    <main className="min-h-screen bg-white pt-28 sm:pt-36 text-slate-900 transition-colors dark:bg-slate-950 dark:text-white">
         {/* --- 1. HERO SECTION --- */}
         <section className="border-b border-slate-200/80 bg-white py-5 dark:border-slate-800/80 dark:bg-slate-950 sm:py-8 lg:py-10">
           <div className="site-container">
@@ -1016,7 +1013,7 @@ export default function ProductSolutionPage() {
                       className="flex items-start gap-2 rounded-lg border border-slate-200/80 bg-white px-2.5 py-2 shadow-xs dark:border-slate-800 dark:bg-slate-900/70 sm:gap-3 sm:rounded-xl sm:px-3 sm:py-2.5"
                     >
                       <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary-light sm:h-5 sm:w-5">
-                        <Check className="h-3 w-3 stroke-[3] sm:h-3.5 sm:w-3.5" />
+                        <Check className="h-3 w-3 stroke-3 sm:h-3.5 sm:w-3.5" />
                       </span>
                       <span className="text-[11.5px] leading-relaxed min-[380px]:text-xs sm:text-sm">
                         <strong className="font-extrabold text-slate-950 dark:text-white">{point.title}:</strong>{" "}
@@ -1051,7 +1048,7 @@ export default function ProductSolutionPage() {
                 className="lg:col-span-6"
               >
                 <div className="group/image relative overflow-hidden rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:rounded-2xl sm:p-2 sm:shadow-xl">
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-[16/11] sm:rounded-xl sm:aspect-[16/10]">
+                  <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-16/11 sm:rounded-xl sm:aspect-16/10">
                     <Image
                       src={solution.imageSrc}
                       alt={solution.imageAlt}
@@ -1082,9 +1079,9 @@ export default function ProductSolutionPage() {
           <OrderModesSection orderModes={solution.orderModes} content={solution.orderModesContent} />
         )}
 
-        {/* --- 3. BILLING & HARDWARE SECTION --- */}
-        {solution.billingHardware && (
-          <BillingHardwareSection items={solution.billingHardware} content={solution.billingHardwareContent} />
+        {/* --- 3. BILLING & CHECKOUT SECTION --- */}
+        {solution.billingCheckout && (
+          <BillingCheckoutSection items={solution.billingCheckout} content={solution.billingCheckoutContent} />
         )}
 
         {/* --- 4. ADVANCED CONTROLS --- */}
@@ -1130,8 +1127,5 @@ export default function ProductSolutionPage() {
         {/* --- 6. FAQS --- */}
         <FAQSection faqs={solution.faqs} isLoading={false} />
       </main>
-
-      <Footer />
-    </PublicLayout>
   );
 }

@@ -149,7 +149,7 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 overflow-y-auto">
           {/* Backdrop Blur Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -166,7 +166,7 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
             animate={isShaking ? { x: [-8, 8, -6, 6, -4, 4, 0] } : { opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 15 }}
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="relative z-10 w-full max-w-[360px] bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-slate-950/40 border border-slate-200/90 dark:border-slate-800 my-auto text-slate-800 dark:text-slate-100 select-none"
+            className="relative z-10 w-full max-w-90 bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-slate-950/40 border border-slate-200/90 dark:border-slate-800 my-auto text-slate-800 dark:text-slate-100 select-none"
           >
             {/* Outer Top Right Corner Floating Close Button (X) */}
             <button
@@ -175,11 +175,11 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
               className="absolute -top-3.5 -right-3.5 h-8 w-8 rounded-full bg-white dark:bg-slate-800 text-slate-700 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white border border-slate-200 dark:border-slate-700 shadow-xl hover:scale-110 active:scale-90 transition-all cursor-pointer z-30 flex items-center justify-center"
               aria-label="Close dialog"
             >
-              <X size={16} className="stroke-[2.5]" />
+              <X size={16} className="stroke-2.5" />
             </button>
 
             {/* Top Accent Line */}
-            <div className="absolute top-0 left-6 right-6 h-1 bg-gradient-to-r from-primary via-primary-light to-primary-dark rounded-b-full opacity-80" />
+            <div className="absolute top-0 left-6 right-6 h-1 bg-linear-to-r from-primary via-primary-light to-primary-dark rounded-b-full opacity-80" />
 
             {/* Header Content */}
             <div className="flex flex-col items-center text-center space-y-1.5 mb-4 pt-2">
@@ -188,12 +188,12 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
                   {badgeText}
                 </span>
               )}
-              <h3 className="text-base sm:text-lg font-syne font-black text-slate-900 dark:text-white leading-snug tracking-tight max-w-[270px]">
+              <h3 className="text-base sm:text-lg font-syne font-black text-slate-900 dark:text-white leading-snug tracking-tight max-w-67.5">
                 {title}
               </h3>
 
               {subtitle && (
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium max-w-[275px] leading-tight">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium max-w-68.75 leading-tight">
                   {subtitle}
                 </p>
               )}
@@ -210,13 +210,13 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
                   className="flex flex-col items-center text-center py-4 space-y-3"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/15 text-primary">
-                    <CheckCircle2 size={28} className="stroke-[2.5]" />
+                    <CheckCircle2 size={28} className="stroke-2.5" />
                   </div>
                   <div className="space-y-1">
                     <h4 className="text-sm font-syne font-bold text-slate-900 dark:text-white">
                       Request Sent, {formData.fullName.split(' ')[0]}!
                     </h4>
-                    <p className="text-[11px] text-slate-600 dark:text-slate-300 font-medium max-w-[240px] leading-relaxed">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-300 font-medium max-w-60 leading-relaxed">
                       Our solution engineer will review your request and call you at{' '}
                       <span className="font-bold text-primary">{formData.countryCode} {formData.phone}</span> shortly.
                     </p>

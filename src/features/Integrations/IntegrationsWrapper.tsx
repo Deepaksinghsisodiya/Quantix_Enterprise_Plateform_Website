@@ -9,10 +9,10 @@ export const IntegrationsWrapper: React.FC = () => {
   const { data: integrations = [], isLoading } = useGetIntegrationsQuery();
 
   return (
-    <section className="py-20 text-slate-900 dark:text-white min-h-[80vh] relative transition-colors duration-300">
+    <section className="pt-32 sm:pt-40 pb-16 sm:pb-24 text-slate-900 dark:text-white min-h-[80vh] relative transition-colors duration-300">
       {/* Background visual graphics */}
-      <div className="absolute top-0 left-1/4 w-[400px] h-[400px] rounded-full bg-blue-500/10 blur-[100px] -z-10 pointer-events-none opacity-50 dark:opacity-100" />
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-indigo-500/5 blur-[100px] -z-10 pointer-events-none opacity-50 dark:opacity-100" />
+      <div className="absolute top-0 left-1/4 w-100 h-100 rounded-full bg-blue-500/10 blur-[100px] -z-10 pointer-events-none opacity-50 dark:opacity-100" />
+      <div className="absolute bottom-0 right-1/4 w-100 h-100 rounded-full bg-indigo-500/5 blur-[100px] -z-10 pointer-events-none opacity-50 dark:opacity-100" />
 
       <div className="site-container">
         {/* Header */}

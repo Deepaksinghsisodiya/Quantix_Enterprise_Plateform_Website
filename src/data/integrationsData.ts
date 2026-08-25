@@ -164,7 +164,7 @@ export const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
     ],
     faqs: [
       {
-        question: 'Does this support physical Stripe Reader hardware terminals?',
+        question: 'Does this support physical Stripe Reader terminals?',
         answer: 'Yes! Quantix fully supports Stripe Smart Terminals including S700, BBPOS WisePOS E, and Reader M2.',
       },
     ],
@@ -242,9 +242,9 @@ export const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
     accent: '#006AFF',
     badge: 'Official Square Register Bridge',
     heroHeadline: 'Unify Square POS Terminals with Central Quantix Cloud Inventory',
-    tagline: 'Keep your Square hardware registers while powering your back-office with Quantix Enterprise.',
+    tagline: 'Keep your Square registers while powering your back-office with Quantix Enterprise.',
     description:
-      'Bridge your existing Square hardware terminals with Quantix Enterprise Cloud. Maintain a single unified inventory catalog, multi-store stock levels, and real-time kitchen order dispatching with zero dual-entry.',
+      'Bridge your existing Square terminals with Quantix Enterprise Cloud. Maintain a single unified inventory catalog, multi-store stock levels, and real-time kitchen order dispatching with zero dual-entry.',
     stats: [
       { value: '1 Catalog', label: 'Unified Multi-Store Stock' },
       { value: '0 Tablet', label: 'Clutter Elimination' },
@@ -257,8 +257,8 @@ export const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
         icon: '📦',
       },
       {
-        title: 'Square Hardware Reader Bridge',
-        description: 'Accept tap, swipe, and chip payments on Square hardware seamlessly logged into Quantix tickets.',
+        title: 'Square Reader Bridge',
+        description: 'Accept tap, swipe, and chip payments on Square devices seamlessly logged into Quantix tickets.',
         icon: '🖥️',
       },
       {
@@ -295,7 +295,7 @@ export const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
     faqs: [
       {
         question: 'Do I need to replace my existing Square Stand or Terminal?',
-        answer: 'No! You can keep your physical Square hardware while leveraging Quantix for enterprise back-office management.',
+        answer: 'No! You can keep your physical Square terminals while leveraging Quantix for enterprise back-office management.',
       },
     ],
   },

@@ -86,7 +86,7 @@ const INDUSTRIES_DATA: Record<string, IndustryData> = {
       { title: "Massive SKU Management", desc: "Import, edit, and categorize up to 100,000 barcode listings without interface lag." },
       { title: "Local Cache Billing", desc: "Keep lanes scanning even when the internet drops. Sales sync up instantly when connection resumes." }
     ],
-    technicalHighlights: ["Hardware scale integrations", "IndexedDB caching", "Fast barcode parsing", "Bulk invoice generator"]
+    technicalHighlights: ["Scale & device integrations", "IndexedDB caching", "Fast barcode parsing", "Bulk invoice generator"]
   },
   cafes: {
     title: "Cafes & Bars POS Setup",
@@ -263,13 +263,13 @@ export const IndustryDetail: React.FC<IndustryDetailProps> = ({
           <div className="space-y-6">
             <div className="inline-flex items-center space-x-2 text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full dark:bg-emerald-950/40 dark:text-emerald-400">
               <Award className="h-3.5 w-3.5" />
-              <span>Quantix Hardware Compliance</span>
+              <span>Quantix System Compliance</span>
             </div>
             <h2 className="text-3xl font-syne font-black text-slate-900 dark:text-white uppercase leading-tight">
-              Integrates directly with certified checkout hardware
+              Integrates directly with certified checkout terminals
             </h2>
             <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
-              Quantix is engineered from the ground up to connect seamlessly with modern hardware terminals, scales, thermal printers, cash drawers, and barcode scanners.
+              Quantix is engineered from the ground up to connect seamlessly with modern POS terminals, scales, thermal printers, cash drawers, and barcode scanners.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {industry.technicalHighlights.map((tech, idx) => (
@@ -281,7 +281,7 @@ export const IndustryDetail: React.FC<IndustryDetailProps> = ({
             </div>
           </div>
 
-          {/* Visual Hardware card mock */}
+          {/* Visual Terminal card mock */}
           <div className="bg-slate-900 rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden h-72 flex flex-col justify-end">
             <div className="absolute top-0 right-0 h-48 w-48 bg-primary/20 rounded-full blur-3xl" />
             <div className="relative z-10 space-y-4 max-w-sm">

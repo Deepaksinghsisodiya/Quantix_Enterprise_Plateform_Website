@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 40" fill="none">
+  <!-- Green QuickBooks QB logo -->
+  <rect x="5" y="8" width="24" height="24" rx="12" fill="#2CA01C" />
+  <text x="11" y="24" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#FFFFFF">qb</text>
+  <!-- QuickBooks text -->
+  <text x="36" y="24" font-family="Arial, sans-serif" font-weight="bold" font-size="13" fill="#2CA01C">quickbooks</text>
+</svg>

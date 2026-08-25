@@ -8,7 +8,6 @@ import { ProductsMegaMenu } from './MegaMenu/ProductsMegaMenu';
 import { SolutionsMegaMenu } from './MegaMenu/SolutionsMegaMenu';
 import { IntegrationsMegaMenu } from './MegaMenu/IntegrationsMegaMenu';
 import { ResourcesMegaMenu } from './MegaMenu/ResourcesMegaMenu';
-import { CompanyMegaMenu } from './MegaMenu/CompanyMegaMenu';
 
 interface DesktopNavProps {
   pathname: string;
@@ -67,13 +66,6 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
           <ResourcesMegaMenu
             onClose={() => onSetOpenMegaMenu(null)}
             onMouseEnter={() => onSetOpenMegaMenu('Resources')}
-            onMouseLeave={() => onSetOpenMegaMenu(null)}
-          />
-        )}
-        {openMegaMenu === 'Company' && (
-          <CompanyMegaMenu
-            onClose={() => onSetOpenMegaMenu(null)}
-            onMouseEnter={() => onSetOpenMegaMenu('Company')}
             onMouseLeave={() => onSetOpenMegaMenu(null)}
           />
         )}

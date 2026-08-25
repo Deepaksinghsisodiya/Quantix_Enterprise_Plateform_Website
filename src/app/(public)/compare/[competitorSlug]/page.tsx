@@ -52,11 +52,11 @@ const COMPETITORS_DATA: Record<string, CompetitorData> = {
     slug: 'clover',
     name: 'Clover POS',
     posType: 'Generic Merchant Systems',
-    strengths: ['Strong hardware build', 'Merchant bank partnerships'],
+    strengths: ['Strong terminal build', 'Merchant bank partnerships'],
     weaknesses: ['Complex app marketplace costs', 'Limited telemetry telemetry reporting', 'No global menu syncing'],
-    pricingComparison: 'Clover requires buying expensive proprietary hardware and paying for individual apps. Quantix runs on any tablet or PC and holds all features natively.',
+    pricingComparison: 'Clover requires buying expensive proprietary terminals and paying for individual apps. Quantix runs on any tablet or PC and holds all features natively.',
     featuresList: [
-      { title: 'Hardware Compatibility', quantix: true, competitor: false, note: 'Quantix works on iPad, Android, Windows; Clover mandates Clover hardware.' },
+      { title: 'Device Compatibility', quantix: true, competitor: false, note: 'Quantix works on iPad, Android, Windows; Clover mandates Clover terminals.' },
       { title: 'Native App ecosystem', quantix: true, competitor: false, note: 'Quantix includes all reporting; Clover requires paid marketplace apps.' },
       { title: 'Central Menu sync', quantix: true, competitor: false, note: 'Quantix syncs multi-stores instantly; Clover requires store-by-store edits.' },
       { title: 'Barcode scanner support', quantix: true, competitor: true, note: 'Both support plug-and-play barcode scanners.' }
@@ -99,7 +99,7 @@ export default function CompetitorComparePage() {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">{competitor.name}</span>
               </h1>
               <p className="text-slate-550 dark:text-slate-400 text-xs sm:text-sm font-medium leading-relaxed max-w-xl">
-                See how we compare on hardware adaptability, payment processor choices, offline database safety, and dynamic subscription structures. Break free from variable swipe markup markups.
+                See how we compare on device adaptability, payment processor choices, offline database safety, and dynamic subscription structures. Break free from variable swipe markup markups.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

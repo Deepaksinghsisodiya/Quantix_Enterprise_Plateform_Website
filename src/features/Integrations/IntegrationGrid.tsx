@@ -69,7 +69,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search all connectors (e.g. Stripe, Xero)..."
-            className="w-full rounded-full border border-gray-300 dark:border-slate-700/50 bg-white dark:bg-slate-950/60 py-3 pl-11 pr-5 text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/10 transition-all duration-200"
+            className="w-full rounded-full border border-gray-300 dark:border-slate-700/50 bg-white dark:bg-slate-950/60 py-3 pl-11 pr-5 text-sm text-slate-900 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/10 transition-all duration-200"
           />
         </div>
 
@@ -80,7 +80,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
               'rounded-full px-5 py-2 text-xs font-bold transition-all duration-200 cursor-pointer',
               !activeCategory
                 ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                : 'bg-gray-200 dark:bg-slate-800 text-slate-650 dark:text-slate-400 hover:bg-gray-300 dark:hover:bg-slate-700/60 hover:text-slate-900 dark:hover:text-slate-200'
+                : 'bg-gray-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-gray-300 dark:hover:bg-slate-700/60 hover:text-slate-900 dark:hover:text-slate-200'
             )}
           >
             All Connectors
@@ -93,7 +93,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
                 'rounded-full px-5 py-2 text-xs font-bold capitalize transition-all duration-200 cursor-pointer',
                 activeCategory === cat
                   ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                  : 'bg-gray-200 dark:bg-slate-800 text-slate-650 dark:text-slate-400 hover:bg-gray-300 dark:hover:bg-slate-700/60 hover:text-slate-900 dark:hover:text-slate-200'
+                  : 'bg-gray-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-gray-300 dark:hover:bg-slate-700/60 hover:text-slate-900 dark:hover:text-slate-200'
               )}
             >
               {cat}
@@ -118,7 +118,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
           ))}
         </div>
       ) : (
-        <div className="py-16 text-center bg-gray-50/50 dark:bg-slate-900/10 border border-gray-250 dark:border-slate-800/60 rounded-2xl">
+        <div className="py-16 text-center bg-gray-50/50 dark:bg-slate-900/10 border border-gray-200 dark:border-slate-800/60 rounded-2xl">
           <p className="text-sm text-slate-500 dark:text-slate-400 font-semibold">
             No connectors found matching your query. Please request an integration below.
           </p>
@@ -127,13 +127,13 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
 
       {/* Integration Request Card */}
       <div className="rounded-2xl border border-gray-200 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/20 p-8 sm:p-10 backdrop-blur-md relative overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-linear-to-r from-transparent via-blue-500/40 to-transparent" />
 
         <div className="max-w-xl mx-auto text-center space-y-4">
           <h3 className="text-xl sm:text-2xl font-syne font-black text-slate-900 dark:text-white uppercase tracking-tight">
             Need a custom integration?
           </h3>
-          <p className="text-xs sm:text-sm text-slate-550 dark:text-slate-400 font-medium leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
             Our secure, high-performance API lets you build custom connections in minutes. Alternatively, tell us what connector you need and we will prioritize it.
           </p>
 
@@ -147,7 +147,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
                     value={requestName}
                     onChange={(e) => setRequestName(e.target.value)}
                     placeholder="e.g. Xero, Hubspot"
-                    className="w-full rounded-xl border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-950/60 px-4 py-3 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full rounded-xl border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-950/60 px-4 py-3 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
                   <input
                     type="email"
@@ -155,7 +155,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
                     value={requestEmail}
                     onChange={(e) => setRequestEmail(e.target.value)}
                     placeholder="Your work email"
-                    className="w-full rounded-xl border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-950/60 px-4 py-3 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full rounded-xl border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-950/60 px-4 py-3 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
                 </div>
                 <button
@@ -176,7 +176,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
                   <Check size={16} className="stroke-[3]" />
                 </div>
                 <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Request Logged</h4>
-                <p className="text-[11px] text-slate-550 dark:text-slate-400 font-medium">We will update you at {requestEmail} as soon as this connector is ready!</p>
+                <p className="text-[11px] text-slate-600 dark:text-slate-400 font-medium">We will update you at {requestEmail} as soon as this connector is ready!</p>
               </motion.div>
             )}
           </AnimatePresence>

@@ -208,14 +208,11 @@ export default function IndustrySolutionPage() {
   }
 
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
+    <main className="pt-28 sm:pt-36 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
         {/* Hero Section */}
         <div className="site-container relative overflow-hidden py-16 sm:py-24 px-4 sm:px-0">
           {/* Background Ambient Glow */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-blue-500/10 blur-[100px] rounded-full -z-10 pointer-events-none" />
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-87.5 h-87.5 bg-blue-500/10 blur-[100px] rounded-full -z-10 pointer-events-none" />
 
           {/* Breadcrumbs */}
           <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-6">
@@ -232,7 +229,7 @@ export default function IndustrySolutionPage() {
               </div>
               <h1 className="text-4xl sm:text-6xl font-syne font-black tracking-tight uppercase leading-[1.05] text-slate-900 dark:text-white">
                 Quantix for <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">{industry.name}</span>
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">{industry.name}</span>
               </h1>
               <p className="max-w-xl text-slate-655 dark:text-slate-400 text-sm sm:text-base font-medium leading-relaxed">
                 Streamline operations, optimize checkout speeds, and manage inventory with customized telemetry interfaces and database controls specifically engineered for {industry.name.toLowerCase()} businesses.
@@ -257,7 +254,7 @@ export default function IndustrySolutionPage() {
             {/* Right Hero - Simulated Premium Screen Mockup */}
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-3xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
+                <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-blue-500/40 to-transparent" />
                 
                 {/* Header Window Buttons */}
                 <div className="flex gap-1.5 mb-6">
@@ -325,7 +322,7 @@ export default function IndustrySolutionPage() {
         {/* Testimonial Quote Section */}
         <div className="site-container py-16 sm:py-24 px-4 sm:px-0 border-t border-gray-200 dark:border-slate-900">
           <div className="max-w-3xl mx-auto rounded-3xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/40 p-8 sm:p-10 text-center space-y-6 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-blue-500/40 to-transparent" />
             
             <div className="flex justify-center gap-1">
               {[...Array(industry.testimonial.rating)].map((_, i) => (
@@ -350,8 +347,8 @@ export default function IndustrySolutionPage() {
 
         {/* Bottom CTA Block */}
         <div className="site-container py-12 px-4 sm:px-0">
-          <div className="max-w-4xl mx-auto rounded-3xl bg-gradient-to-tr from-blue-600 to-indigo-600 p-8 sm:p-12 text-center text-white space-y-6 shadow-2xl relative overflow-hidden">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-white/10 blur-[90px] rounded-full pointer-events-none" />
+          <div className="max-w-4xl mx-auto rounded-3xl bg-linear-to-tr from-blue-600 to-indigo-600 p-8 sm:p-12 text-center text-white space-y-6 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-87.5 h-87.5 bg-white/10 blur-[90px] rounded-full pointer-events-none" />
             
             <span className="text-[10px] font-bold uppercase tracking-wider bg-white/10 border border-white/20 px-3.5 py-1 rounded-full inline-block">
               UPGRADE TODAY
@@ -378,8 +375,5 @@ export default function IndustrySolutionPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
-    </PublicLayout>
   );
 }

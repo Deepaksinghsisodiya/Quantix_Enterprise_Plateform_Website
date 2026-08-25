@@ -1,31 +1,30 @@
 import type { FooterLink, SocialLink } from '../types/FooterTypes';
 
+export const RESTAURANT_SITE_URL = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3000';
+export const RETAIL_SITE_URL = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
+
 export const PRODUCT_LINKS: FooterLink[] = [
-  { href: "/features/offline-registers", label: "Cloud POS Registers" },
-  { href: "/features/table-management", label: "Kitchen Display (KDS)" },
-  { href: "/features/online-ordering", label: "Online Ordering Portal" },
-  { href: "/features/smart-inventory", label: "Inventory & Stock Sync" },
+  { href: RESTAURANT_SITE_URL, label: "Restaurant POS System" },
+  { href: RETAIL_SITE_URL, label: "Retail Register Platform" },
   { href: "/pricing", label: "Plans & Pricing" },
-  { href: "/integrations", label: "Integrations & Hardware" },
-  { href: "/downloads", label: "Desktop & Mobile Apps" },
+  { href: "/integrations", label: "Integrations Ecosystem" },
+  { href: "/downloads", label: "Register Apps & Drivers" },
 ];
 
 export const COMPANY_LINKS: FooterLink[] = [
   { href: "/about", label: "About Quantix Enterprise" },
-  { href: "/careers", label: "Careers", badge: "Hiring" },
-  { href: "/blog", label: "Industry Insights & Blog" },
-  { href: "/press", label: "Press Kit & Media" },
-  { href: "/contact/sales", label: "Contact Sales Team" },
-  { href: "/contact/demo", label: "Book Personalized Demo" },
+  { href: "/resources/pos-guide", label: "Enterprise POS Guide", badge: "2026" },
+  { href: "/resources", label: "Resource Hub & Blueprints" },
+  { href: "/roi-calculator", label: "ROI Savings Forecaster" },
+  { href: "/contact/sales", label: "Contact Enterprise Sales" },
 ];
 
 export const INDUSTRY_LINKS: FooterLink[] = [
-  { href: "/solutions/quick-service", label: "Restaurants & QSR" },
+  { href: "/solutions/fine-dining", label: "Fine Dining & Restaurants" },
+  { href: "/solutions/quick-service", label: "Quick Service (QSR)" },
   { href: "/solutions/fashion-retail", label: "Retail & Boutiques" },
   { href: "/solutions/grocery", label: "Supermarkets & Grocery" },
-  { href: "/solutions/cafe-bakery", label: "Cafes & Bakeries" },
   { href: "/solutions/franchise", label: "Multi-Store Franchises" },
-  { href: "/solutions/food-trucks", label: "Food Trucks & Pop-ups" },
 ];
 
 export const LEGAL_LINKS: FooterLink[] = [
@@ -33,7 +32,6 @@ export const LEGAL_LINKS: FooterLink[] = [
   { href: "/terms", label: "Terms of Service" },
   { href: "/pci", label: "PCI-DSS Security" },
   { href: "/gdpr", label: "GDPR Compliance" },
-  { href: "/sla", label: "Service SLA (99.99%)" },
   { href: "/status", label: "Live System Status" },
 ];
 
@@ -43,5 +41,5 @@ export const SOCIAL_LINKS: SocialLink[] = [
   { href: "https://github.com/quantix", ariaLabel: "GitHub", icon: "github" },
 ];
 
-export const FOOTER_COPYRIGHT = "© 2025 Quantix Enterprise Inc. All rights reserved.";
+export const FOOTER_COPYRIGHT = "© 2026 Quantix Enterprise Inc. All rights reserved.";
 export const FOOTER_COMPLIANCE = "PCI-DSS Tier 1 Certified · SOC 2 Type II · 256-bit Encrypted";

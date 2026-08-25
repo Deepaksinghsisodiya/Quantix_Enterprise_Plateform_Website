@@ -24,12 +24,12 @@ const ARTICLES_DATA: Record<string, ArticleDetail> = {
   'pair-printers': {
     slug: 'pair-printers',
     title: 'Pairing Bluetooth Receipt Printers',
-    category: 'Hardware & Terminal Setup',
-    categorySlug: 'hardware-setup',
+    category: 'Device & Terminal Setup',
+    categorySlug: 'terminal-setup',
     readTime: '3 min read',
     body: [
       'Step 1: Power on your thermal paper receipt printer. Verify that the Bluetooth indicator LED is blinking blue, indicating discoverable mode.',
-      'Step 2: On your Quantix POS register terminal, navigate to Settings > Hardware Connect > Bluetooth Printers.',
+      'Step 2: On your Quantix POS register terminal, navigate to Settings > Device Connect > Bluetooth Printers.',
       'Step 3: Click "Scan for Devices". Select your printer model from the populated list (e.g., "Star-TSP-100").',
       'Step 4: Enter the pairing pin "0000" or "1234" if prompted. Once connected, print a test receipt to verify successful configuration.'
     ],

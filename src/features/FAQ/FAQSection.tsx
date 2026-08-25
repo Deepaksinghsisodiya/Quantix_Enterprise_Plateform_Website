@@ -1,3 +1,5 @@
+'use client';
+
 // src/features/FAQ/FAQSection.tsx
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -22,8 +24,8 @@ const DEFAULT_FAQS: FAQItem[] = [
     answer: "Yes, Quantix POS runs on an offline-first indexed caching layer. You can check out carts, scan barcode SKUs, and store sales locally. Transactions automatically sync to the server when connection is restored."
   },
   {
-    id: "hardware",
-    question: "What hardware is compatible with Quantix POS?",
+    id: "compatibility",
+    question: "What devices and terminals are compatible with Quantix POS?",
     answer: "Quantix is fully compatible with standard thermal receipt printers, Bluetooth card readers, barcode scanners, cash drawers, and weighing scale devices."
   },
   {
@@ -45,20 +47,20 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ faqs, isLoading }) => {
   const useTwoColumnLayout = isLoading || displayFAQs.length > 1;
 
   return (
-    <section className="bg-white py-10 sm:py-12 border-b border-slate-100" id="faq">
+    <section className="bg-white dark:bg-slate-950 py-6 sm:py-8 border-b border-slate-100 dark:border-slate-800 transition-colors" id="faq">
       <div className="site-container">
-        <div className={cn("mx-auto", isSingleFAQ ? "max-w-[720px]" : "max-w-6xl")}>
+        <div className={cn("mx-auto", isSingleFAQ ? "max-w-180" : "max-w-5xl")}>
           {/* Header */}
-          <div className="mx-auto mb-10 max-w-[720px] text-center sm:mb-12">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/80 border border-blue-200/50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-4 shadow-sm">
+          <div className="mx-auto mb-5 max-w-170 text-center sm:mb-6">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary dark:text-primary-light mb-2 shadow-xs">
               FAQ
             </div>
-            <h2 className="text-3xl font-syne font-black text-gray-900 md:text-5xl leading-tight">
-              Frequently asked questions
+            <h2 className="text-xl sm:text-2xl font-syne font-extrabold text-slate-900 dark:text-white md:text-3xl leading-snug">
+              Frequently Asked Questions
             </h2>
-            <p className="mt-4 text-slate-500 font-medium text-base">
+            <p className="mt-1.5 text-slate-500 dark:text-slate-400 font-medium text-xs sm:text-sm">
               Can't find what you're looking for?{" "}
-              <a href="/contact" className="font-bold text-blue-600 hover:underline">
+              <a href="/contact" className="font-bold text-primary hover:underline">
                 Contact our team.
               </a>
             </p>
@@ -68,14 +70,14 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ faqs, isLoading }) => {
           <div
             className={cn(
               "w-full",
-              useTwoColumnLayout ? "grid gap-3.5 md:grid-cols-2 md:items-start" : "space-y-3.5"
+              useTwoColumnLayout ? "grid gap-2.5 sm:gap-3 md:grid-cols-2 md:items-start" : "space-y-2.5"
             )}
           >
             {isLoading
               ? Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="p-5 animate-pulse rounded-2xl border border-slate-100 bg-white">
-                    <div className="h-5 w-3/4 bg-gray-200 rounded mb-2" />
-                    <div className="h-4 w-5/6 bg-gray-200 rounded" />
+                  <div key={i} className="p-3.5 sm:p-4 animate-pulse rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+                    <div className="h-4 w-3/4 bg-gray-200 dark:bg-slate-800 rounded mb-2" />
+                    <div className="h-3 w-5/6 bg-gray-200 dark:bg-slate-800 rounded" />
                   </div>
                 ))
               : displayFAQs.map((faq) => {
@@ -84,10 +86,10 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ faqs, isLoading }) => {
                     <div
                       key={faq.id}
                       className={cn(
-                        "p-5 rounded-2xl border transition-all duration-300 bg-white",
+                        "p-3.5 sm:p-4 rounded-xl border transition-all duration-300 bg-white dark:bg-slate-900",
                         isOpen
-                          ? "border-blue-200/60 bg-blue-50/5 shadow-[0_4px_20px_rgba(37,99,235,0.02)]"
-                          : "border-slate-100 hover:border-slate-200 hover:bg-slate-50/30"
+                          ? "border-primary/60 bg-primary/5 shadow-[0_4px_20px_rgba(37,99,235,0.02)]"
+                          : "border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700"
                       )}
                     >
                       {/* Question */}
@@ -96,17 +98,17 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ faqs, isLoading }) => {
                         onClick={() => toggle(faq.id)}
                         className="flex w-full items-center justify-between text-left cursor-pointer group"
                       >
-                        <span className="font-syne font-bold text-slate-800 text-sm sm:text-base pr-4 leading-snug group-hover:text-blue-600 transition-colors duration-200">
+                        <span className="font-syne font-bold text-slate-800 dark:text-slate-200 text-xs sm:text-sm pr-3 leading-snug group-hover:text-primary transition-colors duration-200">
                           {faq.question}
                         </span>
                         
                         {/* Interactive toggle indicator */}
                         <div
                           className={cn(
-                            "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300",
+                            "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all duration-300",
                             isOpen
-                              ? "bg-blue-50 border-blue-100 text-blue-600"
-                              : "bg-slate-50 border-slate-200/50 text-slate-400 group-hover:text-slate-600 group-hover:bg-slate-100/50"
+                              ? "bg-primary/10 border-primary/20 text-primary"
+                              : "bg-slate-50 border-slate-200/60 text-slate-400 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400 group-hover:text-slate-600 group-hover:bg-slate-100"
                           )}
                         >
                           <motion.div
@@ -114,7 +116,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ faqs, isLoading }) => {
                             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
                             className="flex items-center justify-center"
                           >
-                            <Plus className="h-4 w-4 stroke-[2.5]" />
+                            <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
                           </motion.div>
                         </div>
                       </button>
@@ -126,12 +128,12 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ faqs, isLoading }) => {
                             key="content"
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
+                            exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
                             className="overflow-hidden"
                           >
-                            <div className="pt-3.5 border-t border-slate-100/80 mt-3.5">
-                              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-medium">
+                            <div className="pt-2.5 border-t border-slate-100 dark:border-slate-800 mt-2.5">
+                              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                                 {faq.answer}
                               </p>
                             </div>

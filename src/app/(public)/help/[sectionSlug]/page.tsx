@@ -24,9 +24,9 @@ interface Section {
 }
 
 const SECTIONS_DATA: Record<string, Section> = {
-  'hardware-setup': {
-    slug: 'hardware-setup',
-    title: 'Hardware & Terminal Setup',
+  'terminal-setup': {
+    slug: 'terminal-setup',
+    title: 'Device & Terminal Setup',
     description: 'Guides on unboxing registers, pairing thermal printers, and configuring weight scales.',
     icon: <BookOpen size={20} />,
     articles: [

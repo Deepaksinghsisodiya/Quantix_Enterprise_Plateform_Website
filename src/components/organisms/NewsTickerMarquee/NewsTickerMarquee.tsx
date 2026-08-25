@@ -23,13 +23,15 @@ type NewsTickerItem = {
   isNew: boolean;
 };
 
+import { RESTAURANT_SITE_URL, RETAIL_SITE_URL } from '../Navbar/config/navConfig';
+
 const tickerItems: NewsTickerItem[] = [
   {
     id: "restaurant-pos",
     title: "Restaurant POS",
     description: "Tableside orders and kitchen ticket routing",
     icon: ChefHat,
-    href: "/products/restaurant-pos",
+    href: RESTAURANT_SITE_URL,
     isNew: false,
   },
   {
@@ -37,7 +39,7 @@ const tickerItems: NewsTickerItem[] = [
     title: "Retail POS",
     description: "Offline checkout with barcode inventory",
     icon: Store,
-    href: "/products/retail-pos",
+    href: RETAIL_SITE_URL,
     isNew: false,
   },
   {

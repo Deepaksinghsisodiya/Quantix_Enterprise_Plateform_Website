@@ -281,7 +281,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
       {
         question: "Does it support payment terminals and receipts?",
         answer:
-          "Yes. The workflow can connect kiosk checkout with card terminal payment status and thermal receipt printing where hardware is configured.",
+          "Yes. The workflow can connect kiosk checkout with card terminal payment status and thermal receipt printing where terminals are configured.",
       },
       {
         question: "Can staff help or override a kiosk order?",

@@ -24,7 +24,7 @@ const DEFAULT_POSTS: BlogPostDto[] = [
     postId: "2",
     title: "The Future of Offline-First Merchant APIs",
     slug: "future-of-offline-first-merchant-apis",
-    excerpt: "Why background sync networks are becoming the gold standard for retail stores and dining POS hardware.",
+    excerpt: "Why background sync networks are becoming the gold standard for retail stores and dining POS systems.",
     body: "Traditional POS models depend heavily on continuous web requests. Today, systems run decoupled SQLite/IndexedDB backplanes, pushing bulk synchronization only when connections stabilize.",
     author: "Marc Verney",
     categoryName: "Architecture",

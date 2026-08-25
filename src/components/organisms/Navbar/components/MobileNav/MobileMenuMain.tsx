@@ -1,14 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ChevronRight, User, LogOut, LogIn, Headset } from 'lucide-react';
+import { ChevronRight, User, LogOut, LogIn, Headset, UserPlus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MOBILE_MENU_SECTIONS, QUICK_MOBILE_TOOLS } from '../../config/navConfig';
 import type { MobileMenuSection, QuickMobileTool } from '../../config/navTypes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { useGetMeQuery } from '@/features/Login/services/LoginServices';
 import { logout } from '@/redux/slices/authSlice';
 import Cookies from 'js-cookie';
 import { toast } from 'sonner';
@@ -26,14 +25,27 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
   onClose,
 }) => {
   const token = useAppSelector((state) => state.auth.token);
-  const { data: meData } = useGetMeQuery(undefined, { skip: !token });
+  const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const { openModal } = useContactModal();
+
+  const [hasLoggedOut, setHasLoggedOut] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loggedOutFlag = localStorage.getItem('quantix_has_logged_out');
+      setHasLoggedOut(Boolean(loggedOutFlag));
+    }
+  }, [token]);
 
   const handleLogout = () => {
     try {
       Cookies.remove('accessToken');
       Cookies.remove('refreshToken');
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('quantix_has_logged_out', 'true');
+        setHasLoggedOut(true);
+      }
       dispatch(logout());
       toast.success('Successfully signed out.');
       onClose();
@@ -100,7 +112,7 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
                   aria-label={`Open ${link.label} menu`}
                   aria-pressed={isActive}
                   className={cn(
-                    'group/nav relative flex w-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl border px-3 py-3 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 min-h-[105px]',
+                    'group/nav relative flex w-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl border px-3 py-3 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 min-h-26.25',
                     isActive
                       ? 'border-primary bg-primary text-white shadow-md shadow-primary/20'
                       : 'border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:border-primary/30 hover:bg-primary/5'
@@ -191,14 +203,25 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
             <>
               <div className="flex items-center gap-2.5 justify-center rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 py-2.5 shadow-xs select-none">
                 <User size={15} className="text-primary" />
-                <span className="text-[13px] font-bold uppercase tracking-normal text-slate-800 dark:text-slate-200">
-                  Hi, {meData?.data?.username || meData?.username || 'Admin'}
+                <span className="text-[13px] font-syne font-bold uppercase tracking-normal text-slate-800 dark:text-slate-200">
+                  Hi, {user?.username || 'Enterprise Admin'}
                 </span>
               </div>
               <button
                 type="button"
+                onClick={() => {
+                  onClose();
+                  openModal('Enterprise Priority Support', 'MOBILE_NAV_CONTACT');
+                }}
+                className="flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-[13px] font-syne font-bold uppercase tracking-normal text-slate-800 dark:text-slate-200 hover:border-primary/40 hover:text-primary transition-all"
+              >
+                <Headset size={15} className="text-primary" />
+                <span>Contact Enterprise Support</span>
+              </button>
+              <button
+                type="button"
                 onClick={handleLogout}
-                className="flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-rose-600 text-[13px] font-extrabold uppercase tracking-normal text-white shadow-md shadow-rose-600/15 transition-all duration-200 hover:bg-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500/25"
+                className="flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-rose-600 text-[13px] font-syne font-extrabold uppercase tracking-normal text-white shadow-md shadow-rose-600/15 transition-all duration-200 hover:bg-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500/25"
               >
                 <LogOut size={15} />
                 Log Out
@@ -206,22 +229,25 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
             </>
           ) : (
             <>
-              <Link
-                href="/sign-up"
-                onClick={onClose}
-                className="flex h-11 items-center justify-center rounded-xl bg-primary text-[13px] font-extrabold uppercase tracking-normal text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  openModal('Start Your 14-Day Free Trial', 'START_FREE_TRIAL');
+                }}
+                className="flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary text-[13px] font-syne font-extrabold uppercase tracking-normal text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
               >
-                Start Free Trial
+                <UserPlus size={15} />
+                <span>Start a Free Trial</span>
+              </button>
+              <Link
+                href={hasLoggedOut ? "/sign-in" : "/sign-up"}
+                onClick={onClose}
+                className="flex h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-[13px] font-syne font-bold uppercase tracking-normal text-slate-800 dark:text-slate-200 hover:border-primary/40 hover:text-primary transition-all"
+              >
+                {hasLoggedOut ? <LogIn size={15} className="text-primary" /> : <UserPlus size={15} className="text-primary" />}
+                <span>{hasLoggedOut ? "Sign In to Account" : "Sign Up"}</span>
               </Link>
-              <div className="grid grid-cols-2 gap-2">
-                <Link
-                  href="/sign-in"
-                  onClick={onClose}
-                  className="flex h-11 items-center justify-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-[12px] font-extrabold uppercase tracking-normal text-slate-800 dark:text-slate-200 shadow-xs transition-all duration-200 hover:bg-slate-50 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
-                >
-                  <LogIn size={14} /> Sign In
-                </Link>
-              </div>
             </>
           )}
         </motion.div>
