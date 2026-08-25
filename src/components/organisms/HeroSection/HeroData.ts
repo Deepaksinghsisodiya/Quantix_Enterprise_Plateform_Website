@@ -20,7 +20,7 @@ export const HERO_SLIDES: HeroSlide[] = [
       "Control thousands of locations, menus, and staff permissions from a single, unified enterprise dashboard built for scale.",
     primaryCta: { label: "Contact Sales", href: "/contact" },
     secondaryCta: { label: "Request Demo", href: "/contact/demo" },
-    backgroundImage: "/images/ent_cloud_hq.jpg",
+    backgroundImage: "/images/foodhub_pos_terminal.jpg",
     featureHighlights: ["Global Menu Management", "Role-Based Permissions", "Live Enterprise Sync"],
   },
   {

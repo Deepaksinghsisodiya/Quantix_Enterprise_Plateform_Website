@@ -18,7 +18,7 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     badgeColor: "bg-indigo-100/90 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300 border-indigo-200/80 dark:border-indigo-800/60",
     title: "Connect core ERP & legacy systems",
     description: "Our solutions engineering team helps you bridge existing ERPs, payment gateways, and CRM platforms into the central Hub.",
-    imageSrc: "/images/ss2-ai.png",
+    imageSrc: "/images/retail_hardware_peripherals.jpg",
     imageAlt: "Quantix Enterprise integration setup",
     bullets: [
       "Establish secure API connections to SAP, NetSuite, and Workday.",
@@ -46,7 +46,7 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     badgeColor: "bg-blue-100/90 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200/80 dark:border-blue-800/60",
     title: "Deploy POS & centralize operations",
     description: "Deploy modernized POS endpoints to physical stores while headquarters monitors live telemetry and controls operations.",
-    imageSrc: "/images/hero_inventory_analytics.jpg",
+    imageSrc: "/images/foodhub_pos_terminal.jpg",
     imageAlt: "Enterprise cloud network rollout",
     bullets: [
       "Push menu changes, pricing updates, and promotions instantly to all branches.",
