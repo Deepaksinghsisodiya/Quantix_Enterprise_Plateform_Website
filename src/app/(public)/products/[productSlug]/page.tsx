@@ -123,35 +123,41 @@ const motionTransition = {
 };
 
 const PRODUCT_CARD_IMAGES: Array<{ keywords: string[]; src: string; alt: string }> = [
-  { keywords: ["kitchen", "grill", "bar", "prep", "recipe"], src: "/images/prod_kitchen_display.png", alt: "Kitchen operations workflow" },
-  { keywords: ["table", "dine", "restaurant", "cafe", "floor"], src: "/images/hero-restaurant.jpg", alt: "Restaurant floor workflow" },
-  { keywords: ["delivery", "pickup", "takeaway", "order", "ordering", "curbside"], src: "/images/prod_online_ordering.png", alt: "Ordering and fulfillment workflow" },
-  { keywords: ["stock", "inventory", "supplier", "catalog", "barcode", "shelf", "product"], src: "/images/prod_inventory_sync.png", alt: "Inventory and catalog workflow" },
-  { keywords: ["mobile", "handheld", "app", "customer"], src: "/images/prod_mobile_app.png", alt: "Mobile POS workflow" },
-  { keywords: ["payment", "receipt", "cash", "bill", "refund", "discount", "loyalty", "gift"], src: "/images/nav_retail_register.png", alt: "POS checkout workflow" },
+  { keywords: ["kitchen", "grill", "bar", "prep", "kds"], src: "/images/rest_kds_kitchen.jpg", alt: "Kitchen operations KDS screen" },
+  { keywords: ["table", "dine", "floor", "counter"], src: "/images/rest_pos_floor_plan.jpg", alt: "Restaurant floor plan management" },
+  { keywords: ["delivery", "dispatch", "courier", "route"], src: "/images/rest_delivery_dispatch.jpg", alt: "Food delivery dispatch live tracking" },
+  { keywords: ["stock", "inventory", "recipe", "costing", "cost"], src: "/images/rest_recipe_costing.jpg", alt: "Recipe costing and inventory control" },
+  { keywords: ["qr", "mobile", "handheld", "phone"], src: "/images/rest_qr_table_ordering.jpg", alt: "Mobile QR code ordering interface" },
+  { keywords: ["online", "web", "storefront", "pickup"], src: "/images/rest_online_ordering.jpg", alt: "Online web ordering portal" },
+  { keywords: ["menu", "modifier", "topping", "variant", "scheduled"], src: "/images/rest_menu_modifiers.jpg", alt: "Menu and modifier builder interface" },
+  { keywords: ["staff", "shift", "permission", "drawer", "roster"], src: "/images/rest_staff_shifts.jpg", alt: "Staff roster and shift scheduling dashboard" },
+  { keywords: ["reservation", "waitlist", "booking", "guest queue"], src: "/images/rest_reservations_waitlist.jpg", alt: "Table reservations and waitlist host stand" },
+  { keywords: ["loyalty", "crm", "rewards", "vip"], src: "/images/rest_loyalty_crm.jpg", alt: "Customer loyalty and dining CRM" },
+  { keywords: ["analytics", "telemetry", "reports", "margin", "p&l"], src: "/images/rest_analytics_inventory.jpg", alt: "Restaurant revenue analytics and telemetry" },
+  { keywords: ["payment", "receipt", "cash", "bill", "split", "tip", "terminal", "card"], src: "/images/rest_checkout_payments.jpg", alt: "POS checkout and split check terminal" },
 ];
 
 const getProductCardImage = (title: string) => {
   const normalizedTitle = title.toLowerCase();
   return PRODUCT_CARD_IMAGES.find(({ keywords }) => keywords.some((keyword) => normalizedTitle.includes(keyword))) ?? {
-    src: "/images/demo-thumb-ai.png",
-    alt: "Quantix platform workflow",
+    src: "/images/rest_pos_floor_plan.jpg",
+    alt: "Quantix restaurant platform workflow",
   };
 };
 
 const WORKFLOW_IMAGE_MAP: Record<string, { src: string; alt: string; badge: string }> = {
-  "Table management": { src: "/images/ss2.jpg", alt: "Restaurant table management POS screen", badge: "Floor workflow" },
-  "Kitchen display system": { src: "/images/hero-restaurant.jpg", alt: "Kitchen display system workflow", badge: "Kitchen routing" },
-  "Direct online ordering": { src: "/images/prod_online_ordering.png", alt: "Online ordering workflow", badge: "Web ordering" },
-  "QR code ordering": { src: "/images/prod_mobile_app.png", alt: "Mobile QR ordering workflow", badge: "QR ordering" },
-  "Delivery dispatch": { src: "/images/hero-local.png", alt: "Delivery dispatch workflow", badge: "Delivery flow" },
-  "Loyalty workflows": { src: "/images/demo-thumb-ai.png", alt: "Customer loyalty workflow", badge: "Customer growth" },
-  "Menu & modifier management": { src: "/images/hero-cafe.jpg", alt: "Restaurant menu modifier management workflow", badge: "Menu controls" },
-  "Payments & split bills": { src: "/images/demo-thumb.jpg", alt: "Restaurant split bill and payment workflow", badge: "Bill splitting" },
-  "Staff & shift controls": { src: "/images/ss3-ai.png", alt: "Restaurant staff shift controls dashboard", badge: "Staff controls" },
-  "Inventory & recipe costing": { src: "/images/prod_inventory_sync.png", alt: "Restaurant inventory and recipe costing workflow", badge: "Recipe costing" },
-  "Reservations & waitlist": { src: "/images/prod_enterprise_hub.png", alt: "Restaurant reservations and waitlist workflow", badge: "Guest flow" },
-  "Restaurant analytics": { src: "/images/ss1.jpg", alt: "Restaurant analytics dashboard workflow", badge: "Analytics" },
+  "Table management": { src: "/images/rest_pos_floor_plan.jpg", alt: "Restaurant live table management POS interface", badge: "Floor workflow" },
+  "Kitchen display system": { src: "/images/rest_kds_kitchen.jpg", alt: "Restaurant kitchen display system KDS workflow", badge: "Kitchen routing" },
+  "Direct online ordering": { src: "/images/rest_online_ordering.jpg", alt: "Online ordering web storefront workflow", badge: "Web ordering" },
+  "QR code ordering": { src: "/images/rest_qr_table_ordering.jpg", alt: "Mobile QR code self-ordering workflow", badge: "QR ordering" },
+  "Delivery dispatch": { src: "/images/rest_delivery_dispatch.jpg", alt: "Delivery dispatch and courier route workflow", badge: "Delivery dispatch" },
+  "Loyalty workflows": { src: "/images/rest_loyalty_crm.jpg", alt: "Customer dining CRM and loyalty workflow", badge: "Customer loyalty" },
+  "Menu & modifier management": { src: "/images/rest_menu_modifiers.jpg", alt: "Restaurant menu builder and modifier workflow", badge: "Menu controls" },
+  "Payments & split bills": { src: "/images/rest_checkout_payments.jpg", alt: "Restaurant split bill and contactless payment workflow", badge: "Bill splitting" },
+  "Staff & shift controls": { src: "/images/rest_staff_shifts.jpg", alt: "Restaurant staff roster and shift scheduling dashboard", badge: "Staff controls" },
+  "Inventory & recipe costing": { src: "/images/rest_recipe_costing.jpg", alt: "Restaurant recipe ingredient costing and inventory workflow", badge: "Recipe costing" },
+  "Reservations & waitlist": { src: "/images/rest_reservations_waitlist.jpg", alt: "Restaurant host stand reservations and waitlist workflow", badge: "Guest flow" },
+  "Restaurant analytics": { src: "/images/rest_analytics_inventory.jpg", alt: "Restaurant revenue analytics and telemetry dashboard", badge: "Live telemetry" },
   "Offline register": { src: "/images/nav_retail_register.png", alt: "Offline retail register workflow", badge: "Offline till" },
   "Smart inventory": { src: "/images/prod_inventory_sync.png", alt: "Smart inventory sync workflow", badge: "Inventory sync" },
   "Barcode lookup": { src: "/images/ss2-ai.png", alt: "Barcode lookup retail POS workflow", badge: "Fast barcode" },
@@ -161,8 +167,8 @@ const WORKFLOW_IMAGE_MAP: Record<string, { src: string; alt: string; badge: stri
   "Multi-location dashboards": { src: "/images/prod_enterprise_hub.png", alt: "Multi-location dashboard workflow", badge: "Branch dashboards" },
   "Central menu control": { src: "/images/ss2-ai.png", alt: "Central menu control dashboard", badge: "Central controls" },
   "Cloud reporting": { src: "/images/demo-thumb-ai.png", alt: "Cloud reporting workflow", badge: "Live reporting" },
-  "Branded storefront": { src: "/images/prod_online_ordering.png", alt: "Branded online storefront workflow", badge: "Storefront" },
-  "Pickup and delivery": { src: "/images/demo-thumb-ai.png", alt: "Pickup and delivery ordering workflow", badge: "Order channels" },
+  "Branded storefront": { src: "/images/rest_online_ordering.jpg", alt: "Branded online storefront workflow", badge: "Storefront" },
+  "Pickup and delivery": { src: "/images/rest_delivery_dispatch.jpg", alt: "Pickup and delivery ordering workflow", badge: "Order channels" },
   "Server handhelds": { src: "/images/prod_mobile_app.png", alt: "Server handheld POS workflow", badge: "Handheld POS" },
   "Custom workflow design": { src: "/images/ss2-ai.png", alt: "Custom POS workflow design dashboard", badge: "Workflow design" },
   "API bridge development": { src: "/images/ss1.jpg", alt: "Custom API bridge and middleware workflow", badge: "API bridge" },
@@ -298,6 +304,16 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
       { title: "Online ordering", desc: "Branded web orders routed into POS and KDS.", icon: Globe2 },
       { title: "Scheduled orders", desc: "Advance orders for pickup windows, parties, and planned service.", icon: Smartphone },
     ],
+    orderModesContent: {
+      badge: "Kitchen Routing & Service",
+      title: "Real-time Multi-Station KDS & Kitchen Dispatch",
+      description:
+        "Orders from tables, QR codes, takeaway registers, and online apps route directly to station screens with prep timers, modifier badges, and one-tap bump bars.",
+      imageSrc: "/images/rest_kds_kitchen.jpg",
+      imageAlt: "Restaurant Kitchen Display System KDS monitor interface",
+      topBadge: "Multi-station KDS",
+      bottomBadge: "Sub-second order firing",
+    },
     billingCheckout: [
       { title: "Guest receipt printing", desc: "Print table receipts, reprint guest bills, and counter invoices from checkout.", icon: ReceiptText },
       { title: "Kitchen ticket printing", desc: "Route prep tickets to kitchen, bar, grill, and expo printers.", icon: Printer },
@@ -306,6 +322,16 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
       { title: "Tax, tips & service charge", desc: "Apply tax, tips, service charges, discounts, voids, and bill adjustments.", icon: Calculator },
       { title: "Shift close reports", desc: "Close the day with totals for cash, refunds, voids, and staff activity.", icon: Clock },
     ],
+    billingCheckoutContent: {
+      badge: "Split Billing & Payments",
+      title: "Split Checks & Instant Tap-to-Pay Checkout",
+      description:
+        "Print guest receipts, split bills by seat or amount, apply custom tip percentages (15%, 18%, 20%), and accept contactless Apple Pay, Google Pay & card terminals.",
+      imageSrc: "/images/rest_checkout_payments.jpg",
+      imageAlt: "Restaurant POS split check and payment terminal",
+      topBadge: "Contactless NFC + EMV",
+      bottomBadge: "Clean bill splitting",
+    },
     advancedControls: [
       { title: "Offline billing mode", desc: "Keep dine-in tables, counter orders, receipts, and closing flow moving during short outages.", icon: Cloud },
       { title: "Customer display screen", desc: "Show table items, tips, service charge, tax, discounts, totals, and payment status.", icon: Monitor },
@@ -316,6 +342,16 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
       { title: "Tip pooling & distribution", desc: "Track service-charge splits, tip pooling, and staff payout summaries.", icon: Banknote },
       { title: "Restaurant accounting export", desc: "Export restaurant sales, service charges, tips, tax, payouts, discounts, refunds, and close-day totals.", icon: ReceiptText },
     ],
+    advancedControlsContent: {
+      badge: "Telemetry & Inventory Control",
+      title: "Recipe Costing, Low-Stock Alerts & Peak Turnover Telemetry",
+      description:
+        "Monitor peak-hour table turnover, ingredient deduction alerts, staff shift summaries, and gross profit margins from one unified console.",
+      imageSrc: "/images/rest_analytics_inventory.jpg",
+      imageAlt: "Restaurant recipe costing and live analytics telemetry",
+      topBadge: "Real-time Telemetry",
+      bottomBadge: "Live recipe costing",
+    },
     workflows: [
       { title: "Table management", desc: "Interactive floor layouts, table status, course pacing, and split checks." },
       { title: "Kitchen display system", desc: "Station-based prep tickets for grill, bar, assembly, and expo screens." },
@@ -328,10 +364,10 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
       { title: "Reservations & waitlist", desc: "Coordinate bookings, walk-ins, queue status, seating, and table handoff." },
       { title: "Restaurant analytics", desc: "Track table turns, item sales, staff performance, voids, discounts, and peak hours." },
     ],
-    imageSrc: "/images/prod_kitchen_display.png",
-    imageAlt: "Restaurant POS and kitchen display system",
-    topBadge: "Kitchen-ready workflow",
-    bottomBadge: "Built for dining operations",
+    imageSrc: "/images/rest_pos_floor_plan.jpg",
+    imageAlt: "Restaurant POS interactive floor plan and table management system",
+    topBadge: "Live Floor & Table Management",
+    bottomBadge: "Built for High-Volume Dining",
     ctaLabel: "Start Restaurant POS Trial",
     ctaHref: "/sign-up",
     icon: ChefHat,
@@ -527,40 +563,40 @@ const WorkflowRow: React.FC<{
   ];
 
   return (
-    <div className="border-t border-slate-200/80 py-5 dark:border-slate-800/80 sm:py-6 lg:py-8">
-      <div className="grid grid-cols-1 items-center gap-4 sm:gap-5 lg:grid-cols-12 lg:gap-9 xl:gap-12">
+    <div className="border-t border-slate-200/80 py-10 dark:border-slate-800/80 sm:py-14">
+      <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-12">
         <motion.div
           variants={fadeSide(isRight ? -18 : 18)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           transition={{ ...motionTransition, delay: 0.04 }}
-          className={`space-y-2.5 sm:space-y-3 lg:col-span-6 ${!isRight ? "lg:order-2" : "lg:order-1"}`}
+          className={`space-y-3.5 lg:col-span-7 ${!isRight ? "lg:order-2" : "lg:order-1"}`}
         >
           <div>
-            <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1.5 text-[9px] font-black uppercase tracking-normal text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light sm:mb-2.5 sm:gap-2 sm:px-3 sm:text-[11px] sm:tracking-wider">
-              <Icon className="h-3 w-3 stroke-[2.4] sm:h-3.5 sm:w-3.5" />
+            <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
+              <Icon className="h-3 w-3 stroke-[2.4]" />
               Workflow {String(index + 1).padStart(2, "0")}
             </div>
-            <h3 className="max-w-2xl font-syne text-[1.35rem] font-black leading-[1.08] tracking-normal text-slate-950 dark:text-white min-[380px]:text-[1.5rem] sm:text-3xl sm:tracking-tight lg:text-[2.35rem]">
+            <h3 className="font-syne text-2xl sm:text-3xl lg:text-[2rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-tight">
               {workflow.title}
             </h3>
           </div>
 
-          <p className="max-w-xl text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
+          <p className="max-w-xl text-xs sm:text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-400">
             {workflow.desc}
           </p>
 
-          <div className="grid max-w-xl gap-2">
+          <div className="grid grid-cols-1 gap-2 pt-1 max-w-xl">
             {details.map((detail) => (
               <div
                 key={detail}
-                className="flex items-start gap-2 rounded-lg border border-slate-200/80 bg-white px-2.5 py-2 shadow-xs dark:border-slate-800 dark:bg-slate-900/70 sm:gap-3 sm:rounded-xl sm:px-3 sm:py-2.5"
+                className="flex items-start gap-3 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-darkSurface/60 px-3.5 py-2.5 shadow-2xs hover:border-primary/30 dark:hover:border-primary/30 transition-all duration-200"
               >
-                <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary-light sm:h-5 sm:w-5">
-                  <Check className="h-3 w-3 stroke-3 sm:h-3.5 sm:w-3.5" />
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light">
+                  <Check className="h-3 w-3 stroke-3" />
                 </span>
-                <span className="text-[11.5px] font-medium leading-relaxed text-slate-600 dark:text-slate-300 min-[380px]:text-xs sm:text-sm">
+                <span className="text-xs sm:text-[13px] font-medium leading-relaxed text-slate-700 dark:text-slate-300">
                   {detail}
                 </span>
               </div>
@@ -574,26 +610,26 @@ const WorkflowRow: React.FC<{
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           transition={{ ...motionTransition, delay: 0.1 }}
-          className={`lg:col-span-6 ${!isRight ? "lg:order-1" : "lg:order-2"}`}
+          className={`lg:col-span-5 ${!isRight ? "lg:order-1" : "lg:order-2"}`}
         >
-          <div className="group/image relative overflow-hidden rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:rounded-2xl sm:p-2 sm:shadow-xl">
-            <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-16/11 sm:rounded-xl sm:aspect-16/10">
+          <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white/70 p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/50 dark:shadow-none sm:p-2.5">
+            <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
               <Image
                 src={visual.src}
                 alt={visual.alt}
                 fill
-                sizes="(max-width: 1024px) 92vw, 44vw"
-                className="object-cover transition-transform duration-700 group-hover/image:scale-[1.03]"
+                sizes="(max-width: 1024px) 92vw, 40vw"
+                className="object-cover transition-transform duration-700 group-hover/image:scale-[1.02]"
               />
             </div>
 
-            <div className="absolute right-2 top-2 z-20 inline-flex max-w-[74%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8px] font-extrabold uppercase tracking-normal text-slate-800 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 sm:right-4 sm:top-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-wider">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+            <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
               {visual.badge}
             </div>
 
-            <div className="absolute bottom-2 left-2 z-20 inline-flex max-w-[78%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8.5px] font-extrabold leading-none text-slate-700 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200 sm:bottom-4 sm:left-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[11px]">
-              <ShieldCheck className="h-3 w-3 shrink-0 text-primary sm:h-3.5 sm:w-3.5" />
+            <div className="absolute bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
+              <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
               Built into Quantix workflow
             </div>
           </div>
@@ -646,35 +682,33 @@ const OrderModesSection: React.FC<{
   const BadgeIcon = content.icon ?? Sparkles;
 
   return (
-    <section className="border-b border-slate-200/80 bg-slate-50/70 py-5 dark:border-slate-800/80 dark:bg-slate-900/45 sm:py-7">
+    <section className="border-b border-slate-200/80 bg-slate-50/50 py-10 sm:py-14 dark:border-slate-800/80 dark:bg-slate-900/30">
       <div className="site-container">
-        <div className="grid grid-cols-1 items-center gap-5 lg:grid-cols-12 lg:gap-10 xl:gap-12">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-12">
           <motion.div
             variants={fadeSide(-18)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             transition={motionTransition}
-            className="space-y-3 lg:col-span-6"
+            className="space-y-4 lg:col-span-7"
           >
             <div>
-              <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1.5 text-[9px] font-black uppercase tracking-normal text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light sm:text-[10px] sm:tracking-wider">
+              <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
                 <BadgeIcon className="h-3 w-3 stroke-[2.4]" />
                 {content.badge}
               </span>
-              <h2 className="max-w-2xl font-syne text-[1.45rem] font-black leading-[1.08] tracking-normal text-slate-950 dark:text-white min-[380px]:text-[1.65rem] sm:text-3xl sm:tracking-tight lg:text-[2.35rem]">
+              <h2 className="font-syne text-2xl sm:text-3xl lg:text-[2rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-tight">
                 {content.title}
               </h2>
+              <p className="mt-2 text-xs sm:text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-400 max-w-2xl">
+                {content.description}
+              </p>
             </div>
 
-            <p className="max-w-xl text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
-              {content.description}
-            </p>
-
-            <div className="grid max-w-xl grid-cols-1 gap-2 min-[430px]:grid-cols-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
               {orderModes.map((mode, index) => {
                 const ModeIcon = mode.icon;
-                const modeImage = getProductCardImage(mode.title);
 
                 return (
                   <motion.div
@@ -683,23 +717,20 @@ const OrderModesSection: React.FC<{
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-60px" }}
-                    transition={{ ...motionTransition, delay: index * 0.04 }}
-                    className="group/mode flex items-start gap-2.5 rounded-xl border border-slate-200/90 bg-white p-2.5 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md hover:shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none"
+                    transition={{ ...motionTransition, delay: index * 0.025 }}
+                    className="group/mode flex flex-col justify-between gap-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-darkSurface/60 p-2.5 shadow-2xs hover:border-primary/40 dark:hover:border-primary/40 hover:bg-slate-50/80 dark:hover:bg-darkSurface hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
                   >
-                    <span className="relative h-11 w-11 shrink-0 overflow-visible rounded-lg">
-                      <Image src={modeImage.src} alt={modeImage.alt} fill sizes="44px" className="rounded-lg object-cover" />
-                      <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-md border border-white bg-primary text-white shadow-sm dark:border-slate-900">
-                        <ModeIcon className="h-3 w-3 stroke-[2.4]" />
-                      </span>
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block font-syne text-[12px] font-black leading-tight text-slate-950 dark:text-white sm:text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light border border-primary/20 group-hover/mode:bg-primary group-hover/mode:text-white transition-all duration-200 shadow-2xs">
+                        <ModeIcon className="h-3.5 w-3.5 stroke-[2.2]" />
+                      </div>
+                      <span className="font-syne font-bold text-[11.5px] text-slate-900 dark:text-white group-hover/mode:text-primary transition-colors truncate">
                         {mode.title}
                       </span>
-                      <span className="mt-1 block text-[10.5px] font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-xs">
-                        {mode.desc}
-                      </span>
-                    </span>
+                    </div>
+                    <p className="text-[10px] font-medium leading-snug text-slate-500 dark:text-slate-400 line-clamp-2">
+                      {mode.desc}
+                    </p>
                   </motion.div>
                 );
               })}
@@ -712,26 +743,26 @@ const OrderModesSection: React.FC<{
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             transition={{ ...motionTransition, delay: 0.1 }}
-            className="lg:col-span-6"
+            className="lg:col-span-5"
           >
-            <div className="group/image relative overflow-hidden rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:rounded-2xl sm:p-2 sm:shadow-xl">
-              <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-16/11 sm:rounded-xl sm:aspect-16/10">
+            <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white/70 p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/50 dark:shadow-none sm:p-2.5">
+              <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
                 <Image
                   src={content.imageSrc}
                   alt={content.imageAlt}
                   fill
-                  sizes="(max-width: 1024px) 92vw, 44vw"
-                  className="object-cover transition-transform duration-700 group-hover/image:scale-[1.03]"
+                  sizes="(max-width: 1024px) 92vw, 40vw"
+                  className="object-cover transition-transform duration-700 group-hover/image:scale-[1.02]"
                 />
               </div>
 
-              <div className="absolute right-2 top-2 z-20 inline-flex max-w-[74%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8px] font-extrabold uppercase tracking-normal text-slate-800 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 sm:right-4 sm:top-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-wider">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
                 {content.topBadge}
               </div>
 
-              <div className="absolute bottom-2 left-2 z-20 inline-flex max-w-[78%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8.5px] font-extrabold leading-none text-slate-700 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200 sm:bottom-4 sm:left-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[11px]">
-                <ShieldCheck className="h-3 w-3 shrink-0 text-primary sm:h-3.5 sm:w-3.5" />
+              <div className="absolute bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
+                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
                 {content.bottomBadge}
               </div>
             </div>
@@ -749,65 +780,58 @@ const BillingCheckoutSection: React.FC<{
   const BadgeIcon = content.icon ?? ReceiptText;
 
   return (
-    <section className="border-b border-slate-200/80 bg-white py-5 dark:border-slate-800/80 dark:bg-slate-950 sm:py-7">
+    <section className="border-b border-slate-200/80 bg-white py-10 sm:py-14 dark:border-slate-800/80 dark:bg-darkBg">
       <div className="site-container">
-        <div className="grid grid-cols-1 items-center gap-5 lg:grid-cols-12 lg:gap-10 xl:gap-12">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-12">
           <motion.div
             variants={fadeSide(-18)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             transition={motionTransition}
-            className="lg:col-span-6 lg:order-2"
+            className="space-y-4 lg:col-span-7 lg:order-2"
           >
-            <div className="space-y-3">
-              <div>
-                <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1.5 text-[9px] font-black uppercase tracking-normal text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light sm:text-[10px] sm:tracking-wider">
-                  <BadgeIcon className="h-3 w-3 stroke-[2.4]" />
-                  {content.badge}
-                </span>
-                <h2 className="max-w-2xl font-syne text-[1.45rem] font-black leading-[1.08] tracking-normal text-slate-950 dark:text-white min-[380px]:text-[1.65rem] sm:text-3xl sm:tracking-tight lg:text-[2.35rem]">
-                  {content.title}
-                </h2>
-              </div>
-
-              <p className="max-w-xl text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
+            <div>
+              <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
+                <BadgeIcon className="h-3 w-3 stroke-[2.4]" />
+                {content.badge}
+              </span>
+              <h2 className="font-syne text-2xl sm:text-3xl lg:text-[2rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-tight">
+                {content.title}
+              </h2>
+              <p className="mt-2 text-xs sm:text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-400 max-w-2xl">
                 {content.description}
               </p>
+            </div>
 
-              <div className="grid max-w-xl grid-cols-1 gap-2 min-[430px]:grid-cols-2">
-                {items.map((item, index) => {
-                  const ItemIcon = item.icon;
-                  const itemImage = getProductCardImage(item.title);
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+              {items.map((item, index) => {
+                const ItemIcon = item.icon;
 
-                  return (
-                    <motion.div
-                      key={item.title}
-                      variants={fadeUp}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true, margin: "-60px" }}
-                      transition={{ ...motionTransition, delay: index * 0.04 }}
-                      className="group/billing flex items-start gap-2.5 rounded-xl border border-slate-200/90 bg-white p-2.5 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md hover:shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none"
-                    >
-                      <span className="relative h-11 w-11 shrink-0 overflow-visible rounded-lg">
-                        <Image src={itemImage.src} alt={itemImage.alt} fill sizes="44px" className="rounded-lg object-cover" />
-                        <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-md border border-white bg-primary text-white shadow-sm dark:border-slate-900">
-                          <ItemIcon className="h-3 w-3 stroke-[2.4]" />
-                        </span>
+                return (
+                  <motion.div
+                    key={item.title}
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ ...motionTransition, delay: index * 0.025 }}
+                    className="group/billing flex flex-col justify-between gap-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/70 dark:bg-darkSurface/60 p-2.5 shadow-2xs hover:border-primary/40 dark:hover:border-primary/40 hover:bg-slate-100/80 dark:hover:bg-darkSurface hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light border border-primary/20 group-hover/billing:bg-primary group-hover/billing:text-white transition-all duration-200 shadow-2xs">
+                        <ItemIcon className="h-3.5 w-3.5 stroke-[2.2]" />
+                      </div>
+                      <span className="font-syne font-bold text-[11.5px] text-slate-900 dark:text-white group-hover/billing:text-primary transition-colors truncate">
+                        {item.title}
                       </span>
-                      <span className="min-w-0">
-                        <span className="block font-syne text-[12px] font-black leading-tight text-slate-950 dark:text-white sm:text-sm">
-                          {item.title}
-                        </span>
-                        <span className="mt-1 block text-[10.5px] font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-xs">
-                          {item.desc}
-                        </span>
-                      </span>
-                    </motion.div>
-                  );
-                })}
-              </div>
+                    </div>
+                    <p className="text-[10px] font-medium leading-snug text-slate-500 dark:text-slate-400 line-clamp-2">
+                      {item.desc}
+                    </p>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
 
@@ -817,26 +841,26 @@ const BillingCheckoutSection: React.FC<{
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             transition={{ ...motionTransition, delay: 0.1 }}
-            className="lg:col-span-6 lg:order-1"
+            className="lg:col-span-5 lg:order-1"
           >
-            <div className="group/image relative overflow-hidden rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:rounded-2xl sm:p-2 sm:shadow-xl">
-              <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-16/11 sm:rounded-xl sm:aspect-16/10">
+            <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-slate-50/80 p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/50 dark:shadow-none sm:p-2.5">
+              <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
                 <Image
                   src={content.imageSrc}
                   alt={content.imageAlt}
                   fill
-                  sizes="(max-width: 1024px) 92vw, 44vw"
-                  className="object-cover transition-transform duration-700 group-hover/image:scale-[1.03]"
+                  sizes="(max-width: 1024px) 92vw, 40vw"
+                  className="object-cover transition-transform duration-700 group-hover/image:scale-[1.02]"
                 />
               </div>
 
-              <div className="absolute right-2 top-2 z-20 inline-flex max-w-[74%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8px] font-extrabold uppercase tracking-normal text-slate-800 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 sm:right-4 sm:top-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-wider">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
                 {content.topBadge}
               </div>
 
-              <div className="absolute bottom-2 left-2 z-20 inline-flex max-w-[78%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8.5px] font-extrabold leading-none text-slate-700 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200 sm:bottom-4 sm:left-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[11px]">
-                <ShieldCheck className="h-3 w-3 shrink-0 text-primary sm:h-3.5 sm:w-3.5" />
+              <div className="absolute bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
+                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
                 {content.bottomBadge}
               </div>
             </div>
@@ -854,35 +878,33 @@ const AdvancedControlsSection: React.FC<{
   const BadgeIcon = content.icon ?? Sparkles;
 
   return (
-    <section className="border-b border-slate-200/80 bg-slate-50/70 py-5 dark:border-slate-800/80 dark:bg-slate-900/45 sm:py-7">
+    <section className="border-b border-slate-200/80 bg-slate-50/50 py-10 sm:py-14 dark:border-slate-800/80 dark:bg-slate-900/30">
       <div className="site-container">
-        <div className="grid grid-cols-1 items-center gap-5 lg:grid-cols-12 lg:gap-10 xl:gap-12">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-12">
           <motion.div
             variants={fadeSide(-18)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             transition={motionTransition}
-            className="space-y-3 lg:col-span-6"
+            className="space-y-4 lg:col-span-7"
           >
             <div>
-              <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1.5 text-[9px] font-black uppercase tracking-normal text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light sm:text-[10px] sm:tracking-wider">
+              <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
                 <BadgeIcon className="h-3 w-3 stroke-[2.4]" />
                 {content.badge}
               </span>
-              <h2 className="max-w-2xl font-syne text-[1.45rem] font-black leading-[1.08] tracking-normal text-slate-950 dark:text-white min-[380px]:text-[1.65rem] sm:text-3xl sm:tracking-tight lg:text-[2.35rem]">
+              <h2 className="font-syne text-2xl sm:text-3xl lg:text-[2rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-tight">
                 {content.title}
               </h2>
+              <p className="mt-2 text-xs sm:text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-400 max-w-2xl">
+                {content.description}
+              </p>
             </div>
 
-            <p className="max-w-xl text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
-              {content.description}
-            </p>
-
-            <div className="grid max-w-xl grid-cols-1 gap-2 min-[430px]:grid-cols-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
               {items.map((item, index) => {
                 const ItemIcon = item.icon;
-                const itemImage = getProductCardImage(item.title);
 
                 return (
                   <motion.div
@@ -891,23 +913,20 @@ const AdvancedControlsSection: React.FC<{
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-60px" }}
-                    transition={{ ...motionTransition, delay: index * 0.035 }}
-                    className="group/control flex items-start gap-2.5 rounded-xl border border-slate-200/90 bg-white p-2.5 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md hover:shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none"
+                    transition={{ ...motionTransition, delay: index * 0.025 }}
+                    className="group/control flex flex-col justify-between gap-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-darkSurface/60 p-2.5 shadow-2xs hover:border-primary/40 dark:hover:border-primary/40 hover:bg-slate-50/80 dark:hover:bg-darkSurface hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
                   >
-                    <span className="relative h-11 w-11 shrink-0 overflow-visible rounded-lg">
-                      <Image src={itemImage.src} alt={itemImage.alt} fill sizes="44px" className="rounded-lg object-cover" />
-                      <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-md border border-white bg-primary text-white shadow-sm dark:border-slate-900">
-                        <ItemIcon className="h-3 w-3 stroke-[2.4]" />
-                      </span>
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block font-syne text-[12px] font-black leading-tight text-slate-950 dark:text-white sm:text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light border border-primary/20 group-hover/control:bg-primary group-hover/control:text-white transition-all duration-200 shadow-2xs">
+                        <ItemIcon className="h-3.5 w-3.5 stroke-[2.2]" />
+                      </div>
+                      <span className="font-syne font-bold text-[11.5px] text-slate-900 dark:text-white group-hover/control:text-primary transition-colors truncate">
                         {item.title}
                       </span>
-                      <span className="mt-1 block text-[10.5px] font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-xs">
-                        {item.desc}
-                      </span>
-                    </span>
+                    </div>
+                    <p className="text-[10px] font-medium leading-snug text-slate-500 dark:text-slate-400 line-clamp-2">
+                      {item.desc}
+                    </p>
                   </motion.div>
                 );
               })}
@@ -920,26 +939,26 @@ const AdvancedControlsSection: React.FC<{
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             transition={{ ...motionTransition, delay: 0.1 }}
-            className="lg:col-span-6"
+            className="lg:col-span-5"
           >
-            <div className="group/image relative overflow-hidden rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:rounded-2xl sm:p-2 sm:shadow-xl">
-              <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-16/11 sm:rounded-xl sm:aspect-16/10">
+            <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white/70 p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/50 dark:shadow-none sm:p-2.5">
+              <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
                 <Image
                   src={content.imageSrc}
                   alt={content.imageAlt}
                   fill
-                  sizes="(max-width: 1024px) 92vw, 44vw"
-                  className="object-cover transition-transform duration-700 group-hover/image:scale-[1.03]"
+                  sizes="(max-width: 1024px) 92vw, 40vw"
+                  className="object-cover transition-transform duration-700 group-hover/image:scale-[1.02]"
                 />
               </div>
 
-              <div className="absolute right-2 top-2 z-20 inline-flex max-w-[74%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8px] font-extrabold uppercase tracking-normal text-slate-800 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 sm:right-4 sm:top-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-wider">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
                 {content.topBadge}
               </div>
 
-              <div className="absolute bottom-2 left-2 z-20 inline-flex max-w-[78%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8.5px] font-extrabold leading-none text-slate-700 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200 sm:bottom-4 sm:left-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[11px]">
-                <ShieldCheck className="h-3 w-3 shrink-0 text-primary sm:h-3.5 sm:w-3.5" />
+              <div className="absolute bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
+                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
                 {content.bottomBadge}
               </div>
             </div>
@@ -990,50 +1009,50 @@ export default function ProductSolutionPage() {
                 initial="hidden"
                 animate="visible"
                 transition={{ ...motionTransition, delay: 0.08 }}
-                className="space-y-3.5 lg:col-span-6"
+                className="space-y-3.5 lg:col-span-7"
               >
                 <div>
-                  <div className="mb-2 inline-flex max-w-full items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1.5 text-[8.5px] font-black uppercase leading-none tracking-normal text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light min-[380px]:text-[9px] sm:mb-2.5 sm:gap-2 sm:px-3 sm:text-[11px] sm:tracking-wider">
+                  <div className="mb-2 inline-flex max-w-full items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 text-[9px] font-black uppercase leading-none tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light sm:mb-2.5 sm:gap-2 sm:px-3 sm:text-[10px]">
                     <Icon className="h-3 w-3 shrink-0 stroke-[2.4] sm:h-3.5 sm:w-3.5" />
                     {solution.eyebrow}
                   </div>
-                  <h1 className="max-w-2xl font-syne text-[1.72rem] font-black leading-[1.05] tracking-normal text-slate-950 dark:text-white min-[380px]:text-[1.95rem] sm:text-5xl sm:tracking-tight lg:text-[3.2rem]">
+                  <h1 className="font-syne text-2xl sm:text-4xl lg:text-[2.6rem] font-extrabold leading-[1.08] tracking-tight text-slate-950 dark:text-white">
                     {solution.title}
                   </h1>
                 </div>
 
-                <p className="max-w-xl text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 min-[380px]:text-[13px] sm:text-base">
+                <p className="max-w-xl text-xs sm:text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-400">
                   {solution.description}
                 </p>
 
-                <div className="grid gap-2 pt-0.5">
+                <div className="grid grid-cols-1 gap-2 pt-1 max-w-xl">
                   {solution.points.map((point) => (
                     <div
                       key={point.title}
-                      className="flex items-start gap-2 rounded-lg border border-slate-200/80 bg-white px-2.5 py-2 shadow-xs dark:border-slate-800 dark:bg-slate-900/70 sm:gap-3 sm:rounded-xl sm:px-3 sm:py-2.5"
+                      className="flex items-start gap-3 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-darkSurface/60 px-3.5 py-2.5 shadow-2xs hover:border-primary/30 dark:hover:border-primary/30 transition-all duration-200"
                     >
-                      <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary-light sm:h-5 sm:w-5">
-                        <Check className="h-3 w-3 stroke-3 sm:h-3.5 sm:w-3.5" />
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light">
+                        <Check className="h-3.5 w-3.5 stroke-3" />
                       </span>
-                      <span className="text-[11.5px] leading-relaxed min-[380px]:text-xs sm:text-sm">
-                        <strong className="font-extrabold text-slate-950 dark:text-white">{point.title}:</strong>{" "}
-                        <span className="font-medium text-slate-600 dark:text-slate-300">{point.desc}</span>
+                      <span className="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                        <strong className="font-extrabold text-slate-950 dark:text-white font-syne">{point.title}:</strong>{" "}
+                        <span>{point.desc}</span>
                       </span>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex flex-row gap-2 pt-0.5 sm:gap-3 sm:pt-1">
+                <div className="flex flex-row gap-3 pt-2">
                   <Link
                     href={solution.ctaHref}
-                    className="inline-flex h-10 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary px-2.5 font-syne text-[8.5px] font-extrabold uppercase tracking-normal text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-dark active:scale-95 min-[380px]:text-[9.5px] sm:h-12 sm:flex-none sm:gap-2.5 sm:rounded-full sm:px-6 sm:text-xs sm:tracking-wider"
+                    className="inline-flex h-10 sm:h-11 items-center justify-center gap-2 rounded-xl sm:rounded-full bg-primary px-5 sm:px-6 font-syne text-xs sm:text-[13px] font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/25 transition-all duration-300 hover:bg-primary-light hover:scale-105 active:scale-95"
                   >
-                    <span className="truncate">{solution.ctaLabel}</span>
-                    <ArrowRight className="h-3.5 w-3.5 stroke-[2.5] sm:h-4 sm:w-4" />
+                    <span>{solution.ctaLabel}</span>
+                    <ArrowRight className="h-3.5 w-3.5 stroke-[2.5]" />
                   </Link>
                   <Link
                     href="/contact/sales"
-                    className="inline-flex h-10 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl border border-slate-300 bg-white px-2.5 font-syne text-[8.5px] font-extrabold uppercase tracking-normal text-slate-800 transition-all duration-200 hover:border-primary/35 hover:text-primary active:scale-95 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 min-[380px]:text-[9.5px] sm:h-12 sm:flex-none sm:gap-2.5 sm:rounded-full sm:px-6 sm:text-xs sm:tracking-wider"
+                    className="inline-flex h-10 sm:h-11 items-center justify-center gap-2 rounded-xl sm:rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-darkSurface px-5 sm:px-6 font-syne text-xs sm:text-[13px] font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 transition-all duration-300 hover:border-primary/40 hover:text-primary hover:scale-105 active:scale-95 shadow-2xs"
                   >
                     Contact sales
                   </Link>
@@ -1045,27 +1064,27 @@ export default function ProductSolutionPage() {
                 initial="hidden"
                 animate="visible"
                 transition={{ ...motionTransition, delay: 0.16 }}
-                className="lg:col-span-6"
+                className="lg:col-span-5"
               >
-                <div className="group/image relative overflow-hidden rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:rounded-2xl sm:p-2 sm:shadow-xl">
-                  <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-16/11 sm:rounded-xl sm:aspect-16/10">
+                <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white/70 p-2 shadow-2xl shadow-slate-200/70 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl dark:border-slate-800/90 dark:bg-darkSurface/50 dark:shadow-none sm:p-2.5">
+                  <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
                     <Image
                       src={solution.imageSrc}
                       alt={solution.imageAlt}
                       fill
                       priority
-                      sizes="(max-width: 1024px) 92vw, 44vw"
-                      className="object-cover transition-transform duration-700 group-hover/image:scale-[1.03]"
+                      sizes="(max-width: 1024px) 92vw, 40vw"
+                      className="object-cover transition-transform duration-700 group-hover/image:scale-[1.02]"
                     />
                   </div>
 
-                  <div className="absolute right-2 top-2 z-20 inline-flex max-w-[74%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8px] font-extrabold uppercase tracking-normal text-slate-800 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 sm:right-4 sm:top-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-wider">
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                  <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[9px] font-syne font-black uppercase tracking-wider text-slate-800 dark:text-slate-100 shadow-md">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
                     {solution.topBadge}
                   </div>
 
-                  <div className="absolute bottom-2 left-2 z-20 inline-flex max-w-[78%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8.5px] font-extrabold leading-none text-slate-700 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200 sm:bottom-4 sm:left-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[11px]">
-                    <ShieldCheck className="h-3 w-3 shrink-0 text-primary sm:h-3.5 sm:w-3.5" />
+                  <div className="absolute bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700/80 bg-white/95 dark:bg-darkBg/95 backdrop-blur-md px-3 py-1 text-[10px] font-syne font-bold text-slate-700 dark:text-slate-200 shadow-md">
+                    <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
                     {solution.bottomBadge}
                   </div>
                 </div>
@@ -1090,7 +1109,7 @@ export default function ProductSolutionPage() {
         )}
 
         {/* --- 5. INCLUDED WORKFLOWS --- */}
-        <section className="border-b border-slate-200/80 bg-slate-50/70 py-5 dark:border-slate-800/80 dark:bg-slate-900/45 sm:py-8">
+        <section className="border-b border-slate-200/80 bg-slate-50/50 py-12 sm:py-20 dark:border-slate-800/80 dark:bg-slate-900/30">
           <div className="site-container">
             <motion.div
               variants={fadeUp}
@@ -1098,13 +1117,13 @@ export default function ProductSolutionPage() {
               whileInView="visible"
               viewport={{ once: true, margin: "-80px" }}
               transition={motionTransition}
-              className="mx-auto mb-1 max-w-3xl text-center sm:mb-3"
+              className="mx-auto mb-8 max-w-3xl text-center sm:mb-12"
             >
-              <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1.5 text-[9px] font-black uppercase tracking-normal text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light sm:mb-2.5 sm:px-3 sm:text-[10px] sm:tracking-wider">
-                <Sparkles className="h-3 w-3 stroke-[2.4]" />
+              <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
+                <Sparkles className="h-3.5 w-3.5 stroke-[2.4]" />
                 Included workflows
               </span>
-              <h2 className="font-syne text-[1.45rem] font-black leading-[1.08] tracking-normal text-slate-950 dark:text-white min-[380px]:text-[1.65rem] sm:text-4xl sm:tracking-tight lg:text-5xl">
+              <h2 className="font-syne text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-tight">
                 Everything this module brings into the Quantix platform
               </h2>
             </motion.div>

@@ -60,8 +60,8 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
       title: 'Restaurant POS System',
       desc: 'Tableside ordering, floor maps, KDS routing & split check payments.',
       ctaText: 'Launch Restaurant POS',
-      href: RESTAURANT_SITE_URL,
-      imageSrc: '/images/nav_restaurant_pos.png',
+      href: '/products/restaurant-pos',
+      imageSrc: '/images/rest_pos_floor_plan.jpg',
       badgeColor: 'text-amber-700 dark:text-amber-400 bg-amber-100/90 dark:bg-amber-900/30 border border-amber-300/40',
     },
     {
@@ -69,7 +69,7 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
       title: 'Retail Register',
       desc: 'Barcode checkout, cashier permissions, inventory matrix & offline till.',
       ctaText: 'Launch Retail Register',
-      href: RETAIL_SITE_URL,
+      href: '/products/retail-pos',
       imageSrc: '/images/nav_retail_register.png',
       badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-900/30 border border-emerald-300/40',
     },
@@ -78,8 +78,8 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
     {
       categoryTitle: 'CORE POS TERMINALS & PLATFORMS',
       items: [
-        { title: 'Restaurant POS', desc: 'Tableside orders & kitchen KDS', href: RESTAURANT_SITE_URL, icon: Utensils, iconColor: 'text-amber-500' },
-        { title: 'Retail Register', desc: 'Barcode billing & offline till', href: RETAIL_SITE_URL, icon: Store, iconColor: 'text-emerald-500' },
+        { title: 'Restaurant POS', desc: 'Tableside orders & kitchen KDS', href: '/products/restaurant-pos', icon: Utensils, iconColor: 'text-amber-500' },
+        { title: 'Retail Register', desc: 'Barcode billing & offline till', href: '/products/retail-pos', icon: Store, iconColor: 'text-emerald-500' },
       ],
     },
   ],
@@ -217,8 +217,8 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
       {
         title: 'CORE POS PLATFORMS',
         items: [
-          { title: 'Restaurant POS', desc: 'Tableside orders & kitchen KDS', href: RESTAURANT_SITE_URL, icon: Utensils },
-          { title: 'Retail Register', desc: 'Barcode billing & offline till', href: RETAIL_SITE_URL, icon: Store },
+          { title: 'Restaurant POS', desc: 'Tableside orders & kitchen KDS', href: '/products/restaurant-pos', icon: Utensils },
+          { title: 'Retail Register', desc: 'Barcode billing & offline till', href: '/products/retail-pos', icon: Store },
         ],
       },
     ],
