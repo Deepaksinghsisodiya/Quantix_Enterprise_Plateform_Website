@@ -653,8 +653,6 @@ const WorkflowRow: React.FC<{
     </div>
   );
 };
-  );
-};
 
 const DEFAULT_ORDER_MODES_CONTENT: FeaturePanelContent = {
   badge: "Order modes",
