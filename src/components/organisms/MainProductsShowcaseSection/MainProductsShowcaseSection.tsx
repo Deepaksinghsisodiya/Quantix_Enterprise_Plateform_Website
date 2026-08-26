@@ -289,9 +289,9 @@ export const MainProductsShowcaseSection: React.FC = () => {
     <section id="products-showcase" className="relative overflow-hidden py-10 sm:py-14 lg:py-16 text-slate-900 transition-colors dark:text-white">
       {/* 4 Big Cards Section (Matches Restaurant Layout Order) */}
       <div className="site-container relative z-10 space-y-10 sm:space-y-14 lg:space-y-16 mb-10 sm:mb-12">
-        {PRODUCT_LINES.map((line) => {
+        {PRODUCT_LINES.map((line, idx) => {
           const Icon = line.icon;
-          const isRight = line.imagePosition === "right";
+          const isRight = idx % 2 === 0;
 
           return (
             <div

@@ -123,26 +123,26 @@ const motionTransition = {
 };
 
 const PRODUCT_CARD_IMAGES: Array<{ keywords: string[]; src: string; alt: string }> = [
-  { keywords: ["table", "dine", "floor", "counter", "pos", "terminal"], src: "/images/foodhub_pos_terminal.jpg", alt: "Foodhub-style commercial dual-screen restaurant POS countertop terminal" },
-  { keywords: ["kitchen", "grill", "bar", "prep", "kds"], src: "/images/hero_kitchen_kds.jpg", alt: "Commercial stainless steel mounted kitchen display KDS system" },
-  { keywords: ["handheld", "waiter", "card terminal", "terminal", "pay"], src: "/images/retail_hardware_peripherals.jpg", alt: "POS card reader and billing peripherals" },
-  { keywords: ["delivery", "dispatch", "courier", "route"], src: "/images/product_delivery_driver.jpg", alt: "Food delivery management and courier dispatch tracking" },
-  { keywords: ["stock", "inventory", "recipe", "costing", "cost"], src: "/images/rest_recipe_costing.jpg", alt: "Recipe costing and inventory control" },
-  { keywords: ["qr", "mobile", "phone"], src: "/images/hero_qr_ordering.jpg", alt: "Mobile QR code ordering interface on restaurant table" },
-  { keywords: ["online", "web", "storefront", "pickup"], src: "/images/rest_online_ordering.jpg", alt: "Online web ordering portal" },
-  { keywords: ["kiosk", "self-service"], src: "/images/solution_qsr_kiosk.jpg", alt: "Restaurant free-standing self-ordering kiosk" },
-  { keywords: ["menu", "modifier", "topping", "variant", "scheduled", "board"], src: "/images/product_menu_board.jpg", alt: "Restaurant digital menu board and modifier management" },
-  { keywords: ["staff", "shift", "permission", "drawer", "roster"], src: "/images/rest_staff_shifts.jpg", alt: "Staff roster and shift scheduling dashboard" },
-  { keywords: ["reservation", "waitlist", "booking", "guest queue"], src: "/images/rest_reservations_waitlist.jpg", alt: "Table reservations and waitlist host stand" },
-  { keywords: ["loyalty", "crm", "rewards", "vip"], src: "/images/rest_loyalty_crm.jpg", alt: "Customer loyalty and dining CRM" },
-  { keywords: ["analytics", "telemetry", "reports", "margin", "p&l"], src: "/images/rest_analytics_inventory.jpg", alt: "Restaurant revenue analytics and telemetry" },
-  { keywords: ["payment", "receipt", "cash", "bill", "split", "tip"], src: "/images/retail_hardware_peripherals.jpg", alt: "POS checkout and split check terminal" },
+  { keywords: ["table", "dine", "floor", "counter", "pos", "terminal"], src: "/images/ent_global_pos_bundle.png", alt: "Dual-screen restaurant POS countertop terminal" },
+  { keywords: ["kitchen", "grill", "bar", "prep", "kds"], src: "/images/ent_global_pos_bundle.png", alt: "Kitchen display KDS system" },
+  { keywords: ["handheld", "waiter", "card terminal", "terminal", "pay"], src: "/images/nav_payment_bundle.png", alt: "POS card reader and billing peripherals" },
+  { keywords: ["delivery", "dispatch", "courier", "route"], src: "/images/ent_omnichannel_bundle.png", alt: "Food delivery management and courier dispatch tracking" },
+  { keywords: ["stock", "inventory", "recipe", "costing", "cost"], src: "/images/ent_supply_chain_bundle.png", alt: "Recipe costing and inventory control" },
+  { keywords: ["qr", "mobile", "phone"], src: "/images/ent_omnichannel_bundle.png", alt: "Mobile QR code ordering interface on restaurant table" },
+  { keywords: ["online", "web", "storefront", "pickup"], src: "/images/ent_omnichannel_bundle.png", alt: "Online web ordering portal" },
+  { keywords: ["kiosk", "self-service"], src: "/images/ent_qsr_kiosk_bundle.png", alt: "Restaurant free-standing self-ordering kiosk" },
+  { keywords: ["menu", "modifier", "topping", "variant", "scheduled", "board"], src: "/images/nav_restaurant_bundle.png", alt: "Restaurant digital menu board and modifier management" },
+  { keywords: ["staff", "shift", "permission", "drawer", "roster"], src: "/images/ent_franchise_portal.png", alt: "Staff roster and shift scheduling dashboard" },
+  { keywords: ["reservation", "waitlist", "booking", "guest queue"], src: "/images/ent_fine_dining_bundle.png", alt: "Table reservations and waitlist host stand" },
+  { keywords: ["loyalty", "crm", "rewards", "vip"], src: "/images/ent_venues_pos.png", alt: "Customer loyalty and dining CRM" },
+  { keywords: ["analytics", "telemetry", "reports", "margin", "p&l"], src: "/images/ent_bi_analytics_bundle.png", alt: "Restaurant revenue analytics and telemetry" },
+  { keywords: ["payment", "receipt", "cash", "bill", "split", "tip"], src: "/images/nav_payment_bundle.png", alt: "POS checkout and split check terminal" },
 ];
 
 const getProductCardImage = (title: string) => {
   const normalizedTitle = title.toLowerCase();
   return PRODUCT_CARD_IMAGES.find(({ keywords }) => keywords.some((keyword) => normalizedTitle.includes(keyword))) ?? {
-    src: "/images/foodhub_pos_terminal.jpg",
+    src: "/images/ent_global_pos_bundle.png",
     alt: "Quantix restaurant platform workflow",
   };
 };
@@ -1388,24 +1388,24 @@ export default function ProductSolutionPage() {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
               {[
-                { title: "PDQ Terminal", desc: "Wireless EMV tap-to-pay", img: "/images/retail_hardware_peripherals.jpg", bg: "bg-amber-50/70 dark:bg-amber-950/20 border-amber-200/60 dark:border-amber-900/30" },
-                { title: "Self-Order Kiosk", desc: "Line-busting touchscreen", img: "/images/solution_qsr_kiosk.jpg", bg: "bg-teal-50/70 dark:bg-teal-950/20 border-teal-200/60 dark:border-teal-900/30" },
-                { title: "Kitchen Display", desc: "Prep tickets & routing", img: "/images/hero_kitchen_kds.jpg", bg: "bg-slate-50/80 dark:bg-slate-900/50 border-slate-200/80 dark:border-slate-800" },
-                { title: "Digital Board", desc: "4K live menu signage", img: "/images/product_menu_board.jpg", bg: "bg-purple-50/70 dark:bg-purple-950/20 border-purple-200/60 dark:border-purple-900/30" },
-                { title: "Management App", desc: "Shift & sales telemetry", img: "/images/rest_staff_shifts.jpg", bg: "bg-emerald-50/70 dark:bg-emerald-950/20 border-emerald-200/60 dark:border-emerald-900/30" },
-                { title: "Online Storefront", desc: "Direct branded web store", img: "/images/rest_online_ordering.jpg", bg: "bg-rose-50/70 dark:bg-rose-950/20 border-rose-200/60 dark:border-rose-900/30" },
+                { title: "PDQ Terminal", desc: "Wireless EMV tap-to-pay", img: "/images/nav_payment_bundle.png", bg: "bg-amber-50/70 dark:bg-amber-950/20 border-amber-200/60 dark:border-amber-900/30" },
+                { title: "Self-Order Kiosk", desc: "Line-busting touchscreen", img: "/images/ent_qsr_kiosk_bundle.png", bg: "bg-teal-50/70 dark:bg-teal-950/20 border-teal-200/60 dark:border-teal-900/30" },
+                { title: "Kitchen Display", desc: "Prep tickets & routing", img: "/images/ent_global_pos_bundle.png", bg: "bg-slate-50/80 dark:bg-slate-900/50 border-slate-200/80 dark:border-slate-800" },
+                { title: "Digital Board", desc: "4K live menu signage", img: "/images/nav_restaurant_bundle.png", bg: "bg-purple-50/70 dark:bg-purple-950/20 border-purple-200/60 dark:border-purple-900/30" },
+                { title: "Management App", desc: "Shift & sales telemetry", img: "/images/ent_franchise_portal.png", bg: "bg-emerald-50/70 dark:bg-emerald-950/20 border-emerald-200/60 dark:border-emerald-900/30" },
+                { title: "Online Storefront", desc: "Direct branded web store", img: "/images/ent_omnichannel_bundle.png", bg: "bg-rose-50/70 dark:bg-rose-950/20 border-rose-200/60 dark:border-rose-900/30" },
               ].map((tool) => (
                 <div
                   key={tool.title}
                   className={`group rounded-2xl border p-3 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg ${tool.bg}`}
                 >
-                  <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-white/80 dark:bg-darkSurface/60 mb-3 border border-slate-200/50 dark:border-slate-800/50">
+                  <div className="relative aspect-square w-full flex items-center justify-center p-2 mb-3 bg-transparent">
                     <Image
                       src={tool.img}
                       alt={tool.title}
                       fill
                       sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 15vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-contain p-1 drop-shadow-md transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="text-center">

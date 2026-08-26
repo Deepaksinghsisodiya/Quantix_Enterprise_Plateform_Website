@@ -43,18 +43,18 @@ type FeatureCard = {
 };
 
 const CARD_IMAGE_BY_KEYWORD: Array<{ keywords: string[]; src: string; alt: string }> = [
-  { keywords: ["kitchen", "prep", "recipe", "food", "dining"], src: "/images/kitchen_display_3d.png", alt: "Restaurant kitchen workflow" },
-  { keywords: ["order", "ordering", "checkout", "customer", "guest", "pickup", "delivery"], src: "/images/online_ordering_3d.png", alt: "Connected ordering workflow" },
-  { keywords: ["table", "floor", "cafe", "restaurant"], src: "/images/hero-restaurant.jpg", alt: "Restaurant service floor" },
-  { keywords: ["stock", "inventory", "supplier", "catalog", "product", "barcode", "shelf"], src: "/images/inventory_sync_3d.png", alt: "Inventory and catalog workflow" },
-  { keywords: ["mobile", "handheld", "app", "portal"], src: "/images/mobile_app_3d.png", alt: "Mobile POS workflow" },
-  { keywords: ["payment", "bill", "cash", "refund", "discount", "loyalty", "reward"], src: "/images/pos_counter_3d.png", alt: "POS checkout workflow" },
+  { keywords: ["kitchen", "prep", "recipe", "food", "dining"], src: "/images/ent_global_pos_bundle.png", alt: "Restaurant kitchen workflow" },
+  { keywords: ["order", "ordering", "checkout", "customer", "guest", "pickup", "delivery"], src: "/images/ent_omnichannel_bundle.png", alt: "Connected ordering workflow" },
+  { keywords: ["table", "floor", "cafe", "restaurant"], src: "/images/nav_restaurant_bundle.png", alt: "Restaurant service floor" },
+  { keywords: ["stock", "inventory", "supplier", "catalog", "product", "barcode", "shelf"], src: "/images/ent_supply_chain_bundle.png", alt: "Inventory and catalog workflow" },
+  { keywords: ["mobile", "handheld", "app", "portal"], src: "/images/nav_restaurant_bundle.png", alt: "Mobile POS workflow" },
+  { keywords: ["payment", "bill", "cash", "refund", "discount", "loyalty", "reward"], src: "/images/nav_payment_bundle.png", alt: "POS checkout workflow" },
 ];
 
 const getCardImage = (title: string) => {
   const normalizedTitle = title.toLowerCase();
   return CARD_IMAGE_BY_KEYWORD.find(({ keywords }) => keywords.some((keyword) => normalizedTitle.includes(keyword))) ?? {
-    src: "/images/demo-thumb-ai.png",
+    src: "/images/ent_global_pos_bundle.png",
     alt: "Quantix platform workflow",
   };
 };

@@ -31,7 +31,7 @@ const SECTORS = [
     badge: "Course Pacing",
     color: "from-amber-500/20 via-orange-500/10 to-transparent",
     iconBg: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
-    image: "/images/solution_fine_dining.jpg",
+    image: "/images/ent_fine_dining_bundle.png",
   },
   {
     slug: "quick-service",
@@ -43,7 +43,7 @@ const SECTORS = [
     badge: "High Speed",
     color: "from-emerald-500/20 via-teal-500/10 to-transparent",
     iconBg: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
-    image: "/images/solution_qsr_kiosk.jpg",
+    image: "/images/ent_qsr_kiosk_bundle.png",
   },
   {
     slug: "fast-casual",
@@ -67,7 +67,7 @@ const SECTORS = [
     badge: "Recipe Costing",
     color: "from-amber-600/20 via-yellow-500/10 to-transparent",
     iconBg: "bg-amber-600/10 text-amber-700 dark:text-amber-400 border-amber-600/20",
-    image: "/images/solution_cafe_bakery.jpg",
+    image: "/images/ent_cafe_bakery_bundle.png",
   },
   {
     slug: "fashion-retail",
@@ -79,7 +79,7 @@ const SECTORS = [
     badge: "Size Matrix",
     color: "from-purple-500/20 via-pink-500/10 to-transparent",
     iconBg: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
-    image: "/images/retail_fashion_boutique.jpg",
+    image: "/images/ent_supply_chain_bundle.png",
   },
   {
     slug: "grocery",
@@ -91,7 +91,7 @@ const SECTORS = [
     badge: "Scale Integrated",
     color: "from-teal-500/20 via-emerald-500/10 to-transparent",
     iconBg: "bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/20",
-    image: "/images/retail_grocery_scale.jpg",
+    image: "/images/ent_global_pos_bundle.png",
   },
   {
     slug: "electronics",
@@ -103,7 +103,7 @@ const SECTORS = [
     badge: "Serial Sync",
     color: "from-sky-500/20 via-cyan-500/10 to-transparent",
     iconBg: "bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20",
-    image: "/images/retail_electronics_pos.jpg",
+    image: "/images/ent_venues_pos.png",
   },
   {
     slug: "franchise",
