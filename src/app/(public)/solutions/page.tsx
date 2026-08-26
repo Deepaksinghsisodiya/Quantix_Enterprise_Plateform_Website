@@ -31,6 +31,7 @@ const SECTORS = [
     badge: "Course Pacing",
     color: "from-amber-500/20 via-orange-500/10 to-transparent",
     iconBg: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+    image: "/images/solution_fine_dining.jpg",
   },
   {
     slug: "quick-service",
@@ -42,6 +43,7 @@ const SECTORS = [
     badge: "High Speed",
     color: "from-emerald-500/20 via-teal-500/10 to-transparent",
     iconBg: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+    image: "/images/solution_qsr_kiosk.jpg",
   },
   {
     slug: "fast-casual",
@@ -53,6 +55,7 @@ const SECTORS = [
     badge: "Combo Engine",
     color: "from-blue-500/20 via-indigo-500/10 to-transparent",
     iconBg: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
+    image: "/images/nav_restaurant_bundle.png",
   },
   {
     slug: "cafe-bakery",
@@ -64,6 +67,7 @@ const SECTORS = [
     badge: "Recipe Costing",
     color: "from-amber-600/20 via-yellow-500/10 to-transparent",
     iconBg: "bg-amber-600/10 text-amber-700 dark:text-amber-400 border-amber-600/20",
+    image: "/images/solution_cafe_bakery.jpg",
   },
   {
     slug: "fashion-retail",
@@ -75,6 +79,7 @@ const SECTORS = [
     badge: "Size Matrix",
     color: "from-purple-500/20 via-pink-500/10 to-transparent",
     iconBg: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
+    image: "/images/retail_fashion_boutique.jpg",
   },
   {
     slug: "grocery",
@@ -86,6 +91,7 @@ const SECTORS = [
     badge: "Scale Integrated",
     color: "from-teal-500/20 via-emerald-500/10 to-transparent",
     iconBg: "bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/20",
+    image: "/images/retail_grocery_scale.jpg",
   },
   {
     slug: "electronics",
@@ -97,6 +103,7 @@ const SECTORS = [
     badge: "Serial Sync",
     color: "from-sky-500/20 via-cyan-500/10 to-transparent",
     iconBg: "bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20",
+    image: "/images/retail_electronics_pos.jpg",
   },
   {
     slug: "franchise",
@@ -108,6 +115,7 @@ const SECTORS = [
     badge: "Global Sync",
     color: "from-violet-500/20 via-purple-500/10 to-transparent",
     iconBg: "bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20",
+    image: "/images/ent_franchise_portal.png",
   },
 ];
 
@@ -149,13 +157,22 @@ export default function SolutionsOverviewPage() {
                     <div className={`absolute top-0 left-0 right-0 h-32 bg-linear-to-b ${sec.color} opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none`} />
 
                     <div>
-                      <div className="flex items-center justify-between gap-3 mb-6 relative z-10">
+                      <div className="flex items-center justify-between gap-3 mb-4 relative z-10">
                         <span className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${sec.iconBg} shadow-xs`}>
                           <IconComp size={22} />
                         </span>
                         <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700">
                           {sec.badge}
                         </span>
+                      </div>
+
+                      {/* Visual Mockup Container */}
+                      <div className="relative aspect-16/10 w-full flex items-center justify-center my-3 transition-transform duration-500 group-hover:scale-105 overflow-hidden rounded-2xl">
+                        <img
+                          src={sec.image}
+                          alt={sec.name}
+                          className="w-full h-full object-contain p-1 drop-shadow-xl"
+                        />
                       </div>
 
                       <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary block mb-1">

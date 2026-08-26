@@ -124,13 +124,13 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
                   )}
                   <span className="flex items-start justify-between gap-2">
                     {link.imageSrc ? (
-                      <span className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-200/80 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-0.5 overflow-hidden shadow-2xs">
+                      <span className="relative flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center bg-transparent p-0 overflow-hidden">
                         <Image
                           src={link.imageSrc}
                           alt={link.label}
                           fill
-                          sizes="32px"
-                          className="object-contain p-0.5"
+                          sizes="64px"
+                          className="object-contain drop-shadow-sm"
                         />
                       </span>
                     ) : (

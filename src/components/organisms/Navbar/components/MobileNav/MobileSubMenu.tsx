@@ -45,13 +45,13 @@ export const MobileSubMenu: React.FC<MobileSubMenuProps> = ({
         {/* Header Visual Card with Hardware Mockup */}
         <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-3.5 shadow-xs flex items-center gap-3.5 overflow-hidden">
           {activeSection.imageSrc ? (
-            <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-xl overflow-hidden shrink-0 border border-slate-200/80 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-1 shadow-2xs">
+            <div className="relative w-22 h-22 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shrink-0 bg-transparent flex items-center justify-center p-1">
               <Image
                 src={activeSection.imageSrc}
                 alt={activeSection.label}
                 fill
-                sizes="80px"
-                className="object-contain p-0.5 drop-shadow-xs"
+                sizes="100px"
+                className="object-contain p-0.5 drop-shadow-md"
               />
             </div>
           ) : (

@@ -56,6 +56,15 @@ export default function EnterpriseVsStandalonePage() {
                 </div>
               </div>
 
+              {/* 3D Visual Mockup */}
+              <div className="relative aspect-16/10 w-full flex items-center justify-center">
+                <img
+                  src="/images/ent_global_pos_bundle.png"
+                  alt="Quantix Cloud Enterprise POS"
+                  className="w-full h-full object-contain drop-shadow-xl"
+                />
+              </div>
+
               <ul className="space-y-3">
                 {[
                   'Real-time backoffice sync',
@@ -95,13 +104,22 @@ export default function EnterpriseVsStandalonePage() {
                 </div>
               </div>
 
+              {/* 3D Visual Mockup */}
+              <div className="relative aspect-16/10 w-full flex items-center justify-center">
+                <img
+                  src="/images/nav_retail_bundle.png"
+                  alt="Quantix Offline Standalone POS"
+                  className="w-full h-full object-contain drop-shadow-xl"
+                />
+              </div>
+
               <ul className="space-y-3">
                 {[
                   'Zero monthly subscription fees',
-                  '100% internet independent local database',
-                  'Standard local terminal operations',
-                  'Optional local server offline sync',
-                  'Manual update imports'
+                  '100% offline local SQLite DB',
+                  'Direct USB thermal printer driver',
+                  'Perpetual one-time license key',
+                  'Self-contained audit reports'
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-xs text-slate-300">
                     <Check size={13} className="text-emerald-400 stroke-[3]" /> {item}

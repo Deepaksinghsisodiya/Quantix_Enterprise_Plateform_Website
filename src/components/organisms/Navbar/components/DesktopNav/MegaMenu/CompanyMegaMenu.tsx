@@ -33,7 +33,7 @@ export const CompanyMegaMenu: React.FC<CompanyMegaMenuProps> = ({
                 onClick={onClose}
                 className="group/card relative flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-rose-500/40 hover:bg-slate-50/50 dark:hover:bg-slate-850 transition-all duration-300 shadow-2xs hover:shadow-md overflow-hidden"
               >
-                <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-2xl overflow-hidden shrink-0 border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs flex items-center justify-center p-1.5">
+                <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-2xl overflow-hidden shrink-0 bg-transparent flex items-center justify-center p-1">
                   <Image
                     src={card.imageSrc || '/images/foodhub_bundle_mockup.png'}
                     alt={card.title}

@@ -27,6 +27,15 @@ export default function AboutPage() {
           <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed">
             We engineer offline-first, cloud-synchronized point-of-sale platforms that empower high-volume retail chains and multi-unit restaurant brands to scale with sub-second register velocity.
           </p>
+
+          {/* 3D Visual Showcase */}
+          <div className="relative w-full max-w-xl mx-auto aspect-16/10 flex items-center justify-center pt-4">
+            <img
+              src="/images/ent_global_pos_bundle.png"
+              alt="Quantix Enterprise Engineering Platform"
+              className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+            />
+          </div>
         </div>
       </section>
 

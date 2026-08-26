@@ -254,8 +254,8 @@ export const HeroView: React.FC<HeroViewProps> = ({
 
             {/* Decorative Geometric Backgrounds (Exact Center of iPad Frame - Equal Dimensions) */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[125%] h-[125%] -z-10 pointer-events-none hidden lg:block">
-              {/* White/Light Gray Circle (Left) */}
-              <div className="absolute top-1/2 left-[-8%] -translate-y-1/2 w-[72%] aspect-square rounded-full bg-slate-50 dark:bg-slate-900/40 shadow-2xl shadow-slate-200/50 dark:shadow-none" />
+              {/* White Circle (Left) */}
+              <div className="absolute top-1/2 left-[-8%] -translate-y-1/2 w-[72%] aspect-square rounded-full bg-white dark:bg-slate-900/40 shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-transparent" />
               {/* Orange Circle (Right - Identical width & height, perfectly centered vertically) */}
               <div className="absolute top-1/2 right-[-8%] -translate-y-1/2 w-[72%] aspect-square rounded-full bg-[#FF4F00] shadow-2xl shadow-[#FF4F00]/25" />
 
@@ -275,12 +275,12 @@ export const HeroView: React.FC<HeroViewProps> = ({
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 className="w-full z-10"
               >
-                {/* Straight iPad Frame with Zoom in / Zoom out on hover (No 3D tilt) */}
+                {/* Straight iPad Frame with Zoom in / Zoom out on hover */}
                 <div className="group relative w-full aspect-4/3 transition-transform duration-500 hover:scale-[1.02]">
                   <div className="absolute inset-0 rounded-xl lg:rounded-3xl bg-[#111] p-[0.3rem] lg:p-[0.55rem] shadow-xl lg:shadow-2xl border border-slate-800">
 
-                    {/* Inner Screen */}
-                    <div className="relative h-full w-full overflow-hidden rounded-[1.2rem] bg-white">
+                    {/* Inner Screen with Full Rich Photography */}
+                    <div className="relative h-full w-full overflow-hidden rounded-[1.2rem] bg-slate-900">
                       <Image
                         src={slide.backgroundImage}
                         alt={slide.heading}
@@ -319,7 +319,6 @@ export const HeroView: React.FC<HeroViewProps> = ({
                     >
                       <ChevronRight size={18} className="stroke-[2.5]" />
                     </button>
-
                   </div>
                 </div>
               </motion.div>

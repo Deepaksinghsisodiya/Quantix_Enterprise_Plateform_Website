@@ -59,7 +59,7 @@ const PLATFORM_MODULES: PlatformModule[] = [
     description: "Centralized controls for managing hundreds of store or restaurant branches.",
     badge: "Enterprise",
     href: "/products/enterprise-pos",
-    imageSrc: "/images/foodhub_pos_terminal.jpg",
+    imageSrc: "/images/ent_global_pos_bundle.png",
     imageAlt: "Enterprise POS multi-location dashboard",
     icon: Store,
   },
@@ -68,7 +68,7 @@ const PLATFORM_MODULES: PlatformModule[] = [
     description: "Live dashboards, global catalog visibility, and remote branch control.",
     badge: "Cloud HQ",
     href: "/products/cloud-pos",
-    imageSrc: "/images/ent_cloud_hq.jpg",
+    imageSrc: "/images/nav_cloud_bundle.png",
     imageAlt: "Enterprise cloud management hub",
     icon: Cloud,
   },
@@ -77,7 +77,7 @@ const PLATFORM_MODULES: PlatformModule[] = [
     description: "Automated stock transfers, purchase orders, and warehouse sync.",
     badge: "Inventory",
     href: "/products/inventory",
-    imageSrc: "/images/ent_supply_chain.jpg",
+    imageSrc: "/images/ent_supply_chain_bundle.png",
     imageAlt: "Enterprise supply chain and inventory management",
     icon: Boxes,
   },
@@ -86,7 +86,7 @@ const PLATFORM_MODULES: PlatformModule[] = [
     description: "Unify e-commerce, mobile apps, and physical POS orders.",
     badge: "Omnichannel",
     href: "/products/omnichannel",
-    imageSrc: "/images/retail_omnichannel_fulfillment.jpg",
+    imageSrc: "/images/ent_omnichannel_bundle.png",
     imageAlt: "Omnichannel retail and e-commerce fulfillment",
     icon: Globe2,
   },
@@ -95,17 +95,17 @@ const PLATFORM_MODULES: PlatformModule[] = [
     description: "Custom data lakes, cross-store reporting, and API-driven insights.",
     badge: "Analytics",
     href: "/products/analytics",
-    imageSrc: "/images/retail_pos_analytics_bi.jpg",
+    imageSrc: "/images/ent_bi_analytics_bundle.png",
     imageAlt: "Enterprise business intelligence analytics",
     icon: LineChart,
   },
   {
-    title: "Digital Menu & Signage",
-    description: "Instant cloud menu updates, scheduled pricing, and 4K digital boards.",
-    badge: "Digital Board",
-    href: "/products/restaurant-pos",
-    imageSrc: "/images/product_menu_board.jpg",
-    imageAlt: "Digital menu board display screen",
+    title: "Digital POS Station",
+    description: "Dual-screen customer display, kitchen routing & fast line busting.",
+    badge: "Digital Station",
+    href: "/products/enterprise-pos",
+    imageSrc: "/images/foodhub_bundle_mockup.png",
+    imageAlt: "Digital POS station display screen",
     icon: Store,
   },
   {
@@ -113,17 +113,17 @@ const PLATFORM_MODULES: PlatformModule[] = [
     description: "Self-service kiosks and handheld tablets for rapid line-busting.",
     badge: "Mobile Kiosk",
     href: "/products/mobile-pos",
-    imageSrc: "/images/solution_qsr_kiosk.jpg",
+    imageSrc: "/images/nav_retail_bundle.png",
     imageAlt: "Enterprise kiosk and mobile workflow",
     icon: Smartphone,
   },
   {
-    title: "Role-Based Access Control",
-    description: "Strict permission matrices, shift audits, and central staff control.",
-    badge: "Security",
+    title: "Payment Hardware & Security",
+    description: "Contactless tap terminals, strict PIN matrices, and shift audits.",
+    badge: "Payments",
     href: "/products/security",
-    imageSrc: "/images/rest_staff_shifts.jpg",
-    imageAlt: "Enterprise security and staff access controls",
+    imageSrc: "/images/nav_payment_bundle.png",
+    imageAlt: "Enterprise security and payment terminals",
     icon: Users,
   },
 ];
@@ -146,7 +146,7 @@ const PRODUCT_LINES: ProductLine[] = [
       { title: "Regional Pricing Tiers", desc: "Create dynamic pricing models based on geographic zones or individual branch requirements." },
       { title: "Automated Tax Compliance", desc: "Apply localized tax rates and compliance rules automatically across different territories." },
     ],
-    imageSrc: "/images/foodhub_pos_terminal.jpg",
+    imageSrc: "/images/ent_global_pos_bundle.png",
     imageAlt: "Enterprise master data and menu catalog management",
     topBadge: "Dual-Screen Countertop EPOS",
     bottomBadge: "Global Cloud Sync",
@@ -165,7 +165,7 @@ const PRODUCT_LINES: ProductLine[] = [
       { title: "Inter-Store Transfers", desc: "Move stock effortlessly between branches and central warehouses with full audit trails." },
       { title: "Live Recipe & Matrix Costing", desc: "Track exact margins on every dish or retail SKU globally in real-time." },
     ],
-    imageSrc: "/images/ent_supply_chain.jpg",
+    imageSrc: "/images/ent_supply_chain_bundle.png",
     imageAlt: "Enterprise supply chain and inventory network",
     topBadge: "Warehouse Sync",
     bottomBadge: "Live Supply Chain",
@@ -184,7 +184,7 @@ const PRODUCT_LINES: ProductLine[] = [
       { title: "Cross-Channel Loyalty", desc: "Allow customers to earn and redeem enterprise loyalty points online or in any branch." },
       { title: "Click-and-Collect Infrastructure", desc: "Manage curbside pickup and BOPIS (Buy Online, Pick Up In-Store) workflows flawlessly." },
     ],
-    imageSrc: "/images/retail_omnichannel_fulfillment.jpg",
+    imageSrc: "/images/ent_omnichannel_bundle.png",
     imageAlt: "Omnichannel order fulfillment across web and POS",
     topBadge: "Unified Commerce",
     bottomBadge: "Cross-Channel Sync",
@@ -203,7 +203,7 @@ const PRODUCT_LINES: ProductLine[] = [
       { title: "Custom Data Lakes", desc: "Export untruncated, raw transactional data via secure API webhooks or bulk CSV dumps." },
       { title: "Cross-Branch Benchmarking", desc: "Compare labor costs, sales velocity, and profitability metrics across your entire portfolio." },
     ],
-    imageSrc: "/images/retail_pos_analytics_bi.jpg",
+    imageSrc: "/images/ent_bi_analytics_bundle.png",
     imageAlt: "Enterprise API business intelligence and reporting",
     topBadge: "Custom API Access",
     bottomBadge: "ERP & BI Integrations",
@@ -231,13 +231,13 @@ const PlatformModuleCard: React.FC<{
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-emerald-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover/module:opacity-100 pointer-events-none" />
 
         <div>
-          <div className="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-950">
+          <div className="relative aspect-video w-full overflow-hidden bg-transparent flex items-center justify-center p-2.5">
             <Image
               src={module.imageSrc}
               alt={module.imageAlt}
               fill
               sizes="(max-width: 640px) min(85vw, 290px), (max-width: 1024px) 330px, 370px"
-              className="object-cover transition-transform duration-700 group-hover/module:scale-105"
+              className="object-contain p-2 transition-transform duration-700 group-hover/module:scale-105 drop-shadow-md"
             />
             <div className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-slate-200/90 bg-white/95 px-2 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider text-primary shadow-2xs backdrop-blur-md dark:border-slate-800/90 dark:bg-slate-900/95 dark:text-primary-light">
               <Icon className="h-2.5 w-2.5 stroke-[2.5]" />
@@ -363,23 +363,23 @@ export const MainProductsShowcaseSection: React.FC = () => {
               >
                 <div className="absolute -inset-2 rounded-[2.5rem] bg-gradient-to-tr from-primary/10 via-orange-500/5 to-emerald-500/5 opacity-50 blur-xl pointer-events-none transition-all duration-700 group-hover/image:opacity-80" />
 
-                <div className="group/image relative overflow-hidden rounded-2xl shadow-lg shadow-slate-200/40 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl dark:shadow-none">
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-950">
+                <div className="group/image relative flex items-center justify-center transition-all duration-500 hover:-translate-y-1.5">
+                  <div className="relative aspect-[16/10] w-full flex items-center justify-center p-2 sm:p-4">
                     <Image
                       src={line.imageSrc}
                       alt={line.imageAlt}
                       fill
                       sizes="(max-width: 1024px) 92vw, 44vw"
-                      className="object-cover transition-transform duration-1000 group-hover/image:scale-105"
+                      className="object-contain p-1 sm:p-2 transition-transform duration-700 group-hover/image:scale-105 drop-shadow-2xl"
                     />
                   </div>
 
-                  <div className="absolute right-5 top-5 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/90 px-3 py-1 text-[9.5px] font-extrabold uppercase tracking-wider text-slate-800 shadow-md backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-900/90 dark:text-slate-100">
+                  <div className="absolute right-2 top-2 z-20 inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white/95 px-3 py-1 text-[9.5px] font-extrabold uppercase tracking-wider text-slate-800 shadow-md backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-900/95 dark:text-slate-100">
                     <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary animate-pulse" />
                     {line.topBadge}
                   </div>
 
-                  <div className="absolute bottom-5 left-5 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/90 px-3 py-1 text-[9.5px] font-extrabold leading-none text-slate-700 shadow-md backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-900/90 dark:text-slate-200">
+                  <div className="absolute bottom-2 left-2 z-20 inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white/95 px-3 py-1 text-[9.5px] font-extrabold leading-none text-slate-700 shadow-md backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-900/95 dark:text-slate-200">
                     <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-primary" />
                     {line.bottomBadge}
                   </div>

@@ -56,7 +56,7 @@ const RESOURCES_LIST: Resource[] = [
     readTime: '8 min read',
     fileSize: '2.1 MB',
     fileName: 'quantix_franchise_pos_architecture.pdf',
-    image: '/images/hero_multi_location_hq.jpg',
+    image: '/images/ent_franchise_portal.png',
     href: '/resources/pos-guide',
   },
   {
@@ -71,7 +71,7 @@ const RESOURCES_LIST: Resource[] = [
     readTime: 'Excel Tool',
     fileSize: '940 KB',
     fileName: 'quantix_inventory_safety_stock_model.xlsx',
-    image: '/images/retail_stockroom_inventory.jpg',
+    image: '/images/ent_supply_chain_bundle.png',
   },
   {
     id: '3',
@@ -85,7 +85,7 @@ const RESOURCES_LIST: Resource[] = [
     readTime: '10 min read',
     fileSize: '3.4 MB',
     fileName: 'quantix_pos_to_erp_integration_guide.pdf',
-    image: '/images/prod_inventory_sync.png',
+    image: '/images/ent_guide_blueprint.png',
     href: '/api-docs',
   },
   {
@@ -100,7 +100,7 @@ const RESOURCES_LIST: Resource[] = [
     readTime: '7 min read',
     fileSize: '2.7 MB',
     fileName: 'quantix_pci_tier1_security_brief.pdf',
-    image: '/images/kitchen_display_3d.png',
+    image: '/images/nav_payment_bundle.png',
     href: '/resources/pos-guide',
   },
   {
@@ -115,7 +115,7 @@ const RESOURCES_LIST: Resource[] = [
     readTime: '5 min read',
     fileSize: '1.2 MB',
     fileName: 'quantix_hardware_migration_checklist.pdf',
-    image: '/images/pos_counter_3d.png',
+    image: '/images/nav_restaurant_bundle.png',
     href: '/help',
   },
   {
@@ -130,7 +130,7 @@ const RESOURCES_LIST: Resource[] = [
     readTime: 'SOP Sheet',
     fileSize: '1.1 MB',
     fileName: 'quantix_enterprise_rbac_matrix.pdf',
-    image: '/images/prod_enterprise_hub.png',
+    image: '/images/ent_global_pos_bundle.png',
   },
 ];
 

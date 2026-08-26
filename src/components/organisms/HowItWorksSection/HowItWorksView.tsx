@@ -77,14 +77,14 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
                   </div>
                 </div>
 
-                {/* 2. Middle Rounded Image Container */}
-                <div className="group relative aspect-[16/11] w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-md transition-all duration-300 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900">
+                {/* 2. Middle Image Container */}
+                <div className="group relative aspect-[16/11] w-full flex items-center justify-center p-1">
                   <Image
                     src={step.imageSrc}
                     alt={step.imageAlt}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                    className="object-contain transition-transform duration-700 group-hover:scale-[1.05] drop-shadow-xl"
                   />
                 </div>
 

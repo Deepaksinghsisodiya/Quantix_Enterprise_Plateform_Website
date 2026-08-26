@@ -79,7 +79,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
     name: 'Waiter Tableside Handhelds',
     icon: Tablet,
     desc: 'Lightweight handheld tablets for tableside ordering, seat numbering, and mobile tip checkout.',
-    image: '/images/product_waiter_handheld.jpg',
+    image: '/images/nav_restaurant_bundle.png',
     items: [
       {
         name: 'iPad 10.9" / iPad Mini 8.3"',
@@ -103,7 +103,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'Wi-Fi / 4G / Bluetooth',
         features: 'Integrated EMV card reader and receipt printer',
         verified: true,
-        image: '/images/product_waiter_handheld.jpg',
+        image: '/images/nav_restaurant_bundle.png',
       },
     ],
   },
@@ -112,7 +112,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
     name: 'Kitchen Impact & Receipt Printers',
     icon: Printer,
     desc: 'Heat-resistant 2-color ribbon kitchen impact printers and ultra-fast FOH receipt printers.',
-    image: '/images/rest_checkout_payments.jpg',
+    image: '/images/ent_supply_chain_bundle.png',
     items: [
       {
         name: 'TM-U220B Kitchen Impact Printer',
@@ -136,7 +136,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'CloudPRNT / LAN',
         features: 'Compact internal power supply, sticky linerless label support',
         verified: true,
-        image: '/images/retail_hardware_peripherals.jpg',
+        image: '/images/ent_supply_chain_bundle.png',
       },
     ],
   },
@@ -145,7 +145,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
     name: 'Pay-at-Table Contactless Terminals',
     icon: CreditCard,
     desc: 'PCI-certified P2PE card readers with Apple Pay, Google Pay, and tableside tip suggestions.',
-    image: '/images/foodhub_pos_terminal.jpg',
+    image: '/images/nav_payment_bundle.png',
     items: [
       {
         name: 'BBPOS WisePOS E Smart Terminal',
@@ -153,7 +153,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'Wi-Fi / Ethernet',
         features: 'Color touch display, contactless Tap-to-Pay, P2PE encrypted',
         verified: true,
-        image: '/images/foodhub_pos_terminal.jpg',
+        image: '/images/nav_payment_bundle.png',
       },
       {
         name: 'Move/5000 Wireless Terminal',
@@ -161,7 +161,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'Wi-Fi / 4G Cellular',
         features: 'Pay-at-table tip selection, split checks, EMV chip reader',
         verified: true,
-        image: '/images/product_waiter_handheld.jpg',
+        image: '/images/ent_venues_pos.png',
       },
     ],
   },

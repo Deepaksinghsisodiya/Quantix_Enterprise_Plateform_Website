@@ -433,6 +433,15 @@ export default function POSGuidePage() {
             </div>
           </div>
 
+          {/* 3D Blueprint Visual Showcase */}
+          <div className="relative w-full max-w-lg mx-auto aspect-16/10 flex items-center justify-center py-2">
+            <img
+              src="/images/ent_guide_blueprint.png"
+              alt="Enterprise Hybrid POS Blueprint"
+              className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+
           {/* Interactive Chapter Rail */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
             {CHAPTERS.map((ch, idx) => {

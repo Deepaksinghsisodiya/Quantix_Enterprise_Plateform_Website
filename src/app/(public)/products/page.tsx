@@ -35,7 +35,7 @@ const PRODUCTS = [
     badge: "Most Popular",
     color: "from-amber-500/20 via-orange-500/10 to-transparent",
     iconBg: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
-    image: "/images/rest_pos_floor_plan.jpg",
+    image: "/images/nav_restaurant_bundle.png",
   },
   {
     slug: "retail-pos",
@@ -47,7 +47,7 @@ const PRODUCTS = [
     badge: "Scanner Ready",
     color: "from-emerald-500/20 via-teal-500/10 to-transparent",
     iconBg: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
-    image: "/images/pos_counter_3d.png",
+    image: "/images/nav_retail_bundle.png",
   },
   {
     slug: "cloud-pos",
@@ -59,7 +59,7 @@ const PRODUCTS = [
     badge: "Cloud Hub",
     color: "from-blue-500/20 via-indigo-500/10 to-transparent",
     iconBg: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
-    image: "/images/inventory_sync_3d.png",
+    image: "/images/nav_cloud_bundle.png",
   },
   {
     slug: "enterprise-pos",
@@ -71,7 +71,7 @@ const PRODUCTS = [
     badge: "Enterprise SLA",
     color: "from-purple-500/20 via-violet-500/10 to-transparent",
     iconBg: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
-    image: "/images/enterprise_hub_3d.png",
+    image: "/images/ent_global_pos_bundle.png",
   },
   {
     slug: "websites",
@@ -83,7 +83,7 @@ const PRODUCTS = [
     badge: "Zero Commission",
     color: "from-sky-500/20 via-cyan-500/10 to-transparent",
     iconBg: "bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20",
-    image: "/images/online_ordering_3d.png",
+    image: "/images/ent_omnichannel_bundle.png",
   },
   {
     slug: "mobile-application",
@@ -95,7 +95,7 @@ const PRODUCTS = [
     badge: "Handheld POS",
     color: "from-rose-500/20 via-pink-500/10 to-transparent",
     iconBg: "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20",
-    image: "/images/mobile_app_3d.png",
+    image: "/images/ent_venues_pos.png",
   },
   {
     slug: "custom-service",
@@ -107,7 +107,7 @@ const PRODUCTS = [
     badge: "Tailored Build",
     color: "from-teal-500/20 via-emerald-500/10 to-transparent",
     iconBg: "bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/20",
-    image: "/images/ss1-ai.png",
+    image: "/images/ent_guide_blueprint.png",
   },
 ];
 
@@ -149,13 +149,24 @@ export default function ProductsPage() {
                     <div className={`absolute top-0 left-0 right-0 h-32 bg-linear-to-b ${prod.color} opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none`} />
 
                     <div>
-                      <div className="flex items-center justify-between gap-3 mb-6 relative z-10">
+                      <div className="flex items-center justify-between gap-3 mb-4 relative z-10">
                         <span className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${prod.iconBg} shadow-xs`}>
                           <IconComp size={22} />
                         </span>
                         <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700">
                           {prod.badge}
                         </span>
+                      </div>
+
+                      {/* Transparent 3D Studio Mockup */}
+                      <div className="relative aspect-16/10 w-full flex items-center justify-center my-3 transition-transform duration-500 group-hover:scale-105">
+                        <Image
+                          src={prod.image}
+                          alt={prod.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-contain drop-shadow-xl p-1"
+                        />
                       </div>
 
                       <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary block mb-1">

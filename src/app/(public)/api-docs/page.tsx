@@ -326,6 +326,15 @@ export default function ApiDocsPage() {
               🔒 Auth: Bearer API Keys & HMAC Webhooks
             </span>
           </div>
+
+          {/* 3D Blueprint Visual Showcase */}
+          <div className="relative w-full max-w-xl mx-auto aspect-16/10 flex items-center justify-center pt-4">
+            <img
+              src="/images/ent_guide_blueprint.png"
+              alt="Enterprise POS API Architecture Blueprint"
+              className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+            />
+          </div>
         </div>
       </section>
 

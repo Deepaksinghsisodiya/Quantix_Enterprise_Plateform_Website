@@ -49,9 +49,9 @@ export const DEFAULT_INTEGRATIONS: IntegrationDto[] = [
 ];
 
 export const INTEGRATION_CARD_VISUALS: Record<string, { src: string; alt: string }> = {
-  payments: { src: '/images/pos_counter_3d.png', alt: 'Integrated payment terminal workflow' },
-  'pos & inventory': { src: '/images/hero-retail.jpg', alt: 'Retail POS and inventory workflow' },
-  delivery: { src: '/images/hero-local.png', alt: 'Delivery dispatch and kitchen workflow' },
+  payments: { src: '/images/nav_payment_bundle.png', alt: 'Integrated payment terminal workflow' },
+  'pos & inventory': { src: '/images/ent_supply_chain_bundle.png', alt: 'Retail POS and inventory workflow' },
+  delivery: { src: '/images/ent_omnichannel_bundle.png', alt: 'Delivery dispatch and kitchen workflow' },
 };
 
 export const INTEGRATION_DETAIL_SLUGS = new Set([

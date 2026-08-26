@@ -406,7 +406,7 @@ export default function ProductTourPage() {
       <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
         {/* Intro view */}
         {phase === 'intro' && (
-          <div className="site-container max-w-lg text-center py-20 space-y-6">
+          <div className="site-container max-w-xl text-center py-16 space-y-6">
             <div className="mx-auto h-16 w-16 rounded-3xl bg-blue-500/10 text-blue-500 dark:text-blue-400 flex items-center justify-center border border-blue-500/20 shadow-md">
               <Play size={24} className="fill-blue-500 dark:fill-blue-400" />
             </div>
@@ -416,6 +416,16 @@ export default function ProductTourPage() {
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
               Explore the entire POS transaction workflow with our live, interactive virtual iPad terminal. No details missed.
             </p>
+
+            {/* 3D Visual Mockup */}
+            <div className="relative w-full aspect-16/10 flex items-center justify-center my-4">
+              <img
+                src="/images/ent_global_pos_bundle.png"
+                alt="Quantix Enterprise POS Tour Preview"
+                className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+
             <button
               onClick={startTour}
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-8 py-4 rounded-full transition-all cursor-pointer shadow-lg shadow-blue-500/15 uppercase tracking-wider"
