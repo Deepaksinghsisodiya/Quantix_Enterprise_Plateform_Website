@@ -408,10 +408,10 @@ html {
 }
 
 :root {
-  --section-py-mobile: 2.75rem;
-  --section-py-sm: 3.5rem;
-  --section-py-md: 4rem;
-  --section-py-lg: 4.5rem;
+  --section-py-mobile: 2rem;
+  --section-py-sm: 2.75rem;
+  --section-py-md: 3.5rem;
+  --section-py-lg: 4.25rem;
 }
 
 .py-10,
