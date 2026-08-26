@@ -213,6 +213,8 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[0],
     icon: Layers,
+    imageSrc: '/images/nav_restaurant_bundle.png',
+    badge: 'CORE POS PLATFORMS',
     groups: [
       {
         title: 'CORE POS PLATFORMS',
@@ -226,6 +228,8 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[1],
     icon: Store,
+    imageSrc: '/images/nav_retail_bundle.png',
+    badge: 'ALL INDUSTRY VERTICALS',
     groups: [
       {
         title: 'DINING & FOODSERVICE',
@@ -248,6 +252,8 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[2],
     icon: RefreshCw,
+    imageSrc: '/images/nav_payment_bundle.png',
+    badge: 'PAYMENT & APPS SYNC',
     groups: [
       {
         title: 'PAYMENT & DELIVERY GATEWAYS',
@@ -263,6 +269,8 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[4],
     icon: HelpCircle,
+    imageSrc: '/images/nav_cloud_bundle.png',
+    badge: 'GUIDES & PLAYBOOKS',
     groups: [
       {
         title: 'KNOWLEDGE & PLAYBOOKS',

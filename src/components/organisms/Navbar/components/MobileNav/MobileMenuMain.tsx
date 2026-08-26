@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ChevronRight, User, LogOut, LogIn, Headset, UserPlus } from 'lucide-react';
+import { ChevronRight, User, LogOut, LogIn, Headset, UserPlus, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MOBILE_MENU_SECTIONS, QUICK_MOBILE_TOOLS } from '../../config/navConfig';
 import type { MobileMenuSection, QuickMobileTool } from '../../config/navTypes';
@@ -122,16 +123,28 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
                     <span className="absolute inset-x-3 top-0 h-0.5 rounded-b-full bg-white/65" />
                   )}
                   <span className="flex items-start justify-between gap-2">
-                    <span
-                      className={cn(
-                        'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border transition-colors',
-                        isActive
-                          ? 'border-white/20 bg-white/15 text-white'
-                          : 'border-primary/15 bg-primary/10 text-primary group-hover/nav:bg-primary group-hover/nav:text-white'
-                      )}
-                    >
-                      <LinkIcon size={16} />
-                    </span>
+                    {link.imageSrc ? (
+                      <span className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-200/80 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-0.5 overflow-hidden shadow-2xs">
+                        <Image
+                          src={link.imageSrc}
+                          alt={link.label}
+                          fill
+                          sizes="32px"
+                          className="object-contain p-0.5"
+                        />
+                      </span>
+                    ) : (
+                      <span
+                        className={cn(
+                          'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border transition-colors',
+                          isActive
+                            ? 'border-white/20 bg-white/15 text-white'
+                            : 'border-primary/15 bg-primary/10 text-primary group-hover/nav:bg-primary group-hover/nav:text-white'
+                        )}
+                      >
+                        <LinkIcon size={16} />
+                      </span>
+                    )}
                     <span
                       className={cn(
                         'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-all',

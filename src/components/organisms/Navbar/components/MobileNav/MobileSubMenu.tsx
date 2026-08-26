@@ -2,8 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { MobileMenuSection } from '../../config/navTypes';
 
@@ -41,25 +42,38 @@ export const MobileSubMenu: React.FC<MobileSubMenuProps> = ({
           <ArrowLeft size={14} /> Back to Main Menu
         </button>
 
-        {/* Header Header */}
-        <div className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 px-3.5 py-3 shadow-xs">
-          <span className="text-[10px] font-extrabold uppercase tracking-normal text-primary block">
-            Explore Category
-          </span>
-          <div className="mt-2 flex items-center gap-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-primary/15 bg-primary/10 text-primary">
-              {React.createElement(activeSection.icon, { size: 17 })}
-            </span>
-            <div className="min-w-0">
-              <h3 className="font-syne text-[18px] font-black uppercase leading-none tracking-normal text-slate-900 dark:text-white">
-                {activeSection.label}
-              </h3>
-              {activeSection.desc && (
-                <p className="mt-1 text-xs font-medium leading-snug text-slate-500 dark:text-slate-400">
-                  {activeSection.desc}
-                </p>
-              )}
+        {/* Header Visual Card with Hardware Mockup */}
+        <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-3.5 shadow-xs flex items-center gap-3.5 overflow-hidden">
+          {activeSection.imageSrc ? (
+            <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-xl overflow-hidden shrink-0 border border-slate-200/80 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-1 shadow-2xs">
+              <Image
+                src={activeSection.imageSrc}
+                alt={activeSection.label}
+                fill
+                sizes="80px"
+                className="object-contain p-0.5 drop-shadow-xs"
+              />
             </div>
+          ) : (
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-primary/15 bg-primary/10 text-primary">
+              {React.createElement(activeSection.icon, { size: 20 })}
+            </span>
+          )}
+          <div className="min-w-0 flex-1">
+            {activeSection.badge && (
+              <span className="inline-flex items-center gap-1 text-[8.5px] font-syne font-black uppercase tracking-wider text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-full mb-1">
+                <Sparkles size={8.5} />
+                {activeSection.badge}
+              </span>
+            )}
+            <h3 className="font-syne text-[16px] font-bold text-slate-900 dark:text-white leading-tight">
+              {activeSection.label}
+            </h3>
+            {activeSection.desc && (
+              <p className="mt-0.5 text-[11px] font-medium leading-snug text-slate-500 dark:text-slate-400 line-clamp-2">
+                {activeSection.desc}
+              </p>
+            )}
           </div>
         </div>
 

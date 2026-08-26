@@ -56,6 +56,8 @@ export interface MobileMenuGroup {
 export interface MobileMenuSection extends NavLink {
   icon: IconComponent;
   groups: MobileMenuGroup[];
+  imageSrc?: string;
+  badge?: string;
 }
 
 export interface QuickMobileTool {
