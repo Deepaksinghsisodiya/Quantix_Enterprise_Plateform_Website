@@ -1,6 +1,6 @@
 import type { FooterLink, SocialLink } from '../types/FooterTypes';
 
-export const RESTAURANT_SITE_URL = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3000';
+export const RESTAURANT_SITE_URL = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3002';
 export const RETAIL_SITE_URL = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
 
 export const PRODUCT_LINKS: FooterLink[] = [

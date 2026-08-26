@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { IndustryProvider } from "@/context/IndustryContext";
 import { ContactModalProvider } from "@/context/ContactModalContext";
 import { FloatingContactButton } from "@/components/atoms/FloatingContactButton";
+import { FirstVisitOfferModal } from "@/components/organisms/OfferPopupModal/FirstVisitOfferModal";
 import { motion, useScroll, useSpring } from "framer-motion";
 
 // Simple wrapper used inside app pages – does NOT render <html>/<body>
@@ -34,6 +35,7 @@ export const PublicLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </Suspense>
           <FloatingContactButton />
+          <FirstVisitOfferModal />
         </div>
       </ContactModalProvider>
     </IndustryProvider>

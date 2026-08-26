@@ -1,10 +1,11 @@
 {
   "name": "quantix",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "node ./scripts/start-next-dev.js",
-    "dev:next": "next dev --webpack",
+    "dev:next": "next dev -p 3000 --webpack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

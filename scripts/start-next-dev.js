@@ -1,27 +1,66 @@
-import { execSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { platform } from 'node:os';
 import { fileURLToPath } from 'node:url';
+import http from 'node:http';
 import path from 'node:path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const url = 'http://localhost:3000';
+const PORT = 3000;
+const url = `http://localhost:${PORT}`;
 
 function openBrowser(target) {
   const platformName = platform();
   try {
     if (platformName === 'win32') {
-      execSync(`start "" "${target}"`, { stdio: 'ignore' });
+      spawn('cmd.exe', ['/c', 'start', '', target], { stdio: 'ignore', detached: true }).unref();
     } else if (platformName === 'darwin') {
-      execSync(`open "${target}"`, { stdio: 'ignore' });
+      spawn('open', [target], { stdio: 'ignore', detached: true }).unref();
     } else {
-      execSync(`xdg-open "${target}"`, { stdio: 'ignore' });
+      spawn('xdg-open', [target], { stdio: 'ignore', detached: true }).unref();
     }
   } catch {
-    // ignore if open command fails; next dev will still start
+    // ignore
   }
 }
 
-openBrowser(url);
-execSync('next dev --webpack', { stdio: 'inherit', cwd: __dirname + '/../' });
+let opened = false;
+function tryOpen() {
+  if (opened) return;
+  opened = true;
+  openBrowser(url);
+}
+
+function checkServerReady() {
+  const req = http.get(url, () => {
+    tryOpen();
+  });
+  req.on('error', () => {
+    if (!opened) {
+      setTimeout(checkServerReady, 300);
+    }
+  });
+  req.setTimeout(800, () => {
+    req.destroy();
+  });
+}
+
+// Start polling for server ready
+setTimeout(checkServerReady, 400);
+
+// Fallback timer: ensure browser opens even if polling encounters edge cases
+setTimeout(() => {
+  tryOpen();
+}, 3500);
+
+// Start next dev server on port 3000
+const child = spawn(`next dev -p ${PORT} --webpack`, {
+  shell: true,
+  stdio: 'inherit',
+  cwd: path.join(__dirname, '..'),
+});
+
+child.on('exit', (code) => {
+  process.exit(code ?? 0);
+});
