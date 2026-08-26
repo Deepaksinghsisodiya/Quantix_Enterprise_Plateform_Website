@@ -39,8 +39,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({
           aria-modal="true"
           aria-label="Mobile Navigation Drawer"
           className={cn(
-            'fixed inset-x-0 bottom-0 z-40 overflow-hidden border-t border-slate-200/80 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 shadow-2xl lg:hidden',
-            scrolled ? 'top-[42px] sm:top-[58px]' : 'top-[74px] sm:top-[96px]'
+            'absolute inset-x-0 top-full h-[calc(100dvh-100%)] z-40 overflow-hidden overscroll-contain border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-2xl lg:hidden'
           )}
         >
           {activeSection ? (

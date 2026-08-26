@@ -210,7 +210,7 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.25 }}
-          className="sticky bottom-0 z-10 mx-auto mt-2 flex w-full max-w-md flex-col gap-2.5 border-t border-slate-200/70 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-3.5"
+          className="sticky bottom-0 z-10 mx-auto mt-2 flex w-full max-w-md flex-col gap-2.5 border-t border-slate-200/70 dark:border-slate-800 bg-white dark:bg-slate-950 py-3.5"
         >
           {token ? (
             <>

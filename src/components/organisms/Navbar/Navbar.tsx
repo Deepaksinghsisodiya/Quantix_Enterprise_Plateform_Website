@@ -1,15 +1,27 @@
 'use client';
 
 import React, { useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { cn } from '@/lib/utils';
 import { useNavbarState } from './hooks/useNavbarState';
 import { useOutsideClick } from './hooks/useOutsideClick';
 import { TopPromoBanner } from './components/TopPromoBanner';
 import { BrandLogo } from './components/BrandLogo';
 import { DesktopNav } from './components/DesktopNav/DesktopNav';
-import { NavAuthActions } from './components/NavAuthActions';
 import { MobileNavTrigger } from './components/MobileNav/MobileNavTrigger';
 import { MobileNavDrawer } from './components/MobileNav/MobileNavDrawer';
+
+const NavAuthActions = dynamic(
+  () => import('./components/NavAuthActions').then((m) => m.NavAuthActions),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="hidden lg:flex items-center gap-3">
+        <div className="h-10 w-20 rounded-xl bg-slate-100 dark:bg-slate-800 animate-pulse" />
+      </div>
+    ),
+  }
+);
 
 const Navbar: React.FC = () => {
   const {
@@ -25,7 +37,7 @@ const Navbar: React.FC = () => {
     closeMegaMenu,
   } = useNavbarState();
 
-  const navRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
 
   // Close open dropdowns or mobile menu when clicking outside or pressing ESC
   useOutsideClick(navRef, () => {
@@ -35,18 +47,17 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 z-50 w-full flex flex-col">
+      <div ref={navRef} className="fixed top-0 left-0 z-50 w-full flex flex-col">
         {/* Top Promo Banner - Collapses smoothly on scroll */}
         <TopPromoBanner scrolled={scrolled} />
 
         {/* Main Navigation Bar */}
         <nav
-          ref={navRef}
           role="navigation"
           aria-label="Main Navigation"
           className={cn(
             'w-full bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800 relative transition-all duration-300',
-            scrolled ? 'shadow-md shadow-slate-900/5 py-2 sm:py-2.5' : 'shadow-sm py-2.5 sm:py-3'
+            scrolled ? 'shadow-md shadow-slate-900/5 py-1.5 sm:py-2.5' : 'shadow-sm py-2 sm:py-3'
           )}
           onMouseLeave={closeMegaMenu}
         >
@@ -70,17 +81,17 @@ const Navbar: React.FC = () => {
             </div>
           </div>
         </nav>
-      </div>
 
-      {/* Full-Screen Mobile Drawer */}
-      <MobileNavDrawer
-        mobileOpen={mobileOpen}
-        mobileSubMenu={mobileSubMenu}
-        scrolled={scrolled}
-        pathname={pathname}
-        onSetSubMenu={(label) => setMobileSubMenu(label)}
-        onClose={closeMobile}
-      />
+        {/* Full-Screen Mobile Drawer */}
+        <MobileNavDrawer
+          mobileOpen={mobileOpen}
+          mobileSubMenu={mobileSubMenu}
+          scrolled={scrolled}
+          pathname={pathname}
+          onSetSubMenu={(label) => setMobileSubMenu(label)}
+          onClose={closeMobile}
+        />
+      </div>
     </>
   );
 };
