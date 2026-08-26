@@ -31,14 +31,15 @@ export const CompanyMegaMenu: React.FC<CompanyMegaMenuProps> = ({
                 key={idx}
                 href={card.href || '/about'}
                 onClick={onClose}
-                className="group/card relative flex items-center gap-4 p-4 rounded-2xl bg-linear-to-br from-slate-50/90 via-slate-50/40 to-rose-500/3 dark:from-slate-900/60 dark:via-slate-900/30 dark:to-rose-500/5 border border-slate-200/80 dark:border-slate-800/80 hover:border-rose-500/40 transition-all duration-300 shadow-2xs hover:shadow-lg overflow-hidden"
+                className="group/card relative flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-rose-500/40 hover:bg-slate-50/50 dark:hover:bg-slate-850 transition-all duration-300 shadow-2xs hover:shadow-md overflow-hidden"
               >
-                <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0 border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+                <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-2xl overflow-hidden shrink-0 border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs flex items-center justify-center p-1.5">
                   <Image
-                    src={card.imageSrc || '/images/hero-restaurant.jpg'}
+                    src={card.imageSrc || '/images/foodhub_bundle_mockup.png'}
                     alt={card.title}
                     fill
-                    className="object-cover group-hover/card:scale-110 transition-transform duration-500"
+                    sizes="90px"
+                    className="object-contain p-0.5 group-hover/card:scale-105 transition-transform duration-300 drop-shadow-xs"
                   />
                 </div>
                 <div className="flex-1 space-y-1 min-w-0">
@@ -62,8 +63,8 @@ export const CompanyMegaMenu: React.FC<CompanyMegaMenuProps> = ({
           </div>
         )}
 
-        {/* Right Columns: Clean 2-Column Grid (8 cols) */}
-        <div className="col-span-8 space-y-3">
+        {/* Right Columns: 2 Ultra-Modern 2-Line Item Grids (8 cols / 2 sub-cols) */}
+        <div className="col-span-8 grid grid-cols-2 gap-8">
           {categories.map((cat: any) => (
             <div key={cat.categoryTitle} className="space-y-3">
               <div className="flex items-center gap-2 text-[10px] font-syne font-black uppercase tracking-widest text-primary select-none px-1">
@@ -71,7 +72,7 @@ export const CompanyMegaMenu: React.FC<CompanyMegaMenuProps> = ({
                 <span>{cat.categoryTitle}</span>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 max-w-2xl">
+              <div className="flex flex-col space-y-1.5">
                 {cat.items.map((item: any) => {
                   const ItemIcon = item.icon;
                   return (
@@ -79,9 +80,9 @@ export const CompanyMegaMenu: React.FC<CompanyMegaMenuProps> = ({
                       key={item.href}
                       href={item.href}
                       onClick={onClose}
-                      className="group/item flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-100/80 dark:hover:bg-slate-900/80 border border-transparent hover:border-slate-200/80 dark:hover:border-slate-800 transition-all duration-200"
+                      className="group/item flex items-start gap-3.5 p-2.5 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-200 dark:hover:border-slate-800 transition-all duration-200"
                     >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-slate-100 to-slate-200/60 dark:from-slate-900 dark:to-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 group-hover/item:border-primary/40 group-hover/item:bg-primary/10 group-hover/item:scale-110 transition-all duration-200 shadow-2xs mt-0.5">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 group-hover/item:border-primary/40 group-hover/item:bg-primary/10 group-hover/item:scale-110 transition-all duration-200 shadow-2xs mt-0.5">
                         <ItemIcon size={16} className={item.iconColor || 'text-primary'} />
                       </span>
                       <div className="min-w-0 flex-1">

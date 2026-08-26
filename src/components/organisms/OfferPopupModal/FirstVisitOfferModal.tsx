@@ -103,13 +103,12 @@ export const FirstVisitOfferModal: React.FC = () => {
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3.5 sm:p-4 overflow-y-auto">
-          {/* Backdrop */}
+          {/* Backdrop (Strict Mode - Outside clicks do not close) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            onClick={handleClose}
             className="fixed inset-0 bg-slate-950/70 backdrop-blur-xs"
           />
 

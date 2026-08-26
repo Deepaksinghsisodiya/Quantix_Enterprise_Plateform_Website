@@ -165,8 +165,8 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
             initial={{ opacity: 0, scale: 0.92, y: 15 }}
             animate={isShaking ? { x: [-8, 8, -6, 6, -4, 4, 0] } : { opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 15 }}
-            transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="relative z-10 w-full max-w-90 bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-slate-950/40 border border-slate-200/90 dark:border-slate-800 my-auto text-slate-800 dark:text-slate-100 select-none"
+            transition={isShaking ? { duration: 0.4, ease: "easeInOut" } : { duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 w-full max-w-[410px] sm:max-w-[425px] bg-white dark:bg-slate-900 rounded-2xl px-4 py-5 sm:px-5 sm:py-6 shadow-2xl shadow-slate-950/40 border border-slate-200/90 dark:border-slate-800 my-auto text-slate-800 dark:text-slate-100 select-none"
           >
             {/* Outer Top Right Corner Floating Close Button (X) */}
             <button
@@ -188,12 +188,12 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
                   {badgeText}
                 </span>
               )}
-              <h3 className="text-base sm:text-lg font-syne font-black text-slate-900 dark:text-white leading-snug tracking-tight max-w-67.5">
+              <h3 className="text-base sm:text-lg font-syne font-black text-slate-900 dark:text-white leading-snug tracking-tight max-w-sm">
                 {title}
               </h3>
 
               {subtitle && (
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium max-w-68.75 leading-tight">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium max-w-sm leading-tight">
                   {subtitle}
                 </p>
               )}
@@ -357,7 +357,7 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
                       ) : (
                         <>
                           <SendHorizontal size={14} className="stroke-[2.5]" />
-                          <span>{buttonText}</span>
+                          <span>{buttonText ? (buttonText.includes('_') ? buttonText.split('_').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ') : buttonText) : 'Start Free Trial'}</span>
                         </>
                       )}
                     </button>

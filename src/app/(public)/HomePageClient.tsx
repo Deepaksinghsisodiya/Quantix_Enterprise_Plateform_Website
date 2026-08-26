@@ -2,7 +2,6 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import HeroSection from "@/components/organisms/HeroSection/HeroSection";
-import NewsTickerMarquee from "@/components/organisms/NewsTickerMarquee/NewsTickerMarquee";
 import MainProductsShowcaseSection from "@/components/organisms/MainProductsShowcaseSection/MainProductsShowcaseSection";
 import { MerchantTypeExplainerSection } from "@/components/organisms/MerchantExplainer/MerchantTypeExplainerSection";
 import { IntegrationsTickerSection } from "@/components/organisms/IntegrationsTicker/IntegrationsTickerSection";
@@ -76,10 +75,7 @@ export default function HomePageClient() {
         <HeroSection />
       </section>
 
-      {/* 2. Feature & Badge Ticker Marquee */}
-      <NewsTickerMarquee />
-
-      {/* 3. Core Product Suite Showcase */}
+      {/* 2. Core Product Suite Showcase */}
       <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <MainProductsShowcaseSection />
       </section>

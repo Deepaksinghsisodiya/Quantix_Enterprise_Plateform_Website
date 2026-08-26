@@ -31,14 +31,15 @@ export const ResourcesMegaMenu: React.FC<ResourcesMegaMenuProps> = ({
                 key={idx}
                 href={card.href || '/help'}
                 onClick={onClose}
-                className="group/card relative flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-br from-slate-50/90 via-slate-50/40 to-blue-500/[0.03] dark:from-slate-900/60 dark:via-slate-900/30 dark:to-blue-500/[0.05] border border-slate-200/80 dark:border-slate-800/80 hover:border-blue-500/40 transition-all duration-300 shadow-2xs hover:shadow-lg overflow-hidden"
+                className="group/card relative flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500/40 hover:bg-slate-50/50 dark:hover:bg-slate-850 transition-all duration-300 shadow-2xs hover:shadow-md overflow-hidden"
               >
-                <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+                <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-2xl overflow-hidden shrink-0 border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs flex items-center justify-center p-1.5">
                   <Image
-                    src={card.imageSrc || '/images/hero-cafe.jpg'}
+                    src={card.imageSrc || '/images/nav_cloud_bundle.png'}
                     alt={card.title}
                     fill
-                    className="object-cover group-hover/card:scale-110 transition-transform duration-500"
+                    sizes="90px"
+                    className="object-contain p-0.5 group-hover/card:scale-105 transition-transform duration-300 drop-shadow-xs"
                   />
                 </div>
                 <div className="flex-1 space-y-1 min-w-0">
@@ -79,9 +80,9 @@ export const ResourcesMegaMenu: React.FC<ResourcesMegaMenuProps> = ({
                       key={item.href}
                       href={item.href}
                       onClick={onClose}
-                      className="group/item flex items-start gap-3.5 p-2.5 rounded-2xl hover:bg-slate-100/80 dark:hover:bg-slate-900/80 border border-transparent hover:border-slate-200/80 dark:hover:border-slate-800 transition-all duration-200"
+                      className="group/item flex items-start gap-3.5 p-2.5 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-200 dark:hover:border-slate-800 transition-all duration-200"
                     >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-slate-100 to-slate-200/60 dark:from-slate-900 dark:to-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 group-hover/item:border-primary/40 group-hover/item:bg-primary/10 group-hover/item:scale-110 transition-all duration-200 shadow-2xs mt-0.5">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 group-hover/item:border-primary/40 group-hover/item:bg-primary/10 group-hover/item:scale-110 transition-all duration-200 shadow-2xs mt-0.5">
                         <ItemIcon size={16} className={item.iconColor || 'text-primary'} />
                       </span>
                       <div className="min-w-0 flex-1">
