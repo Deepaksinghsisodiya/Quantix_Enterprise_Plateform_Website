@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -43,7 +43,7 @@ const SECTORS: EnterpriseSector[] = [
     category: "franchise",
     badge: "CENTRAL HQ",
     desc: "Centralized menu catalog distribution, franchise royalty tracking, regional price tiers, and consolidated P&L telemetry.",
-    image: "/images/ent_franchise_portal.png",
+    image: "/images/industries/franchise_portal_enterprise.png",
     icon: Building2,
     accentColor: "text-primary dark:text-primary-light bg-primary/10 border-primary/20",
     glowColor: "from-primary/15 to-transparent",
@@ -56,7 +56,7 @@ const SECTORS: EnterpriseSector[] = [
     category: "retail",
     badge: "SCALE & MULTI-LANE",
     desc: "High-speed barcode scanner billing, certified weighing scales, automated vendor purchase orders, and inter-store stock routing.",
-    image: "/images/ent_global_pos_bundle.png",
+    image: "/images/products/ent_global_pos.png",
     icon: ShoppingBag,
     accentColor: "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/50",
     glowColor: "from-emerald-500/15 to-transparent",
@@ -69,7 +69,7 @@ const SECTORS: EnterpriseSector[] = [
     category: "venues",
     badge: "HIGH-BURST OFFLINE",
     desc: "Sub-second offline transactions during peak event rushes, mobile hawker POS terminals, and zone-based inventory dispatching.",
-    image: "/images/ent_venues_pos.png",
+    image: "/images/industries/venues_stadium_enterprise.png",
     icon: Zap,
     accentColor: "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-900/50",
     glowColor: "from-blue-500/15 to-transparent",
@@ -82,7 +82,7 @@ const SECTORS: EnterpriseSector[] = [
     category: "franchise",
     badge: "WAREHOUSE MATRIX",
     desc: "Real-time central warehouse replenishment, lot/batch tracking, multi-tier safety stock alerts, and automated EDI supplier links.",
-    image: "/images/ent_supply_chain_bundle.png",
+    image: "/images/products/ent_inventory_matrix.png",
     icon: Layers,
     accentColor: "text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-900/50",
     glowColor: "from-purple-500/15 to-transparent",
@@ -95,7 +95,7 @@ const SECTORS: EnterpriseSector[] = [
     category: "hospitality",
     badge: "PACING & WINE VIP",
     desc: "Multi-course pacing, sommelier cellar inventory, tableside split checks, VIP clienteling, and private event banquet logs.",
-    image: "/images/ent_fine_dining_bundle.png",
+    image: "/images/industries/fine_dining_enterprise.png",
     icon: Utensils,
     accentColor: "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900/50",
     glowColor: "from-amber-500/15 to-transparent",
@@ -108,7 +108,7 @@ const SECTORS: EnterpriseSector[] = [
     category: "hospitality",
     badge: "15-SEC TURNOVER",
     desc: "15-second counter turnover, interactive self-ordering kiosks, multi-station kitchen KDS displays, and delivery aggregator auto-injection.",
-    image: "/images/ent_qsr_kiosk_bundle.png",
+    image: "/images/industries/qsr_kiosk_enterprise.png",
     icon: Tv,
     accentColor: "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/50",
     glowColor: "from-rose-500/15 to-transparent",

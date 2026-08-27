@@ -1,4 +1,4 @@
-// src/app/(public)/product-tour/page.tsx
+﻿// src/app/(public)/product-tour/page.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -420,7 +420,7 @@ export default function ProductTourPage() {
             {/* 3D Visual Mockup */}
             <div className="relative w-full aspect-16/10 flex items-center justify-center my-4">
               <img
-                src="/images/ent_global_pos_bundle.png"
+                src="/images/products/ent_global_pos.png"
                 alt="Quantix Enterprise POS Tour Preview"
                 className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
               />

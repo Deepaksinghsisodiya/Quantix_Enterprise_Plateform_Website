@@ -1,4 +1,4 @@
-// src/features/Industries/IndustriesSection.tsx
+﻿// src/features/Industries/IndustriesSection.tsx
 'use client';
 
 import React, { useState, useEffect } from "react";
@@ -74,7 +74,7 @@ const DEFAULT_INDUSTRIES: IndustryDto[] = [
       "Staff performance reports",
       "Returns & exchange handling"
     ],
-    imageUrl: "/images/hero-retail.jpg",
+    imageUrl: "/images/hero/hero_enterprise_inventory.jpg",
     statLabel: "Avg. Retail growth",
     statValue: "+34% avg. revenue growth"
   },
@@ -94,7 +94,7 @@ const DEFAULT_INDUSTRIES: IndustryDto[] = [
       "Reservation & waitlist management",
       "Delivery partner sync"
     ],
-    imageUrl: "/images/hero-restaurant.jpg",
+    imageUrl: "/images/hero/hero_enterprise_hq.jpg",
     statLabel: "Avg. Output speed",
     statValue: "+40% faster kitchen output"
   }
@@ -197,7 +197,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                 <div className="relative order-1 lg:order-2 mb-8 lg:mb-0">
                   <div className="relative aspect-[4/3] w-full rounded-3xl overflow-hidden shadow-2xl border border-slate-100">
                     <Image
-                      src={activeIndustry.imageUrl || "/images/hero-retail.jpg"}
+                      src={activeIndustry.imageUrl || "/images/hero/hero_enterprise_inventory.jpg"}
                       alt={activeIndustry.title}
                       fill
                       sizes="(max-width: 1024px) 100vw, 50vw"

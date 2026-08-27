@@ -1,4 +1,4 @@
-import {
+﻿import {
   Cloud,
   Layers,
   Monitor,
@@ -61,7 +61,7 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Tableside ordering, floor maps, KDS routing & split check payments.',
       ctaText: 'Launch Restaurant POS',
       href: '/products/restaurant-pos',
-      imageSrc: '/images/nav_restaurant_bundle.png',
+      imageSrc: '/images/navbar/nav_global_pos.png',
       badgeColor: 'text-amber-700 dark:text-amber-400 bg-amber-100/90 dark:bg-amber-900/30 border border-amber-300/40',
     },
     {
@@ -70,7 +70,7 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Barcode checkout, cashier permissions, inventory matrix & offline till.',
       ctaText: 'Launch Retail Register',
       href: '/products/retail-pos',
-      imageSrc: '/images/nav_retail_bundle.png',
+      imageSrc: '/images/navbar/nav_inventory.png',
       badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-900/30 border border-emerald-300/40',
     },
   ],
@@ -93,7 +93,7 @@ export const SOLUTIONS_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Interactive floor mapping, course pacing, 15-sec counter checkout & KDS routing.',
       ctaText: 'Explore Foodservice',
       href: '/solutions',
-      imageSrc: '/images/ent_global_pos_bundle.png',
+      imageSrc: '/images/products/ent_global_pos.png',
       badgeColor: 'text-amber-700 dark:text-amber-400 bg-amber-100/90 dark:bg-amber-900/30 border border-amber-300/40',
     },
     {
@@ -102,7 +102,7 @@ export const SOLUTIONS_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Central menu push, franchise royalty engine, store rankings & multi-store catalog.',
       ctaText: 'Explore Franchise Solutions',
       href: '/solutions/franchise',
-      imageSrc: '/images/ent_franchise_portal.png',
+      imageSrc: '/images/industries/franchise_portal_enterprise.png',
       badgeColor: 'text-purple-700 dark:text-purple-400 bg-purple-100/90 dark:bg-purple-900/30 border border-purple-300/40',
     },
   ],
@@ -136,7 +136,7 @@ export const INTEGRATIONS_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Card readers, tap-to-pay, Apple Pay & real-time payout reconciliation.',
       ctaText: 'Explore Payment Gateway',
       href: '/integrations/stripe',
-      imageSrc: '/images/nav_payment_bundle.png',
+      imageSrc: '/images/navbar/nav_payments.png',
       badgeColor: 'text-indigo-700 dark:text-indigo-400 bg-indigo-100/90 dark:bg-indigo-900/30 border border-indigo-300/40',
     },
     {
@@ -145,7 +145,7 @@ export const INTEGRATIONS_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Direct kitchen printer & KDS ticket injection without third-party tablets.',
       ctaText: 'Explore Delivery Sync',
       href: '/integrations/doordash',
-      imageSrc: '/images/ent_omnichannel_bundle.png',
+      imageSrc: '/images/products/ent_omnichannel.png',
       badgeColor: 'text-red-700 dark:text-red-400 bg-red-100/90 dark:bg-red-900/30 border border-red-300/40',
     },
   ],
@@ -176,7 +176,7 @@ export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Hybrid cloud topology, offline cashier cache & real-time ERP data pipelines.',
       ctaText: 'Open Master Guide',
       href: '/resources/pos-guide',
-      imageSrc: '/images/ent_guide_blueprint.png',
+      imageSrc: '/images/navbar/nav_guide_blueprint.png',
       badgeColor: 'text-blue-700 dark:text-blue-400 bg-blue-100/90 dark:bg-blue-900/30 border border-blue-300/40',
     },
     {
@@ -185,7 +185,7 @@ export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Calculate cost reductions, fee savings, and hardware amortization vs legacy POS.',
       ctaText: 'Launch ROI Calculator',
       href: '/roi-calculator',
-      imageSrc: '/images/ent_roi_analytics.png',
+      imageSrc: '/images/navbar/nav_roi_forecaster.png',
       badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-900/30 border border-emerald-300/40',
     },
   ],
@@ -213,7 +213,7 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[0],
     icon: Layers,
-    imageSrc: '/images/ent_global_pos_bundle.png',
+    imageSrc: '/images/products/ent_global_pos.png',
     badge: 'CORE POS PLATFORMS',
     groups: [
       {
@@ -228,7 +228,7 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[1],
     icon: Store,
-    imageSrc: '/images/ent_franchise_portal.png',
+    imageSrc: '/images/industries/franchise_portal_enterprise.png',
     badge: 'ALL INDUSTRY VERTICALS',
     groups: [
       {
@@ -252,7 +252,7 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[2],
     icon: RefreshCw,
-    imageSrc: '/images/nav_payment_bundle.png',
+    imageSrc: '/images/navbar/nav_payments.png',
     badge: 'PAYMENT & APPS SYNC',
     groups: [
       {
@@ -269,7 +269,7 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[4],
     icon: HelpCircle,
-    imageSrc: '/images/ent_guide_blueprint.png',
+    imageSrc: '/images/navbar/nav_guide_blueprint.png',
     badge: 'GUIDES & PLAYBOOKS',
     groups: [
       {

@@ -1,4 +1,4 @@
-// src/app/(public)/forgot-password/page.tsx
+﻿// src/app/(public)/forgot-password/page.tsx
 'use client';
 
 import React from 'react';
@@ -12,7 +12,7 @@ import { ATMButton } from '@/components/atoms/ATMButton';
 export default function ForgotPasswordPage() {
   return (
     <SplitAuthLayout
-      coverImage="/images/retail_stockroom_inventory.jpg"
+      coverImage="/images/products/ent_inventory_matrix.png"
       coverAlt="Quantix Enterprise Multi-Unit POS"
       coverHeadline="Reset your enterprise password."
       coverSubtext="Recover access to your central HQ dashboard, store cluster telemetry, and ERP data feeds."

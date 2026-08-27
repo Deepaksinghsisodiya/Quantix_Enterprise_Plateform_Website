@@ -1,4 +1,4 @@
-export type IntegrationDetail = {
+﻿export type IntegrationDetail = {
   slug: string;
   name: string;
   category: string;
@@ -39,7 +39,7 @@ export const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
     slug: 'paypal',
     name: 'PayPal',
     category: 'PAYMENTS & BNPL',
-    logo: '/images/demo-thumb-ai.png',
+    logo: '/images/navbar/nav_guide_blueprint.png',
     accent: '#003087',
     badge: 'Official PayPal Express & Venmo Partner',
     heroHeadline: 'Supercharge Checkout Conversion with PayPal, Venmo & Pay in 4',
@@ -108,7 +108,7 @@ export const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
     slug: 'stripe',
     name: 'Stripe',
     category: 'PAYMENTS',
-    logo: '/images/demo-thumb-ai.png',
+    logo: '/images/navbar/nav_guide_blueprint.png',
     accent: '#635BFF',
     badge: 'Enterprise Stripe Connect Partner',
     heroHeadline: 'Accept Global Card Payments & Subscriptions with Zero Friction',
@@ -173,7 +173,7 @@ export const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
     slug: 'authorize-net',
     name: 'Authorize.Net',
     category: 'PAYMENTS',
-    logo: '/images/demo-thumb-ai.png',
+    logo: '/images/navbar/nav_guide_blueprint.png',
     accent: '#003366',
     badge: 'Enterprise Visa Payment Gateway',
     heroHeadline: 'High-Volume Credit Card Processing & Automated Batching',
@@ -238,7 +238,7 @@ export const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
     slug: 'square',
     name: 'Square',
     category: 'POS & INVENTORY',
-    logo: '/images/demo-thumb-ai.png',
+    logo: '/images/navbar/nav_guide_blueprint.png',
     accent: '#006AFF',
     badge: 'Official Square Register Bridge',
     heroHeadline: 'Unify Square POS Terminals with Central Quantix Cloud Inventory',
@@ -303,7 +303,7 @@ export const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
     slug: 'doordash',
     name: 'DoorDash',
     category: 'DELIVERY DISPATCH',
-    logo: '/images/demo-thumb-ai.png',
+    logo: '/images/navbar/nav_guide_blueprint.png',
     accent: '#FF3008',
     badge: 'Direct DoorDash Drive POS Partner',
     heroHeadline: 'Automate DoorDash Orders Directly Into Kitchen Printers & POS',
@@ -368,7 +368,7 @@ export const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
     slug: 'uber-eats',
     name: 'Uber Eats',
     category: 'DELIVERY DISPATCH',
-    logo: '/images/demo-thumb-ai.png',
+    logo: '/images/navbar/nav_guide_blueprint.png',
     accent: '#06C167',
     badge: 'Direct Uber Eats Integration',
     heroHeadline: 'Streamline Uber Eats Delivery Tickets Directly to POS & KDS',

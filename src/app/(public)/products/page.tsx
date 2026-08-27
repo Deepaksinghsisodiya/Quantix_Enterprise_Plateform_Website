@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -42,7 +42,7 @@ const PRODUCTS: ProductCardItem[] = [
     category: "pos",
     icon: Utensils,
     badge: "MOST POPULAR",
-    image: "/images/nav_restaurant_bundle.png",
+    image: "/images/navbar/nav_global_pos.png",
     accentColor: "text-primary dark:text-primary-light bg-primary/10 border-primary/20",
     glowColor: "from-primary/15 to-transparent",
     tags: ["Floor Mapping", "KDS Routing", "Split Bills"],
@@ -56,7 +56,7 @@ const PRODUCTS: ProductCardItem[] = [
     category: "pos",
     icon: Store,
     badge: "SCANNER READY",
-    image: "/images/nav_retail_bundle.png",
+    image: "/images/navbar/nav_inventory.png",
     accentColor: "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/50",
     glowColor: "from-emerald-500/15 to-transparent",
     tags: ["Barcode Scanner", "Offline Till", "Shelf Labels"],
@@ -70,7 +70,7 @@ const PRODUCTS: ProductCardItem[] = [
     category: "cloud",
     icon: Cloud,
     badge: "CLOUD HUB",
-    image: "/images/ent_franchise_portal.png",
+    image: "/images/industries/franchise_portal_enterprise.png",
     accentColor: "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-900/50",
     glowColor: "from-blue-500/15 to-transparent",
     tags: ["Central Push", "Live Telemetry", "QuickBooks Sync"],
@@ -84,7 +84,7 @@ const PRODUCTS: ProductCardItem[] = [
     category: "cloud",
     icon: Server,
     badge: "ENTERPRISE SLA",
-    image: "/images/ent_global_pos_bundle.png",
+    image: "/images/products/ent_global_pos.png",
     accentColor: "text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-900/50",
     glowColor: "from-purple-500/15 to-transparent",
     tags: ["SAP / NetSuite", "SAML 2.0 SSO", "99.999% SLA"],
@@ -98,7 +98,7 @@ const PRODUCTS: ProductCardItem[] = [
     category: "digital",
     icon: Globe,
     badge: "ZERO COMMISSION",
-    image: "/images/ent_omnichannel_bundle.png",
+    image: "/images/products/ent_omnichannel.png",
     accentColor: "text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/40 border-cyan-200 dark:border-cyan-900/50",
     glowColor: "from-cyan-500/15 to-transparent",
     tags: ["Direct Web Sales", "BOPIS Pickup", "KDS Injection"],
@@ -112,7 +112,7 @@ const PRODUCTS: ProductCardItem[] = [
     category: "digital",
     icon: Smartphone,
     badge: "HANDHELD POS",
-    image: "/images/nav_restaurant_bundle.png",
+    image: "/images/navbar/nav_global_pos.png",
     accentColor: "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/50",
     glowColor: "from-rose-500/15 to-transparent",
     tags: ["Tableside Tap", "Line Busting", "Mobile Mesh"],
@@ -126,7 +126,7 @@ const PRODUCTS: ProductCardItem[] = [
     category: "cloud",
     icon: Server,
     badge: "BESPOKE ARCHITECTURE",
-    image: "/images/ent_guide_blueprint.png",
+    image: "/images/navbar/nav_guide_blueprint.png",
     accentColor: "text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-teal-200 dark:border-teal-900/50",
     glowColor: "from-teal-500/15 to-transparent",
     tags: ["Custom Workflows", "API Middleware", "Dedicated Architect"],

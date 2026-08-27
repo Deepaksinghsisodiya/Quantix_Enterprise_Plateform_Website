@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -402,12 +402,12 @@ export default async function IntegrationDetailPage({
               <div className="relative aspect-4/3 w-full flex items-center justify-center p-2 group">
                 <Image
                   src={
-                    integration.id === "stripe" ? "/images/ent_stripe_pos_bundle.png" :
-                    integration.category === "PAYMENTS" ? "/images/ent_stripe_pos_bundle.png" :
-                    integration.category === "DELIVERY" ? "/images/ent_delivery_dispatch_bundle.png" :
-                    integration.category === "ACCOUNTING" ? "/images/ent_bi_analytics_bundle.png" :
-                    integration.category === "INVENTORY" ? "/images/ent_supply_chain_bundle.png" :
-                    "/images/ent_global_pos_bundle.png"
+                    integration.id === "stripe" ? "/images/navbar/nav_payments.png" :
+                    integration.category === "PAYMENTS" ? "/images/navbar/nav_payments.png" :
+                    integration.category === "DELIVERY" ? "/images/products/ent_omnichannel.png" :
+                    integration.category === "ACCOUNTING" ? "/images/products/ent_bi_analytics.png" :
+                    integration.category === "INVENTORY" ? "/images/products/ent_inventory_matrix.png" :
+                    "/images/products/ent_global_pos.png"
                   }
                   alt={`${integration.name} 3D integration bundle`}
                   fill

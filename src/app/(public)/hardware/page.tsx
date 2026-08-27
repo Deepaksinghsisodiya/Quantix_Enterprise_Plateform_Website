@@ -1,4 +1,4 @@
-// src/app/(public)/hardware/page.tsx
+﻿// src/app/(public)/hardware/page.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -46,7 +46,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
     name: 'Kitchen Display (KDS) & Bump Bars',
     icon: Tv,
     desc: 'Heavy-duty kitchen touchscreens and physical bump bars rated for kitchen heat and grease.',
-    image: '/images/hero_kitchen_kds.jpg',
+    image: '/images/hero/hero_enterprise_hq.jpg',
     items: [
       {
         name: 'I-Series 4 for Android 15" / 22"',
@@ -54,7 +54,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'Ethernet / Wi-Fi / PoE',
         features: 'IP54 splash-resistant, multi-touch, VESA mountable',
         verified: true,
-        image: '/images/hero_kitchen_kds.jpg',
+        image: '/images/hero/hero_enterprise_hq.jpg',
       },
       {
         name: 'Logic Controls KB1700 Bump Bar',
@@ -62,7 +62,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'USB / PS/2',
         features: '17 programmable tactile keys, stainless steel casing',
         verified: true,
-        image: '/images/rest_kds_kitchen.jpg',
+        image: '/images/products/ent_global_pos.png',
       },
       {
         name: 'X-Series All-in-One KDS',
@@ -70,7 +70,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'LAN / Dual Wi-Fi',
         features: 'Fanless cooling, high-brightness kitchen panel',
         verified: true,
-        image: '/images/hero_kitchen_kds.jpg',
+        image: '/images/hero/hero_enterprise_hq.jpg',
       },
     ],
   },
@@ -79,7 +79,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
     name: 'Waiter Tableside Handhelds',
     icon: Tablet,
     desc: 'Lightweight handheld tablets for tableside ordering, seat numbering, and mobile tip checkout.',
-    image: '/images/nav_restaurant_bundle.png',
+    image: '/images/navbar/nav_global_pos.png',
     items: [
       {
         name: 'iPad 10.9" / iPad Mini 8.3"',
@@ -87,7 +87,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'Wi-Fi 6',
         features: 'Sub-second order fires, all-day battery life',
         verified: true,
-        image: '/images/hero_qr_ordering.jpg',
+        image: '/images/hero/hero_enterprise_omnichannel.jpg',
       },
       {
         name: 'Galaxy Tab Active4 Pro Rugged',
@@ -95,7 +95,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'Wi-Fi / 5G / NFC',
         features: 'Drop-proof MIL-STD-810H, S-Pen order entry',
         verified: true,
-        image: '/images/product_waiter_handheld.jpg',
+        image: '/images/products/enterprise_pos_terminal.png',
       },
       {
         name: 'PAX A920 Pro Mobile POS',
@@ -103,7 +103,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'Wi-Fi / 4G / Bluetooth',
         features: 'Integrated EMV card reader and receipt printer',
         verified: true,
-        image: '/images/nav_restaurant_bundle.png',
+        image: '/images/navbar/nav_global_pos.png',
       },
     ],
   },
@@ -112,7 +112,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
     name: 'Kitchen Impact & Receipt Printers',
     icon: Printer,
     desc: 'Heat-resistant 2-color ribbon kitchen impact printers and ultra-fast FOH receipt printers.',
-    image: '/images/ent_supply_chain_bundle.png',
+    image: '/images/products/ent_inventory_matrix.png',
     items: [
       {
         name: 'TM-U220B Kitchen Impact Printer',
@@ -120,7 +120,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'Ethernet / Serial',
         features: '2-color red/black printing for item modifiers, buzzer alert',
         verified: true,
-        image: '/images/retail_hardware_peripherals.jpg',
+        image: '/images/products/ent_inventory_matrix.png',
       },
       {
         name: 'TM-T88VII High-Speed Thermal',
@@ -128,7 +128,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'LAN / Wi-Fi / USB',
         features: '500 mm/sec receipt printing, sub-second guest check printing',
         verified: true,
-        image: '/images/rest_checkout_payments.jpg',
+        image: '/images/navbar/nav_payments.png',
       },
       {
         name: 'TSP143IV Bi-Directional Printer',
@@ -136,7 +136,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'CloudPRNT / LAN',
         features: 'Compact internal power supply, sticky linerless label support',
         verified: true,
-        image: '/images/ent_supply_chain_bundle.png',
+        image: '/images/products/ent_inventory_matrix.png',
       },
     ],
   },
@@ -145,7 +145,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
     name: 'Pay-at-Table Contactless Terminals',
     icon: CreditCard,
     desc: 'PCI-certified P2PE card readers with Apple Pay, Google Pay, and tableside tip suggestions.',
-    image: '/images/nav_payment_bundle.png',
+    image: '/images/navbar/nav_payments.png',
     items: [
       {
         name: 'BBPOS WisePOS E Smart Terminal',
@@ -153,7 +153,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'Wi-Fi / Ethernet',
         features: 'Color touch display, contactless Tap-to-Pay, P2PE encrypted',
         verified: true,
-        image: '/images/nav_payment_bundle.png',
+        image: '/images/navbar/nav_payments.png',
       },
       {
         name: 'Move/5000 Wireless Terminal',
@@ -161,7 +161,7 @@ const RESTAURANT_HARDWARE: RestaurantHardwareCategory[] = [
         connectivity: 'Wi-Fi / 4G Cellular',
         features: 'Pay-at-table tip selection, split checks, EMV chip reader',
         verified: true,
-        image: '/images/ent_venues_pos.png',
+        image: '/images/industries/venues_stadium_enterprise.png',
       },
     ],
   },
@@ -253,7 +253,7 @@ export default function RestaurantHardwarePage() {
               <div className="group/image relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white/80 p-2.5 shadow-2xl shadow-slate-200/70 dark:border-slate-800/90 dark:bg-darkSurface/60 dark:shadow-none transition-all duration-500 hover:border-primary/40">
                 <div className="relative aspect-16/11 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-950">
                   <Image
-                    src="/images/foodhub_pos_terminal.jpg"
+                    src="/images/hero/hero_enterprise_bundle.jpg"
                     alt="Foodhub-style commercial dual-screen restaurant POS countertop terminal"
                     fill
                     priority

@@ -1,4 +1,4 @@
-export interface HowItWorksStep {
+﻿export interface HowItWorksStep {
   number: string;
   badgeLabel: string;
   badgeIconName: "reach" | "process" | "delivery";
@@ -18,7 +18,7 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     badgeColor: "bg-indigo-100/90 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300 border-indigo-200/80 dark:border-indigo-800/60",
     title: "Connect core ERP & legacy systems",
     description: "Our solutions engineering team helps you bridge existing ERPs, payment gateways, and CRM platforms into the central Hub.",
-    imageSrc: "/images/ent_bi_analytics_bundle.png",
+    imageSrc: "/images/products/ent_bi_analytics.png",
     imageAlt: "Quantix Enterprise integration setup",
     bullets: [
       "Establish secure API connections to SAP, NetSuite, and Workday.",
@@ -32,7 +32,7 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     badgeColor: "bg-emerald-100/90 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200/80 dark:border-emerald-800/60",
     title: "Map multi-location structures",
     description: "Designate regional zones, franchise vs corporate groupings, tax profiles, and dynamic pricing tiers across the network.",
-    imageSrc: "/images/nav_cloud_bundle.png",
+    imageSrc: "/images/products/ent_cloud_hq.png",
     imageAlt: "Enterprise branch and hierarchy mapping",
     bullets: [
       "Define granular role-based access control (RBAC) and managerial permissions.",
@@ -46,7 +46,7 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     badgeColor: "bg-blue-100/90 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200/80 dark:border-blue-800/60",
     title: "Deploy POS & centralize operations",
     description: "Deploy modernized POS endpoints to physical stores while headquarters monitors live telemetry and controls operations.",
-    imageSrc: "/images/ent_global_pos_bundle.png",
+    imageSrc: "/images/products/ent_global_pos.png",
     imageAlt: "Enterprise cloud network rollout",
     bullets: [
       "Push menu changes, pricing updates, and promotions instantly to all branches.",

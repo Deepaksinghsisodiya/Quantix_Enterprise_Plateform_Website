@@ -1,4 +1,4 @@
-// src/app/(public)/api-docs/page.tsx
+﻿// src/app/(public)/api-docs/page.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -339,7 +339,7 @@ export default function ApiDocsPage() {
             {/* 3D Blueprint Visual Showcase */}
             <div className="relative w-full max-w-lg mx-auto aspect-16/10 flex items-center justify-center pt-2">
               <img
-                src="/images/ent_guide_blueprint.png"
+                src="/images/navbar/nav_guide_blueprint.png"
                 alt="Enterprise POS API Architecture Blueprint"
                 className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
               />

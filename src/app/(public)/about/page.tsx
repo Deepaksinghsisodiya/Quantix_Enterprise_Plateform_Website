@@ -1,4 +1,4 @@
-// src/app/(public)/about/page.tsx
+﻿// src/app/(public)/about/page.tsx
 'use client';
 
 import React from 'react';
@@ -37,7 +37,7 @@ export default function AboutPage() {
             {/* 3D Visual Showcase */}
             <div className="relative w-full max-w-lg mx-auto aspect-16/10 flex items-center justify-center pt-2">
               <img
-                src="/images/ent_global_pos_bundle.png"
+                src="/images/products/ent_global_pos.png"
                 alt="Quantix Enterprise Engineering Platform"
                 className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
               />

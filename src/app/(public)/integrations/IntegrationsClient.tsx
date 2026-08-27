@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -50,7 +50,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     categoryLabel: "PAYMENTS",
     desc: "Deploy custom fleet terminal configs, automated multi-merchant routing, P2PE card tokenization, and multi-currency payouts.",
     renderLogo: () => <SiStripe size={22} className="text-[#635BFF]" />,
-    image: "/images/ent_stripe_pos_bundle.png",
+    image: "/images/navbar/nav_payments.png",
     accentColor: "text-[#635BFF] bg-[#635BFF]/10 border-[#635BFF]/30",
     glowColor: "from-[#635BFF]/15 to-transparent",
     tags: ["Fleet Management", "P2PE Tokenization", "Multi-Currency"],
@@ -63,7 +63,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     categoryLabel: "PAYMENTS",
     desc: "Enterprise merchant vault processing, advanced fraud detection suite (AFDS), recurring catering billing, and secure customer profiles.",
     renderLogo: () => <AuthorizeNetIcon size={22} />,
-    image: "/images/ent_venues_pos.png",
+    image: "/images/industries/venues_stadium_enterprise.png",
     accentColor: "text-[#1E3A5F] dark:text-sky-400 bg-sky-50 dark:bg-sky-950/40 border-sky-200 dark:border-sky-900/50",
     glowColor: "from-sky-500/15 to-transparent",
     tags: ["Customer Vault", "AFDS Fraud Suite", "Batch Settlement"],
@@ -76,7 +76,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     categoryLabel: "PAYMENTS",
     desc: "Manage multi-unit Square Terminal and Reader devices with remote lockouts, unified gift card balances, and offline mode resilience.",
     renderLogo: () => <SiSquare size={20} className="text-slate-900 dark:text-white" />,
-    image: "/images/nav_payment_bundle.png",
+    image: "/images/navbar/nav_payments.png",
     accentColor: "text-slate-900 dark:text-slate-100 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700",
     glowColor: "from-slate-500/15 to-transparent",
     tags: ["Square Fleet", "Universal Gift Cards", "Offline Mode"],
@@ -89,7 +89,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     categoryLabel: "ERP / ACCOUNTING",
     desc: "Automate consolidated daily branch shift closures, multi-state sales tax journal entries, and real-time inventory COGS sync.",
     renderLogo: () => <SiQuickbooks size={22} className="text-[#2CA01C]" />,
-    image: "/images/ent_accounting_sync_bundle.png",
+    image: "/images/navbar/nav_payments.png",
     accentColor: "text-[#2CA01C] bg-[#2CA01C]/10 border-[#2CA01C]/30",
     glowColor: "from-[#2CA01C]/15 to-transparent",
     tags: ["Multi-Branch Ledgers", "Auto Z-Reports", "COGS Sync"],
@@ -102,7 +102,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     categoryLabel: "E-COMMERCE",
     desc: "Unified enterprise catalog distribution, bi-directional multi-store stock reservations, and 2-hour BOPIS order routing.",
     renderLogo: () => <SiShopify size={22} className="text-[#7AB55C]" />,
-    image: "/images/ent_omnichannel_bundle.png",
+    image: "/images/products/ent_omnichannel.png",
     accentColor: "text-[#7AB55C] bg-[#7AB55C]/10 border-[#7AB55C]/30",
     glowColor: "from-[#7AB55C]/15 to-transparent",
     tags: ["BOPIS Pickup", "Shopify Plus", "Store Routing"],
@@ -115,7 +115,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     categoryLabel: "DELIVERY MARKETPLACE",
     desc: "Inject online delivery orders directly into restaurant KDS screens and dispatch white-label delivery drivers automatically.",
     renderLogo: () => <SiDoordash size={22} className="text-[#FF3008]" />,
-    image: "/images/ent_delivery_dispatch_bundle.png",
+    image: "/images/products/ent_omnichannel.png",
     accentColor: "text-[#FF3008] bg-[#FF3008]/10 border-[#FF3008]/30",
     glowColor: "from-[#FF3008]/15 to-transparent",
     tags: ["Direct KDS Injection", "Auto 86 Sync", "DoorDash Drive"],
@@ -128,7 +128,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     categoryLabel: "DELIVERY MARKETPLACE",
     desc: "Synchronize multi-location digital menus, pricing tiers, and delivery ticket tracking without manual tablet entry.",
     renderLogo: () => <SiUbereats size={22} className="text-[#06C167]" />,
-    image: "/images/ent_venues_pos.png",
+    image: "/images/industries/venues_stadium_enterprise.png",
     accentColor: "text-[#06C167] bg-[#06C167]/10 border-[#06C167]/30",
     glowColor: "from-[#06C167]/15 to-transparent",
     tags: ["Zero Tablet Clutter", "Dynamic Menu Sync", "Courier Tracking"],

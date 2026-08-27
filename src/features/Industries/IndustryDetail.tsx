@@ -1,4 +1,4 @@
-// src/features/Industries/IndustryDetail.tsx
+﻿// src/features/Industries/IndustryDetail.tsx
 'use client';
 
 import React, { useMemo } from "react";
@@ -44,7 +44,7 @@ const INDUSTRIES_DATA: Record<string, IndustryData> = {
     title: "Retail POS Solutions",
     tagline: "SMART INVENTORY & SCALE FOR RETAIL",
     icon: <Store className="h-10 w-10 text-primary" />,
-    backgroundImage: "/images/retail_fashion_boutique.jpg",
+    backgroundImage: "/images/solutions/solution_retail_boutique.png",
     heroHeadline: "Omnichannel inventory sync for modern storefronts",
     statNumber: "45%",
     statLabel: "Average Inventory Efficiency Gain",
@@ -60,7 +60,7 @@ const INDUSTRIES_DATA: Record<string, IndustryData> = {
     title: "Restaurant POS Systems",
     tagline: "SPEED, TABLES & TABLETS FOR HOSPITALITY",
     icon: <Utensils className="h-10 w-10 text-primary" />,
-    backgroundImage: "/images/solution_fine_dining.jpg",
+    backgroundImage: "/images/solutions/solution_fine_dining.png",
     heroHeadline: "Kitchen flow and floor plan sync in real time",
     statNumber: "3.2x",
     statLabel: "Faster Table Turnaround Rate",
@@ -76,7 +76,7 @@ const INDUSTRIES_DATA: Record<string, IndustryData> = {
     title: "Grocery POS Systems",
     tagline: "HIGH-VOLUME SPEED & WEIGHING SCALES",
     icon: <ShoppingBag className="h-10 w-10 text-primary" />,
-    backgroundImage: "/images/retail_grocery_scale.jpg",
+    backgroundImage: "/images/solutions/solution_supermarket.png",
     heroHeadline: "Process thousands of SKU items in seconds",
     statNumber: "0.8s",
     statLabel: "Average Checkout Processing Speed",
@@ -92,7 +92,7 @@ const INDUSTRIES_DATA: Record<string, IndustryData> = {
     title: "Cafes & Bars POS Setup",
     tagline: "QUICK ORDERS & MODIFIERS FOR HIGH PACES",
     icon: <Coffee className="h-10 w-10 text-primary" />,
-    backgroundImage: "/images/solution_cafe_bakery.jpg",
+    backgroundImage: "/images/solutions/solution_cafe_bakery.png",
     heroHeadline: "Rapid transactions, open tabs, and happy customers",
     statNumber: "28%",
     statLabel: "Increase in Beverage sales",
@@ -108,7 +108,7 @@ const INDUSTRIES_DATA: Record<string, IndustryData> = {
     title: "Food Truck Mobile POS",
     tagline: "CELLULAR SYNC & MOBILE CARD READERS",
     icon: <Truck className="h-10 w-10 text-primary" />,
-    backgroundImage: "/images/solution_qsr_kiosk.jpg",
+    backgroundImage: "/images/solutions/solution_qsr_kiosk.png",
     heroHeadline: "Robust POS system designed to travel with you",
     statNumber: "100%",
     statLabel: "Offline-First Reliability",
@@ -136,7 +136,7 @@ export const IndustryDetail: React.FC<IndustryDetailProps> = ({
         title: apiIndustry.title || apiIndustry.name || "",
         tagline: (apiIndustry.name || apiIndustry.title || "").toUpperCase(),
         icon: ICON_MAP[slug] || <Store className="h-10 w-10 text-primary" />,
-        backgroundImage: apiIndustry.imageUrl || "/images/hero-retail.jpg",
+        backgroundImage: apiIndustry.imageUrl || "/images/hero/hero_enterprise_inventory.jpg",
         heroHeadline: apiIndustry.description || "",
         statNumber: apiIndustry.statValue || "30%",
         statLabel: apiIndustry.statLabel || "Process Efficiency Gain",
