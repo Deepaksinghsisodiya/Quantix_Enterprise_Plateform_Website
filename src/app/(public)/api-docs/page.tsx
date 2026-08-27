@@ -17,6 +17,7 @@ import {
   Radio,
   Server,
   ArrowRight,
+  ChevronRight,
   Database,
   Lock,
   Cpu,
