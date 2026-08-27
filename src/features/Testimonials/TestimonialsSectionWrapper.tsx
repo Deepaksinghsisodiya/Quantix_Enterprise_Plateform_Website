@@ -1,4 +1,5 @@
-// src/features/Testimonials/TestimonialsSectionWrapper.tsx
+'use client';
+
 import React from 'react';
 import { useGetTestimonialsQuery } from './services/TestimonialsServices';
 import TestimonialsSection from './TestimonialsSection';
