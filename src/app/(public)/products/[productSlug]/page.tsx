@@ -64,26 +64,26 @@ type ProductSolution = {
 const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
   "restaurant-pos": {
     slug: "restaurant-pos",
-    eyebrow: "Restaurant & Kitchen POS",
+    eyebrow: "Enterprise Restaurant & Dining",
     title: "Restaurant POS & Kitchen System",
     description:
-      "Equip your restaurant with visual floor mapping, course pacing, complex bill splitting, QR ordering, and robust back-of-house kitchen displays.",
+      "Run multi-room floor layouts, course pacing, complex tableside bill splitting, QR self-ordering, and multi-station KDS routing from one enterprise-ready POS stack.",
     points: [
-      { title: "Course-Paced Routing", desc: "Fire starters, mains, and desserts in perfect sequence to the kitchen KDS displays." },
-      { title: "Visual Table Floor Plans", desc: "Track table status, guest seat counts, and server sections in real time." },
-      { title: "Advanced Bill Splitting", desc: "Split checks by seat, fractional amount, or individual items easily at tableside." },
+      { title: "Course-Paced KDS Routing", desc: "Fire starters, mains, and desserts in perfect sequence across kitchen station screens." },
+      { title: "Interactive Floor Plans", desc: "Track table status, guest seat counts, split checks, and server sections in real time." },
+      { title: "Sub-4ms Offline Till Mesh", desc: "Keep registers and tableside billing running during broadband outages with zero downtime." },
     ],
     workflows: [
-      { title: "Tableside Handhelds", desc: "Equip servers with mobile tablets to take orders and process payments directly at the table." },
-      { title: "Multi-Station KDS Sync", desc: "Instant order ticket routing to grill, bar, salad, and expo prep station screens." },
-      { title: "Tip & Shift Pooling", desc: "Manage server checkouts, tip pooling distribution, and cash drawer reconciliations." },
-      { title: "Direct QR Table Ordering", desc: "Let diners scan QR codes on tables to load the interactive restaurant menu and pay instantly." },
-      { title: "Menu & Modifier Trees", desc: "Custom order buttons for recipe variants, add-ons, temperatures, and allergy warnings." },
-      { title: "Inventory & Recipe Costing", desc: "Link menu items to ingredient usage weights and calculate dish profit margins in real time." },
+      { title: "Tableside Server Handhelds", desc: "Equip floor staff with mobile handheld tablets for tableside ordering, ticket firing, and contactless payments." },
+      { title: "Multi-Station KDS Sync", desc: "Instant order ticket routing to grill, bar, salad, assembly, and expo prep station screens." },
+      { title: "Tip Pooling & Shift Ledgers", desc: "Manage server checkouts, tip pooling distribution, blind cash counts, and automated Z-reports." },
+      { title: "QR Table Self-Ordering", desc: "Let diners scan QR codes on tables to load the interactive restaurant menu and pay instantly via Apple Pay." },
+      { title: "Menu & Modifier Trees", desc: "Custom order buttons for recipe variants, add-ons, temperatures, cooking notes, and allergy warnings." },
+      { title: "Recipe Costing & Inventory", desc: "Link menu items to ingredient usage weights and calculate dish profit margins in real time." },
     ],
     imageSrc: "/images/nav_restaurant_bundle.png",
     imageAlt: "Full service restaurant POS and kitchen management system",
-    topBadge: "Full-Service Dining",
+    topBadge: "Multi-Location POS",
     bottomBadge: "Table Ops & Pacing",
     ctaLabel: "Start Restaurant POS Trial",
     icon: ChefHat,
@@ -96,14 +96,14 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
   },
   "retail-pos": {
     slug: "retail-pos",
-    eyebrow: "Retail & Inventory Registers",
+    eyebrow: "Retail & Supermarket Chains",
     title: "Retail POS & Inventory Register",
     description:
-      "Rapid barcode scanning billing, real-time stock deductions, cashier drawer controls, shelf label printing, and offline till continuity for retail stores.",
+      "Rapid barcode scanning billing, real-time stock deductions, cashier drawer controls, shelf label printing, and offline till continuity for retail chains.",
     points: [
-      { title: "Barcode Checkout Speed", desc: "Scan items instantly with handheld or high-speed USB barcode readers." },
+      { title: "High-Speed Barcode Billing", desc: "Scan items instantly with handheld or high-speed USB barcode readers and scales." },
       { title: "Offline Till Continuity", desc: "Process checkout and print receipts even during internet broadband dropouts." },
-      { title: "Real-Time Stock Control", desc: "Track inventory levels, matrix items (size/color), and automatic low-stock alerts." },
+      { title: "Real-Time Stock Matrix", desc: "Track inventory levels, matrix items (size/color), and automatic low-stock alerts." },
     ],
     workflows: [
       { title: "Barcode Lookup & Scale Sync", desc: "High-speed 1D/2D barcode scanning with certified weighing scale integrations." },
@@ -123,10 +123,10 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
   },
   "cloud-pos": {
     slug: "cloud-pos",
-    eyebrow: "Cloud Back-Office Hub & Analytics",
+    eyebrow: "Multi-Store Chains & Franchises",
     title: "Cloud POS & Multi-Store Telemetry",
     description:
-      "Centralized cloud hub to control pricing, menus, live inventory sync, employee shift permissions, and consolidated branch analytics.",
+      "Centralized cloud back-office hub to control pricing, menus, live inventory sync, employee shift permissions, and consolidated branch analytics.",
     points: [
       { title: "Central Store Control", desc: "Manage catalog pricing, store menus, and promos across all branches." },
       { title: "Live Branch Telemetry", desc: "View real-time sales revenue, cashier performance, and hourly footfall." },
@@ -152,7 +152,7 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
     eyebrow: "Enterprise Multi-Location Networks",
     title: "Enterprise POS for Large Scale Chains",
     description:
-      "Role-permission matrices, central catalog rollouts, regional dashboards, ERP integrations, and 24/7 dedicated SLA operations.",
+      "Role-permission matrices, central catalog rollouts, regional dashboards, SAP/Oracle ERP integrations, and 24/7 dedicated SLA operations.",
     points: [
       { title: "Role Permission Governance", desc: "Granular access control for cashiers, managers, regional leads, and admins." },
       { title: "Custom ERP & API Middleware", desc: "Connect Quantix with SAP, Oracle, NetSuite, and enterprise ERP systems." },
@@ -175,7 +175,7 @@ const PRODUCT_SOLUTIONS: Record<string, ProductSolution> = {
   },
   "websites": {
     slug: "websites",
-    eyebrow: "Direct Online Ordering & Web Storefront",
+    eyebrow: "Direct Online Channels",
     title: "Website Ordering & Online Storefront",
     description:
       "Direct branded web ordering for pickup and delivery, QR code menus, and direct order injection into POS and kitchen KDS.",
@@ -496,7 +496,7 @@ export default async function ProductDetailPage({
 
   return (
     <>
-      {/* 1. Hero Section (Matching Restaurant Benchmark) */}
+      {/* 1. Hero Section (Exact Layout of solutions/restaurants) */}
       <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
         <div className="site-container relative z-10 px-4 sm:px-6">
           <div className="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
@@ -568,7 +568,7 @@ export default async function ProductDetailPage({
         </div>
       </section>
 
-      {/* 2. Industry Workflows Section (Matching Restaurant Benchmark) */}
+      {/* 2. Industry Workflows Bento Section (Exact Layout of solutions/restaurants) */}
       <section className="section-py bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80">
         <div className="site-container px-4 sm:px-6">
           <div className="mb-10 text-center max-w-2xl mx-auto">
@@ -577,7 +577,7 @@ export default async function ProductDetailPage({
               Engineered For {product.title}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
-              Purpose-built capabilities engineered to streamline operations and elevate customer experience.
+              Purpose-built capabilities engineered to streamline operations and scale multi-unit performance.
             </p>
           </div>
 
