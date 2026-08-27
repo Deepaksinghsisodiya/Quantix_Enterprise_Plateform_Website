@@ -1,4 +1,4 @@
-﻿// src/app/(public)/enterprise-vs-standalone/page.tsx
+// src/app/(public)/enterprise-vs-standalone/page.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -59,7 +59,7 @@ export default function EnterpriseVsStandalonePage() {
               {/* 3D Visual Mockup */}
               <div className="relative aspect-16/10 w-full flex items-center justify-center">
                 <img
-                  src="/images/products/ent_global_pos.png"
+                  src="/images/ent_global_pos_bundle.png"
                   alt="Quantix Cloud Enterprise POS"
                   className="w-full h-full object-contain drop-shadow-xl"
                 />
@@ -107,7 +107,7 @@ export default function EnterpriseVsStandalonePage() {
               {/* 3D Visual Mockup */}
               <div className="relative aspect-16/10 w-full flex items-center justify-center">
                 <img
-                  src="/images/navbar/nav_inventory.png"
+                  src="/images/nav_retail_bundle.png"
                   alt="Quantix Offline Standalone POS"
                   className="w-full h-full object-contain drop-shadow-xl"
                 />

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import Link from 'next/link';
@@ -35,7 +35,7 @@ export const ResourcesMegaMenu: React.FC<ResourcesMegaMenuProps> = ({
               >
                 <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-2xl overflow-hidden shrink-0 bg-transparent flex items-center justify-center p-1">
                   <Image
-                    src={card.imageSrc || '/images/products/ent_cloud_hq.png'}
+                    src={card.imageSrc || '/images/nav_cloud_bundle.png'}
                     alt={card.title}
                     fill
                     sizes="90px"

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
@@ -47,7 +47,7 @@ const ENTERPRISE_RESOURCES: Resource[] = [
     readTime: "8 min read",
     fileSize: "2.1 MB",
     fileName: "quantix_franchise_pos_architecture.pdf",
-    image: "/images/navbar/nav_guide_blueprint.png",
+    image: "/images/ent_guide_blueprint.png",
     href: "/resources/pos-guide",
     tags: ["HQ Push", "Multi-Branch", "Branch Overrides"],
   },
@@ -64,7 +64,7 @@ const ENTERPRISE_RESOURCES: Resource[] = [
     readTime: "Excel Tool",
     fileSize: "940 KB",
     fileName: "quantix_inventory_safety_stock_model.xlsx",
-    image: "/images/navbar/nav_roi_forecaster.png",
+    image: "/images/ent_roi_analytics.png",
     tags: ["Safety Stock", "Shrinkage Logs", "Reorder Triggers"],
   },
   {
@@ -80,7 +80,7 @@ const ENTERPRISE_RESOURCES: Resource[] = [
     readTime: "10 min read",
     fileSize: "3.4 MB",
     fileName: "quantix_pos_to_erp_integration_guide.pdf",
-    image: "/images/navbar/nav_payments.png",
+    image: "/images/ent_accounting_sync_bundle.png",
     tags: ["SAP / NetSuite", "Webhooks", "COGS Ledgers"],
   },
   {
@@ -96,7 +96,7 @@ const ENTERPRISE_RESOURCES: Resource[] = [
     readTime: "7 min read",
     fileSize: "1.6 MB",
     fileName: "quantix_pci_tokenization_brief.pdf",
-    image: "/images/navbar/nav_payments.png",
+    image: "/images/nav_payment_bundle.png",
     tags: ["P2PE Encryption", "PCI-DSS Tier 1", "SAML SSO"],
   },
   {
@@ -112,7 +112,7 @@ const ENTERPRISE_RESOURCES: Resource[] = [
     readTime: "Checklist",
     fileSize: "850 KB",
     fileName: "quantix_enterprise_settlement_sop.pdf",
-    image: "/images/industries/franchise_portal_enterprise.png",
+    image: "/images/ent_franchise_portal.png",
     tags: ["Blind Cash Counts", "Manager Signoff", "Auto Z-Reports"],
   },
 ];
@@ -340,7 +340,7 @@ export default function ResourcesClient() {
             {/* Free-Floating 3D Blueprint Mockup */}
             <div className="lg:col-span-5 relative h-56 sm:h-64 flex items-center justify-center">
               <img
-                src="/images/navbar/nav_guide_blueprint.png"
+                src="/images/ent_guide_blueprint.png"
                 alt="Enterprise POS Architecture Blueprint"
                 className="w-full h-full object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500"
               />

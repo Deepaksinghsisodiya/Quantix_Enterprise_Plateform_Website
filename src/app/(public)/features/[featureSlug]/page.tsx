@@ -1,4 +1,4 @@
-﻿// src/app/(public)/features/[featureSlug]/page.tsx
+// src/app/(public)/features/[featureSlug]/page.tsx
 "use client";
 
 import React from "react";
@@ -43,18 +43,18 @@ type FeatureCard = {
 };
 
 const CARD_IMAGE_BY_KEYWORD: Array<{ keywords: string[]; src: string; alt: string }> = [
-  { keywords: ["kitchen", "prep", "recipe", "food", "dining"], src: "/images/products/ent_global_pos.png", alt: "Restaurant kitchen workflow" },
-  { keywords: ["order", "ordering", "checkout", "customer", "guest", "pickup", "delivery"], src: "/images/products/ent_omnichannel.png", alt: "Connected ordering workflow" },
-  { keywords: ["table", "floor", "cafe", "restaurant"], src: "/images/navbar/nav_global_pos.png", alt: "Restaurant service floor" },
-  { keywords: ["stock", "inventory", "supplier", "catalog", "product", "barcode", "shelf"], src: "/images/products/ent_inventory_matrix.png", alt: "Inventory and catalog workflow" },
-  { keywords: ["mobile", "handheld", "app", "portal"], src: "/images/navbar/nav_global_pos.png", alt: "Mobile POS workflow" },
-  { keywords: ["payment", "bill", "cash", "refund", "discount", "loyalty", "reward"], src: "/images/navbar/nav_payments.png", alt: "POS checkout workflow" },
+  { keywords: ["kitchen", "prep", "recipe", "food", "dining"], src: "/images/ent_global_pos_bundle.png", alt: "Restaurant kitchen workflow" },
+  { keywords: ["order", "ordering", "checkout", "customer", "guest", "pickup", "delivery"], src: "/images/ent_omnichannel_bundle.png", alt: "Connected ordering workflow" },
+  { keywords: ["table", "floor", "cafe", "restaurant"], src: "/images/nav_restaurant_bundle.png", alt: "Restaurant service floor" },
+  { keywords: ["stock", "inventory", "supplier", "catalog", "product", "barcode", "shelf"], src: "/images/ent_supply_chain_bundle.png", alt: "Inventory and catalog workflow" },
+  { keywords: ["mobile", "handheld", "app", "portal"], src: "/images/nav_restaurant_bundle.png", alt: "Mobile POS workflow" },
+  { keywords: ["payment", "bill", "cash", "refund", "discount", "loyalty", "reward"], src: "/images/nav_payment_bundle.png", alt: "POS checkout workflow" },
 ];
 
 const getCardImage = (title: string) => {
   const normalizedTitle = title.toLowerCase();
   return CARD_IMAGE_BY_KEYWORD.find(({ keywords }) => keywords.some((keyword) => normalizedTitle.includes(keyword))) ?? {
-    src: "/images/products/ent_global_pos.png",
+    src: "/images/ent_global_pos_bundle.png",
     alt: "Quantix platform workflow",
   };
 };
@@ -149,7 +149,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Responsive web ordering portal with server-rendered menus, secure checkout handoff, POS order injection, KDS routing, availability sync, customer status messaging, and fulfillment channel rules.",
     visual: {
-      imageSrc: "/images/products/ent_omnichannel.png",
+      imageSrc: "/images/online_ordering_3d.png",
       imageAlt: "Branded online ordering portal connected to POS workflows",
       topBadge: "Direct ordering",
       bottomBadge: "Website, POS and kitchen connected",
@@ -229,7 +229,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Locked-down kiosk mode interface for touchscreen ordering, menu availability sync, integrated payment terminal status, thermal receipt printing, and POS/KDS order routing.",
     visual: {
-      imageSrc: "/images/products/ent_omnichannel.png",
+      imageSrc: "/images/online_ordering_3d.png",
       imageAlt: "Self-service kiosk ordering workflow connected to POS and kitchen display",
       topBadge: "Guest self-ordering",
       bottomBadge: "Connected POS + KDS workflow",
@@ -309,7 +309,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Tokenized table sessions with browser-based ordering, menu availability sync, table mapping, secure checkout handoff, POS order creation, KDS routing, and staff service alerts.",
     visual: {
-      imageSrc: "/images/products/ent_omnichannel.png",
+      imageSrc: "/images/mobile_app_3d.png",
       imageAlt: "Tableside QR ordering mobile workflow",
       topBadge: "Scan to order",
       bottomBadge: "Table session connected to POS",
@@ -389,7 +389,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Low-latency order event stream with station routing rules, prep timers, ticket bump states, local network fallback, role-specific displays, and POS/KDS status synchronization.",
     visual: {
-      imageSrc: "/images/products/ent_global_pos.png",
+      imageSrc: "/images/kitchen_display_3d.png",
       imageAlt: "Kitchen display system station workflow",
       topBadge: "Live kitchen routing",
       bottomBadge: "Prep stations and expo aligned",
@@ -469,7 +469,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Dispatch workflow layer with POS order state, KDS readiness events, driver assignment fields, delivery zone rules, customer notification triggers, and fulfillment status synchronization.",
     visual: {
-      imageSrc: "/images/hero/hero_enterprise_omnichannel.jpg",
+      imageSrc: "/images/hero-local.png",
       imageAlt: "Delivery dispatch and order handoff workflow",
       topBadge: "Dispatch control",
       bottomBadge: "Orders, drivers and kitchen aligned",
@@ -549,7 +549,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Customer profile and campaign workflow with POS purchase history, reward balance tracking, offer rules, redemption controls, segment filters, and checkout-level loyalty visibility.",
     visual: {
-      imageSrc: "/images/navbar/nav_guide_blueprint.png",
+      imageSrc: "/images/demo-thumb-ai.png",
       imageAlt: "Marketing and loyalty customer dashboard",
       topBadge: "Customer growth",
       bottomBadge: "Rewards connected to checkout",
@@ -629,7 +629,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Payment workflow layer using gateway tokenization, TLS-protected checkout handoff, payment status callbacks, refund and void controls, tip capture states, and POS receipt reconciliation.",
     visual: {
-      imageSrc: "/images/navbar/nav_guide_blueprint.png",
+      imageSrc: "/images/demo-thumb.jpg",
       imageAlt: "Secure POS payment terminal and checkout workflow",
       topBadge: "Tokenized checkout",
       bottomBadge: "Payments connected to POS",
@@ -709,7 +709,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Role-aware owner dashboard with POS event summaries, sales snapshots, branch filters, inventory signals, staff activity, alert rules, and secure mobile session controls.",
     visual: {
-      imageSrc: "/images/products/ent_omnichannel.png",
+      imageSrc: "/images/mobile_app_3d.png",
       imageAlt: "Owner mobile dashboard for POS operations",
       topBadge: "Owner visibility",
       bottomBadge: "Live sales and alerts",
@@ -789,7 +789,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Display-ready menu board workflow with branch menu sync, layout blocks, availability flags, scheduled dayparts, promo groups, image assets, and screen assignment controls.",
     visual: {
-      imageSrc: "/images/hero/hero_enterprise_analytics.jpg",
+      imageSrc: "/images/hero-cafe.jpg",
       imageAlt: "Digital menu board display in a cafe counter environment",
       topBadge: "Live menu display",
       bottomBadge: "Prices, promos and availability synced",

@@ -1,4 +1,4 @@
-﻿// src/app/(public)/roi-calculator/page.tsx
+// src/app/(public)/roi-calculator/page.tsx
 'use client';
 
 import React from 'react';
@@ -39,7 +39,7 @@ export default function ROICalculatorPage() {
             {/* 3D ROI Visual Showcase */}
             <div className="relative w-full max-w-lg mx-auto aspect-16/10 flex items-center justify-center pt-2">
               <img
-                src="/images/navbar/nav_roi_forecaster.png"
+                src="/images/ent_roi_analytics.png"
                 alt="Enterprise ROI Analytics Dashboard"
                 className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
               />

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -148,7 +148,7 @@ export const FirstVisitOfferModal: React.FC = () => {
                   <div className="relative my-2 flex items-center justify-center">
                     <div className="relative w-full h-[125px] flex items-center justify-center">
                       <Image
-                        src="/images/products/enterprise_pos_terminal.png"
+                        src="/images/foodhub_bundle_mockup.png"
                         alt="Quantix Enterprise POS & Online Platform"
                         fill
                         quality={100}

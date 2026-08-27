@@ -1,4 +1,4 @@
-﻿// src/features/Testimonials/TestimonialBanner.tsx
+// src/features/Testimonials/TestimonialBanner.tsx
 'use client';
 
 import React, { useEffect, useState, useMemo } from "react";
@@ -62,8 +62,8 @@ export const TestimonialBanner: React.FC<TestimonialBannerProps> = ({
   const backgroundImage = useMemo(() => {
     if (!current) return "";
     return current.industry === "Restaurant" 
-      ? "/images/hero/hero_enterprise_hq.jpg" 
-      : "/images/hero/hero_enterprise_inventory.jpg";
+      ? "/images/hero-restaurant.jpg" 
+      : "/images/hero-retail.jpg";
   }, [current]);
 
   const getAvatarColor = (idx: number) => {

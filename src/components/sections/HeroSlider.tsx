@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -26,7 +26,7 @@ const SLIDES: SlideData[] = [
     subtitle: "RETAIL POS",
     title: "SMARTER RETAIL OPERATIONS START HERE",
     description: "Sync your store inventory, track staff performance, and delight retail customers across multiple branches.",
-    backgroundImage: "/images/hero/hero_enterprise_inventory.jpg",
+    backgroundImage: "/images/hero-retail.jpg",
     primaryCtaText: "Start Free Trial",
     secondaryCtaText: "Explore Features",
   },
@@ -35,7 +35,7 @@ const SLIDES: SlideData[] = [
     subtitle: "RESTAURANT POS",
     title: "THE ALL-IN-ONE POS FOR RESTAURANTS",
     description: "Manage tables, order dispatch, and kitchen flows in real time — all from one single unified device.",
-    backgroundImage: "/images/hero/hero_enterprise_hq.jpg",
+    backgroundImage: "/images/hero-restaurant.jpg",
     primaryCtaText: "Start Free Trial",
     secondaryCtaText: "Watch Demo",
   },
@@ -44,7 +44,7 @@ const SLIDES: SlideData[] = [
     subtitle: "CLOUD POS",
     title: "RUN YOUR BUSINESS FROM THE CLOUD",
     description: "Access real-time sales data, inventory levels, and analytics from anywhere in the world on any device.",
-    backgroundImage: "/images/hero/hero_enterprise_analytics.jpg",
+    backgroundImage: "/images/hero-cafe.jpg",
     primaryCtaText: "Start Free Trial",
     secondaryCtaText: "View Plans",
   },
@@ -53,7 +53,7 @@ const SLIDES: SlideData[] = [
     subtitle: "LOCAL BILLING POS",
     title: "OFFLINE-FIRST LOCAL BILLING TERMINAL",
     description: "Keep selling even when the internet goes down. Seamless local billing with automatic cloud sync when reconnected.",
-    backgroundImage: "/images/hero/hero_enterprise_omnichannel.jpg",
+    backgroundImage: "/images/hero-local.png",
     primaryCtaText: "Start Free Trial",
     secondaryCtaText: "Explore Offline",
   },
