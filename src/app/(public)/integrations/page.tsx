@@ -1,13 +1,13 @@
-// src/app/(public)/integrations/page.tsx
-'use client';
+import React from "react";
+import type { Metadata } from "next";
+import IntegrationsClient from "./IntegrationsClient";
 
-import React from 'react';
-import IntegrationsWrapper from '@/features/Integrations/components/IntegrationsWrapper';
+export const metadata: Metadata = {
+  title: "Enterprise Ecosystem Integrations | Quantix Enterprise",
+  description:
+    "Automate fleet terminal payments, ERP ledger journals, online delivery dispatching, and omnichannel inventory routing.",
+};
 
-export default function IntegrationsPage() {
-  return (
-    <main className="bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white transition-colors duration-300">
-      <IntegrationsWrapper />
-    </main>
-  );
+export default function IntegrationsOverviewPage() {
+  return <IntegrationsClient />;
 }

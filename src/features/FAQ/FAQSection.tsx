@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 import { FAQItem } from "./Types/FAQTypes";
 
 export interface FAQSectionProps {
-  faqs: FAQItem[];
-  isLoading: boolean;
+  faqs?: FAQItem[];
+  isLoading?: boolean;
 }
 
 const DEFAULT_FAQS: FAQItem[] = [
@@ -35,14 +35,14 @@ const DEFAULT_FAQS: FAQItem[] = [
   }
 ];
 
-export const FAQSection: React.FC<FAQSectionProps> = ({ faqs, isLoading }) => {
+export const FAQSection: React.FC<FAQSectionProps> = ({ faqs = [], isLoading = false }) => {
   const [openId, setOpenId] = useState<string | null>(null);
 
   const toggle = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id));
   };
 
-  const displayFAQs = faqs.length > 0 ? faqs : DEFAULT_FAQS;
+  const displayFAQs = faqs && faqs.length > 0 ? faqs : DEFAULT_FAQS;
   const isSingleFAQ = !isLoading && displayFAQs.length === 1;
   const useTwoColumnLayout = isLoading || displayFAQs.length > 1;
 
