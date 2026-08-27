@@ -1,4 +1,5 @@
-// src/features/Industries/IndustryDetailWrapper.tsx
+'use client';
+
 import React from 'react';
 import { useParams } from 'next/navigation';
 import { useGetIndustryBySlugQuery } from './services/IndustriesServices';

@@ -1,9 +1,9 @@
 // src/features/Testimonials/TestimonialsSection.tsx
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Building2 } from "lucide-react";
 import { TestimonialDto } from "./Types/TestimonialsTypes";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -20,7 +20,6 @@ const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
     role: "VP Operations",
     companyName: "FoodFlow Group",
     industry: "Restaurant",
-    avatarUrl: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
     id: "t2",
@@ -29,7 +28,6 @@ const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
     role: "Founder",
     companyName: "Bloom Retail Boutique",
     industry: "Retail",
-    avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
     id: "t3",
@@ -38,7 +36,6 @@ const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
     role: "Owner",
     companyName: "Bella Italia Bistro",
     industry: "Restaurant",
-    avatarUrl: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
     id: "t4",
@@ -47,7 +44,6 @@ const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
     role: "Operations Director",
     companyName: "Urban Wear Co.",
     industry: "Retail",
-    avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
     id: "t5",
@@ -56,7 +52,6 @@ const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
     role: "General Manager",
     companyName: "Espresso House",
     industry: "Restaurant",
-    avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&h=150&q=80"
   }
 ];
 
@@ -64,13 +59,8 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   testimonials,
   isLoading,
 }) => {
-  const [mounted, setMounted] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showFullQuote, setShowFullQuote] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const displayTestimonials = testimonials.length > 0 ? testimonials : DEFAULT_TESTIMONIALS;
 
@@ -99,9 +89,8 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   return (
     <section className="scroll-mt-20 bg-slate-50 dark:bg-slate-900/40 py-10 sm:py-14 lg:py-20 border-b border-slate-100 dark:border-slate-800/80 transition-colors duration-300" id="testimonials">
       <div className="site-container">
-        {/* Header */}
         <div className="text-center mb-12 lg:mb-16">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 dark:bg-blue-950/40 border border-blue-200/50 dark:border-blue-900/50 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4 shadow-sm select-none">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-primary dark:text-primary-light mb-4 shadow-sm select-none">
             CLIENT TESTIMONIALS
           </div>
           <h2 className="text-3xl font-syne font-black text-slate-900 dark:text-white md:text-5xl leading-tight select-none">
@@ -109,70 +98,74 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
           </h2>
         </div>
 
-        {/* Carousel Layout Wrapper */}
-        <div className="relative max-w-5xl mx-auto px-4 md:px-12 select-none">
-          
-          {/* Navigation Arrows */}
+        <div className="relative mx-auto max-w-5xl px-0 select-none sm:px-14 md:px-12">
+          {/* Desktop Navigation Arrows (hidden on mobile) */}
           <button
+            type="button"
             onClick={handlePrev}
-            className="absolute left-[-10px] md:left-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 shadow-md text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary-light hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200 hover:scale-105 active:scale-95"
+            className="hidden sm:flex absolute left-0 top-1/2 z-10 h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200/80 bg-white text-slate-600 shadow-md transition-all duration-200 hover:scale-105 hover:bg-slate-50 hover:text-primary active:scale-95 dark:border-slate-700/80 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/50 dark:hover:text-primary-light"
             aria-label="Previous testimonial"
           >
             <ChevronLeft size={20} />
           </button>
 
           <button
+            type="button"
             onClick={handleNext}
-            className="absolute right-[-10px] md:right-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 shadow-md text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary-light hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200 hover:scale-105 active:scale-95"
+            className="hidden sm:flex absolute right-0 top-1/2 z-10 h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200/80 bg-white text-slate-600 shadow-md transition-all duration-200 hover:scale-105 hover:bg-slate-50 hover:text-primary active:scale-95 dark:border-slate-700/80 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/50 dark:hover:text-primary-light"
             aria-label="Next testimonial"
           >
             <ChevronRight size={20} />
           </button>
 
-          {/* Testimonial Active Card Wrapper */}
-          <div className="overflow-hidden min-h-[300px] sm:min-h-[250px] md:min-h-[220px] flex items-center justify-center">
+          <div className="overflow-hidden min-h-[300px] sm:min-h-[250px] flex items-center justify-center">
             <AnimatePresence mode="wait">
-              {mounted && !isLoading && current && (
+              {!isLoading && current && (
                 <motion.div
                   key={activeIndex}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-full bg-white dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 p-6 md:p-8 rounded-[2rem] shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col md:flex-row items-center gap-8 relative"
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x > 50 || info.velocity.x > 300) {
+                      handlePrev();
+                    } else if (info.offset.x < -50 || info.velocity.x < -300) {
+                      handleNext();
+                    }
+                  }}
+                  className="w-full bg-white dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 p-5 sm:p-6 md:p-8 rounded-3xl md:rounded-4xl shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col md:flex-row items-center gap-5 sm:gap-6 md:gap-8 relative cursor-grab active:cursor-grabbing touch-pan-y"
                 >
-                  
-                  {/* Left Column: Avatar */}
-                  <div className="relative shrink-0 select-none">
-                    <div className="h-32 w-32 md:h-36 md:w-36 rounded-full overflow-hidden border-4 border-slate-100 dark:border-slate-700 shadow-md relative group/avatar bg-slate-100 dark:bg-slate-800">
-                      {current.avatarUrl ? (
-                        <img
-                          src={current.avatarUrl}
-                          alt={current.author}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover/avatar:scale-110"
-                        />
-                      ) : (
-                        <div className="h-full w-full flex items-center justify-center text-3xl font-black bg-blue-600 text-white">
-                          {current.initials || current.author.slice(0, 2).toUpperCase()}
-                        </div>
-                      )}
+                  {/* Avatar Block */}
+                  <div className="relative shrink-0 select-none flex flex-col items-center">
+                    <div className="h-16 w-16 min-[400px]:h-20 min-[400px]:w-20 md:h-28 md:w-28 rounded-2xl md:rounded-3xl overflow-hidden border-2 border-primary/20 dark:border-primary/30 shadow-md relative group/avatar bg-gradient-to-br from-primary via-orange-600 to-amber-600 flex flex-col items-center justify-center text-white p-2 md:p-3">
+                      <Building2 className="h-5 w-5 md:h-7 md:w-7 mb-0.5 text-white/90" />
+                      <span className="text-base md:text-xl font-syne font-black tracking-wider">
+                        {current.author.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+                      </span>
+                      <span className="text-[8px] md:text-[9px] font-bold text-white/85 uppercase tracking-widest mt-0.5">
+                        VERIFIED
+                      </span>
                     </div>
                   </div>
 
-                  {/* Right Column: Quotes & Info */}
-                  <div className="flex-1 text-center md:text-left flex flex-col justify-between h-full space-y-4">
+                  {/* Content Block */}
+                  <div className="flex-1 text-center md:text-left flex flex-col justify-between h-full space-y-3 sm:space-y-4">
                     <div className="relative">
-                      {/* Premium Quotes mark */}
-                      <span className="absolute top-[-25px] left-[-15px] text-[70px] font-serif leading-none select-none text-slate-150 dark:text-slate-700 pointer-events-none">
-                        “
+                      <span className="hidden sm:inline-block absolute -top-6 -left-3.5 text-[60px] md:text-[70px] font-serif leading-none select-none text-slate-200 dark:text-slate-700 pointer-events-none">
+                        &ldquo;
                       </span>
                       
-                      <p className="text-slate-600 dark:text-slate-300 text-base md:text-lg leading-relaxed font-medium pl-2 italic relative z-10">
+                      <p className="text-slate-700 dark:text-slate-200 text-sm sm:text-base md:text-lg leading-relaxed font-medium sm:pl-2 italic relative z-10">
                         {displayedQuote}
                         {shouldTruncate && (
                           <button
+                            type="button"
                             onClick={() => setShowFullQuote(!showFullQuote)}
-                            className="text-primary hover:text-primary-light font-bold text-xs uppercase ml-2 tracking-wide hover:underline cursor-pointer inline-block"
+                            className="text-primary hover:text-primary-light font-bold text-xs uppercase ml-1.5 tracking-wide hover:underline cursor-pointer inline-block"
                           >
                             {showFullQuote ? "SHOW LESS" : "SHOW MORE"}
                           </button>
@@ -180,44 +173,66 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
                       </p>
                     </div>
 
-                    {/* Author & Footer Elements */}
-                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pt-4 border-t border-slate-100 dark:border-slate-700/80">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 pt-3 border-t border-slate-100 dark:border-slate-700/80">
                       <div>
-                        <h4 className="text-base font-extrabold text-slate-900 dark:text-white">
+                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">
                           {current.author}
-                          <span className="text-slate-400 dark:text-slate-500 font-medium text-sm ml-2">
+                          <span className="text-slate-500 dark:text-slate-400 font-medium text-xs sm:text-sm ml-1.5">
                             — {current.role}
                           </span>
                         </h4>
-                        <p className="text-primary dark:text-primary-light font-extrabold uppercase text-[11px] tracking-wider mt-1">
+                        <p className="text-primary dark:text-primary-light font-extrabold uppercase text-[10px] sm:text-[11px] tracking-wider mt-0.5">
                           {current.companyName || current.industry}
                         </p>
                       </div>
                     </div>
                   </div>
-
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
 
-          {/* Dots Indicator Pagination */}
-          <div className="flex justify-center items-center gap-2 mt-8 select-none">
-            {displayTestimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => handleDotClick(index)}
-                className={cn(
-                  "h-2 rounded-full transition-all duration-300 cursor-pointer",
-                  index === activeIndex
-                    ? "w-6 bg-primary"
-                    : "w-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400"
-                )}
-                aria-label={`Go to testimonial slide ${index + 1}`}
-              />
-            ))}
-          </div>
+          {/* Mobile arrows + Dot pagination */}
+          <div className="flex justify-center items-center gap-3 mt-6 sm:mt-8 select-none">
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="flex sm:hidden h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm active:scale-95 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft size={16} />
+            </button>
 
+            <div className="flex items-center gap-1.5">
+              {displayTestimonials.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => handleDotClick(index)}
+                  className="flex h-7 w-7 items-center justify-center cursor-pointer group"
+                  aria-label={`Go to testimonial slide ${index + 1}`}
+                >
+                  <span
+                    className={cn(
+                      "h-2 rounded-full transition-all duration-300",
+                      index === activeIndex
+                        ? "w-6 bg-primary shadow-sm shadow-primary/30"
+                        : "w-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 group-hover:bg-slate-400"
+                    )}
+                  />
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={handleNext}
+              className="flex sm:hidden h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm active:scale-95 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
         </div>
       </div>
     </section>

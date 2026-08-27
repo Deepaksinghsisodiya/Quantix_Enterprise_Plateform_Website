@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { RESTAURANT_SITE_URL, RETAIL_SITE_URL } from '../Navbar/config/navConfig';
 
 type Integration = {
   id: string;
@@ -12,15 +11,15 @@ type Integration = {
   category: string;
   color: string;
   logo: string;
-  href: string;
+  href?: string;
 };
 
 const integrations: Integration[] = [
-  { id: 'stripe', name: 'Stripe', category: 'PAYMENTS', color: '#635BFF', logo: '/brands/integrations/stripe.svg', href: `${RETAIL_SITE_URL}/integrations/stripe` },
-  { id: 'authorize-net', name: 'Authorize.Net', category: 'PAYMENTS', color: '#1E3A5F', logo: '/brands/integrations/authorize.svg', href: `${RETAIL_SITE_URL}/integrations/authorize-net` },
-  { id: 'square', name: 'Square', category: 'CARD READER', color: '#000000', logo: '/brands/integrations/square.svg', href: `${RETAIL_SITE_URL}/integrations/square` },
-  { id: 'doordash', name: 'DoorDash Drive', category: 'FOOD DELIVERY', color: '#FF3008', logo: '/brands/integrations/doordash.svg', href: `${RESTAURANT_SITE_URL}/integrations/doordash` },
-  { id: 'ubereats', name: 'Uber Eats', category: 'ONLINE ORDERS', color: '#06C167', logo: '/brands/integrations/ubereats.svg', href: `${RESTAURANT_SITE_URL}/integrations/uber-eats` },
+  { id: 'ubereats', name: 'Uber Eats', category: 'DELIVERY', color: '#06C167', logo: '/brands/integrations/ubereats.svg', href: '/integrations/ubereats' },
+  { id: 'stripe', name: 'Stripe', category: 'PAYMENTS', color: '#635BFF', logo: '/brands/integrations/stripe.svg', href: '/integrations/stripe' },
+  { id: 'authorize-net', name: 'Authorize.Net', category: 'PAYMENTS', color: '#1E3A5F', logo: '/brands/integrations/authorize.svg', href: '/integrations/authorize-net' },
+  { id: 'square', name: 'Square', category: 'PAYMENTS', color: '#000000', logo: '/brands/integrations/square.svg', href: '/integrations/square' },
+  { id: 'doordash', name: 'DoorDash', category: 'DELIVERY', color: '#FF3008', logo: '/brands/integrations/doordash.svg', href: '/integrations/doordash' },
 ];
 
 export const IntegrationsTickerSection: React.FC = () => {
@@ -29,19 +28,19 @@ export const IntegrationsTickerSection: React.FC = () => {
   const duplicatedList = [...integrations, ...integrations, ...integrations, ...integrations, ...integrations];
 
   return (
-    <section className="py-16 sm:py-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-t border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden relative select-none transition-colors">
+    <section className="py-16 sm:py-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden relative select-none transition-colors">
       <div className="site-container mb-10 sm:mb-14 text-center relative z-10">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-black uppercase tracking-widest text-primary-dark dark:text-primary-light mb-3">
           <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <span>ENTERPRISE ECOSYSTEM</span>
+          <span>ENTERPRISE INTEGRATIONS</span>
         </div>
 
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-syne font-black text-slate-900 dark:text-white tracking-tight leading-tight max-w-3xl mx-auto">
-          Connect Quantix With Your <span className="text-primary dark:text-primary-light">POS & Delivery Ecosystem</span>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-syne font-semibold text-slate-900 dark:text-white tracking-tight leading-tight max-w-3xl mx-auto">
+          Connect Quantix With Your <span className="text-primary dark:text-primary-light">Food & Retail Ecosystem</span>
         </h2>
 
         <p className="mt-3 text-xs sm:text-base text-slate-600 dark:text-slate-400 font-medium max-w-xl mx-auto leading-relaxed">
-          Automate payment terminals, card readers, door-to-door online delivery, and kitchen KDS tickets effortlessly.
+          Automate kitchen order tickets, delivery dispatching, table payments, and daily settlements automatically.
         </p>
       </div>
 
@@ -59,13 +58,13 @@ export const IntegrationsTickerSection: React.FC = () => {
 
         <motion.div
           animate={isPaused ? { x: undefined } : { x: ['0%', '-50%'] }}
-          transition={isPaused ? { duration: 0 } : { duration: 55, ease: 'linear', repeat: Infinity }}
+          transition={isPaused ? { duration: 0 } : { duration: 65, ease: 'linear', repeat: Infinity }}
           className="flex gap-4 sm:gap-6 shrink-0 items-center"
         >
           {duplicatedList.map((partner, idx) => (
             <Link
               key={idx}
-              href={partner.href}
+              href={partner.href || `/integrations/${partner.id}`}
               className="block"
             >
               <motion.div
@@ -102,4 +101,5 @@ export const IntegrationsTickerSection: React.FC = () => {
 };
 
 export { integrations };
+export type { Integration };
 export default IntegrationsTickerSection;

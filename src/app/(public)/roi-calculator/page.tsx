@@ -2,52 +2,61 @@
 'use client';
 
 import React from 'react';
-import { Sparkles, Calculator, ArrowRight, TrendingUp, ShieldCheck, Flame } from 'lucide-react';
+import Link from 'next/link';
+import { Sparkles, Calculator, ArrowRight, TrendingUp, ShieldCheck, Flame, ChevronRight } from 'lucide-react';
 import ROICalculator from '@/features/ROI/ROICalculator';
 import CTABanner from '@/components/organisms/CTABanner/CTABanner';
 
 export default function ROICalculatorPage() {
   return (
-    <div className="w-full text-slate-900 dark:text-slate-100 bg-white dark:bg-darkBg transition-colors duration-300">
-      {/* 1. Hero Header Section (Clear of fixed navbar with pt-32 sm:pt-36 md:pt-40 pb-12 sm:pb-16) */}
-      <section className="relative pt-32 sm:pt-36 md:pt-40 pb-12 sm:pb-16 bg-linear-to-b from-slate-50/70 via-white to-white dark:from-darkBg dark:via-darkSurface/30 dark:to-darkBg border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
-        {/* Ambient brand glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-75 bg-primary/10 blur-[130px] rounded-full pointer-events-none -z-10" />
-
-        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
-            <Flame size={13} className="text-primary" />
-            <span>Multi-Unit Financial Forecaster</span>
+    <>
+      {/* 1. Hero Header Section */}
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
+        <div className="site-container relative z-10 px-4 sm:px-6">
+          {/* Breadcrumb */}
+          <div className="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+            <ChevronRight size={12} />
+            <Link href="/resources" className="hover:text-primary transition-colors">Resources</Link>
+            <ChevronRight size={12} />
+            <span className="text-primary font-bold">ROI Calculator</span>
           </div>
 
-          <h1 className="font-syne text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white leading-[1.12] tracking-tight">
-            Calculate Your Multi-Store ROI
-          </h1>
+          <div className="max-w-4xl mx-auto text-center space-y-4">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
+              <Flame size={13} className="text-primary" />
+              <span>Multi-Unit Financial Forecaster</span>
+            </div>
 
-          <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed">
-            Adjust your store outlet count and daily order volume to forecast annual operational cost reductions vs legacy enterprise POS vendors.
-          </p>
+            <h1 className="font-syne text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 dark:text-white leading-tight tracking-tight">
+              Calculate Your Multi-Store ROI
+            </h1>
 
-          {/* 3D ROI Visual Showcase */}
-          <div className="relative w-full max-w-xl mx-auto aspect-16/10 flex items-center justify-center pt-4">
-            <img
-              src="/images/ent_roi_analytics.png"
-              alt="Enterprise ROI Analytics Dashboard"
-              className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-            />
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed">
+              Adjust your store outlet count and daily order volume to forecast annual operational cost reductions vs legacy enterprise POS vendors.
+            </p>
+
+            {/* 3D ROI Visual Showcase */}
+            <div className="relative w-full max-w-lg mx-auto aspect-16/10 flex items-center justify-center pt-2">
+              <img
+                src="/images/ent_roi_analytics.png"
+                alt="Enterprise ROI Analytics Dashboard"
+                className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* 2. Interactive Calculator Section */}
-      <section className="py-10 sm:py-16 bg-slate-50/60 dark:bg-darkBg/50">
-        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
+      <section className="section-py bg-slate-50/60 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80">
+        <div className="site-container px-4 sm:px-6">
           <ROICalculator />
         </div>
       </section>
 
       {/* 3. Bottom CTABanner */}
       <CTABanner />
-    </div>
+    </>
   );
 }

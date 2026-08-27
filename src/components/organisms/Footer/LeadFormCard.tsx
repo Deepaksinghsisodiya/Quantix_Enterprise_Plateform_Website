@@ -149,13 +149,13 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
 
   return (
     <div
-      className={`relative w-full max-w-[330px] bg-white dark:bg-slate-900 rounded-2xl p-3.5 sm:p-4 shadow-lg shadow-slate-200/60 dark:shadow-none border border-slate-200/80 dark:border-slate-800 transition-all duration-300 text-slate-800 dark:text-slate-100 ${className}`}
+      className={`relative w-full max-w-full sm:max-w-[360px] md:max-w-[380px] bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 shadow-lg shadow-slate-200/60 dark:shadow-none border border-slate-200/80 dark:border-slate-800 transition-all duration-300 text-slate-800 dark:text-slate-100 ${className}`}
     >
       {/* Top Header & Branding */}
-      <div className="flex flex-col items-center text-center space-y-1 mb-2.5">
+      <div className="flex flex-col items-center text-center space-y-1 mb-3">
         {/* Brand Logo */}
         <div className="flex items-center justify-center gap-1.5 select-none">
-          <div className="flex h-5 w-5 items-center justify-center rounded-md bg-gradient-to-tr from-primary to-primary-dark text-white shadow-xs">
+          <div className="flex h-5 w-5 items-center justify-center rounded-md bg-linear-to-tr from-primary to-primary-dark text-white shadow-xs">
             <Zap className="h-3 w-3 fill-white stroke-[2.5]" />
           </div>
           <span className="font-syne text-xs font-black text-slate-900 dark:text-white">
@@ -169,12 +169,12 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
         </div>
 
         {/* Heading */}
-        <h3 className="text-xs sm:text-sm font-syne font-extrabold text-slate-900 dark:text-white leading-snug tracking-tight max-w-[250px]">
+        <h3 className="text-sm sm:text-base font-syne font-extrabold text-slate-900 dark:text-white leading-snug tracking-tight max-w-[280px]">
           {heading}
         </h3>
 
         {subheading && (
-          <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium max-w-[240px] leading-tight">
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium max-w-[260px] leading-tight">
             {subheading}
           </p>
         )}
@@ -221,9 +221,9 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
           >
             {/* 1. Name */}
             <div>
-              <label htmlFor="lead-fullname" className="sr-only">Name</label>
+              <label htmlFor="lead-fullname-ent" className="sr-only">Name</label>
               <input
-                id="lead-fullname"
+                id="lead-fullname-ent"
                 type="text"
                 name="fullName"
                 value={formData.fullName}
@@ -235,9 +235,9 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
 
             {/* 2. Email */}
             <div>
-              <label htmlFor="lead-email" className="sr-only">Email</label>
+              <label htmlFor="lead-email-ent" className="sr-only">Email</label>
               <input
-                id="lead-email"
+                id="lead-email-ent"
                 type="email"
                 name="email"
                 value={formData.email}
@@ -250,9 +250,9 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
             {/* 3. Phone (with country code selector) */}
             <div className="flex gap-1.5">
               <div className="relative shrink-0">
-                <label htmlFor="lead-country-code" className="sr-only">Country Code</label>
+                <label htmlFor="lead-country-code-ent" className="sr-only">Country Code</label>
                 <select
-                  id="lead-country-code"
+                  id="lead-country-code-ent"
                   name="countryCode"
                   value={formData.countryCode}
                   onChange={handleChange}
@@ -267,9 +267,9 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
                 <ChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-slate-400 pointer-events-none" />
               </div>
               <div className="min-w-0 flex-1">
-                <label htmlFor="lead-phone" className="sr-only">Phone Number</label>
+                <label htmlFor="lead-phone-ent" className="sr-only">Phone Number</label>
                 <input
-                  id="lead-phone"
+                  id="lead-phone-ent"
                   type="tel"
                   name="phone"
                   value={formData.phone}
@@ -282,9 +282,9 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
 
             {/* 4. Business Name */}
             <div>
-              <label htmlFor="lead-businessname" className="sr-only">Business Name</label>
+              <label htmlFor="lead-businessname-ent" className="sr-only">Business Name</label>
               <input
-                id="lead-businessname"
+                id="lead-businessname-ent"
                 type="text"
                 name="businessName"
                 value={formData.businessName}
@@ -296,9 +296,9 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
 
             {/* 5. Business Category */}
             <div className="relative">
-              <label htmlFor="lead-businesscategory" className="sr-only">Business Category</label>
+              <label htmlFor="lead-businesscategory-ent" className="sr-only">Business Category</label>
               <select
-                id="lead-businesscategory"
+                id="lead-businesscategory-ent"
                 name="businessCategory"
                 value={formData.businessCategory}
                 onChange={handleChange}

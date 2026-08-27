@@ -7,5 +7,5 @@ export interface FooterLink {
 export interface SocialLink {
   href: string;
   ariaLabel: string;
-  icon: 'twitter' | 'linkedin' | 'github';
+  icon: 'twitter' | 'x' | 'linkedin' | 'github' | 'youtube' | 'instagram' | string;
 }

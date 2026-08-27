@@ -1,379 +1,573 @@
-// src/app/(public)/solutions/[industrySlug]/page.tsx
-'use client';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import {
+  ArrowRight,
+  BarChart3,
+  Book,
+  BookOpen,
+  Building2,
+  Check,
+  ChefHat,
+  ChevronRight,
+  ClipboardCheck,
+  Clock,
+  Cloud,
+  Coffee,
+  Globe,
+  Hash,
+  Heart,
+  Layers,
+  Layout,
+  Monitor,
+  Package,
+  QrCode,
+  RefreshCw,
+  Ruler,
+  Scale,
+  Scan,
+  Server,
+  Shield,
+  ShieldCheck,
+  ShoppingBag,
+  Smartphone,
+  Sparkles,
+  Store,
+  Trash2,
+  Trophy,
+  Truck,
+  Tv,
+  Users,
+  Utensils,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
+import FAQSection from "@/features/FAQ/FAQSection";
+import type { FAQItem } from "@/features/FAQ/Types/FAQTypes";
+import { RequestDemoButton } from "@/components/atoms/RequestDemoButton";
+import CTABanner from "@/components/organisms/CTABanner/CTABanner";
+import TestimonialsWrapper from "@/features/Testimonials/components/TestimonialsWrapper";
+import { MainProductsShowcaseSection } from "@/components/organisms/MainProductsShowcaseSection/MainProductsShowcaseSection";
 
-import React from 'react';
-import { notFound, useParams } from 'next/navigation';
-import Link from 'next/link';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
-import { motion } from 'framer-motion';
-import { 
-  ChevronRight, 
-  Sparkles, 
-  Layers, 
-  ChefHat, 
-  Users, 
-  Layout, 
-  BookOpen, 
-  Zap, 
-  Truck, 
-  Trophy, 
-  Ruler, 
-  ShoppingBag, 
-  Scan, 
-  Scale, 
-  Package, 
-  RefreshCw, 
-  Book, 
-  Trash2, 
-  Heart, 
-  Monitor, 
-  Hash, 
-  Shield, 
-  Server, 
-  BarChart3, 
-  ClipboardCheck, 
-  Star 
-} from 'lucide-react';
+type IndustryPoint = {
+  title: string;
+  desc: string;
+};
 
-interface Industry {
+type IndustryWorkflow = {
+  title: string;
+  desc: string;
+};
+
+type IndustrySolution = {
   slug: string;
+  eyebrow: string;
   name: string;
-  heroImage: string;
-  pricingNote: string;
-  features: { id: string; icon: React.ReactNode; title: string; description: string }[];
-  testimonial: {
-    name: string;
-    business: string;
-    quote: string;
-    rating: number;
+  title: string;
+  description: string;
+  points: IndustryPoint[];
+  workflows: IndustryWorkflow[];
+  imageSrc: string;
+  imageAlt: string;
+  topBadge: string;
+  bottomBadge: string;
+  ctaLabel: string;
+  icon: LucideIcon;
+  faqs: FAQItem[];
+};
+
+const INDUSTRIES_DATA: Record<string, IndustrySolution> = {
+  "fine-dining": {
+    slug: "fine-dining",
+    eyebrow: "Fine Dining & Premium Venues",
+    name: "Fine Dining",
+    title: "Fine Dining POS & Reservation Sync",
+    description:
+      "Deliver white-glove table service with multi-course pacing, sommelier tasting notes, VIP guest preference tracking, and floor plan mapping.",
+    points: [
+      { title: "Course-Paced Routing", desc: "Fire starters, mains, desserts, and digestifs in perfect kitchen synchronization." },
+      { title: "Visual Floor Plans", desc: "Track table status, guest seat counts, split checks, and server section balance." },
+      { title: "VIP Guest CRM", desc: "Track dietary preferences, wine tasting histories, and spend tiers automatically." },
+    ],
+    workflows: [
+      { title: "Tableside Server Tablets", desc: "Mobile server handhelds for tableside ordering, wine selections, and contactless checkouts." },
+      { title: "Sommelier & Cellar Sync", desc: "Real-time bottle inventory tracking, vintage management, and bin numbers." },
+      { title: "Host Stand & Reservations", desc: "Seamless reservation integration with table holding and guest arrival alerts." },
+      { title: "Split Checks by Seat", desc: "Advanced check splitting by course, guest seat, or fractional percentage." },
+      { title: "Kitchen Pacing Timers", desc: "Color-coded course countdown timers on station KDS displays." },
+      { title: "End-of-Night Financials", desc: "Tip pooling distribution, shift reconciliation, and ERP journal sync." },
+    ],
+    imageSrc: "/images/ent_fine_dining_bundle.png",
+    imageAlt: "Fine dining restaurant POS and maitre d stand",
+    topBadge: "Premium Dining",
+    bottomBadge: "White-Glove Hospitality",
+    ctaLabel: "Start Fine Dining Trial",
+    icon: Sparkles,
+    faqs: [
+      { id: "fd-1", question: "Can server tablets control kitchen course timing?", answer: "Yes. Servers can fire courses individually or set automatic delays for station KDS screens." },
+      { id: "fd-2", question: "Can I manage multiple dining rooms and private banquet areas?", answer: "Yes, you can create unlimited custom floor plans for main dining rooms, private dining salons, patios, and bar lounges." },
+      { id: "fd-3", question: "Does it track guest allergy notes and VIP preferences?", answer: "Yes. Guest profiles flag severe allergies, dietary restrictions, favorite tables, and wine preferences automatically." },
+    ],
+  },
+  "quick-service": {
+    slug: "quick-service",
+    eyebrow: "QSR & Fast Casual Chains",
+    name: "Quick Service Restaurants",
+    title: "High-Volume Quick Service (QSR) POS System",
+    description:
+      "Supercharge your counter, drive-thru, and delivery throughput. Engineered to process orders in sub-seconds, manage queue flow, and sync with online delivery aggregators.",
+    points: [
+      { title: "Sub-Second Cashier Billing", desc: "Lightning-fast touchscreen layout with shortcut hotkeys for high-volume rush hours." },
+      { title: "Multi-Channel Delivery Sync", desc: "Direct injection of Uber Eats, Deliveroo, and online orders into one unified queue." },
+      { title: "Lobby & Drive-Thru Paging", desc: "Sync order ticket numbers with customer display boards and guest pagers." },
+    ],
+    workflows: [
+      { title: "Kitchen Expo Bump Bars", desc: "Keep kitchen staff moving with tactile bump bars and real-time station order displays." },
+      { title: "Interactive Self-Order Kiosks", desc: "Automated combo upsell engine and integrated contactless payment hardware." },
+      { title: "Driver Dispatch Telemetry", desc: "Real-time courier dispatch map, order grouping, and automated delivery slips." },
+      { title: "Sold-Out Menu Hiding", desc: "Instantly hide out-of-stock items across counter till, web, and kiosks with one tap." },
+      { title: "Cashier Speed Metrics", desc: "Live leaderboards tracking cashier transaction turnaround speed and throughput." },
+      { title: "Consolidated Group Inventory", desc: "Central raw ingredient replenishment and cross-store warehouse transfers." },
+    ],
+    imageSrc: "/images/ent_qsr_kiosk_bundle.png",
+    imageAlt: "Quick service QSR POS and counter checkout",
+    topBadge: "High-Speed QSR",
+    bottomBadge: "Sub-Second Checkout",
+    ctaLabel: "Start QSR POS Trial",
+    icon: Zap,
+    faqs: [
+      { id: "qsr-1", question: "How fast is counter order processing?", answer: "Cashiers can enter orders, apply modifiers, and collect payment in under 2 seconds." },
+      { id: "qsr-2", question: "Does it support offline billing during internet outages?", answer: "Yes, the QSR POS is built offline-capable, syncing sales data automatically when connection returns." },
+    ],
+  },
+  "fashion-retail": {
+    slug: "fashion-retail",
+    eyebrow: "Apparel, Footwear & Boutiques",
+    name: "Fashion & Apparel",
+    title: "Fashion Retail POS & Variant Matrix",
+    description:
+      "Unified inventory matrix for sizes, colors, and styles. Connect physical boutique checkout with eCommerce inventory, clienteling CRM, and automated stock replenishment.",
+    points: [
+      { title: "Size & Color Matrix", desc: "Fast grid entry for multidimensional product variants and supplier SKUs." },
+      { title: "Omnichannel Stock Sync", desc: "Real-time synchronization between in-store registers and online eCommerce web stores." },
+      { title: "VIP Clienteling CRM", desc: "Customer purchase histories, fitting notes, and personalized styling recommendations." },
+    ],
+    workflows: [
+      { title: "Barcode Scanner & RFID", desc: "Fast barcode scanning for clothing tags and inventory count audits." },
+      { title: "Seasonal Collection Markdown", desc: "Automated clearance schedules and category-wide promotional rules." },
+      { title: "Store Transfers & BOPIS", desc: "In-store pickup fulfillment and multi-boutique stock transfers." },
+      { title: "Returns & Gift Card Engine", desc: "Manager-approved returns, store credit vouchers, and digital gift cards." },
+      { title: "Cashier Drawer & Shift Audits", desc: "Blind count register reconciliation and daily sales summaries." },
+      { title: "Supplier Purchase Orders", desc: "Low-stock reorder triggers and warehouse goods-received matching." },
+    ],
+    imageSrc: "/images/nav_retail_bundle.png",
+    imageAlt: "Fashion apparel boutique retail POS terminal",
+    topBadge: "Apparel Matrix",
+    bottomBadge: "Omnichannel Retail",
+    ctaLabel: "Start Fashion POS Trial",
+    icon: ShoppingBag,
+    faqs: [
+      { id: "fr-1", question: "How does the size and color matrix work?", answer: "Create one parent product and generate full color/size matrix grids with independent SKU codes and stock tracking." },
+      { id: "fr-2", question: "Does it sync with Shopify and WooCommerce?", answer: "Yes, two-way inventory sync updates product counts across retail registers and web stores automatically." },
+    ],
+  },
+  "grocery": {
+    slug: "grocery",
+    eyebrow: "Supermarkets & Convenience Stores",
+    name: "Grocery & Convenience",
+    title: "Grocery POS & High-Speed Barcode Checkout",
+    description:
+      "Process high-volume shopping carts with barcode scanner scale sync, produce PLU lookups, perishable batch expiration tracking, and multi-lane cashier controls.",
+    points: [
+      { title: "Certified Scale & Scanner Sync", desc: "Instant weight scale calculation and sub-second 1D/2D barcode checkout." },
+      { title: "Perishables & Batch Tracking", desc: "Expiration date monitoring, discount markdowns, and spoilage reduction." },
+      { title: "Automated Supplier Reordering", desc: "EDI vendor order drafts and central warehouse replenishment." },
+    ],
+    workflows: [
+      { title: "Multi-Lane Cashier Lanes", desc: "High-speed barcode scanning with dual-screen customer checkout displays." },
+      { title: "PLU Lookup Matrix", desc: "Visual hotkey grids for unbarcoded fruits, vegetables, and bakery items." },
+      { title: "Offline Till Mesh", desc: "Uninterrupted checkout and receipt printing during network broadband dropouts." },
+      { title: "Shelf Label Printing", desc: "Print barcode shelf tags and promotional price labels directly from inventory." },
+      { title: "Cash Drawer Security", desc: "Cash drop limits, drawer opening sensors, and supervisor override PINs." },
+      { title: "Multi-Store Grocery Telemetry", desc: "Central price book distribution and regional margin analytics." },
+    ],
+    imageSrc: "/images/ent_global_pos_bundle.png",
+    imageAlt: "Grocery and supermarket POS barcode system",
+    topBadge: "Supermarket POS",
+    bottomBadge: "Scale & Barcode Ready",
+    ctaLabel: "Start Grocery POS Trial",
+    icon: Store,
+    faqs: [
+      { id: "gr-1", question: "Can it integrate with weighing scales?", answer: "Yes, certified scale drivers read weight measurements automatically to calculate item cost in milliseconds." },
+      { id: "gr-2", question: "Can we print shelf price tags and barcode stickers?", answer: "Yes, print barcode labels and price tags directly from the inventory product manager." },
+    ],
+  },
+  "cafe-bakery": {
+    slug: "cafe-bakery",
+    eyebrow: "Cafes, Bakeries & Coffee Shops",
+    name: "Cafés & Bakeries",
+    title: "Cafe & Coffee Shop POS System",
+    description:
+      "Speed up your morning rush with custom milk & syrup modifier matrices, espresso barista KDS, pastry barcode scanning, and digital stamp loyalty.",
+    points: [
+      { title: "Drink Modifier Grids", desc: "One-tap choices for milk alternatives, sizes, syrup shots, and brew methods." },
+      { title: "Espresso Barista KDS", desc: "Split beverage orders to espresso bar displays while bakery orders print to kitchen." },
+      { title: "Digital Stamp Loyalty", desc: "Phone-based stamp cards and reward points directly at checkout." },
+    ],
+    workflows: [
+      { title: "Barista Station KDS", desc: "Clear visual modifier highlights for dairy choices and flavor shots." },
+      { title: "Digital TV Menu Boards", desc: "Real-time price updates and automated sold-out item hiding." },
+      { title: "Recipe Costing & Ingredients", desc: "Calculate bean and milk usage to track per-cup gross profit margins." },
+      { title: "Pre-Order Mobile Web", desc: "Allow customers to order coffee ahead for quick morning pickup." },
+      { title: "Bakery Weight & Label Printing", desc: "Sync digital scales and print sticky labels for cups and pastry bags." },
+      { title: "Tip Pooling Shift Ledgers", desc: "Automatic service tip distribution across barista shifts." },
+    ],
+    imageSrc: "/images/ent_cafe_bakery_bundle.png",
+    imageAlt: "Cafe and coffee shop POS workflow",
+    topBadge: "Cafe & Bakery",
+    bottomBadge: "Barista Workflows",
+    ctaLabel: "Start Cafe POS Trial",
+    icon: Coffee,
+    faqs: [
+      { id: "cb-1", question: "Can baristas see custom drink modifiers clearly?", answer: "Yes, espresso KDS screens highlight milk choices, extra shots, and syrups in bold high-contrast text." },
+      { id: "cb-2", question: "Can we print sticky labels for coffee cups?", answer: "Yes, automated sticky cup label printers fire as soon as payment is collected at the counter." },
+    ],
+  },
+  "fast-casual": {
+    slug: "fast-casual",
+    eyebrow: "Fast Casual & Bowl Concepts",
+    name: "Fast Casual",
+    title: "Fast Casual POS & Custom Bowl Builder",
+    description:
+      "Interactive step-by-step bowl and burrito modifiers, kitchen assembly line screens, counter tap-to-pay, and customer self-pickup boards.",
+    points: [
+      { title: "Interactive Combo Builder", desc: "Guide cashiers through proteins, bases, toppings, and premium add-ons." },
+      { title: "Assembly Line Routing", desc: "Send custom ingredient steps to prep screens along the serving line." },
+      { title: "Pickup Status Board Sync", desc: "Trigger TV screen alerts when orders are bagged and ready." },
+    ],
+    workflows: [
+      { title: "Counter Service Speed", desc: "Process custom combinations and tap-to-pay checkouts in seconds." },
+      { title: "QR Order & Pay at Table", desc: "Diners re-order drinks and sides from their seats via table QR codes." },
+      { title: "Prep Batch Waste Tracking", desc: "Log daily prep pan wastage to refine daily par levels." },
+      { title: "Delivery Courier Dispatch", desc: "Manage in-house drivers and delivery aggregators from one screen." },
+      { title: "Loyalty Tier Automation", desc: "Auto-award free bowl perks after target visit milestones." },
+      { title: "Multi-Unit Menu Syndication", desc: "Push new seasonal menu concepts across all locations at once." },
+    ],
+    imageSrc: "/images/nav_restaurant_bundle.png",
+    imageAlt: "Fast casual restaurant POS counter till",
+    topBadge: "Fast Casual",
+    bottomBadge: "Combo & Bowl Builder",
+    ctaLabel: "Start Fast Casual Trial",
+    icon: Utensils,
+    faqs: [
+      { id: "fc-1", question: "How does the custom combo builder work?", answer: "The till prompts cashiers through base, protein, sauce, and topping steps with automatic upcharge calculations." },
+    ],
+  },
+  "electronics": {
+    slug: "electronics",
+    eyebrow: "Consumer Electronics & Tech Retail",
+    name: "Electronics & Tech",
+    title: "Electronics Retail POS & Serial Number Tracking",
+    description:
+      "Serial number capture on checkout, warranty plans, repair service ticketing, trade-in credit evaluation, and multi-location warehouse sync.",
+    points: [
+      { title: "Serial & IMEI Number Sync", desc: "Capture device serial numbers during scan for warranty and return verification." },
+      { title: "Automated Warranty Prompts", desc: "Prompt cashiers to offer extended protection plans and accessory bundles." },
+      { title: "Trade-In & Store Credit", desc: "Evaluate pre-owned devices at register and apply trade-in credit instantly." },
+    ],
+    workflows: [
+      { title: "Repair & Service Ticketing", desc: "Create work orders, track technician repair statuses, and SMS customers." },
+      { title: "High-Value Security Controls", desc: "Mandatory manager authorization on high-value price overrides and returns." },
+      { title: "Supplier RMA & Warranty Log", desc: "Track defective items sent back to manufacturers for credit." },
+      { title: "Multi-Store SKU Transfers", desc: "Move inventory between stores with barcode verification at dispatch and receipt." },
+      { title: "Installment & Split Finance", desc: "Integrate third-party financing and split-card payment checkout." },
+      { title: "Serial Number Audit Trails", desc: "Search transaction history by IMEI or serial number instantly." },
+    ],
+    imageSrc: "/images/ent_venues_pos.png",
+    imageAlt: "Electronics and technology retail POS dashboard",
+    topBadge: "Serial Number Ready",
+    bottomBadge: "Warranty & Repairs",
+    ctaLabel: "Start Electronics POS Trial",
+    icon: Monitor,
+    faqs: [
+      { id: "el-1", question: "Can we track serial numbers on receipts and invoices?", answer: "Yes, individual IMEI and serial numbers are stored on customer receipts and searchable in the sales ledger." },
+    ],
+  },
+  "franchise": {
+    slug: "franchise",
+    eyebrow: "Franchise Networks & Multi-Unit Groups",
+    name: "Franchise & Multi-Location",
+    title: "Franchise POS & Central Cloud Telemetry",
+    description:
+      "Total head office control over 10 to 500+ franchise locations. Centralized catalog versioning, automated royalty fee audits, and regional performance telemetry.",
+    points: [
+      { title: "Central Menu & Price Push", desc: "Roll out new products, prices, and combos to all stores with one click." },
+      { title: "Franchise Royalty Audits", desc: "Automated gross sales calculation and percentage-based franchise fee ledgers." },
+      { title: "Role Permission Governance", desc: "Define exact permissions for cashiers, store managers, and franchise owners." },
+    ],
+    workflows: [
+      { title: "Multi-Location Live Telemetry", desc: "Compare hourly sales, average ticket size, and labor efficiency across branches." },
+      { title: "Global Loyalty & Gift Cards", desc: "Let customers earn and redeem rewards at any franchise location." },
+      { title: "Central Supply Chain POs", desc: "Consolidate supplier orders from all locations to negotiate volume pricing." },
+      { title: "Regional Tax & Pricing Tiers", desc: "Set different price books and tax rates by city, region, or airport venue." },
+      { title: "Store Audit & Compliance Logs", desc: "Track manager overrides, drawer openings, and void exceptions remotely." },
+      { title: "Automated ERP Financial Sync", desc: "Native gRPC and REST webhook pipelines into SAP, NetSuite, and Oracle." },
+    ],
+    imageSrc: "/images/ent_franchise_portal.png",
+    imageAlt: "Franchise and multi-location management portal",
+    topBadge: "Franchise HQ",
+    bottomBadge: "Multi-Location Scale",
+    ctaLabel: "Schedule Franchise Demo",
+    icon: Building2,
+    faqs: [
+      { id: "fr-1", question: "Can franchise store managers override corporate pricing?", answer: "Only if head office explicitly grants price-override permission in the central role manager." },
+    ],
+  },
+  "cloud-kitchen": {
+    slug: "cloud-kitchen",
+    eyebrow: "Ghost Kitchens & Virtual Brands",
+    name: "Cloud Kitchens",
+    title: "Cloud Kitchen POS & Multi-Brand Hub",
+    description:
+      "Run 5+ virtual delivery brands from one shared kitchen, single POS terminal, and unified KDS prep line.",
+    points: [
+      { title: "Multi-Brand Aggregation", desc: "Direct ingestion of orders from Uber Eats, DoorDash, and direct web into one screen." },
+      { title: "Unified Kitchen Routing", desc: "Direct food items from multiple virtual menus to the right grill or fryer station." },
+      { title: "Driver Dispatch Handoff", desc: "TV screen in driver waiting area displaying order readiness by delivery platform." },
+    ],
+    workflows: [
+      { title: "Expo Packing Station", desc: "Verification screens to ensure all bags contain correct items before driver handoff." },
+      { title: "Virtual Brand Analytics", desc: "Break down revenue, food costs, and platform commission by individual brand." },
+      { title: "Aggregator Live Menu Sync", desc: "Turn off menu items across all delivery platforms with a single button." },
+      { title: "Virtual Recipe Par Levels", desc: "Shared ingredient stock tracking across multiple virtual menu offerings." },
+      { title: "Automated Delivery Labels", desc: "Print order summary stickers with customer name, bag count, and courier ID." },
+      { title: "Central Kitchen Ledger", desc: "Daily sales reconciliation grouped by third-party delivery channel." },
+    ],
+    imageSrc: "/images/ent_omnichannel_bundle.png",
+    imageAlt: "Cloud kitchen virtual brand management POS",
+    topBadge: "Ghost Kitchens",
+    bottomBadge: "Multi-Brand Hub",
+    ctaLabel: "Start Cloud Kitchen Trial",
+    icon: Cloud,
+    faqs: [
+      { id: "ck-1", question: "Do I need separate tablets for every delivery app?", answer: "No, all delivery app orders flow into one unified queue and print to the correct kitchen stations." },
+    ],
+  },
+  "multi-location": {
+    slug: "multi-location",
+    eyebrow: "Multi-Location Chains",
+    name: "Multi-Location Enterprise",
+    title: "Enterprise Chain POS & Group Operations",
+    description:
+      "Scale from 5 to 100+ stores with central menu management, cross-store inventory balancing, and enterprise SLA reliability.",
+    points: [
+      { title: "Central Menu Syndication", desc: "Update menus, pricing, and allergen data across all restaurants instantly." },
+      { title: "Cross-Store Sales Telemetry", desc: "Compare hourly sales, table turn times, and food costs across all outlets." },
+      { title: "Enterprise SLA & Offline Mesh", desc: "Sub-4ms local till caching with guaranteed 99.99% uptime SLA." },
+    ],
+    workflows: [
+      { title: "Central Purchasing & Warehouse", desc: "Coordinate central commissary stock orders and store replenishment." },
+      { title: "Universal Gift Card Engine", desc: "Sell and redeem gift cards across all physical stores and web portals." },
+      { title: "Regional Store Manager Portal", desc: "Store-level dashboard for rosters, shifts, and drawer reconciliations." },
+      { title: "Consolidated P&L Reporting", desc: "Group-level financial analytics exported to enterprise accounting software." },
+      { title: "KDS Station Standardization", desc: "Standardize prep times and station routing across all chain kitchens." },
+      { title: "Dedicated Account Support", desc: "24/7 priority enterprise support and named technical account manager." },
+    ],
+    imageSrc: "/images/ent_global_pos_bundle.png",
+    imageAlt: "Multi-location restaurant enterprise POS dashboard",
+    topBadge: "Enterprise Scale",
+    bottomBadge: "Multi-Unit Control",
+    ctaLabel: "Schedule Enterprise Demo",
+    icon: Building2,
+    faqs: [
+      { id: "ml-1", question: "How does cross-store inventory transfer work?", answer: "Create transfer orders from the central portal and receive goods with barcode verification at the destination." },
+    ],
+  },
+};
+
+export function generateStaticParams() {
+  return Object.keys(INDUSTRIES_DATA).map((industrySlug) => ({ industrySlug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ industrySlug: string }>;
+}): Promise<Metadata> {
+  const { industrySlug } = await params;
+  const industry = INDUSTRIES_DATA[industrySlug];
+  if (!industry) {
+    return { title: "Solutions | Quantix Enterprise" };
+  }
+  return {
+    title: `${industry.title} | Quantix Enterprise`,
+    description: industry.description,
   };
 }
 
-const INDUSTRIES_DATA: Record<string, Industry> = {
-  'fine-dining': {
-    slug: 'fine-dining',
-    name: 'Fine Dining',
-    heroImage: '/images/ent_fine_dining_bundle.png',
-    pricingNote: 'Most fine dining restaurants choose our Enterprise Pro Plan.',
-    features: [
-      { id: 'tables', icon: <Layout size={20} />, title: 'Table Management', description: 'Interactive floor plan editor, table reservations, and course-paced service flows.' },
-      { id: 'menu', icon: <BookOpen size={20} />, title: 'Course Menus', description: 'Dynamic multi-course menus with selective wine pairings and instant modifiers.' },
-      { id: 'kds', icon: <ChefHat size={20} />, title: 'Kitchen Display (KDS)', description: 'Course-by-course firing with precision prep timers and real-time alerts.' },
-      { id: 'crm', icon: <Users size={20} />, title: 'Guest Profiles', description: 'Secure guest tracking including preferences, severe allergies, and visit histories.' },
-    ],
-    testimonial: {
-      name: 'Maria Rossi',
-      business: 'Trattoria Elegante',
-      quote: 'Quantix transformed our table management and wine pairing workflow. Course pace is flawless.',
-      rating: 5,
-    }
-  },
-  'quick-service': {
-    slug: 'quick-service',
-    name: 'Quick Service Restaurants',
-    heroImage: '/images/ent_qsr_kiosk_bundle.png',
-    pricingNote: 'QSR chains benefit most from our high-throughput Enterprise plans.',
-    features: [
-      { id: 'speed', icon: <Zap size={20} />, title: 'Speed Checkout', description: 'Quick-order grids, combo builders, and one-tap favorites for rapid checkout lines.' },
-      { id: 'kds', icon: <ChefHat size={20} />, title: 'Order Queue Management', description: 'High-throughput kitchen display with distinct sound alerts and delivery priorities.' },
-      { id: 'delivery', icon: <Truck size={20} />, title: 'Delivery Integration', description: 'Seamless third-party delivery platform synchronization directly to the POS terminal.' },
-      { id: 'loyalty', icon: <Trophy size={20} />, title: 'Loyalty Stamps', description: 'Integrated digital stamp cards, customer phone lookups, and automatic rewards.' },
-    ],
-    testimonial: {
-      name: 'Ahmed Khan',
-      business: 'Spice Express',
-      quote: 'Order throughput increased by 35% in the first month. No cashier training needed.',
-      rating: 5,
-    }
-  },
-  'fashion-retail': {
-    slug: 'fashion-retail',
-    name: 'Fashion & Apparel',
-    heroImage: '/images/ent_supply_chain_bundle.png',
-    pricingNote: 'Fashion retailers typically choose Enterprise Basic or Pro plans.',
-    features: [
-      { id: 'sizes', icon: <Ruler size={20} />, title: 'Size & Color Matrix', description: 'High-performance variant management with a simple size/color grid interface.' },
-      { id: 'collections', icon: <Layers size={20} />, title: 'Collection Tracking', description: 'Seasonal collections, Lookbook management, and automated clearance markdown events.' },
-      { id: 'crm', icon: <Users size={20} />, title: 'Premium Clienteling', description: 'Unified customer profiles with secure purchase histories and personal recommendations.' },
-      { id: 'ecommerce', icon: <ShoppingBag size={20} />, title: 'Online Store Sync', description: 'Instantly sync in-store inventory levels with your Shopify or WooCommerce portal.' },
-    ],
-    testimonial: {
-      name: 'Sophie Laurent',
-      business: 'Maison Chic',
-      quote: 'Size guides and collection management are game-changers for our boutique stores.',
-      rating: 5,
-    }
-  },
-  'grocery': {
-    slug: 'grocery',
-    name: 'Grocery & Convenience',
-    heroImage: '/images/ent_global_pos_bundle.png',
-    pricingNote: 'Grocery stores benefit from our Advance or Premium standalone token licenses.',
-    features: [
-      { id: 'barcode', icon: <Scan size={20} />, title: 'Barcode Scanning', description: 'High-speed barcode scanner compatibility and PLU price lookups in milliseconds.' },
-      { id: 'scale', icon: <Scale size={20} />, title: 'Weight Scale Integration', description: 'Scale integration for deli and produce items, calculating prices instantly.' },
-      { id: 'inventory', icon: <Package size={20} />, title: 'Perishables Tracking', description: 'Intelligent expiration date warnings, batch tracking, and spoilage reduction reports.' },
-      { id: 'reorder', icon: <RefreshCw size={20} />, title: 'Auto Reorder Points', description: 'Generate drafts for supplier purchase orders automatically when stock is low.' },
-    ],
-    testimonial: {
-      name: 'David Okonkwo',
-      business: 'FreshMart',
-      quote: 'Inventory alerts and smart batch tracking reduced our grocery spoilage by 40%.',
-      rating: 5,
-    }
-  },
-  'cafe-bakery': {
-    slug: 'cafe-bakery',
-    name: 'Cafés & Bakeries',
-    heroImage: '/images/ent_cafe_bakery_bundle.png',
-    pricingNote: 'Small cafés and retail bakeries typically start with Standalone Standard.',
-    features: [
-      { id: 'recipes', icon: <Book size={20} />, title: 'Recipe Costing', description: 'Track raw ingredient costs to calculate exact menu item gross profit margins.' },
-      { id: 'waste', icon: <Trash2 size={20} />, title: 'Waste Tracking logs', description: 'Log kitchen waste reasons (spoilage, dropped, incorrect order) to save costs.' },
-      { id: 'tips', icon: <Heart size={20} />, title: 'Tip Pooling Management', description: 'Prompts clients for digital tips, distributing them fairly via smart shifts.' },
-      { id: 'display', icon: <Monitor size={20} />, title: 'Digital Menu Boards', description: 'Direct dynamic sync to display screens, hiding sold-out items automatically.' },
-    ],
-    testimonial: {
-      name: 'Priya Sharma',
-      business: 'The Daily Grind',
-      quote: 'The recipe costing feature helped us price our menu perfectly. Highly recommended.',
-      rating: 5,
-    }
-  },
-  'fast-casual': {
-    slug: 'fast-casual',
-    name: 'Fast Casual',
-    heroImage: '/images/nav_restaurant_bundle.png',
-    pricingNote: 'Fast casual restaurants thrive on Enterprise Basic or Pro subscription plans.',
-    features: [
-      { id: 'combos', icon: <Layers size={20} />, title: 'Combo Builder', description: 'Create dynamic combos (Main + Side + Drink) with smart upsell prompts.' },
-      { id: 'queue', icon: <Layers size={20} />, title: 'Estimated Wait Times', description: 'Calculates kitchen queue backlogs to offer real-time checkout expectations.' },
-      { id: 'kds', icon: <ChefHat size={20} />, title: 'Multi-Station KDS', description: 'Route salads to prep stations and hot items to grills with custom timers.' },
-      { id: 'loyalty', icon: <Trophy size={20} />, title: 'Points-based Rewards', description: 'Drives repeat visits with simple reward points triggered by checkout numbers.' },
-    ],
-    testimonial: {
-      name: 'James Rivera',
-      business: 'BowlCo Kitchen',
-      quote: 'The combo builder and order queue boosted our lunch rush throughput by 28%.',
-      rating: 5,
-    }
-  },
-  'electronics': {
-    slug: 'electronics',
-    name: 'Electronics & Tech',
-    heroImage: '/images/ent_venues_pos.png',
-    pricingNote: 'Electronics retailers benefit from Enterprise Pro with serial number sync.',
-    features: [
-      { id: 'serial', icon: <Hash size={20} />, title: 'Serial Number Sync', description: 'Register serial numbers during checkout for foolproof warranty and return audits.' },
-      { id: 'variants', icon: <Layers size={20} />, title: 'Product Combos', description: 'Manage complex combinations of colors, storage sizes, and model versions.' },
-      { id: 'warranty', icon: <Shield size={20} />, title: 'Warranty Upgrades', description: 'Prompts checkout staff to offer customized extended warranties automatically.' },
-      { id: 'trade-in', icon: <RefreshCw size={20} />, title: 'Trade-in Credits', description: 'Evaluate used devices at the register and apply trade-in value as store credit.' },
-    ],
-    testimonial: {
-      name: 'Liam Tanaka',
-      business: 'Circuit Hub',
-      quote: 'Serial number tracking and warranty management save us hours every week during audits.',
-      rating: 5,
-    }
-  },
-  'franchise': {
-    slug: 'franchise',
-    name: 'Franchise & Multi-Location',
-    heroImage: '/images/ent_franchise_portal.png',
-    pricingNote: 'Multi-location operations leverage centralized Cloud Telemetry dashboards.',
-    features: [
-      { id: 'central', icon: <Server size={20} />, title: 'Central Management Hub', description: 'Manage employee shifts, terminal setups, and tax brackets for all locations at once.' },
-      { id: 'menu-sync', icon: <RefreshCw size={20} />, title: 'Global Menu Syncing', description: 'Publish menu price updates or seasonal items to selected terminals instantly.' },
-      { id: 'compare', icon: <BarChart3 size={20} />, title: 'Location Rankings', description: 'Compare store revenues, hourly transaction speeds, and client reviews side-by-side.' },
-      { id: 'compliance', icon: <ClipboardCheck size={20} />, title: 'Compliance Audits', description: 'Enforce brand promotional pricing guidelines globally without manual visits.' },
-    ],
-    testimonial: {
-      name: 'Natasha Brooks',
-      business: 'FreshBite Franchise',
-      quote: 'Global menu syncing is a miracle. We updated pricing for 18 venues in seconds.',
-      rating: 5,
-    }
-  }
-};
+export default async function IndustrySolutionPage({
+  params,
+}: {
+  params: Promise<{ industrySlug: string }>;
+}) {
+  const { industrySlug } = await params;
 
-export default function IndustrySolutionPage() {
-  const params = useParams();
-  const industrySlug = params.industrySlug as string;
-  const industry = INDUSTRIES_DATA[industrySlug];
-
-  if (!industry) {
+  if (!industrySlug) {
     notFound();
   }
 
-  return (
-    <main className="pt-28 sm:pt-36 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
-        {/* Hero Section */}
-        <div className="site-container relative overflow-hidden py-16 sm:py-24 px-4 sm:px-0">
-          {/* Background Ambient Glow */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-87.5 h-87.5 bg-blue-500/10 blur-[100px] rounded-full -z-10 pointer-events-none" />
+  let industry = INDUSTRIES_DATA[industrySlug];
+  if (!industry) {
+    industry = {
+      slug: industrySlug,
+      eyebrow: industrySlug.split("-").map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join(" "),
+      name: industrySlug.split("-").map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join(" "),
+      title: `${industrySlug.split("-").map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join(" ")} POS System`,
+      description: `Tailored enterprise workflows for ${industrySlug.replace("-", " ")} businesses with central telemetry, offline mesh reliability, and multi-unit controls.`,
+      points: [
+        { title: "Core Workflows Ready", desc: "Engineered specifically for high-throughput enterprise scale." },
+        { title: "Sub-4ms Offline Till Mesh", desc: "Maintain continuous operations during broadband interruptions." },
+        { title: "Central HQ Telemetry", desc: "Real-time visibility into branch revenue, inventory, and staff." },
+      ],
+      workflows: [
+        { title: "Connected Till Systems", desc: "Keep menu and inventory in sync across all store registers." },
+        { title: "Live Real-Time Sync", desc: "Stream real-time transactions into cloud telemetry consoles." },
+        { title: "24/7 SLA Operations", desc: "Backed by enterprise support and uptime guarantees." },
+      ],
+      imageSrc: "/images/nav_restaurant_bundle.png",
+      imageAlt: industrySlug,
+      topBadge: "Quantix Solution",
+      bottomBadge: "All-in-One POS",
+      ctaLabel: "Contact Sales",
+      icon: Store,
+      faqs: [
+        { id: "coming-soon", question: "When will this solution be released?", answer: "This sector solution is fully supported. Contact our sales team for an immediate walkthrough." },
+      ],
+    };
+  }
+  const Icon = industry.icon;
 
-          {/* Breadcrumbs */}
-          <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-6">
-            <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
-            <ChevronRight size={10} />
-            <span className="text-slate-600 dark:text-slate-400">{industry.name}</span>
+  return (
+    <>
+      {/* 1. Hero Section (Matching Exact Product Detail Standard) */}
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
+        <div className="site-container relative z-10 px-4 sm:px-6">
+          <div className="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+            <ChevronRight size={12} />
+            <Link href="/solutions" className="hover:text-primary transition-colors">Solutions</Link>
+            <ChevronRight size={12} />
+            <span className="text-primary font-bold truncate max-w-55 sm:max-w-none">{industry.eyebrow || industry.name}</span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Hero */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-500 dark:text-blue-400 shadow-sm">
-                <Sparkles size={11} /> PURPOSE-BUILT SOLUTIONS
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+            <div className="space-y-4 lg:col-span-7">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light shadow-xs">
+                <Icon size={14} className="stroke-[2.5]" />
+                <span>{industry.eyebrow}</span>
               </div>
-              <h1 className="text-4xl sm:text-6xl font-syne font-black tracking-tight uppercase leading-[1.05] text-slate-900 dark:text-white">
-                Quantix for <br />
-                <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">{industry.name}</span>
+
+              <h1 className="font-syne text-3xl font-black leading-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
+                {industry.title}
               </h1>
-              <p className="max-w-xl text-slate-655 dark:text-slate-400 text-sm sm:text-base font-medium leading-relaxed">
-                Streamline operations, optimize checkout speeds, and manage inventory with customized telemetry interfaces and database controls specifically engineered for {industry.name.toLowerCase()} businesses.
+
+              <p className="max-w-xl text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
+                {industry.description}
               </p>
-              <div className="flex flex-wrap gap-3 pt-2">
-                <Link href="/sign-up">
-                  <span className="rounded-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-3.5 px-7 shadow-lg shadow-blue-500/10 hover:shadow-blue-500/20 active:scale-[0.98] transition-all inline-block cursor-pointer">
-                    Start Free Trial
-                  </span>
-                </Link>
-                <Link href="/contact">
-                  <span className="rounded-full border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 text-slate-600 dark:text-slate-300 text-xs font-bold py-3.5 px-7 active:scale-[0.98] transition-all inline-block cursor-pointer">
-                    Talk to Sales
-                  </span>
-                </Link>
+
+              <div className="grid gap-2.5 pt-2">
+                {industry.points.map((point) => (
+                  <div key={point.title} className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary-light">
+                      <Check className="h-3.5 w-3.5 stroke-3" />
+                    </span>
+                    <span className="text-xs sm:text-sm">
+                      <strong className="font-extrabold text-slate-950 dark:text-white">{point.title}: </strong>
+                      <span className="font-medium text-slate-600 dark:text-slate-300">{point.desc}</span>
+                    </span>
+                  </div>
+                ))}
               </div>
-              <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">
-                💡 {industry.pricingNote}
-              </p>
+
+              <div className="flex flex-row items-center gap-2.5 sm:gap-3.5 pt-4 w-full sm:w-auto">
+                <Link
+                  href="/sign-up"
+                  className="flex-1 sm:flex-initial flex h-11 sm:h-12 items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-primary px-3 sm:px-8 font-syne text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-md shadow-primary/20 transition-all hover:bg-primary-dark active:scale-95 text-center min-w-0 cursor-pointer"
+                >
+                  <span className="truncate">{industry.ctaLabel}</span>
+                  <ArrowRight size={13} className="shrink-0" />
+                </Link>
+                <RequestDemoButton
+                  title={`Request Demo for ${industry.name}`}
+                  buttonText="SOLUTION_DETAIL_DEMO"
+                  className="flex-1 sm:flex-initial flex h-11 sm:h-12 items-center justify-center gap-1.5 sm:gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 sm:px-8 font-syne text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer text-center min-w-0"
+                />
+              </div>
             </div>
 
-            {/* Right Hero - Simulated Premium Screen Mockup */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative rounded-3xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-blue-500/40 to-transparent" />
-                
-                {/* Header Window Buttons */}
-                <div className="flex gap-1.5 mb-6">
-                  <span className="h-2.5 w-2.5 rounded-full bg-red-500/40" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/40" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-green-500/40" />
-                </div>
-
-                <div className="space-y-4">
-                  <div className="h-32 rounded-2xl bg-white dark:bg-slate-950 border border-gray-200 dark:border-slate-900 p-4 flex flex-col justify-between">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Live Telemetry Control</span>
-                    <div className="flex justify-between items-end">
-                      <div>
-                        <span className="text-2xl font-syne font-black text-slate-900 dark:text-white">$14,892.40</span>
-                        <span className="text-[9px] font-bold text-emerald-500 ml-1.5">+24.8% Today</span>
-                      </div>
-                      <span className="h-8 w-16 bg-blue-500/10 rounded-lg flex items-center justify-center text-[10px] font-bold text-blue-500 dark:text-blue-400 uppercase tracking-wider border border-blue-500/20">Active</span>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="rounded-2xl border border-gray-200 dark:border-slate-900/80 p-3 bg-white/40 dark:bg-slate-950/20">
-                      <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 block mb-1 uppercase">Terminals Sync</span>
-                      <span className="text-xs font-bold text-slate-800 dark:text-slate-200">6 Online</span>
-                    </div>
-                    <div className="rounded-2xl border border-gray-200 dark:border-slate-900/80 p-3 bg-white/40 dark:bg-slate-950/20">
-                      <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 block mb-1 uppercase">Database Mode</span>
-                      <span className="text-xs font-bold text-slate-800 dark:text-slate-200">Local + Cloud</span>
-                    </div>
-                  </div>
-                </div>
+            <div className="lg:col-span-5">
+              <div className="relative aspect-4/3 w-full flex items-center justify-center p-2">
+                <Image
+                  src={industry.imageSrc}
+                  alt={industry.imageAlt}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 92vw, 42vw"
+                  className="object-contain p-2 drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                />
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Feature Grid Section */}
-        <div className="site-container py-16 sm:py-24 px-4 sm:px-0 border-t border-gray-200 dark:border-slate-900">
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 dark:text-blue-400">CORE WORKFLOWS</span>
-            <h2 className="text-3xl sm:text-4xl font-syne font-black uppercase text-slate-900 dark:text-white">Customized Features</h2>
-            <p className="text-slate-500 dark:text-slate-450 text-xs sm:text-sm font-medium">
-              We replace generic systems with precision industry tools. Here are the core modules deployed immediately for your establishment.
+      {/* 2. Core Workflows Bento Grid Section */}
+      <section className="section-py bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80">
+        <div className="site-container px-4 sm:px-6">
+          <div className="mb-10 text-center max-w-2xl mx-auto">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-primary block mb-2">INDUSTRY WORKFLOWS</span>
+            <h2 className="font-syne text-2xl font-black text-slate-900 dark:text-white sm:text-3xl leading-tight">
+              Engineered For {industry.name}
+            </h2>
+            <p className="mt-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
+              Purpose-built capabilities engineered to streamline operations and scale multi-unit performance.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {industry.features.map((feature, i) => (
-              <div 
-                key={feature.id} 
-                className="rounded-2xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/20 p-6 flex gap-4 hover:border-blue-500/30 transition-colors"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+            {industry.workflows.map((wf) => (
+              <div
+                key={wf.title}
+                className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between"
               >
-                <div className="h-10 w-10 shrink-0 rounded-xl bg-blue-500/10 text-blue-500 dark:text-blue-400 flex items-center justify-center border border-blue-500/20">
-                  {feature.icon}
-                </div>
-                <div className="space-y-1">
-                  <h3 className="text-sm font-bold uppercase tracking-tight text-slate-900 dark:text-white">{feature.title}</h3>
-                  <p className="text-xs text-slate-550 dark:text-slate-400 leading-relaxed font-medium">{feature.description}</p>
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles size={14} className="text-primary shrink-0" />
+                    <h3 className="font-syne font-bold text-slate-900 dark:text-white text-base line-clamp-1">{wf.title}</h3>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-medium leading-relaxed">{wf.desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Testimonial Quote Section */}
-        <div className="site-container py-16 sm:py-24 px-4 sm:px-0 border-t border-gray-200 dark:border-slate-900">
-          <div className="max-w-3xl mx-auto rounded-3xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/40 p-8 sm:p-10 text-center space-y-6 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-blue-500/40 to-transparent" />
-            
-            <div className="flex justify-center gap-1">
-              {[...Array(industry.testimonial.rating)].map((_, i) => (
-                <Star key={i} size={14} className="fill-amber-400 text-amber-400" />
-              ))}
-            </div>
+      {/* 3. Main Products Showcase Section */}
+      <div className="border-b border-slate-200/80 dark:border-slate-800/80">
+        <MainProductsShowcaseSection />
+      </div>
 
-            <blockquote className="text-lg sm:text-xl font-syne font-medium text-slate-850 dark:text-slate-200 leading-relaxed italic">
-              &ldquo;{industry.testimonial.quote}&rdquo;
-            </blockquote>
+      {/* 4. Customer Social Proof */}
+      <TestimonialsWrapper />
 
-            <div className="space-y-1">
-              <cite className="not-italic text-xs font-bold uppercase tracking-wide text-slate-900 dark:text-white">
-                {industry.testimonial.name}
-              </cite>
-              <p className="text-[10px] font-bold text-blue-500 dark:text-blue-400 uppercase tracking-widest">
-                Owner, {industry.testimonial.business}
-              </p>
-            </div>
-          </div>
-        </div>
+      {/* 5. Sector FAQ Section */}
+      <FAQSection faqs={industry.faqs} />
 
-        {/* Bottom CTA Block */}
-        <div className="site-container py-12 px-4 sm:px-0">
-          <div className="max-w-4xl mx-auto rounded-3xl bg-linear-to-tr from-blue-600 to-indigo-600 p-8 sm:p-12 text-center text-white space-y-6 shadow-2xl relative overflow-hidden">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-87.5 h-87.5 bg-white/10 blur-[90px] rounded-full pointer-events-none" />
-            
-            <span className="text-[10px] font-bold uppercase tracking-wider bg-white/10 border border-white/20 px-3.5 py-1 rounded-full inline-block">
-              UPGRADE TODAY
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-syne font-black uppercase tracking-tight leading-tight">
-              Ready to scale your <br />
-              {industry.name.toLowerCase()} operations?
-            </h2>
-            <p className="max-w-lg mx-auto text-xs sm:text-sm text-blue-100 font-medium leading-relaxed">
-              Start your free 14-day trial now. Integrate payments instantly, connect local offline terminals, and sync real-time sales telemetry.
-            </p>
-            <div className="pt-2 flex flex-wrap justify-center gap-3">
-              <Link href="/sign-up">
-                <span className="rounded-full bg-white hover:bg-slate-100 text-blue-600 text-xs font-bold py-3.5 px-8 shadow-lg transition-all inline-block cursor-pointer">
-                  Start Free Trial
-                </span>
-              </Link>
-              <Link href="/contact">
-                <span className="rounded-full border border-white/20 hover:bg-white/10 text-white text-xs font-bold py-3.5 px-8 transition-all inline-block cursor-pointer">
-                  Book a Demo
-                </span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </main>
+      {/* 6. Production CTA Banner */}
+      <CTABanner />
+    </>
   );
 }

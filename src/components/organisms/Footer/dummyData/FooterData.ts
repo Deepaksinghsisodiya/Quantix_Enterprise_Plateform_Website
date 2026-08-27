@@ -36,9 +36,9 @@ export const LEGAL_LINKS: FooterLink[] = [
 ];
 
 export const SOCIAL_LINKS: SocialLink[] = [
-  { href: "https://twitter.com/quantix", ariaLabel: "Twitter", icon: "twitter" },
-  { href: "https://linkedin.com/company/quantix", ariaLabel: "LinkedIn", icon: "linkedin" },
-  { href: "https://github.com/quantix", ariaLabel: "GitHub", icon: "github" },
+  { href: "https://youtube.com/@quantixpos", ariaLabel: "YouTube", icon: "youtube" },
+  { href: "https://instagram.com/quantixpos", ariaLabel: "Instagram", icon: "instagram" },
+  { href: "https://facebook.com/quantixpos", ariaLabel: "Facebook", icon: "facebook" },
 ];
 
 export const FOOTER_COPYRIGHT = "© 2026 Quantix Enterprise Inc. All rights reserved.";

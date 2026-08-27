@@ -1,4 +1,5 @@
-// src/features/Industries/IndustriesSectionWrapper.tsx
+'use client';
+
 import React from 'react';
 import { useGetIndustriesQuery } from './services/IndustriesServices';
 import IndustriesSection from './IndustriesSection';

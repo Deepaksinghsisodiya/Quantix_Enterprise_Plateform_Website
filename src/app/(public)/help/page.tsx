@@ -24,6 +24,7 @@ import {
   Clock,
   X,
   ExternalLink,
+  ChevronRight,
 } from 'lucide-react';
 import Link from 'next/link';
 import CTABanner from '@/components/organisms/CTABanner/CTABanner';
@@ -58,68 +59,71 @@ const HELP_FAQS: HelpFaq[] = [
   {
     category: 'hardware',
     q: 'Can we pair a master register with a satellite terminal and kitchen display (KDS)?',
-    a: 'Yes. On the local LAN network, registers automatically discover each other via local mDNS broadcast. You can route orders from 4 front-of-house cashier registers to 2 dedicated kitchen displays and bar printers with zero WAN network dependency.',
+    a: 'Yes. Quantix uses a local peer-to-peer WebSocket mesh. Satellite registers, server handheld tablets, and kitchen display bump bars connect directly across the local LAN subnet, ensuring kitchen tickets fire instantly even if outside WAN internet is unavailable.',
   },
   {
     category: 'offline',
-    q: 'What happens if a cashier processes an offline card charge that fails later?',
-    a: 'Quantix offline card processing incorporates customizable store risk parameters (e.g. max $100 per offline txn, max $1,000 total offline batch per till). All card charges are tokenized inside the EMV chip reader and submitted immediately when connection resumes.',
+    q: 'What happens if a cashier terminal experiences a hardware power failure mid-order?',
+    a: 'Active shopping carts and split bills are continuously autosaved to local persistent SQLite/IndexedDB journal files. Upon rebooting, the cashier simply enters their PIN to resume the exact in-progress order without data loss.',
   },
 ];
 
-export default function HelpCentrePage() {
+export default function HelpCenterPage() {
+  const [activeCategory, setActiveCategory] = useState<'all' | 'hardware' | 'offline' | 'catalog' | 'erp'>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
 
   const filteredFaqs = HELP_FAQS.filter((faq) => {
-    const matchCat = selectedCategory === 'all' || faq.category === selectedCategory;
-    const matchSearch =
-      !searchQuery.trim() ||
+    const matchesCategory = activeCategory === 'all' || faq.category === activeCategory;
+    const matchesSearch =
+      searchQuery === '' ||
       faq.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
       faq.a.toLowerCase().includes(searchQuery.toLowerCase());
-
-    return matchCat && matchSearch;
+    return matchesCategory && matchesSearch;
   });
 
   return (
-    <div className="w-full text-slate-900 dark:text-slate-100 bg-white dark:bg-darkBg transition-colors duration-300">
-      {/* 1. Hero Header Section (Clear of fixed navbar with pt-32 sm:pt-36 md:pt-40 pb-12 sm:pb-16) */}
-      <section className="relative pt-32 sm:pt-36 md:pt-40 pb-12 sm:pb-16 bg-linear-to-b from-slate-50/70 via-white to-white dark:from-darkBg dark:via-darkSurface/30 dark:to-darkBg border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-75 bg-primary/10 blur-[130px] rounded-full pointer-events-none -z-10" />
-
-        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
-            <Flame size={13} className="text-primary" />
-            <span>24/7 Enterprise Support Center</span>
+    <>
+      {/* 1. Hero Header */}
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header text-center">
+        <div className="site-container relative z-10 px-4 sm:px-6">
+          {/* Breadcrumb */}
+          <div className="mb-4 inline-flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+            <ChevronRight size={12} />
+            <span className="text-primary font-bold">Help Center</span>
           </div>
 
-          <h1 className="font-syne text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white leading-[1.12] tracking-tight">
-            How Can We Assist Your Team?
-          </h1>
+          <div className="max-w-3xl mx-auto space-y-4">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
+              <LifeBuoy size={13} className="text-primary" />
+              <span>24/7 Enterprise Technical Support</span>
+            </div>
 
-          <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed">
-            Search our enterprise knowledge base, terminal hardware setup manuals, offline resilience playbooks, and developer integration specs.
-          </p>
+            <h1 className="font-syne text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 dark:text-white leading-tight tracking-tight">
+              How Can We Help You Today?
+            </h1>
 
-          {/* Search Bar */}
-          <div className="pt-4 max-w-xl mx-auto">
-            <div className="relative flex items-center bg-white dark:bg-darkSurface/80 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs focus-within:ring-2 focus-within:ring-primary/20 transition-all p-1">
-              <Search className="h-4 w-4 text-slate-400 dark:text-slate-500 ml-3.5 shrink-0" />
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium max-w-xl mx-auto">
+              Search setup guides, offline failover protocols, hardware driver setup, and ERP integration documentation.
+            </p>
+
+            {/* Live Search Input */}
+            <div className="pt-2 max-w-xl mx-auto relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search help topics, error codes, hardware setup (e.g. Offline, ERP, Printers)..."
-                className="w-full bg-transparent px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
+                placeholder="Search troubleshooting guides (e.g. offline till, printer pairing, SAP webhook)..."
+                className="w-full pl-11 pr-10 py-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-sm font-medium text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-primary shadow-xs transition-all"
               />
               {searchQuery && (
                 <button
-                  type="button"
                   onClick={() => setSearchQuery('')}
-                  className="p-1.5 mr-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                 >
-                  <X size={15} />
+                  <X size={16} />
                 </button>
               )}
             </div>
@@ -127,160 +131,155 @@ export default function HelpCentrePage() {
         </div>
       </section>
 
-      {/* 2. Quick Navigation Resource Cards */}
-      <section className="py-10 sm:py-14 bg-white dark:bg-darkBg">
-        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {[
-              {
-                title: 'POS Architecture Guide',
-                desc: 'Offline mesh & multi-store setup',
-                icon: BookOpen,
-                href: '/resources/pos-guide',
-              },
-              {
-                title: 'Resources & Toolkits',
-                desc: 'Downloadable Excel & PDF models',
-                icon: FileText,
-                href: '/resources',
-              },
-              {
-                title: 'Multi-Store ROI Model',
-                desc: 'Savings & TCO financial forecaster',
-                icon: HelpCircle,
-                href: '/roi-calculator',
-              },
-              {
-                title: 'Developer API Telemetry',
-                desc: 'REST webhooks & ERP lakes',
-                icon: Terminal,
-                href: '/api-docs',
-              },
-            ].map((card, idx) => (
-              <Link key={idx} href={card.href} className="group">
-                <div className="p-5 sm:p-6 rounded-3xl bg-slate-50/70 dark:bg-darkSurface/50 border border-slate-200/80 dark:border-slate-800 space-y-3 hover:border-primary/40 hover:shadow-lg transition-all h-full flex flex-col justify-between">
-                  <div className="p-3 rounded-2xl bg-primary/10 text-primary w-fit">
-                    <card.icon size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-syne text-sm sm:text-base font-bold text-slate-950 dark:text-white group-hover:text-primary transition-colors">
-                      {card.title}
-                    </h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
-                      {card.desc}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+      {/* 2. Quick Action Cards */}
+      <section className="section-py site-container px-4 sm:px-6 border-b border-slate-200/80 dark:border-slate-800/80">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link
+            href="/resources/pos-guide"
+            className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
+          >
+            <div>
+              <div className="h-10 w-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                <BookOpen size={20} />
+              </div>
+              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white">Master POS Blueprint</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                Step-by-step offline topology and hybrid cloud architecture.
+              </p>
+            </div>
+            <span className="text-[11px] font-bold text-primary flex items-center gap-1 mt-4">
+              Explore Guide <ArrowRight size={12} />
+            </span>
+          </Link>
+
+          <Link
+            href="/api-docs"
+            className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
+          >
+            <div>
+              <div className="h-10 w-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                <Terminal size={20} />
+              </div>
+              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white">Developer API Portal</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                REST webhook endpoints, payload samples, and gRPC specs.
+              </p>
+            </div>
+            <span className="text-[11px] font-bold text-primary flex items-center gap-1 mt-4">
+              View API Docs <ArrowRight size={12} />
+            </span>
+          </Link>
+
+          <Link
+            href="/roi-calculator"
+            className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
+          >
+            <div>
+              <div className="h-10 w-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                <FileText size={20} />
+              </div>
+              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white">ROI Calculator</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                Forecast multi-store operational savings vs legacy POS systems.
+              </p>
+            </div>
+            <span className="text-[11px] font-bold text-primary flex items-center gap-1 mt-4">
+              Calculate Savings <ArrowRight size={12} />
+            </span>
+          </Link>
+
+          <Link
+            href="/contact"
+            className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
+          >
+            <div>
+              <div className="h-10 w-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                <Headphones size={20} />
+              </div>
+              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white">Priority SLA Hotline</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                24/7 dedicated engineering support for live enterprise venues.
+              </p>
+            </div>
+            <span className="text-[11px] font-bold text-primary flex items-center gap-1 mt-4">
+              Contact Engineers <ArrowRight size={12} />
+            </span>
+          </Link>
         </div>
       </section>
 
-      {/* 3. Filterable Knowledge Base & FAQ Accordion */}
-      <section className="py-12 sm:py-16 bg-slate-50/60 dark:bg-darkBg/50 border-t border-slate-200/80 dark:border-slate-800/80">
-        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
-          
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <span className="text-[10px] font-syne font-black uppercase tracking-wider text-primary">
-                FREQUENTLY ASKED QUESTIONS
-              </span>
-              <h2 className="font-syne text-2xl sm:text-3xl font-black text-slate-950 dark:text-white mt-1">
-                Enterprise Support Matrix
-              </h2>
-            </div>
+      {/* 3. Knowledge Base FAQs */}
+      <section className="section-py site-container max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-8">
+          <span className="text-xs font-syne font-black text-primary tracking-widest uppercase">
+            KNOWLEDGE BASE
+          </span>
+          <h2 className="font-syne text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-1">
+            Frequently Solved Inquiries
+          </h2>
+        </div>
 
-            {/* Category Filter Pills */}
-            <div className="flex flex-wrap items-center gap-1.5">
-              {[
-                { id: 'all', label: 'All FAQs' },
-                { id: 'offline', label: 'Offline Mode' },
-                { id: 'hardware', label: 'Hardware' },
-                { id: 'catalog', label: 'Catalogs' },
-                { id: 'erp', label: 'ERP Sync' },
-              ].map((cat) => (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-syne font-bold transition-all border cursor-pointer ${
-                    selectedCategory === cat.id
-                      ? 'bg-primary border-primary text-white shadow-xs'
-                      : 'bg-white dark:bg-darkSurface/60 border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary/40'
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-          </div>
+        {/* Category Pills */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {(
+            [
+              { id: 'all', label: 'All Topics' },
+              { id: 'offline', label: 'Offline Failover' },
+              { id: 'hardware', label: 'Printers & Scanners' },
+              { id: 'catalog', label: 'Price Overrides' },
+              { id: 'erp', label: 'ERP & Webhooks' },
+            ] as const
+          ).map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveCategory(tab.id)}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                activeCategory === tab.id
+                  ? 'bg-primary text-white shadow-xs'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-          {/* Accordion */}
+        {/* FAQ Accordion */}
+        <div className="space-y-3">
           {filteredFaqs.length === 0 ? (
-            <div className="text-center py-12 p-6 rounded-3xl bg-white dark:bg-darkSurface/60 border border-slate-200 dark:border-slate-800">
-              <HelpCircle className="mx-auto h-8 w-8 text-slate-400 mb-2" />
-              <p className="text-sm font-bold text-slate-900 dark:text-white">No articles matched your search</p>
-              <p className="text-xs text-slate-500 mt-1">Try different search terms or clear your category filter.</p>
+            <div className="p-8 text-center bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800">
+              <p className="text-sm font-medium text-slate-500">No help articles found matching "{searchQuery}".</p>
             </div>
           ) : (
-            <div className="space-y-3">
-              {filteredFaqs.map((faq, i) => (
-                <div
-                  key={i}
-                  className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-darkSurface/60 overflow-hidden shadow-2xs"
-                >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaqIndex(openFaqIndex === i ? null : i)}
-                    className="w-full text-left p-5 text-xs sm:text-sm font-bold text-slate-900 dark:text-white flex items-center justify-between gap-3 cursor-pointer"
-                  >
-                    <span className="font-syne">{faq.q}</span>
-                    {openFaqIndex === i ? (
-                      <ChevronUp size={16} className="text-primary shrink-0" />
-                    ) : (
-                      <ChevronDown size={16} className="text-slate-400 shrink-0" />
-                    )}
-                  </button>
-                  {openFaqIndex === i && (
-                    <div className="p-5 border-t border-slate-100 dark:border-slate-800 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium bg-slate-50/50 dark:bg-darkBg/60">
-                      {faq.a}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Dedicated Support Channels Card */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-linear-to-br from-primary/10 via-primary/5 to-transparent dark:from-darkSurface/90 dark:via-darkBg dark:to-darkBg border border-primary/20 shadow-md space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 text-primary font-syne font-bold text-xs">
-                  <Headphones size={15} />
-                  <span>Dedicated Enterprise SLA Support</span>
-                </div>
-                <h3 className="font-syne text-lg sm:text-xl font-black text-slate-950 dark:text-white">
-                  Need Immediate Technical Support?
-                </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                  Enterprise tier accounts receive a dedicated Slack channel, 15-minute emergency SLA response, and on-site field engineering support.
-                </p>
-              </div>
-
-              <Link
-                href="/contact/sales"
-                className="px-6 py-3 rounded-2xl bg-primary hover:bg-primary-dark text-white font-syne font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-primary/20 transition-all text-center shrink-0"
+            filteredFaqs.map((faq, idx) => (
+              <div
+                key={idx}
+                className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs overflow-hidden"
               >
-                Contact Enterprise Support →
-              </Link>
-            </div>
-          </div>
+                <button
+                  onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
+                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 dark:hover:bg-slate-850/50 transition-colors"
+                >
+                  <span className="font-syne font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                    {faq.q}
+                  </span>
+                  <span className="p-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 shrink-0">
+                    {expandedFaq === idx ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </span>
+                </button>
+                {expandedFaq === idx && (
+                  <div className="px-4 pb-5 sm:px-5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed border-t border-slate-100 dark:border-slate-800/80 pt-3">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            ))
+          )}
         </div>
       </section>
 
       {/* 4. Bottom CTABanner */}
       <CTABanner />
-    </div>
+    </>
   );
 }
