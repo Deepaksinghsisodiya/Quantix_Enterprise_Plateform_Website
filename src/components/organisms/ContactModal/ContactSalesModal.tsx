@@ -369,3 +369,5 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
     </AnimatePresence>
   );
 };
+
+export default ContactSalesModal;

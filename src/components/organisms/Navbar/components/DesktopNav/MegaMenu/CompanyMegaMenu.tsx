@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { ArrowRight, Sparkles, Check } from 'lucide-react';
+import { ArrowRight, Sparkles, Check, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MegaMenuWrapper } from './MegaMenuWrapper';
 import { RESOURCES_MEGA_CONFIG } from '../../../config/navConfig';
