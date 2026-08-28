@@ -27,7 +27,7 @@ const buttonVariants = cva('flex items-center justify-center font-semibold trans
       sm: 'px-4 py-2 text-xs',
       md: 'px-5 py-2.5 text-sm',
       lg: 'px-7 py-3.5 text-base',
-      form: 'py-4 text-sm',
+      form: 'py-2.5 sm:py-3.5 px-4 text-xs sm:text-sm',
     },
     fullWidth: {
       true: 'w-full',

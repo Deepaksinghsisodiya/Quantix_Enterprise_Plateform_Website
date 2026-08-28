@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2, ChevronDown, SendHorizontal, Lock } from 'lucide-react';
+import { X, CheckCircle2, ChevronDown, Sparkles, ArrowRight, Lock, ShieldCheck, User, Mail, Phone, Building2 } from 'lucide-react';
 import Link from 'next/link';
 
 export interface ContactSalesModalProps {
@@ -18,22 +18,13 @@ const COUNTRY_CODES = [
   { code: '+1', country: 'US/CA' },
 ];
 
-const BUSINESS_CATEGORIES = [
-  'Restaurant & Fine Dining',
-  'Retail & Boutique Store',
-  'Supermarket & Grocery',
-  'Cafe, Bakery & Coffee Shop',
-  'Quick Service (QSR) & Takeaway',
-  'Multi-Store Franchise & Chain',
-];
-
 export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
   isOpen,
   onClose,
-  title = "We've got the right solution for you!",
+  title = "Claim Your 3 Months Free Trial",
   subtitle = "Tell us about your business and our solution specialist will build your custom setup within 1 hour.",
   badgeText = "SOLUTIONS EXPERT",
-  buttonText = "GET STARTED TODAY",
+  buttonText,
 }) => {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -41,7 +32,6 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
     countryCode: '+1',
     phone: '',
     businessName: '',
-    businessCategory: '',
   });
 
   const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
@@ -104,7 +94,6 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
     if (!isPhoneValid) newErrors.phone = true;
 
     if (!formData.businessName.trim()) newErrors.businessName = true;
-    if (!formData.businessCategory.trim()) newErrors.businessCategory = true;
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -133,7 +122,6 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
       countryCode: '+1',
       phone: '',
       businessName: '',
-      businessCategory: '',
     });
     setErrors({});
     setIsSubmitted(false);
@@ -143,13 +131,25 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
     const hasError = errors[fieldName];
     return hasError
       ? 'border-red-500 ring-2 ring-red-500/20 bg-red-50/40 dark:bg-red-950/20 text-slate-900 dark:text-slate-100 placeholder:text-red-400'
-      : 'border-slate-200/90 dark:border-slate-700/80 bg-slate-50/80 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-2 focus:ring-primary/20';
+      : 'border-slate-200 dark:border-slate-700/80 bg-slate-50/90 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:border-red-500 focus:ring-2 focus:ring-red-500/20';
+  };
+
+  // Format clean button CTA text
+  const getCtaLabel = () => {
+    if (!buttonText) return 'CLAIM MY 3 MONTHS FREE';
+    if (buttonText.includes('TOP_PROMO_BANNER') || buttonText.includes('START_FREE_TRIAL') || buttonText.includes('BANNER')) {
+      return 'CLAIM MY 3 MONTHS FREE';
+    }
+    if (buttonText.includes('_')) {
+      return buttonText.split('_').map((w) => w.toUpperCase()).join(' ');
+    }
+    return buttonText.toUpperCase();
   };
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
           {/* Backdrop Blur Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -157,46 +157,44 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm cursor-pointer"
+            className="fixed inset-0 bg-slate-950/75 backdrop-blur-sm cursor-pointer"
           />
 
-          {/* Dialog Container Card with Horizontal Shake on Invalid Submit */}
+          {/* Dialog Container Card */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 15 }}
+            initial={{ opacity: 0, scale: 0.94, y: 15 }}
             animate={isShaking ? { x: [-8, 8, -6, 6, -4, 4, 0] } : { opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: 15 }}
+            exit={{ opacity: 0, scale: 0.94, y: 15 }}
             transition={isShaking ? { duration: 0.4, ease: "easeInOut" } : { duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 w-full max-w-[410px] sm:max-w-[425px] bg-white dark:bg-slate-900 rounded-2xl px-4 py-5 sm:px-5 sm:py-6 shadow-2xl shadow-slate-950/40 border border-slate-200/90 dark:border-slate-800 my-auto text-slate-800 dark:text-slate-100 select-none"
+            className="relative z-10 w-full max-w-[420px] bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-6 shadow-2xl shadow-slate-950/50 border border-slate-200 dark:border-slate-800 my-auto text-slate-800 dark:text-slate-100 select-none"
           >
-            {/* Outer Top Right Corner Floating Close Button (X) */}
+            {/* Top Red Gradient Accent */}
+            <div className="absolute top-0 left-6 right-6 h-1 bg-gradient-to-r from-red-600 via-rose-500 to-amber-500 rounded-b-full opacity-90" />
+
+            {/* Outer Top Right Floating Close Button */}
             <button
               type="button"
               onClick={onClose}
-              className="absolute -top-3.5 -right-3.5 h-8 w-8 rounded-full bg-white dark:bg-slate-800 text-slate-700 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white border border-slate-200 dark:border-slate-700 shadow-xl hover:scale-110 active:scale-90 transition-all cursor-pointer z-30 flex items-center justify-center"
+              className="absolute -top-3.5 -right-3.5 h-8 w-8 rounded-full bg-white dark:bg-slate-800 text-slate-700 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white border border-slate-200 dark:border-slate-700 shadow-xl hover:scale-110 active:scale-90 transition-all flex items-center justify-center cursor-pointer z-50"
               aria-label="Close dialog"
             >
-              <X size={16} className="stroke-2.5" />
+              <X size={16} className="stroke-[2.5]" />
             </button>
 
-            {/* Top Accent Line */}
-            <div className="absolute top-0 left-6 right-6 h-1 bg-linear-to-r from-primary via-primary-light to-primary-dark rounded-b-full opacity-80" />
-
             {/* Header Content */}
-            <div className="flex flex-col items-center text-center space-y-1.5 mb-4 pt-2">
-              {badgeText && (
-                <span className="mb-1 inline-flex items-center gap-1 rounded-md border border-primary/20 bg-primary/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-primary dark:text-primary-light">
-                  {badgeText}
-                </span>
-              )}
-              <h3 className="text-base sm:text-lg font-syne font-black text-slate-900 dark:text-white leading-snug tracking-tight max-w-sm">
+            <div className="flex flex-col items-center text-center space-y-1.5 mb-5 pt-1">
+              <span className="inline-flex items-center gap-1 text-[9.5px] font-syne font-black uppercase tracking-wider text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 px-2.5 py-0.5 rounded-full shadow-2xs">
+                <Sparkles size={10} className="text-red-500 fill-red-500" />
+                {badgeText}
+              </span>
+
+              <h3 className="text-lg sm:text-xl font-syne font-black text-slate-900 dark:text-white leading-snug tracking-tight">
                 {title}
               </h3>
 
-              {subtitle && (
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium max-w-sm leading-tight">
-                  {subtitle}
-                </p>
-              )}
+              <p className="text-[11.5px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed max-w-xs">
+                {subtitle}
+              </p>
             </div>
 
             {/* Form Content */}
@@ -207,32 +205,32 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="flex flex-col items-center text-center py-4 space-y-3"
+                  className="flex flex-col items-center text-center py-6 space-y-3"
                 >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/15 text-primary">
-                    <CheckCircle2 size={28} className="stroke-2.5" />
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-500">
+                    <CheckCircle2 size={32} className="stroke-[2.5]" />
                   </div>
                   <div className="space-y-1">
-                    <h4 className="text-sm font-syne font-bold text-slate-900 dark:text-white">
-                      Request Sent, {formData.fullName.split(' ')[0]}!
+                    <h4 className="text-base font-syne font-bold text-slate-900 dark:text-white">
+                      Request Confirmed, {formData.fullName.split(' ')[0]}!
                     </h4>
-                    <p className="text-[11px] text-slate-600 dark:text-slate-300 font-medium max-w-60 leading-relaxed">
-                      Our solution engineer will review your request and call you at{' '}
-                      <span className="font-bold text-primary">{formData.countryCode} {formData.phone}</span> shortly.
+                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium max-w-64 leading-relaxed">
+                      Our platform specialist will review your details and call you at{' '}
+                      <span className="font-bold text-red-600 dark:text-red-400">{formData.countryCode} {formData.phone}</span> within 1 hour.
                     </p>
                   </div>
-                  <div className="pt-1 flex gap-2">
+                  <div className="pt-2 flex gap-2">
                     <button
                       type="button"
                       onClick={onClose}
-                      className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold uppercase tracking-wider hover:bg-slate-200 transition-colors cursor-pointer"
+                      className="px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all cursor-pointer shadow-md"
                     >
-                      Close
+                      Done
                     </button>
                     <button
                       type="button"
                       onClick={handleReset}
-                      className="px-3 py-2 text-xs font-bold text-primary hover:underline cursor-pointer"
+                      className="px-3 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 cursor-pointer"
                     >
                       Submit Another
                     </button>
@@ -245,7 +243,7 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   onSubmit={handleSubmit}
-                  className="space-y-2.5"
+                  className="space-y-3"
                   noValidate
                 >
                   {/* Name */}
@@ -257,21 +255,21 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleChange}
-                      placeholder="Name"
+                      placeholder="Full Name"
                       className={`w-full border font-medium rounded-xl px-3.5 py-2.5 text-xs outline-none transition-all ${getInputStyle('fullName')}`}
                     />
                   </div>
 
                   {/* Email */}
                   <div>
-                    <label htmlFor="modal-email" className="sr-only">Email</label>
+                    <label htmlFor="modal-email" className="sr-only">Work Email</label>
                     <input
                       id="modal-email"
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="Email"
+                      placeholder="Work Email"
                       className={`w-full border font-medium rounded-xl px-3.5 py-2.5 text-xs outline-none transition-all ${getInputStyle('email')}`}
                     />
                   </div>
@@ -285,7 +283,7 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
                         name="countryCode"
                         value={formData.countryCode}
                         onChange={handleChange}
-                        className="appearance-none bg-slate-50/80 dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 text-slate-900 dark:text-slate-100 font-bold rounded-xl pl-3 pr-7 py-2.5 text-xs outline-none focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all cursor-pointer"
+                        className="appearance-none bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 font-bold rounded-xl pl-3 pr-7 py-2.5 text-xs outline-none focus:ring-1 focus:ring-red-500 transition-all cursor-pointer"
                       >
                         {COUNTRY_CODES.map((item) => (
                           <option key={item.code} value={item.code}>
@@ -303,7 +301,7 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        placeholder="Phone"
+                        placeholder="Phone Number (e.g. 555-123-4567)"
                         className={`w-full border font-medium rounded-xl px-3.5 py-2.5 text-xs outline-none transition-all ${getInputStyle('phone')}`}
                       />
                     </div>
@@ -311,70 +309,55 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
 
                   {/* Business Name */}
                   <div>
-                    <label htmlFor="modal-businessname" className="sr-only">Business Name</label>
+                    <label htmlFor="modal-businessname" className="sr-only">Business / Brand Name</label>
                     <input
                       id="modal-businessname"
                       type="text"
                       name="businessName"
                       value={formData.businessName}
                       onChange={handleChange}
-                      placeholder="Business Name"
+                      placeholder="Business / Brand Name"
                       className={`w-full border font-medium rounded-xl px-3.5 py-2.5 text-xs outline-none transition-all ${getInputStyle('businessName')}`}
                     />
                   </div>
 
-                  {/* Business Category */}
-                  <div className="relative">
-                    <label htmlFor="modal-businesscategory" className="sr-only">Business Category</label>
-                    <select
-                      id="modal-businesscategory"
-                      name="businessCategory"
-                      value={formData.businessCategory}
-                      onChange={handleChange}
-                      className={`w-full appearance-none border font-medium rounded-xl px-3.5 py-2.5 text-xs outline-none transition-all cursor-pointer ${getInputStyle('businessCategory')}`}
-                    >
-                      <option value="" disabled className="text-slate-400">
-                        Business Category
-                      </option>
-                      {BUSINESS_CATEGORIES.map((cat) => (
-                        <option key={cat} value={cat}>
-                          {cat}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
-                  </div>
-
                   {/* CTA Button */}
-                  <div className="pt-1.5">
+                  <div className="pt-2">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full rounded-xl bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-syne font-extrabold text-xs tracking-wider uppercase py-3 px-5 shadow-md shadow-primary/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:pointer-events-none"
+                      className="w-full rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-syne font-black text-xs tracking-wider uppercase py-3.5 px-5 shadow-lg shadow-red-600/30 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:pointer-events-none"
                     >
                       {isSubmitting ? (
                         <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
                       ) : (
                         <>
-                          <SendHorizontal size={14} className="stroke-[2.5]" />
-                          <span>{buttonText ? (buttonText.includes('_') ? buttonText.split('_').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ') : buttonText) : 'Start Free Trial'}</span>
+                          <Sparkles size={14} className="text-amber-300 fill-amber-300" />
+                          <span>{getCtaLabel()}</span>
+                          <ArrowRight size={14} className="stroke-[3]" />
                         </>
                       )}
                     </button>
                   </div>
 
-                  {/* Trust badge & Privacy Disclaimer */}
-                  <div className="flex flex-col items-center gap-1 pt-1">
-                    <div className="inline-flex items-center gap-1 text-[10px] font-bold text-slate-500 dark:text-slate-400">
-                      <Lock size={10} className="text-primary shrink-0" />
-                      <span>100% Confidential • Instant 1-hr Response</span>
+                  {/* Trust Indicators */}
+                  <div className="flex flex-col items-center gap-1.5 pt-2">
+                    <div className="flex items-center gap-2 text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+                      <span className="flex items-center gap-1">
+                        <ShieldCheck size={11} className="text-emerald-500" />
+                        No Credit Card Required
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1">
+                        <Lock size={10} className="text-slate-400" />
+                        100% Confidential
+                      </span>
                     </div>
                     <p className="text-[10px] text-center text-slate-400 font-medium leading-tight">
                       By submitting, you agree to our{' '}
-                      <Link href="/privacy" onClick={onClose} className="text-slate-600 dark:text-slate-300 font-semibold underline underline-offset-2 hover:text-primary transition-colors">
+                      <Link href="/privacy" onClick={onClose} className="text-slate-600 dark:text-slate-300 font-semibold underline hover:text-red-500 transition-colors">
                         Privacy Policy
                       </Link>
-                      .
                     </p>
                   </div>
                 </motion.form>
@@ -386,5 +369,3 @@ export const ContactSalesModal: React.FC<ContactSalesModalProps> = ({
     </AnimatePresence>
   );
 };
-
-export default ContactSalesModal;

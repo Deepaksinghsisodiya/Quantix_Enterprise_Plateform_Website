@@ -63,16 +63,16 @@ export const ProductsMegaMenu: React.FC<ProductsMegaMenuProps> = ({
           </div>
         )}
 
-        {/* Right Columns: Clean 2-Column Grid (8 cols) */}
+        {/* Right Columns: Original 3 Categories (8 cols) */}
         <div className="col-span-8 space-y-3">
           {categories.map((cat: any) => (
-            <div key={cat.categoryTitle} className="space-y-3">
+            <div key={cat.categoryTitle} className="space-y-2">
               <div className="flex items-center gap-2 text-[10px] font-syne font-black uppercase tracking-widest text-primary select-none px-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
                 <span>{cat.categoryTitle}</span>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 max-w-2xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl">
                 {cat.items.map((item: any) => {
                   const ItemIcon = item.icon;
                   return (
@@ -90,11 +90,6 @@ export const ProductsMegaMenu: React.FC<ProductsMegaMenuProps> = ({
                           <span className="font-syne font-bold text-[13px] text-slate-900 dark:text-white group-hover/item:text-primary transition-colors truncate">
                             {item.title}
                           </span>
-                          {item.badge && (
-                            <span className="text-[8px] font-black uppercase tracking-wider bg-primary/10 text-primary border border-primary/20 px-1.5 py-0.2 rounded-md shrink-0">
-                              {item.badge}
-                            </span>
-                          )}
                         </div>
                         {item.desc && (
                           <p className="text-[10.5px] text-slate-500 dark:text-slate-400 font-medium leading-snug group-hover/item:text-slate-700 dark:group-hover/item:text-slate-300 line-clamp-1 mt-0.5">
@@ -113,3 +108,5 @@ export const ProductsMegaMenu: React.FC<ProductsMegaMenuProps> = ({
     </MegaMenuWrapper>
   );
 };
+
+export default ProductsMegaMenu;

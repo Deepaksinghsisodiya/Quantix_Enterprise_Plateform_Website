@@ -39,6 +39,9 @@ import {
   Star,
   Compass,
   FileSpreadsheet,
+  Boxes,
+  PlayCircle,
+  Building2,
 } from 'lucide-react';
 import type { NavLink, MegaMenuSectionData, MobileMenuSection, QuickMobileTool } from './navTypes';
 
@@ -46,29 +49,29 @@ export const RESTAURANT_SITE_URL = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'ht
 export const RETAIL_SITE_URL = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
 
 export const PRIMARY_LINKS: NavLink[] = [
-  { label: 'Products', href: '/products', desc: 'Unified Restaurant & Retail POS Platforms', hasMegaMenu: true },
-  { label: 'Solutions', href: '/solutions', desc: 'Industry-tailored solutions for Dining & Retail', hasMegaMenu: true },
-  { label: 'Integrations', href: '/integrations', desc: 'Payment terminals, online delivery & app sync', hasMegaMenu: true },
-  { label: 'Pricing', href: '/pricing', desc: 'Flexible plans for Restaurant & Retail chains' },
-  { label: 'Resources', href: '/resources', desc: 'Help guides, playbooks & company mission', hasMegaMenu: true },
+  { label: 'Products', href: '/products', desc: 'Complete Restaurant & Retail Cloud POS Software', hasMegaMenu: true },
+  { label: 'Solutions', href: '/solutions', desc: 'Tailored workflows for Dining, Takeaways & Retail Stores', hasMegaMenu: true },
+  { label: 'Integrations', href: '/integrations', desc: 'Card readers, online delivery apps & accounting sync', hasMegaMenu: true },
+  { label: 'Pricing', href: '/pricing', desc: 'Affordable monthly plans with 3 Months Free trial' },
+  { label: 'Resources', href: '/resources', desc: 'Help guides, ROI calculator & setup tutorials', hasMegaMenu: true },
 ];
 
 export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
   promoCards: [
     {
-      badge: 'RESTAURANT PLATFORM',
-      title: 'Restaurant POS System',
-      desc: 'Tableside ordering, floor maps, KDS routing & split check payments.',
-      ctaText: 'Launch Restaurant POS',
+      badge: 'RESTAURANT SOFTWARE',
+      title: 'Restaurant POS & Kitchen Screens',
+      desc: 'Table floor mapping, tableside ordering, kitchen display screens & bill splitting.',
+      ctaText: 'Explore Restaurant POS',
       href: '/products/restaurant-pos',
       imageSrc: '/images/nav_restaurant_bundle.png',
       badgeColor: 'text-amber-700 dark:text-amber-400 bg-amber-100/90 dark:bg-amber-900/30 border border-amber-300/40',
     },
     {
-      badge: 'RETAIL PLATFORM',
-      title: 'Retail Register',
-      desc: 'Barcode checkout, cashier permissions, inventory matrix & offline till.',
-      ctaText: 'Launch Retail Register',
+      badge: 'RETAIL SOFTWARE',
+      title: 'Retail Register & Live Stock',
+      desc: 'Barcode scanning, offline cash register, size/color variants & low stock alerts.',
+      ctaText: 'Explore Retail Register',
       href: '/products/retail-pos',
       imageSrc: '/images/nav_retail_bundle.png',
       badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-900/30 border border-emerald-300/40',
@@ -76,10 +79,21 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
   ],
   categories: [
     {
-      categoryTitle: 'CORE POS TERMINALS & PLATFORMS',
+      categoryTitle: 'RESTAURANT & FOODSERVICE SOFTWARE',
       items: [
-        { title: 'Restaurant POS', desc: 'Tableside orders & kitchen KDS', href: '/products/restaurant-pos', icon: Utensils, iconColor: 'text-amber-500' },
-        { title: 'Retail Register', desc: 'Barcode billing & offline till', href: '/products/retail-pos', icon: Store, iconColor: 'text-emerald-500' },
+        { title: 'Restaurant POS System', desc: 'Table floor plans, kitchen orders & fast billing', href: '/products/restaurant-pos', icon: Utensils, iconColor: 'text-amber-500' },
+      ],
+    },
+    {
+      categoryTitle: 'RETAIL & STORE SOFTWARE',
+      items: [
+        { title: 'Retail Register', desc: 'Barcode scanner checkout & offline cash drawer', href: '/products/retail-pos', icon: Store, iconColor: 'text-emerald-500' },
+      ],
+    },
+    {
+      categoryTitle: 'MULTI-STORE CLOUD CONTROL',
+      items: [
+        { title: 'Cloud Multi-Store HQ', desc: 'Manage menus, prices & see live sales across all stores', href: '/products/cloud-pos', icon: Cloud, iconColor: 'text-sky-500' },
       ],
     },
   ],
@@ -88,41 +102,34 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
 export const SOLUTIONS_MEGA_CONFIG: MegaMenuSectionData = {
   promoCards: [
     {
-      badge: 'ENTERPRISE RESTAURANTS',
-      title: 'Enterprise POS & Kitchen KDS',
-      desc: 'Interactive floor mapping, course pacing, 15-sec counter checkout & KDS routing.',
-      ctaText: 'Explore Foodservice',
+      badge: 'RESTAURANT SECTORS',
+      title: 'Dining & Foodservice POS',
+      desc: 'Floor plans, kitchen routing & split bills for restaurants, cafes, bars & food trucks.',
+      ctaText: 'Explore Foodservice POS',
       href: '/solutions',
-      imageSrc: '/images/ent_global_pos_bundle.png',
+      imageSrc: '/images/nav_restaurant_bundle.png',
       badgeColor: 'text-amber-700 dark:text-amber-400 bg-amber-100/90 dark:bg-amber-900/30 border border-amber-300/40',
     },
     {
-      badge: 'FRANCHISE & MULTI-STORE',
-      title: 'Franchise Royalty & Multi-Unit HQ',
-      desc: 'Central menu push, franchise royalty engine, store rankings & multi-store catalog.',
-      ctaText: 'Explore Franchise Solutions',
-      href: '/solutions/franchise',
-      imageSrc: '/images/ent_franchise_portal.png',
-      badgeColor: 'text-purple-700 dark:text-purple-400 bg-purple-100/90 dark:bg-purple-900/30 border border-purple-300/40',
+      badge: 'RETAIL SECTORS',
+      title: 'Retail Store POS Solutions',
+      desc: 'Barcode checkout, SKU inventory & offline drawer for boutiques, groceries & vape shops.',
+      ctaText: 'Explore Retail POS',
+      href: '/solutions',
+      imageSrc: '/images/nav_retail_bundle.png',
+      badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-900/30 border border-emerald-300/40',
     },
   ],
   categories: [
     {
-      categoryTitle: 'RESTAURANT & DINING SECTORS',
+      categoryTitle: 'BY BUSINESS TYPE',
       items: [
-        { title: 'Fine Dining & Full Service', desc: 'Course pacing & table floor map', href: '/solutions/fine-dining', icon: Utensils, iconColor: 'text-amber-500' },
-        { title: 'Quick Service (QSR)', desc: '15-second counter billing & KDS', href: '/solutions/quick-service', icon: Zap, iconColor: 'text-yellow-500' },
-        { title: 'Fast Casual Restaurants', desc: 'Counter order with table delivery', href: '/solutions/fast-casual', icon: Layers, iconColor: 'text-blue-500' },
-        { title: 'Cafes & Bakeries', desc: 'Drink modifiers & batch costing', href: '/solutions/cafe-bakery', icon: Coffee, iconColor: 'text-amber-700' },
-      ],
-    },
-    {
-      categoryTitle: 'RETAIL & STORE SECTORS',
-      items: [
-        { title: 'Fashion & Apparel Boutiques', desc: 'Size/color matrix & boutique stock', href: '/solutions/fashion-retail', icon: ShoppingBag, iconColor: 'text-pink-500' },
-        { title: 'Grocery & Supermarkets', desc: 'Barcode scale & perishable alerts', href: '/solutions/grocery', icon: Store, iconColor: 'text-emerald-500' },
-        { title: 'Electronics & Tech Retail', desc: 'Serial number sync & warranty', href: '/solutions/electronics', icon: Monitor, iconColor: 'text-sky-500' },
-        { title: 'Multi-Store Franchise Chains', desc: 'Central catalog push & multi-branch', href: '/solutions/franchise', icon: Server, iconColor: 'text-purple-500' },
+        { title: 'Dine-In Restaurants', desc: 'Floor plans, table orders & bill split', href: '/solutions', icon: Utensils, iconColor: 'text-amber-500' },
+        { title: 'Boutiques & Apparel', desc: 'Variants, barcode tags & returns', href: '/solutions', icon: ShoppingBag, iconColor: 'text-pink-500' },
+        { title: 'Cafes & Bakeries', desc: 'Fast modifiers, hot drinks & combos', href: '/solutions', icon: Coffee, iconColor: 'text-orange-500' },
+        { title: 'Convenience & Grocery', desc: 'Weight scales, barcode scans & fast till', href: '/solutions', icon: Store, iconColor: 'text-emerald-500' },
+        { title: 'Bars & Nightclubs', desc: 'Quick bar tabs, drink reorders & tips', href: '/solutions', icon: Flame, iconColor: 'text-purple-500' },
+        { title: 'Vape & Smoke Shops', desc: 'Age checks, serial numbers & high-SKU', href: '/solutions', icon: Layers, iconColor: 'text-blue-500' },
       ],
     },
   ],
@@ -131,38 +138,25 @@ export const SOLUTIONS_MEGA_CONFIG: MegaMenuSectionData = {
 export const INTEGRATIONS_MEGA_CONFIG: MegaMenuSectionData = {
   promoCards: [
     {
-      badge: 'PAYMENT INTEGRATION',
-      title: 'Stripe & Card Terminals',
-      desc: 'Card readers, tap-to-pay, Apple Pay & real-time payout reconciliation.',
-      ctaText: 'Explore Payment Gateway',
-      href: '/integrations/stripe',
+      badge: 'TOP INTEGRATION',
+      title: 'QuickBooks & Xero Accounting Sync',
+      desc: 'Automatically sync daily sales, sales taxes, tips, and inventory costs to your ledger with zero manual data entry.',
+      ctaText: 'Explore Accounting Sync',
+      href: '/integrations',
       imageSrc: '/images/nav_payment_bundle.png',
-      badgeColor: 'text-indigo-700 dark:text-indigo-400 bg-indigo-100/90 dark:bg-indigo-900/30 border border-indigo-300/40',
-    },
-    {
-      badge: 'OMNICHANNEL DISPATCH',
-      title: 'DoorDash & Delivery Sync',
-      desc: 'Direct kitchen printer & KDS ticket injection without third-party tablets.',
-      ctaText: 'Explore Delivery Sync',
-      href: '/integrations/doordash',
-      imageSrc: '/images/ent_omnichannel_bundle.png',
-      badgeColor: 'text-red-700 dark:text-red-400 bg-red-100/90 dark:bg-red-900/30 border border-red-300/40',
+      badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-900/30 border border-emerald-300/40',
     },
   ],
   categories: [
     {
-      categoryTitle: 'PAYMENT PROCESSORS & TERMINALS',
+      categoryTitle: 'COMPATIBLE PLATFORMS & HARDWARE',
       items: [
-        { title: 'Stripe Payments', desc: 'Card terminals & subscription sync', href: '/integrations/stripe', icon: CreditCard, iconColor: 'text-indigo-500' },
-        { title: 'Authorize.Net', desc: 'Enterprise Visa gateway & batching', href: '/integrations/authorize-net', icon: ShieldCheck, iconColor: 'text-blue-600' },
-        { title: 'Square POS Reader', desc: 'Terminal reader & catalog bridge', href: '/integrations/square', icon: Monitor, iconColor: 'text-sky-500' },
-      ],
-    },
-    {
-      categoryTitle: 'FOODSERVICE & DELIVERY PLATFORMS',
-      items: [
-        { title: 'DoorDash Drive', desc: 'Direct kitchen ticket printing', href: '/integrations/doordash', icon: Truck, iconColor: 'text-red-500' },
-        { title: 'Uber Eats Direct Sync', desc: 'Zero-tablet kitchen dispatching', href: '/integrations/uber-eats', icon: Utensils, iconColor: 'text-emerald-500' },
+        { title: 'Payment Card Readers', desc: 'Tap, chip & Apple Pay with Stripe, Square & Clover', href: '/integrations', icon: CreditCard, iconColor: 'text-blue-500' },
+        { title: 'QuickBooks Online', desc: 'Automatic daily sales, tax & payroll bookkeeping sync', href: '/integrations', icon: Calculator, iconColor: 'text-emerald-500' },
+        { title: 'DoorDash & UberEats', desc: 'Online food orders print straight to your kitchen', href: '/integrations', icon: Truck, iconColor: 'text-red-500' },
+        { title: 'Xero Accounting', desc: 'Live bank feeds & automatic profit/loss sync', href: '/integrations', icon: RefreshCw, iconColor: 'text-sky-500' },
+        { title: 'Barcode Scanners & Scales', desc: 'Plug-and-play USB & Bluetooth hardware devices', href: '/integrations', icon: Scan, iconColor: 'text-purple-500' },
+        { title: 'Receipt & Kitchen Printers', desc: 'Epson & Star Micronics thermal & KDS network printers', href: '/integrations', icon: Printer, iconColor: 'text-amber-500' },
       ],
     },
   ],
@@ -171,39 +165,25 @@ export const INTEGRATIONS_MEGA_CONFIG: MegaMenuSectionData = {
 export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
   promoCards: [
     {
-      badge: 'ENTERPRISE ARCHITECTURE',
-      title: 'Enterprise POS Master Blueprint',
-      desc: 'Hybrid cloud topology, offline cashier cache & real-time ERP data pipelines.',
-      ctaText: 'Open Master Guide',
+      badge: 'FEATURED GUIDE',
+      title: '2026 POS Buying & Setup Guide',
+      desc: 'A complete step-by-step checklist on choosing the right hardware, reducing fees, and training cashiers.',
+      ctaText: 'Read Free POS Guide',
       href: '/resources/pos-guide',
-      imageSrc: '/images/ent_guide_blueprint.png',
+      imageSrc: '/images/nav_cloud_bundle.png',
       badgeColor: 'text-blue-700 dark:text-blue-400 bg-blue-100/90 dark:bg-blue-900/30 border border-blue-300/40',
-    },
-    {
-      badge: 'FINANCIAL SAVINGS',
-      title: 'Enterprise ROI & Fee Calculator',
-      desc: 'Calculate cost reductions, fee savings, and hardware amortization vs legacy POS.',
-      ctaText: 'Launch ROI Calculator',
-      href: '/roi-calculator',
-      imageSrc: '/images/ent_roi_analytics.png',
-      badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-900/30 border border-emerald-300/40',
     },
   ],
   categories: [
     {
-      categoryTitle: 'ESSENTIAL GUIDES & TOOLS',
+      categoryTitle: 'TOOLS, GUIDES & SUPPORT',
       items: [
-        { title: 'Enterprise POS Master Guide', desc: 'Hybrid cloud, offline till & ERP sync', href: '/resources/pos-guide', icon: Server, iconColor: 'text-blue-500' },
-        { title: 'Resource Hub & Templates', desc: 'Whitepapers, spreadsheets & SOPs', href: '/resources', icon: FileSpreadsheet, iconColor: 'text-emerald-500' },
-        { title: 'ROI Savings Calculator', desc: 'Calculate cost savings vs legacy POS', href: '/roi-calculator', icon: Calculator, iconColor: 'text-purple-500' },
-      ],
-    },
-    {
-      categoryTitle: 'DEVELOPER & SUPPORT',
-      items: [
-        { title: 'API Documentation', desc: 'REST endpoints & webhook data lakes', href: '/api-docs', icon: FileText, iconColor: 'text-amber-500' },
-        { title: 'Help Center & Docs', desc: 'Setup documentation & ticket support', href: '/help', icon: HelpCircle, iconColor: 'text-sky-500' },
-        { title: 'About Us & Mission', desc: 'Discover our vision, story & leadership', href: '/about', icon: Flame, iconColor: 'text-rose-500' },
+        { title: 'POS Savings ROI Calculator', desc: 'Calculate how much you save on card fees & labor', href: '/resources/roi-calculator', icon: Calculator, iconColor: 'text-emerald-500' },
+        { title: 'Help & Knowledge Center', desc: 'Step-by-step setup tutorials & hardware guides', href: '/resources/help-center', icon: HelpCircle, iconColor: 'text-blue-500' },
+        { title: 'POS System Comparison', desc: 'See how Quantix compares to traditional systems', href: '/resources/compare', icon: FileSpreadsheet, iconColor: 'text-purple-500' },
+        { title: 'Customer Stories', desc: 'Read how multi-unit businesses scale with Quantix', href: '/resources/case-studies', icon: Users, iconColor: 'text-amber-500' },
+        { title: 'Live Hardware Diagnostics', desc: 'Test printers, card readers & scanners online', href: '/resources/system-status', icon: Activity, iconColor: 'text-cyan-500' },
+        { title: '24/7 Priority Support', desc: 'Speak to a dedicated POS engineer anytime', href: '/contact', icon: Headset, iconColor: 'text-rose-500' },
       ],
     },
   ],
@@ -212,39 +192,35 @@ export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
 export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[0],
-    icon: Layers,
-    imageSrc: '/images/ent_global_pos_bundle.png',
-    badge: 'CORE POS PLATFORMS',
+    icon: Sparkles,
+    imageSrc: '/images/nav_restaurant_bundle.png',
+    badge: 'CORE POS SUITE',
     groups: [
       {
-        title: 'CORE POS PLATFORMS',
+        title: 'SOFTWARE CAPABILITIES',
         items: [
-          { title: 'Restaurant POS', desc: 'Tableside orders & kitchen KDS', href: '/products/restaurant-pos', icon: Utensils },
-          { title: 'Retail Register', desc: 'Barcode billing & offline till', href: '/products/retail-pos', icon: Store },
+          { title: 'Restaurant POS System', desc: 'Table floor plans & kitchen billing', href: '/products/restaurant-pos', icon: Utensils },
+          { title: 'Retail Register', desc: 'Barcode scanner & cash drawer', href: '/products/retail-pos', icon: Store },
+          { title: 'Cloud Multi-Store HQ', desc: 'Manage menus & multi-store sales', href: '/products/cloud-pos', icon: Cloud },
         ],
       },
     ],
   },
   {
     ...PRIMARY_LINKS[1],
-    icon: Store,
-    imageSrc: '/images/ent_franchise_portal.png',
-    badge: 'ALL INDUSTRY VERTICALS',
+    icon: Layers,
+    imageSrc: '/images/ent_global_pos_bundle.png',
+    badge: 'INDUSTRY SOLUTIONS',
     groups: [
       {
-        title: 'DINING & FOODSERVICE',
+        title: 'BY BUSINESS TYPE',
         items: [
-          { title: 'Fine Dining & Full Service', desc: 'Table mapping & course service', href: '/solutions/fine-dining', icon: Utensils },
-          { title: 'Quick Service & QSR', desc: 'Fast counter checkout', href: '/solutions/quick-service', icon: Zap },
-          { title: 'Cafes & Bakeries', desc: 'Modifiers & recipe costing', href: '/solutions/cafe-bakery', icon: Coffee },
-        ],
-      },
-      {
-        title: 'RETAIL & STORE',
-        items: [
-          { title: 'Fashion & Apparel', desc: 'Size/color matrix & boutique stock', href: '/solutions/fashion-retail', icon: ShoppingBag },
-          { title: 'Grocery & Supermarket', desc: 'Barcode scanning & scale', href: '/solutions/grocery', icon: Store },
-          { title: 'Multi-Store Franchise', desc: 'Central menu push & multi-branch', href: '/solutions/franchise', icon: Server },
+          { title: 'Dine-In Restaurants', desc: 'Table floor plan & billing', href: '/solutions', icon: Utensils },
+          { title: 'Boutiques & Apparel', desc: 'Variants & barcode tags', href: '/solutions', icon: ShoppingBag },
+          { title: 'Cafes & Bakeries', desc: 'Modifiers, drinks & combos', href: '/solutions', icon: Coffee },
+          { title: 'Convenience & Grocery', desc: 'Weight scales & fast till', href: '/solutions', icon: Store },
+          { title: 'Bars & Nightclubs', desc: 'Bar tabs & quick reorders', href: '/solutions', icon: Flame },
+          { title: 'Vape & Smoke Shops', desc: 'Age checks & SKU catalogs', href: '/solutions', icon: Layers },
         ],
       },
     ],
@@ -253,33 +229,36 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
     ...PRIMARY_LINKS[2],
     icon: RefreshCw,
     imageSrc: '/images/nav_payment_bundle.png',
-    badge: 'PAYMENT & APPS SYNC',
+    badge: 'PAYMENTS & APPS',
     groups: [
       {
-        title: 'PAYMENT & DELIVERY GATEWAYS',
+        title: 'INTEGRATIONS',
         items: [
-          { title: 'Stripe Payments', desc: 'Card terminal & subscription sync', href: '/integrations/stripe', icon: CreditCard },
-          { title: 'Authorize.Net Gateway', desc: 'Enterprise Visa payment gateway', href: '/integrations/authorize-net', icon: ShieldCheck },
-          { title: 'DoorDash Drive', desc: 'Direct kitchen ticket printing', href: '/integrations/doordash', icon: Truck },
-          { title: 'Uber Eats', desc: 'Zero tablet order dispatch', href: '/integrations/uber-eats', icon: Utensils },
+          { title: 'Payment Card Readers', desc: 'Stripe, Square & Clover readers', href: '/integrations', icon: CreditCard },
+          { title: 'QuickBooks Online', desc: 'Auto bookkeeping sync', href: '/integrations', icon: Calculator },
+          { title: 'DoorDash & UberEats', desc: 'Online delivery app sync', href: '/integrations', icon: Truck },
+          { title: 'Xero Accounting', desc: 'Profit & loss ledger sync', href: '/integrations', icon: RefreshCw },
+          { title: 'Barcode Scanners & Scales', desc: 'Hardware peripheral bridge', href: '/integrations', icon: Scan },
+          { title: 'Receipt & Kitchen Printers', desc: 'Star & Epson thermal printers', href: '/integrations', icon: Printer },
         ],
       },
     ],
   },
   {
     ...PRIMARY_LINKS[4],
-    icon: HelpCircle,
-    imageSrc: '/images/ent_guide_blueprint.png',
-    badge: 'GUIDES & PLAYBOOKS',
+    icon: BookOpen,
+    imageSrc: '/images/nav_cloud_bundle.png',
+    badge: 'GUIDES & SUPPORT',
     groups: [
       {
-        title: 'KNOWLEDGE & PLAYBOOKS',
+        title: 'TOOLS & SUPPORT',
         items: [
-          { title: 'Enterprise POS Guide', desc: 'Hybrid cloud & ERP architecture', href: '/resources/pos-guide', icon: Server },
-          { title: 'Resource Hub & Templates', desc: 'Spreadsheets, whitepapers & checklists', href: '/resources', icon: FileSpreadsheet },
-          { title: 'ROI Savings Calculator', desc: 'Calculate cost savings vs legacy POS', href: '/roi-calculator', icon: Calculator },
-          { title: 'Help Guides & Documentation', desc: 'Terminal & setup guides', href: '/help', icon: FileText },
-          { title: 'About Us & Mission', desc: 'Learn about our vision and team', href: '/about', icon: Flame },
+          { title: 'ROI Savings Calculator', desc: 'Calculate monthly savings', href: '/resources/roi-calculator', icon: Calculator },
+          { title: 'Help & Knowledge Center', desc: 'Setup tutorials & guides', href: '/resources/help-center', icon: HelpCircle },
+          { title: 'POS System Comparison', desc: 'Side-by-side feature matrix', href: '/resources/compare', icon: FileSpreadsheet },
+          { title: 'Customer Stories', desc: 'Real customer case studies', href: '/resources/case-studies', icon: Users },
+          { title: 'Live Hardware Diagnostics', desc: 'Test scanners & printers online', href: '/resources/system-status', icon: Activity },
+          { title: '24/7 Priority Support', desc: 'Speak to a POS engineer', href: '/contact', icon: Headset },
         ],
       },
     ],
@@ -287,8 +266,8 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
 ];
 
 export const QUICK_MOBILE_TOOLS: QuickMobileTool[] = [
-  { label: 'Downloads', href: '/downloads', icon: Download },
-  { label: 'Support', href: '/help', icon: Headset },
+  { label: 'ROI Calculator', href: '/resources/roi-calculator', icon: Calculator },
+  { label: 'Help Center', href: '/resources/help-center', icon: HelpCircle },
   { label: 'Pricing', href: '/pricing', icon: Sparkles },
-  { label: 'About Us', href: '/about', icon: Users },
+  { label: 'Contact Us', href: '/contact', icon: Headset },
 ];

@@ -12,7 +12,7 @@ import { ATMButton } from '@/components/atoms/ATMButton';
 export default function ForgotPasswordPage() {
   return (
     <SplitAuthLayout
-      coverImage="/images/retail_stockroom_inventory.jpg"
+      coverImage="/images/enterprise_auth_cover_modern_hq.jpg"
       coverAlt="Quantix Enterprise Multi-Unit POS"
       coverHeadline="Reset your enterprise password."
       coverSubtext="Recover access to your central HQ dashboard, store cluster telemetry, and ERP data feeds."

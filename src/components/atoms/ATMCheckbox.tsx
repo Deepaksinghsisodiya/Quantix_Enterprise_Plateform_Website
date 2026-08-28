@@ -45,7 +45,7 @@ export const ATMCheckbox: React.FC<ATMCheckboxProps> = ({
         {...rest}
       />
       <div className="flex flex-col">
-        <label htmlFor={id} className="text-sm font-medium text-gray-700 dark:text-gray-200 cursor-pointer">
+        <label htmlFor={id} className="text-xs sm:text-sm font-medium text-white select-none cursor-pointer">
           {label}
         </label>
         {description && (

@@ -8,7 +8,7 @@ import RegisterFormWrapper from '@/features/Register/components/RegisterWrapper'
 export default function SignUpPage() {
   return (
     <SplitAuthLayout
-      coverImage="/images/hero_multi_location_hq.jpg"
+      coverImage="/images/enterprise_auth_cover_modern_hq.jpg"
       coverAlt="Quantix Enterprise Multi-Unit POS"
       coverHeadline="Scale enterprise operations with zero friction."
       coverSubtext="Deploy multi-unit franchises, master SKU catalogs, and real-time ERP cloud data lakes in minutes."

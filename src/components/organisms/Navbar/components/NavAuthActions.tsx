@@ -66,15 +66,12 @@ export const NavAuthActions: React.FC = () => {
         <button
           type="button"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-darkSurface/80 dark:hover:bg-darkSurface border border-slate-200 dark:border-slate-800 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20"
+          className="flex items-center gap-1.5 p-1 sm:px-2 sm:py-1 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-darkSurface/80 dark:hover:bg-darkSurface border border-slate-200 dark:border-slate-800 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20"
         >
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-white font-syne">
-            <span className="text-xs font-bold uppercase">{displayUsername.charAt(0)}</span>
+          <div className="flex h-7 w-7 sm:h-7.5 sm:w-7.5 items-center justify-center rounded-lg bg-gradient-to-tr from-primary to-primary-dark text-white font-syne shadow-xs">
+            <span className="text-xs font-black uppercase">{displayUsername.charAt(0)}</span>
           </div>
-          <span className="text-xs font-syne font-bold text-slate-800 dark:text-slate-200 max-w-30 truncate">
-            {displayUsername}
-          </span>
-          <ChevronDown size={14} className={`text-slate-500 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown size={13} className={`text-slate-500 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
         </button>
 
         {/* Dropdown Menu */}
@@ -89,7 +86,7 @@ export const NavAuthActions: React.FC = () => {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-syne font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors text-left cursor-pointer"
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-syne font-bold text-primary hover:bg-primary/10 transition-colors text-left cursor-pointer"
               >
                 <LogOut size={15} />
                 Log Out
@@ -101,7 +98,7 @@ export const NavAuthActions: React.FC = () => {
     );
   }
 
-  // 2. LOGGED OUT STATE (Has existing account -> Show Sign In + Start a Free Trial at right end)
+  // 2. LOGGED OUT STATE (Has existing account -> Show Sign In + Claim 3 Months Free at right end)
   if (hasLoggedOut) {
     return (
       <div className="hidden lg:flex items-center gap-3">
@@ -115,17 +112,17 @@ export const NavAuthActions: React.FC = () => {
 
         <button
           type="button"
-          onClick={() => openModal('Start Your 14-Day Free Trial', 'START_FREE_TRIAL')}
-          className="flex items-center justify-center gap-2 h-10 px-5.5 rounded-xl bg-primary hover:bg-primary-light text-white font-syne font-extrabold text-[13px] transition-all duration-300 hover:scale-[1.04] active:scale-95 shadow-md shadow-primary/20 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+          onClick={() => openModal('Claim Your 3 Months Free Trial', 'START_FREE_TRIAL')}
+          className="flex items-center justify-center gap-2 h-10 px-5.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-syne font-extrabold text-[13px] transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-md shadow-red-600/30 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/40"
         >
-          <Sparkles size={14} className="text-amber-300" />
-          <span>Start a Free Trial</span>
+          <Sparkles size={14} className="text-amber-300 fill-amber-300" />
+          <span>Claim 3 Months Free</span>
         </button>
       </div>
     );
   }
 
-  // 3. FIRST TIME VISIT STATE (No account yet -> Show Sign Up + Start a Free Trial at right end)
+  // 3. FIRST TIME VISIT STATE (No account yet -> Show Sign Up + Claim 3 Months Free at right end)
   return (
     <div className="hidden lg:flex items-center gap-3">
       <Link
@@ -138,11 +135,11 @@ export const NavAuthActions: React.FC = () => {
 
       <button
         type="button"
-        onClick={() => openModal('Start Your 14-Day Free Trial', 'START_FREE_TRIAL')}
-        className="flex items-center justify-center gap-2 h-10 px-5.5 rounded-xl bg-primary hover:bg-primary-light text-white font-syne font-extrabold text-[13px] transition-all duration-300 hover:scale-[1.04] active:scale-95 shadow-md shadow-primary/20 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+        onClick={() => openModal('Claim Your 3 Months Free Trial', 'START_FREE_TRIAL')}
+        className="flex items-center justify-center gap-2 h-10 px-5.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-syne font-extrabold text-[13px] transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-md shadow-red-600/30 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/40"
       >
-        <Sparkles size={14} className="text-amber-300" />
-        <span>Start a Free Trial</span>
+        <Sparkles size={14} className="text-amber-300 fill-amber-300" />
+        <span>Claim 3 Months Free</span>
       </button>
     </div>
   );
