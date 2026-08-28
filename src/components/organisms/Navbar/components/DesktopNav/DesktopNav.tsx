@@ -40,7 +40,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
       </ul>
 
       {/* Render Desktop Mega Menu Dropdowns */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {openMegaMenu === 'Products' && (
           <ProductsMegaMenu
             onClose={() => onSetOpenMegaMenu(null)}

@@ -31,7 +31,7 @@ function AuthorizeNetIcon({ size = 20 }: { size?: number }) {
 interface IntegrationItem {
   id: string;
   name: string;
-  category: "all" | "payments" | "erp" | "marketplaces";
+  category: "all" | "payments" | "delivery";
   categoryLabel: string;
   desc: string;
   renderLogo: () => React.ReactNode;
@@ -83,35 +83,9 @@ const INTEGRATIONS: IntegrationItem[] = [
     syncSpeed: "< 1.5s Speed",
   },
   {
-    id: "quickbooks",
-    name: "QuickBooks & Enterprise ERP",
-    category: "erp",
-    categoryLabel: "ERP / ACCOUNTING",
-    desc: "Automate consolidated daily branch shift closures, multi-state sales tax journal entries, and real-time inventory COGS sync.",
-    renderLogo: () => <SiQuickbooks size={22} className="text-[#2CA01C]" />,
-    image: "/images/ent_accounting_sync_bundle.png",
-    accentColor: "text-[#2CA01C] bg-[#2CA01C]/10 border-[#2CA01C]/30",
-    glowColor: "from-[#2CA01C]/15 to-transparent",
-    tags: ["Multi-Branch Ledgers", "Auto Z-Reports", "COGS Sync"],
-    syncSpeed: "Daily Midnight",
-  },
-  {
-    id: "shopify",
-    name: "Shopify Plus Omnichannel",
-    category: "erp",
-    categoryLabel: "E-COMMERCE",
-    desc: "Unified enterprise catalog distribution, bi-directional multi-store stock reservations, and 2-hour BOPIS order routing.",
-    renderLogo: () => <SiShopify size={22} className="text-[#7AB55C]" />,
-    image: "/images/ent_omnichannel_bundle.png",
-    accentColor: "text-[#7AB55C] bg-[#7AB55C]/10 border-[#7AB55C]/30",
-    glowColor: "from-[#7AB55C]/15 to-transparent",
-    tags: ["BOPIS Pickup", "Shopify Plus", "Store Routing"],
-    syncSpeed: "Instant Webhook",
-  },
-  {
     id: "doordash",
     name: "DoorDash Drive & Marketplace",
-    category: "marketplaces",
+    category: "delivery",
     categoryLabel: "DELIVERY MARKETPLACE",
     desc: "Inject online delivery orders directly into restaurant KDS screens and dispatch white-label delivery drivers automatically.",
     renderLogo: () => <SiDoordash size={22} className="text-[#FF3008]" />,
@@ -124,7 +98,7 @@ const INTEGRATIONS: IntegrationItem[] = [
   {
     id: "ubereats",
     name: "Uber Eats Direct & Enterprise",
-    category: "marketplaces",
+    category: "delivery",
     categoryLabel: "DELIVERY MARKETPLACE",
     desc: "Synchronize multi-location digital menus, pricing tiers, and delivery ticket tracking without manual tablet entry.",
     renderLogo: () => <SiUbereats size={22} className="text-[#06C167]" />,
@@ -139,8 +113,7 @@ const INTEGRATIONS: IntegrationItem[] = [
 const FILTER_TABS = [
   { id: "all", label: "All Integrations" },
   { id: "payments", label: "Enterprise Payments" },
-  { id: "erp", label: "ERP & Cloud Ledgers" },
-  { id: "marketplaces", label: "Delivery & Marketplaces" },
+  { id: "delivery", label: "Delivery Marketplaces" },
 ];
 
 const containerVariants: Variants = {

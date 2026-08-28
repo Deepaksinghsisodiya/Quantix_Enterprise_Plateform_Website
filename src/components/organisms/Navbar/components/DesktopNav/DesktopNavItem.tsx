@@ -28,7 +28,7 @@ export const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
   return (
     <li
       role="none"
-      className="relative py-2.5 px-3 group"
+      className="relative py-2.5 px-3 group cursor-pointer"
       onMouseEnter={() => {
         if (isDropdown) {
           onMouseEnter(link.label);
@@ -36,11 +36,17 @@ export const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
           onMouseLeave();
         }
       }}
+      onMouseLeave={onMouseLeave}
     >
       <Link
         href={link.href}
         role="menuitem"
         aria-expanded={isDropdown ? isMenuOpen : undefined}
+        onClick={(e) => {
+          if (isDropdown) {
+            onMouseEnter(link.label);
+          }
+        }}
         className={cn(
           'relative z-10 text-[15px] font-semibold transition-all duration-300 block hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 rounded-sm',
           isActive || isMenuOpen

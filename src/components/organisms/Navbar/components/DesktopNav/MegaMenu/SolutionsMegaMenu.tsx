@@ -73,11 +73,11 @@ export const SolutionsMegaMenu: React.FC<SolutionsMegaMenuProps> = ({
               </div>
 
               <div className="grid grid-cols-2 gap-4 max-w-2xl">
-                {cat.items.map((item: any) => {
+                {cat.items.map((item: any, idx: number) => {
                   const ItemIcon = item.icon;
                   return (
                     <Link
-                      key={item.href}
+                      key={`${cat.categoryTitle}-${item.title}-${idx}`}
                       href={item.href}
                       onClick={onClose}
                       className="group/item flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-200 dark:hover:border-slate-800 transition-all duration-200"

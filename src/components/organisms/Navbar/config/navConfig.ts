@@ -102,34 +102,30 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
 export const SOLUTIONS_MEGA_CONFIG: MegaMenuSectionData = {
   promoCards: [
     {
-      badge: 'RESTAURANT SECTORS',
-      title: 'Dining & Foodservice POS',
-      desc: 'Floor plans, kitchen routing & split bills for restaurants, cafes, bars & food trucks.',
-      ctaText: 'Explore Foodservice POS',
+      badge: 'FEATURED SECTORS',
+      title: 'Multi-Unit Enterprise Solutions',
+      desc: 'Unified cloud management for restaurant chains, retail franchises, and hybrid dining concepts.',
+      ctaText: 'Explore Solutions',
       href: '/solutions',
       imageSrc: '/images/nav_restaurant_bundle.png',
       badgeColor: 'text-amber-700 dark:text-amber-400 bg-amber-100/90 dark:bg-amber-900/30 border border-amber-300/40',
     },
-    {
-      badge: 'RETAIL SECTORS',
-      title: 'Retail Store POS Solutions',
-      desc: 'Barcode checkout, SKU inventory & offline drawer for boutiques, groceries & vape shops.',
-      ctaText: 'Explore Retail POS',
-      href: '/solutions',
-      imageSrc: '/images/nav_retail_bundle.png',
-      badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-900/30 border border-emerald-300/40',
-    },
   ],
   categories: [
     {
-      categoryTitle: 'BY BUSINESS TYPE',
+      categoryTitle: 'FOODSERVICE & HOSPITALITY',
       items: [
-        { title: 'Dine-In Restaurants', desc: 'Floor plans, table orders & bill split', href: '/solutions', icon: Utensils, iconColor: 'text-amber-500' },
-        { title: 'Boutiques & Apparel', desc: 'Variants, barcode tags & returns', href: '/solutions', icon: ShoppingBag, iconColor: 'text-pink-500' },
-        { title: 'Cafes & Bakeries', desc: 'Fast modifiers, hot drinks & combos', href: '/solutions', icon: Coffee, iconColor: 'text-orange-500' },
-        { title: 'Convenience & Grocery', desc: 'Weight scales, barcode scans & fast till', href: '/solutions', icon: Store, iconColor: 'text-emerald-500' },
-        { title: 'Bars & Nightclubs', desc: 'Quick bar tabs, drink reorders & tips', href: '/solutions', icon: Flame, iconColor: 'text-purple-500' },
-        { title: 'Vape & Smoke Shops', desc: 'Age checks, serial numbers & high-SKU', href: '/solutions', icon: Layers, iconColor: 'text-blue-500' },
+        { title: 'Dine-In Restaurants', desc: 'Floor plans, table orders & bill split', href: '/solutions/restaurants', icon: Utensils, iconColor: 'text-amber-500' },
+        { title: 'Cafes & Bakeries', desc: 'Fast modifiers, hot drinks & combos', href: '/solutions/cafes', icon: Coffee, iconColor: 'text-orange-500' },
+        { title: 'Bars & Nightclubs', desc: 'Quick bar tabs, drink reorders & tips', href: '/solutions/bars', icon: Flame, iconColor: 'text-purple-500' },
+      ],
+    },
+    {
+      categoryTitle: 'RETAIL & COMMERCE',
+      items: [
+        { title: 'Boutiques & Apparel', desc: 'Variants, barcode tags & returns', href: '/solutions/apparel', icon: ShoppingBag, iconColor: 'text-pink-500' },
+        { title: 'Convenience & Grocery', desc: 'Weight scales, barcode scans & fast till', href: '/solutions/grocery', icon: Store, iconColor: 'text-emerald-500' },
+        { title: 'Vape & Smoke Shops', desc: 'Age checks, serial numbers & high-SKU', href: '/solutions/smoke-shops', icon: Layers, iconColor: 'text-blue-500' },
       ],
     },
   ],
@@ -138,25 +134,29 @@ export const SOLUTIONS_MEGA_CONFIG: MegaMenuSectionData = {
 export const INTEGRATIONS_MEGA_CONFIG: MegaMenuSectionData = {
   promoCards: [
     {
-      badge: 'TOP INTEGRATION',
-      title: 'QuickBooks & Xero Accounting Sync',
-      desc: 'Automatically sync daily sales, sales taxes, tips, and inventory costs to your ledger with zero manual data entry.',
-      ctaText: 'Explore Accounting Sync',
+      badge: 'CONNECTED APPS',
+      title: 'Enterprise Integrations Hub',
+      desc: 'Link fleet card terminals, ERP accounting ledgers, and delivery marketplaces automatically.',
+      ctaText: 'Explore All Integrations',
       href: '/integrations',
       imageSrc: '/images/nav_payment_bundle.png',
-      badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-900/30 border border-emerald-300/40',
+      badgeColor: 'text-primary dark:text-primary-light bg-primary/10 border border-primary/20',
     },
   ],
   categories: [
     {
-      categoryTitle: 'COMPATIBLE PLATFORMS & HARDWARE',
+      categoryTitle: 'PAYMENT PROCESSORS',
       items: [
-        { title: 'Payment Card Readers', desc: 'Tap, chip & Apple Pay with Stripe, Square & Clover', href: '/integrations', icon: CreditCard, iconColor: 'text-blue-500' },
-        { title: 'QuickBooks Online', desc: 'Automatic daily sales, tax & payroll bookkeeping sync', href: '/integrations', icon: Calculator, iconColor: 'text-emerald-500' },
-        { title: 'DoorDash & UberEats', desc: 'Online food orders print straight to your kitchen', href: '/integrations', icon: Truck, iconColor: 'text-red-500' },
-        { title: 'Xero Accounting', desc: 'Live bank feeds & automatic profit/loss sync', href: '/integrations', icon: RefreshCw, iconColor: 'text-sky-500' },
-        { title: 'Barcode Scanners & Scales', desc: 'Plug-and-play USB & Bluetooth hardware devices', href: '/integrations', icon: Scan, iconColor: 'text-purple-500' },
-        { title: 'Receipt & Kitchen Printers', desc: 'Epson & Star Micronics thermal & KDS network printers', href: '/integrations', icon: Printer, iconColor: 'text-amber-500' },
+        { title: 'Stripe Enterprise', desc: 'Fleet terminals, P2PE tokenization & multi-currency', href: '/integrations/stripe', icon: CreditCard, iconColor: 'text-indigo-500' },
+        { title: 'Authorize.Net Vault', desc: 'High-volume merchant gateway & fraud suites', href: '/integrations/authorize-net', icon: ShieldCheck, iconColor: 'text-blue-600' },
+        { title: 'Square Register Fleet', desc: 'Multi-unit terminal pairing & offline resilience', href: '/integrations/square', icon: Smartphone, iconColor: 'text-slate-700 dark:text-slate-300' },
+      ],
+    },
+    {
+      categoryTitle: 'DELIVERY MARKETPLACES',
+      items: [
+        { title: 'DoorDash Drive', desc: 'Direct kitchen routing & courier dispatching', href: '/integrations/doordash', icon: Truck, iconColor: 'text-rose-500' },
+        { title: 'Uber Eats Enterprise', desc: 'Multi-location automated order injection & delivery sync', href: '/integrations/uber-eats', icon: Truck, iconColor: 'text-emerald-500' },
       ],
     },
   ],

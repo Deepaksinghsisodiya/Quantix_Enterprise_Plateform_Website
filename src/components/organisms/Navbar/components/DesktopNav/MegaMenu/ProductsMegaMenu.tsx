@@ -77,7 +77,7 @@ export const ProductsMegaMenu: React.FC<ProductsMegaMenuProps> = ({
                   const ItemIcon = item.icon;
                   return (
                     <Link
-                      key={item.href}
+                      key={`${cat.categoryTitle}-${item.title}`}
                       href={item.href}
                       onClick={onClose}
                       className="group/item flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-200 dark:hover:border-slate-800 transition-all duration-200"

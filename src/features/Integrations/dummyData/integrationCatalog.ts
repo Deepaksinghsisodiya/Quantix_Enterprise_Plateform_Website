@@ -4,8 +4,8 @@ export const DEFAULT_INTEGRATIONS: IntegrationDto[] = [
   {
     id: '1',
     slug: 'stripe',
-    name: 'Stripe Payments',
-    description: 'Process online and in-person card payments with terminal and payout sync.',
+    name: 'Stripe Enterprise Payments',
+    description: 'Process online and in-person card payments with terminal fleet and payout sync.',
     category: 'payments',
     isPopular: true,
   },
@@ -13,52 +13,44 @@ export const DEFAULT_INTEGRATIONS: IntegrationDto[] = [
     id: '2',
     slug: 'authorize-net',
     name: 'Authorize.Net',
-    description: 'Secure enterprise Visa gateway with batch settlement and card vaulting.',
+    description: 'Secure enterprise payment gateway with batch settlement and card vaulting.',
     category: 'payments',
   },
   {
     id: '3',
     slug: 'square',
-    name: 'Square POS',
+    name: 'Square Register Fleet',
     description: 'Bridge Square terminals with Quantix Enterprise catalog, inventory, and reporting.',
-    category: 'pos & inventory',
+    category: 'payments',
     isPopular: true,
   },
   {
     id: '4',
-    slug: 'paypal',
-    name: 'PayPal Checkout',
-    description: 'Connect Express Checkout, Venmo wallet payments, refunds, and payouts.',
-    category: 'payments',
-  },
-  {
-    id: '5',
     slug: 'doordash',
     name: 'DoorDash Drive',
-    description: 'Send delivery orders to POS and kitchen workflows with dispatch status.',
+    description: 'Send delivery orders to POS and kitchen workflows with live dispatch status.',
     category: 'delivery',
     isPopular: true,
   },
   {
-    id: '6',
+    id: '5',
     slug: 'uber-eats',
-    name: 'Uber Eats',
-    description: 'Sync delivery menus, modifiers, prep timing, and courier-ready tickets.',
+    name: 'Uber Eats Enterprise',
+    description: 'Sync delivery menus, modifiers, prep timing, and automated courier-ready tickets.',
     category: 'delivery',
   },
 ];
 
 export const INTEGRATION_CARD_VISUALS: Record<string, { src: string; alt: string }> = {
-  payments: { src: '/images/nav_payment_bundle.png', alt: 'Integrated payment terminal workflow' },
-  'pos & inventory': { src: '/images/ent_supply_chain_bundle.png', alt: 'Retail POS and inventory workflow' },
-  delivery: { src: '/images/ent_omnichannel_bundle.png', alt: 'Delivery dispatch and kitchen workflow' },
+  payments: { src: '/images/ent_stripe_pos_bundle.png', alt: 'Integrated payment terminal workflow' },
+  delivery: { src: '/images/ent_delivery_dispatch_bundle.png', alt: 'Delivery dispatch and kitchen workflow' },
 };
 
 export const INTEGRATION_DETAIL_SLUGS = new Set([
   'stripe',
   'authorize-net',
   'square',
-  'paypal',
   'doordash',
   'uber-eats',
+  'ubereats',
 ]);

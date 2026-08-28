@@ -273,6 +273,39 @@ const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
       { id: "xr-2", question: "Can our accountant access the sync logs?", answer: "Yes, full sync logs with transaction IDs and timestamped audit trails are accessible in your Quantix admin panel." },
     ],
   },
+  shopify: {
+    id: "shopify",
+    name: "Shopify Plus",
+    category: "E-COMMERCE",
+    color: "#7AB55C",
+    tagline: "Omnichannel inventory, multi-warehouse routing, and BOPIS fulfillment across all enterprise retail channels.",
+    description: "Connect your enterprise Shopify Plus storefront directly to Quantix POS. Automate multi-location catalog distribution, bi-directional inventory reservation, and 2-hour store pickup fulfillment.",
+    features: [
+      { title: "Real-Time Enterprise Stock Sync", desc: "Bi-directional stock reservation across regional warehouses and physical retail store registers." },
+      { title: "Shopify Plus Multi-Storefronts", desc: "Manage multi-brand and international localized stores from one single Quantix master catalog." },
+      { title: "BOPIS & Curbside Pickup", desc: "Route web orders for click-and-collect in under 2 hours with instant barcode staging scans." },
+      { title: "Unified Customer Loyalty", desc: "Omnichannel customer profiles, store credits, and loyalty points usable online and in-store." },
+      { title: "Cross-Channel Returns", desc: "Process online returns at physical retail counters with automatic inventory restock and refund ledgers." },
+      { title: "Automated Tax & Duty Mapping", desc: "Sync regional sales taxes and international duty calculations directly to your ERP ledgers." },
+    ],
+    howItWorks: [
+      { step: "01", title: "Install Enterprise Connector", desc: "Link your Shopify Plus organization via OAuth in Quantix Admin → Integrations → Omnichannel." },
+      { step: "02", title: "Map Locations & Warehouses", desc: "Pair your physical branches and regional 3PL fulfillment centers with Shopify inventory locations." },
+      { step: "03", title: "Sync Product Catalog", desc: "Quantix automatically matches SKUs, barcodes, matrix variants, and tiered wholesale pricing rules." },
+      { step: "04", title: "Go Live With Webhooks", desc: "High-throughput encrypted webhooks ensure instantaneous multi-store inventory deductions." },
+    ],
+    benefits: [
+      "Zero stock discrepancies between online storefronts and store shelves",
+      "Accelerate BOPIS fulfillment speed to under 15 minutes",
+      "Unified customer purchase history across retail and e-commerce",
+      "Support for high-volume flash sales with rate-limit resilient sync",
+      "Centralized ERP accounting entries for all digital orders",
+    ],
+    faqs: [
+      { id: "sh-1", question: "Does this support Shopify Plus high-volume orders?", answer: "Yes, our enterprise connector is engineered for enterprise tier volume, supporting 10,000+ orders per hour during flash sales." },
+      { id: "sh-2", question: "Can we fulfill web orders from physical retail stores?", answer: "Absolutely. Quantix provides store-level pick-and-pack routing for Ship-from-Store and BOPIS pickup." },
+    ],
+  },
 };
 
 export function generateStaticParams() {
@@ -285,7 +318,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const integration = INTEGRATIONS_DATA[slug];
+  const integration = INTEGRATIONS_DATA[slug] || (slug === "ubereats" ? INTEGRATIONS_DATA["uber-eats"] : undefined);
   if (!integration) {
     return { title: "Integrations | Quantix Enterprise" };
   }
@@ -302,7 +335,7 @@ export default async function IntegrationDetailPage({
 }) {
   const { slug } = await params;
 
-  let integration = INTEGRATIONS_DATA[slug];
+  let integration = INTEGRATIONS_DATA[slug] || (slug === "ubereats" ? INTEGRATIONS_DATA["uber-eats"] : undefined);
   if (!integration) {
     integration = {
       id: slug,

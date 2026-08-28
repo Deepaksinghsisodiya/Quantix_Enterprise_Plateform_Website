@@ -16,10 +16,9 @@ type Integration = {
 const integrations: Integration[] = [
   { id: 'stripe', name: 'Stripe', category: 'PAYMENTS', color: '#635BFF', logo: '/brands/integrations/stripe.svg' },
   { id: 'authorize-net', name: 'Authorize.Net', category: 'PAYMENTS', color: '#1E3A5F', logo: '/brands/integrations/authorize.svg' },
-  { id: 'square', name: 'Square', category: 'CARD READER', color: '#000000', logo: '/brands/integrations/square.svg' },
-  { id: 'clover', name: 'Clover', category: 'TERMINALS', color: '#228B22', logo: '/brands/integrations/clover.svg' },
-  { id: 'quickbooks', name: 'QuickBooks', category: 'ACCOUNTING', color: '#2CA01C', logo: '/brands/integrations/quickbooks.svg' },
-  { id: 'xero', name: 'Xero', category: 'FINANCE', color: '#13B5EA', logo: '/brands/integrations/xero.svg' },
+  { id: 'square', name: 'Square', category: 'PAYMENTS', color: '#000000', logo: '/brands/integrations/square.svg' },
+  { id: 'doordash', name: 'DoorDash', category: 'DELIVERY', color: '#FF3008', logo: '/brands/integrations/doordash.svg' },
+  { id: 'ubereats', name: 'Uber Eats', category: 'DELIVERY', color: '#06C167', logo: '/brands/integrations/ubereats.svg' },
 ];
 
 export const IntegrationsTickerSection: React.FC = () => {

@@ -1,12 +1,63 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
 export function useNavbarState() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSubMenu, setMobileSubMenu] = useState<string | null>(null);
-  const [openMegaMenu, setOpenMegaMenu] = useState<string | null>(null);
+  const [openMegaMenu, setOpenMegaMenuState] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const openTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const setOpenMegaMenu = useCallback((label: string | null) => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    if (openTimerRef.current) {
+      clearTimeout(openTimerRef.current);
+      openTimerRef.current = null;
+    }
+
+    if (label) {
+      setOpenMegaMenuState((current) => {
+        if (current) {
+          return label;
+        } else {
+          openTimerRef.current = setTimeout(() => {
+            setOpenMegaMenuState(label);
+          }, 80);
+          return current;
+        }
+      });
+    } else {
+      closeTimerRef.current = setTimeout(() => {
+        setOpenMegaMenuState(null);
+      }, 200);
+    }
+  }, []);
+
+  const closeMegaMenu = useCallback(() => {
+    if (openTimerRef.current) {
+      clearTimeout(openTimerRef.current);
+      openTimerRef.current = null;
+    }
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    closeTimerRef.current = setTimeout(() => {
+      setOpenMegaMenuState(null);
+    }, 200);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (openTimerRef.current) clearTimeout(openTimerRef.current);
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    };
+  }, []);
 
   // Scroll listener for collapsing top promo banner & shadow toggle
   useEffect(() => {
@@ -42,7 +93,7 @@ export function useNavbarState() {
   useEffect(() => {
     setMobileOpen(false);
     setMobileSubMenu(null);
-    setOpenMegaMenu(null);
+    setOpenMegaMenuState(null);
   }, [pathname]);
 
   const toggleMobile = useCallback(() => {
@@ -55,10 +106,6 @@ export function useNavbarState() {
   const closeMobile = useCallback(() => {
     setMobileOpen(false);
     setMobileSubMenu(null);
-  }, []);
-
-  const closeMegaMenu = useCallback(() => {
-    setOpenMegaMenu(null);
   }, []);
 
   return {

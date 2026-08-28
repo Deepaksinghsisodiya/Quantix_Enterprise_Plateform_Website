@@ -15,11 +15,11 @@ type Integration = {
 };
 
 const integrations: Integration[] = [
-  { id: 'ubereats', name: 'Uber Eats', category: 'DELIVERY', color: '#06C167', logo: '/brands/integrations/ubereats.svg', href: '/integrations/ubereats' },
   { id: 'stripe', name: 'Stripe', category: 'PAYMENTS', color: '#635BFF', logo: '/brands/integrations/stripe.svg', href: '/integrations/stripe' },
   { id: 'authorize-net', name: 'Authorize.Net', category: 'PAYMENTS', color: '#1E3A5F', logo: '/brands/integrations/authorize.svg', href: '/integrations/authorize-net' },
   { id: 'square', name: 'Square', category: 'PAYMENTS', color: '#000000', logo: '/brands/integrations/square.svg', href: '/integrations/square' },
   { id: 'doordash', name: 'DoorDash', category: 'DELIVERY', color: '#FF3008', logo: '/brands/integrations/doordash.svg', href: '/integrations/doordash' },
+  { id: 'ubereats', name: 'Uber Eats', category: 'DELIVERY', color: '#06C167', logo: '/brands/integrations/ubereats.svg', href: '/integrations/uber-eats' },
 ];
 
 export const IntegrationsTickerSection: React.FC = () => {
