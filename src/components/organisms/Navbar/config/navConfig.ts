@@ -176,13 +176,18 @@ export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
   ],
   categories: [
     {
-      categoryTitle: 'TOOLS, GUIDES & SUPPORT',
+      categoryTitle: 'TOOLS & CALCULATORS',
       items: [
-        { title: 'POS Savings ROI Calculator', desc: 'Calculate how much you save on card fees & labor', href: '/resources/roi-calculator', icon: Calculator, iconColor: 'text-emerald-500' },
-        { title: 'Help & Knowledge Center', desc: 'Step-by-step setup tutorials & hardware guides', href: '/resources/help-center', icon: HelpCircle, iconColor: 'text-blue-500' },
-        { title: 'POS System Comparison', desc: 'See how Quantix compares to traditional systems', href: '/resources/compare', icon: FileSpreadsheet, iconColor: 'text-purple-500' },
-        { title: 'Customer Stories', desc: 'Read how multi-unit businesses scale with Quantix', href: '/resources/case-studies', icon: Users, iconColor: 'text-amber-500' },
-        { title: 'Live Hardware Diagnostics', desc: 'Test printers, card readers & scanners online', href: '/resources/system-status', icon: Activity, iconColor: 'text-cyan-500' },
+        { title: 'POS Savings ROI Calculator', desc: 'Calculate how much you save on card fees & labor', href: '/roi-calculator', icon: Calculator, iconColor: 'text-emerald-500' },
+        { title: 'Help & Knowledge Center', desc: 'Step-by-step setup tutorials & hardware guides', href: '/help', icon: HelpCircle, iconColor: 'text-blue-500' },
+        { title: 'POS System Comparison', desc: 'See how Quantix compares to traditional systems', href: '/compare', icon: FileSpreadsheet, iconColor: 'text-purple-500' },
+      ],
+    },
+    {
+      categoryTitle: 'SUPPORT & STORIES',
+      items: [
+        { title: 'Customer Stories', desc: 'Read how multi-unit businesses scale with Quantix', href: '/testimonials', icon: Users, iconColor: 'text-amber-500' },
+        { title: 'Live Hardware Diagnostics', desc: 'Test printers, card readers & scanners online', href: '/status', icon: Activity, iconColor: 'text-cyan-500' },
         { title: '24/7 Priority Support', desc: 'Speak to a dedicated POS engineer anytime', href: '/contact', icon: Headset, iconColor: 'text-rose-500' },
       ],
     },
@@ -215,12 +220,12 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
       {
         title: 'BY BUSINESS TYPE',
         items: [
-          { title: 'Dine-In Restaurants', desc: 'Table floor plan & billing', href: '/solutions', icon: Utensils },
-          { title: 'Boutiques & Apparel', desc: 'Variants & barcode tags', href: '/solutions', icon: ShoppingBag },
-          { title: 'Cafes & Bakeries', desc: 'Modifiers, drinks & combos', href: '/solutions', icon: Coffee },
-          { title: 'Convenience & Grocery', desc: 'Weight scales & fast till', href: '/solutions', icon: Store },
-          { title: 'Bars & Nightclubs', desc: 'Bar tabs & quick reorders', href: '/solutions', icon: Flame },
-          { title: 'Vape & Smoke Shops', desc: 'Age checks & SKU catalogs', href: '/solutions', icon: Layers },
+          { title: 'Dine-In Restaurants', desc: 'Table floor plan & billing', href: '/solutions/restaurants', icon: Utensils },
+          { title: 'Boutiques & Apparel', desc: 'Variants & barcode tags', href: '/solutions/apparel', icon: ShoppingBag },
+          { title: 'Cafes & Bakeries', desc: 'Modifiers, drinks & combos', href: '/solutions/cafes', icon: Coffee },
+          { title: 'Convenience & Grocery', desc: 'Weight scales & fast till', href: '/solutions/grocery', icon: Store },
+          { title: 'Bars & Nightclubs', desc: 'Bar tabs & quick reorders', href: '/solutions/bars', icon: Flame },
+          { title: 'Vape & Smoke Shops', desc: 'Age checks & SKU catalogs', href: '/solutions/smoke-shops', icon: Layers },
         ],
       },
     ],
@@ -234,12 +239,11 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
       {
         title: 'INTEGRATIONS',
         items: [
-          { title: 'Payment Card Readers', desc: 'Stripe, Square & Clover readers', href: '/integrations', icon: CreditCard },
-          { title: 'QuickBooks Online', desc: 'Auto bookkeeping sync', href: '/integrations', icon: Calculator },
-          { title: 'DoorDash & UberEats', desc: 'Online delivery app sync', href: '/integrations', icon: Truck },
-          { title: 'Xero Accounting', desc: 'Profit & loss ledger sync', href: '/integrations', icon: RefreshCw },
-          { title: 'Barcode Scanners & Scales', desc: 'Hardware peripheral bridge', href: '/integrations', icon: Scan },
-          { title: 'Receipt & Kitchen Printers', desc: 'Star & Epson thermal printers', href: '/integrations', icon: Printer },
+          { title: 'Stripe Enterprise', desc: 'Fleet terminals & tokenization', href: '/integrations/stripe', icon: CreditCard },
+          { title: 'Authorize.Net Vault', desc: 'High-volume merchant gateway', href: '/integrations/authorize-net', icon: ShieldCheck },
+          { title: 'Square Register Fleet', desc: 'Terminal pairing & offline', href: '/integrations/square', icon: Smartphone },
+          { title: 'DoorDash Drive', desc: 'Online delivery app sync', href: '/integrations/doordash', icon: Truck },
+          { title: 'Uber Eats Enterprise', desc: 'Automated order injection', href: '/integrations/uber-eats', icon: Truck },
         ],
       },
     ],
@@ -253,11 +257,11 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
       {
         title: 'TOOLS & SUPPORT',
         items: [
-          { title: 'ROI Savings Calculator', desc: 'Calculate monthly savings', href: '/resources/roi-calculator', icon: Calculator },
-          { title: 'Help & Knowledge Center', desc: 'Setup tutorials & guides', href: '/resources/help-center', icon: HelpCircle },
-          { title: 'POS System Comparison', desc: 'Side-by-side feature matrix', href: '/resources/compare', icon: FileSpreadsheet },
-          { title: 'Customer Stories', desc: 'Real customer case studies', href: '/resources/case-studies', icon: Users },
-          { title: 'Live Hardware Diagnostics', desc: 'Test scanners & printers online', href: '/resources/system-status', icon: Activity },
+          { title: 'ROI Savings Calculator', desc: 'Calculate monthly savings', href: '/roi-calculator', icon: Calculator },
+          { title: 'Help & Knowledge Center', desc: 'Setup tutorials & guides', href: '/help', icon: HelpCircle },
+          { title: 'POS System Comparison', desc: 'Side-by-side feature matrix', href: '/compare', icon: FileSpreadsheet },
+          { title: 'Customer Stories', desc: 'Real customer case studies', href: '/testimonials', icon: Users },
+          { title: 'Live Hardware Diagnostics', desc: 'Test scanners & printers online', href: '/status', icon: Activity },
           { title: '24/7 Priority Support', desc: 'Speak to a POS engineer', href: '/contact', icon: Headset },
         ],
       },
@@ -266,8 +270,8 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
 ];
 
 export const QUICK_MOBILE_TOOLS: QuickMobileTool[] = [
-  { label: 'ROI Calculator', href: '/resources/roi-calculator', icon: Calculator },
-  { label: 'Help Center', href: '/resources/help-center', icon: HelpCircle },
+  { label: 'ROI Calculator', href: '/roi-calculator', icon: Calculator },
+  { label: 'Help Center', href: '/help', icon: HelpCircle },
   { label: 'Pricing', href: '/pricing', icon: Sparkles },
   { label: 'Contact Us', href: '/contact', icon: Headset },
 ];
