@@ -62,17 +62,17 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
       badge: 'RESTAURANT SOFTWARE',
       title: 'Restaurant POS & Kitchen Screens',
       desc: 'Table floor mapping, tableside ordering, kitchen display screens & bill splitting.',
-      ctaText: 'Explore Restaurant POS',
-      href: '/products/restaurant-pos',
+      ctaText: 'Visit Restaurant Site',
+      href: RESTAURANT_SITE_URL,
       imageSrc: '/images/nav_restaurant_bundle.png',
       badgeColor: 'text-amber-700 dark:text-amber-400 bg-amber-100/90 dark:bg-amber-900/30 border border-amber-300/40',
     },
     {
       badge: 'RETAIL SOFTWARE',
-      title: 'Retail Register & Live Stock',
+      title: 'Retail POS & Live Inventory',
       desc: 'Barcode scanning, offline cash register, size/color variants & low stock alerts.',
-      ctaText: 'Explore Retail Register',
-      href: '/products/retail-pos',
+      ctaText: 'Visit Retail Site',
+      href: RETAIL_SITE_URL,
       imageSrc: '/images/nav_retail_bundle.png',
       badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-900/30 border border-emerald-300/40',
     },
@@ -87,13 +87,13 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
     {
       categoryTitle: 'RETAIL & STORE SOFTWARE',
       items: [
-        { title: 'Retail Register', desc: 'Barcode scanner checkout & offline cash drawer', href: '/products/retail-pos', icon: Store, iconColor: 'text-emerald-500' },
+        { title: 'Retail POS System', desc: 'Barcode scanner checkout, variants & offline till', href: '/products/retail-pos', icon: Store, iconColor: 'text-emerald-500' },
       ],
     },
     {
       categoryTitle: 'MULTI-STORE CLOUD CONTROL',
       items: [
-        { title: 'Cloud Multi-Store HQ', desc: 'Manage menus, prices & see live sales across all stores', href: '/products/cloud-pos', icon: Cloud, iconColor: 'text-sky-500' },
+        { title: 'Cloud Multi-Store POS System', desc: 'Central menus, prices, stock transfers & live store sales', href: '/products/cloud-pos', icon: Cloud, iconColor: 'text-sky-500' },
       ],
     },
   ],

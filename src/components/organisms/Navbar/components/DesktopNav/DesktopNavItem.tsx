@@ -24,6 +24,7 @@ export const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
   const isDropdown = Boolean(link.hasMegaMenu);
   const isMenuOpen = openMegaMenu === link.label;
   const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(`${link.href}/`));
+  const isHighlighted = openMegaMenu ? isMenuOpen : isActive;
 
   return (
     <li
@@ -49,7 +50,7 @@ export const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
         }}
         className={cn(
           'relative z-10 text-[15px] font-semibold transition-all duration-300 block hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 rounded-sm',
-          isActive || isMenuOpen
+          isHighlighted
             ? 'text-primary font-bold'
             : 'text-slate-600 dark:text-slate-300 group-hover:text-slate-950 dark:group-hover:text-white'
         )}
@@ -72,7 +73,7 @@ export const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
       <span
         className={cn(
           'absolute bottom-0 left-3 right-3 h-[2px] bg-primary transition-transform duration-300 ease-out origin-left scale-x-0 group-hover:scale-x-100',
-          (isActive || isMenuOpen) && 'scale-x-100'
+          isHighlighted && 'scale-x-100'
         )}
       />
     </li>
