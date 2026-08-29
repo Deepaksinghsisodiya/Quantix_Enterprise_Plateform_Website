@@ -14,7 +14,6 @@ import {
   Zap,
   DollarSign,
   ShieldCheck,
-  Building2,
 } from 'lucide-react';
 import { useContactModal } from '@/context/ContactModalContext';
 
@@ -139,7 +138,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
 
       addMessage('ai', responseText, !!action, action);
       setIsTyping(false);
-    }, 800);
+    }, 850);
   };
 
   const addMessage = (sender: 'ai' | 'user', text: string, isActionable?: boolean, actionType?: 'BOOK_DEMO' | 'CONTACT_SALES') => {
@@ -180,22 +179,25 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
 
   // REUSABLE CHAT UI
   const renderChatUI = () => (
-    <div className={`w-full h-full flex flex-col bg-white dark:bg-slate-950 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden backdrop-blur-2xl ${className}`}>
+    <div className={`w-full h-full flex flex-col bg-white dark:bg-slate-950 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-2xl overflow-hidden backdrop-blur-2xl ${className}`}>
       
       {/* Draggable Top Header Bar */}
-      <div className="bg-slate-900 dark:bg-slate-950 p-3.5 text-white flex items-center justify-between border-b border-slate-800 shadow-md relative shrink-0 select-none">
+      <div className="bg-slate-900 dark:bg-slate-950 p-4 text-white flex items-center justify-between border-b border-slate-800 shadow-sm relative shrink-0 select-none">
         
-        {/* Drag Handle */}
+        {/* Drag Handle Bar */}
         {variant === 'floating' && (
-          <div className="absolute top-1.5 left-1/2 -translate-x-1/2 flex items-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing">
-            <GripHorizontal className="h-4 w-4 text-slate-400" />
+          <div className="absolute top-1.5 left-1/2 -translate-x-1/2 flex items-center justify-center cursor-grab active:cursor-grabbing group py-1 px-4">
+            <div className="w-10 h-1 bg-slate-700/80 rounded-full group-hover:bg-slate-500 transition-colors" />
           </div>
         )}
 
-        <div className="flex items-center gap-3 pt-1 relative z-10">
+        <div className="flex items-center gap-3 pt-1.5 relative z-10">
           <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-tr from-primary to-primary-dark text-white shadow-md shadow-primary/30 border border-white/20">
             <Bot className="h-5 w-5" />
-            <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-500 border-2 border-slate-900" />
+            <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-slate-900" />
+            </span>
           </div>
 
           <div>
@@ -207,7 +209,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-1 pt-1 relative z-10">
+        <div className="flex items-center gap-1.5 pt-1.5 relative z-10">
           <button
             onClick={() => setMessages([{
               id: Date.now().toString(),
@@ -234,24 +236,24 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       </div>
 
       {/* Messages Stream */}
-      <div className="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-4 bg-slate-50/50 dark:bg-slate-950/80 no-scrollbar">
+      <div className="flex-1 p-4 sm:p-5 overflow-y-auto space-y-4 bg-slate-50/50 dark:bg-slate-950/80 no-scrollbar">
         {messages.map((msg) => (
           <div
             key={msg.id}
             className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
           >
-            <div className="flex items-end gap-2 max-w-[88%]">
+            <div className="flex items-end gap-2.5 max-w-[88%]">
               {msg.sender === 'ai' && (
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-2xs mb-1">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-2xs mb-1">
                   <Bot className="h-4 w-4" />
                 </div>
               )}
 
               <div
-                className={`p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed ${
+                className={`p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm leading-relaxed ${
                   msg.sender === 'user'
                     ? 'bg-primary text-white rounded-tr-xs font-medium shadow-md shadow-primary/20'
-                    : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-tl-xs border border-slate-200/80 dark:border-slate-800 shadow-xs'
+                    : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-tl-xs border border-slate-200/90 dark:border-slate-800 shadow-2xs'
                 }`}
               >
                 {msg.text}
@@ -261,7 +263,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
                   <div className="mt-3 pt-2.5 border-t border-slate-200/80 dark:border-slate-800">
                     <button
                       onClick={() => handleActionClick(msg.actionType)}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary-dark text-white px-4 py-2.5 text-xs font-bold transition-all shadow-md active:scale-95 cursor-pointer group"
+                      className="w-full flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary-dark text-white px-4 py-2.5 text-xs sm:text-sm font-bold transition-all shadow-md active:scale-95 cursor-pointer group"
                     >
                       <Calendar className="h-3.5 w-3.5" />
                       <span>
@@ -272,7 +274,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
                   </div>
                 )}
 
-                <span className="block text-[9px] mt-1.5 opacity-70 text-right font-medium">
+                <span className="block text-[9px] mt-1.5 opacity-60 text-right font-medium">
                   {msg.timestamp}
                 </span>
               </div>
@@ -283,10 +285,10 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
         {/* Typing Indicator */}
         {isTyping && (
           <div className="flex items-center gap-2 text-slate-400">
-            <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-primary text-white">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white">
               <Bot className="h-4 w-4" />
             </div>
-            <div className="flex items-center gap-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3.5 py-2.5 rounded-2xl shadow-xs">
+            <div className="flex items-center gap-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2.5 rounded-2xl shadow-2xs">
               <span className="h-2 w-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: '0ms' }} />
               <span className="h-2 w-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: '150ms' }} />
               <span className="h-2 w-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -298,13 +300,13 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       </div>
 
       {/* Clean Quick Suggestion Chips Container */}
-      <div className="px-3 py-2.5 bg-white dark:bg-slate-950 border-t border-slate-200/80 dark:border-slate-800 overflow-x-auto no-scrollbar shrink-0">
+      <div className="px-4 py-3 bg-white dark:bg-slate-950 border-t border-slate-200/80 dark:border-slate-800/80 overflow-x-auto no-scrollbar shrink-0">
         <div className="flex gap-2 min-w-max">
           {QUICK_SUGGESTIONS.map((sug, idx) => (
             <button
               key={idx}
               onClick={() => handleSuggestionClick(sug.query)}
-              className="flex items-center gap-1.5 text-[11px] font-bold bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-xl transition-all border border-slate-200/80 dark:border-slate-800 cursor-pointer shadow-2xs hover:scale-102 shrink-0"
+              className="flex items-center gap-1.5 text-xs font-bold bg-slate-100/90 hover:bg-primary/10 hover:text-primary dark:bg-slate-900 dark:hover:bg-primary/20 text-slate-700 dark:text-slate-200 px-3.5 py-2 rounded-full transition-all duration-200 border border-slate-200/90 dark:border-slate-800 cursor-pointer shadow-2xs hover:border-primary/40 active:scale-95 shrink-0"
             >
               <span>{sug.icon}</span>
               <span>{sug.label}</span>
@@ -316,20 +318,20 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       {/* Input Form Footer */}
       <form
         onSubmit={handleSend}
-        className="p-3 bg-white dark:bg-slate-950 border-t border-slate-200/80 dark:border-slate-800 flex items-center gap-2 shrink-0"
+        className="p-3.5 sm:p-4 bg-white dark:bg-slate-950 border-t border-slate-200/80 dark:border-slate-800/80 flex items-center gap-2.5 shrink-0"
       >
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask about enterprise sync, pricing, demo..."
-          className="flex-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+          className="flex-1 bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
         />
 
         <button
           type="submit"
           disabled={!input.trim() || isTyping}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary hover:bg-primary-dark disabled:opacity-50 text-white shadow-md transition-all active:scale-95 cursor-pointer"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary hover:bg-primary-dark disabled:opacity-40 text-white shadow-md transition-all active:scale-95 cursor-pointer"
         >
           <Send className="h-4 w-4" />
         </button>
@@ -361,7 +363,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             whileTap={{ scale: 0.96 }}
             onClick={handleOpenToggle}
             aria-label="Open Quantix Enterprise AI Advisor"
-            className="relative flex items-center gap-3 rounded-full bg-slate-900/95 dark:bg-slate-900/95 text-white px-4 sm:px-5 py-3 shadow-2xl shadow-slate-950/40 border border-slate-700/80 backdrop-blur-md cursor-pointer group"
+            className="relative flex items-center gap-3 rounded-full bg-slate-900/95 dark:bg-slate-900/95 text-white px-5 py-3 shadow-2xl shadow-slate-950/40 border border-slate-700/80 backdrop-blur-md cursor-pointer group"
           >
             {hasUnread && (
               <span className="absolute -top-1 -right-1 flex h-4 w-4">
