@@ -13,7 +13,6 @@ import {
   Zap,
   Flame,
   Clock,
-  MessageSquare,
 } from 'lucide-react';
 import { useContactModal } from '@/context/ContactModalContext';
 
@@ -38,10 +37,16 @@ export interface AIAssistantProps {
   className?: string;
 }
 
+const QUICK_STARTERS = [
+  { label: '🔥 3 Months Free Trial', query: 'Tell me about the 3 Months Free Trial program and rollout' },
+  { label: '⚡ Toast & Square Comparison', query: 'How is Quantix Enterprise better than Toast POS and Square?' },
+  { label: '📦 Multi-Store Inventory', query: 'How does multi-store supply chain and par-level replenishment work?' },
+];
+
 export const AIAssistantModal: React.FC<AIAssistantProps> = ({
   variant = 'floating',
   title = "Quantix Enterprise AI",
-  subtitle = "24/7 Intelligent Enterprise POS Assistant",
+  subtitle = "24/7 Enterprise POS Advisor",
   className = "",
 }) => {
   const [isOpen, setIsOpen] = useState(variant === 'embedded');
@@ -55,15 +60,17 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     {
       id: 'welcome-1',
       sender: 'ai',
-      text: '👋 Hello! I am your 24/7 Quantix AI Assistant. You can ask me anything about our enterprise cloud POS, multi-store sync, custom integrations, pricing, or architecture. How can I help you today?',
+      text: '👋 **Welcome to Quantix Enterprise!** I am your 24/7 AI Operations & POS Solutions Advisor. Ask me anything about our **Multi-Store Cloud Hub**, **Supply Chain**, **SAP/NetSuite ERP Integrations**, or our **3 Months Free Trial**.',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
 
-  // Auto scroll to bottom smoothly
   useEffect(() => {
     if (isOpen || variant === 'embedded') {
-      chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      const timer = setTimeout(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+      return () => clearTimeout(timer);
     }
   }, [messages, isOpen, isTyping, variant]);
 
@@ -92,8 +99,8 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             data.isActionable,
             data.actionType,
             data.actionType === 'BOOK_DEMO'
-              ? { title: '1-on-1 Enterprise Architecture Demo', subtitle: 'Live POS & KDS demo with Solution Architect', badge: 'High Priority SLA' }
-              : { title: 'Enterprise Custom Pricing & Proposal', subtitle: 'Tailored tier quotes based on terminal count', badge: 'Volume Discount' }
+              ? { title: '1-on-1 Enterprise Architecture Demo', subtitle: 'Live POS & KDS walkthrough with Solution Architect', badge: 'High Priority SLA' }
+              : { title: 'Claim 3 Months Free Trial', subtitle: 'Custom setup configured within 1 hour by our specialist', badge: 'Special Offer' }
           );
           setIsTyping(false);
           return;
@@ -103,56 +110,18 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       // Fallback
     }
 
-    // Comprehensive Intelligent Enterprise Knowledge Base Engine
-    setTimeout(() => {
-      const q = userQuery.toLowerCase().trim();
-      let responseText = "";
-      let action: 'BOOK_DEMO' | 'CONTACT_SALES' | undefined = undefined;
-      let actionData = undefined;
-
-      if (q.includes('demo') || q.includes('schedule') || q.includes('book') || q.includes('meeting') || q.includes('call')) {
-        responseText = "I would be delighted to schedule a live 1-on-1 Enterprise POS demonstration for your team! Our Solution Architects will walk through multi-location sync, menu matrices, and custom workflows. Click below to pick your time:";
-        action = 'BOOK_DEMO';
-        actionData = {
-          title: 'Schedule 1-on-1 Enterprise Demo',
-          subtitle: 'Live interactive walkthrough with Solution Architect',
-          badge: 'Executive SLA',
-        };
-      } else if (q.includes('price') || q.includes('pricing') || q.includes('cost') || q.includes('plan') || q.includes('fee')) {
-        responseText = "Quantix Enterprise provides custom tiered volume pricing tailored to your exact store count, register terminals, and transaction volume. Every plan includes 24/7 dedicated engineering support, custom API pipelines, and white-glove onboarding.";
-        action = 'CONTACT_SALES';
-        actionData = {
-          title: 'Request Custom Enterprise Quote',
-          subtitle: 'Get an itemized rollout proposal in 24 hours',
-          badge: 'Volume Tier',
-        };
-      } else if (q.includes('chain') || q.includes('multi') || q.includes('outlet') || q.includes('store') || q.includes('location') || q.includes('sync')) {
-        responseText = "Quantix Enterprise is architected specifically for multi-location venue networks (from 10 to 1,000+ outlets). You can centralize menu updates, dynamic pricing rules, staff RBAC permissions, and aggregated P&L reporting in real-time from a single headquarters portal.";
-      } else if (q.includes('offline') || q.includes('internet') || q.includes('down') || q.includes('network') || q.includes('wifi')) {
-        responseText = "Yes! Quantix Enterprise features an autonomous zero-downtime offline engine. If internet connectivity drops, local registers continue billing, taking orders, and issuing receipts seamlessly, automatically syncing transaction batches to the cloud once restored.";
-      } else if (q.includes('hardware') || q.includes('terminal') || q.includes('device') || q.includes('ipad') || q.includes('windows') || q.includes('printer')) {
-        responseText = "Quantix POS is 100% cloud-native and hardware-agnostic. It runs seamlessly on Windows PCs, iPads, Android tablets, all-in-one touch terminals, barcode scanners, and thermal receipt networks without requiring proprietary hardware lock-in.";
-      } else if (q.includes('kds') || q.includes('kitchen') || q.includes('order')) {
-        responseText = "Quantix includes an intelligent Kitchen Display System (KDS) with color-coded station routing, prep-time tracking, course pacing, and automatic kitchen printer redirection.";
-      } else if (q.includes('integration') || q.includes('api') || q.includes('quickbooks') || q.includes('stripe') || q.includes('xero')) {
-        responseText = "Quantix Enterprise features pre-built integrations with major payment processors (Stripe, Square), accounting platforms (QuickBooks, Xero), ERP systems, delivery platforms, and custom REST/GraphQL webhook APIs.";
-      } else if (q.includes('support') || q.includes('help') || q.includes('contact') || q.includes('sla')) {
-        responseText = "We provide 24/7 dedicated enterprise technical support with priority SLAs, a personal Customer Success Manager, and full staff onboarding assistance for all locations.";
-      } else if (q.includes('hi') || q.includes('hello') || q.includes('hey')) {
-        responseText = "Hello! How can I help you today? Feel free to ask any question regarding Quantix Enterprise features, multi-store architecture, custom pricing, or rollout timelines.";
-      } else {
-        responseText = `Regarding "${userQuery}": Quantix Enterprise is designed as an all-in-one cloud platform for high-volume multi-store venues. We provide centralized cloud management, real-time inventory matrices, offline resilience, and dedicated 24/7 support. Would you like to see a live demonstration?`;
-        action = 'BOOK_DEMO';
-        actionData = {
-          title: 'Schedule 1-on-1 Enterprise Demo',
-          subtitle: 'Customized walkthrough for your business setup',
-          badge: 'Recommended',
-        };
+    addMessage(
+      'ai',
+      "Quantix Enterprise is an all-in-one cloud POS platform purpose-built for multi-store chains, featuring centralized menus, smart KDS, delivery integrations, and offline resilience. Would you like to see a live 1-on-1 demo?",
+      true,
+      'BOOK_DEMO',
+      {
+        title: 'Schedule 1-on-1 Enterprise Demo',
+        subtitle: 'Interactive live POS & Cloud Hub walkthrough',
+        badge: 'Recommended',
       }
-
-      addMessage('ai', responseText, !!action, action, actionData);
-      setIsTyping(false);
-    }, 700);
+    );
+    setIsTyping(false);
   };
 
   const addMessage = (
@@ -174,80 +143,90 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     setMessages((prev) => [...prev, newMessage]);
   };
 
-  const handleSend = (e?: React.FormEvent) => {
+  const handleSend = (e?: React.FormEvent, customText?: string) => {
     if (e) e.preventDefault();
-    if (!input.trim() || isTyping) return;
+    const query = (customText || input).trim();
+    if (!query || isTyping) return;
 
-    const userText = input.trim();
     setInput('');
-    addMessage('user', userText);
-    generateAIResponse(userText);
+    addMessage('user', query);
+    generateAIResponse(query);
   };
 
   const handleActionClick = (actionType?: 'BOOK_DEMO' | 'CONTACT_SALES') => {
     if (actionType === 'BOOK_DEMO') {
       openModal('1-on-1 Enterprise AI Demo Booking', 'AI_ASSISTANT_DEMO');
     } else {
-      openModal('Enterprise Custom Pricing Inquiry', 'AI_ASSISTANT_PRICING');
+      openModal('Claim Your 3 Months Free Trial', 'AI_ASSISTANT_PRICING');
     }
   };
 
-  // CLEAN, TRUE AI CONVERSATIONAL CHAT UI
-  const renderChatUI = () => (
-    <div className={`w-full h-full flex flex-col bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden relative ${className}`}>
-      
-      {/* TOP HEADER */}
-      <div className="bg-slate-900 px-4 py-3.5 text-white flex items-center justify-between relative shrink-0 select-none border-b border-slate-800">
-        
-        {/* Drag Handle */}
-        {variant === 'floating' && (
-          <div className="absolute top-1.5 left-1/2 -translate-x-1/2 flex items-center justify-center cursor-grab active:cursor-grabbing group py-0.5 px-6">
-            <div className="w-10 h-1 bg-slate-700 rounded-full group-hover:bg-[#FF4D00] transition-colors" />
+  const renderFormattedText = (rawText: string) => {
+    const lines = rawText.split('\n').filter(Boolean);
+    return lines.map((line, idx) => {
+      const formatted = line.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>');
+      if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
+        return (
+          <div key={idx} className="flex items-start gap-1.5 my-0.5 pl-0.5 text-[11px] sm:text-xs leading-snug">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#FF4D00] mt-1 shrink-0 shadow-xs shadow-[#FF4D00]/50" />
+            <span dangerouslySetInnerHTML={{ __html: formatted.replace(/^[-*]\s+/, '') }} />
           </div>
-        )}
+        );
+      }
+      return (
+        <p key={idx} className={idx > 0 ? "mt-1 leading-snug text-[11px] sm:text-xs" : "leading-snug text-[11px] sm:text-xs"} dangerouslySetInnerHTML={{ __html: formatted }} />
+      );
+    });
+  };
 
-        <div className="flex items-center gap-3 pt-1">
-          {/* Brand Theme Bot Icon */}
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF4D00] text-white shadow-md shadow-[#FF4D00]/30 border border-white/20">
-            <Bot className="h-5 w-5" />
-            <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-slate-900" />
+  const renderChatUI = () => (
+    <div className={`w-full h-full flex flex-col bg-white dark:bg-slate-900/95 backdrop-blur-xl text-slate-800 dark:text-slate-100 rounded-3xl border border-slate-200/90 dark:border-slate-800/90 shadow-[0_20px_50px_rgba(0,0,0,0.25)] overflow-hidden relative ${className}`}>
+      
+      {/* GLOWING TOP ACCENT STRIP */}
+      <div className="h-0.5 w-full bg-gradient-to-r from-[#FF4D00] via-[#FF7332] to-[#FF4D00] shrink-0" />
+
+      {/* LUXURY HEADER */}
+      <div className="bg-slate-900 px-3.5 py-2.5 text-white flex items-center justify-between relative shrink-0 select-none border-b border-slate-800/80 shadow-xs">
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="relative flex h-7.5 w-7.5 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4D00] to-[#E03E00] text-white shadow-md shadow-[#FF4D00]/30 border border-white/20 shrink-0">
+            <Bot className="h-4 w-4" />
+            <span className="absolute -bottom-0.5 -right-0.5 flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 border border-slate-900" />
             </span>
           </div>
 
-          <div>
-            <div className="flex items-center gap-2">
-              <h3 className="font-syne text-sm font-extrabold tracking-wide text-white">{title}</h3>
-              <span className="inline-flex items-center gap-1 bg-[#FF4D00]/20 text-[#FF7332] text-[9px] font-bold px-2 py-0.5 rounded-full border border-[#FF4D00]/30 uppercase tracking-wider">
-                <Sparkles className="h-2.5 w-2.5" />
-                AI ACTIVE
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5">
+              <h3 className="font-syne text-xs sm:text-[13px] font-black tracking-wide text-white truncate">{title}</h3>
+              <span className="inline-flex items-center gap-1 bg-[#FF4D00]/20 text-[#FF7332] text-[7.5px] sm:text-[8px] font-extrabold px-1.5 py-0.5 rounded-full border border-[#FF4D00]/30 uppercase tracking-wider shrink-0 shadow-inner">
+                <Sparkles className="h-2 w-2" />
+                ONLINE
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 font-medium">{subtitle}</p>
+            <p className="text-[9.5px] text-slate-400 font-medium truncate">{subtitle}</p>
           </div>
         </div>
 
-        {/* Header Action Buttons */}
-        <div className="flex items-center gap-1 pt-1">
+        <div className="flex items-center gap-0.5 shrink-0">
           <button
             onClick={() => setMessages([{
               id: Date.now().toString(),
               sender: 'ai',
-              text: '👋 Chat reset! Ask me any question about Quantix Enterprise POS, architecture, pricing, or features.',
+              text: '👋 Chat reset! Ask me any question about Quantix Enterprise Multi-Store POS, Supply Chain, ERP Integrations, or the 3 Months Free Trial.',
               timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             }])}
             title="Reset conversation"
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer active:scale-95"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/80 transition-all cursor-pointer active:scale-95 border border-transparent hover:border-slate-700"
           >
-            <RefreshCw className="h-4 w-4" />
+            <RefreshCw className="h-3.5 w-3.5" />
           </button>
 
           {variant === 'floating' && (
             <button
               onClick={handleOpenToggle}
               title="Close Assistant"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer active:scale-95"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/80 transition-all cursor-pointer active:scale-95 border border-transparent hover:border-slate-700"
             >
               <X className="h-4 w-4" />
             </button>
@@ -255,59 +234,68 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
         </div>
       </div>
 
-      {/* MESSAGES FEED AREA */}
+      {/* MESSAGES FEED AREA - Compact, tight, and neat */}
       <div 
-        className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-slate-50/70 dark:bg-slate-950/60"
+        className="flex-1 p-3 sm:p-3.5 pt-2.5 sm:pt-3 pb-3 sm:pb-4 overflow-y-auto space-y-2.5 bg-slate-50/70 dark:bg-slate-950/60"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {/* Messages Stream */}
         {messages.map((msg) => (
           <div
             key={msg.id}
             className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
           >
-            <div className="flex items-end gap-2 max-w-[92%] sm:max-w-[88%]">
+            <div className="flex items-end gap-1.5 max-w-[94%] sm:max-w-[88%]">
+              {msg.sender === 'ai' && (
+                <div className="h-5 w-5 rounded-md bg-slate-900 border border-slate-800 text-[#FF4D00] flex items-center justify-center shrink-0 mb-0.5">
+                  <Bot className="h-3 w-3" />
+                </div>
+              )}
+
+              {/* TIGHT & ELEGANT MESSAGE BUBBLE */}
               <div
-                className={`p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm leading-relaxed ${
+                className={`py-2 px-3 sm:py-2.5 sm:px-3.5 rounded-2xl shadow-xs transition-shadow ${
                   msg.sender === 'user'
-                    ? 'bg-[#FF4D00] text-white rounded-tr-xs font-medium shadow-md shadow-[#FF4D00]/20'
-                    : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-tl-xs border border-slate-200/90 dark:border-slate-800 shadow-xs'
+                    ? 'bg-gradient-to-r from-[#FF4D00] to-[#FF6B2B] text-white rounded-tr-xs font-medium shadow-sm shadow-[#FF4D00]/20'
+                    : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-tl-xs border border-slate-200/90 dark:border-slate-800/90'
                 }`}
               >
-                <p className="leading-relaxed">{msg.text}</p>
+                <div>{renderFormattedText(msg.text)}</div>
 
-                {/* ACTIONABLE CONVERSION CARD */}
+                {/* ACTIONABLE LEAD CARD */}
                 {msg.isActionable && (
-                  <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800">
-                    <div className="rounded-xl bg-orange-50/70 dark:bg-orange-950/30 border border-orange-200/80 dark:border-orange-900/40 p-3 flex flex-col gap-2">
+                  <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-slate-800">
+                    <div className="rounded-xl bg-gradient-to-br from-orange-50/90 via-white to-orange-50/40 dark:from-orange-950/40 dark:via-slate-900 dark:to-orange-950/20 border border-orange-200/90 dark:border-orange-900/50 p-2 sm:p-2.5 flex flex-col gap-1 shadow-xs">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#FF4D00] uppercase tracking-wider">
-                          <Flame className="h-3 w-3" />
-                          <span>{msg.actionData?.badge || 'Priority'}</span>
+                        <div className="flex items-center gap-1 text-[8.5px] sm:text-[9px] font-black text-[#FF4D00] uppercase tracking-wider">
+                          <Flame className="h-2.5 w-2.5 fill-[#FF4D00]/20" />
+                          <span>{msg.actionData?.badge || 'Special Offer'}</span>
                         </div>
-                        <span className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                          <Clock className="h-3 w-3" /> Instant
+                        <span className="text-[8.5px] sm:text-[9px] text-slate-500 dark:text-slate-400 flex items-center gap-1 font-medium">
+                          <Clock className="h-2.5 w-2.5 text-[#FF4D00]" /> 1 hr setup
                         </span>
                       </div>
 
                       <div>
-                        <p className="text-xs font-syne font-bold text-slate-900 dark:text-white">{msg.actionData?.title || 'Schedule Enterprise Demo'}</p>
-                        <p className="text-[11px] text-slate-600 dark:text-slate-300">{msg.actionData?.subtitle || '1-on-1 walkthrough with POS Architect'}</p>
+                        <p className="text-[11px] sm:text-[11.5px] font-syne font-extrabold text-slate-900 dark:text-white leading-tight">{msg.actionData?.title || 'Claim 3 Months Free Trial'}</p>
+                        <p className="text-[9.5px] sm:text-[10px] text-slate-600 dark:text-slate-300 mt-0.5">{msg.actionData?.subtitle || 'Custom setup built within 1 hour'}</p>
                       </div>
 
                       <button
                         onClick={() => handleActionClick(msg.actionType)}
-                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#FF4D00] hover:bg-[#E03E00] text-white py-2 px-3 text-xs font-bold shadow-md shadow-[#FF4D00]/25 active:scale-95 transition-all cursor-pointer group mt-1"
+                        className="w-full flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C23500] text-white py-1.5 px-2.5 text-[10.5px] font-syne font-bold shadow-xs shadow-[#FF4D00]/25 active:scale-95 transition-all cursor-pointer group mt-0.5"
                       >
-                        <Calendar className="h-3.5 w-3.5" />
-                        <span>Schedule Strategy Demo</span>
-                        <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                        <Calendar className="h-3 w-3" />
+                        <span>{msg.actionType === 'BOOK_DEMO' ? 'Schedule Strategy Demo' : 'Claim 3 Months Free Trial'}</span>
+                        <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                       </button>
                     </div>
                   </div>
                 )}
 
-                <span className="block text-[9px] mt-1.5 text-slate-400 dark:text-slate-500 text-right font-mono">
+                {/* TIMESTAMP - CLEAN WHITE ON USER BUBBLE, CRISP SLATE ON AI */}
+                <span className={`block text-[8px] mt-1 text-right font-mono tracking-tight ${
+                  msg.sender === 'user' ? 'text-white/90 font-medium' : 'text-slate-400 dark:text-slate-500'
+                }`}>
                   {msg.timestamp}
                 </span>
               </div>
@@ -317,116 +305,135 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
 
         {/* Typing Indicator */}
         {isTyping && (
-          <div className="flex items-center gap-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3.5 py-2 rounded-2xl shadow-xs w-fit">
-            <span className="h-2 w-2 rounded-full bg-[#FF4D00] animate-bounce" style={{ animationDelay: '0ms' }} />
-            <span className="h-2 w-2 rounded-full bg-[#FF4D00] animate-bounce" style={{ animationDelay: '150ms' }} />
-            <span className="h-2 w-2 rounded-full bg-[#FF4D00] animate-bounce" style={{ animationDelay: '300ms' }} />
+          <div className="flex items-center gap-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-2.5 py-1.5 rounded-2xl shadow-xs w-fit">
+            <div className="flex items-center gap-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF4D00] animate-bounce" style={{ animationDelay: '0ms' }} />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF4D00] animate-bounce" style={{ animationDelay: '150ms' }} />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF4D00] animate-bounce" style={{ animationDelay: '300ms' }} />
+            </div>
+            <span className="text-[9.5px] text-slate-400 font-medium font-sans">AI is typing...</span>
           </div>
         )}
 
         <div ref={chatEndRef} />
       </div>
 
-      {/* INPUT FORM FOOTER (Clean & Prominent AI Prompt Bar) */}
+      {/* QUICK SUGGESTION STARTERS */}
+      {messages.length <= 1 && (
+        <div className="px-3 py-1.5 bg-slate-100/60 dark:bg-slate-900/60 border-t border-slate-200/50 dark:border-slate-800/50 flex flex-wrap gap-1 shrink-0">
+          {QUICK_STARTERS.map((s, i) => (
+            <button
+              key={i}
+              onClick={() => handleSend(undefined, s.query)}
+              className="text-[9.5px] font-medium text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 hover:border-[#FF4D00] hover:text-[#FF4D00] dark:hover:text-[#FF7332] px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700 transition-all cursor-pointer shadow-xs active:scale-95"
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* INPUT FORM FOOTER */}
       <form
         onSubmit={handleSend}
-        className="p-3.5 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2 shrink-0 z-10"
+        className="p-2 sm:p-2.5 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 shrink-0 z-10"
       >
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask any question about Quantix Enterprise POS..."
-          className="flex-1 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/20 transition-all shadow-inner"
-        />
+        <div className="relative flex-1 flex items-center">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask anything about Quantix Enterprise..."
+            className="w-full bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-xl pl-3 pr-2 py-1.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:border-[#FF4D00] focus:ring-1 focus:ring-[#FF4D00]/20 transition-all shadow-inner"
+          />
+        </div>
 
         <button
           type="submit"
           disabled={!input.trim() || isTyping}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FF4D00] hover:bg-[#E03E00] disabled:opacity-40 text-white shadow-md shadow-[#FF4D00]/25 transition-all active:scale-95 cursor-pointer"
+          aria-label="Send message"
+          className="flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C23500] disabled:opacity-40 text-white shadow-xs shadow-[#FF4D00]/30 transition-all active:scale-90 cursor-pointer"
         >
-          <Send className="h-4 w-4" />
+          <Send className="h-3.5 w-3.5" />
         </button>
       </form>
 
-      {/* Micro Footer Tag */}
-      <div className="bg-slate-50 dark:bg-slate-950 py-1 px-4 text-center border-t border-slate-100 dark:border-slate-800">
-        <p className="text-[9px] text-slate-400 dark:text-slate-500 font-mono">⚡ Quantix Neural POS Intelligence • Ask Anything</p>
+      {/* Micro Telemetry Footer */}
+      <div className="bg-slate-50 dark:bg-slate-950 py-0.5 px-3 flex items-center justify-center gap-1 border-t border-slate-100 dark:border-slate-800/80 select-none">
+        <span className="h-1 w-1 rounded-full bg-emerald-500 animate-pulse" />
+        <p className="text-[8px] text-slate-400 dark:text-slate-500 font-mono tracking-tight">Quantix POS Neural Engine • 24/7 Active</p>
       </div>
 
     </div>
   );
 
-  // IF EMBEDDED INLINE VARIANT
   if (variant === 'embedded') {
     return (
-      <div className={`w-full h-[560px] max-w-2xl mx-auto my-6 ${className}`}>
+      <div className={`w-full h-[480px] max-w-xl mx-auto my-4 sm:my-6 ${className}`}>
         {renderChatUI()}
       </div>
     );
   }
 
-  // IF FLOATING & DRAGGABLE MODAL VARIANT (BOTTOM-LEFT)
+  // FLOATING RESPONSIVE MODAL
   return (
-    <div className={`fixed bottom-6 left-4 sm:left-6 z-50 font-sans pointer-events-auto ${className}`}>
-      
-      {/* THEME BRAND FLOATING TRIGGER BUTTON (BOTTOM-LEFT) */}
+    <>
+      {/* RIGHT-CENTER SLEEK TRIGGER */}
       <AnimatePresence>
         {!isOpen && (
-          <motion.button
-            initial={{ scale: 0.8, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0, y: 20 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleOpenToggle}
-            aria-label="Open Quantix Enterprise AI Advisor"
-            className="relative flex items-center gap-3 rounded-full bg-slate-900 text-white px-5 py-3.5 shadow-2xl shadow-slate-950/20 border border-slate-700/80 hover:border-[#FF4D00] backdrop-blur-xl cursor-pointer group transition-all"
-          >
-            {/* Pulsing Active Indicator */}
-            {hasUnread && (
-              <span className="absolute -top-1 -right-1 flex h-4 w-4">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF4D00] opacity-75" />
-                <span className="relative inline-flex rounded-full h-4 w-4 bg-[#FF4D00] border-2 border-slate-900" />
-              </span>
-            )}
+          <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[60] font-sans pointer-events-auto select-none">
+            <motion.button
+              initial={{ x: 50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: 50, opacity: 0 }}
+              whileHover={{ x: -4, scale: 1.02 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleOpenToggle}
+              aria-label="Open Quantix Enterprise AI Advisor"
+              className="relative flex items-center gap-2 rounded-l-2xl bg-slate-900/95 hover:bg-slate-900 text-white pl-3 pr-2.5 py-2.5 shadow-2xl shadow-slate-950/40 border-y border-l border-slate-700/90 hover:border-[#FF4D00] backdrop-blur-xl cursor-pointer group transition-all"
+            >
+              {hasUnread && (
+                <span className="absolute -top-1 -left-1 flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF4D00] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#FF4D00] border-2 border-slate-900" />
+                </span>
+              )}
 
-            {/* Brand Theme Bot Icon */}
-            <div className="relative flex h-9 w-9 items-center justify-center rounded-2xl bg-[#FF4D00] text-white shadow-md shadow-[#FF4D00]/40">
-              <Bot className="h-5 w-5 group-hover:rotate-12 transition-transform" />
-            </div>
-
-            <div className="text-left hidden sm:block">
-              <div className="flex items-center gap-1.5">
-                <p className="text-xs font-syne font-black tracking-wide leading-none text-white">Quantix AI</p>
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="relative flex h-7.5 w-7.5 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4D00] to-[#E03E00] text-white shadow-md shadow-[#FF4D00]/40 shrink-0">
+                <Bot className="h-4 w-4 group-hover:rotate-12 transition-transform" />
               </div>
-              <p className="text-[10px] text-slate-300 font-medium leading-tight mt-0.5">Enterprise POS Advisor</p>
-            </div>
 
-            <Sparkles className="h-4 w-4 text-[#FF7332] animate-pulse ml-0.5" />
-          </motion.button>
+              <div className="text-left hidden sm:block pr-0.5">
+                <div className="flex items-center gap-1">
+                  <p className="text-[11px] font-syne font-black tracking-wide leading-none text-white">Quantix AI</p>
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                </div>
+                <p className="text-[8.5px] text-slate-300 font-medium leading-tight mt-0.5">Ask Anything</p>
+              </div>
+
+              <Sparkles className="h-3 w-3 text-[#FF7332] animate-pulse shrink-0" />
+            </motion.button>
+          </div>
         )}
       </AnimatePresence>
 
-      {/* FLOATING DRAGGABLE CHAT WINDOW */}
+      {/* COMPACT & GORGEOUS FLOATING MODAL */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            drag
-            dragMomentum={false}
-            dragElastic={0.05}
-            initial={{ opacity: 0, y: 25, scale: 0.94 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 25, scale: 0.94 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="w-[94vw] sm:w-[420px] h-[560px] max-h-[86vh] cursor-grab active:cursor-grabbing"
-          >
-            {renderChatUI()}
-          </motion.div>
+          <div className="fixed right-3 sm:right-6 bottom-3 sm:bottom-6 z-[70] font-sans pointer-events-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 15, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 15, scale: 0.95 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              className="w-[90vw] max-w-[340px] sm:w-[390px] sm:max-w-none h-[470px] max-h-[75vh] sm:h-[530px]"
+            >
+              {renderChatUI()}
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 };
 
