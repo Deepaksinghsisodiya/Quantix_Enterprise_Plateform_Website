@@ -11,10 +11,9 @@ import {
   RefreshCw,
   Calendar,
   Zap,
-  DollarSign,
-  ShieldCheck,
   Flame,
   Clock,
+  MessageSquare,
 } from 'lucide-react';
 import { useContactModal } from '@/context/ContactModalContext';
 
@@ -39,33 +38,10 @@ export interface AIAssistantProps {
   className?: string;
 }
 
-const QUICK_SUGGESTIONS = [
-  {
-    icon: <Zap className="h-3.5 w-3.5 text-[#FF4D00]" />,
-    label: 'Multi-Store Sync',
-    query: 'How does Quantix handle multi-location chain sync?',
-  },
-  {
-    icon: <DollarSign className="h-3.5 w-3.5 text-emerald-600" />,
-    label: 'Custom Pricing',
-    query: 'What is the Enterprise pricing structure?',
-  },
-  {
-    icon: <Calendar className="h-3.5 w-3.5 text-blue-600" />,
-    label: 'Book a Live Demo',
-    query: 'I want to schedule a 1-on-1 enterprise demo',
-  },
-  {
-    icon: <ShieldCheck className="h-3.5 w-3.5 text-amber-600" />,
-    label: 'Offline Engine',
-    query: 'Does Quantix POS work offline without internet?',
-  },
-];
-
 export const AIAssistantModal: React.FC<AIAssistantProps> = ({
   variant = 'floating',
   title = "Quantix Enterprise AI",
-  subtitle = "Neural POS & Chain Operations Advisor",
+  subtitle = "24/7 Intelligent Enterprise POS Assistant",
   className = "",
 }) => {
   const [isOpen, setIsOpen] = useState(variant === 'embedded');
@@ -79,7 +55,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     {
       id: 'welcome-1',
       sender: 'ai',
-      text: '👋 Greetings! I am Quantix Enterprise AI, your specialized multi-store operations & architecture advisor. How can I assist with your franchise or venue rollout today?',
+      text: '👋 Hello! I am your 24/7 Quantix AI Assistant. You can ask me anything about our enterprise cloud POS, multi-store sync, custom integrations, pricing, or architecture. How can I help you today?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -127,48 +103,56 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       // Fallback
     }
 
-    // Intelligent Enterprise KB engine
+    // Comprehensive Intelligent Enterprise Knowledge Base Engine
     setTimeout(() => {
-      const lower = userQuery.toLowerCase();
+      const q = userQuery.toLowerCase().trim();
       let responseText = "";
       let action: 'BOOK_DEMO' | 'CONTACT_SALES' | undefined = undefined;
       let actionData = undefined;
 
-      if (lower.includes('demo') || lower.includes('schedule') || lower.includes('book') || lower.includes('meeting')) {
-        responseText = "I would be thrilled to arrange a dedicated 1-on-1 Enterprise demonstration for your executive team. Our POS Solution Architects will walk through multi-store routing, inventory matrices, and custom API pipelines.";
+      if (q.includes('demo') || q.includes('schedule') || q.includes('book') || q.includes('meeting') || q.includes('call')) {
+        responseText = "I would be delighted to schedule a live 1-on-1 Enterprise POS demonstration for your team! Our Solution Architects will walk through multi-location sync, menu matrices, and custom workflows. Click below to pick your time:";
         action = 'BOOK_DEMO';
         actionData = {
           title: 'Schedule 1-on-1 Enterprise Demo',
-          subtitle: 'Choose preferred date with Senior Architect',
+          subtitle: 'Live interactive walkthrough with Solution Architect',
           badge: 'Executive SLA',
         };
-      } else if (lower.includes('pricing') || lower.includes('cost') || lower.includes('plan') || lower.includes('price')) {
-        responseText = "Quantix Enterprise offers tailored volume-tier pricing configured specifically for your multi-location footprint. Every tier includes dedicated account management, custom webhook pipelines, and 24/7 priority SLA support.";
+      } else if (q.includes('price') || q.includes('pricing') || q.includes('cost') || q.includes('plan') || q.includes('fee')) {
+        responseText = "Quantix Enterprise provides custom tiered volume pricing tailored to your exact store count, register terminals, and transaction volume. Every plan includes 24/7 dedicated engineering support, custom API pipelines, and white-glove onboarding.";
         action = 'CONTACT_SALES';
         actionData = {
           title: 'Request Custom Enterprise Quote',
           subtitle: 'Get an itemized rollout proposal in 24 hours',
           badge: 'Volume Tier',
         };
-      } else if (lower.includes('chain') || lower.includes('multi') || lower.includes('sync') || lower.includes('outlet')) {
-        responseText = "Quantix Enterprise utilizes high-frequency cloud sync across 10 to 1,000+ venues. Push global menu revisions, tiered price matrices, and role-based staff permissions (RBAC) instantly from a central executive portal.";
-      } else if (lower.includes('offline') || lower.includes('internet') || lower.includes('down')) {
-        responseText = "Quantix Enterprise features an autonomous offline transactional engine. In the event of network disruption, local registers execute checkout and receipt issuance without interruption, auto-syncing upon reconnection.";
-      } else if (lower.includes('hardware') || lower.includes('terminal') || lower.includes('device')) {
-        responseText = "Quantix POS is 100% hardware-agnostic and cloud-native. It deploys effortlessly across Windows touch terminals, iPads, Android registers, customer-facing displays, and thermal receipt networks.";
+      } else if (q.includes('chain') || q.includes('multi') || q.includes('outlet') || q.includes('store') || q.includes('location') || q.includes('sync')) {
+        responseText = "Quantix Enterprise is architected specifically for multi-location venue networks (from 10 to 1,000+ outlets). You can centralize menu updates, dynamic pricing rules, staff RBAC permissions, and aggregated P&L reporting in real-time from a single headquarters portal.";
+      } else if (q.includes('offline') || q.includes('internet') || q.includes('down') || q.includes('network') || q.includes('wifi')) {
+        responseText = "Yes! Quantix Enterprise features an autonomous zero-downtime offline engine. If internet connectivity drops, local registers continue billing, taking orders, and issuing receipts seamlessly, automatically syncing transaction batches to the cloud once restored.";
+      } else if (q.includes('hardware') || q.includes('terminal') || q.includes('device') || q.includes('ipad') || q.includes('windows') || q.includes('printer')) {
+        responseText = "Quantix POS is 100% cloud-native and hardware-agnostic. It runs seamlessly on Windows PCs, iPads, Android tablets, all-in-one touch terminals, barcode scanners, and thermal receipt networks without requiring proprietary hardware lock-in.";
+      } else if (q.includes('kds') || q.includes('kitchen') || q.includes('order')) {
+        responseText = "Quantix includes an intelligent Kitchen Display System (KDS) with color-coded station routing, prep-time tracking, course pacing, and automatic kitchen printer redirection.";
+      } else if (q.includes('integration') || q.includes('api') || q.includes('quickbooks') || q.includes('stripe') || q.includes('xero')) {
+        responseText = "Quantix Enterprise features pre-built integrations with major payment processors (Stripe, Square), accounting platforms (QuickBooks, Xero), ERP systems, delivery platforms, and custom REST/GraphQL webhook APIs.";
+      } else if (q.includes('support') || q.includes('help') || q.includes('contact') || q.includes('sla')) {
+        responseText = "We provide 24/7 dedicated enterprise technical support with priority SLAs, a personal Customer Success Manager, and full staff onboarding assistance for all locations.";
+      } else if (q.includes('hi') || q.includes('hello') || q.includes('hey')) {
+        responseText = "Hello! How can I help you today? Feel free to ask any question regarding Quantix Enterprise features, multi-store architecture, custom pricing, or rollout timelines.";
       } else {
-        responseText = `Thank you for asking! Quantix Enterprise is purpose-built for high-volume venues requiring uninterrupted register uptime, real-time multi-store telemetry, and 24/7 dedicated engineering support. Would you like a live walkthrough?`;
+        responseText = `Regarding "${userQuery}": Quantix Enterprise is designed as an all-in-one cloud platform for high-volume multi-store venues. We provide centralized cloud management, real-time inventory matrices, offline resilience, and dedicated 24/7 support. Would you like to see a live demonstration?`;
         action = 'BOOK_DEMO';
         actionData = {
           title: 'Schedule 1-on-1 Enterprise Demo',
-          subtitle: 'Live interactive POS & KDS walkthrough',
+          subtitle: 'Customized walkthrough for your business setup',
           badge: 'Recommended',
         };
       }
 
       addMessage('ai', responseText, !!action, action, actionData);
       setIsTyping(false);
-    }, 750);
+    }, 700);
   };
 
   const addMessage = (
@@ -200,12 +184,6 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     generateAIResponse(userText);
   };
 
-  const handleSuggestionClick = (query: string) => {
-    if (isTyping) return;
-    addMessage('user', query);
-    generateAIResponse(query);
-  };
-
   const handleActionClick = (actionType?: 'BOOK_DEMO' | 'CONTACT_SALES') => {
     if (actionType === 'BOOK_DEMO') {
       openModal('1-on-1 Enterprise AI Demo Booking', 'AI_ASSISTANT_DEMO');
@@ -214,11 +192,11 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     }
   };
 
-  // REUSABLE PIXEL-PERFECT THEME CHAT UI
+  // CLEAN, TRUE AI CONVERSATIONAL CHAT UI
   const renderChatUI = () => (
     <div className={`w-full h-full flex flex-col bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden relative ${className}`}>
       
-      {/* TOP HEADER (Sleek Dark Slate Header with Brand Color Accent) */}
+      {/* TOP HEADER */}
       <div className="bg-slate-900 px-4 py-3.5 text-white flex items-center justify-between relative shrink-0 select-none border-b border-slate-800">
         
         {/* Drag Handle */}
@@ -243,7 +221,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
               <h3 className="font-syne text-sm font-extrabold tracking-wide text-white">{title}</h3>
               <span className="inline-flex items-center gap-1 bg-[#FF4D00]/20 text-[#FF7332] text-[9px] font-bold px-2 py-0.5 rounded-full border border-[#FF4D00]/30 uppercase tracking-wider">
                 <Sparkles className="h-2.5 w-2.5" />
-                AI LIVE
+                AI ACTIVE
               </span>
             </div>
             <p className="text-[11px] text-slate-400 font-medium">{subtitle}</p>
@@ -256,7 +234,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             onClick={() => setMessages([{
               id: Date.now().toString(),
               sender: 'ai',
-              text: '👋 Chat reset! How can I assist your Enterprise POS operations today?',
+              text: '👋 Chat reset! Ask me any question about Quantix Enterprise POS, architecture, pricing, or features.',
               timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             }])}
             title="Reset conversation"
@@ -277,36 +255,20 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
         </div>
       </div>
 
-      {/* MESSAGES FEED AREA (No Scrollbar Track Glitch) */}
+      {/* MESSAGES FEED AREA */}
       <div 
         className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-slate-50/70 dark:bg-slate-950/60"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {/* Welcome Status Card */}
-        <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 p-3 flex items-center justify-between text-xs shadow-xs">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#FF4D00]/10 text-[#FF4D00] shrink-0">
-              <Zap className="h-3.5 w-3.5" />
-            </div>
-            <div>
-              <p className="font-syne font-bold text-slate-900 dark:text-white text-[11px]">24/7 Real-Time Enterprise Guidance</p>
-              <p className="text-[10px] text-slate-500 dark:text-slate-400">Ask about multi-store sync, pricing, offline mode</p>
-            </div>
-          </div>
-          <span className="hidden sm:inline-flex text-[9px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 px-2 py-0.5 rounded-full">
-            Active
-          </span>
-        </div>
-
         {/* Messages Stream */}
         {messages.map((msg) => (
           <div
             key={msg.id}
             className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
           >
-            <div className="flex items-end gap-2 max-w-[90%]">
+            <div className="flex items-end gap-2 max-w-[92%] sm:max-w-[88%]">
               <div
-                className={`p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed ${
+                className={`p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm leading-relaxed ${
                   msg.sender === 'user'
                     ? 'bg-[#FF4D00] text-white rounded-tr-xs font-medium shadow-md shadow-[#FF4D00]/20'
                     : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-tl-xs border border-slate-200/90 dark:border-slate-800 shadow-xs'
@@ -365,33 +327,16 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
         <div ref={chatEndRef} />
       </div>
 
-      {/* QUICK SUGGESTION CHIPS (Clean Horizontal Scroll - Zero Orange Scrollbar Line) */}
-      <div 
-        className="px-3.5 py-2.5 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 overflow-x-auto flex gap-2 shrink-0 z-10"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-      >
-        {QUICK_SUGGESTIONS.map((sug, idx) => (
-          <button
-            key={idx}
-            onClick={() => handleSuggestionClick(sug.query)}
-            className="flex items-center gap-1.5 text-xs font-semibold bg-slate-100 hover:bg-orange-50 hover:border-[#FF4D00]/40 hover:text-[#FF4D00] dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-full transition-all border border-slate-200/80 dark:border-slate-700 cursor-pointer shadow-2xs hover:scale-102 active:scale-95 shrink-0"
-          >
-            <span>{sug.icon}</span>
-            <span>{sug.label}</span>
-          </button>
-        ))}
-      </div>
-
-      {/* INPUT FORM FOOTER */}
+      {/* INPUT FORM FOOTER (Clean & Prominent AI Prompt Bar) */}
       <form
         onSubmit={handleSend}
-        className="p-3 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2 shrink-0 z-10"
+        className="p-3.5 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2 shrink-0 z-10"
       >
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask about multi-store sync, pricing, demo..."
+          placeholder="Ask any question about Quantix Enterprise POS..."
           className="flex-1 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/20 transition-all shadow-inner"
         />
 
@@ -406,7 +351,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
 
       {/* Micro Footer Tag */}
       <div className="bg-slate-50 dark:bg-slate-950 py-1 px-4 text-center border-t border-slate-100 dark:border-slate-800">
-        <p className="text-[9px] text-slate-400 dark:text-slate-500 font-mono">⚡ Quantix Neural POS Intelligence • 24/7 Always Online</p>
+        <p className="text-[9px] text-slate-400 dark:text-slate-500 font-mono">⚡ Quantix Neural POS Intelligence • Ask Anything</p>
       </div>
 
     </div>
