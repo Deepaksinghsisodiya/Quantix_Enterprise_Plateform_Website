@@ -10,7 +10,6 @@ import { ATMLoader } from "@/components/atoms/ATMLoader";
 import { cn } from "@/lib/utils";
 import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import SupportSection from "@/components/organisms/SupportSection/SupportSection";
 
 import dynamic from "next/dynamic";
@@ -71,44 +70,49 @@ export default function HomePageClient() {
         }}
       />
 
-      {/* 1. Hero Section */}
+      {/* 1. Hero Section (White BG) */}
       <section id="home" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <HeroSection />
       </section>
 
-      {/* 2. Core Product Suite Showcase */}
-      <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
+      {/* 2. Core Product Suite Showcase (White BG + Bottom Border) */}
+      <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <MainProductsShowcaseSection />
       </section>
 
-      {/* 4. Solutions by Enterprise Scale Type */}
-      <MerchantTypeExplainerSection />
+      {/* 3. Solutions by Enterprise Scale (Soft Slate 50 BG + Bottom Border) */}
+      <section id="solutions" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
+        <MerchantTypeExplainerSection />
+      </section>
 
-      {/* 5. Workflow Step-by-Step */}
-      <HowItWorksSection />
+      {/* 4. Workflow Step-by-Step (White BG + Bottom Border) */}
+      <section id="how-it-works" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
+        <HowItWorksSection />
+      </section>
 
-      {/* 6. Integrations Ecosystem Ticker */}
-      <IntegrationsTickerSection />
+      {/* 5. Integrations Ecosystem Ticker (Soft Slate 50 BG + Bottom Border) */}
+      <section id="integrations" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
+        <IntegrationsTickerSection />
+      </section>
 
-      {/* 6.5 24/7 Platform Technical Support */}
-      <section id="support" className={cn("scroll-mt-28 transition-colors duration-300")}>
+      {/* 6. 24/7 Platform Technical Support (White BG + Bottom Border) */}
+      <section id="support" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <SupportSection platformName="Quantix Enterprise" />
       </section>
 
-      {/* 7. Social Proof & Customer Reviews */}
-      <section id="testimonials" className={cn("scroll-mt-28 bg-slate-50 dark:bg-slate-900/40 transition-colors duration-300")}>
+      {/* 7. Social Proof & Customer Reviews (Soft Slate 50 BG + Bottom Border) */}
+      <section id="testimonials" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}>
           <LazyTestimonialsSection />
         </Suspense>
       </section>
 
-      {/* 8. Frequently Asked Questions */}
+      {/* 8. Frequently Asked Questions (White BG) */}
       <section id="faq" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}>
           <LazyFAQWrapper />
         </Suspense>
       </section>
-
 
       {/* Scroll-To-Top Button */}
       <AnimatePresence>
