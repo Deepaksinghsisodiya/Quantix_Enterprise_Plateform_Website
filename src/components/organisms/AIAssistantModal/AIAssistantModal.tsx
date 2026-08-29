@@ -11,6 +11,10 @@ import {
   RefreshCw,
   Calendar,
   GripHorizontal,
+  Zap,
+  DollarSign,
+  ShieldCheck,
+  Building2,
 } from 'lucide-react';
 import { useContactModal } from '@/context/ContactModalContext';
 
@@ -31,10 +35,26 @@ export interface AIAssistantProps {
 }
 
 const QUICK_SUGGESTIONS = [
-  { label: '⚡ Multi-Store Chain Sync', query: 'How does Quantix handle multi-location chain sync?' },
-  { label: '💰 Enterprise Pricing', query: 'What is the Enterprise pricing structure?' },
-  { label: '📅 Book a Live Demo', query: 'I want to schedule a 1-on-1 enterprise demo' },
-  { label: '🛡️ Offline Cloud Mode', query: 'Does Quantix POS work offline without internet?' },
+  {
+    icon: <Zap className="h-3.5 w-3.5 text-primary" />,
+    label: 'Multi-Store Chain Sync',
+    query: 'How does Quantix handle multi-location chain sync?',
+  },
+  {
+    icon: <DollarSign className="h-3.5 w-3.5 text-emerald-500" />,
+    label: 'Enterprise Pricing',
+    query: 'What is the Enterprise pricing structure?',
+  },
+  {
+    icon: <Calendar className="h-3.5 w-3.5 text-blue-500" />,
+    label: 'Book a Live Demo',
+    query: 'I want to schedule a 1-on-1 enterprise demo',
+  },
+  {
+    icon: <ShieldCheck className="h-3.5 w-3.5 text-amber-500" />,
+    label: 'Offline Cloud Mode',
+    query: 'Does Quantix POS work offline without internet?',
+  },
 ];
 
 export const AIAssistantModal: React.FC<AIAssistantProps> = ({
@@ -214,7 +234,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       </div>
 
       {/* Messages Stream */}
-      <div className="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-4 bg-slate-50/50 dark:bg-slate-950/80 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800">
+      <div className="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-4 bg-slate-50/50 dark:bg-slate-950/80 no-scrollbar">
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -277,16 +297,17 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
         <div ref={chatEndRef} />
       </div>
 
-      {/* Quick Suggestion Chips */}
+      {/* Clean Quick Suggestion Chips Container */}
       <div className="px-3 py-2.5 bg-white dark:bg-slate-950 border-t border-slate-200/80 dark:border-slate-800 overflow-x-auto no-scrollbar shrink-0">
         <div className="flex gap-2 min-w-max">
           {QUICK_SUGGESTIONS.map((sug, idx) => (
             <button
               key={idx}
               onClick={() => handleSuggestionClick(sug.query)}
-              className="text-[11px] font-bold bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-full transition-all border border-slate-200/80 dark:border-slate-800 cursor-pointer shadow-2xs hover:scale-102"
+              className="flex items-center gap-1.5 text-[11px] font-bold bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-xl transition-all border border-slate-200/80 dark:border-slate-800 cursor-pointer shadow-2xs hover:scale-102 shrink-0"
             >
-              {sug.label}
+              <span>{sug.icon}</span>
+              <span>{sug.label}</span>
             </button>
           ))}
         </div>
@@ -325,7 +346,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     );
   }
 
-  // IF FLOATING & DRAGGABLE MODAL VARIANT (POSITIONED ON BOTTOM-LEFT AS REQUESTED)
+  // IF FLOATING & DRAGGABLE MODAL VARIANT (POSITIONED ON BOTTOM-LEFT)
   return (
     <div className={`fixed bottom-6 left-4 sm:left-6 z-50 font-sans pointer-events-auto ${className}`}>
       
