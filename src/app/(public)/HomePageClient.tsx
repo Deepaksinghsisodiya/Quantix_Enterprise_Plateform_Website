@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
+import SupportSection from "@/components/organisms/SupportSection/SupportSection";
 
 import dynamic from "next/dynamic";
 
@@ -89,6 +90,11 @@ export default function HomePageClient() {
       {/* 6. Integrations Ecosystem Ticker */}
       <IntegrationsTickerSection />
 
+      {/* 6.5 24/7 Platform Technical Support */}
+      <section id="support" className={cn("scroll-mt-28 transition-colors duration-300")}>
+        <SupportSection platformName="Quantix Enterprise" />
+      </section>
+
       {/* 7. Social Proof & Customer Reviews */}
       <section id="testimonials" className={cn("scroll-mt-28 bg-slate-50 dark:bg-slate-900/40 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}>
@@ -103,10 +109,6 @@ export default function HomePageClient() {
         </Suspense>
       </section>
 
-      {/* 9. Final Call to Action Banner */}
-      <section id="cta" className={cn("scroll-mt-28 transition-colors duration-300")}>
-        <CTABanner />
-      </section>
 
       {/* Scroll-To-Top Button */}
       <AnimatePresence>

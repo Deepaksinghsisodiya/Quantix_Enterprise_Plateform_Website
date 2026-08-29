@@ -22,20 +22,11 @@ export interface LeadFormData {
   countryCode: string;
   phone: string;
   businessName: string;
-  businessCategory: string;
+  businessCategory?: string;
 }
 
 const COUNTRY_CODES = [
   { code: '+1', country: 'US/CA' },
-];
-
-const BUSINESS_CATEGORIES = [
-  'Restaurant & Fine Dining',
-  'Retail & Boutique Shop',
-  'Supermarket & Grocery',
-  'Cafe, Bakery & Coffee Shop',
-  'Quick Service (QSR) & Takeaway',
-  'Multi-Store Enterprise & Franchise',
 ];
 
 export const LeadFormCard: React.FC<LeadFormCardProps> = ({
@@ -53,7 +44,6 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
     countryCode: '+1',
     phone: '',
     businessName: '',
-    businessCategory: '',
   });
 
   const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
@@ -101,9 +91,6 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
     if (!formData.businessName.trim()) {
       newErrors.businessName = true;
     }
-    if (!formData.businessCategory.trim()) {
-      newErrors.businessCategory = true;
-    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -134,7 +121,6 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
       countryCode: '+1',
       phone: '',
       businessName: '',
-      businessCategory: '',
     });
     setErrors({});
     setIsSubmitted(false);
@@ -292,28 +278,6 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
                 placeholder="Business Name"
                 className={`w-full border font-medium rounded-lg px-2.5 py-1.5 text-[11px] outline-none transition-all h-8 ${getInputStyle('businessName')}`}
               />
-            </div>
-
-            {/* 5. Business Category */}
-            <div className="relative">
-              <label htmlFor="lead-businesscategory-ent" className="sr-only">Business Category</label>
-              <select
-                id="lead-businesscategory-ent"
-                name="businessCategory"
-                value={formData.businessCategory}
-                onChange={handleChange}
-                className={`w-full appearance-none border font-medium rounded-lg px-2.5 py-1.5 text-[11px] outline-none transition-all cursor-pointer h-8 ${getInputStyle('businessCategory')}`}
-              >
-                <option value="" disabled className="text-slate-400">
-                  Business Category
-                </option>
-                {BUSINESS_CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-400 pointer-events-none" />
             </div>
 
             {/* CTA Button */}

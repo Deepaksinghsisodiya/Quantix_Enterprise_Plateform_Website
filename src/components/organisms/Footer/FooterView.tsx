@@ -94,13 +94,13 @@ const SocialButton = ({ social }: { social: SocialLink }) => {
 };
 
 const LinkColumn = ({ title, links, onOpenContact }: { title: string; links: FooterLink[]; onOpenContact: () => void }) => (
-  <div className="flex flex-col space-y-3">
+  <div className="flex flex-col space-y-4">
     <div>
       <h4 className="font-syne font-bold text-slate-900 dark:text-white text-[13px] sm:text-sm uppercase tracking-wider inline-block pb-1.5 border-b-2 border-primary">
         {title}
       </h4>
     </div>
-    <ul className="flex flex-col space-y-2.5 sm:space-y-3 pt-1">
+    <ul className="flex flex-col space-y-4 sm:space-y-5 pt-1.5">
       {links.map((link) => (
         <li key={link.label}>
           {link.href === '/contact' || link.href.startsWith('/contact/sales') ? (
@@ -149,7 +149,7 @@ export const FooterView: React.FC<FooterViewProps> = ({
       <div className="site-container relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 xl:gap-8 items-start mb-6 lg:mb-10">
           {/* Brand Info (Order 1 on mobile, Order 1 on desktop) */}
-          <div className="order-1 lg:order-1 col-span-1 lg:col-span-3 xl:col-span-3 flex flex-col space-y-3 sm:space-y-4 text-center lg:text-left items-center lg:items-start">
+          <div className="order-1 lg:order-1 col-span-1 lg:col-span-3 xl:col-span-3 flex flex-col space-y-4 sm:space-y-5 text-center lg:text-left items-center lg:items-start">
             <BrandLogo pathname={pathname} />
             <p className="text-xs sm:text-[13px] font-medium leading-relaxed text-slate-500 dark:text-slate-400 max-w-xs text-center lg:text-left">
               Quantix Enterprise is the next-gen EPOS & Cloud management platform for restaurants, retail, and franchise chains.
@@ -157,7 +157,7 @@ export const FooterView: React.FC<FooterViewProps> = ({
 
             {/* Vibrant Social Links Row */}
             {socialLinks && socialLinks.length > 0 && (
-              <div className="flex items-center gap-2 pt-1">
+              <div className="flex items-center gap-2 pt-2 sm:pt-4">
                 {socialLinks.map((social) => (
                   <SocialButton key={social.ariaLabel} social={social} />
                 ))}
