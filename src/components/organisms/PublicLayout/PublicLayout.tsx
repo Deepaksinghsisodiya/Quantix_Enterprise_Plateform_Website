@@ -9,6 +9,8 @@ import { FloatingContactButton } from "@/components/atoms/FloatingContactButton"
 import { FirstVisitOfferModal } from "@/components/organisms/OfferPopupModal/FirstVisitOfferModal";
 import { motion, useScroll, useSpring } from "framer-motion";
 
+import { AIAssistantModal } from "@/components/organisms/AIAssistantModal/AIAssistantModal";
+
 // Simple wrapper used inside app pages – does NOT render <html>/<body>
 export const PublicLayout = ({ children }: { children: React.ReactNode }) => {
   const { scrollYProgress } = useScroll();
@@ -36,6 +38,7 @@ export const PublicLayout = ({ children }: { children: React.ReactNode }) => {
           </Suspense>
           <FloatingContactButton />
           <FirstVisitOfferModal />
+          <AIAssistantModal />
         </div>
       </ContactModalProvider>
     </IndustryProvider>
