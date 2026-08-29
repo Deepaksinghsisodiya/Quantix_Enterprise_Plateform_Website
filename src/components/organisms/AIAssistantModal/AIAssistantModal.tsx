@@ -10,10 +10,11 @@ import {
   ArrowRight,
   RefreshCw,
   Calendar,
-  Building2,
+  GripHorizontal,
+  Move,
   ShieldCheck,
-  Maximize2,
-  Minimize2,
+  MessageSquare,
+  Zap,
 } from 'lucide-react';
 import { useContactModal } from '@/context/ContactModalContext';
 
@@ -52,6 +53,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
   const [hasUnread, setHasUnread] = useState(true);
   const { openModal } = useContactModal();
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const dragConstraintsRef = useRef(null);
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -161,13 +163,21 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     }
   };
 
-  // INNER CHAT UI CONTENT (REUSABLE IN BOTH EMBEDDED & FLOATING MODES)
+  // INNER CHAT UI CONTENT (REUSABLE & DRAGGABLE)
   const renderChatUI = () => (
-    <div className={`w-full h-full flex flex-col bg-white dark:bg-slate-950 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-2xl overflow-hidden backdrop-blur-2xl ${className}`}>
+    <div className={`w-full h-full flex flex-col bg-white/95 dark:bg-slate-950/95 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-2xl overflow-hidden backdrop-blur-2xl ${className}`}>
       
-      {/* Header Bar */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 p-4 text-white flex items-center justify-between border-b border-slate-800 shadow-md relative overflow-hidden shrink-0">
-        <div className="flex items-center gap-3 relative z-10">
+      {/* Draggable Top Header Bar */}
+      <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 p-3.5 text-white flex items-center justify-between border-b border-slate-800 shadow-md relative shrink-0 select-none">
+        
+        {/* Drag Handle Indicator */}
+        {variant === 'floating' && (
+          <div className="absolute top-1.5 left-1/2 -translate-x-1/2 flex items-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing">
+            <GripHorizontal className="h-4 w-4 text-slate-400" />
+          </div>
+        )}
+
+        <div className="flex items-center gap-3 pt-1 relative z-10">
           <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-tr from-red-600 via-rose-500 to-amber-500 text-white shadow-md shadow-red-500/20 border border-white/20">
             <Bot className="h-5 w-5" />
             <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-500 border-2 border-slate-900" />
@@ -182,7 +192,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-1 relative z-10">
+        <div className="flex items-center gap-1 pt-1 relative z-10">
           <button
             onClick={() => setMessages([{
               id: Date.now().toString(),
@@ -209,7 +219,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       </div>
 
       {/* Messages Stream */}
-      <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50/60 dark:bg-slate-950/70">
+      <div className="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-4 bg-slate-50/60 dark:bg-slate-950/70">
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -314,15 +324,15 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
   // IF EMBEDDED INLINE VARIANT
   if (variant === 'embedded') {
     return (
-      <div className={`w-full h-[520px] max-w-2xl mx-auto my-6 ${className}`}>
+      <div className={`w-full h-[540px] max-w-2xl mx-auto my-6 ${className}`}>
         {renderChatUI()}
       </div>
     );
   }
 
-  // IF FLOATING MODAL VARIANT
+  // IF FLOATING & DRAGGABLE MODAL VARIANT
   return (
-    <div className={`fixed bottom-6 right-6 z-50 font-sans ${className}`}>
+    <div className={`fixed bottom-6 right-4 sm:right-6 z-50 font-sans pointer-events-auto ${className}`}>
       
       {/* Floating Trigger Button */}
       <AnimatePresence>
@@ -335,7 +345,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             whileTap={{ scale: 0.96 }}
             onClick={handleOpenToggle}
             aria-label="Open Quantix Enterprise AI Advisor"
-            className="relative flex items-center gap-3 rounded-full bg-slate-900/95 dark:bg-slate-900/95 text-white px-5 py-3 shadow-2xl shadow-slate-950/40 border border-slate-700/80 backdrop-blur-md cursor-pointer group"
+            className="relative flex items-center gap-3 rounded-full bg-slate-900/95 dark:bg-slate-900/95 text-white px-4 sm:px-5 py-3 shadow-2xl shadow-slate-950/40 border border-slate-700/80 backdrop-blur-md cursor-pointer group"
           >
             {hasUnread && (
               <span className="absolute -top-1 -right-1 flex h-4 w-4">
@@ -361,15 +371,18 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
         )}
       </AnimatePresence>
 
-      {/* Floating Popup Window */}
+      {/* Floating DRAGGABLE Popup Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            drag
+            dragMomentum={false}
+            dragElastic={0.05}
             initial={{ opacity: 0, y: 25, scale: 0.94 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 25, scale: 0.94 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="w-[92vw] sm:w-[420px] h-[550px] max-h-[82vh]"
+            className="w-[94vw] sm:w-[420px] h-[550px] max-h-[85vh] cursor-grab active:cursor-grabbing"
           >
             {renderChatUI()}
           </motion.div>
