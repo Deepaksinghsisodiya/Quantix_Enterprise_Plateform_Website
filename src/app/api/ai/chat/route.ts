@@ -44,7 +44,6 @@ async function getAvailableGoogleModels(geminiKey: string): Promise<string[]> {
     'models/gemini-1.5-flash-002',
     'models/gemini-1.5-flash-001',
     'models/gemini-1.5-flash',
-    'models/gemma-4-26b-a4b-it',
   ];
 }
 
@@ -59,7 +58,7 @@ export async function POST(req: Request) {
     const geminiKey = (process.env.GEMINI_API_KEY || '').trim();
     const openaiKey = (process.env.OPENAI_API_KEY || '').trim();
 
-    // 1. DYNAMIC LIVE GOOGLE GEMINI CALL (with 3.8s timeout)
+    // 1. DYNAMIC LIVE GOOGLE GEMINI CALL (Natural, Professional, Accurate)
     if (geminiKey) {
       const models = await getAvailableGoogleModels(geminiKey);
 
@@ -80,14 +79,28 @@ export async function POST(req: Request) {
                 {
                   parts: [
                     {
-                      text: `${QUANTIX_MASTER_PROMPT}\n\nCustomer: "${message}"\nAssistant (Direct concise response only in English or Roman Hinglish):`,
+                      text: `You are Quantix AI, the official 24/7 Chief Solutions Advisor for the Quantix Enterprise POS Platform.
+Your goal is to warmly, clearly, and helpfully answer the customer's questions using our verified platform capabilities below.
+
+VERIFIED PLATFORM CAPABILITIES:
+${QUANTIX_MASTER_PROMPT}
+
+INSTRUCTIONS:
+- Directly answer whatever the customer asks in 2-3 clear, helpful, and professional sentences.
+- When asked about delivery, explain our direct DoorDash and Uber Eats integrations (orders inject straight into POS without extra tablets) and branded online ordering.
+- When asked about payments, explain our Stripe and Authorize.Net integrations (Apple Pay, Google Pay, Tap-to-Pay, and offline billing).
+- Respond in English or natural fluent Hinglish (Roman English letters) based on the customer's language.
+- Never output Devanagari script (हिंदी).
+
+Customer: "${message}"
+Quantix AI:`,
                     },
                   ],
                 },
               ],
               generationConfig: {
-                temperature: 0.6,
-                maxOutputTokens: 300,
+                temperature: 0.3,
+                maxOutputTokens: 250,
               },
             }),
           });
@@ -99,25 +112,34 @@ export async function POST(req: Request) {
             let rawReply = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
             if (rawReply) {
-              if (rawReply.includes('Draft 2') || rawReply.includes('Hinglish Translation')) {
-                const parts = rawReply.split(/(?:Draft \d+.*?:|Hinglish Translation:)/i);
-                rawReply = parts[parts.length - 1].trim();
-              }
-              const reply = rawReply.replace(/^(Option \d+|Role:.*|Analysis:.*|\*   .*)/gm, '').trim() || rawReply;
+              const lower = rawReply.toLowerCase();
+              const isActionable =
+                lower.includes('trial') ||
+                lower.includes('demo') ||
+                lower.includes('pricing') ||
+                lower.includes('plan') ||
+                lower.includes('schedule') ||
+                lower.includes('contact');
 
-              const lower = message.toLowerCase();
-              const isActionable = lower.includes('demo') || lower.includes('price') || lower.includes('cost') || lower.includes('trial') || lower.includes('book');
-              const actionType = lower.includes('price') || lower.includes('cost') || lower.includes('trial') ? 'CONTACT_SALES' : 'BOOK_DEMO';
-              return NextResponse.json({ reply, isActionable, actionType, model: `Google Gemini (${cleanModel})` });
+              const actionType = lower.includes('pricing') || lower.includes('trial')
+                ? 'CONTACT_SALES'
+                : 'BOOK_DEMO';
+
+              return NextResponse.json({
+                reply: rawReply,
+                isActionable,
+                actionType,
+                source: 'gemini-live',
+              });
             }
           }
         } catch {
-          // Fall through to next model quickly
+          // Try next model or fallback
         }
       }
     }
 
-    // 2. OPENAI GPT-4o-MINI (If present)
+    // 2. OPENAI FALLBACK
     if (openaiKey) {
       try {
         const res = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -128,37 +150,52 @@ export async function POST(req: Request) {
           },
           body: JSON.stringify({
             model: 'gpt-4o-mini',
+            temperature: 0.3,
+            max_tokens: 250,
             messages: [
-              { role: 'system', content: QUANTIX_MASTER_PROMPT },
+              {
+                role: 'system',
+                content: `You are Quantix AI, the official solutions advisor for Quantix Enterprise. Answer helpfully and accurately using this platform knowledge:\n\n${QUANTIX_MASTER_PROMPT}`,
+              },
               { role: 'user', content: message },
             ],
-            temperature: 0.6,
-            max_tokens: 250,
           }),
         });
 
         if (res.ok) {
           const data = await res.json();
-          const reply = data?.choices?.[0]?.message?.content?.trim();
-          if (reply) {
-            const lower = message.toLowerCase();
-            const isActionable = lower.includes('demo') || lower.includes('price') || lower.includes('cost') || lower.includes('trial') || lower.includes('book');
-            const actionType = lower.includes('price') || lower.includes('cost') || lower.includes('trial') ? 'CONTACT_SALES' : 'BOOK_DEMO';
-            return NextResponse.json({ reply, isActionable, actionType, model: 'ChatGPT (GPT-4o-mini)' });
+          const rawReply = data?.choices?.[0]?.message?.content?.trim();
+          if (rawReply) {
+            const lower = rawReply.toLowerCase();
+            const isActionable = lower.includes('demo') || lower.includes('trial') || lower.includes('pricing');
+            return NextResponse.json({
+              reply: rawReply,
+              isActionable,
+              actionType: lower.includes('trial') ? 'CONTACT_SALES' : 'BOOK_DEMO',
+              source: 'openai-live',
+            });
           }
         }
       } catch {
-        // Fall through
+        // Fallback to deterministic local engine
       }
     }
 
-    // 3. INDUSTRY-GRADE SMART LOCAL FALLBACK (Zero Delay, 100% accurate)
-    const localResult = getSmartLocalResponse(message);
+    // 3. 100% VERIFIED DETERMINISTIC LOCAL ENGINE
+    const local = getSmartLocalResponse(message);
     return NextResponse.json({
-      ...localResult,
-      model: 'Quantix Universal AI Engine',
+      reply: local.reply,
+      isActionable: local.isActionable,
+      actionType: local.actionType,
+      source: 'quantix-verified-local',
     });
-  } catch (error) {
-    return NextResponse.json({ error: 'Internal error' }, { status: 500 });
+  } catch {
+    const local = getSmartLocalResponse('help');
+    return NextResponse.json({
+      reply: local.reply,
+      isActionable: local.isActionable,
+      actionType: local.actionType,
+      source: 'quantix-fallback',
+    });
   }
 }

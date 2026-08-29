@@ -3,16 +3,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Bot,
+  Cpu,
+  Sparkles,
   Send,
   X,
-  Sparkles,
-  ArrowRight,
-  RefreshCw,
-  Calendar,
-  Zap,
+  RotateCcw,
+  CalendarCheck,
   Flame,
   Clock,
+  Layers,
+  Boxes,
+  ArrowRight,
 } from 'lucide-react';
 import { useContactModal } from '@/context/ContactModalContext';
 
@@ -37,10 +38,10 @@ export interface AIAssistantProps {
   className?: string;
 }
 
-const QUICK_STARTERS = [
-  { label: '🔥 3 Months Free Trial', query: 'Tell me about the 3 Months Free Trial program and rollout' },
-  { label: '⚡ Toast & Square Comparison', query: 'How is Quantix Enterprise better than Toast POS and Square?' },
-  { label: '📦 Multi-Store Inventory', query: 'How does multi-store supply chain and par-level replenishment work?' },
+const ENTERPRISE_QUICK_STARTERS = [
+  { label: '3 Months Free Trial', query: 'Tell me about the 3 Months Free Trial program and rollout', icon: Flame },
+  { label: 'Multi-Store Cloud Hub', query: 'How does multi-store supply chain and par-level replenishment work?', icon: Layers },
+  { label: 'ERP & SAP Integrations', query: 'Which ERP, accounting, and custom APIs does Quantix integrate with?', icon: Boxes },
 ];
 
 export const AIAssistantModal: React.FC<AIAssistantProps> = ({
@@ -69,7 +70,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     if (isOpen || variant === 'embedded') {
       const timer = setTimeout(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 50);
+      }, 60);
       return () => clearTimeout(timer);
     }
   }, [messages, isOpen, isTyping, variant]);
@@ -99,7 +100,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             data.isActionable,
             data.actionType,
             data.actionType === 'BOOK_DEMO'
-              ? { title: '1-on-1 Enterprise Architecture Demo', subtitle: 'Live POS & KDS walkthrough with Solution Architect', badge: 'High Priority SLA' }
+              ? { title: '1-on-1 Enterprise Architecture Demo', subtitle: 'Live Multi-Store POS & Cloud Hub walkthrough with Solution Architect', badge: 'High Priority SLA' }
               : { title: 'Claim 3 Months Free Trial', subtitle: 'Custom setup configured within 1 hour by our specialist', badge: 'Special Offer' }
           );
           setIsTyping(false);
@@ -167,20 +168,20 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       const formatted = line.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>');
       if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
         return (
-          <div key={idx} className="flex items-start gap-1.5 my-0.5 pl-0.5 text-[11px] sm:text-xs leading-snug">
+          <div key={idx} className="flex items-start gap-1.5 my-0.5 pl-0.5 text-[11.5px] sm:text-xs leading-snug font-sans">
             <span className="h-1.5 w-1.5 rounded-full bg-[#FF4D00] mt-1 shrink-0 shadow-xs shadow-[#FF4D00]/50" />
             <span dangerouslySetInnerHTML={{ __html: formatted.replace(/^[-*]\s+/, '') }} />
           </div>
         );
       }
       return (
-        <p key={idx} className={idx > 0 ? "mt-1 leading-snug text-[11px] sm:text-xs" : "leading-snug text-[11px] sm:text-xs"} dangerouslySetInnerHTML={{ __html: formatted }} />
+        <p key={idx} className={idx > 0 ? "mt-1 leading-snug text-[11.5px] sm:text-xs font-sans" : "leading-snug text-[11.5px] sm:text-xs font-sans"} dangerouslySetInnerHTML={{ __html: formatted }} />
       );
     });
   };
 
   const renderChatUI = () => (
-    <div className={`w-full h-full flex flex-col bg-white dark:bg-slate-900/95 backdrop-blur-xl text-slate-800 dark:text-slate-100 rounded-3xl border border-slate-200/90 dark:border-slate-800/90 shadow-[0_20px_50px_rgba(0,0,0,0.25)] overflow-hidden relative ${className}`}>
+    <div className={`w-full h-full flex flex-col font-sans bg-white dark:bg-slate-900/95 backdrop-blur-xl text-slate-800 dark:text-slate-100 rounded-3xl border border-slate-200/90 dark:border-slate-800/90 shadow-[0_20px_50px_rgba(0,0,0,0.25)] overflow-hidden relative ${className}`}>
       
       {/* GLOWING TOP ACCENT STRIP */}
       <div className="h-0.5 w-full bg-gradient-to-r from-[#FF4D00] via-[#FF7332] to-[#FF4D00] shrink-0" />
@@ -189,7 +190,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       <div className="bg-slate-900 px-3.5 py-2.5 text-white flex items-center justify-between relative shrink-0 select-none border-b border-slate-800/80 shadow-xs">
         <div className="flex items-center gap-2 min-w-0">
           <div className="relative flex h-7.5 w-7.5 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4D00] to-[#E03E00] text-white shadow-md shadow-[#FF4D00]/30 border border-white/20 shrink-0">
-            <Bot className="h-4 w-4" />
+            <Cpu className="h-4 w-4" />
             <span className="absolute -bottom-0.5 -right-0.5 flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 border border-slate-900" />
@@ -199,12 +200,12 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
               <h3 className="font-syne text-xs sm:text-[13px] font-black tracking-wide text-white truncate">{title}</h3>
-              <span className="inline-flex items-center gap-1 bg-[#FF4D00]/20 text-[#FF7332] text-[7.5px] sm:text-[8px] font-extrabold px-1.5 py-0.5 rounded-full border border-[#FF4D00]/30 uppercase tracking-wider shrink-0 shadow-inner">
+              <span className="inline-flex items-center gap-1 bg-[#FF4D00]/20 text-[#FF7332] text-[7.5px] sm:text-[8px] font-syne font-extrabold px-1.5 py-0.5 rounded-full border border-[#FF4D00]/30 uppercase tracking-wider shrink-0 shadow-inner">
                 <Sparkles className="h-2 w-2" />
                 ONLINE
               </span>
             </div>
-            <p className="text-[9.5px] text-slate-400 font-medium truncate">{subtitle}</p>
+            <p className="text-[9.5px] font-sans text-slate-400 font-medium truncate">{subtitle}</p>
           </div>
         </div>
 
@@ -219,7 +220,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             title="Reset conversation"
             className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/80 transition-all cursor-pointer active:scale-95 border border-transparent hover:border-slate-700"
           >
-            <RefreshCw className="h-3.5 w-3.5" />
+            <RotateCcw className="h-3.5 w-3.5" />
           </button>
 
           {variant === 'floating' && (
@@ -234,7 +235,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
         </div>
       </div>
 
-      {/* MESSAGES FEED AREA - Compact, tight, and neat */}
+      {/* MESSAGES FEED AREA */}
       <div 
         className="flex-1 p-3 sm:p-3.5 pt-2.5 sm:pt-3 pb-3 sm:pb-4 overflow-y-auto space-y-2.5 bg-slate-50/70 dark:bg-slate-950/60"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -247,13 +248,12 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             <div className="flex items-end gap-1.5 max-w-[94%] sm:max-w-[88%]">
               {msg.sender === 'ai' && (
                 <div className="h-5 w-5 rounded-md bg-slate-900 border border-slate-800 text-[#FF4D00] flex items-center justify-center shrink-0 mb-0.5">
-                  <Bot className="h-3 w-3" />
+                  <Cpu className="h-3 w-3" />
                 </div>
               )}
 
-              {/* TIGHT & ELEGANT MESSAGE BUBBLE */}
               <div
-                className={`py-2 px-3 sm:py-2.5 sm:px-3.5 rounded-2xl shadow-xs transition-shadow ${
+                className={`py-2 px-3 sm:py-2.5 sm:px-3.5 rounded-2xl shadow-xs transition-shadow font-sans ${
                   msg.sender === 'user'
                     ? 'bg-gradient-to-r from-[#FF4D00] to-[#FF6B2B] text-white rounded-tr-xs font-medium shadow-sm shadow-[#FF4D00]/20'
                     : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-tl-xs border border-slate-200/90 dark:border-slate-800/90'
@@ -266,35 +266,34 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
                   <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-slate-800">
                     <div className="rounded-xl bg-gradient-to-br from-orange-50/90 via-white to-orange-50/40 dark:from-orange-950/40 dark:via-slate-900 dark:to-orange-950/20 border border-orange-200/90 dark:border-orange-900/50 p-2 sm:p-2.5 flex flex-col gap-1 shadow-xs">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-[8.5px] sm:text-[9px] font-black text-[#FF4D00] uppercase tracking-wider">
+                        <div className="flex items-center gap-1 text-[8.5px] sm:text-[9px] font-syne font-black text-[#FF4D00] uppercase tracking-wider">
                           <Flame className="h-2.5 w-2.5 fill-[#FF4D00]/20" />
                           <span>{msg.actionData?.badge || 'Special Offer'}</span>
                         </div>
-                        <span className="text-[8.5px] sm:text-[9px] text-slate-500 dark:text-slate-400 flex items-center gap-1 font-medium">
+                        <span className="text-[8.5px] sm:text-[9px] font-sans text-slate-500 dark:text-slate-400 flex items-center gap-1 font-medium">
                           <Clock className="h-2.5 w-2.5 text-[#FF4D00]" /> 1 hr setup
                         </span>
                       </div>
 
                       <div>
                         <p className="text-[11px] sm:text-[11.5px] font-syne font-extrabold text-slate-900 dark:text-white leading-tight">{msg.actionData?.title || 'Claim 3 Months Free Trial'}</p>
-                        <p className="text-[9.5px] sm:text-[10px] text-slate-600 dark:text-slate-300 mt-0.5">{msg.actionData?.subtitle || 'Custom setup built within 1 hour'}</p>
+                        <p className="text-[9.5px] sm:text-[10px] font-sans text-slate-600 dark:text-slate-300 mt-0.5">{msg.actionData?.subtitle || 'Custom setup built within 1 hour'}</p>
                       </div>
 
                       <button
                         onClick={() => handleActionClick(msg.actionType)}
                         className="w-full flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C23500] text-white py-1.5 px-2.5 text-[10.5px] font-syne font-bold shadow-xs shadow-[#FF4D00]/25 active:scale-95 transition-all cursor-pointer group mt-0.5"
                       >
-                        <Calendar className="h-3 w-3" />
+                        <CalendarCheck className="h-3.5 w-3.5" />
                         <span>{msg.actionType === 'BOOK_DEMO' ? 'Schedule Strategy Demo' : 'Claim 3 Months Free Trial'}</span>
-                        <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+                        <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
                       </button>
                     </div>
                   </div>
                 )}
 
-                {/* TIMESTAMP - CLEAN WHITE ON USER BUBBLE, CRISP SLATE ON AI */}
-                <span className={`block text-[8px] mt-1 text-right font-mono tracking-tight ${
-                  msg.sender === 'user' ? 'text-white/90 font-medium' : 'text-slate-400 dark:text-slate-500'
+                <span className={`block text-[8px] sm:text-[8.5px] mt-1 text-right font-sans tracking-tight ${
+                  msg.sender === 'user' ? 'text-white/90 font-medium' : 'text-slate-400 dark:text-slate-500 font-normal'
                 }`}>
                   {msg.timestamp}
                 </span>
@@ -303,15 +302,14 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
           </div>
         ))}
 
-        {/* Typing Indicator */}
         {isTyping && (
-          <div className="flex items-center gap-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-2.5 py-1.5 rounded-2xl shadow-xs w-fit">
+          <div className="flex items-center gap-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-2.5 py-1.5 rounded-2xl shadow-xs w-fit font-sans">
             <div className="flex items-center gap-1">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FF4D00] animate-bounce" style={{ animationDelay: '0ms' }} />
               <span className="h-1.5 w-1.5 rounded-full bg-[#FF4D00] animate-bounce" style={{ animationDelay: '150ms' }} />
               <span className="h-1.5 w-1.5 rounded-full bg-[#FF4D00] animate-bounce" style={{ animationDelay: '300ms' }} />
             </div>
-            <span className="text-[9.5px] text-slate-400 font-medium font-sans">AI is typing...</span>
+            <span className="text-[9.5px] text-slate-400 font-medium">AI is typing...</span>
           </div>
         )}
 
@@ -321,22 +319,26 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       {/* QUICK SUGGESTION STARTERS */}
       {messages.length <= 1 && (
         <div className="px-3 py-1.5 bg-slate-100/60 dark:bg-slate-900/60 border-t border-slate-200/50 dark:border-slate-800/50 flex flex-wrap gap-1 shrink-0">
-          {QUICK_STARTERS.map((s, i) => (
-            <button
-              key={i}
-              onClick={() => handleSend(undefined, s.query)}
-              className="text-[9.5px] font-medium text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 hover:border-[#FF4D00] hover:text-[#FF4D00] dark:hover:text-[#FF7332] px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700 transition-all cursor-pointer shadow-xs active:scale-95"
-            >
-              {s.label}
-            </button>
-          ))}
+          {ENTERPRISE_QUICK_STARTERS.map((s, i) => {
+            const IconComponent = s.icon;
+            return (
+              <button
+                key={i}
+                onClick={() => handleSend(undefined, s.query)}
+                className="inline-flex items-center gap-1 text-[9.5px] font-sans font-medium text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 hover:border-[#FF4D00] hover:text-[#FF4D00] dark:hover:text-[#FF7332] px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700 transition-all cursor-pointer shadow-xs active:scale-95"
+              >
+                <IconComponent className="h-2.5 w-2.5 text-[#FF4D00] shrink-0" />
+                <span>{s.label}</span>
+              </button>
+            );
+          })}
         </div>
       )}
 
-      {/* INPUT FORM FOOTER */}
+      {/* INPUT FORM FOOTER WITH SEND (PAPER PLANE) ICON */}
       <form
         onSubmit={handleSend}
-        className="p-2 sm:p-2.5 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 shrink-0 z-10"
+        className="p-2 sm:p-2.5 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 shrink-0 z-10 font-sans"
       >
         <div className="relative flex-1 flex items-center">
           <input
@@ -344,7 +346,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask anything about Quantix Enterprise..."
-            className="w-full bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-xl pl-3 pr-2 py-1.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:border-[#FF4D00] focus:ring-1 focus:ring-[#FF4D00]/20 transition-all shadow-inner"
+            className="w-full bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-xl pl-3 pr-2 py-1.5 text-xs font-sans text-slate-900 dark:text-white placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:border-[#FF4D00] focus:ring-1 focus:ring-[#FF4D00]/20 transition-all shadow-inner"
           />
         </div>
 
@@ -354,14 +356,14 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
           aria-label="Send message"
           className="flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C23500] disabled:opacity-40 text-white shadow-xs shadow-[#FF4D00]/30 transition-all active:scale-90 cursor-pointer"
         >
-          <Send className="h-3.5 w-3.5" />
+          <Send className="h-3.5 w-3.5 ml-0.5" />
         </button>
       </form>
 
       {/* Micro Telemetry Footer */}
-      <div className="bg-slate-50 dark:bg-slate-950 py-0.5 px-3 flex items-center justify-center gap-1 border-t border-slate-100 dark:border-slate-800/80 select-none">
+      <div className="bg-slate-50 dark:bg-slate-950 py-0.5 px-3 flex items-center justify-center gap-1 border-t border-slate-100 dark:border-slate-800/80 select-none font-sans">
         <span className="h-1 w-1 rounded-full bg-emerald-500 animate-pulse" />
-        <p className="text-[8px] text-slate-400 dark:text-slate-500 font-mono tracking-tight">Quantix POS Neural Engine • 24/7 Active</p>
+        <p className="text-[8px] text-slate-400 dark:text-slate-500 font-sans tracking-tight">Quantix Enterprise POS Neural Core • 24/7 Active</p>
       </div>
 
     </div>
@@ -400,7 +402,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
               )}
 
               <div className="relative flex h-7.5 w-7.5 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4D00] to-[#E03E00] text-white shadow-md shadow-[#FF4D00]/40 shrink-0">
-                <Bot className="h-4 w-4 group-hover:rotate-12 transition-transform" />
+                <Cpu className="h-4 w-4 group-hover:rotate-12 transition-transform" />
               </div>
 
               <div className="text-left hidden sm:block pr-0.5">
@@ -408,7 +410,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
                   <p className="text-[11px] font-syne font-black tracking-wide leading-none text-white">Quantix AI</p>
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 </div>
-                <p className="text-[8.5px] text-slate-300 font-medium leading-tight mt-0.5">Ask Anything</p>
+                <p className="text-[8.5px] font-sans text-slate-300 font-medium leading-tight mt-0.5">Ask Anything</p>
               </div>
 
               <Sparkles className="h-3 w-3 text-[#FF7332] animate-pulse shrink-0" />
