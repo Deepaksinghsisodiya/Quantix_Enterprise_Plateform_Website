@@ -1,1 +1,2 @@
-export { default } from '../PricingSection';
+// src/features/Pricing/components/Pricing.tsx
+export { default } from './PricingSection';
