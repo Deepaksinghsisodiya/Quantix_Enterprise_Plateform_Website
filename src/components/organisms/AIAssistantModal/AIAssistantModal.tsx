@@ -376,7 +376,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask anything about Quantix Enterprise..."
-            className="w-full bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-lg pl-3 pr-2 py-1.5 text-xs font-sans text-slate-900 dark:text-white placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:border-[#FF4D00] focus:ring-1 focus:ring-[#FF4D00]/20 transition-all shadow-inner"
+            className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg pl-3 pr-2 py-1.5 text-xs font-sans text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-[#FF4D00] focus:ring-1 focus:ring-[#FF4D00]/20 transition-all shadow-inner"
           />
         </div>
 
@@ -384,7 +384,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
           type="submit"
           disabled={!input.trim() || isTyping}
           aria-label="Send message"
-          className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#B83200] disabled:opacity-40 text-white flex items-center justify-center transition-all shadow-xs shadow-[#FF4D00]/25 active:scale-95 disabled:active:scale-100 cursor-pointer disabled:cursor-not-allowed shrink-0"
+          className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#B83200] disabled:opacity-40 text-white flex items-center justify-center transition-all shadow-xs shadow-[#FF4D00]/25 active:scale-95 disabled:pointer-events-none cursor-pointer shrink-0"
         >
           <Send className="h-3.5 w-3.5" />
         </button>
