@@ -415,17 +415,17 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
               whileTap={{ scale: 0.95 }}
               onClick={handleOpenToggle}
               aria-label="Open Quantix Enterprise AI Advisor"
-              className="relative flex items-center gap-2 rounded-l-lg bg-slate-900/95 hover:bg-slate-900 text-white pl-3 pr-2.5 py-2.5 shadow-2xl shadow-slate-950/40 border-y border-l border-slate-700/90 hover:border-[#FF4D00] backdrop-blur-xl cursor-pointer group transition-all"
+              className="relative flex items-center gap-1.5 sm:gap-2 rounded-l-md sm:rounded-l-lg bg-slate-900/95 hover:bg-slate-900 text-white p-1.5 sm:pl-3 sm:pr-2.5 sm:py-2.5 shadow-2xl shadow-slate-950/40 border-y border-l border-slate-700/90 hover:border-[#FF4D00] backdrop-blur-xl cursor-pointer group transition-all"
             >
               {hasUnread && (
-                <span className="absolute -top-1 -left-1 flex h-3 w-3">
+                <span className="absolute -top-1 -left-1 flex h-2.5 w-2.5 sm:h-3 sm:w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF4D00] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#FF4D00] border-2 border-slate-900" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-[#FF4D00] border-2 border-slate-900" />
                 </span>
               )}
 
-              <div className="relative flex h-7.5 w-7.5 items-center justify-center rounded-md bg-gradient-to-br from-[#FF4D00] to-[#E03E00] text-white shadow-md shadow-[#FF4D00]/40 shrink-0">
-                <Cpu className="h-4 w-4 group-hover:rotate-12 transition-transform" />
+              <div className="relative flex h-6 w-6 sm:h-7.5 sm:w-7.5 items-center justify-center rounded-md bg-gradient-to-br from-[#FF4D00] to-[#E03E00] text-white shadow-md shadow-[#FF4D00]/40 shrink-0">
+                <Cpu className="h-3.5 w-3.5 sm:h-4 sm:w-4 group-hover:rotate-12 transition-transform" />
               </div>
 
               <div className="text-left hidden sm:block pr-0.5">
@@ -436,7 +436,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
                 <p className="text-[8.5px] font-sans text-slate-300 font-medium leading-tight mt-0.5">Ask Anything</p>
               </div>
 
-              <Sparkles className="h-3 w-3 text-[#FF7332] animate-pulse shrink-0" />
+              <Sparkles className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-[#FF7332] animate-pulse shrink-0 hidden sm:block" />
             </motion.button>
           </div>
         )}
@@ -445,13 +445,13 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       {/* COMPACT & GORGEOUS FLOATING MODAL */}
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed right-3 sm:right-6 bottom-3 sm:bottom-6 z-[70] font-sans pointer-events-auto">
+          <div className="fixed inset-x-3 bottom-3 sm:inset-x-auto sm:right-6 sm:bottom-6 z-[70] font-sans pointer-events-auto flex justify-center sm:block">
             <motion.div
               initial={{ opacity: 0, y: 15, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 15, scale: 0.95 }}
               transition={{ duration: 0.18, ease: "easeOut" }}
-              className="w-[90vw] max-w-[340px] sm:w-[390px] sm:max-w-none h-[470px] max-h-[75vh] sm:h-[530px]"
+              className="w-full max-w-sm sm:w-[390px] sm:max-w-none h-[480px] max-h-[80vh] sm:h-[530px]"
             >
               {renderChatUI()}
             </motion.div>
