@@ -6,7 +6,8 @@ import { Mail, User, Building2, Store, ArrowRight } from 'lucide-react';
 import { ATMTextField, ATMPhoneField, ATMCountrySelect, ATMButton } from '@/components/atoms';
 import { SignUpFormProps } from '../Types/SignUpTypes';
 
-export const SignUpForm: React.FC<SignUpFormProps> = ({ loading }) => {
+export const SignUpForm: React.FC<SignUpFormProps> = ({ loading, isSubmitting }) => {
+  const isBusy = loading ?? isSubmitting ?? false;
   return (
     <div className="space-y-3.5 font-sans">
       {/* Row 1: Merchant Company Name & Contact Person */}
@@ -83,12 +84,12 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ loading }) => {
           variant="form"
           size="form"
           fullWidth
-          isLoading={loading}
-          disabled={loading}
+          isLoading={isBusy}
+          disabled={isBusy}
           className="h-11 bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#FF621F] hover:to-[#FF4D00] shadow-md shadow-orange-500/25 text-white font-bold text-sm rounded-xl transition-all duration-200 cursor-pointer"
           rightIcon={<ArrowRight size={16} className="stroke-[2.5]" />}
         >
-          {loading ? 'Registering...' : 'REGISTER'}
+          {isBusy ? 'Registering...' : 'REGISTER'}
         </ATMButton>
       </div>
     </div>

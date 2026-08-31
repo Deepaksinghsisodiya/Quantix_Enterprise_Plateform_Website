@@ -52,7 +52,10 @@ export interface SignUpFormValues {
 }
 
 export interface SignUpFormProps {
-  loading: boolean;
+  loading?: boolean;
+  isSubmitting?: boolean;
+  values?: SignUpFormValues;
+  setFieldValue?: (field: string, value: any, shouldValidate?: boolean) => Promise<any> | void;
   selectedNature?: string;
   onSelectNature?: (nature: string) => void;
 }
