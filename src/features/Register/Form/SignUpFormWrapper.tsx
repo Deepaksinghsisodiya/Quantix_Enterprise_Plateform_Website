@@ -1,12 +1,14 @@
 // src/features/Register/Form/SignUpFormWrapper.tsx
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import Cookies from 'js-cookie';
 import { toast } from 'sonner';
+import { CheckCircle2, Sparkles } from 'lucide-react';
 import { useCreateBasicInfoSignupMutation } from '../services/SignUpServices';
 import { INITIAL_SIGNUP_VALUES } from '../Constants/SignUpConstants';
 import { SignUpFormValues } from '../Types/SignUpTypes';
@@ -16,6 +18,27 @@ export const SignUpFormWrapper: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [createBasicInfoSignup, { isLoading }] = useCreateBasicInfoSignupMutation();
+
+  const planId = searchParams.get('planId');
+  const planCode = searchParams.get('planCode');
+
+  // If already logged in, redirect away from registration to dashboard
+  useEffect(() => {
+    const token = Cookies.get('accessToken');
+    if (token) {
+      router.replace('/dashboard');
+    }
+  }, [router]);
+
+  // Track and save selected plan into cookies
+  useEffect(() => {
+    if (planId) {
+      Cookies.set('selectedPlanId', planId, { expires: 7 });
+    }
+    if (planCode) {
+      Cookies.set('selectedPlanCode', planCode, { expires: 7 });
+    }
+  }, [planId, planCode]);
 
   // Read URL query parameter (e.g. ?type=restaurant or ?nature=Retail)
   const initialNature = useMemo(() => {
@@ -37,7 +60,7 @@ export const SignUpFormWrapper: React.FC = () => {
       .required('Company / Individual name is required'),
     contactName: Yup.string()
       .trim()
-      .min(2, 'Contact name must be at least 2 characters')
+      .min(2, 'Contact person name is required')
       .required('Contact person name is required'),
     contactEmail: Yup.string()
       .email('Please enter a valid email address')
@@ -63,28 +86,36 @@ export const SignUpFormWrapper: React.FC = () => {
         contactEmail: values.contactEmail.trim().toLowerCase(),
         contactPhone: cleanPhone,
         country: values.country,
-        businessNature: values.businessNature?.trim() || 'Restaurent',
+        businessNature: values.businessNature || initialNature,
       }).unwrap();
 
-      if (response.success && response.data?.merchantId) {
+      if (response.success && response.data) {
         const merchantId = response.data.merchantId;
-        
-        // Save merchant reference for subsequent steps
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('quantix_merchant_id', merchantId);
-          localStorage.setItem('quantix_merchant_data', JSON.stringify(response.data));
-        }
+        const adminEmail = values.contactEmail.trim().toLowerCase();
 
-        toast.success(`Signup created for ${response.data.companyName}! Continuing onboarding...`);
+        // Save registration context to cookies
+        Cookies.set('pendingMerchantId', merchantId);
+        Cookies.set('pendingAdminEmail', adminEmail);
 
-        // Route to activation/onboarding step
-        router.push(`/sign-up/activate?merchantId=${merchantId}`);
+        toast.success(response.message || 'Basic registration completed! Setting up your workspace...');
+
+        // Pass selected plan parameters along to activation
+        const queryParams = new URLSearchParams({ merchantId });
+        if (planId) queryParams.set('planId', planId);
+        if (planCode) queryParams.set('planCode', planCode);
+
+        router.push(`/sign-up/activate?${queryParams.toString()}`);
       } else {
         toast.error(response.message || 'Registration failed. Please check your information.');
       }
     } catch (err: any) {
       const serverMessage = err?.data?.message || err?.error || 'Unable to connect to registration service.';
-      toast.error(serverMessage);
+      if (serverMessage.toLowerCase().includes('already') || serverMessage.toLowerCase().includes('exist')) {
+        toast.error('This account is already registered. Please Sign In to continue.');
+        setTimeout(() => router.push('/sign-in'), 1500);
+      } else {
+        toast.error(serverMessage);
+      }
     }
   };
 
@@ -92,6 +123,12 @@ export const SignUpFormWrapper: React.FC = () => {
     <div className="w-full">
       {/* Header */}
       <div className="mb-5 text-left">
+        {planCode && (
+          <div className="mb-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 border border-orange-200 text-[11px] font-bold text-[#FF4D00] shadow-2xs">
+            <CheckCircle2 size={13} className="text-emerald-500" />
+            Selected Plan: <span className="font-mono uppercase">{planCode}</span>
+          </div>
+        )}
         <h2 className="text-2xl sm:text-3xl font-syne font-bold text-slate-900 leading-tight tracking-tight">
           Sign Up
         </h2>
@@ -110,18 +147,25 @@ export const SignUpFormWrapper: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {() => (
-          <Form className="animate-in fade-in duration-300">
-            <SignUpForm loading={isLoading} />
+        {({ values, setFieldValue, isSubmitting }) => (
+          <Form className="space-y-4">
+            <SignUpForm
+              values={values}
+              setFieldValue={setFieldValue}
+              isSubmitting={isLoading || isSubmitting}
+            />
           </Form>
         )}
       </Formik>
 
-      {/* Footer login link */}
-      <div className="mt-4 text-center text-xs text-slate-500 font-normal">
-        Already a member?{' '}
-        <Link href="/sign-in" className="font-bold text-[#FF4D00] hover:text-[#E03E00] underline underline-offset-2 ml-0.5 transition-colors">
-          Login
+      {/* Footer / Login Redirection */}
+      <div className="mt-6 text-center text-xs text-slate-500">
+        Already have an account?{' '}
+        <Link
+          href="/sign-in"
+          className="font-bold text-[#FF4D00] hover:text-[#E03E00] transition-colors inline-block ml-1 hover:underline"
+        >
+          Sign in here
         </Link>
       </div>
     </div>

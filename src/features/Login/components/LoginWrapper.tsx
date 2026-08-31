@@ -54,6 +54,7 @@ export const LoginWrapper: React.FC = () => {
       if (token) {
         // Save live access token to cookies
         Cookies.set('accessToken', token, { expires: values.remember ? 30 : 1 });
+        Cookies.set('authUser', JSON.stringify(user), { expires: values.remember ? 30 : 1 });
         if (refreshToken) {
           Cookies.set('refreshToken', refreshToken, { expires: 30 });
         }

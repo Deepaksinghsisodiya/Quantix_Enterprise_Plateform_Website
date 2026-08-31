@@ -13,8 +13,19 @@ function AuthInitializer({ children }: { children: ReactNode }) {
   useEffect(() => {
     const token = Cookies.get("accessToken");
     const refreshToken = Cookies.get("refreshToken");
+    const authUserCookie = Cookies.get("authUser");
+    let user = undefined;
+
+    if (authUserCookie) {
+      try {
+        user = JSON.parse(authUserCookie);
+      } catch (e) {
+        user = undefined;
+      }
+    }
+
     if (token) {
-      dispatch(setCredentials({ token, refreshToken }));
+      dispatch(setCredentials({ token, refreshToken, user }));
     }
   }, [dispatch]);
 

@@ -1,33 +1,40 @@
 // src/features/Pricing/Types/PricingTypes.ts
 
-export interface PricingPlan {
-  id: string;
-  planCode: string;
-  name: string;
-  price: number;
-  interval: string;
-  priceMonthly: number;
-  priceSuffix: string;
-  description: string;
-  features: string[];
-  mostPopular?: boolean;
-  custom?: boolean;
-  isActive?: boolean;
-}
+export type PlanType = 'StandalonePos' | 'StandaloneCloud' | 'EnterpriseCloud';
+export type PlanFlavour = 'RES' | 'RET' | 'BOT';
+export type BillingCycle = 'monthly' | 'annual';
 
-// Matches actual /api/v1/billing/plans response
 export interface ApiBillingPlan {
   planId: string;
   planCode: string;
+  planName: string;
   displayName: string;
-  planType: string; // "Trial" | "Basic" | "Pro" | "Enterprise"
+  planType: PlanType;
+  flavour: PlanFlavour;
   isActive: boolean;
   isPublic: boolean;
   isDeprecated: boolean;
   planPricePerDay: number;
+  sortOrder: number;
+  activeSubscriberCount: number;
+  maxLocations: number;
+  maxTerminals: number;
+  marketingBullets: string[];
 }
 
 export interface ApiBillingPlansResponse {
   success: boolean;
   data: ApiBillingPlan[];
+  message?: string;
+}
+
+export interface PricingCardProps {
+  plan: ApiBillingPlan;
+  billing: BillingCycle;
+  isSelected?: boolean;
+  onSelect?: (plan: ApiBillingPlan) => void;
+  brandColor?: string;
+  badgeText?: string;
+  locationLabel?: string;
+  terminalLabel?: string;
 }
