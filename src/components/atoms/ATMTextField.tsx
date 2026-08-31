@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useField } from 'formik';
+import { Eye, EyeOff } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface ATMTextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -11,6 +12,7 @@ export interface ATMTextFieldProps extends React.InputHTMLAttributes<HTMLInputEl
   rightIcon?: React.ReactNode;
   error?: string;
   helperText?: string;
+  required?: boolean;
 }
 
 export const ATMTextField: React.FC<ATMTextFieldProps> = ({
@@ -19,9 +21,15 @@ export const ATMTextField: React.FC<ATMTextFieldProps> = ({
   rightIcon,
   error: explicitError,
   helperText,
+  required,
+  type = 'text',
   ...props
 }) => {
   const [field, meta] = useField(props.name);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const isPasswordType = type === 'password';
+  const inputType = isPasswordType ? (showPassword ? 'text' : 'password') : type;
 
   const errorMessage = explicitError !== undefined 
     ? explicitError 
@@ -30,41 +38,55 @@ export const ATMTextField: React.FC<ATMTextFieldProps> = ({
   const isError = Boolean(errorMessage);
 
   return (
-    <div>
+    <div className="w-full text-left font-sans">
       {label && (
-        <label className="block text-[11px] sm:text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
-          {label}
+        <label className="block text-[11px] font-semibold text-slate-700 mb-1 tracking-normal">
+          {label} {required && <span className="text-[#FF4D00] font-bold">*</span>}
         </label>
       )}
       <div className="relative">
         <input
           {...field}
           {...props}
+          type={inputType}
+          value={field.value ?? ''}
           className={cn(
-            'w-full rounded-xl border py-2.5 sm:py-3 pr-4 text-xs sm:text-sm font-medium outline-none transition-all text-white',
-            leftIcon ? 'pl-10 sm:pl-11' : 'pl-3.5 sm:pl-4',
-            rightIcon ? 'pr-10 sm:pr-11' : '',
+            'w-full h-9.5 sm:h-10 rounded-lg sm:rounded-xl border px-3 text-xs sm:text-[13px] font-normal outline-none transition-all duration-200 text-slate-900 bg-white placeholder:text-slate-400',
+            leftIcon ? 'pl-9' : 'pl-3',
+            (rightIcon || isPasswordType) ? 'pr-9' : 'pr-3',
             isError
-              ? 'border-red-500 bg-red-500/10 placeholder:text-red-400 focus:ring-1 focus:ring-red-500'
-              : 'border-slate-800 bg-slate-900/60 placeholder:text-slate-500 focus:ring-1 focus:ring-primary focus:border-primary/50',
+              ? 'border-red-400 bg-white focus:border-red-500 focus:ring-2 focus:ring-red-500/15'
+              : 'border-slate-200 hover:border-slate-300 focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/15 shadow-2xs',
             props.className
           )}
         />
         {leftIcon && (
-          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none flex items-center justify-center">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none flex items-center justify-center">
             {leftIcon}
           </span>
         )}
-        {rightIcon && (
-          <span className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none flex items-center justify-center">
+
+        {/* Password Eye toggle or custom rightIcon */}
+        {isPasswordType ? (
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer flex items-center justify-center"
+          >
+            {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+          </button>
+        ) : rightIcon ? (
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none flex items-center justify-center">
             {rightIcon}
           </span>
-        )}
+        ) : null}
       </div>
       {isError ? (
-        <div className="mt-1 text-[11px] text-red-500 font-medium">{errorMessage}</div>
+        <div className="mt-1 text-[11px] text-red-500 font-medium leading-tight">
+          {errorMessage}
+        </div>
       ) : helperText ? (
-        <div className="mt-1 text-[11px] text-slate-500 font-medium">{helperText}</div>
+        <div className="mt-1 text-[11px] text-slate-500 font-normal leading-tight">{helperText}</div>
       ) : null}
     </div>
   );

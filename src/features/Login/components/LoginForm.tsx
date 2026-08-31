@@ -11,25 +11,27 @@ interface LoginFormProps {
 
 export const LoginForm: React.FC<LoginFormProps> = ({ loading }) => {
   return (
-    <div className="space-y-3.5">
+    <div className="space-y-3 font-sans text-left">
       <ATMTextField
         name="email"
         type="email"
         label="Corporate Work Email"
-        placeholder="name@company.com"
-        leftIcon={<Mail size={15} />}
+        placeholder="Enter your corporate email"
+        leftIcon={<Mail size={14} />}
+        required
       />
       <ATMTextField
         name="password"
         type="password"
         label="Password"
         placeholder="Enter your password"
-        leftIcon={<Lock size={15} />}
+        leftIcon={<Lock size={14} />}
+        required
       />
       
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 text-xs pt-0.5">
         <ATMCheckbox name="remember" label="Remember this device" />
-        <Link href="/forgot-password" className="font-bold text-primary hover:text-primary-light transition-colors">
+        <Link href="/forgot-password" className="font-semibold text-[#FF4D00] hover:text-[#E03E00] transition-colors">
           Forgot password?
         </Link>
       </div>
@@ -42,10 +44,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ loading }) => {
           fullWidth
           isLoading={loading}
           disabled={loading}
-          className="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 shadow-md shadow-red-600/30"
+          className="h-10 sm:h-10.5 bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#FF621F] hover:to-[#FF4D00] shadow-md shadow-orange-500/25 text-white font-bold text-xs sm:text-sm rounded-xl transition-all duration-200 cursor-pointer"
           rightIcon={<ArrowRight size={15} className="stroke-[2.5]" />}
         >
-          Sign In to Enterprise HQ
+          {loading ? 'Signing In...' : 'SIGN IN TO ENTERPRISE HQ'}
         </ATMButton>
       </div>
     </div>

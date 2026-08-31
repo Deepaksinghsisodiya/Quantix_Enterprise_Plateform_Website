@@ -9,12 +9,12 @@ export interface ATMCheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInp
   description?: string;
 }
 
-const checkboxVariants = cva('h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded', {
+const checkboxVariants = cva('h-3.5 w-3.5 text-[#FF4D00] focus:ring-[#FF4D00] border-slate-300 rounded cursor-pointer accent-[#FF4D00]', {
   variants: {
     size: {
       sm: 'h-3 w-3',
-      md: 'h-4 w-4',
-      lg: 'h-5 w-5',
+      md: 'h-3.5 w-3.5',
+      lg: 'h-4 w-4',
     },
   },
   defaultVariants: { size: 'md' },
@@ -33,7 +33,7 @@ export const ATMCheckbox: React.FC<ATMCheckboxProps> = ({
   const inputClass = cn(checkboxVariants({ size }), className);
   const id = `${name}-checkbox`;
   return (
-    <div className="flex items-start space-x-2">
+    <div className="flex items-center space-x-2 text-left select-none">
       <input
         type="checkbox"
         id={id}
@@ -44,21 +44,23 @@ export const ATMCheckbox: React.FC<ATMCheckboxProps> = ({
         aria-describedby={error ? `${name}-error` : description ? `${name}-desc` : undefined}
         {...rest}
       />
-      <div className="flex flex-col">
-        <label htmlFor={id} className="text-xs sm:text-sm font-medium text-white select-none cursor-pointer">
+      {label && (
+        <label htmlFor={id} className="text-xs text-slate-600 dark:text-slate-300 font-normal select-none cursor-pointer">
           {label}
         </label>
-        {description && (
-          <p id={`${name}-desc`} className="text-xs text-gray-500 dark:text-gray-400">
-            {description}
-          </p>
-        )}
-        {error && (
-          <p id={`${name}-error`} className="mt-1 text-xs text-red-600 dark:text-red-400">
-            {error}
-          </p>
-        )}
-      </div>
+      )}
+      {description && (
+        <p id={`${name}-desc`} className="text-xs text-slate-500">
+          {description}
+        </p>
+      )}
+      {error && (
+        <p id={`${name}-error`} className="mt-1 text-xs text-red-500">
+          {error}
+        </p>
+      )}
     </div>
   );
 };
+
+export default ATMCheckbox;

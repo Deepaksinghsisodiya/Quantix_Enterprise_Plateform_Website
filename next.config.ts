@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/v1/:path*",
-        destination: "http://localhost:5104/api/v1/:path*",
+        destination: "https://quantixapi.foreteksolution.in/api/v1/:path*",
       },
     ];
   },

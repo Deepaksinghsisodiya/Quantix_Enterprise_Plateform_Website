@@ -3,13 +3,15 @@
 export interface SignInFormValues {
   email: string;
   password: string;
-  rememberMe: boolean;
+  rememberMe?: boolean;
 }
 
 export interface UserLoginDto {
+  email?: string | null;
   username?: string | null;
   password?: string | null;
   mfaCode?: string | null;
+  rememberMe?: boolean;
 }
 
 export interface RefreshTokenDto {
@@ -17,8 +19,17 @@ export interface RefreshTokenDto {
 }
 
 export interface LoginResponse {
-  token: string;
-  refreshToken?: string | null;
-  accessToken?: string | null;
-  user?: Record<string, unknown> | null;
+  success?: boolean;
+  message?: string;
+  data?: {
+    token?: string;
+    accessToken?: string;
+    refreshToken?: string;
+    user?: Record<string, any>;
+    merchantId?: string;
+  };
+  token?: string;
+  accessToken?: string;
+  refreshToken?: string;
+  user?: Record<string, any>;
 }

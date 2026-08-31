@@ -1,12 +1,14 @@
 // src/components/organisms/SplitAuthLayout/SplitAuthLayout.tsx
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Zap } from 'lucide-react';
+'use client';
+
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Zap, ShieldCheck } from 'lucide-react';
 
 export interface SplitAuthLayoutProps {
   children: React.ReactNode;
-  coverImage: string;
+  coverImage?: string;
   coverAlt?: string;
   coverHeadline?: string;
   coverSubtext?: string;
@@ -14,97 +16,97 @@ export interface SplitAuthLayoutProps {
 
 export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
   children,
-  coverImage,
-  coverAlt = "Quantix Platform",
-  coverHeadline,
-  coverSubtext,
+  coverImage = '/images/quantix_auth_pos_terminal.jpg',
+  coverAlt = 'Quantix Enterprise Cloud POS',
+  coverHeadline = 'Start our journey',
+  coverSubtext = 'Deploy multi-unit franchises, master SKU catalogs, and real-time cloud POS data lakes across your entire retail and restaurant network.',
 }) => {
   return (
-    <div className="flex min-h-screen bg-slate-950">
+    <div className="min-h-screen w-full bg-white lg:bg-[#F3F4F6] flex flex-col justify-between lg:justify-center p-0 lg:p-6 xl:p-8 font-sans">
 
-      {/* ── LEFT Side: Ultra-HD Cover Image Showcase (hidden on mobile) ── */}
-      <div className="relative hidden lg:block lg:w-[55%] xl:w-[58%] overflow-hidden bg-slate-900">
-        <Image
-          src={coverImage}
-          alt={coverAlt}
-          fill
-          priority
-          quality={95}
-          className="object-cover object-center"
-          sizes="(min-width: 1024px) 58vw, 0vw"
-        />
+      {/* ── Main Container (Full-screen on Mobile, Centered Card Window on Desktop) ── */}
+      <div className="w-full max-w-none lg:max-w-5xl mx-auto lg:rounded-3xl lg:shadow-xl lg:shadow-slate-300/40 overflow-hidden relative z-10 flex flex-col lg:flex-row lg:border lg:border-slate-200/80 bg-white flex-1 lg:flex-initial">
 
-        {/* Minimal edge fade only at the right border to blend seamlessly into form container */}
-        <div className="absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-slate-950 to-transparent pointer-events-none" />
+        {/* ── LEFT SIDE: Full-bleed Showcase Image (DESKTOP ONLY lg+) ── */}
+        <div className="hidden lg:flex lg:w-[46%] xl:w-[45%] relative min-h-[580px] bg-slate-950 overflow-hidden flex-col justify-between p-7 sm:p-8 text-white select-none">
+          <Image
+            src={coverImage}
+            alt={coverAlt}
+            fill
+            priority
+            quality={95}
+            className="object-cover object-center"
+            sizes="(min-width: 1024px) 45vw, 0vw"
+          />
 
-        {/* Brand watermark top-left */}
-        <div className="absolute top-8 left-10 z-10">
-          <Link href="/" className="inline-flex items-center gap-2.5 group select-none">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-primary-dark text-white shadow-md shadow-primary/30">
-              <Zap className="h-5 w-5 fill-white stroke-[2.5]" />
+          {/* Luxury dark & warm gradient overlays */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/60 pointer-events-none" />
+
+          {/* Top Logo on Image */}
+          <div className="relative z-10">
+            <Link href="/" className="inline-flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF4D00] via-[#FF621F] to-[#E03E00] text-white shadow-md shadow-orange-600/40">
+                <Zap className="h-5 w-5 fill-white stroke-[2.5]" />
+              </div>
+              <div>
+                <span className="font-syne text-lg font-bold tracking-tight text-white block leading-tight">
+                  Quantix
+                </span>
+                <span className="text-[9.5px] text-[#FF7332] font-bold tracking-wider uppercase block">
+                  Enterprise Cloud
+                </span>
+              </div>
+            </Link>
+          </div>
+
+          {/* Bottom Headline & Story on Image */}
+          <div className="relative z-10 mt-auto pt-10">
+            <h2 className="text-2xl font-syne font-bold text-white tracking-tight mb-2 leading-tight">
+              {coverHeadline}
+            </h2>
+            <div className="w-10 h-1 bg-[#FF4D00] rounded-full mb-2.5 shadow-md" />
+            <p className="text-xs text-slate-200 font-normal leading-relaxed max-w-sm mb-3">
+              {coverSubtext}
+            </p>
+            <div className="flex items-center gap-2 text-[11px] text-slate-300 font-medium">
+              <ShieldCheck size={14} className="text-emerald-400" />
+              <span>Live Cloud API • 99.99% Uptime SLA</span>
             </div>
-            <span className="font-syne text-xl font-black tracking-tight text-white drop-shadow-md">
-              Quantix <span className="text-primary-light">Enterprise</span>
-            </span>
-          </Link>
+          </div>
         </div>
 
-        {/* Headline directly inline on the image without box background */}
-        {(coverHeadline || coverSubtext) && (
-          <div className="absolute bottom-12 left-10 right-14 z-10">
-            {coverHeadline && (
-              <h3 className="text-2xl xl:text-3xl font-syne font-black text-white uppercase tracking-tight leading-tight mb-2 drop-shadow-lg">
-                {coverHeadline}
-              </h3>
-            )}
-            {coverSubtext && (
-              <p className="text-sm text-slate-200/90 font-medium leading-relaxed max-w-md drop-shadow-md">
-                {coverSubtext}
-              </p>
-            )}
+        {/* ── RIGHT SIDE: Native Mobile Page / Desktop Form Area ── */}
+        <div className="w-full lg:w-[54%] xl:w-[55%] bg-white px-4 py-6 sm:px-8 sm:py-8 lg:p-8 xl:p-9 flex flex-col justify-center text-slate-900 flex-1">
+
+          {/* Mobile Top Brand Header */}
+          <div className="mb-5 lg:hidden flex items-center justify-between pb-3 border-b border-slate-100">
+            <Link href="/" className="inline-flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#FF4D00] text-white shadow-xs">
+                <Zap className="h-4 w-4 fill-white stroke-[2.5]" />
+              </div>
+              <span className="font-syne text-lg font-bold tracking-tight text-slate-900">
+                Quantix <span className="text-[#FF4D00]">Enterprise</span>
+              </span>
+            </Link>
+            <span className="text-[10.5px] font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full">
+              Live Cloud API
+            </span>
           </div>
-        )}
+
+          <div className="w-full max-w-[450px] mx-auto">{children}</div>
+        </div>
       </div>
 
-      {/* ── RIGHT Side: Form Area ── */}
-      <div className="relative flex w-full flex-col lg:w-[45%] xl:w-[42%]">
-        {/* Subtle grid background */}
-        <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-
-        {/* Soft ambient glows */}
-        <div className="absolute top-1/4 right-0 w-[350px] h-[350px] bg-blue-500/8 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-1/4 left-0 w-[250px] h-[250px] bg-indigo-500/5 rounded-full blur-[80px] pointer-events-none" />
-
-        {/* Mobile-only brand header (hidden on lg where logo is on image) */}
-        <div className="relative z-10 px-6 pt-7 sm:px-10 lg:hidden">
-          <Link href="/" className="inline-flex items-center gap-2 group select-none">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-primary-dark text-white shadow-md">
-              <Zap className="h-4.5 w-4.5 fill-white stroke-[2.5]" />
-            </div>
-            <span className="font-syne text-lg font-black tracking-tight text-white">
-              Quantix <span className="text-primary-light">Enterprise</span>
-            </span>
-          </Link>
-        </div>
-
-        {/* Scrollable form content area — vertically centred */}
-        <div className="relative z-10 flex flex-1 items-center justify-center px-6 py-8 sm:px-10 lg:px-12 xl:px-14">
-          <div className="w-full max-w-[420px]">{children}</div>
-        </div>
-
-        {/* Footer fine-print */}
-        <div className="relative z-10 px-6 pb-6 sm:px-10 text-center sm:text-left">
-          <p className="text-[10.5px] text-slate-400 font-medium leading-relaxed">
-            © {new Date().getFullYear()} Quantix Inc. All rights reserved.{" "}
-            <Link href="/privacy" className="text-slate-300 hover:text-white underline underline-offset-2">
-              Privacy Policy
-            </Link>{" "}
-            &{" "}
-            <Link href="/terms" className="text-slate-300 hover:text-white underline underline-offset-2">
-              Terms of Service
-            </Link>
-          </p>
-        </div>
+      {/* Footer fine-print */}
+      <div className="py-4 lg:py-0 lg:mt-5 text-center text-slate-500 text-xs font-normal">
+        © {new Date().getFullYear()} Quantix Inc. All rights reserved. •{' '}
+        <Link href="/privacy" className="text-slate-600 hover:text-slate-900 underline underline-offset-2">
+          Privacy Policy
+        </Link>{' '}
+        &{' '}
+        <Link href="/terms" className="text-slate-600 hover:text-slate-900 underline underline-offset-2">
+          Terms of Service
+        </Link>
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ export const loginApi = baseApi.injectEndpoints({
       providesTags: ['User'],
     }),
   }),
-  overrideExisting: true, // Allow override since we are reorganizing authApi
+  overrideExisting: true,
 });
 
 export const {

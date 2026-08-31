@@ -8,8 +8,8 @@ import LoginFormWrapper from '@/features/Login/components/LoginWrapper';
 export default function SignInPage() {
   return (
     <SplitAuthLayout
-      coverImage="/images/enterprise_auth_cover_modern_hq.jpg"
-      coverAlt="Quantix Enterprise Global Operations POS"
+      coverImage="/images/quantix_auth_pos_terminal.jpg"
+      coverAlt="Quantix Enterprise Multi-Location Cloud POS"
       coverHeadline="Enterprise command at your fingertips."
       coverSubtext="Access global telemetry, branch registers, and ERP integration feeds from anywhere."
     >
