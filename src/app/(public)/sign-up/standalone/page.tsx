@@ -9,7 +9,7 @@ import { useSignupMutation } from '@/features/Register/services/RegisterServices
 import { ChevronRight, ArrowRight, ShieldCheck, Download, Sparkles, Building2, User, Mail, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 
 type StandaloneTokenPackId = 'standard' | 'advance' | 'premium';
@@ -39,6 +39,7 @@ export default function StandaloneSignupPage() {
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [signup, { isLoading }] = useSignupMutation();
 
@@ -58,7 +59,16 @@ export default function StandaloneSignupPage() {
 
       toast.success('Registration successful! Check email for standalone validity tokens.');
       const merchantId = extractMerchantId(res);
-      router.push(merchantId ? `/sign-up/verify?id=${merchantId}` : '/sign-in');
+      
+      const returnUrl = searchParams.get('returnUrl');
+      const source = searchParams.get('source');
+      const verifyParams = new URLSearchParams();
+      if (merchantId) verifyParams.set('id', merchantId);
+      if (email) verifyParams.set('email', email);
+      if (returnUrl) verifyParams.set('returnUrl', returnUrl);
+      if (source) verifyParams.set('source', source);
+
+      router.push(merchantId ? `/sign-up/verify?${verifyParams.toString()}` : '/sign-in');
     } catch (error: unknown) {
       const err = error as { data?: { message?: string }; message?: string };
       toast.error(err?.data?.message || err?.message || 'Onboarding registration failed. Please check details and try again.');
@@ -127,7 +137,7 @@ export default function StandaloneSignupPage() {
             <div className="lg:col-span-7">
               <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 relative overflow-hidden shadow-sm">
                 <div className="absolute top-0 left-0 right-0 h-[3px] bg-blue-600" />
-                
+
                 <h3 className="text-sm font-bold uppercase text-slate-900 mb-6 font-syne">Enter Registrant Details</h3>
 
                 <form onSubmit={handleNextStep} className="space-y-4">

@@ -10,12 +10,14 @@ export const loginApi = baseApi.injectEndpoints({
         method: 'POST',
         body: credentials,
       }),
+      invalidatesTags: ['Auth', 'User'],
     }),
     logout: builder.mutation<void, void>({
       query: () => ({
         url: '/auth/logout',
         method: 'POST',
       }),
+      invalidatesTags: ['Auth', 'User'],
     }),
     refreshToken: builder.mutation<any, RefreshTokenDto>({
       query: (payload) => ({
@@ -28,6 +30,20 @@ export const loginApi = baseApi.injectEndpoints({
       query: () => '/auth/me',
       providesTags: ['User'],
     }),
+    requestPasswordReset: builder.mutation<{ success: boolean; message?: string }, { email: string }>({
+      query: (body) => ({
+        url: '/auth/password/reset',
+        method: 'POST',
+        body,
+      }),
+    }),
+    confirmPasswordReset: builder.mutation<{ success: boolean; message?: string }, { token: string; newPassword: string }>({
+      query: (body) => ({
+        url: '/auth/password/reset/confirm',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
   overrideExisting: true,
 });
@@ -37,4 +53,6 @@ export const {
   useLogoutMutation,
   useRefreshTokenMutation,
   useGetMeQuery,
+  useRequestPasswordResetMutation,
+  useConfirmPasswordResetMutation,
 } = loginApi;

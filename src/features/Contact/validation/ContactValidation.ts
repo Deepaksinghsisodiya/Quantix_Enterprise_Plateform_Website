@@ -8,11 +8,12 @@ export const contactSalesValidationSchema: Yup.ObjectSchema<ContactSalesFormValu
   workEmail: Yup.string()
     .email('Please enter a valid work email')
     .required('Work email is required'),
+  phone: Yup.string().optional(),
+  companyName: Yup.string().optional(),
+  inquiryType: Yup.string().optional(),
   message: Yup.string()
-    .min(20, 'Message must be at least 20 characters')
+    .min(10, 'Message must be at least 10 characters')
     .max(1000, 'Message cannot exceed 1000 characters')
     .required('Message is required'),
-  captcha: Yup.string()
-    .test('is-correct', 'Incorrect answer', (value) => value === '7' || value?.toLowerCase() === 'seven')
-    .required('Please answer the anti-spam question'),
+  captcha: Yup.string().optional(),
 });

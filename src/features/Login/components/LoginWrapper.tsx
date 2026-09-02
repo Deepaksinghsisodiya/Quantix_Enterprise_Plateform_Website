@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppDispatch } from '@/redux/hooks';
 import { setCredentials } from '@/redux/slices/authSlice';
 import Cookies from 'js-cookie';
@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 import { LoginForm } from './LoginForm';
 import { useLoginMutation } from '../Service/LoginService';
 import { ShieldCheck, Zap } from 'lucide-react';
+import { parseApiError } from '@/lib/errorHandler';
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -33,6 +34,7 @@ interface LoginFormValues {
 export const LoginWrapper: React.FC = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [login, { isLoading }] = useLoginMutation();
 
   const handleSignIn = async (values: LoginFormValues) => {
@@ -67,17 +69,39 @@ export const LoginWrapper: React.FC = () => {
           localStorage.setItem('quantix_merchant_id', response.data.merchantId);
         }
 
-        toast.success('Signed in successfully! Redirecting...');
+        const returnUrl = searchParams?.get('returnUrl') || Cookies.get('authReturnUrl');
+        const source = searchParams?.get('source') || Cookies.get('authSource');
+
+        Cookies.remove('authReturnUrl');
+        Cookies.remove('authSource');
+
+        if (returnUrl && returnUrl.startsWith('http')) {
+          toast.success('Signed in successfully! Returning to your platform...');
+          window.location.href = returnUrl;
+          return;
+        }
+
+        if (source === 'restaurant') {
+          const restUrl = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3002';
+          toast.success('Signed in successfully! Returning to Restaurant platform...');
+          window.location.href = restUrl;
+          return;
+        }
+
+        if (source === 'retail') {
+          const retailUrl = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
+          toast.success('Signed in successfully! Returning to Retail platform...');
+          window.location.href = retailUrl;
+          return;
+        }
+
+        toast.success('Signed in successfully! Welcome to Quantix Enterprise.');
         router.push('/');
       } else {
-        toast.error(response.message || 'Login failed. Please check your credentials.');
+        toast.error(response?.message || 'Login failed. Please check your credentials.');
       }
-    } catch (err: any) {
-      const serverMessage = 
-        err?.data?.message || 
-        err?.data?.error || 
-        err?.error || 
-        'Invalid email or password. Please verify that your account is registered.';
+    } catch (err: unknown) {
+      const serverMessage = parseApiError(err, 'Invalid email or password. Please verify that your account is registered.');
       toast.error(serverMessage);
     }
   };
@@ -87,13 +111,13 @@ export const LoginWrapper: React.FC = () => {
       <div className="mb-6 text-left">
         <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-orange-50 border border-orange-200 text-[10px] font-bold uppercase tracking-wider text-[#FF4D00] mb-2.5">
           <Zap size={12} />
-          <span>Enterprise Portal</span>
+          <span>Secure Merchant Portal</span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-syne font-bold text-slate-900 mb-1 leading-tight tracking-tight">
-          Enterprise Sign In
+          Sign In
         </h2>
         <p className="text-slate-500 font-normal text-xs sm:text-sm">
-          Access your centralized multi-location POS dashboard, ERP data feeds, and franchise telemetry.
+          Enter your credentials to access your merchant dashboard and POS telemetry.
         </p>
       </div>
 
@@ -112,9 +136,9 @@ export const LoginWrapper: React.FC = () => {
       {/* Footer link to Sign-up */}
       <div className="mt-5 pt-4 border-t border-slate-100 text-center">
         <p className="text-xs font-normal text-slate-500">
-          Need a new multi-unit corporate workspace?{' '}
-          <Link href="/sign-up" className="font-bold text-[#FF4D00] hover:text-[#E03E00] underline underline-offset-2 ml-0.5 transition-colors">
-            Create Enterprise Account
+          Don&apos;t have an account?{' '}
+          <Link href={`/sign-up${searchParams?.toString() ? `?${searchParams.toString()}` : ''}`} className="font-bold text-[#FF4D00] hover:text-[#E03E00] underline underline-offset-2 ml-0.5 transition-colors">
+            Sign up here
           </Link>
         </p>
       </div>

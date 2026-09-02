@@ -12,11 +12,14 @@ export const PricingCard: React.FC<PricingCardProps> = ({
   plan,
   billing,
 }) => {
-  const isPopular = plan.displayName.toLowerCase().includes('pro');
-  const monthlyPrice = Math.round(plan.planPricePerDay * 30);
-  const annualPrice = Math.round(plan.planPricePerDay * 365 * 0.84); // 16% discount
-  const displayPrice = billing === 'annual' ? annualPrice : monthlyPrice;
-  const priceSuffix = billing === 'monthly' ? '/month' : '/year';
+  const displayName = plan?.displayName || plan?.planName || 'Plan';
+  const isPopular = displayName.toLowerCase().includes('pro');
+
+  const pricePerDay = Number(plan?.planPricePerDay ?? 0);
+  const monthlyPrice = Math.round(pricePerDay * 30);
+  const annualPrice = Math.round(pricePerDay * 365 * 0.84); // 16% annual discount
+  const displayPrice = billing === 'annual' || billing === 'Annual' ? annualPrice : monthlyPrice;
+  const priceSuffix = (billing === 'monthly' || billing === 'Monthly') ? '/month' : '/year';
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -24,11 +27,44 @@ export const PricingCard: React.FC<PricingCardProps> = ({
     setIsLoggedIn(!!Cookies.get('accessToken'));
   }, []);
 
-  const ctaHref = isLoggedIn
-    ? `/dashboard?planId=${plan.planId}&planCode=${plan.planCode}`
-    : `/sign-up?planId=${plan.planId}&planCode=${plan.planCode}&businessNature=Enterprise`;
+  const planId = plan?.planId || '';
+  const planCode = plan?.planCode || '';
 
-  const ctaLabel = isLoggedIn ? `Subscribe ${plan.displayName}` : `Get Started`;
+  const ctaHref = isLoggedIn
+    ? `/dashboard?planId=${encodeURIComponent(planId)}&planCode=${encodeURIComponent(planCode)}`
+    : `/sign-up?planId=${encodeURIComponent(planId)}&planCode=${encodeURIComponent(planCode)}&businessNature=Enterprise`;
+
+  const ctaLabel = isLoggedIn ? `Subscribe ${displayName}` : `Get Started`;
+
+  // Safely extract marketing bullets (handle string, string[], or undefined)
+  const bullets: string[] = React.useMemo(() => {
+    if (Array.isArray(plan?.marketingBullets)) {
+      return plan.marketingBullets.filter((b): b is string => typeof b === 'string' && b.trim().length > 0);
+    }
+    if (typeof plan?.marketingBullets === 'string' && plan.marketingBullets.trim()) {
+      return plan.marketingBullets
+        .split(/(?<=[.!?])\s+|\r?\n/)
+        .map((b) => b.trim())
+        .filter(Boolean);
+    }
+    // Fallback to top features if marketingBullets is empty
+    if (Array.isArray(plan?.features)) {
+      return plan.features
+        .filter((f) => f?.isIncluded && f?.showOnWebsite && f?.featureName)
+        .slice(0, 5)
+        .map((f) => f.featureName as string);
+    }
+    return [];
+  }, [plan]);
+
+  // Safely resolve max locations and terminals
+  const locationsCount = plan?.maxLocations ??
+    plan?.limits?.find((l) => l?.limitCode === 'OUT' || l?.limitCode === 'BUS')?.value ??
+    (isPopular ? 10 : 3);
+
+  const terminalsCount = plan?.maxTerminals ??
+    plan?.limits?.find((l) => l?.limitCode === 'TRM')?.value ??
+    (isPopular ? 50 : 10);
 
   return (
     <div
@@ -58,7 +94,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
             isPopular ? 'text-white/80' : 'text-slate-400 dark:text-slate-500'
           )}
         >
-          {plan.displayName}
+          {displayName}
         </h3>
 
         {/* Big Clear Price */}
@@ -74,7 +110,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
           <span
             className={cn(
               'text-xs font-semibold',
-              isPopular ? 'text-white/70' : 'text-slate-500 dark:text-slate-400'
+              isPopular ? 'text-white/80' : 'text-slate-500 dark:text-slate-400'
             )}
           >
             {priceSuffix}
@@ -88,7 +124,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
             isPopular ? 'text-white/90' : 'text-slate-500 dark:text-slate-400'
           )}
         >
-          {plan.marketingBullets[0] || plan.planName}
+          {bullets[0] || plan?.description || plan?.planName || 'Enterprise Cloud Infrastructure'}
         </p>
 
         {/* Features Checklist */}
@@ -108,7 +144,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
               )}
             />
             <span className={isPopular ? 'text-white' : 'text-slate-800 dark:text-slate-200'}>
-              Up to {plan.maxLocations} Locations included
+              Up to {locationsCount} Locations included
             </span>
           </div>
 
@@ -121,12 +157,12 @@ export const PricingCard: React.FC<PricingCardProps> = ({
               )}
             />
             <span className={isPopular ? 'text-white' : 'text-slate-800 dark:text-slate-200'}>
-              Up to {plan.maxTerminals} Terminal registers included
+              Up to {terminalsCount} Terminal registers included
             </span>
           </div>
 
           {/* Remaining bullet points */}
-          {plan.marketingBullets.slice(1).map((bullet, idx) => (
+          {bullets.slice(1, 5).map((bullet, idx) => (
             <div key={idx} className="flex items-start gap-2.5 text-xs">
               <Check
                 size={14}

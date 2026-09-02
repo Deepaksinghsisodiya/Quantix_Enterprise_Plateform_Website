@@ -6,8 +6,8 @@ export const INITIAL_SIGNUP_VALUES: SignUpFormValues = {
   contactName: '',
   contactEmail: '',
   contactPhone: '',
-  country: 'US',
-  businessNature: 'Restaurent',
+  country: 'United States',
+  businessNature: 'Enterprise',
 };
 
 export const COUNTRY_OPTIONS = [

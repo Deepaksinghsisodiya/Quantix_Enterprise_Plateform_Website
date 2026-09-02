@@ -6,7 +6,8 @@ import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';
 import { useRequestDemoMutation } from '@/features/Contact/services/ContactServices';
-import { ChevronRight, ArrowLeft, Calendar, User, Mail, Store, Sparkles, Star, Loader2 } from 'lucide-react';
+import { parseApiError } from '@/lib/errorHandler';
+import { ChevronRight, ArrowLeft, Calendar, User, Mail, Phone, Store, Sparkles, Star, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 
@@ -14,28 +15,63 @@ export default function ContactDemoPage() {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [locations, setLocations] = useState('1');
   const [demoDate, setDemoDate] = useState('');
 
   const [requestDemo, { isLoading }] = useRequestDemoMutation();
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const raw = value.replace(/\D/g, '').slice(0, 10);
+    let newValue = '';
+    if (!raw) {
+      newValue = '';
+    } else if (raw.length <= 3) {
+      newValue = `(${raw}`;
+    } else if (raw.length <= 6) {
+      newValue = `(${raw.slice(0, 3)}) ${raw.slice(3)}`;
+    } else {
+      newValue = `(${raw.slice(0, 3)}) ${raw.slice(3, 6)}-${raw.slice(6, 10)}`;
+    }
+    setPhone(newValue);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanName = name.trim();
+    const cleanPhone = phone.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!cleanEmail || !emailRegex.test(cleanEmail)) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+
+    const phoneDigits = cleanPhone.replace(/\D/g, '');
+    if (phoneDigits.length !== 10) {
+      toast.error('Please enter a valid 10-digit phone number.');
+      return;
+    }
+
     try {
-      await requestDemo({
-        name,
-        email,
-        phone: '',
-        company: `Outlets count: ${locations}`,
-        message: `Onboarding requested via dedicated demo scheduling portal for ${locations} location(s) on ${demoDate}.`,
+      const res = await requestDemo({
+        contactName: cleanName,
+        email: cleanEmail,
+        phone: cleanPhone,
+        companyName: `Outlets: ${locations}`,
+        businessType: 'Enterprise',
+        preferredMerchantType: 'Enterprise',
+        message: `Onboarding requested via Enterprise demo portal for ${locations} location(s) on ${demoDate}.`,
       }).unwrap();
 
       setSubmitted(true);
-      toast.success('Your live iPad demo session has been scheduled successfully!');
-    } catch (err) {
-      // Fallback in case of sandboxed network errors
-      setSubmitted(true);
-      toast.success('Scheduled live iPad session!');
+      toast.success(res?.message || 'Your live iPad demo session has been scheduled successfully!');
+    } catch (err: unknown) {
+      const message = parseApiError(err, 'Failed to schedule demo. Please try again.');
+      toast.error(message);
     }
   };
 
@@ -115,7 +151,7 @@ export default function ContactDemoPage() {
                           required
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                          placeholder="Your name"
+                          placeholder="Full Name"
                           className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 pl-10 text-xs text-slate-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none"
                         />
                       </div>
@@ -130,7 +166,23 @@ export default function ContactDemoPage() {
                           required
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          placeholder="business@example.com"
+                          placeholder="Work Email"
+                          className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 pl-10 text-xs text-slate-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block font-syne">Phone Number</label>
+                      <div className="relative">
+                        <Phone className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
+                        <input
+                          type="tel"
+                          required
+                          maxLength={14}
+                          value={phone}
+                          onChange={handlePhoneChange}
+                          placeholder="Phone Number"
                           className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 pl-10 text-xs text-slate-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none"
                         />
                       </div>

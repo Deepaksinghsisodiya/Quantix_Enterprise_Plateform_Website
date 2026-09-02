@@ -1,9 +1,11 @@
 // src/components/organisms/SplitAuthLayout/SplitAuthLayout.tsx
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import Cookies from 'js-cookie';
 import { Zap, ShieldCheck } from 'lucide-react';
 
 export interface SplitAuthLayoutProps {
@@ -17,10 +19,44 @@ export interface SplitAuthLayoutProps {
 export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
   children,
   coverImage = '/images/quantix_auth_pos_terminal.jpg',
-  coverAlt = 'Quantix Enterprise Cloud POS',
-  coverHeadline = 'Start our journey',
+  coverAlt = 'Quantix Cloud POS',
+  coverHeadline = 'Start your journey',
   coverSubtext = 'Deploy multi-unit franchises, master SKU catalogs, and real-time cloud POS data lakes across your entire retail and restaurant network.',
 }) => {
+  const searchParams = useSearchParams();
+
+  const source = useMemo(() => {
+    const s = searchParams?.get('source') || searchParams?.get('businessNature') || Cookies.get('authSource') || '';
+    return s.toLowerCase();
+  }, [searchParams]);
+
+  const returnUrl = useMemo(() => {
+    return searchParams?.get('returnUrl') || Cookies.get('authReturnUrl') || '';
+  }, [searchParams]);
+
+  // Determine dynamic return link to keep user on Restaurant / Retail when clicking the logo
+  const homeHref = useMemo(() => {
+    if (returnUrl && returnUrl.startsWith('http')) {
+      return returnUrl;
+    }
+    if (source.includes('rest')) {
+      return process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3002';
+    }
+    if (source.includes('retail')) {
+      return process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
+    }
+    return '/';
+  }, [returnUrl, source]);
+
+  // Dynamic brand subtitle based on platform source
+  const brandSubtext = useMemo(() => {
+    if (source.includes('rest')) return 'Restaurant POS';
+    if (source.includes('retail')) return 'Retail POS';
+    return 'Enterprise Cloud';
+  }, [source]);
+
+  const isExternalLink = homeHref.startsWith('http');
+
   return (
     <div className="min-h-screen w-full bg-white lg:bg-[#F3F4F6] flex flex-col justify-between lg:justify-center p-0 lg:p-6 xl:p-8 font-sans">
 
@@ -44,19 +80,35 @@ export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
 
           {/* Top Logo on Image */}
           <div className="relative z-10">
-            <Link href="/" className="inline-flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF4D00] via-[#FF621F] to-[#E03E00] text-white shadow-md shadow-orange-600/40">
-                <Zap className="h-5 w-5 fill-white stroke-[2.5]" />
-              </div>
-              <div>
-                <span className="font-syne text-lg font-bold tracking-tight text-white block leading-tight">
-                  Quantix
-                </span>
-                <span className="text-[9.5px] text-[#FF7332] font-bold tracking-wider uppercase block">
-                  Enterprise Cloud
-                </span>
-              </div>
-            </Link>
+            {isExternalLink ? (
+              <a href={homeHref} className="inline-flex items-center gap-2.5 group">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF4D00] via-[#FF621F] to-[#E03E00] text-white shadow-md shadow-orange-600/40 group-hover:scale-105 transition-transform">
+                  <Zap className="h-5 w-5 fill-white stroke-[2.5]" />
+                </div>
+                <div>
+                  <span className="font-syne text-lg font-bold tracking-tight text-white block leading-tight">
+                    Quantix
+                  </span>
+                  <span className="text-[9.5px] text-[#FF7332] font-bold tracking-wider uppercase block">
+                    {brandSubtext}
+                  </span>
+                </div>
+              </a>
+            ) : (
+              <Link href="/" className="inline-flex items-center gap-2.5 group">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF4D00] via-[#FF621F] to-[#E03E00] text-white shadow-md shadow-orange-600/40 group-hover:scale-105 transition-transform">
+                  <Zap className="h-5 w-5 fill-white stroke-[2.5]" />
+                </div>
+                <div>
+                  <span className="font-syne text-lg font-bold tracking-tight text-white block leading-tight">
+                    Quantix
+                  </span>
+                  <span className="text-[9.5px] text-[#FF7332] font-bold tracking-wider uppercase block">
+                    {brandSubtext}
+                  </span>
+                </div>
+              </Link>
+            )}
           </div>
 
           {/* Bottom Headline & Story on Image */}
@@ -80,14 +132,25 @@ export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
 
           {/* Mobile Top Brand Header */}
           <div className="mb-5 lg:hidden flex items-center justify-between pb-3 border-b border-slate-100">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#FF4D00] text-white shadow-xs">
-                <Zap className="h-4 w-4 fill-white stroke-[2.5]" />
-              </div>
-              <span className="font-syne text-lg font-bold tracking-tight text-slate-900">
-                Quantix <span className="text-[#FF4D00]">Enterprise</span>
-              </span>
-            </Link>
+            {isExternalLink ? (
+              <a href={homeHref} className="inline-flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#FF4D00] text-white shadow-xs">
+                  <Zap className="h-4 w-4 fill-white stroke-[2.5]" />
+                </div>
+                <span className="font-syne text-lg font-bold tracking-tight text-slate-900">
+                  Quantix <span className="text-[#FF4D00]">{brandSubtext}</span>
+                </span>
+              </a>
+            ) : (
+              <Link href="/" className="inline-flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#FF4D00] text-white shadow-xs">
+                  <Zap className="h-4 w-4 fill-white stroke-[2.5]" />
+                </div>
+                <span className="font-syne text-lg font-bold tracking-tight text-slate-900">
+                  Quantix <span className="text-[#FF4D00]">{brandSubtext}</span>
+                </span>
+              </Link>
+            )}
             <span className="text-[10.5px] font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full">
               Live Cloud API
             </span>

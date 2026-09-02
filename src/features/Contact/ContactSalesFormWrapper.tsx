@@ -1,4 +1,6 @@
 // src/features/Contact/ContactSalesFormWrapper.tsx
+'use client';
+
 import React from "react";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
@@ -7,6 +9,7 @@ import { useSubmitContactFormMutation } from "./services/ContactServices";
 import { ContactSalesFormValues } from "./Types/ContactTypes";
 import { ContactSalesForm } from "./ContactSalesForm";
 import { contactSalesValidationSchema } from "./validation/ContactValidation";
+import { parseApiError } from "@/lib/errorHandler";
 
 const initialValues: ContactSalesFormValues = {
   fullName: "",
@@ -24,22 +27,21 @@ export const ContactSalesFormWrapper: React.FC = () => {
     validationSchema: contactSalesValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        await submitContact({
-          name: values.fullName,
-          email: values.workEmail,
-          phone: "",
-          companyName: "",
-          inquiryType: "General",
-          message: values.message,
+        const res = await submitContact({
+          name: values.fullName.trim(),
+          email: values.workEmail.trim().toLowerCase(),
+          phone: values.phone?.trim() || "",
+          companyName: values.companyName?.trim() || "",
+          inquiryType: values.inquiryType || "Sales",
+          message: values.message.trim(),
         }).unwrap();
+
         toast.success(
-          "Message sent! Our team will reach out within 1 business day."
+          res?.message || "Inquiry received! An enterprise specialist will connect with you shortly."
         );
         resetForm();
       } catch (err: unknown) {
-        const message =
-          (err as { data?: { message?: string } })?.data?.message ||
-          "Failed to send message. Please try again.";
+        const message = parseApiError(err, "Failed to submit inquiry. Please try again.");
         toast.error(message);
       }
     },

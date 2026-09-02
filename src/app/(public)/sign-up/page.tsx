@@ -10,7 +10,7 @@ export default function SignUpPage() {
     <SplitAuthLayout
       coverImage="/images/quantix_auth_pos_terminal.jpg"
       coverAlt="Quantix Cloud POS Terminal Hardware Setup"
-      coverHeadline="Start our journey"
+      coverHeadline="Start your journey"
       coverSubtext="Deploy multi-unit franchises, master SKU catalogs, and real-time cloud POS data lakes across your entire retail and restaurant network."
     >
       <Suspense fallback={<div className="text-center py-12 text-slate-400 font-sans text-xs">Loading registration...</div>}>

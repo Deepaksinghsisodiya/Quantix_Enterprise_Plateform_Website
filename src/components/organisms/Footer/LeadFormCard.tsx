@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, ChevronDown, PhoneCall, Zap } from 'lucide-react';
+import { toast } from 'sonner';
+import { useRequestDemoMutation } from '@/features/Contact/Service/ContactService';
+import { parseApiError } from '@/lib/errorHandler';
 
 export interface LeadFormCardProps {
   heading?: string;
@@ -67,28 +70,37 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
     }
   };
 
+  const [requestDemo, { isLoading: isApiSubmitting }] = useRequestDemoMutation();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const newErrors: { [key: string]: boolean } = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!formData.fullName.trim()) {
+    const cleanName = formData.fullName.trim();
+    const cleanEmail = formData.email.trim().toLowerCase();
+    const cleanBusiness = formData.businessName.trim();
+
+    if (!cleanName) {
       newErrors.fullName = true;
     }
-    if (!formData.email.trim() || !formData.email.includes('@')) {
+    if (!cleanEmail || !emailRegex.test(cleanEmail)) {
       newErrors.email = true;
     }
     
-    let isPhoneValid = formData.phone.trim().length > 0;
+    const phoneDigits = formData.phone.replace(/\D/g, '');
+    let isPhoneValid = false;
     if (formData.countryCode === '+1') {
-      const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-      isPhoneValid = phoneRegex.test(formData.phone) || formData.phone.trim().length >= 7;
+      isPhoneValid = phoneDigits.length === 10;
+    } else {
+      isPhoneValid = phoneDigits.length >= 7;
     }
     if (!isPhoneValid) {
       newErrors.phone = true;
     }
 
-    if (!formData.businessName.trim()) {
+    if (!cleanBusiness) {
       newErrors.businessName = true;
     }
 
@@ -101,14 +113,26 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
     setIsSubmitting(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const cleanPhone = `${formData.countryCode} ${formData.phone}`.trim();
+      const res = await requestDemo({
+        contactName: formData.fullName.trim(),
+        email: formData.email.trim().toLowerCase(),
+        phone: cleanPhone,
+        companyName: formData.businessName.trim(),
+        businessType: 'Enterprise',
+        preferredMerchantType: 'Enterprise',
+        message: `Inquiry submitted via LeadFormCard: ${heading}`,
+      }).unwrap();
+
       setIsSubmitted(true);
+      toast.success(res?.message || 'Thank you! Your request has been logged. An enterprise architect will connect shortly.');
 
       if (onSubmitSuccess) {
         onSubmitSuccess(formData);
       }
-    } catch (err) {
-      // Handled silently
+    } catch (err: unknown) {
+      const msg = parseApiError(err, 'Failed to submit request. Please try again.');
+      toast.error(msg);
     } finally {
       setIsSubmitting(false);
     }

@@ -15,8 +15,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ loading }) => {
       <ATMTextField
         name="email"
         type="email"
-        label="Corporate Work Email"
-        placeholder="Enter your corporate email"
+        label="Work Email"
+        placeholder="Work Email"
         leftIcon={<Mail size={14} />}
         required
       />
@@ -24,7 +24,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ loading }) => {
         name="password"
         type="password"
         label="Password"
-        placeholder="Enter your password"
+        placeholder="Password"
         leftIcon={<Lock size={14} />}
         required
       />
@@ -47,7 +47,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ loading }) => {
           className="h-10 sm:h-10.5 bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#FF621F] hover:to-[#FF4D00] shadow-md shadow-orange-500/25 text-white font-bold text-xs sm:text-sm rounded-xl transition-all duration-200 cursor-pointer"
           rightIcon={<ArrowRight size={15} className="stroke-[2.5]" />}
         >
-          {loading ? 'Signing In...' : 'SIGN IN TO ENTERPRISE HQ'}
+          {loading ? 'Signing In...' : 'Sign In'}
         </ATMButton>
       </div>
     </div>

@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Clock, ChevronDown, Sparkles, ArrowRight, ShieldCheck, Check } from 'lucide-react';
 import Image from 'next/image';
 import { toast } from 'sonner';
+import { useRequestDemoMutation } from '@/features/Contact/Service/ContactService';
+import { parseApiError } from '@/lib/errorHandler';
 
 const COUNTRY_CODES = [
   { code: '+1', country: 'US/CA' },
@@ -12,7 +14,7 @@ const COUNTRY_CODES = [
 
 export const FirstVisitOfferModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [requestDemo, { isLoading: isApiSubmitting }] = useRequestDemoMutation();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -45,9 +47,15 @@ export const FirstVisitOfferModal: React.FC = () => {
     let newValue = value;
 
     if (name === 'phone' && formData.countryCode === '+1') {
-      const x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-      if (x) {
-        newValue = !x[2] ? x[1] : `(${x[1]}) ${x[2]}` + (x[3] ? `-${x[3]}` : '');
+      const raw = value.replace(/\D/g, '').slice(0, 10);
+      if (!raw) {
+        newValue = '';
+      } else if (raw.length <= 3) {
+        newValue = `(${raw}`;
+      } else if (raw.length <= 6) {
+        newValue = `(${raw.slice(0, 3)}) ${raw.slice(3)}`;
+      } else {
+        newValue = `(${raw.slice(0, 3)}) ${raw.slice(3, 6)}-${raw.slice(6, 10)}`;
       }
     }
 
@@ -57,30 +65,57 @@ export const FirstVisitOfferModal: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: { [key: string]: boolean } = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!formData.fullName.trim()) newErrors.fullName = true;
-    if (!formData.email.trim() || !formData.email.includes('@')) newErrors.email = true;
-    if (!formData.phone.trim() || formData.phone.trim().length < 6) newErrors.phone = true;
-    if (!formData.businessName.trim()) newErrors.businessName = true;
+    const cleanName = formData.fullName.trim();
+    const cleanEmail = formData.email.trim().toLowerCase();
+    const cleanBusiness = formData.businessName.trim();
+
+    if (!cleanName) newErrors.fullName = true;
+    if (!cleanEmail || !emailRegex.test(cleanEmail)) newErrors.email = true;
+
+    const phoneDigits = formData.phone.replace(/\D/g, '');
+    let isPhoneValid = false;
+    if (formData.countryCode === '+1') {
+      isPhoneValid = phoneDigits.length === 10;
+    } else {
+      isPhoneValid = phoneDigits.length >= 7;
+    }
+    if (!isPhoneValid) newErrors.phone = true;
+
+    if (!cleanBusiness) newErrors.businessName = true;
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    const pageSource = typeof window !== 'undefined' && window.location ? window.location.pathname : '/';
+
+    try {
+      const res = await requestDemo({
+        contactName: cleanName,
+        email: cleanEmail,
+        phone: `${formData.countryCode} ${formData.phone.trim()}`,
+        companyName: cleanBusiness,
+        businessType: 'Enterprise',
+        preferredMerchantType: 'Enterprise',
+        message: `Lead from First Visit Offer Popup (3 Months Free Enterprise Promo) - Source: ${pageSource}`,
+      }).unwrap();
+
       setIsOpen(false);
       sessionStorage.setItem('quantix_offer_dismissed', 'true');
       localStorage.setItem('quantix_offer_claimed', 'true');
-      toast.success('Congratulations! Your 3 Months Free Enterprise Offer has been reserved. Our specialist will contact you shortly.', {
+      toast.success(res?.message || 'Congratulations! Your 3 Months Free Enterprise Offer has been reserved. Our specialist will contact you shortly.', {
         duration: 5000,
       });
-    }, 700);
+    } catch (err) {
+      const errMsg = parseApiError(err, 'Failed to reserve offer. Please try again.');
+      toast.error(errMsg);
+    }
   };
 
   const getInputStyle = (fieldName: string) => {
@@ -255,9 +290,10 @@ export const FirstVisitOfferModal: React.FC = () => {
                     <div className="min-w-0 flex-1">
                       <label htmlFor="modal-phone-ent" className="sr-only">Phone Number</label>
                       <input
-                        id="modal-phone-ent"
+                        id="modal-phone"
                         type="tel"
                         name="phone"
+                        maxLength={14}
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="Phone Number *"
@@ -284,10 +320,10 @@ export const FirstVisitOfferModal: React.FC = () => {
                   <div className="pt-1">
                     <button
                       type="submit"
-                      disabled={isSubmitting}
+                      disabled={isApiSubmitting}
                       className="w-full rounded-xl bg-gradient-to-r from-red-600 via-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 active:scale-[0.99] text-white font-syne font-black text-xs tracking-wider uppercase py-2.5 px-4 shadow-lg shadow-red-600/30 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:pointer-events-none h-10"
                     >
-                      {isSubmitting ? (
+                      {isApiSubmitting ? (
                         <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
                       ) : (
                         <>

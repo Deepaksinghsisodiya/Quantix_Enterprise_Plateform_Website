@@ -8,10 +8,6 @@ export function getApiBaseUrl() {
     return DEFAULT_API_BASE_URL;
   }
 
-  const configuredBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
-  if (configuredBaseUrl && configuredBaseUrl.startsWith("http")) {
-    return configuredBaseUrl.replace(/\/$/, "");
-  }
-
-  return process.env.LIVE_BACKEND_API_URL || "https://quantixapi.foreteksolution.in/api/v1";
+  const backendUrl = process.env.BACKEND_API_URL || process.env.LIVE_BACKEND_API_URL || "http://localhost:5104";
+  return `${backendUrl.replace(/\/$/, "")}/api/v1`;
 }

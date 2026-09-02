@@ -2,13 +2,11 @@
 'use client';
 
 import React from 'react';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
-import { useGetSignupStatusQuery } from '@/features/Register/services/RegisterServices';
-import { ChevronRight, ShieldCheck, Clock, CheckCircle2, Loader2, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { ShieldCheck, Clock, CheckCircle2, Loader2, ArrowRight, RefreshCw } from 'lucide-react';
+import SplitAuthLayout from '@/components/organisms/SplitAuthLayout/SplitAuthLayout';
+import { useGetSignupStatusQuery } from '@/features/Register/services/RegisterServices';
 
 interface StatusStep {
   name?: string;
@@ -17,19 +15,19 @@ interface StatusStep {
 
 export default function SignupStatusPage() {
   const params = useParams();
-  const merchantId = params.merchantId as string;
-  const { data: statusData, isLoading, error, refetch } = useGetSignupStatusQuery(merchantId, {
-    pollingInterval: 30000, // Poll status every 30 seconds
+  const merchantId = (params?.merchantId as string) || '';
+  const { data: statusData, isLoading, error, refetch, isFetching } = useGetSignupStatusQuery(merchantId, {
+    skip: !merchantId,
+    pollingInterval: 30000,
   });
 
   const onboardingSteps = [
     { step: 1, title: 'Profile Registration', desc: 'Merchant profile created and email verified.' },
-    { step: 2, title: 'Payment Processing', desc: 'Validity license token package authorized.' },
-    { step: 3, title: 'Terminal Provisioning', desc: 'Sync telemetry databases provisioning active pipelines.' },
-    { step: 4, title: 'Activation Live', desc: 'Terminal live keys active. Ready to download register installers.' }
+    { step: 2, title: 'Application Review', desc: 'KYC & compliance validation by platform administrator.' },
+    { step: 3, title: 'Cloud Infrastructure', desc: 'Isolated telemetry database and POS pipelines provisioned.' },
+    { step: 4, title: 'Account Activated', desc: 'Live access keys active. Ready to download POS clients.' }
   ];
 
-  // Map backend status response (e.g. status: 'PENDING', 'PROVISIONED', 'ACTIVE') to step number
   let currentProgress = 1;
   if (statusData) {
     const data = statusData.data || statusData;
@@ -43,108 +41,93 @@ export default function SignupStatusPage() {
   }
 
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="pt-24 bg-white min-h-screen text-slate-900 pb-16 transition-colors duration-300">
-        <div className="site-container max-w-2xl px-4 sm:px-0">
-          {/* Breadcrumbs */}
-          <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-6">
-            <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
-            <ChevronRight size={10} />
-            <span className="text-slate-600">Onboarding Tracker</span>
+    <SplitAuthLayout
+      coverImage="/images/quantix_auth_pos_terminal.jpg"
+      coverAlt="Quantix Onboarding Tracker"
+      coverHeadline="Onboarding Tracker"
+      coverSubtext="Monitor the provisioning lifecycle of your enterprise master terminal, sync databases, and multi-franchise catalogs in real time."
+    >
+      <div className="w-full">
+        {/* Header */}
+        <div className="mb-6 text-left">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 border border-orange-200/80 text-[11px] font-bold text-[#FF4D00] mb-3">
+            <Clock size={12} className={isFetching ? 'animate-spin' : ''} />
+            <span>Live Onboarding Tracker</span>
           </div>
-
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 relative overflow-hidden shadow-sm space-y-8">
-            <div className="absolute top-0 left-0 right-0 h-[3px] bg-blue-600" />
-
-            <div className="space-y-2 text-center">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 flex items-center justify-center gap-1.5">
-                <Clock size={12} className="animate-spin" /> LIVE ONBOARDING STATUS
-              </span>
-              <h1 className="text-2xl sm:text-4xl font-syne font-black uppercase text-slate-900 leading-tight">
-                Merchant Tracker
-              </h1>
-              <p className="text-slate-500 text-xs font-mono font-bold tracking-wider">
-                Merchant ID: {merchantId}
-              </p>
-            </div>
-
-            {isLoading ? (
-              <div className="flex flex-col items-center justify-center py-12 space-y-3">
-                <Loader2 className="animate-spin text-blue-600" size={32} />
-                <p className="text-slate-500 text-xs font-medium">Fetching terminal activation logs...</p>
-              </div>
-            ) : error ? (
-              <div className="text-center py-10 space-y-3">
-                <p className="text-red-500 text-xs font-bold uppercase">Onboarding Record Not Found</p>
-                <p className="text-slate-550 text-xs leading-relaxed max-w-md mx-auto">
-                  We could not locate an active onboarding progress report matching this ID. Standard demo/sandbox updates are active.
-                </p>
-                <button 
-                  onClick={() => refetch()}
-                  className="rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold py-2 px-5 transition-all uppercase tracking-wider"
-                >
-                  Retry Search
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-6 pt-4 border-t border-slate-100">
-                <div className="space-y-6">
-                  {onboardingSteps.map((step) => {
-                    const isDone = currentProgress > step.step;
-                    const isActive = currentProgress === step.step;
-                    return (
-                      <div key={step.step} className="flex gap-4 items-start relative">
-                        <div className={`h-8 w-8 rounded-full shrink-0 flex items-center justify-center border font-black text-xs transition-all ${
-                          isDone 
-                            ? 'bg-emerald-50 border-emerald-500 text-white'
-                            : isActive
-                              ? 'bg-blue-600 border-blue-600 text-white shadow-md'
-                              : 'bg-white border-slate-200 text-slate-400'
-                        }`}>
-                          {isDone ? <CheckCircle2 size={14} /> : step.step}
-                        </div>
-
-                        <div className="space-y-0.5">
-                          <h4 className={`text-xs font-bold uppercase ${
-                            isDone 
-                              ? 'text-slate-400 line-through'
-                              : 'text-slate-900'
-                          }`}>
-                            {step.title}
-                          </h4>
-                          <p className="text-[11px] text-slate-550 leading-relaxed font-semibold">
-                            {step.desc}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {currentProgress === 4 && (
-                  <div className="pt-8 text-center border-t border-slate-100 animate-fade-in space-y-4">
-                    <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-250 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600 shadow-sm">
-                      <ShieldCheck size={11} /> TERMINALS READY FOR USE
-                    </div>
-                    <p className="text-xs text-slate-550 font-medium">
-                      Setup complete! You can download the physical POS client and initialize sync telemetry.
-                    </p>
-                    <Link href="/downloads">
-                      <span className="rounded-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-3.5 px-8 shadow-lg shadow-blue-500/10 hover:shadow-blue-500/20 active:scale-[0.98] transition-all inline-flex items-center gap-1 cursor-pointer">
-                        Get POS Installer <ArrowRight size={13} />
-                      </span>
-                    </Link>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+          <h2 className="text-2xl sm:text-3xl font-syne font-bold text-slate-900 leading-tight tracking-tight">
+            Application Status
+          </h2>
+          <p className="text-slate-500 text-xs sm:text-sm mt-1.5 leading-relaxed font-mono">
+            Merchant Ref: <span className="font-bold text-slate-800">{merchantId ? `${merchantId.slice(0, 8)}...${merchantId.slice(-4)}` : 'Loading...'}</span>
+          </p>
         </div>
-      </main>
 
-      <Footer />
-    </PublicLayout>
+        {/* Loading State */}
+        {isLoading ? (
+          <div className="py-12 flex flex-col items-center justify-center space-y-3 text-slate-400">
+            <Loader2 className="animate-spin text-[#FF4D00]" size={32} />
+            <p className="text-xs font-medium">Fetching live provisioning status...</p>
+          </div>
+        ) : error ? (
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center space-y-3 mb-6">
+            <p className="text-xs font-bold text-slate-700 uppercase">Application Under Review</p>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Your registration is being verified by our operations team. You will receive an email once your workspace is live.
+            </p>
+            <button
+              onClick={() => refetch()}
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF4D00] hover:underline cursor-pointer pt-2"
+            >
+              <RefreshCw size={12} />
+              <span>Refresh Status</span>
+            </button>
+          </div>
+        ) : (
+          /* Steps Progress */
+          <div className="rounded-2xl border border-slate-200/80 bg-slate-50/50 p-4 sm:p-5 space-y-3.5 mb-6 text-left">
+            <div className="space-y-3">
+              {onboardingSteps.map((step) => {
+                const isDone = currentProgress > step.step;
+                const isActive = currentProgress === step.step;
+                return (
+                  <div key={step.step} className="flex gap-3 items-start">
+                    <div
+                      className={`h-6 w-6 rounded-full shrink-0 flex items-center justify-center font-bold text-[11px] transition-all mt-0.5 ${
+                        isDone
+                          ? 'bg-emerald-500 text-white shadow-xs'
+                          : isActive
+                            ? 'bg-[#FF4D00] text-white shadow-xs'
+                            : 'bg-white border border-slate-200 text-slate-400'
+                      }`}
+                    >
+                      {isDone ? <CheckCircle2 size={13} className="stroke-[3]" /> : step.step}
+                    </div>
+                    <div>
+                      <h4 className={`text-xs font-bold ${isDone ? 'text-slate-400 line-through' : 'text-slate-900'}`}>
+                        {step.title}
+                      </h4>
+                      <p className="text-[11px] text-slate-500 leading-relaxed font-medium">
+                        {step.desc}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Action Button */}
+        <div className="space-y-3">
+          <Link
+            href="/sign-in"
+            className="w-full rounded-xl bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white py-3.5 px-4 text-xs font-bold uppercase tracking-wider shadow-lg shadow-orange-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span>Go to Sign In</span>
+            <ArrowRight size={14} />
+          </Link>
+        </div>
+      </div>
+    </SplitAuthLayout>
   );
 }

@@ -5,11 +5,16 @@ import React from 'react';
 import Link from 'next/link';
 import { Formik, Form } from 'formik';
 import { Mail, ArrowLeft, Send } from 'lucide-react';
+import { toast } from 'sonner';
 import SplitAuthLayout from '@/components/organisms/SplitAuthLayout/SplitAuthLayout';
 import { ATMTextField } from '@/components/atoms/ATMTextField';
 import { ATMButton } from '@/components/atoms/ATMButton';
+import { useRequestPasswordResetMutation } from '@/features/Login/Service/LoginService';
+import { parseApiError } from '@/lib/errorHandler';
 
 export default function ForgotPasswordPage() {
+  const [requestPasswordReset, { isLoading }] = useRequestPasswordResetMutation();
+
   return (
     <SplitAuthLayout
       coverImage="/images/enterprise_auth_cover_modern_hq.jpg"
@@ -42,12 +47,17 @@ export default function ForgotPasswordPage() {
             }
             return errors;
           }}
-          onSubmit={(values, { setSubmitting, setStatus }) => {
-            setSubmitting(true);
-            setTimeout(() => {
+          onSubmit={async (values, { setSubmitting, setStatus }) => {
+            try {
+              await requestPasswordReset({ email: values.email.trim().toLowerCase() }).unwrap();
               setStatus({ sent: true });
+              toast.success('Password reset link sent to your email.');
+            } catch (err: unknown) {
+              const msg = parseApiError(err, 'Failed to send password reset link. Please verify your email.');
+              toast.error(msg);
+            } finally {
               setSubmitting(false);
-            }, 800);
+            }
           }}
         >
           {({ isSubmitting, status }) => (
@@ -76,9 +86,9 @@ export default function ForgotPasswordPage() {
                     variant="primary"
                     size="md"
                     className="w-full"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isLoading}
                   >
-                    {isSubmitting ? 'Sending Link...' : 'Send Reset Link'}
+                    {isSubmitting || isLoading ? 'Sending Link...' : 'Send Reset Link'}
                   </ATMButton>
                 </>
               )}

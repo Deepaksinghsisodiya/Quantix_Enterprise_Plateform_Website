@@ -1,35 +1,53 @@
 // src/features/Pricing/components/PricingSection.tsx
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Sparkles, ShieldCheck, HelpCircle, Building2, UtensilsCrossed, ShoppingBag } from 'lucide-react';
 import { useGetBillingPlansQuery } from '../services/PricingServices';
-import { BillingCycle } from '../Types/PricingTypes';
+import { BillingCycle, ApiBillingPlan } from '../Types/PricingTypes';
 import { FALLBACK_ENTERPRISE_PLANS } from '../Constants/PricingConstants';
 import { PricingCard } from './PricingCard';
 import { PricingComparisonTable } from './PricingComparisonTable';
+import { PricingSkeleton } from './PricingSkeleton';
 
 export const PricingSection: React.FC = () => {
-  const { data: response } = useGetBillingPlansQuery();
+  const { data: response, isLoading } = useGetBillingPlansQuery();
   const [billing, setBilling] = useState<BillingCycle>('monthly');
+  const [mounted, setMounted] = useState(false);
 
-  // Instant zero-delay data with live API synchronization
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const showSkeleton = !mounted || isLoading;
+
+  // Instant zero-delay data with live API synchronization & robust null-safety
   const { hybridPlans, restaurantPlans, retailPlans } = useMemo(() => {
-    const raw = (response?.data && response.data.length > 0) ? response.data : FALLBACK_ENTERPRISE_PLANS;
-    const entPlans = raw.filter((p) => p.isActive && p.isPublic && !p.isDeprecated && p.planType === 'EnterpriseCloud');
+    let raw: ApiBillingPlan[] = FALLBACK_ENTERPRISE_PLANS;
+    if (response?.data) {
+      if (Array.isArray(response.data) && response.data.length > 0) {
+        raw = response.data;
+      } else if (response.data && typeof response.data === 'object' && 'plans' in response.data && Array.isArray((response.data as any).plans)) {
+        raw = (response.data as any).plans;
+      }
+    }
+
+    const entPlans = (raw || []).filter(
+      (p) => p && (p.isActive ?? true) && (p.isPublic ?? true) && !p.isDeprecated && (p.planType === 'EnterpriseCloud' || !p.planType)
+    );
 
     return {
       hybridPlans: entPlans
-        .filter((p) => p.flavour === 'BOT')
-        .sort((a, b) => a.sortOrder - b.sortOrder),
+        .filter((p) => p?.flavour === 'BOT' || !p?.flavour)
+        .sort((a, b) => (a?.sortOrder ?? 0) - (b?.sortOrder ?? 0)),
       restaurantPlans: entPlans
-        .filter((p) => p.flavour === 'RES')
-        .sort((a, b) => a.sortOrder - b.sortOrder),
+        .filter((p) => p?.flavour === 'RES')
+        .sort((a, b) => (a?.sortOrder ?? 0) - (b?.sortOrder ?? 0)),
       retailPlans: entPlans
-        .filter((p) => p.flavour === 'RET')
-        .sort((a, b) => a.sortOrder - b.sortOrder),
+        .filter((p) => p?.flavour === 'RET')
+        .sort((a, b) => (a?.sortOrder ?? 0) - (b?.sortOrder ?? 0)),
     };
   }, [response]);
 
@@ -115,11 +133,15 @@ export const PricingSection: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-stretch">
-              {hybridPlans.map((plan) => (
-                <PricingCard key={plan.planId} plan={plan} billing={billing} />
-              ))}
-            </div>
+            {showSkeleton ? (
+              <PricingSkeleton count={3} />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-stretch">
+                {hybridPlans.map((plan) => (
+                  <PricingCard key={plan.planId} plan={plan} billing={billing} />
+                ))}
+              </div>
+            )}
           </div>
 
           {/* ─── SECTION 2: Restaurant Enterprise Chains ─── */}
@@ -145,11 +167,15 @@ export const PricingSection: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-stretch">
-              {restaurantPlans.map((plan) => (
-                <PricingCard key={plan.planId} plan={plan} billing={billing} />
-              ))}
-            </div>
+            {showSkeleton ? (
+              <PricingSkeleton count={3} />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-stretch">
+                {restaurantPlans.map((plan) => (
+                  <PricingCard key={plan.planId} plan={plan} billing={billing} />
+                ))}
+              </div>
+            )}
           </div>
 
           {/* ─── SECTION 3: Retail Enterprise Chains ─── */}
@@ -175,11 +201,15 @@ export const PricingSection: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-stretch">
-              {retailPlans.map((plan) => (
-                <PricingCard key={plan.planId} plan={plan} billing={billing} />
-              ))}
-            </div>
+            {showSkeleton ? (
+              <PricingSkeleton count={3} />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-stretch">
+                {retailPlans.map((plan) => (
+                  <PricingCard key={plan.planId} plan={plan} billing={billing} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import Cookies from 'js-cookie';
 import { toast } from 'sonner';
 import { CheckCircle2, Sparkles } from 'lucide-react';
+import { parseApiError } from '@/lib/errorHandler';
 import { useCreateBasicInfoSignupMutation } from '../services/SignUpServices';
 import { INITIAL_SIGNUP_VALUES } from '../Constants/SignUpConstants';
 import { SignUpFormValues } from '../Types/SignUpTypes';
@@ -40,16 +41,17 @@ export const SignUpFormWrapper: React.FC = () => {
     }
   }, [planId, planCode]);
 
-  // Read URL query parameter (e.g. ?type=restaurant or ?nature=Retail)
+  // Read URL query parameter (e.g. ?businessNature=Retail or ?source=retail)
   const initialNature = useMemo(() => {
-    const typeParam = searchParams.get('type') || searchParams.get('nature') || searchParams.get('businessNature');
+    const typeParam = searchParams.get('businessNature') || searchParams.get('source') || searchParams.get('type') || searchParams.get('nature');
     if (typeParam) {
       const lower = typeParam.toLowerCase();
-      if (lower.includes('rest')) return 'Restaurent';
       if (lower.includes('retail')) return 'Retail';
+      if (lower.includes('rest')) return 'Restaurant';
+      if (lower.includes('enterprise')) return 'Enterprise';
       return typeParam;
     }
-    return 'Restaurent';
+    return 'Enterprise';
   }, [searchParams]);
 
   // Yup Validation Schema with proper error messages
@@ -67,9 +69,13 @@ export const SignUpFormWrapper: React.FC = () => {
       .required('Contact email is required'),
     contactPhone: Yup.string()
       .required('Contact phone is required')
-      .test('phone-validation', 'Please enter a valid phone number (7-15 digits)', (value) => {
+      .test('phone-validation', 'Please enter a valid 10-digit phone number', function (value) {
         if (!value) return false;
         const cleanDigits = value.replace(/\D/g, '');
+        const country = (this.parent.country || 'US').toUpperCase();
+        if (country === 'US' || country === 'CA' || country === 'UNITED STATES' || country === 'CANADA') {
+          return cleanDigits.length === 10;
+        }
         return cleanDigits.length >= 7 && cleanDigits.length <= 15;
       }),
     country: Yup.string().required('Country selection is required'),
@@ -97,24 +103,32 @@ export const SignUpFormWrapper: React.FC = () => {
         Cookies.set('pendingMerchantId', merchantId);
         Cookies.set('pendingAdminEmail', adminEmail);
 
-        toast.success(response.message || 'Basic registration completed! Setting up your workspace...');
+        const returnUrl = searchParams.get('returnUrl') || '';
+        const source = searchParams.get('source') || '';
+        if (returnUrl) Cookies.set('authReturnUrl', returnUrl);
+        if (source) Cookies.set('authSource', source);
 
-        // Pass selected plan parameters along to activation
-        const queryParams = new URLSearchParams({ merchantId });
-        if (planId) queryParams.set('planId', planId);
-        if (planCode) queryParams.set('planCode', planCode);
+        toast.success(response.message || 'Account created! Please verify your email with the OTP sent to you.');
 
-        router.push(`/sign-up/activate?${queryParams.toString()}`);
+        // Forward returnUrl and source to email OTP verification page
+        const verifyParams = new URLSearchParams({
+          id: merchantId,
+          email: adminEmail,
+        });
+        if (returnUrl) verifyParams.set('returnUrl', returnUrl);
+        if (source) verifyParams.set('source', source);
+
+        router.push(`/sign-up/verify?${verifyParams.toString()}`);
       } else {
-        toast.error(response.message || 'Registration failed. Please check your information.');
+        toast.error(response?.message || 'Registration failed. Please check your information.');
       }
-    } catch (err: any) {
-      const serverMessage = err?.data?.message || err?.error || 'Unable to connect to registration service.';
-      if (serverMessage.toLowerCase().includes('already') || serverMessage.toLowerCase().includes('exist')) {
+    } catch (err: unknown) {
+      const errorMessage = parseApiError(err, 'Unable to connect to registration service.');
+      if (errorMessage.toLowerCase().includes('already') || errorMessage.toLowerCase().includes('exist')) {
         toast.error('This account is already registered. Please Sign In to continue.');
         setTimeout(() => router.push('/sign-in'), 1500);
       } else {
-        toast.error(serverMessage);
+        toast.error(errorMessage);
       }
     }
   };
@@ -162,7 +176,7 @@ export const SignUpFormWrapper: React.FC = () => {
       <div className="mt-6 text-center text-xs text-slate-500">
         Already have an account?{' '}
         <Link
-          href="/sign-in"
+          href={`/sign-in${searchParams.toString() ? `?${searchParams.toString()}` : ''}`}
           className="font-bold text-[#FF4D00] hover:text-[#E03E00] transition-colors inline-block ml-1 hover:underline"
         >
           Sign in here

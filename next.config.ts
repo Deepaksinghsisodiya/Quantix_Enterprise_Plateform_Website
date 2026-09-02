@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const backendUrl = (process.env.BACKEND_API_URL || process.env.LIVE_BACKEND_API_URL || "http://localhost:5104").replace(/\/$/, "");
+
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.31.91", "localhost"],
   experimental: {
@@ -9,7 +11,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/v1/:path*",
-        destination: "https://quantixapi.foreteksolution.in/api/v1/:path*",
+        destination: `${backendUrl}/api/v1/:path*`,
       },
     ];
   },
