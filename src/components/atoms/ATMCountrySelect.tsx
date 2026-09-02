@@ -41,7 +41,7 @@ export const ATMCountrySelect: React.FC<ATMCountrySelectProps> = ({
       {/* Fixed USA Country Display */}
       <div
         className={cn(
-          'w-full h-9.5 sm:h-10 rounded-lg sm:rounded-xl border border-slate-200 px-3 text-xs sm:text-[13px] font-normal transition-all duration-200 text-slate-900 bg-slate-50/80 flex items-center shadow-2xs select-none'
+          'w-full h-10.5 sm:h-11 rounded-xl border border-slate-200 px-3.5 text-xs sm:text-[13px] font-normal transition-all duration-200 text-slate-900 bg-slate-50/80 flex items-center shadow-2xs select-none'
         )}
       >
         <div className="flex items-center gap-2 min-w-0">

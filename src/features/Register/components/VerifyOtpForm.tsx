@@ -3,7 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { Mail, ArrowRight, RefreshCw, ArrowLeft, KeyRound, Sparkles } from 'lucide-react';
-import { OtpInput } from './OtpInput';
+import { ATMOtpInput, ATMButton } from '@/components/atoms';
+
 
 export interface VerifyOtpFormProps {
   email: string;
@@ -61,7 +62,7 @@ export const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
           <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
             Enter 6-Digit Code
           </label>
-          <OtpInput
+          <ATMOtpInput
             value={otp}
             onChange={onChangeOtp}
             disabled={isVerifying}
@@ -105,23 +106,18 @@ export const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
         )}
 
         {/* Submit Button */}
-        <button
+        <ATMButton
           type="submit"
+          variant="form"
+          size="form"
+          fullWidth
+          isLoading={isVerifying}
           disabled={isVerifying || otp.length < 6}
-          className="w-full rounded-xl bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white py-3.5 px-4 text-xs font-bold uppercase tracking-wider shadow-lg shadow-orange-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-orange-600/35"
+          className="bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white shadow-lg shadow-orange-600/25 cursor-pointer disabled:opacity-50"
+          rightIcon={<ArrowRight size={14} className="stroke-[2.5]" />}
         >
-          {isVerifying ? (
-            <>
-              <RefreshCw size={14} className="animate-spin" />
-              <span>Verifying & Signing In...</span>
-            </>
-          ) : (
-            <>
-              <span>Verify & Continue</span>
-              <ArrowRight size={14} />
-            </>
-          )}
-        </button>
+          Verify & Continue
+        </ATMButton>
 
         {/* Resend Code Section */}
         <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">

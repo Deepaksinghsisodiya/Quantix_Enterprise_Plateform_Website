@@ -33,7 +33,7 @@ const extractMerchantId = (res: SignupResponseShape | null | undefined) =>
   res?.leadId ??
   res?.id;
 
-export default function StandaloneSignupPage() {
+function StandaloneSignupContent() {
   const [selectedTokenPack, setSelectedTokenPack] = useState<StandaloneTokenPackId>('advance');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -213,5 +213,13 @@ export default function StandaloneSignupPage() {
 
       <Footer />
     </PublicLayout>
+  );
+}
+
+export default function StandaloneSignupPage() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-xs text-slate-400">Loading signup...</div>}>
+      <StandaloneSignupContent />
+    </React.Suspense>
   );
 }

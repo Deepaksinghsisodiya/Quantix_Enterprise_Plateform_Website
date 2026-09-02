@@ -10,3 +10,5 @@ export { ATMSelectField } from './ATMSelectField';
 export { ATMSwitch } from './ATMSwitch';
 export { ATMTextArea } from './ATMTextArea';
 export { ATMTextField } from './ATMTextField';
+export { ATMOtpInput } from './ATMOtpInput';
+

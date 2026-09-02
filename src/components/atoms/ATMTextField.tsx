@@ -1,3 +1,4 @@
+// src/components/atoms/ATMTextField.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -40,28 +41,28 @@ export const ATMTextField: React.FC<ATMTextFieldProps> = ({
   return (
     <div className="w-full text-left font-sans">
       {label && (
-        <label className="block text-[11px] font-semibold text-slate-700 mb-1 tracking-normal">
+        <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1 tracking-normal">
           {label} {required && <span className="text-[#FF4D00] font-bold">*</span>}
         </label>
       )}
-      <div className="relative">
+      <div className="relative flex items-center">
         <input
           {...field}
           {...props}
           type={inputType}
           value={field.value ?? ''}
           className={cn(
-            'w-full h-9.5 sm:h-10 rounded-lg sm:rounded-xl border px-3 text-xs sm:text-[13px] font-normal outline-none transition-all duration-200 text-slate-900 bg-white placeholder:text-slate-400',
-            leftIcon ? 'pl-9' : 'pl-3',
-            (rightIcon || isPasswordType) ? 'pr-9' : 'pr-3',
+            'w-full h-10 sm:h-10.5 rounded-xl border px-3.5 text-xs sm:text-[13px] font-medium outline-none transition-all duration-200 text-slate-900 dark:text-white bg-white dark:bg-slate-900 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-2xs',
+            leftIcon ? 'pl-9.5' : 'pl-3.5',
+            (rightIcon || isPasswordType) ? 'pr-9.5' : 'pr-3.5',
             isError
-              ? 'border-red-400 bg-white focus:border-red-500 focus:ring-2 focus:ring-red-500/15'
-              : 'border-slate-200 hover:border-slate-300 focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/15 shadow-2xs',
+              ? 'border-red-400 dark:border-red-500 bg-red-50/20 dark:bg-red-950/20 focus:border-red-500 focus:ring-2 focus:ring-red-500/15'
+              : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 focus:border-[#FF4D00] dark:focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/15',
             props.className
           )}
         />
         {leftIcon && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none flex items-center justify-center">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 pointer-events-none flex items-center justify-center">
             {leftIcon}
           </span>
         )}
@@ -71,12 +72,12 @@ export const ATMTextField: React.FC<ATMTextFieldProps> = ({
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer flex items-center justify-center"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 focus:outline-none cursor-pointer flex items-center justify-center"
           >
             {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
           </button>
         ) : rightIcon ? (
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none flex items-center justify-center">
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 pointer-events-none flex items-center justify-center">
             {rightIcon}
           </span>
         ) : null}

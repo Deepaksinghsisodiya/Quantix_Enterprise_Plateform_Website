@@ -49,6 +49,7 @@ export interface SignUpFormValues {
   contactPhone: string;
   country: string;
   businessNature: string;
+  agreedToTerms?: boolean;
 }
 
 export interface SignUpFormProps {

@@ -1,11 +1,8 @@
 // src/app/(public)/[slug]/page.tsx
-"use client";
-
 import React from "react";
-import { useParams, useRouter } from "next/navigation";
-import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
-import Navbar from "@/components/organisms/Navbar/Navbar";
-import { Footer } from "@/components/organisms/Footer/Footer";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import { Shield, Scale, Cookie, CheckCircle, Lock, ArrowLeft } from "lucide-react";
 
 // Mock data for legal pages
@@ -21,7 +18,7 @@ const LEGAL_PAGES: Record<
 > = {
   privacy: {
     title: "Privacy Policy",
-    icon: <Shield className="h-8 w-8 text-primary" />,
+    icon: <Shield className="h-8 w-8 text-[#FF4D00]" />,
     lastUpdated: "May 2026",
     description: "Your privacy is important to us. This policy explains how we collect, use, and protect your personal and business data.",
     sections: [
@@ -45,7 +42,7 @@ const LEGAL_PAGES: Record<
   },
   terms: {
     title: "Terms of Service",
-    icon: <Scale className="h-8 w-8 text-primary" />,
+    icon: <Scale className="h-8 w-8 text-[#FF4D00]" />,
     lastUpdated: "May 2026",
     description: "Welcome to Quantix. These terms govern your subscription and use of our SaaS application and POS billing terminal services.",
     sections: [
@@ -58,28 +55,28 @@ const LEGAL_PAGES: Record<
         content: "Our software must only be used for legal billing, stock management, and retail/restaurant service operations. You agree not to reverse-engineer our proprietary local offline billing database mechanisms.",
       },
       {
-        heading: "3. Payments, Refunds & Taxes",
-        content: "Subscription plans are billed monthly or annually. You are responsible for setting up accurate POS sales tax brackets inside our terminal setup. Refund policies for your retail shoppers are your sole responsibility.",
+        heading: "3. Payment & Subscription Billing",
+        content: "Monthly and annual subscriptions renew automatically unless cancelled before the billing cycle ends. Hardware purchases and warranty coverage terms apply as specified during terminal procurement.",
       },
       {
         heading: "4. Limitation of Liability",
-        content: "Quantix provides its cloud syncing services on an 'as-is' and 'as-available' basis. While our terminal operates robustly offline, we are not responsible for direct business losses resulting from network outages.",
+        content: "Quantix provides the software on an 'as-is' and 'as-available' basis. We are not liable for incidental business revenue losses resulting from internet outages or third-party card terminal communication dropouts.",
       },
     ],
   },
   cookies: {
     title: "Cookie Policy",
-    icon: <Cookie className="h-8 w-8 text-primary" />,
+    icon: <Cookie className="h-8 w-8 text-[#FF4D00]" />,
     lastUpdated: "April 2026",
-    description: "This cookie policy outlines how Quantix uses trackers, local storage, and session tokens to provide responsive cloud billing.",
+    description: "This policy details the functional and analytical cookies we use across Quantix applications and marketing platforms.",
     sections: [
       {
-        heading: "1. Why We Use Local Storage",
-        content: "We use browser local storage and IndexedDB databases. These are essential for our offline billing mode, allowing cashiers to add items to cart, compute tax, and generate receipts even during internet outages.",
+        heading: "1. What are Cookies?",
+        content: "Cookies are small data files placed on your browser or device to help our services remember your language preferences, multi-location filter states, and secure login tokens.",
       },
       {
         heading: "2. Authentication Cookies",
-        content: "We set minor browser tokens to keep manager and employee credentials verified on active checkout terminals, preventing constant session timeout interruptions during peak restaurant hours.",
+        content: "We set minor browser tokens to keep manager and employee credentials verified on active checkout terminals, preventing constant session timeout interruptions during peak hours.",
       },
       {
         heading: "3. Analytics Tools",
@@ -89,7 +86,7 @@ const LEGAL_PAGES: Record<
   },
   gdpr: {
     title: "GDPR Compliance",
-    icon: <CheckCircle className="h-8 w-8 text-primary" />,
+    icon: <CheckCircle className="h-8 w-8 text-[#FF4D00]" />,
     lastUpdated: "March 2026",
     description: "Quantix is fully committed to compliance with the General Data Protection Regulation (GDPR) for our European Union merchant base.",
     sections: [
@@ -109,7 +106,7 @@ const LEGAL_PAGES: Record<
   },
   pci: {
     title: "PCI DSS Security Compliance",
-    icon: <Lock className="h-8 w-8 text-primary" />,
+    icon: <Lock className="h-8 w-8 text-[#FF4D00]" />,
     lastUpdated: "January 2026",
     description: "Quantix operates under strict Payment Card Industry Data Security Standards (PCI DSS) to secure merchant checkouts.",
     sections: [
@@ -129,105 +126,114 @@ const LEGAL_PAGES: Record<
   },
 };
 
-export default function DynamicLegalPage() {
-  const params = useParams();
-  const router = useRouter();
-  const slug = typeof params.slug === "string" ? params.slug.toLowerCase() : "";
-
-  // If page does not exist in our mock list, show a friendly page not found message
-  const pageData = LEGAL_PAGES[slug];
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const pageData = LEGAL_PAGES[slug?.toLowerCase()];
 
   if (!pageData) {
-    return (
-      <PublicLayout>
-        <Navbar />
-        <div className="flex-1 flex flex-col items-center justify-center pt-32 pb-24 site-container text-center">
-          <Shield className="h-16 w-16 text-slate-300 mb-4" />
-          <h1 className="text-3xl font-syne font-bold text-slate-800 mb-2">Page Not Found</h1>
-          <p className="text-slate-500 mb-6 max-w-sm">The document or subpage you are trying to view does not exist or has been relocated.</p>
-          <button
-            onClick={() => router.push("/")}
-            className="flex items-center space-x-2 bg-primary text-white px-5 py-2.5 rounded-full font-semibold shadow-md shadow-primary/20 hover:scale-105 transition-all duration-300"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>Return to Home</span>
-          </button>
-        </div>
-        <Footer />
-      </PublicLayout>
-    );
+    return {
+      title: "Document Not Found | Quantix Enterprise",
+    };
+  }
+
+  return {
+    title: `${pageData.title} | Quantix Enterprise`,
+    description: pageData.description,
+  };
+}
+
+export default async function DynamicLegalPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const pageData = LEGAL_PAGES[slug?.toLowerCase()];
+
+  if (!pageData) {
+    notFound();
   }
 
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <div className="pb-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 flex-1">
-        <div className="site-container max-w-5xl">
-          {/* Header Area */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 rounded-2xl p-8 md:p-12 mb-8 shadow-sm flex flex-col md:flex-row md:items-center gap-6">
-            <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl w-fit">
-              {pageData.icon}
+    <div className="pb-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 flex-1">
+      <div className="site-container max-w-5xl pt-8 sm:pt-12">
+        {/* Header Area */}
+        <div className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 rounded-2xl p-8 md:p-12 mb-8 shadow-sm flex flex-col md:flex-row md:items-center gap-6">
+          <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl w-fit">
+            {pageData.icon}
+          </div>
+          <div>
+            <span className="text-xs font-bold text-[#FF4D00] tracking-wider uppercase">Quantix Trust & Compliance</span>
+            <h1 className="text-3xl md:text-4xl font-syne font-black text-slate-900 dark:text-white uppercase mt-1 mb-3">
+              {pageData.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-400">
+              <span>Last Updated: {pageData.lastUpdated}</span>
+              <span>•</span>
+              <span>PCI-Compliant Tier 1 SaaS</span>
             </div>
-            <div>
-              <span className="text-xs font-bold text-primary tracking-wider uppercase">Quantix Trust & Compliance</span>
-              <h1 className="text-3xl md:text-4xl font-syne font-black text-slate-900 dark:text-white uppercase mt-1 mb-3">
-                {pageData.title}
-              </h1>
-              <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-400">
-                <span>Last Updated: {pageData.lastUpdated}</span>
-                <span>•</span>
-                <span>PCI-Compliant Tier 1 SaaS</span>
-              </div>
+          </div>
+        </div>
+
+        {/* Main Layout Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Quick Table of Contents / Sidebar */}
+          <div className="md:col-span-1 hidden md:block">
+            <div className="sticky top-28 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 rounded-2xl p-4 shadow-sm">
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 px-2">Table of Contents</h3>
+              <ul className="space-y-1 text-xs">
+                {pageData.sections.map((section, idx) => (
+                  <li key={idx}>
+                    <a
+                      href={`#sec-${idx}`}
+                      className="block px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                    >
+                      {section.heading}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          {/* Main Layout Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            
-            {/* Sidebar navigation */}
-            <div className="md:col-span-1 space-y-2">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Legal Documents</h3>
-              {Object.keys(LEGAL_PAGES).map((key) => (
-                <button
-                  key={key}
-                  onClick={() => router.push(`/${key}`)}
-                  className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
-                    slug === key
-                      ? "bg-primary text-white shadow-sm"
-                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-200/40 dark:hover:bg-slate-800/40"
-                  }`}
-                >
-                  {LEGAL_PAGES[key].title}
-                </button>
-              ))}
-            </div>
-
-            {/* Document Content */}
-            <div className="md:col-span-3 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 rounded-2xl p-8 md:p-10 shadow-sm space-y-8">
-              <p className="text-base font-medium text-slate-500 dark:text-slate-300 leading-relaxed italic border-l-4 border-primary/40 pl-4 py-1">
-                "{pageData.description}"
+          {/* Policy Body */}
+          <div className="md:col-span-3 space-y-6">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 rounded-2xl p-6 sm:p-8 shadow-sm">
+              <p className="text-sm font-medium text-slate-600 dark:text-slate-300 leading-relaxed mb-8 bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                {pageData.description}
               </p>
 
-              <hr className="border-slate-100 dark:border-slate-800/80" />
-
-              {pageData.sections.map((section, idx) => (
-                <div key={idx} className="space-y-3">
-                  <h2 className="text-lg font-syne font-bold text-slate-900 dark:text-white">
-                    {section.heading}
-                  </h2>
-                  <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
-                    {section.content}
-                  </p>
-                </div>
-              ))}
+              <div className="space-y-8">
+                {pageData.sections.map((sec, i) => (
+                  <div key={i} id={`sec-${i}`} className="scroll-mt-32">
+                    <h2 className="text-lg font-syne font-bold text-slate-900 dark:text-white mb-2">
+                      {sec.heading}
+                    </h2>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                      {sec.content}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
 
+            {/* Back Home Button */}
+            <div className="flex justify-end">
+              <Link
+                href="/"
+                className="inline-flex items-center space-x-2 text-xs font-bold text-[#FF4D00] hover:underline"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                <span>Return to Home</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-
-      <Footer />
-    </PublicLayout>
+    </div>
   );
 }

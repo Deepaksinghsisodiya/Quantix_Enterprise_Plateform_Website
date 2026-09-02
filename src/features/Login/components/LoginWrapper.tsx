@@ -137,7 +137,16 @@ export const LoginWrapper: React.FC = () => {
       <div className="mt-5 pt-4 border-t border-slate-100 text-center">
         <p className="text-xs font-normal text-slate-500">
           Don&apos;t have an account?{' '}
-          <Link href={`/sign-up${searchParams?.toString() ? `?${searchParams.toString()}` : ''}`} className="font-bold text-[#FF4D00] hover:text-[#E03E00] underline underline-offset-2 ml-0.5 transition-colors">
+          <Link
+            href={
+              typeof window !== 'undefined' && window.location.pathname.includes('/restaurant')
+                ? '/sign-up/restaurant'
+                : typeof window !== 'undefined' && window.location.pathname.includes('/retail')
+                ? '/sign-up/retail'
+                : `/sign-up${searchParams?.toString() ? `?${searchParams.toString()}` : ''}`
+            }
+            className="font-bold text-[#FF4D00] hover:text-[#E03E00] underline underline-offset-2 ml-0.5 transition-colors"
+          >
             Sign up here
           </Link>
         </p>

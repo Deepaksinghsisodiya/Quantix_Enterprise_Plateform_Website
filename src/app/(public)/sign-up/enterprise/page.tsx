@@ -33,7 +33,7 @@ const extractMerchantId = (res: SignupResponseShape | null | undefined) =>
   res?.leadId ??
   res?.id;
 
-export default function EnterpriseSignupPage() {
+function EnterpriseSignupContent() {
   const [selectedPlan, setSelectedPlan] = useState<EnterprisePlanId>('pro');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -214,5 +214,13 @@ export default function EnterpriseSignupPage() {
 
       <Footer />
     </PublicLayout>
+  );
+}
+
+export default function EnterpriseSignupPage() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-xs text-slate-400">Loading signup...</div>}>
+      <EnterpriseSignupContent />
+    </React.Suspense>
   );
 }

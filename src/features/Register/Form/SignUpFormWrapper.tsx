@@ -161,8 +161,15 @@ export const SignUpFormWrapper: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldValue, isSubmitting }) => (
-          <Form className="space-y-4">
+        {({ values, setFieldValue, isSubmitting, handleSubmit }) => (
+          <Form
+            className="space-y-4"
+            noValidate
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit(e);
+            }}
+          >
             <SignUpForm
               values={values}
               setFieldValue={setFieldValue}
@@ -176,7 +183,13 @@ export const SignUpFormWrapper: React.FC = () => {
       <div className="mt-6 text-center text-xs text-slate-500">
         Already have an account?{' '}
         <Link
-          href={`/sign-in${searchParams.toString() ? `?${searchParams.toString()}` : ''}`}
+          href={
+            typeof window !== 'undefined' && window.location.pathname.includes('/restaurant')
+              ? '/sign-in/restaurant'
+              : typeof window !== 'undefined' && window.location.pathname.includes('/retail')
+              ? '/sign-in/retail'
+              : `/sign-in${searchParams.toString() ? `?${searchParams.toString()}` : ''}`
+          }
           className="font-bold text-[#FF4D00] hover:text-[#E03E00] transition-colors inline-block ml-1 hover:underline"
         >
           Sign in here

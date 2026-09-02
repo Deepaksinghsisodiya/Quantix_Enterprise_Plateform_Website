@@ -8,6 +8,7 @@ export const INITIAL_SIGNUP_VALUES: SignUpFormValues = {
   contactPhone: '',
   country: 'United States',
   businessNature: 'Enterprise',
+  agreedToTerms: true,
 };
 
 export const COUNTRY_OPTIONS = [

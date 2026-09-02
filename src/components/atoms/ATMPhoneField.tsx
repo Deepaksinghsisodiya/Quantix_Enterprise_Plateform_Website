@@ -1,7 +1,8 @@
+// src/components/atoms/ATMPhoneField.tsx
 'use client';
 
-import React, { useMemo, useState, useRef, useEffect } from 'react';
-import { useField, useFormikContext } from 'formik';
+import React from 'react';
+import { useField } from 'formik';
 import { Phone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -12,22 +13,31 @@ export interface ATMPhoneFieldProps {
   placeholder?: string;
   helperText?: string;
   required?: boolean;
+  className?: string;
 }
 
 export const ATMPhoneField: React.FC<ATMPhoneFieldProps> = ({
   name,
-  countryFieldName = 'country',
+  countryFieldName,
   label,
   placeholder = '(555) 000-0000',
   helperText,
   required = false,
+  className,
 }) => {
-  const [field, meta, helpers] = useField(name);
-  const { setFieldValue } = useFormikContext<any>();
+  let field: any = { value: '', onBlur: () => {} };
+  let meta: any = { touched: false, error: undefined };
+  let helpers: any = { setValue: () => {} };
 
-  useEffect(() => {
-    setFieldValue(countryFieldName, 'United States');
-  }, [countryFieldName, setFieldValue]);
+  try {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const fieldHook = useField(name);
+    field = fieldHook[0];
+    meta = fieldHook[1];
+    helpers = fieldHook[2];
+  } catch {
+    // Graceful fallback outside Formik
+  }
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -51,25 +61,25 @@ export const ATMPhoneField: React.FC<ATMPhoneFieldProps> = ({
   const isError = Boolean(errorMessage);
 
   return (
-    <div className="w-full text-left font-sans">
+    <div className={cn('w-full text-left font-sans', className)}>
       {label && (
-        <label className="block text-[11px] font-semibold text-slate-700 mb-1 tracking-normal">
+        <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1 tracking-normal">
           {label} {required && <span className="text-[#FF4D00] font-bold">*</span>}
         </label>
       )}
 
       <div
         className={cn(
-          'relative w-full h-9.5 sm:h-10 rounded-lg sm:rounded-xl border transition-all duration-200 flex items-center bg-white shadow-2xs overflow-hidden',
+          'relative w-full h-10.5 sm:h-11 rounded-xl border transition-all duration-200 flex items-center bg-white dark:bg-slate-900 shadow-2xs overflow-hidden',
           isError
-            ? 'border-red-400 bg-white focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-500/15'
-            : 'border-slate-200 hover:border-slate-300 focus-within:border-[#FF4D00] focus-within:ring-2 focus-within:ring-[#FF4D00]/15'
+            ? 'border-red-400 dark:border-red-500 bg-white dark:bg-slate-900 focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-500/15'
+            : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 focus-within:border-[#FF4D00] focus-within:ring-2 focus-within:ring-[#FF4D00]/15'
         )}
       >
         {/* USA +1 Prefix with Phone Icon */}
-        <div className="h-full bg-slate-50 border-r border-slate-200 px-3 flex items-center gap-1.5 text-xs font-semibold text-slate-700 select-none shrink-0">
+        <div className="h-full bg-slate-50 dark:bg-slate-800/80 border-r border-slate-200 dark:border-slate-800 px-3 flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 select-none shrink-0">
           <Phone size={13} className="text-slate-400" />
-          <span className="text-slate-800 text-xs font-bold">+1</span>
+          <span className="text-slate-800 dark:text-slate-100 text-xs font-bold">+1</span>
         </div>
 
         {/* Clean Text Input with standard US phone format */}
@@ -81,7 +91,7 @@ export const ATMPhoneField: React.FC<ATMPhoneFieldProps> = ({
           onChange={handlePhoneChange}
           onBlur={field.onBlur}
           placeholder={placeholder}
-          className="w-full h-full bg-transparent border-0 px-3 text-xs sm:text-[13px] text-slate-900 font-normal outline-none placeholder:text-slate-400"
+          className="w-full h-full bg-transparent border-0 px-3 text-xs sm:text-[13px] text-slate-900 dark:text-white font-normal outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
         />
       </div>
 

@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useField } from 'formik';
 import { Mail, User, Building2, Store, ArrowRight, ChevronDown, Check, Utensils, ShoppingBag } from 'lucide-react';
-import { ATMTextField, ATMPhoneField, ATMCountrySelect, ATMButton } from '@/components/atoms';
+import { ATMTextField, ATMPhoneField, ATMCountrySelect, ATMButton, ATMCheckbox } from '@/components/atoms';
 import { SignUpFormProps } from '../Types/SignUpTypes';
 import { cn } from '@/lib/utils';
 
@@ -91,7 +91,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           <button
             type="button"
             onClick={() => setIsTypeDropdownOpen(!isTypeDropdownOpen)}
-            className="w-full h-9.5 sm:h-10 rounded-lg sm:rounded-xl border border-slate-200 hover:border-slate-300 focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/15 px-3 text-xs sm:text-[13px] font-normal transition-all duration-200 text-slate-900 bg-white flex items-center justify-between shadow-2xs cursor-pointer select-none text-left"
+            className="w-full h-10.5 sm:h-11 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/15 px-3.5 text-xs sm:text-[13px] font-normal transition-all duration-200 text-slate-900 bg-white flex items-center justify-between shadow-2xs cursor-pointer select-none text-left"
           >
             <div className="flex items-center gap-2 min-w-0">
               <CurrentIcon size={14} className="text-slate-400 shrink-0" />
@@ -139,17 +139,19 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
       </div>
 
       {/* Terms Agreement Checkbox */}
-      <div className="flex items-center gap-2 pt-1 text-left">
-        <input
-          type="checkbox"
-          id="terms"
-          defaultChecked
+      <div className="pt-1">
+        <ATMCheckbox
+          name="agreedToTerms"
           required
-          className="h-4 w-4 rounded border-slate-300 text-[#FF4D00] focus:ring-[#FF4D00] cursor-pointer accent-[#FF4D00]"
+          label={
+            <span>
+              Agreed to{' '}
+              <span className="text-[#FF4D00] font-semibold underline underline-offset-2 hover:text-[#E03E00]">
+                Terms and Conditions
+              </span>
+            </span>
+          }
         />
-        <label htmlFor="terms" className="text-xs text-slate-600 leading-tight select-none cursor-pointer">
-          Agreed to <span className="text-[#FF4D00] font-semibold underline underline-offset-2 hover:text-[#E03E00]">Terms and Conditions</span>
-        </label>
       </div>
 
       {/* Submit Button */}
