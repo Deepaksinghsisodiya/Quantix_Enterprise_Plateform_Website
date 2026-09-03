@@ -7,7 +7,7 @@ import { ShieldCheck, ArrowRight } from "lucide-react";
 import { BrandLogo } from "../Navbar/components/BrandLogo";
 import { useContactModal } from "@/context/ContactModalContext";
 import { LeadFormCard } from "./LeadFormCard";
-import { NewsletterSubscribeBox } from "./NewsletterSubscribeBox";
+import NewsletterWrapper from "@/features/Newsletter";
 import {
   FooterLink,
   SocialLink,
@@ -166,7 +166,7 @@ export const FooterView: React.FC<FooterViewProps> = ({
             )}
 
             {/* Live Newsletter Subscribe Box */}
-            <NewsletterSubscribeBox className="pt-2 w-full max-w-xs" />
+            <NewsletterWrapper className="pt-2 w-full max-w-xs" />
           </div>
 
           {/* Lead Capture Form Card (Order 2 on mobile, Order 3 on desktop) */}

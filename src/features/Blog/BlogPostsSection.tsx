@@ -3,7 +3,7 @@ import React from "react";
 import { BookOpen, Calendar, User, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { BlogPostDto } from "./Types/BlogTypes";
-import { NewsletterSubscribeBox } from "@/components/organisms/Footer/NewsletterSubscribeBox";
+import NewsletterWrapper from "@/features/Newsletter";
 
 export interface BlogPostsSectionProps {
   posts: BlogPostDto[];
@@ -150,7 +150,7 @@ export const BlogPostsSection: React.FC<BlogPostsSectionProps> = ({ posts, isLoa
             Get the latest enterprise operations playbooks, multi-branch strategies, and POS cloud engineering updates delivered to your inbox.
           </p>
           <div className="flex justify-center pt-2">
-            <NewsletterSubscribeBox title="" subtitle="" className="w-full max-w-md mx-auto" />
+            <NewsletterWrapper title="" subtitle="" variant="card" className="w-full max-w-lg mx-auto" />
           </div>
         </div>
       </section>
