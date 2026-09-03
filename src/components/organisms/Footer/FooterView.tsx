@@ -7,6 +7,7 @@ import { ShieldCheck, ArrowRight } from "lucide-react";
 import { BrandLogo } from "../Navbar/components/BrandLogo";
 import { useContactModal } from "@/context/ContactModalContext";
 import { LeadFormCard } from "./LeadFormCard";
+import { NewsletterSubscribeBox } from "./NewsletterSubscribeBox";
 import {
   FooterLink,
   SocialLink,
@@ -157,12 +158,15 @@ export const FooterView: React.FC<FooterViewProps> = ({
 
             {/* Vibrant Social Links Row */}
             {socialLinks && socialLinks.length > 0 && (
-              <div className="flex items-center gap-2 pt-2 sm:pt-4">
+              <div className="flex items-center gap-2 pt-1 sm:pt-2">
                 {socialLinks.map((social) => (
                   <SocialButton key={social.ariaLabel} social={social} />
                 ))}
               </div>
             )}
+
+            {/* Live Newsletter Subscribe Box */}
+            <NewsletterSubscribeBox className="pt-2 w-full max-w-xs" />
           </div>
 
           {/* Lead Capture Form Card (Order 2 on mobile, Order 3 on desktop) */}

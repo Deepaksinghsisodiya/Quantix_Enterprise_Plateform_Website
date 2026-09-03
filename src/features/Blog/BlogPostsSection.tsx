@@ -3,6 +3,7 @@ import React from "react";
 import { BookOpen, Calendar, User, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { BlogPostDto } from "./Types/BlogTypes";
+import { NewsletterSubscribeBox } from "@/components/organisms/Footer/NewsletterSubscribeBox";
 
 export interface BlogPostsSectionProps {
   posts: BlogPostDto[];
@@ -139,6 +140,19 @@ export const BlogPostsSection: React.FC<BlogPostsSectionProps> = ({ posts, isLoa
             ))}
           </div>
         )}
+
+        {/* Newsletter Subscription Card */}
+        <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-linear-to-r from-orange-500/10 via-amber-500/5 to-transparent border border-orange-200 dark:border-orange-900/40 max-w-3xl mx-auto text-center space-y-3">
+          <h3 className="font-syne text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+            Stay Ahead with Quantix Weekly Insights
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-lg mx-auto">
+            Get the latest enterprise operations playbooks, multi-branch strategies, and POS cloud engineering updates delivered to your inbox.
+          </p>
+          <div className="flex justify-center pt-2">
+            <NewsletterSubscribeBox title="" subtitle="" className="w-full max-w-md mx-auto" />
+          </div>
+        </div>
       </section>
     </div>
   );
