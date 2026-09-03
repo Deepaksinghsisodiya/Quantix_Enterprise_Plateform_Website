@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 import { Formik, Form } from 'formik';
 import { registerValidationSchema } from '../validation/RegisterValidation';
 import { registerUser } from '../services/RegisterServices';
-import { MultiStepSignupForm } from './MultiStepSignupForm';
+import { RegisterForm } from './RegisterForm';
 import type { RegisterFormData } from '../Types/RegisterTypes';
 import { ShieldCheck, Lock, Sparkles } from 'lucide-react';
 
@@ -85,7 +85,7 @@ export const RegisterWrapper: React.FC = () => {
       >
         {({ isValid, dirty }) => (
           <Form className="animate-in fade-in duration-300">
-            <MultiStepSignupForm 
+            <RegisterForm 
               step={1} 
               loading={loading} 
               nextStep={() => {}}

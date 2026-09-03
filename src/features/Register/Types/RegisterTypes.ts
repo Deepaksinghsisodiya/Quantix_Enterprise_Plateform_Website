@@ -137,14 +137,16 @@ export interface RegisterResponse {
   message: string;
 }
 
-export interface MultiStepSignupFormUIProps {
-  step: number;
+export interface RegisterFormUIProps {
+  step?: number;
   loading: boolean;
   nextStep?: (fields: string[]) => void;
-  prevStep: () => void;
+  prevStep?: () => void;
   isValid?: boolean;
   dirty?: boolean;
 }
+
+export type MultiStepSignupFormUIProps = RegisterFormUIProps;
 
 /** Backward-compat aliases */
 export type SignUpFormValues = any;

@@ -6,10 +6,10 @@ import { useFormikContext } from 'formik';
 import { ATMTextField } from '@/components/atoms/ATMTextField';
 import { ATMSelect } from '@/components/atoms/ATMSelect';
 import { ATMButton } from '@/components/atoms/ATMButton';
-import { MultiStepSignupFormUIProps } from '../Types/RegisterTypes';
+import { RegisterFormUIProps } from '../Types/RegisterTypes';
 import { getApiBaseUrl } from '@/lib/apiBaseUrl';
 
-export const MultiStepSignupForm: React.FC<MultiStepSignupFormUIProps> = ({ 
+export const RegisterForm: React.FC<RegisterFormUIProps> = ({ 
   loading 
 }) => {
   const { values, setFieldError } = useFormikContext<any>();
@@ -61,71 +61,68 @@ export const MultiStepSignupForm: React.FC<MultiStepSignupFormUIProps> = ({
           placeholder="name@company.com"
           leftIcon={<Mail size={15} />}
           onBlur={handleEmailBlur}
-          rightIcon={
-            checkingEmail ? (
-              <Loader2 size={14} className="animate-spin text-slate-400" />
-            ) : emailStatus?.available === true ? (
-              <CheckCircle2 size={14} className="text-emerald-500" />
-            ) : emailStatus?.available === false ? (
-              <AlertCircle size={14} className="text-red-500" />
-            ) : null
-          }
         />
-        {emailStatus && !checkingEmail && (
-          <p
-            className={`text-[11px] font-medium pl-1 ${
-              emailStatus.available ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'
-            }`}
-          >
-            {emailStatus.message}
-          </p>
+        {checkingEmail && (
+          <div className="flex items-center gap-1.5 text-[11px] text-slate-400 pl-1">
+            <Loader2 size={12} className="animate-spin text-primary" />
+            <span>Checking email availability...</span>
+          </div>
+        )}
+        {!checkingEmail && emailStatus && (
+          <div className={`flex items-center gap-1.5 text-[11px] pl-1 font-medium ${emailStatus.available ? 'text-emerald-400' : 'text-red-400'}`}>
+            {emailStatus.available ? (
+              <>
+                <CheckCircle2 size={12} />
+                <span>{emailStatus.message}</span>
+              </>
+            ) : (
+              <>
+                <AlertCircle size={12} />
+                <span>{emailStatus.message}</span>
+              </>
+            )}
+          </div>
         )}
       </div>
 
       <ATMTextField
         name="password"
         type="password"
-        label="Create Password"
-        placeholder="At least 6 characters"
+        label="Password"
+        placeholder="Create a strong password (min 8 chars)"
         leftIcon={<Lock size={15} />}
       />
 
       <ATMTextField
         name="companyName"
-        label="Enterprise / Company Name"
-        placeholder="e.g. Apex Hospitality Group"
+        label="Company / Brand Name"
+        placeholder="e.g. Apex Global Retail"
         leftIcon={<Building size={15} />}
       />
 
       <ATMSelect
         name="locations"
-        label="Number of Stores / Locations"
-        leftIcon={<MapPin size={15} />}
+        label="Number of Store Locations"
         options={[
-          { value: '1', label: '1 Location (Single Store / Restaurant)' },
-          { value: '2-5', label: '2 - 5 Locations (Multi-Branch)' },
-          { value: '6-15', label: '6 - 15 Locations (Regional Chain)' },
-          { value: '16-50', label: '16 - 50 Locations (Multi-Unit Group)' },
-          { value: '50+', label: '50+ Locations (Enterprise Franchise)' },
+          { label: '1 Store (Trial)', value: '1' },
+          { label: '2 - 5 Stores', value: '2-5' },
+          { label: '6 - 20 Stores', value: '6-20' },
+          { label: '20+ Enterprise Outlets', value: '20+' },
         ]}
       />
 
       <div className="pt-2">
         <ATMButton
           type="submit"
-          variant="form"
-          size="form"
-          fullWidth
           isLoading={loading}
-          disabled={loading || emailStatus?.available === false}
-          className="bg-linear-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 shadow-md shadow-red-600/30"
-          rightIcon={<ArrowRight size={15} className="stroke-[2.5]" />}
+          className="w-full py-3 sm:py-3.5 rounded-xl font-syne font-black text-xs uppercase tracking-wider bg-primary hover:bg-[#e64700] text-white shadow-lg shadow-primary/25 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
         >
-          Activate 14-Day Free Trial
+          <span>Start 14-Day Free Trial</span>
+          <ArrowRight size={14} />
         </ATMButton>
       </div>
     </div>
   );
 };
 
-export default MultiStepSignupForm;
+export default RegisterForm;
