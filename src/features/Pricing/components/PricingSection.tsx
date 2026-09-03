@@ -29,8 +29,21 @@ export const PricingSection: React.FC = () => {
     if (response?.data) {
       if (Array.isArray(response.data) && response.data.length > 0) {
         raw = response.data;
-      } else if (response.data && typeof response.data === 'object' && 'plans' in response.data && Array.isArray((response.data as any).plans)) {
-        raw = (response.data as any).plans;
+      } else if (response.data && typeof response.data === 'object') {
+        const d = response.data as any;
+        if (Array.isArray(d.plans) && d.plans.length > 0) {
+          raw = d.plans;
+        } else {
+          const collected: ApiBillingPlan[] = [];
+          Object.values(d).forEach((val: any) => {
+            if (val && Array.isArray(val.plans)) {
+              collected.push(...val.plans);
+            }
+          });
+          if (collected.length > 0) {
+            raw = collected;
+          }
+        }
       }
     }
 
@@ -38,16 +51,14 @@ export const PricingSection: React.FC = () => {
       (p) => p && (p.isActive ?? true) && (p.isPublic ?? true) && !p.isDeprecated && (p.planType === 'EnterpriseCloud' || !p.planType)
     );
 
+    const finalHybrid = entPlans.filter((p) => p?.flavour === 'BOT' || !p?.flavour).sort((a, b) => (a?.sortOrder ?? 0) - (b?.sortOrder ?? 0));
+    const finalRest = entPlans.filter((p) => p?.flavour === 'RES').sort((a, b) => (a?.sortOrder ?? 0) - (b?.sortOrder ?? 0));
+    const finalRetail = entPlans.filter((p) => p?.flavour === 'RET').sort((a, b) => (a?.sortOrder ?? 0) - (b?.sortOrder ?? 0));
+
     return {
-      hybridPlans: entPlans
-        .filter((p) => p?.flavour === 'BOT' || !p?.flavour)
-        .sort((a, b) => (a?.sortOrder ?? 0) - (b?.sortOrder ?? 0)),
-      restaurantPlans: entPlans
-        .filter((p) => p?.flavour === 'RES')
-        .sort((a, b) => (a?.sortOrder ?? 0) - (b?.sortOrder ?? 0)),
-      retailPlans: entPlans
-        .filter((p) => p?.flavour === 'RET')
-        .sort((a, b) => (a?.sortOrder ?? 0) - (b?.sortOrder ?? 0)),
+      hybridPlans: finalHybrid.length > 0 ? finalHybrid : FALLBACK_ENTERPRISE_PLANS.filter((p) => p.flavour === 'BOT' || !p.flavour),
+      restaurantPlans: finalRest.length > 0 ? finalRest : FALLBACK_ENTERPRISE_PLANS.filter((p) => p.flavour === 'RES'),
+      retailPlans: finalRetail.length > 0 ? finalRetail : FALLBACK_ENTERPRISE_PLANS.filter((p) => p.flavour === 'RET'),
     };
   }, [response]);
 

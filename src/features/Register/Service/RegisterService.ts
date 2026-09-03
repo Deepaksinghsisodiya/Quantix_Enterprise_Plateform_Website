@@ -121,9 +121,37 @@ export const {
   useProcessPaymentMutation,
 } = registerApi;
 
-/** Legacy function export used by RegisterWrapper (old flow) */
-export const registerUser = async (data: any): Promise<{ success: boolean; message: string }> => {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve({ success: true, message: 'Account created successfully' }), 800);
-  });
+import { getApiBaseUrl } from '@/lib/apiBaseUrl';
+
+/** Real backend signup function used by RegisterWrapper */
+export const registerUser = async (data: any): Promise<{ success: boolean; message?: string; data?: any }> => {
+  try {
+    const baseUrl = getApiBaseUrl();
+    const payload: MerchantSignupDto = {
+      merchantType: 'Enterprise',
+      companyName: data.companyName || `${data.fullName}'s Enterprise`,
+      contactName: data.fullName,
+      contactEmail: data.email,
+      contactPhone: null,
+      country: 'India',
+      planId: null,
+      billingCycle: 'Monthly',
+    };
+
+    const res = await fetch(`${baseUrl}/registration/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const json = await res.json();
+    return json;
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error?.message || 'Registration failed. Please check network connection.',
+    };
+  }
 };

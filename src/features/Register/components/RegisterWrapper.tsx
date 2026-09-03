@@ -25,26 +25,32 @@ export const RegisterWrapper: React.FC = () => {
     try {
       const response = await registerUser(values);
       if (response.success) {
-        const dummyToken = 'mock_enterprise_token_' + Date.now();
-        const dummyUser = { 
+        const token = response.data?.token || 'enterprise_token_' + Date.now();
+        const user = { 
           username: values.fullName, 
           email: values.email, 
           companyName: values.companyName, 
-          locations: values.locations 
+          locations: values.locations,
+          merchantId: response.data?.merchantId,
         };
 
-        Cookies.set('accessToken', dummyToken);
-        dispatch(setCredentials({ token: dummyToken, user: dummyUser }));
+        Cookies.set('accessToken', token);
+        dispatch(setCredentials({ token, user }));
 
         if (typeof window !== 'undefined') {
-          localStorage.setItem('quantix_has_logged_out', 'true');
+          localStorage.setItem('quantix_has_logged_out', 'false');
+          if (response.data?.merchantId) {
+            localStorage.setItem('quantix_merchant_id', response.data.merchantId);
+          }
         }
 
-        toast.success('Workspace created! Welcome to Quantix Enterprise POS.');
+        toast.success(response.message || 'Workspace created! Welcome to Quantix Enterprise POS.');
         router.push('/');
+      } else {
+        toast.error(response.message || 'Trial registration failed. Please try again.');
       }
-    } catch (err) {
-      toast.error('Trial registration failed.');
+    } catch (err: any) {
+      toast.error(err?.message || 'Trial registration failed.');
     } finally {
       setLoading(false);
     }

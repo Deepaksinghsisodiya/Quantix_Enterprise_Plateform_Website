@@ -58,13 +58,11 @@ export const PricingCard: React.FC<PricingCardProps> = ({
   }, [plan]);
 
   // Safely resolve max locations and terminals
-  const locationsCount = plan?.maxLocations ??
-    plan?.limits?.find((l) => l?.limitCode === 'OUT' || l?.limitCode === 'BUS')?.value ??
-    (isPopular ? 10 : 3);
+  const locationsLimit = plan?.limits?.find((l) => l?.limitCode === 'MLO' || l?.limitCode === 'OUT' || l?.limitCode === 'BUS');
+  const locationsCount = plan?.maxLocations ?? (locationsLimit as any)?.maxValue ?? (locationsLimit as any)?.value ?? (isPopular ? 10 : 3);
 
-  const terminalsCount = plan?.maxTerminals ??
-    plan?.limits?.find((l) => l?.limitCode === 'TRM')?.value ??
-    (isPopular ? 50 : 10);
+  const terminalsLimit = plan?.limits?.find((l) => l?.limitCode === 'MTM' || l?.limitCode === 'TRM');
+  const terminalsCount = plan?.maxTerminals ?? (terminalsLimit as any)?.maxValue ?? (terminalsLimit as any)?.value ?? (isPopular ? 50 : 10);
 
   return (
     <div
