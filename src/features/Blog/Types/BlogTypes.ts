@@ -1,28 +1,30 @@
 // src/features/Blog/Types/BlogTypes.ts
-
 export interface BlogPostDto {
-  postId: string;
+  id?: string;
+  postId?: string;
   title: string;
   slug: string;
   excerpt: string;
-  body: string;
-  author: string;
-  categoryId?: string;
-  categoryName?: string;
-  tags?: string;
+  body?: string;
+  content?: string;
+  coverImage?: string;
   featuredImageUrl?: string;
-  seoTitle?: string;
-  seoDescription?: string;
+  category?: string;
+  categoryName?: string;
+  author: string;
+  readTime?: string;
   publishedAt?: string;
-  createdAt: string;
+  createdAt?: string;
+  tags?: string[] | string;
 }
 
 export interface ApiBlogPostsResponse {
   success: boolean;
   data: BlogPostDto[];
+  total?: number;
 }
 
 export interface ApiBlogPostResponse {
   success: boolean;
-  data: BlogPostDto;
+  data: BlogPostDto | null;
 }

@@ -151,21 +151,9 @@ export const HeroView: React.FC<HeroViewProps> = ({
                 </button>
               </div>
 
-              {/* Trust Banner */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-3.5 pt-3 mt-0.5 border-t border-slate-100 dark:border-slate-800/80 w-full">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-[11px] sm:text-xs font-semibold text-slate-600 dark:text-slate-400">
-                  <span className="font-extrabold text-slate-800 dark:text-slate-200">Trusted by 1,000+</span> enterprise chains, franchise groups, and retail networks globally.
-                </p>
-              </div>
-
-              {/* Full-Width Seamless Continuous Scrolling News Ticker (Ultra-Premium Production UI) */}
-              <div className="w-full mt-1.5 relative flex items-center rounded-xl border border-slate-200/80 bg-gradient-to-r from-orange-500/5 via-white to-slate-50/80 dark:from-orange-500/10 dark:via-slate-900/90 dark:to-slate-900/60 p-1.5 shadow-sm shadow-slate-200/50 dark:shadow-none overflow-hidden backdrop-blur-md min-h-10.5">
-                {/* Left Badge (Live Pulsing Premium Pill) */}
+              {/* Full-Width Seamless Continuous Scrolling News Ticker */}
+              <div className="w-full mt-4 relative flex items-center rounded-xl border border-slate-200/80 bg-gradient-to-r from-orange-500/5 via-white to-slate-50/80 dark:from-orange-500/10 dark:via-slate-900/90 dark:to-slate-900/60 p-1.5 shadow-sm shadow-slate-200/50 dark:shadow-none overflow-hidden backdrop-blur-md min-h-10.5">
+                {/* Left Badge */}
                 <div className="relative z-20 flex items-center justify-center gap-1.5 shrink-0 rounded-lg bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-sm shadow-orange-500/30 select-none">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-80"></span>
@@ -175,14 +163,13 @@ export const HeroView: React.FC<HeroViewProps> = ({
                   <span>Updates</span>
                 </div>
 
-                {/* Left & Right Soft Fade Gradients */}
+                {/* Gradients */}
                 <div className="pointer-events-none absolute left-[92px] top-0 bottom-0 w-8 bg-gradient-to-r from-white dark:from-slate-900 to-transparent z-10" />
                 <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-slate-50 dark:from-slate-900 to-transparent z-10" />
 
-                {/* Seamless Infinite Marquee Track */}
+                {/* Marquee Track */}
                 <div className="min-w-0 flex-1 overflow-hidden ml-2">
                   <div className="flex w-max shrink-0 animate-[heroTickerScroll_32s_linear_infinite] hover:[animation-play-state:paused] items-center gap-6 text-[11px] font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
-                    {/* Track Copy 1 */}
                     <div className="flex items-center gap-6 shrink-0">
                       <span className="inline-flex items-center gap-1.5">
                         <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Restaurant POS</span>
@@ -202,16 +189,10 @@ export const HeroView: React.FC<HeroViewProps> = ({
                       <span className="inline-flex items-center gap-1.5">
                         <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Online Ordering</span>
                         <span>Web & mobile app unified sales</span>
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Custom API</span>
-                        <span>ERP bridges & enterprise integrations</span>
                       </span>
                       <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
                     </div>
 
-                    {/* Track Copy 2 (Identical for seamless loop) */}
                     <div className="flex items-center gap-6 shrink-0">
                       <span className="inline-flex items-center gap-1.5">
                         <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Restaurant POS</span>
@@ -231,11 +212,6 @@ export const HeroView: React.FC<HeroViewProps> = ({
                       <span className="inline-flex items-center gap-1.5">
                         <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Online Ordering</span>
                         <span>Web & mobile app unified sales</span>
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Custom API</span>
-                        <span>ERP bridges & enterprise integrations</span>
                       </span>
                       <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
                     </div>
@@ -348,20 +324,6 @@ export const HeroView: React.FC<HeroViewProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Scroll to Explore (Balanced Spacing) */}
-      <button
-        type="button"
-        onClick={() => document.getElementById('products-showcase')?.scrollIntoView({ behavior: 'smooth' })}
-        className="absolute bottom-4 sm:bottom-6 left-1/2 z-20 hidden -translate-x-1/2 cursor-pointer flex-col items-center gap-1 opacity-70 transition-opacity hover:opacity-100 md:flex bg-transparent border-0 outline-none"
-      >
-        <span className="text-[9.5px] font-extrabold uppercase tracking-widest text-slate-500 dark:text-slate-400">
-          Scroll to Explore
-        </span>
-        <div className="flex h-5 w-5 items-center justify-center rounded-full animate-bounce">
-          <ChevronDown className="h-3.5 w-3.5 text-primary" />
-        </div>
-      </button>
     </section>
   );
 };

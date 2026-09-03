@@ -70,7 +70,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
         'relative rounded-2xl border p-5 sm:p-7 flex flex-col justify-between transition-all duration-200 group',
         'hover:shadow-lg hover:-translate-y-0.5',
         isPopular
-          ? 'bg-gradient-to-b from-[#FF4D00] to-[#E03E00] text-white border-[#FF4D00] shadow-xl shadow-orange-500/20 lg:scale-[1.02] z-10'
+          ? 'bg-linear-to-b from-[#FF4D00] to-[#E03E00] text-white border-[#FF4D00] shadow-xl shadow-orange-500/20 lg:scale-[1.02] z-10'
           : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-xs text-slate-900 dark:text-white'
       )}
     >

@@ -89,7 +89,7 @@ function StatusContent() {
       <div className="space-y-3">
         <Link
           href="/sign-in"
-          className="w-full rounded-xl bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white py-3.5 px-4 text-xs font-bold uppercase tracking-wider shadow-lg shadow-orange-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full rounded-xl bg-linear-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white py-3.5 px-4 text-xs font-bold uppercase tracking-wider shadow-lg shadow-orange-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
           <span>Proceed to Sign In</span>
           <ArrowRight size={14} />

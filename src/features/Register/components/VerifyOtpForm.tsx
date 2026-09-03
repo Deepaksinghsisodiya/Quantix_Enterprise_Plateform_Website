@@ -113,7 +113,7 @@ export const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
           fullWidth
           isLoading={isVerifying}
           disabled={isVerifying || otp.length < 6}
-          className="bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white shadow-lg shadow-orange-600/25 cursor-pointer disabled:opacity-50"
+          className="bg-linear-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 shadow-md shadow-red-600/30 cursor-pointer disabled:opacity-50"
           rightIcon={<ArrowRight size={14} className="stroke-[2.5]" />}
         >
           Verify & Continue

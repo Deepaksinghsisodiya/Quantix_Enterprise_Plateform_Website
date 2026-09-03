@@ -64,12 +64,12 @@ export const PricingSection: React.FC = () => {
 
   return (
     <section
-      className="relative pt-[110px] sm:pt-32 lg:pt-36 pb-16 sm:pb-24 bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-900 overflow-hidden transition-colors font-sans"
+      className="relative pt-27.5 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-900 overflow-hidden transition-colors font-sans"
       id="pricing"
     >
       {/* Background decorations */}
-      <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#FF4D00]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-size-[24px_24px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-100 bg-[#FF4D00]/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}

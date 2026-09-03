@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SupportSection from "@/components/organisms/SupportSection/SupportSection";
+import SocialProofStatsWrapper from "@/features/SocialProof/components/SocialProofWrapper";
 
 import dynamic from "next/dynamic";
 
@@ -73,6 +74,11 @@ export default function HomePageClient() {
       {/* 1. Hero Section (White BG) */}
       <section id="home" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <HeroSection />
+      </section>
+
+      {/* 1.5 Live Social Proof & Platform Stats Counter */}
+      <section className="-mt-6 sm:-mt-10 relative z-20 site-container px-4 sm:px-6 mb-12">
+        <SocialProofStatsWrapper />
       </section>
 
       {/* 2. Core Product Suite Showcase (White BG + Bottom Border) */}

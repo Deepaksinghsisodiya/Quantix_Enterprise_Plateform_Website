@@ -118,7 +118,7 @@ export const MultiStepSignupForm: React.FC<MultiStepSignupFormUIProps> = ({
           fullWidth
           isLoading={loading}
           disabled={loading || emailStatus?.available === false}
-          className="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 shadow-md shadow-red-600/30"
+          className="bg-linear-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 shadow-md shadow-red-600/30"
           rightIcon={<ArrowRight size={15} className="stroke-[2.5]" />}
         >
           Activate 14-Day Free Trial
