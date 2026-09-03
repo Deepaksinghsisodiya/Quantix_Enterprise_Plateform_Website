@@ -13,7 +13,7 @@ export const newsletterApi = baseApi.injectEndpoints({
       invalidatesTags: ['Contact'],
     }),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 });
 
 export const { useSubscribeNewsletterMutation } = newsletterApi;
