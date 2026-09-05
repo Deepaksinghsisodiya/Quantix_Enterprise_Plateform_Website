@@ -118,7 +118,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
             <ChevronRight size={20} />
           </button>
 
-          <div className="overflow-hidden min-h-[300px] sm:min-h-[250px] flex items-center justify-center">
+          <div className="overflow-hidden min-h-75 sm:min-h-62.5 flex items-center justify-center">
             <AnimatePresence mode="wait">
               {!isLoading && current && (
                 <motion.div
@@ -141,7 +141,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
                 >
                   {/* Avatar Block */}
                   <div className="relative shrink-0 select-none flex flex-col items-center">
-                    <div className="h-16 w-16 min-[400px]:h-20 min-[400px]:w-20 md:h-28 md:w-28 rounded-2xl md:rounded-3xl overflow-hidden border-2 border-primary/20 dark:border-primary/30 shadow-md relative group/avatar bg-gradient-to-br from-primary via-orange-600 to-amber-600 flex flex-col items-center justify-center text-white p-2 md:p-3">
+                    <div className="h-16 w-16 min-[400px]:h-20 min-[400px]:w-20 md:h-28 md:w-28 rounded-2xl md:rounded-3xl overflow-hidden border-2 border-primary/20 dark:border-primary/30 shadow-md relative group/avatar bg-linear-to-br from-primary via-orange-600 to-amber-600 flex flex-col items-center justify-center text-white p-2 md:p-3">
                       <Building2 className="h-5 w-5 md:h-7 md:w-7 mb-0.5 text-white/90" />
                       <span className="text-base md:text-xl font-syne font-black tracking-wider">
                         {current.author.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
