@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import {
   ChevronRight,
-  User,
   LogOut,
   LogIn,
   Headset,
@@ -14,7 +13,7 @@ import {
   Sparkles,
   ExternalLink,
   KeyRound,
-  CheckCircle2,
+  Building2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MOBILE_MENU_SECTIONS, QUICK_MOBILE_TOOLS } from '../../config/navConfig';
@@ -25,6 +24,7 @@ import Cookies from 'js-cookie';
 import { toast } from 'sonner';
 import { useContactModal } from '@/context/ContactModalContext';
 import { useGetProfileQuery, ChangePasswordModal } from '@/features/Profile';
+import { ATMButton } from '@/components/atoms';
 
 interface MobileMenuMainProps {
   pathname: string;
@@ -47,10 +47,39 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
   const [hasLoggedOut, setHasLoggedOut] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
-  const rawAuthUser = authUser as any;
-  const displayName = liveProfile?.fullName || liveProfile?.username || rawAuthUser?.fullName || rawAuthUser?.username || 'Enterprise Admin';
-  const displayCompany = liveProfile?.companyName || rawAuthUser?.companyName || 'Quantix Enterprise';
-  const adminPortalUrl = process.env.NEXT_PUBLIC_ADMIN_PORTAL_URL || 'https://quantixadmin.foreteksolution.in/login';
+  const rawAuthUser = (authUser || {}) as any;
+  const rawProfile = (liveProfile || {}) as any;
+  const displayEmail = rawProfile?.email || rawAuthUser?.email || '';
+
+  const resolveDisplayName = () => {
+    const explicitName = rawProfile?.fullName || rawProfile?.name || rawAuthUser?.fullName || rawAuthUser?.name;
+    if (explicitName && explicitName.trim() && explicitName.trim() !== displayEmail) {
+      return explicitName.trim();
+    }
+    if (displayEmail && displayEmail.includes('@')) {
+      const local = displayEmail.split('@')[0];
+      const cleaned = local.replace(/[._-]+/g, ' ').replace(/\d+/g, '').trim();
+      if (cleaned.length >= 3) {
+        return cleaned.replace(/\b\w/g, (c: string) => c.toUpperCase());
+      }
+      return local;
+    }
+    return 'Enterprise User';
+  };
+
+  const displayName = resolveDisplayName();
+  const displayCompany = rawProfile?.companyName || rawAuthUser?.companyName || 'Quantix Enterprise';
+  const avatarInitial = (displayName || displayEmail || 'Q').charAt(0).toUpperCase();
+
+  const getAdminPortalUrl = () => {
+    if (typeof window !== 'undefined') {
+      const hostname = window.location.hostname;
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return 'http://localhost:4173/login';
+      }
+    }
+    return process.env.NEXT_PUBLIC_ADMIN_PORTAL_URL || 'https://quantixadmin.foreteksolution.in/';
+  };
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -71,7 +100,7 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
       dispatch(logout());
       toast.success('Successfully signed out.');
       onClose();
-    } catch (err) {
+    } catch {
       toast.error('Logout failed.');
     }
   };
@@ -92,11 +121,11 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
   };
 
   const isMenuHrefActive = (href: string) =>
-    pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
+    pathname === href || (href !== '/' && href !== '#' && pathname.startsWith(`${href}/`));
 
   const isMobileSectionActive = (section: MobileMenuSection) =>
     isMenuHrefActive(section.href) ||
-    section.groups.some((group) => group.items.some((item) => isMenuHrefActive(item.href)));
+    section.groups?.some((group) => group.items?.some((item) => isMenuHrefActive(item.href)));
 
   return (
     <>
@@ -112,7 +141,7 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
               Navigation Menu
             </span>
             <span className="rounded-full border border-primary/10 bg-white dark:bg-slate-900 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-normal text-primary shadow-xs">
-              POS Platform
+              Enterprise
             </span>
           </div>
 
@@ -226,6 +255,7 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
             </div>
           </motion.div>
 
+          {/* Mobile Profile Card */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -234,30 +264,35 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
           >
             {token ? (
               <>
-                <div className="p-3 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 flex items-center justify-between gap-2.5 shadow-2xs">
+                {/* User Identity Box */}
+                <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 flex items-center justify-between gap-2.5 shadow-2xs">
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr from-[#FF4D00] to-[#E03E00] text-white font-syne text-xs font-black shadow-xs uppercase">
-                      {displayName.charAt(0)}
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF4D00] to-[#E03E00] text-white font-syne text-xs font-black shadow-xs uppercase">
+                      {avatarInitial}
                     </div>
                     <div className="min-w-0">
                       <p className="text-xs font-syne font-bold text-slate-900 dark:text-white truncate">
                         {displayName}
                       </p>
-                      <p className="text-[10.5px] text-slate-500 truncate">{displayCompany}</p>
+                      <p className="text-[10.5px] text-slate-500 dark:text-slate-400 truncate flex items-center gap-1">
+                        <Building2 size={11} className="text-[#FF4D00] shrink-0" />
+                        <span className="truncate">{displayCompany}</span>
+                      </p>
                     </div>
                   </div>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200/80 shrink-0">
-                    <CheckCircle2 size={9} className="text-emerald-600" />
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800/60 shrink-0">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                     Active
                   </span>
                 </div>
 
+                {/* Primary CTA: Go to Admin Panel */}
                 <a
-                  href={adminPortalUrl}
+                  href={getAdminPortalUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={onClose}
-                  className="flex h-11 cursor-pointer items-center justify-between px-4 rounded-xl bg-[#FF4D00] hover:bg-[#E03E00] text-white font-syne text-xs font-bold tracking-wide shadow-md shadow-orange-500/20 transition-all active:scale-95"
+                  className="flex h-11 cursor-pointer items-center justify-between px-4 rounded-xl bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white font-syne text-xs font-bold tracking-wide shadow-md shadow-orange-500/25 transition-all active:scale-95"
                 >
                   <div className="flex items-center gap-2">
                     <Sparkles size={14} className="text-amber-300 fill-amber-300" />
@@ -266,35 +301,45 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
                   <ExternalLink size={13} />
                 </a>
 
-                <button
-                  type="button"
-                  onClick={() => setIsPasswordModalOpen(true)}
-                  className="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-syne font-bold text-slate-800 dark:text-slate-200 hover:border-[#FF4D00]/40 hover:text-[#FF4D00] transition-all"
-                >
-                  <KeyRound size={14} className="text-slate-400" />
-                  <span>Change Password</span>
-                </button>
+                {/* Secondary Actions */}
+                <div className="grid grid-cols-2 gap-2">
+                  <ATMButton
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    fullWidth
+                    onClick={() => setIsPasswordModalOpen(true)}
+                    leftIcon={<KeyRound size={13} />}
+                  >
+                    Change Password
+                  </ATMButton>
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose();
-                    openModal('Enterprise Priority Support', 'MOBILE_NAV_CONTACT');
-                  }}
-                  className="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-syne font-bold text-slate-800 dark:text-slate-200 hover:border-primary/40 hover:text-primary transition-all"
-                >
-                  <Headset size={14} className="text-primary" />
-                  <span>Contact Support</span>
-                </button>
+                  <ATMButton
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    fullWidth
+                    onClick={() => {
+                      onClose();
+                      openModal('Enterprise Priority Support', 'MOBILE_NAV_CONTACT');
+                    }}
+                    leftIcon={<Headset size={13} className="text-[#FF4D00]" />}
+                  >
+                    Support
+                  </ATMButton>
+                </div>
 
-                <button
+                {/* Sign Out Button */}
+                <ATMButton
                   type="button"
+                  variant="danger"
+                  size="sm"
+                  fullWidth
                   onClick={handleLogout}
-                  className="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-xl bg-rose-600 text-xs font-syne font-extrabold uppercase text-white shadow-md shadow-rose-600/15 transition-all hover:bg-rose-700"
+                  leftIcon={<LogOut size={13} />}
                 >
-                  <LogOut size={14} />
-                  <span>Sign Out</span>
-                </button>
+                  Sign Out
+                </ATMButton>
               </>
             ) : (
               <>

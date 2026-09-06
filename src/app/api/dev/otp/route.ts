@@ -1,29 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { execSync } from 'child_process';
-import path from 'path';
+import { NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
-  if (process.env.NODE_ENV === 'production') {
-    return NextResponse.json({ error: 'Endpoint disabled in production' }, { status: 403 });
-  }
-
-  const { searchParams } = new URL(request.url);
-  const merchantId = searchParams.get('merchantId');
-  if (!merchantId) {
-    return NextResponse.json({ error: 'merchantId is required' }, { status: 400 });
-  }
-
-  try {
-    // Resolve absolute path to the helper script to make execution location-independent
-    const scriptPath = path.join(process.cwd(), 'src/app/api/dev/otp/get_otp.py');
-    const output = execSync(`python "${scriptPath}" "${merchantId}"`, { encoding: 'utf-8' }).trim();
-    
-    if (output.startsWith("ERROR:")) {
-      return NextResponse.json({ error: output }, { status: 500 });
-    }
-    
-    return NextResponse.json({ otp: output });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
+export async function GET() {
+  return NextResponse.json({ error: 'Endpoint removed' }, { status: 404 });
 }

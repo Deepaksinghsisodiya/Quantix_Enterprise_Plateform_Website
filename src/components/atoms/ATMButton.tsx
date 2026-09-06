@@ -1,44 +1,60 @@
+// src/components/atoms/ATMButton.tsx
 'use client';
 
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../../lib/utils';
+import { cn } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
 
-export interface ATMButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'size'>, VariantProps<typeof buttonVariants> {
+const buttonVariants = cva(
+  'inline-flex items-center justify-center font-syne font-bold transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100 cursor-pointer focus-visible:outline-none focus-visible:ring-2 select-none',
+  {
+    variants: {
+      variant: {
+        primary:
+          'bg-gradient-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white shadow-md shadow-orange-500/20 hover:shadow-lg hover:shadow-orange-500/30 focus-visible:ring-[#FF4D00]/40',
+        secondary:
+          'bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 shadow-sm focus-visible:ring-slate-500/30',
+        outline:
+          'border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:border-[#FF4D00]/40 dark:hover:border-[#FF4D00]/40 hover:bg-orange-50/50 dark:hover:bg-slate-800/80 hover:text-[#FF4D00] dark:hover:text-[#FF4D00] shadow-2xs focus-visible:ring-[#FF4D00]/30',
+        ghost:
+          'bg-transparent text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white focus-visible:ring-slate-400/20',
+        danger:
+          'bg-rose-600 hover:bg-rose-700 text-white shadow-md shadow-rose-600/20 hover:shadow-lg hover:shadow-rose-600/30 focus-visible:ring-rose-500/40',
+        admin:
+          'bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white shadow-md shadow-orange-500/25 hover:shadow-lg hover:shadow-orange-500/35 focus-visible:ring-[#FF4D00]/40',
+        form:
+          'bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white uppercase tracking-wider shadow-md shadow-orange-500/25 hover:shadow-lg hover:shadow-orange-500/35 focus-visible:ring-[#FF4D00]/40',
+      },
+      size: {
+        xs: 'h-8 px-2.5 text-[11px] rounded-lg gap-1.5',
+        sm: 'h-9 px-3.5 text-xs rounded-xl gap-2',
+        md: 'h-10 sm:h-10.5 px-4.5 text-xs sm:text-[13px] rounded-xl gap-2',
+        lg: 'h-12 px-6 text-sm sm:text-base rounded-xl gap-2.5',
+        form: 'h-11 sm:h-11.5 px-5 text-xs sm:text-sm rounded-xl gap-2 font-extrabold',
+      },
+      fullWidth: {
+        true: 'w-full',
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+      size: 'md',
+      fullWidth: false,
+    },
+  }
+);
+
+export interface ATMButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
   label?: string;
   children?: React.ReactNode;
-  className?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   isLoading?: boolean;
+  loadingText?: string;
 }
-
-const buttonVariants = cva('flex items-center justify-center font-semibold transition-all duration-200 active:scale-[0.97] hover:scale-[1.03] focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none cursor-pointer', {
-  variants: {
-    variant: {
-      primary: 'bg-primary text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/25',
-      secondary: 'bg-slate-900 text-white hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-950/20 dark:bg-slate-800 dark:hover:bg-slate-700',
-      outline: 'border border-slate-200 bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800',
-      ghost: 'bg-transparent text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800',
-      danger: 'bg-rose-600 text-white hover:bg-rose-700 hover:shadow-lg hover:shadow-rose-600/20',
-      form: 'bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-syne font-extrabold uppercase tracking-wider shadow-lg shadow-primary/20 hover:scale-[1.02] rounded-xl',
-    },
-    size: {
-      sm: 'px-4 py-2 text-xs',
-      md: 'px-5 py-2.5 text-sm',
-      lg: 'px-7 py-3.5 text-base',
-      form: 'py-2.5 sm:py-3.5 px-4 text-xs sm:text-sm',
-    },
-    fullWidth: {
-      true: 'w-full',
-    },
-  },
-  defaultVariants: {
-    variant: 'primary',
-    size: 'md',
-    fullWidth: false,
-  },
-});
 
 export const ATMButton: React.FC<ATMButtonProps> = ({
   label,
@@ -52,6 +68,7 @@ export const ATMButton: React.FC<ATMButtonProps> = ({
   leftIcon,
   rightIcon,
   isLoading = false,
+  loadingText = 'Processing...',
   disabled,
   ...props
 }) => {
@@ -64,17 +81,19 @@ export const ATMButton: React.FC<ATMButtonProps> = ({
       {...props}
     >
       {isLoading ? (
-        <div className="flex items-center gap-2">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-          <span>Processing...</span>
-        </div>
+        <span className="flex items-center gap-2">
+          <Loader2 className="h-4 w-4 animate-spin text-current shrink-0" />
+          <span>{loadingText}</span>
+        </span>
       ) : (
-        <div className="flex items-center gap-2">
-          {leftIcon && <span className="flex items-center">{leftIcon}</span>}
+        <span className="flex items-center justify-center gap-2 w-full">
+          {leftIcon && <span className="flex items-center shrink-0">{leftIcon}</span>}
           {label ? <span>{label}</span> : children}
-          {rightIcon && <span className="flex items-center">{rightIcon}</span>}
-        </div>
+          {rightIcon && <span className="flex items-center shrink-0">{rightIcon}</span>}
+        </span>
       )}
     </button>
   );
 };
+
+export default ATMButton;

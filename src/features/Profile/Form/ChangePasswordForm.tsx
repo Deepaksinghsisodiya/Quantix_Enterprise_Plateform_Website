@@ -5,8 +5,7 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import { Lock, CheckCircle2, ShieldAlert } from 'lucide-react';
 import { toast } from 'sonner';
-import { ATMTextField } from '@/components/atoms/ATMTextField';
-import { ATMButton } from '@/components/atoms/ATMButton';
+import { ATMTextField, ATMButton } from '@/components/atoms';
 import { ChangePasswordValidationSchema } from '../validation/ChangePasswordValidation';
 import { INITIAL_CHANGE_PASSWORD_VALUES } from '../Constants/ProfileConstants';
 import { ChangePasswordFormValues } from '../Types/ProfileTypes';
@@ -42,7 +41,7 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onSucces
       validationSchema={ChangePasswordValidationSchema}
       onSubmit={handleSubmit}
     >
-      {({ values, errors, touched }) => (
+      {({ values }) => (
         <Form className="space-y-4">
           <div className="bg-slate-50 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200/60 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 flex items-start gap-2">
             <ShieldAlert size={15} className="text-[#FF4D00] shrink-0 mt-0.5" />
@@ -106,7 +105,7 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onSucces
               fullWidth
               size="form"
               isLoading={isLoading}
-              className="bg-[#FF4D00] hover:bg-[#E03E00]"
+              loadingText="Updating Password..."
             >
               Update & Secure Password
             </ATMButton>

@@ -1,3 +1,4 @@
+// src/features/Register/components/VerifyOtpWrapper.tsx
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -15,13 +16,11 @@ export const VerifyOtpWrapper: React.FC = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const isDev = process.env.NODE_ENV !== 'production';
-
   // Read URL params first (safe on both server and client)
-  const initialId = searchParams.get('id') || searchParams.get('merchantId') || '';
-  const initialEmail = searchParams.get('email') || '';
-  const initialReturnUrl = searchParams.get('returnUrl') || '';
-  const initialSource = searchParams.get('source') || '';
+  const initialId = searchParams?.get('id') || searchParams?.get('merchantId') || '';
+  const initialEmail = searchParams?.get('email') || '';
+  const initialReturnUrl = searchParams?.get('returnUrl') || '';
+  const initialSource = searchParams?.get('source') || '';
 
   const [merchantId, setMerchantId] = useState<string>(initialId);
   const [email, setEmail] = useState<string>(initialEmail);
@@ -31,8 +30,6 @@ export const VerifyOtpWrapper: React.FC = () => {
   const [otp, setOtp] = useState<string>('');
   const [hasError, setHasError] = useState<boolean>(false);
   const [resendCooldown, setResendCooldown] = useState<number>(60);
-  const [devOtp, setDevOtp] = useState<string | null>(null);
-  const [isFetchingDevOtp, setIsFetchingDevOtp] = useState<boolean>(false);
 
   const [verifyEmailCode, { isLoading: isVerifying }] = useVerifyEmailCodeMutation();
   const [sendOtp, { isLoading: isSendingOtp }] = useSendOtpMutation();
@@ -65,39 +62,10 @@ export const VerifyOtpWrapper: React.FC = () => {
     }
   }, [resendCooldown]);
 
-  // Fetch Dev OTP automatically in development
-  useEffect(() => {
-    if (isDev && merchantId) {
-      fetchDevOtp();
-    }
-  }, [isDev, merchantId]);
-
-  const fetchDevOtp = async () => {
-    if (!merchantId) return;
-    setIsFetchingDevOtp(true);
-    try {
-      const res = await fetch(`/api/dev/otp?merchantId=${encodeURIComponent(merchantId)}`);
-      const data = await res.json();
-      if (data.otp && data.otp.length === 6) {
-        setDevOtp(data.otp);
-      }
-    } catch {
-      // Silently ignore in dev
-    } finally {
-      setIsFetchingDevOtp(false);
-    }
-  };
-
-  const handleApplyDevOtp = (code: string) => {
-    setOtp(code);
-    setHasError(false);
-    toast.success(`OTP ${code} auto-filled! Click 'Verify & Continue'.`);
-  };
-
   const handleCompleteRedirect = () => {
     // Check where user originated from (Restaurant, Retail, or Enterprise)
-    const targetReturnUrl = returnUrl || Cookies.get('authReturnUrl');
-    const targetSource = source || Cookies.get('authSource');
+    const targetReturnUrl = returnUrl || Cookies.get('authReturnUrl') || '';
+    const targetSource = source || Cookies.get('authSource') || '';
 
     // Clean up temporary registration pending cookies
     Cookies.remove('pendingMerchantId');
@@ -137,7 +105,7 @@ export const VerifyOtpWrapper: React.FC = () => {
       router.push('/sign-up');
       return;
     }
-    if (otp.length < 6) {
+    if (otp.trim().length < 6) {
       toast.error('Please enter all 6 digits of your verification code.');
       setHasError(true);
       return;
@@ -145,14 +113,14 @@ export const VerifyOtpWrapper: React.FC = () => {
 
     try {
       setHasError(false);
-      await verifyEmailCode({ merchantId, otpCode: otp }).unwrap();
+      await verifyEmailCode({ merchantId: merchantId.trim(), otpCode: otp.trim() }).unwrap();
       handleCompleteRedirect();
     } catch (err: unknown) {
       const msg = parseApiError(err, 'Verification code is invalid or has expired.');
       const errObj = err as any;
       const code = errObj?.data?.errorCode;
 
-      if (code === 'NO_OTP_PENDING' || msg.toLowerCase().includes('no verification pending') || msg.toLowerCase().includes('already verified')) {
+      if (code === 'NO_OTP_PENDING' || msg?.toLowerCase().includes('no verification pending') || msg?.toLowerCase().includes('already verified')) {
         handleCompleteRedirect();
         return;
       }
@@ -168,10 +136,9 @@ export const VerifyOtpWrapper: React.FC = () => {
       return;
     }
     try {
-      await sendOtp(merchantId).unwrap();
+      await sendOtp(merchantId.trim()).unwrap();
       setResendCooldown(60);
       toast.success('A new 6-digit code has been dispatched to your email.');
-      setTimeout(() => fetchDevOtp(), 600);
     } catch (err: unknown) {
       const msg = parseApiError(err, 'Failed to resend code. Please try again.');
       toast.error(msg);
@@ -191,11 +158,6 @@ export const VerifyOtpWrapper: React.FC = () => {
       onResend={handleResend}
       isSendingOtp={isSendingOtp}
       resendCooldown={resendCooldown}
-      devOtp={devOtp}
-      isFetchingDevOtp={isFetchingDevOtp}
-      onApplyDevOtp={handleApplyDevOtp}
-      onRefreshDevOtp={fetchDevOtp}
-      isDev={isDev}
       hasError={hasError}
     />
   );

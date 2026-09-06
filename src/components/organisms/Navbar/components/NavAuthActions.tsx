@@ -1,63 +1,26 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { User, LogOut, LogIn, ChevronDown, UserPlus, Sparkles } from 'lucide-react';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { logout } from '@/redux/slices/authSlice';
+import { LogIn, UserPlus, Sparkles } from 'lucide-react';
+import { useAppSelector } from '@/redux/hooks';
 import { useContactModal } from '@/context/ContactModalContext';
 import { ProfileDropdown } from '@/features/Profile';
-import Cookies from 'js-cookie';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 
 export const NavAuthActions: React.FC = () => {
   const token = useAppSelector((state) => state.auth.token);
-  const user = useAppSelector((state) => state.auth.user);
-  const dispatch = useAppDispatch();
-  const router = useRouter();
   const { openModal } = useContactModal();
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [hasLoggedOut, setHasLoggedOut] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if user has previously logged out or has existing account
     if (typeof window !== 'undefined') {
       const loggedOutFlag = localStorage.getItem('quantix_has_logged_out');
       setHasLoggedOut(Boolean(loggedOutFlag));
     }
   }, [token]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      Cookies.remove('accessToken');
-      Cookies.remove('refreshToken');
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('quantix_has_logged_out', 'true');
-        setHasLoggedOut(true);
-      }
-      dispatch(logout());
-      setIsDropdownOpen(false);
-      toast.success('Successfully signed out. You can sign in anytime!');
-      router.push('/');
-    } catch (err) {
-      toast.error('Logout failed.');
-    }
-  };
-
-  // 1. LOGGED IN STATE
+  // 1. LOGGED IN STATE (Desktop Header Dropdown)
   if (token) {
     return (
       <div className="hidden lg:flex items-center gap-3">
@@ -66,7 +29,7 @@ export const NavAuthActions: React.FC = () => {
     );
   }
 
-  // 2. LOGGED OUT STATE (Has existing account -> Show Sign In + Claim 3 Months Free at right end)
+  // 2. LOGGED OUT STATE (Has existing account -> Show Sign In + Claim 3 Months Free)
   if (hasLoggedOut) {
     return (
       <div className="hidden lg:flex items-center gap-3">
@@ -90,7 +53,7 @@ export const NavAuthActions: React.FC = () => {
     );
   }
 
-  // 3. FIRST TIME VISIT STATE (No account yet -> Show Sign Up + Claim 3 Months Free at right end)
+  // 3. FIRST TIME VISIT STATE (No account yet -> Show Sign Up + Claim 3 Months Free)
   return (
     <div className="hidden lg:flex items-center gap-3">
       <Link
@@ -112,3 +75,5 @@ export const NavAuthActions: React.FC = () => {
     </div>
   );
 };
+
+export default NavAuthActions;
