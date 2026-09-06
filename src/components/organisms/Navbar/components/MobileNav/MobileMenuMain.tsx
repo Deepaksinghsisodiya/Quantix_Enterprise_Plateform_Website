@@ -338,17 +338,18 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
                     </div>
                     <ChevronRight size={13} className="text-slate-400" />
                   </button>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="flex w-full items-center justify-between p-2.5 hover:bg-red-50/70 dark:hover:bg-red-950/30 transition-colors text-red-600 dark:text-red-400 cursor-pointer text-left group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <LogOut size={14} className="text-red-500" />
+                      <span className="font-semibold">Sign Out</span>
+                    </div>
+                    <ChevronRight size={13} className="text-red-400 opacity-60 group-hover:translate-x-0.5 transition-transform" />
+                  </button>
                 </div>
-
-                {/* 4. Sign Out */}
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="flex w-full items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer border border-transparent hover:border-rose-200 dark:hover:border-rose-900/50"
-                >
-                  <LogOut size={13} />
-                  <span>Sign Out</span>
-                </button>
               </div>
             ) : (
               <>
