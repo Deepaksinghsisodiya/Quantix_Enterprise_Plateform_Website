@@ -18,12 +18,11 @@ export const ProfileDropdown: React.FC = () => {
   const authUser = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { openModal } = useContactModal();
+  const { openModal, openPasswordModal } = useContactModal();
 
   const { data: liveProfile } = useGetProfileQuery(undefined, { skip: !token });
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown on outside click
@@ -94,37 +93,32 @@ export const ProfileDropdown: React.FC = () => {
   };
 
   return (
-    <>
-      <div className="relative font-sans" ref={dropdownRef}>
-        {/* Sleek Big-Company Avatar Trigger (Letter Avatar Only - No extra text in navbar) */}
-        <ProfileAvatarTrigger
-          avatarInitial={avatarInitial}
-          isOpen={isOpen}
-          onClick={() => setIsOpen(!isOpen)}
-        />
-
-        {/* Dropdown Card */}
-        {isOpen && (
-          <ProfileDropdownMenu
-            displayName={displayName}
-            displayEmail={displayEmail}
-            displayCompany={displayCompany}
-            avatarInitial={avatarInitial}
-            adminPortalUrl={getAdminPortalUrl()}
-            onClose={() => setIsOpen(false)}
-            onOpenChangePassword={() => setIsPasswordModalOpen(true)}
-            onOpenSupport={() => openModal('Enterprise Priority Support', 'SUPPORT_REQUEST')}
-            onLogout={handleLogout}
-          />
-        )}
-      </div>
-
-      {/* Change Password Modal */}
-      <ChangePasswordModal
-        isOpen={isPasswordModalOpen}
-        onClose={() => setIsPasswordModalOpen(false)}
+    <div className="relative font-sans" ref={dropdownRef}>
+      {/* Sleek Big-Company Avatar Trigger (Letter Avatar Only - No extra text in navbar) */}
+      <ProfileAvatarTrigger
+        avatarInitial={avatarInitial}
+        isOpen={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
       />
-    </>
+
+      {/* Dropdown Card */}
+      {isOpen && (
+        <ProfileDropdownMenu
+          displayName={displayName}
+          displayEmail={displayEmail}
+          displayCompany={displayCompany}
+          avatarInitial={avatarInitial}
+          adminPortalUrl={getAdminPortalUrl()}
+          onClose={() => setIsOpen(false)}
+          onOpenChangePassword={() => {
+            setIsOpen(false);
+            openPasswordModal();
+          }}
+          onOpenSupport={() => openModal('Enterprise Priority Support', 'SUPPORT_REQUEST')}
+          onLogout={handleLogout}
+        />
+      )}
+    </div>
   );
 };
 

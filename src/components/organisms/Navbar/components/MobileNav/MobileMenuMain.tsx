@@ -23,7 +23,7 @@ import { logout } from '@/redux/slices/authSlice';
 import Cookies from 'js-cookie';
 import { toast } from 'sonner';
 import { useContactModal } from '@/context/ContactModalContext';
-import { useGetProfileQuery, ChangePasswordModal } from '@/features/Profile';
+import { useGetProfileQuery } from '@/features/Profile';
 import { ATMButton } from '@/components/atoms';
 
 interface MobileMenuMainProps {
@@ -40,12 +40,11 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
   const token = useAppSelector((state) => state.auth.token);
   const authUser = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
-  const { openModal } = useContactModal();
+  const { openModal, openPasswordModal } = useContactModal();
 
   const { data: liveProfile } = useGetProfileQuery(undefined, { skip: !token });
 
   const [hasLoggedOut, setHasLoggedOut] = useState(false);
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   const rawAuthUser = (authUser || {}) as any;
   const rawProfile = (liveProfile || {}) as any;
@@ -260,87 +259,97 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.25 }}
-            className="sticky bottom-0 z-10 mx-auto mt-2 flex w-full max-w-md flex-col gap-2.5 border-t border-slate-200/70 dark:border-slate-800 bg-white dark:bg-slate-950 py-3.5"
+            className="mx-auto mt-4 flex w-full max-w-md flex-col gap-3 border-t border-slate-200/80 dark:border-slate-800 pt-4 pb-2"
           >
             {token ? (
-              <>
-                {/* User Identity Box */}
-                <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 flex items-center justify-between gap-2.5 shadow-2xs">
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF4D00] to-[#E03E00] text-white font-syne text-xs font-black shadow-xs uppercase">
-                      {avatarInitial}
-                    </div>
-                    <div className="min-w-0">
+              <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-gradient-to-b from-slate-50/90 via-white to-slate-50/50 dark:from-slate-900/90 dark:via-slate-900 dark:to-slate-950 p-4 shadow-sm space-y-3.5">
+                {/* 1. Customer Identity Header */}
+                <div className="flex items-start gap-3">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF4D00] to-[#E03E00] text-white font-syne text-sm font-black shadow-sm uppercase">
+                    {avatarInitial}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-1.5">
                       <p className="text-xs font-syne font-bold text-slate-900 dark:text-white truncate">
                         {displayName}
                       </p>
-                      <p className="text-[10.5px] text-slate-500 dark:text-slate-400 truncate flex items-center gap-1">
-                        <Building2 size={11} className="text-[#FF4D00] shrink-0" />
-                        <span className="truncate">{displayCompany}</span>
-                      </p>
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800/60 shrink-0">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        Active
+                      </span>
                     </div>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5" title={displayEmail}>
+                      {displayEmail}
+                    </p>
+                    <p className="text-[10px] text-slate-600 dark:text-slate-300 font-medium truncate flex items-center gap-1 mt-1 bg-slate-100/80 dark:bg-slate-800/80 px-2 py-0.5 rounded-md w-fit">
+                      <Building2 size={11} className="text-[#FF4D00] shrink-0" />
+                      <span className="truncate">{displayCompany}</span>
+                    </p>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800/60 shrink-0">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    Active
-                  </span>
                 </div>
 
-                {/* Primary CTA: Go to Admin Panel */}
+                {/* 2. Primary Action: Open Admin Dashboard */}
                 <a
                   href={getAdminPortalUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={onClose}
-                  className="flex h-11 cursor-pointer items-center justify-between px-4 rounded-xl bg-gradient-to-r from-[#FF4D00] via-[#FF621F] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white font-syne text-xs font-bold tracking-wide shadow-md shadow-orange-500/25 transition-all active:scale-95"
+                  className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white font-syne shadow-md shadow-orange-500/20 transition-all active:scale-[0.98] group"
                 >
-                  <div className="flex items-center gap-2">
-                    <Sparkles size={14} className="text-amber-300 fill-amber-300" />
-                    <span>Go to Admin Panel</span>
+                  <div className="flex items-center gap-2.5">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-white backdrop-blur-xs">
+                      <Sparkles size={15} className="text-amber-200 fill-amber-200" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-xs font-bold leading-tight">Go to Admin Panel</p>
+                      <p className="text-[10px] text-white/85 leading-tight mt-0.5">Enterprise operations & branches portal</p>
+                    </div>
                   </div>
-                  <ExternalLink size={13} />
+                  <ExternalLink size={14} className="text-white/80 group-hover:translate-x-0.5 transition-transform shrink-0" />
                 </a>
 
-                {/* Secondary Actions */}
-                <div className="grid grid-cols-2 gap-2">
-                  <ATMButton
+                {/* 3. Account Settings List */}
+                <div className="divide-y divide-slate-100 dark:divide-slate-800/80 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/60 overflow-hidden text-xs">
+                  <button
                     type="button"
-                    variant="outline"
-                    size="sm"
-                    fullWidth
-                    onClick={() => setIsPasswordModalOpen(true)}
-                    leftIcon={<KeyRound size={13} />}
+                    onClick={() => {
+                      onClose();
+                      openPasswordModal();
+                    }}
+                    className="flex w-full items-center justify-between p-2.5 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors text-slate-700 dark:text-slate-200 cursor-pointer text-left"
                   >
-                    Change Password
-                  </ATMButton>
-
-                  <ATMButton
+                    <div className="flex items-center gap-2.5">
+                      <KeyRound size={14} className="text-slate-400" />
+                      <span className="font-medium">Change Password</span>
+                    </div>
+                    <ChevronRight size={13} className="text-slate-400" />
+                  </button>
+                  <button
                     type="button"
-                    variant="outline"
-                    size="sm"
-                    fullWidth
                     onClick={() => {
                       onClose();
                       openModal('Enterprise Priority Support', 'MOBILE_NAV_CONTACT');
                     }}
-                    leftIcon={<Headset size={13} className="text-[#FF4D00]" />}
+                    className="flex w-full items-center justify-between p-2.5 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors text-slate-700 dark:text-slate-200 cursor-pointer text-left"
                   >
-                    Support
-                  </ATMButton>
+                    <div className="flex items-center gap-2.5">
+                      <Headset size={14} className="text-slate-400" />
+                      <span className="font-medium">Help & Support</span>
+                    </div>
+                    <ChevronRight size={13} className="text-slate-400" />
+                  </button>
                 </div>
 
-                {/* Sign Out Button */}
-                <ATMButton
+                {/* 4. Sign Out */}
+                <button
                   type="button"
-                  variant="danger"
-                  size="sm"
-                  fullWidth
                   onClick={handleLogout}
-                  leftIcon={<LogOut size={13} />}
+                  className="flex w-full items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer border border-transparent hover:border-rose-200 dark:hover:border-rose-900/50"
                 >
-                  Sign Out
-                </ATMButton>
-              </>
+                  <LogOut size={13} />
+                  <span>Sign Out</span>
+                </button>
+              </div>
             ) : (
               <>
                 <button
@@ -367,11 +376,8 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
           </motion.div>
         </motion.div>
       </div>
-
-      <ChangePasswordModal
-        isOpen={isPasswordModalOpen}
-        onClose={() => setIsPasswordModalOpen(false)}
-      />
     </>
   );
 };
+
+export default MobileMenuMain;

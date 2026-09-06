@@ -42,27 +42,31 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onSucces
       onSubmit={handleSubmit}
     >
       {({ values }) => (
-        <Form className="space-y-4">
-          <div className="bg-slate-50 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200/60 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 flex items-start gap-2">
-            <ShieldAlert size={15} className="text-[#FF4D00] shrink-0 mt-0.5" />
-            <span>Enter the temporary password given by your Admin, then choose a strong new permanent password.</span>
+        <Form className="space-y-2">
+          <div className="bg-amber-500/10 dark:bg-amber-500/15 py-1.5 px-2.5 rounded-xl border border-amber-500/20 text-[10px] sm:text-[10.5px] text-amber-800 dark:text-amber-200 flex items-start gap-1.5">
+            <ShieldAlert size={13} className="text-[#FF4D00] shrink-0 mt-0.5" />
+            <span className="leading-tight">
+              Enter your current password and choose a strong new password to protect your account.
+            </span>
           </div>
 
           <ATMTextField
             name="currentPassword"
             type="password"
-            label="Current Temporary Password"
-            placeholder="Enter temporary password"
-            leftIcon={<Lock size={14} />}
+            label="Current Password"
+            placeholder="Enter current password"
+            leftIcon={<Lock size={13} />}
+            className="h-9 sm:h-9.5 text-xs"
             required
           />
 
           <ATMTextField
             name="newPassword"
             type="password"
-            label="New Permanent Password"
-            placeholder="Min. 8 characters (A-Z, 0-9, @#$)"
-            leftIcon={<Lock size={14} />}
+            label="New Password"
+            placeholder="Min. 8 chars (A-Z, 0-9, @#$)"
+            leftIcon={<Lock size={13} />}
+            className="h-9 sm:h-9.5 text-xs"
             required
           />
 
@@ -71,43 +75,46 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onSucces
             type="password"
             label="Confirm New Password"
             placeholder="Re-type new password"
-            leftIcon={<Lock size={14} />}
+            leftIcon={<Lock size={13} />}
+            className="h-9 sm:h-9.5 text-xs"
             required
           />
 
           {/* Password Strength Checklist */}
-          <div className="p-3 bg-slate-50/70 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800/80 space-y-1.5">
-            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Security Requirements</div>
-            <div className="grid grid-cols-2 gap-1 text-[10.5px]">
-              <div className={`flex items-center gap-1.5 ${values.newPassword.length >= 8 ? 'text-emerald-600' : 'text-slate-400'}`}>
-                <CheckCircle2 size={12} className={values.newPassword.length >= 8 ? 'text-emerald-500' : 'text-slate-300'} />
+          <div className="py-1.5 px-2.5 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/70 dark:border-slate-800 space-y-1">
+            <div className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+              Password Requirements
+            </div>
+            <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[9.5px] sm:text-[10px]">
+              <div className={`flex items-center gap-1.5 ${values.newPassword.length >= 8 ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-slate-400'}`}>
+                <CheckCircle2 size={11} className={values.newPassword.length >= 8 ? 'text-emerald-500' : 'text-slate-300 dark:text-slate-600'} />
                 <span>8+ Characters</span>
               </div>
-              <div className={`flex items-center gap-1.5 ${/[A-Z]/.test(values.newPassword) ? 'text-emerald-600' : 'text-slate-400'}`}>
-                <CheckCircle2 size={12} className={/[A-Z]/.test(values.newPassword) ? 'text-emerald-500' : 'text-slate-300'} />
+              <div className={`flex items-center gap-1.5 ${/[A-Z]/.test(values.newPassword) ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-slate-400'}`}>
+                <CheckCircle2 size={11} className={/[A-Z]/.test(values.newPassword) ? 'text-emerald-500' : 'text-slate-300 dark:text-slate-600'} />
                 <span>1 Uppercase (A-Z)</span>
               </div>
-              <div className={`flex items-center gap-1.5 ${/[0-9]/.test(values.newPassword) ? 'text-emerald-600' : 'text-slate-400'}`}>
-                <CheckCircle2 size={12} className={/[0-9]/.test(values.newPassword) ? 'text-emerald-500' : 'text-slate-300'} />
+              <div className={`flex items-center gap-1.5 ${/[0-9]/.test(values.newPassword) ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-slate-400'}`}>
+                <CheckCircle2 size={11} className={/[0-9]/.test(values.newPassword) ? 'text-emerald-500' : 'text-slate-300 dark:text-slate-600'} />
                 <span>1 Number (0-9)</span>
               </div>
-              <div className={`flex items-center gap-1.5 ${/[^A-Za-z0-9]/.test(values.newPassword) ? 'text-emerald-600' : 'text-slate-400'}`}>
-                <CheckCircle2 size={12} className={/[^A-Za-z0-9]/.test(values.newPassword) ? 'text-emerald-500' : 'text-slate-300'} />
+              <div className={`flex items-center gap-1.5 ${/[^A-Za-z0-9]/.test(values.newPassword) ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-slate-400'}`}>
+                <CheckCircle2 size={11} className={/[^A-Za-z0-9]/.test(values.newPassword) ? 'text-emerald-500' : 'text-slate-300 dark:text-slate-600'} />
                 <span>1 Special (@#$)</span>
               </div>
             </div>
           </div>
 
-          <div className="pt-2">
+          <div className="pt-0.5">
             <ATMButton
               type="submit"
               variant="form"
               fullWidth
               size="form"
               isLoading={isLoading}
-              loadingText="Updating Password..."
+              loadingText="Updating..."
             >
-              Update & Secure Password
+              Update Password
             </ATMButton>
           </div>
         </Form>
