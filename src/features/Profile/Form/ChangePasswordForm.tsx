@@ -9,7 +9,8 @@ import { ATMTextField, ATMButton } from '@/components/atoms';
 import { ChangePasswordValidationSchema } from '../validation/ChangePasswordValidation';
 import { INITIAL_CHANGE_PASSWORD_VALUES } from '../Constants/ProfileConstants';
 import { ChangePasswordFormValues } from '../Types/ProfileTypes';
-import { useChangePasswordMutation } from '../Service/ProfileService';
+import { useChangePasswordMutation, useGetProfileQuery } from '../Service/ProfileService';
+import { useAppSelector } from '@/redux/hooks';
 import { parseApiError } from '@/lib/errorHandler';
 
 interface ChangePasswordFormProps {
@@ -18,10 +19,18 @@ interface ChangePasswordFormProps {
 
 export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onSuccess }) => {
   const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const token = useAppSelector((state) => state.auth.token);
+  const authUser = useAppSelector((state) => state.auth.user);
+  const { data: liveProfile } = useGetProfileQuery(undefined, { skip: !token });
 
   const handleSubmit = async (values: ChangePasswordFormValues, { resetForm }: any) => {
     try {
+      const rawProfile = (liveProfile || {}) as any;
+      const rawUser = (authUser || {}) as any;
+      const resolvedUserId = rawProfile?.id || rawProfile?.userId || rawUser?.id || rawUser?.userId;
+
       await changePassword({
+        ...(resolvedUserId ? { userId: resolvedUserId } : {}),
         currentPassword: values.currentPassword,
         newPassword: values.newPassword,
       }).unwrap();
