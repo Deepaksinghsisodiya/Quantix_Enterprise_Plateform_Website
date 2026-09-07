@@ -28,6 +28,8 @@ export default function HelpFAQPage() {
     f.answer.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const getFaqId = (faq: typeof faqs[number], idx: number) => faq.id || String(idx);
+
   const toggleFaq = (id: string) => {
     setOpenFaqId(openFaqId === id ? null : id);
   };
@@ -77,21 +79,21 @@ export default function HelpFAQPage() {
             <div className="text-center py-10 text-slate-500 text-xs">Loading answers...</div>
           ) : filteredFaqs.length > 0 ? (
             <div className="space-y-3">
-              {filteredFaqs.map((faq) => (
-                <div key={faq.id} className="rounded-2xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/30 dark:bg-slate-900/30 overflow-hidden transition-all">
+              {filteredFaqs.map((faq, idx) => (
+                <div key={getFaqId(faq, idx)} className="rounded-2xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/30 dark:bg-slate-900/30 overflow-hidden transition-all">
                   <button
-                    onClick={() => toggleFaq(faq.id)}
+                    onClick={() => toggleFaq(getFaqId(faq, idx))}
                     className="w-full text-left p-5 text-xs font-bold uppercase text-slate-800 dark:text-white hover:bg-gray-100/50 dark:hover:bg-slate-900/40 transition-all flex justify-between items-center cursor-pointer gap-4"
                   >
                     <span className="flex items-center gap-2">
                       <HelpCircle size={14} className="text-blue-500 shrink-0" />
                       {faq.question}
                     </span>
-                    {openFaqId === faq.id ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                    {openFaqId === getFaqId(faq, idx) ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                   </button>
 
                   <AnimatePresence>
-                    {openFaqId === faq.id && (
+                    {openFaqId === getFaqId(faq, idx) && (
                       <motion.div
                         initial={{ height: 0 }}
                         animate={{ height: 'auto' }}

@@ -69,15 +69,42 @@ export const LoginWrapper: React.FC = () => {
           localStorage.setItem('quantix_merchant_id', response.data.merchantId);
         }
 
-        toast.success('Successfully authenticated. Welcome to Quantix Enterprise!');
+        // Check if there is a redirect query param or source
+        const returnUrl = searchParams?.get('returnUrl') || Cookies.get('authReturnUrl') || '';
+        const source = (
+          searchParams?.get('source') ||
+          Cookies.get('authSource') ||
+          (pathname?.includes('/restaurant') ? 'restaurant' : pathname?.includes('/retail') ? 'retail' : '')
+        ).toLowerCase();
 
-        // Check if there is a redirect query param
-        const returnUrl = searchParams?.get('returnUrl');
+        Cookies.remove('authReturnUrl');
+        Cookies.remove('authSource');
+
+        toast.success('Successfully authenticated. Welcome back!');
+
+        if (returnUrl && returnUrl.startsWith('http')) {
+          window.location.href = returnUrl;
+          return;
+        }
+
+        if (source.includes('rest')) {
+          const restUrl = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3002';
+          window.location.href = restUrl;
+          return;
+        }
+
+        if (source.includes('retail')) {
+          const retailUrl = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
+          window.location.href = retailUrl;
+          return;
+        }
+
         if (returnUrl && returnUrl.startsWith('/')) {
           router.push(returnUrl);
-        } else {
-          router.push('/');
+          return;
         }
+
+        router.push('/');
       } else {
         toast.error('Authentication succeeded but no access token received.');
       }

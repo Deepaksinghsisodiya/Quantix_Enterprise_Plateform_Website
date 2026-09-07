@@ -1,12 +1,18 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Headset } from 'lucide-react';
 import { useContactModal } from '@/context/ContactModalContext';
 
 export const FloatingContactButton: React.FC = () => {
+  const pathname = usePathname();
   const { openModal } = useContactModal();
+
+  if (pathname === '/contact' || pathname?.startsWith('/contact')) {
+    return null;
+  }
 
   return (
     <motion.div

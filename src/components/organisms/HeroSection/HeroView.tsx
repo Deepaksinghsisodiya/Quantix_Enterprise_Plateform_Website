@@ -23,6 +23,8 @@ import {
 import { cn } from "@/lib/utils";
 import { HeroSlide } from "./HeroData";
 import { useContactModal } from "@/context/ContactModalContext";
+import { useGetAnnouncementsQuery } from "@/features/Announcements/Service/AnnouncementService";
+import { FALLBACK_ANNOUNCEMENTS } from "@/features/Announcements/constants/fallbackAnnouncements";
 
 export interface HeroViewProps {
   slides: HeroSlide[];
@@ -47,6 +49,11 @@ export const HeroView: React.FC<HeroViewProps> = ({
 }) => {
   const slide = slides[activeIndex];
   const { openModal } = useContactModal();
+  const { data: announcementsData } = useGetAnnouncementsQuery();
+  const announcements =
+    announcementsData && announcementsData.length > 0
+      ? announcementsData
+      : FALLBACK_ANNOUNCEMENTS;
 
   const formatHeading = (heading: string) => {
     const words = heading.split(" ");
@@ -169,52 +176,39 @@ export const HeroView: React.FC<HeroViewProps> = ({
 
                 {/* Marquee Track */}
                 <div className="min-w-0 flex-1 overflow-hidden ml-2">
-                  <div className="flex w-max shrink-0 animate-[heroTickerScroll_32s_linear_infinite] hover:[animation-play-state:paused] items-center gap-6 text-[11px] font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
-                    <div className="flex items-center gap-6 shrink-0">
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Restaurant POS</span>
-                        <span>Tableside orders & kitchen ticket routing</span>
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Retail POS</span>
-                        <span>Offline checkout with barcode inventory</span>
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Cloud HQ</span>
-                        <span>Multi-store live analytics & sync</span>
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Online Ordering</span>
-                        <span>Web & mobile app unified sales</span>
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                    </div>
-
-                    <div className="flex items-center gap-6 shrink-0">
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Restaurant POS</span>
-                        <span>Tableside orders & kitchen ticket routing</span>
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Retail POS</span>
-                        <span>Offline checkout with barcode inventory</span>
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Cloud HQ</span>
-                        <span>Multi-store live analytics & sync</span>
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="inline-block rounded-md bg-orange-500/10 dark:bg-orange-500/20 px-1.5 py-0.5 text-[9.5px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-wider">Online Ordering</span>
-                        <span>Web & mobile app unified sales</span>
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                    </div>
+                  <div className="flex w-max shrink-0 animate-[heroTickerScroll_85s_linear_infinite] hover:[animation-play-state:paused] items-center gap-6 text-[11px] font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
+                    {[1, 2].map((group) => (
+                      <div key={group} className="flex items-center gap-6 shrink-0">
+                        {announcements.map((item, idx) => (
+                          <React.Fragment key={`${group}-${item.announcementId || idx}`}>
+                            <Link
+                              href={item.linkUrl || "/changelog"}
+                              className="inline-flex items-center gap-1.5 transition-colors hover:text-[#FF4F00]"
+                            >
+                              <span
+                                className={cn(
+                                  "inline-block rounded-md px-1.5 py-0.5 text-[9.5px] font-black uppercase tracking-wider",
+                                  item.kind === "Event"
+                                    ? "bg-purple-500/10 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400"
+                                    : item.kind === "Notice"
+                                    ? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
+                                    : "bg-orange-500/10 text-orange-600 dark:bg-orange-500/20 dark:text-orange-400"
+                                )}
+                              >
+                                {item.kind === "Notice" ? "Offer" : item.kind === "Event" ? "Event" : "Update"}
+                              </span>
+                              <span className="font-semibold text-slate-800 dark:text-slate-200">{item.title}</span>
+                              {item.body && (
+                                <span className="text-slate-500 dark:text-slate-400">
+                                  — {item.body}
+                                </span>
+                              )}
+                            </Link>
+                            <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

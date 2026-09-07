@@ -15,6 +15,7 @@ export const COMPANY_LINKS: FooterLink[] = [
   { href: "/about", label: "About Quantix Enterprise" },
   { href: "/resources/pos-guide", label: "Enterprise POS Guide", badge: "2026" },
   { href: "/resources", label: "Resource Hub & Blueprints" },
+  { href: "/newsletter", label: "Weekly Newsletter", badge: "New" },
   { href: "/roi-calculator", label: "ROI Savings Forecaster" },
   { href: "/contact/sales", label: "Contact Enterprise Sales" },
 ];

@@ -49,8 +49,8 @@ export const RESTAURANT_SITE_URL = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'ht
 export const RETAIL_SITE_URL = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
 
 export const PRIMARY_LINKS: NavLink[] = [
-  { label: 'Products', href: '/products', desc: 'Complete Restaurant & Retail Cloud POS Software', hasMegaMenu: true },
-  { label: 'Solutions', href: '/solutions', desc: 'Tailored workflows for Dining, Takeaways & Retail Stores', hasMegaMenu: true },
+  { label: 'Solutions', href: '/products', desc: 'Complete Restaurant & Retail Cloud POS Software', hasMegaMenu: true },
+  { label: 'Features', href: '/solutions', desc: 'Tailored workflows for Dining, Takeaways & Retail Stores', hasMegaMenu: true },
   { label: 'Integrations', href: '/integrations', desc: 'Card readers, online delivery apps & accounting sync', hasMegaMenu: true },
   { label: 'Pricing', href: '/pricing', desc: 'Affordable monthly plans with 3 Months Free trial' },
   { label: 'Resources', href: '/resources', desc: 'Help guides, ROI calculator & setup tutorials', hasMegaMenu: true },

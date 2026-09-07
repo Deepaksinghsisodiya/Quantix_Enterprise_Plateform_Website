@@ -65,7 +65,7 @@ export const VerifyOtpWrapper: React.FC = () => {
   const handleCompleteRedirect = () => {
     // Check where user originated from (Restaurant, Retail, or Enterprise)
     const targetReturnUrl = returnUrl || Cookies.get('authReturnUrl') || '';
-    const targetSource = source || Cookies.get('authSource') || '';
+    const targetSource = (source || Cookies.get('authSource') || '').toLowerCase();
 
     // Clean up temporary registration pending cookies
     Cookies.remove('pendingMerchantId');
@@ -79,17 +79,23 @@ export const VerifyOtpWrapper: React.FC = () => {
       return;
     }
 
-    if (targetSource === 'restaurant') {
+    if (targetSource.includes('rest')) {
       const restUrl = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3002';
       toast.success('Verification successful! Redirecting to Restaurant platform...');
       window.location.href = restUrl;
       return;
     }
 
-    if (targetSource === 'retail') {
+    if (targetSource.includes('retail')) {
       const retailUrl = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
       toast.success('Verification successful! Redirecting to Retail platform...');
       window.location.href = retailUrl;
+      return;
+    }
+
+    if (targetReturnUrl && targetReturnUrl.startsWith('/')) {
+      toast.success('Verification successful! Welcome to Quantix Enterprise.');
+      router.push(targetReturnUrl);
       return;
     }
 

@@ -3,7 +3,7 @@
 
 import React, { useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Cookies from 'js-cookie';
@@ -18,6 +18,7 @@ import { SignUpForm } from './SignUpForm';
 export const SignUpFormWrapper: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const [createBasicInfoSignup, { isLoading }] = useCreateBasicInfoSignupMutation();
 
   const planId = searchParams.get('planId');
@@ -41,18 +42,42 @@ export const SignUpFormWrapper: React.FC = () => {
     }
   }, [planId, planCode]);
 
-  // Read URL query parameter (e.g. ?businessNature=Retail or ?source=retail)
-  const initialNature = useMemo(() => {
-    const typeParam = searchParams.get('businessNature') || searchParams.get('source') || searchParams.get('type') || searchParams.get('nature');
-    if (typeParam) {
-      const lower = typeParam.toLowerCase();
-      if (lower.includes('retail')) return 'Retail';
-      if (lower.includes('rest')) return 'Restaurant';
-      if (lower.includes('enterprise')) return 'Enterprise';
-      return typeParam;
+  // Read URL query parameter, pathname, or cookies to determine origin
+  const effectiveSource = useMemo(() => {
+    const urlSource = searchParams.get('source') || searchParams.get('businessNature') || searchParams.get('type') || searchParams.get('nature');
+    if (urlSource) {
+      const lower = urlSource.toLowerCase();
+      if (lower.includes('rest')) return 'restaurant';
+      if (lower.includes('retail')) return 'retail';
+      if (lower.includes('enterprise')) return 'enterprise';
+      return lower;
     }
+    if (pathname?.includes('/restaurant')) return 'restaurant';
+    if (pathname?.includes('/retail')) return 'retail';
+    const cookieSource = Cookies.get('authSource');
+    if (cookieSource) return cookieSource.toLowerCase();
+    return 'enterprise';
+  }, [searchParams, pathname]);
+
+  const initialNature = useMemo(() => {
+    if (effectiveSource.includes('rest')) return 'Restaurant';
+    if (effectiveSource.includes('retail')) return 'Retail';
     return 'Enterprise';
-  }, [searchParams]);
+  }, [effectiveSource]);
+
+  const effectiveReturnUrl = useMemo(() => {
+    const urlReturn = searchParams.get('returnUrl');
+    if (urlReturn) return urlReturn;
+    const cookieReturn = Cookies.get('authReturnUrl');
+    if (cookieReturn) return cookieReturn;
+    if (effectiveSource.includes('rest')) {
+      return process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3002';
+    }
+    if (effectiveSource.includes('retail')) {
+      return process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
+    }
+    return '';
+  }, [searchParams, effectiveSource]);
 
   // Yup Validation Schema with proper error messages
   const validationSchema = Yup.object().shape({
@@ -103,10 +128,11 @@ export const SignUpFormWrapper: React.FC = () => {
         Cookies.set('pendingMerchantId', merchantId);
         Cookies.set('pendingAdminEmail', adminEmail);
 
-        const returnUrl = searchParams.get('returnUrl') || '';
-        const source = searchParams.get('source') || '';
-        if (returnUrl) Cookies.set('authReturnUrl', returnUrl);
-        if (source) Cookies.set('authSource', source);
+        // Persist origin source and returnUrl
+        Cookies.set('authSource', effectiveSource, { expires: 1 });
+        if (effectiveReturnUrl) {
+          Cookies.set('authReturnUrl', effectiveReturnUrl, { expires: 1 });
+        }
 
         toast.success(response.message || 'Account created! Please verify your email with the OTP sent to you.');
 
@@ -114,9 +140,11 @@ export const SignUpFormWrapper: React.FC = () => {
         const verifyParams = new URLSearchParams({
           id: merchantId,
           email: adminEmail,
+          source: effectiveSource,
         });
-        if (returnUrl) verifyParams.set('returnUrl', returnUrl);
-        if (source) verifyParams.set('source', source);
+        if (effectiveReturnUrl) {
+          verifyParams.set('returnUrl', effectiveReturnUrl);
+        }
 
         router.push(`/sign-up/verify?${verifyParams.toString()}`);
       } else {
@@ -184,10 +212,10 @@ export const SignUpFormWrapper: React.FC = () => {
         Already have an account?{' '}
         <Link
           href={
-            typeof window !== 'undefined' && window.location.pathname.includes('/restaurant')
-              ? '/sign-in/restaurant'
-              : typeof window !== 'undefined' && window.location.pathname.includes('/retail')
-                ? '/sign-in/retail'
+            effectiveSource.includes('rest')
+              ? `/sign-in/restaurant${effectiveReturnUrl ? `?returnUrl=${encodeURIComponent(effectiveReturnUrl)}` : ''}`
+              : effectiveSource.includes('retail')
+                ? `/sign-in/retail${effectiveReturnUrl ? `?returnUrl=${encodeURIComponent(effectiveReturnUrl)}` : ''}`
                 : `/sign-in${searchParams.toString() ? `?${searchParams.toString()}` : ''}`
           }
           className="font-bold text-[#FF4D00] hover:text-[#E03E00] transition-colors inline-block ml-0.5 hover:underline"
