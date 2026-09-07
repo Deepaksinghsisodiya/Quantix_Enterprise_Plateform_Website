@@ -81,6 +81,8 @@ export const baseApi = createApi({
     'Integrations',
     'Downloads',
     'HelpCentre',
+    'Clientele',
+    'Announcements',
   ],
   endpoints: (builder) => ({}), // placeholder – add endpoints elsewhere
 });

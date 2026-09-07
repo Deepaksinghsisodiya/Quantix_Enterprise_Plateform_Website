@@ -58,15 +58,18 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
             )}
           >
             {isLoading
-              ? Array.from({ length: 6 }).map((_, i) => <FAQSkeleton key={i} />)
-              : faqs.map((faq) => (
-                  <FAQAccordionItem
-                    key={faq.id}
-                    faq={faq}
-                    isOpen={openId === faq.id}
-                    onToggle={() => toggle(faq.id)}
-                  />
-                ))}
+              ? Array.from({ length: 6 }).map((_, i) => <FAQSkeleton key={`faq-skeleton-${i}`} />)
+              : faqs.map((faq, index) => {
+                  const itemId = faq.id || faq.faqId || `${faq.question}-${index}`;
+                  return (
+                    <FAQAccordionItem
+                      key={itemId}
+                      faq={faq}
+                      isOpen={openId === itemId}
+                      onToggle={() => toggle(itemId)}
+                    />
+                  );
+                })}
           </div>
         </div>
       </div>

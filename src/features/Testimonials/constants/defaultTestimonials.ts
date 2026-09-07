@@ -1,0 +1,60 @@
+// src/features/Testimonials/constants/defaultTestimonials.ts
+import { TestimonialDto } from '../Types/TestimonialsTypes';
+
+export const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
+  {
+    id: "t1",
+    quote: "With over 100 outlets synced to a single Cloud Ledger, Quantix is the backbone of our enterprise chain. Real-time multi-branch sync and automated inventory forecasting transformed our daily turnaround.",
+    author: "Elena Rostova",
+    role: "VP Operations",
+    companyName: "FoodFlow Enterprise Group",
+    industry: "Enterprise",
+    rating: 5,
+    highlightStat: "+38% Faster Checkout",
+    statLabel: "Speed Improvement",
+  },
+  {
+    id: "t2",
+    quote: "Quantix changed how we run our chain stores. Offline sync is so robust that weekend rushes never lag. Automated tax compliance and central inventory tracking keep our margins protected.",
+    author: "Amanda Sterling",
+    role: "Director of Retail Ops",
+    companyName: "Bloom Retail Brands",
+    industry: "Retail",
+    rating: 5,
+    highlightStat: "99.99% Uptime",
+    statLabel: "Reliability Record",
+  },
+  {
+    id: "t3",
+    quote: "The interactive table layout mapper and instant split-billing reduced table turnaround by 18 minutes during peak dinners. Training new captains and cashiers takes under 15 minutes.",
+    author: "Chef Giovanni",
+    role: "Culinary Director & Owner",
+    companyName: "Bella Italia Group",
+    industry: "Restaurant",
+    rating: 5,
+    highlightStat: "15% Seat Turnover",
+    statLabel: "Revenue Lift",
+  },
+  {
+    id: "t4",
+    quote: "Offline billing and centralized barcode catalogue across 24 stores eliminated register bottlenecks. We scaled across 3 regions seamlessly using Quantix multi-store master database.",
+    author: "Marcus Vance",
+    role: "Chief Operating Officer",
+    companyName: "Urban Style Wear",
+    industry: "Retail",
+    rating: 5,
+    highlightStat: "0 Offline Downtime",
+    statLabel: "Business Continuity",
+  },
+  {
+    id: "t5",
+    quote: "The unified kitchen display system and live order dispatch have eliminated order mix-ups. Customer feedback is tracked in real-time, boosting our guest satisfaction index to 98%.",
+    author: "Sarah Lindqvist",
+    role: "General Manager",
+    companyName: "Espresso House Collective",
+    industry: "Restaurant",
+    rating: 5,
+    highlightStat: "4.9/5 CSAT",
+    statLabel: "Customer Satisfaction",
+  }
+];

@@ -19,7 +19,8 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
       {children}
       <Toaster
         richColors
-        position="top-right"
+        closeButton
+        position="top-center"
         toastOptions={toastTheme as any}
       />
     </>

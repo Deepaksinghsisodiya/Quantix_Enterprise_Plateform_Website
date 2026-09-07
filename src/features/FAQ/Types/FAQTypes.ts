@@ -4,14 +4,17 @@
 export type FAQCategory = 'General' | 'Billing' | 'Technical' | 'Features' | string;
 
 export interface FAQItem {
-  id: string;
+  id?: string;
+  faqId?: string;
   question: string;
   answer: string;
   category?: FAQCategory;
+  appliesTo?: string;
   order?: number;
   /** legacy alias — some API versions return sortOrder instead of order */
   sortOrder?: number;
   isPopular?: boolean;
+  isActive?: boolean;
 }
 
 export interface ApiFAQResponse {

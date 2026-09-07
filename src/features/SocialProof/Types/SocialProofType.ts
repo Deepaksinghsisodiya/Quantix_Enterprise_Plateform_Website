@@ -1,1 +1,1 @@
-export * from '../Types/SocialProofTypes';
+export * from './SocialProofTypes';

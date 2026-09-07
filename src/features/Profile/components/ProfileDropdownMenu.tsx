@@ -40,9 +40,9 @@ export const ProfileDropdownMenu: React.FC<ProfileDropdownMenuProps> = ({
   return (
     <div className="absolute top-full right-0 mt-2.5 w-80 rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-2xl shadow-slate-900/20 dark:shadow-black/80 overflow-hidden z-50 animate-in fade-in-0 zoom-in-95 duration-150 text-slate-900 dark:text-slate-100 font-sans">
       {/* 1. Header: Customer Identity */}
-      <div className="p-4 bg-gradient-to-b from-slate-50/90 to-white dark:from-slate-800/60 dark:to-slate-900/80 border-b border-slate-100 dark:border-slate-800">
+      <div className="p-4 bg-linear-to-b from-slate-50/90 to-white dark:from-slate-800/60 dark:to-slate-900/80 border-b border-slate-100 dark:border-slate-800">
         <div className="flex items-start gap-3">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF4D00] to-[#E03E00] text-white font-syne text-base font-black shadow-md shadow-orange-500/25 ring-2 ring-[#FF4D00]/20 uppercase">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-tr from-[#FF4D00] to-[#E03E00] text-white font-syne text-base font-black shadow-md shadow-orange-500/25 ring-2 ring-[#FF4D00]/20 uppercase">
             {avatarInitial}
           </div>
           <div className="min-w-0 flex-1">
@@ -67,13 +67,13 @@ export const ProfileDropdownMenu: React.FC<ProfileDropdownMenuProps> = ({
       </div>
 
       {/* 2. Primary Command Center Action */}
-      <div className="p-3 bg-gradient-to-b from-orange-50/70 to-amber-50/40 dark:from-orange-950/30 dark:to-slate-900/40 border-b border-orange-100/80 dark:border-orange-900/30">
+      <div className="p-3 bg-linear-to-b from-orange-50/70 to-amber-50/40 dark:from-orange-950/30 dark:to-slate-900/40 border-b border-orange-100/80 dark:border-orange-900/30">
         <a
           href={adminPortalUrl}
           target="_blank"
           rel="noopener noreferrer"
           onClick={onClose}
-          className="w-full flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white shadow-md shadow-orange-500/25 transition-all duration-200 hover:scale-[1.01] active:scale-[0.98] group cursor-pointer"
+          className="w-full flex items-center justify-between p-3 rounded-xl bg-linear-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white shadow-md shadow-orange-500/25 transition-all duration-200 hover:scale-[1.01] active:scale-[0.98] group cursor-pointer"
         >
           <div className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-white backdrop-blur-xs">

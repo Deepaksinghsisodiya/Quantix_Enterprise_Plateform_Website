@@ -31,7 +31,7 @@ const buttonVariants = cva(
         sm: 'h-9 px-3.5 text-xs rounded-xl gap-2',
         md: 'h-10 sm:h-10.5 px-4.5 text-xs sm:text-[13px] rounded-xl gap-2',
         lg: 'h-12 px-6 text-sm sm:text-base rounded-xl gap-2.5',
-        form: 'h-11 sm:h-11.5 px-5 text-xs sm:text-sm rounded-xl gap-2 font-extrabold',
+        form: 'h-9.5 sm:h-10 px-4 text-xs sm:text-[13px] rounded-xl gap-2 font-bold',
       },
       fullWidth: {
         true: 'w-full',

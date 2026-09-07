@@ -1,1 +1,1 @@
-export { default } from '../NewsTickerMarquee';
+export { default } from '@/features/Announcements/components/AnnouncementTickerWrapper';

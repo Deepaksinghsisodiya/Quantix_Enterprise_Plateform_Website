@@ -122,8 +122,8 @@ function SplitAuthLeftBanner({
         edition: explicitAlt?.toUpperCase().includes('RESTAURANT')
           ? 'Restaurant POS Edition'
           : explicitAlt?.toUpperCase().includes('RETAIL')
-          ? 'Retail POS Edition'
-          : 'Enterprise Cloud Hub',
+            ? 'Retail POS Edition'
+            : 'Enterprise Cloud Hub',
       };
     }
 
@@ -188,7 +188,7 @@ function SplitAuthLeftBanner({
         </p>
         <div className="flex items-center gap-2 text-xs text-slate-300 font-medium">
           <ShieldCheck size={15} className="text-emerald-400 shrink-0" />
-          <span>Live Cloud API • 99.99% Uptime SLA • SOC-2 Certified</span>
+          <span>99.99% Uptime SLA • SOC-2 Certified</span>
         </div>
       </div>
     </div>
@@ -234,29 +234,26 @@ function SplitAuthMobileHeader() {
   const isExternalLink = homeHref.startsWith('http');
 
   return (
-    <div className="mb-6 lg:hidden flex items-center justify-between pb-3.5 border-b border-slate-100">
+    <div className="mb-2.5 lg:hidden flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
       {isExternalLink ? (
-        <a href={homeHref} className="inline-flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF4D00] text-white shadow-xs">
-            <Zap className="h-4.5 w-4.5 fill-white stroke-[2.5]" />
+        <a href={homeHref} className="inline-flex items-center gap-2">
+          <div className="flex h-7.5 w-7.5 shrink-0 items-center justify-center rounded-lg bg-[#FF4D00] text-white shadow-xs">
+            <Zap className="h-4 w-4 fill-white stroke-[2.5]" />
           </div>
-          <span className="font-syne text-lg font-bold tracking-tight text-slate-900">
+          <span className="font-syne text-[15px] sm:text-[17px] font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
             Quantix <span className="text-[#FF4D00]">{brandSubtext}</span>
           </span>
         </a>
       ) : (
-        <Link href="/" className="inline-flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF4D00] text-white shadow-xs">
-            <Zap className="h-4.5 w-4.5 fill-white stroke-[2.5]" />
+        <Link href="/" className="inline-flex items-center gap-2">
+          <div className="flex h-7.5 w-7.5 shrink-0 items-center justify-center rounded-lg bg-[#FF4D00] text-white shadow-xs">
+            <Zap className="h-4 w-4 fill-white stroke-[2.5]" />
           </div>
-          <span className="font-syne text-lg font-bold tracking-tight text-slate-900">
+          <span className="font-syne text-[15px] sm:text-[17px] font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
             Quantix <span className="text-[#FF4D00]">{brandSubtext}</span>
           </span>
         </Link>
       )}
-      <span className="text-[10.5px] font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200/60 px-2.5 py-0.5 rounded-full">
-        Live Cloud API
-      </span>
     </div>
   );
 }
@@ -269,21 +266,21 @@ export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
   coverSubtext,
 }) => {
   return (
-    <div className="min-h-screen w-full bg-[#FAFAFC] dark:bg-slate-950 flex flex-col justify-center items-center py-6 sm:py-10 px-3 sm:px-6 lg:px-8 font-sans relative overflow-x-hidden">
+    <div className="min-h-screen w-full bg-white dark:bg-slate-950 sm:bg-[#FAFAFC] sm:dark:bg-slate-950 flex flex-col justify-center items-center py-1 sm:py-5 lg:py-6 px-0 sm:px-4 lg:px-6 font-sans relative overflow-x-hidden">
 
       {/* Ambient background glows for high-end luxury feel */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-200/20 dark:bg-orange-950/20 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-slate-200/40 dark:bg-slate-900/30 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="hidden sm:block absolute top-0 left-1/4 w-96 h-96 bg-orange-200/20 dark:bg-orange-950/20 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="hidden sm:block absolute bottom-0 right-1/4 w-96 h-96 bg-slate-200/40 dark:bg-slate-900/30 rounded-full blur-3xl pointer-events-none -z-10" />
 
       {/* ── Main Centered Card Container ── */}
-      <div className="w-full max-w-none sm:max-w-xl lg:max-w-[1080px] xl:max-w-[1140px] mx-auto rounded-2xl sm:rounded-3xl shadow-2xl shadow-slate-300/40 dark:shadow-black/60 overflow-hidden relative z-10 flex flex-col lg:flex-row border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 my-auto">
+      <div className="w-full max-w-none sm:max-w-xl lg:max-w-[1020px] xl:max-w-[1080px] mx-auto rounded-none sm:rounded-2xl shadow-none sm:shadow-xl shadow-slate-300/40 dark:shadow-black/60 overflow-hidden relative z-10 flex flex-col lg:flex-row border-0 sm:border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 my-0 sm:my-auto">
 
         {/* ── LEFT SIDE: Showcase Image (DESKTOP ONLY lg+) ── */}
         <Suspense
           fallback={
-            <div className="hidden lg:flex lg:w-[48%] relative min-h-[620px] bg-slate-950 flex-col justify-between p-8 text-white">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#FF4D00] text-white">
-                <Zap className="h-5 w-5 fill-white stroke-[2.5]" />
+            <div className="hidden lg:flex lg:w-[48%] relative min-h-[500px] bg-slate-950 flex-col justify-between p-6 text-white">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF4D00] text-white">
+                <Zap className="h-4.5 w-4.5 fill-white stroke-[2.5]" />
               </div>
             </div>
           }
@@ -297,19 +294,19 @@ export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
         </Suspense>
 
         {/* ── RIGHT SIDE: Form Area ── */}
-        <div className="w-full lg:w-[52%] xl:w-[52%] bg-white dark:bg-slate-900 px-5 py-7 sm:px-10 sm:py-10 lg:p-10 xl:p-12 flex flex-col justify-center text-slate-900 dark:text-white">
+        <div className="w-full lg:w-[52%] xl:w-[52%] bg-white dark:bg-slate-900 px-4 pt-2.5 pb-4 sm:px-7 sm:py-5 lg:px-8 lg:py-6 flex flex-col justify-center text-slate-900 dark:text-white">
 
           {/* Mobile Top Brand Header */}
           <Suspense fallback={null}>
             <SplitAuthMobileHeader />
           </Suspense>
 
-          <div className="w-full max-w-[460px] mx-auto">{children}</div>
+          <div className="w-full max-w-[440px] mx-auto">{children}</div>
         </div>
       </div>
 
       {/* Footer fine-print */}
-      <div className="mt-5 sm:mt-6 text-center text-slate-400 dark:text-slate-500 text-xs font-normal">
+      <div className="mt-2 sm:mt-3 pb-4 sm:pb-0 text-center text-slate-400 dark:text-slate-500 text-[11px] font-normal">
         © {new Date().getFullYear()} Quantix Inc. All rights reserved. •{' '}
         <Link href="/privacy" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 underline underline-offset-2">
           Privacy Policy

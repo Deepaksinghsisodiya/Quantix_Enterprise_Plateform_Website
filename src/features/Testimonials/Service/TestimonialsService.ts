@@ -6,8 +6,14 @@ export const testimonialsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getTestimonials: builder.query<TestimonialDto[], void>({
       query: () => '/marketing/testimonials',
-      transformResponse: (response: ApiTestimonialsResponse) => {
-        return response?.success && response?.data ? response.data : [];
+      transformResponse: (response: any) => {
+        if (!response) return [];
+        if (Array.isArray(response)) return response;
+        if (Array.isArray(response?.data)) return response.data;
+        if (Array.isArray(response?.data?.testimonials)) return response.data.testimonials;
+        if (Array.isArray(response?.data?.items)) return response.data.items;
+        if (Array.isArray(response?.testimonials)) return response.testimonials;
+        return [];
       },
       providesTags: ['Testimonials'],
     }),

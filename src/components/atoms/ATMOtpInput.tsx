@@ -81,12 +81,15 @@ export const ATMOtpInput: React.FC<ATMOtpInputProps> = ({
             onChange={(e) => handleInputChange(idx, e.target.value)}
             onKeyDown={(e) => handleKeyDown(idx, e)}
             className={cn(
-              'h-11 sm:h-14 w-full text-center text-base sm:text-xl font-bold font-mono rounded-lg sm:rounded-xl border bg-white dark:bg-slate-900 text-slate-900 dark:text-white transition-all focus:outline-none disabled:opacity-50 disabled:bg-slate-50 dark:disabled:bg-slate-800 shadow-2xs p-0',
-              hasError
+              'h-11 sm:h-14 w-full text-center text-base sm:text-xl font-bold font-mono rounded-lg sm:rounded-xl border text-slate-900 dark:text-white transition-all focus:outline-none shadow-2xs p-0',
+              disabled
+                ? 'opacity-50 bg-slate-50 dark:bg-slate-800 cursor-not-allowed border-slate-200 dark:border-slate-800'
+                : 'bg-white dark:bg-slate-900',
+              !disabled && (hasError
                 ? 'border-red-500 bg-red-50/20 dark:bg-red-950/20 focus:ring-2 focus:ring-red-500/20'
                 : isFilled
-                ? 'border-[#FF4D00] bg-orange-50/20 dark:bg-orange-950/20 ring-2 ring-[#FF4D00]/20'
-                : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/20'
+                ? 'border-primary bg-orange-50/20 dark:bg-orange-950/20 ring-2 ring-primary/20'
+                : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20')
             )}
           />
         );

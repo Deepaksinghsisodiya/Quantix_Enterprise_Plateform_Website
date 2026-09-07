@@ -262,10 +262,10 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
             className="mx-auto mt-4 flex w-full max-w-md flex-col gap-3 border-t border-slate-200/80 dark:border-slate-800 pt-4 pb-2"
           >
             {token ? (
-              <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-gradient-to-b from-slate-50/90 via-white to-slate-50/50 dark:from-slate-900/90 dark:via-slate-900 dark:to-slate-950 p-4 shadow-sm space-y-3.5">
+              <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-linear-to-b from-slate-50/90 via-white to-slate-50/50 dark:from-slate-900/90 dark:via-slate-900 dark:to-slate-950 p-4 shadow-sm space-y-3.5">
                 {/* 1. Customer Identity Header */}
                 <div className="flex items-start gap-3">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF4D00] to-[#E03E00] text-white font-syne text-sm font-black shadow-sm uppercase">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-tr from-[#FF4D00] to-[#E03E00] text-white font-syne text-sm font-black shadow-sm uppercase">
                     {avatarInitial}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -294,7 +294,7 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={onClose}
-                  className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white font-syne shadow-md shadow-orange-500/20 transition-all active:scale-[0.98] group"
+                  className="flex items-center justify-between p-3 rounded-xl bg-linear-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C83400] text-white font-syne shadow-md shadow-orange-500/20 transition-all active:scale-[0.98] group"
                 >
                   <div className="flex items-center gap-2.5">
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-white backdrop-blur-xs">
@@ -309,7 +309,8 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
                 </a>
 
                 {/* 3. Account Settings List */}
-                <div className="divide-y divide-slate-100 dark:divide-slate-800/80 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/60 overflow-hidden text-xs">
+                <div className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/60 overflow-hidden text-xs">
+                  <div className="divide-y divide-slate-100 dark:divide-slate-800/80">
                   <button
                     type="button"
                     onClick={() => {
@@ -351,6 +352,7 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
                   </button>
                 </div>
               </div>
+            </div>
             ) : (
               <>
                 <button

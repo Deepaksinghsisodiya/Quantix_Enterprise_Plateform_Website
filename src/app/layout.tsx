@@ -80,7 +80,7 @@ export default function RootLayout({
       <body className={`${lato.variable} ${syne.variable} font-sans antialiased min-h-full flex flex-col bg-gray-50 dark:bg-slate-950 transition-colors duration-300`} suppressHydrationWarning>
         <Providers>
           {children}
-          <Toaster richColors position="top-right" theme="dark" />
+          <Toaster richColors position="top-center" closeButton theme="dark" />
         </Providers>
       </body>
     </html>

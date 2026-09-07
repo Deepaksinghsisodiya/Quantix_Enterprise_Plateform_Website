@@ -44,7 +44,7 @@ export const NavAuthActions: React.FC = () => {
         <button
           type="button"
           onClick={() => openModal('Claim Your 3 Months Free Trial', 'START_FREE_TRIAL')}
-          className="flex items-center justify-center gap-2 h-10 px-5.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-syne font-extrabold text-[13px] transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-md shadow-red-600/30 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/40"
+          className="flex items-center justify-center gap-2 h-10 px-5.5 rounded-xl bg-linear-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-syne font-extrabold text-[13px] transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-md shadow-red-600/30 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/40"
         >
           <Sparkles size={14} className="text-amber-300 fill-amber-300" />
           <span>Claim 3 Months Free</span>
@@ -67,7 +67,7 @@ export const NavAuthActions: React.FC = () => {
       <button
         type="button"
         onClick={() => openModal('Claim Your 3 Months Free Trial', 'START_FREE_TRIAL')}
-        className="flex items-center justify-center gap-2 h-10 px-5.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-syne font-extrabold text-[13px] transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-md shadow-red-600/30 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/40"
+        className="flex items-center justify-center gap-2 h-10 px-5.5 rounded-xl bg-linear-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-syne font-extrabold text-[13px] transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-md shadow-red-600/30 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/40"
       >
         <Sparkles size={14} className="text-amber-300 fill-amber-300" />
         <span>Claim 3 Months Free</span>

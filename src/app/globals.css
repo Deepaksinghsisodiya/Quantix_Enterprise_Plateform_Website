@@ -498,3 +498,72 @@ html {
     transform: translate3d(-50%, 0, 0);
   }
 }
+
+/* Sonner Toast close button on top-right corner */
+[data-sonner-toaster] [data-close-button] {
+  left: unset !important;
+  right: 0 !important;
+  transform: translate(35%, -35%) !important;
+}
+
+/* Sonner Mobile Responsiveness for long messages */
+@media (max-width: 640px) {
+  [data-sonner-toaster] {
+    position: fixed !important;
+    top: 16px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    pointer-events: none !important;
+    transform: none !important;
+  }
+
+  [data-sonner-toast] {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: calc(100% - 32px) !important;
+    max-width: calc(100vw - 32px) !important;
+    min-height: 48px !important;
+    height: auto !important;
+    padding: 12px 38px 12px 14px !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3) !important;
+    box-sizing: border-box !important;
+    pointer-events: auto !important;
+  }
+
+  [data-sonner-toast] [data-content] {
+    width: 100% !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  [data-sonner-toast] [data-title],
+  [data-sonner-toast] [data-description] {
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    white-space: normal !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Keep close button cleanly inside the toast bounds on mobile */
+  [data-sonner-toaster] [data-close-button] {
+    top: 12px !important;
+    right: 12px !important;
+    left: unset !important;
+    transform: none !important;
+    width: 22px !important;
+    height: 22px !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+  }
+}

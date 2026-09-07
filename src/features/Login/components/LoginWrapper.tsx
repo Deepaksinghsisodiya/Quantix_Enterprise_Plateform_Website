@@ -41,7 +41,7 @@ export const LoginWrapper: React.FC = () => {
   const handleSignIn = async (values: LoginFormValues) => {
     try {
       const email = values.email.trim().toLowerCase();
-      
+
       // Live API Call to backend auth service
       const response = await login({
         email,
@@ -97,15 +97,15 @@ export const LoginWrapper: React.FC = () => {
   return (
     <div className="w-full font-sans">
       {/* Header */}
-      <div className="mb-6 text-left">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 border border-orange-200/80 text-[11px] font-bold text-[#FF4D00] mb-2.5">
-          <Zap size={12} className="fill-[#FF4D00]" />
+      <div className="mb-2 text-left">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200/80 dark:border-orange-900/60 text-[10px] font-bold text-[#FF4D00] mb-1.5">
+          <Zap size={10} className="fill-[#FF4D00]" />
           <span>Quantix Identity Access</span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-syne font-bold text-slate-900 leading-tight tracking-tight">
+        <h2 className="text-lg sm:text-2xl md:text-3xl font-syne font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
           Sign in to your account
         </h2>
-        <p className="text-slate-500 text-xs sm:text-sm mt-1 leading-relaxed">
+        <p className="text-slate-500 dark:text-slate-400 text-[11px] sm:text-xs mt-0.5 leading-relaxed">
           Access your unified Enterprise multi-store control portal.
         </p>
       </div>
@@ -120,15 +120,15 @@ export const LoginWrapper: React.FC = () => {
         onSubmit={handleSignIn}
       >
         {() => (
-          <Form className="flex flex-col gap-3.5">
+          <Form className="flex flex-col gap-2.5">
             <LoginForm loading={isLoading} />
           </Form>
         )}
       </Formik>
 
       {/* Footer link to Sign-up */}
-      <div className="mt-5 pt-4 border-t border-slate-100 text-center">
-        <p className="text-xs font-normal text-slate-500">
+      <div className="mt-3.5 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-center">
+        <p className="text-xs font-normal text-slate-500 dark:text-slate-400">
           Don&apos;t have an account?{' '}
           <Link
             href={getSignUpHref()}
@@ -140,8 +140,8 @@ export const LoginWrapper: React.FC = () => {
       </div>
 
       {/* Security note */}
-      <div className="mt-4 flex items-center justify-center gap-2 text-[11px] font-medium text-slate-400">
-        <ShieldCheck size={14} className="text-emerald-500" />
+      <div className="mt-2.5 flex items-center justify-center gap-1.5 text-[10.5px] font-medium text-slate-400 dark:text-slate-500">
+        <ShieldCheck size={13} className="text-emerald-500" />
         <span>SOC-2 Type II Certified & End-to-End Encrypted</span>
       </div>
     </div>

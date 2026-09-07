@@ -63,14 +63,14 @@ export const ATMPhoneField: React.FC<ATMPhoneFieldProps> = ({
   return (
     <div className={cn('w-full text-left font-sans', className)}>
       {label && (
-        <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1 tracking-normal">
+        <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-0.5 tracking-normal">
           {label} {required && <span className="text-[#FF4D00] font-bold">*</span>}
         </label>
       )}
 
       <div
         className={cn(
-          'relative w-full h-10.5 sm:h-11 rounded-xl border transition-all duration-200 flex items-center bg-white dark:bg-slate-900 shadow-2xs overflow-hidden',
+          'relative w-full h-9 sm:h-9.5 rounded-xl border transition-all duration-200 flex items-center bg-white dark:bg-slate-900 shadow-2xs overflow-hidden',
           isError
             ? 'border-red-400 dark:border-red-500 bg-white dark:bg-slate-900 focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-500/15'
             : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 focus-within:border-[#FF4D00] focus-within:ring-2 focus-within:ring-[#FF4D00]/15'

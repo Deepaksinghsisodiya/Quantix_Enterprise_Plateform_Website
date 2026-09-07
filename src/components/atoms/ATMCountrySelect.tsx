@@ -33,7 +33,7 @@ export const ATMCountrySelect: React.FC<ATMCountrySelectProps> = ({
   return (
     <div className="w-full text-left font-sans relative">
       {label && (
-        <label className="block text-[11px] font-semibold text-slate-700 mb-1 tracking-normal">
+        <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-0.5 tracking-normal">
           {label} {required && <span className="text-[#FF4D00] font-bold">*</span>}
         </label>
       )}
@@ -41,7 +41,7 @@ export const ATMCountrySelect: React.FC<ATMCountrySelectProps> = ({
       {/* Fixed USA Country Display */}
       <div
         className={cn(
-          'w-full h-10.5 sm:h-11 rounded-xl border border-slate-200 px-3.5 text-xs sm:text-[13px] font-normal transition-all duration-200 text-slate-900 bg-slate-50/80 flex items-center shadow-2xs select-none'
+          'w-full h-9 sm:h-9.5 rounded-xl border border-slate-200 dark:border-slate-800 px-3 text-xs sm:text-[13px] font-normal transition-all duration-200 text-slate-900 dark:text-white bg-slate-50/80 dark:bg-slate-800/60 flex items-center shadow-2xs select-none'
         )}
       >
         <div className="flex items-center gap-2 min-w-0">

@@ -1,0 +1,91 @@
+// src/features/Announcements/constants/fallbackAnnouncements.ts
+import type { AnnouncementDto } from '../Types/AnnouncementTypes';
+
+/**
+ * Fallback announcements used when the API is unavailable or returns empty data.
+ * These are replaced automatically once the backend serves live data.
+ */
+export const FALLBACK_ANNOUNCEMENTS: AnnouncementDto[] = [
+  {
+    announcementId: 'fallback-1',
+    title: 'Quantix POS v4.2 Released',
+    body: 'New multi-terminal sync, faster checkout, and advanced kitchen display integration now live.',
+    kind: 'News',
+    linkUrl: '/changelog',
+    sortOrder: 1,
+    isActive: true,
+    isPinned: true,
+  },
+  {
+    announcementId: 'fallback-2',
+    title: 'Cloud Dashboard 2.0 Launch',
+    body: 'Real-time multi-store analytics, automated P&L reports, and AI-powered sales forecasting.',
+    kind: 'News',
+    linkUrl: '/products/cloud-pos',
+    sortOrder: 2,
+    isActive: true,
+    isPinned: false,
+  },
+  {
+    announcementId: 'fallback-3',
+    title: 'Free POS Migration Offer',
+    body: 'Switch from any legacy POS — zero downtime data migration with dedicated onboarding specialist.',
+    kind: 'Notice',
+    linkUrl: '/contact',
+    sortOrder: 3,
+    isActive: true,
+    isPinned: true,
+  },
+  {
+    announcementId: 'fallback-4',
+    title: 'Quantix Partner Summit 2026',
+    body: 'Join 500+ POS resellers and technology partners — keynotes, workshops, and networking.',
+    kind: 'Event',
+    linkUrl: '/events/partner-summit-2026',
+    sortOrder: 4,
+    isActive: true,
+    isPinned: false,
+    location: 'Dubai World Trade Centre, UAE',
+  },
+  {
+    announcementId: 'fallback-5',
+    title: 'Smart Inventory Module Upgrade',
+    body: 'Automated reorder points, supplier price comparisons, and recipe costing engine — 3x faster.',
+    kind: 'News',
+    linkUrl: '/features/smart-inventory',
+    sortOrder: 5,
+    isActive: true,
+    isPinned: false,
+  },
+  {
+    announcementId: 'fallback-6',
+    title: '99.99% Uptime SLA Guarantee',
+    body: 'Enterprise-grade reliability with 24/7 dedicated support and offline-first architecture.',
+    kind: 'Notice',
+    linkUrl: '/sla',
+    sortOrder: 6,
+    isActive: true,
+    isPinned: false,
+  },
+  {
+    announcementId: 'fallback-7',
+    title: 'New Payment Gateway Integrations',
+    body: 'Stripe Terminal, Square Reader, and Razorpay POS — tap-to-pay across all Quantix terminals.',
+    kind: 'News',
+    linkUrl: '/features/payment-processing',
+    sortOrder: 7,
+    isActive: true,
+    isPinned: false,
+  },
+  {
+    announcementId: 'fallback-8',
+    title: 'Quantix Restaurant Tech Expo',
+    body: 'Live demos of Kitchen Display, QR Table Ordering, and Handheld POS — meet our product team.',
+    kind: 'Event',
+    linkUrl: '/events/restaurant-tech-expo',
+    sortOrder: 8,
+    isActive: true,
+    isPinned: false,
+    location: 'Pragati Maidan, New Delhi, India',
+  },
+];

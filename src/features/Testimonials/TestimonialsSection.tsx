@@ -1,68 +1,85 @@
-// src/features/Testimonials/TestimonialsSection.tsx
 'use client';
 
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import { ChevronLeft, ChevronRight, Building2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Building2, Star } from "lucide-react";
 import { TestimonialDto } from "./Types/TestimonialsTypes";
 import { motion, AnimatePresence } from "framer-motion";
 
 export interface TestimonialsSectionProps {
-  testimonials: TestimonialDto[];
-  isLoading: boolean;
+  testimonials?: TestimonialDto[];
+  isLoading?: boolean;
 }
 
-const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
-  {
-    id: "t1",
-    quote: "With over 100 outlets synced to a single Cloud Ledger, Quantix is the backbone of our restaurant empire. Real-time analytics and centralized control have transformed our operations.",
-    author: "Elena Rostova",
-    role: "VP Operations",
-    companyName: "FoodFlow Group",
-    industry: "Restaurant",
-  },
-  {
-    id: "t2",
-    quote: "Quantix changed how we run our boutique. Offline sync is so smooth, we never worry about losing connection during weekend rushes. Real-time stock alerts keep us prepared and customer billing takes half the time.",
-    author: "Amanda Sterling",
-    role: "Founder",
-    companyName: "Bloom Retail Boutique",
-    industry: "Retail",
-  },
-  {
-    id: "t3",
-    quote: "The restaurant layout mapper is a total game-changer. Bill splits take seconds instead of minutes, increasing our seat turnover by 15% and saving staff overheads. Best POS decision we've ever made.",
-    author: "Chef Giovanni",
-    role: "Owner",
-    companyName: "Bella Italia Bistro",
-    industry: "Restaurant",
-  },
-  {
-    id: "t4",
-    quote: "Offline checkout queues are non-existent now. Cashiers scan and bill customers continuously even during network outages. We scaled from 1 store to 5 in less than a year with the unified dashboard.",
-    author: "Marcus Vance",
-    role: "Operations Director",
-    companyName: "Urban Wear Co.",
-    industry: "Retail",
-  },
-  {
-    id: "t5",
-    quote: "The interface is so clean. It takes less than 10 minutes to train new staff members on our checkout registers, saving us massive setup and onboarding time. The support team is also top-notch.",
-    author: "Sarah Lindqvist",
-    role: "General Manager",
-    companyName: "Espresso House",
-    industry: "Restaurant",
-  }
-];
-
 export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
-  testimonials,
-  isLoading,
+  testimonials = [],
+  isLoading = false,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showFullQuote, setShowFullQuote] = useState(false);
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
 
-  const displayTestimonials = testimonials.length > 0 ? testimonials : DEFAULT_TESTIMONIALS;
+  // Only live API testimonials - no dummy data
+  const displayTestimonials = testimonials;
+
+  if (isLoading) {
+    return (
+      <section className="scroll-mt-20 bg-slate-50 dark:bg-slate-900/40 py-10 sm:py-14 lg:py-20 border-b border-slate-100 dark:border-slate-800/80 transition-colors duration-300" id="testimonials">
+        <div className="site-container">
+          {/* Header Skeleton */}
+          <div className="text-center mb-12 lg:mb-16 flex flex-col items-center">
+            <div className="h-6 w-36 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse mb-4" />
+            <div className="h-10 sm:h-12 w-3/4 max-w-lg rounded-2xl bg-slate-200 dark:bg-slate-800 animate-pulse" />
+          </div>
+
+          {/* Card Skeleton */}
+          <div className="relative mx-auto max-w-5xl px-0 select-none sm:px-14 md:px-12">
+            <div className="w-full bg-white dark:bg-slate-800/90 border border-slate-200/70 dark:border-slate-700/70 p-5 sm:p-6 md:p-8 rounded-3xl md:rounded-4xl shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col md:flex-row items-center gap-5 sm:gap-6 md:gap-8 relative animate-pulse">
+              {/* Avatar skeleton */}
+              <div className="h-16 w-16 min-[400px]:h-20 min-[400px]:w-20 md:h-28 md:w-28 rounded-2xl md:rounded-3xl bg-slate-200 dark:bg-slate-700 shrink-0" />
+              
+              {/* Content skeleton */}
+              <div className="flex-1 w-full flex flex-col justify-between space-y-4">
+                {/* Star icons skeleton */}
+                <div className="flex items-center gap-1.5 justify-center md:justify-start">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div key={i} className="w-4 h-4 rounded bg-slate-200 dark:bg-slate-700" />
+                  ))}
+                  <div className="h-4 w-32 rounded bg-slate-200 dark:bg-slate-700 ml-2" />
+                </div>
+
+                {/* Quotes lines skeleton */}
+                <div className="space-y-2.5">
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded-lg w-full" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded-lg w-11/12" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded-lg w-4/5" />
+                </div>
+
+                {/* Author & company info skeleton */}
+                <div className="pt-3 border-t border-slate-100 dark:border-slate-700/80 flex flex-col md:flex-row md:items-end justify-between gap-2">
+                  <div className="space-y-1.5">
+                    <div className="h-4 w-40 bg-slate-200 dark:bg-slate-700 rounded" />
+                    <div className="h-3 w-28 bg-slate-200 dark:bg-slate-700 rounded" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Dots skeleton */}
+            <div className="flex justify-center items-center gap-2 mt-6 sm:mt-8">
+              <div className="h-2 w-6 rounded-full bg-primary/40 animate-pulse" />
+              <div className="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-700" />
+              <div className="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-700" />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (displayTestimonials.length === 0) {
+    return null;
+  }
 
   const handleNext = () => {
     setShowFullQuote(false);
@@ -79,12 +96,30 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
     setActiveIndex(index);
   };
 
-  const current = displayTestimonials[activeIndex];
-  const maxChars = 150;
-  const shouldTruncate = current?.quote.length > maxChars;
+  const current = displayTestimonials[activeIndex] || displayTestimonials[0];
+  const maxChars = 180;
+  const quoteText = current?.body || current?.quote || "";
+  const shouldTruncate = quoteText.length > maxChars;
   const displayedQuote = shouldTruncate && !showFullQuote
-    ? `${current.quote.slice(0, maxChars)}...`
-    : current?.quote;
+    ? `${quoteText.slice(0, maxChars)}...`
+    : quoteText;
+
+  const authorName = current?.personName || current?.person || current?.author || "Enterprise Leader";
+  const authorRole = current?.personRole || current?.theirRole || current?.role || "VP Operations";
+  const companyName = current?.companyName || current?.company || current?.industry || "Enterprise Merchant";
+  const ratingCount = typeof current?.rating === 'number' && current.rating > 0 ? current.rating : 5;
+  
+  // Resolve avatar URL from direct imageUrl / image or media asset file endpoint
+  const rawAvatarImage = current?.imageUrl || current?.image || current?.avatarUrl || (current?.mediaAssetId ? `/api/v1/media/${current.mediaAssetId}/file` : undefined);
+  const avatarImage = rawAvatarImage && !failedImages[rawAvatarImage] ? rawAvatarImage : undefined;
+
+  const initials = authorName
+    .split(' ')
+    .filter(Boolean)
+    .map((n: string) => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase() || 'Q';
 
   return (
     <section className="scroll-mt-20 bg-slate-50 dark:bg-slate-900/40 py-10 sm:py-14 lg:py-20 border-b border-slate-100 dark:border-slate-800/80 transition-colors duration-300" id="testimonials">
@@ -94,16 +129,16 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
             CLIENT TESTIMONIALS
           </div>
           <h2 className="text-3xl font-syne font-black text-slate-900 dark:text-white md:text-5xl leading-tight select-none">
-            Why Businesses Like Yours <span className="text-primary">Choose Quantix</span>
+            Trusted by Leaders <span className="text-primary">Across the Globe</span>
           </h2>
         </div>
 
         <div className="relative mx-auto max-w-5xl px-0 select-none sm:px-14 md:px-12">
-          {/* Desktop Navigation Arrows (hidden on mobile) */}
+          {/* Desktop Navigation Arrows */}
           <button
             type="button"
             onClick={handlePrev}
-            className="hidden sm:flex absolute left-0 top-1/2 z-10 h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200/80 bg-white text-slate-600 shadow-md transition-all duration-200 hover:scale-105 hover:bg-slate-50 hover:text-primary active:scale-95 dark:border-slate-700/80 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/50 dark:hover:text-primary-light"
+            className="hidden sm:flex absolute left-0 top-1/2 z-10 h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200/80 bg-white text-slate-600 shadow-md transition-all duration-200 hover:scale-105 hover:bg-slate-50 hover:text-primary active:scale-95 dark:border-slate-700/80 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/50 dark:hover:text-primary-light cursor-pointer"
             aria-label="Previous testimonial"
           >
             <ChevronLeft size={20} />
@@ -112,13 +147,13 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
           <button
             type="button"
             onClick={handleNext}
-            className="hidden sm:flex absolute right-0 top-1/2 z-10 h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200/80 bg-white text-slate-600 shadow-md transition-all duration-200 hover:scale-105 hover:bg-slate-50 hover:text-primary active:scale-95 dark:border-slate-700/80 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/50 dark:hover:text-primary-light"
+            className="hidden sm:flex absolute right-0 top-1/2 z-10 h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200/80 bg-white text-slate-600 shadow-md transition-all duration-200 hover:scale-105 hover:bg-slate-50 hover:text-primary active:scale-95 dark:border-slate-700/80 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/50 dark:hover:text-primary-light cursor-pointer"
             aria-label="Next testimonial"
           >
             <ChevronRight size={20} />
           </button>
 
-          <div className="overflow-hidden min-h-75 sm:min-h-62.5 flex items-center justify-center">
+          <div className="overflow-hidden min-h-[300px] sm:min-h-[250px] flex items-center justify-center">
             <AnimatePresence mode="wait">
               {!isLoading && current && (
                 <motion.div
@@ -137,26 +172,51 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
                       handleNext();
                     }
                   }}
-                  className="w-full bg-white dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 p-5 sm:p-6 md:p-8 rounded-3xl md:rounded-4xl shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col md:flex-row items-center gap-5 sm:gap-6 md:gap-8 relative cursor-grab active:cursor-grabbing touch-pan-y"
+                  className="w-full bg-white dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 p-5 sm:p-6 md:p-8 rounded-3xl md:rounded-4xl shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col md:flex-row items-center gap-5 sm:gap-6 md:gap-8 relative cursor-grab touch-pan-y"
                 >
-                  {/* Avatar Block */}
                   <div className="relative shrink-0 select-none flex flex-col items-center">
-                    <div className="h-16 w-16 min-[400px]:h-20 min-[400px]:w-20 md:h-28 md:w-28 rounded-2xl md:rounded-3xl overflow-hidden border-2 border-primary/20 dark:border-primary/30 shadow-md relative group/avatar bg-linear-to-br from-primary via-orange-600 to-amber-600 flex flex-col items-center justify-center text-white p-2 md:p-3">
-                      <Building2 className="h-5 w-5 md:h-7 md:w-7 mb-0.5 text-white/90" />
-                      <span className="text-base md:text-xl font-syne font-black tracking-wider">
-                        {current.author.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
-                      </span>
-                      <span className="text-[8px] md:text-[9px] font-bold text-white/85 uppercase tracking-widest mt-0.5">
-                        VERIFIED
-                      </span>
-                    </div>
+                    {avatarImage ? (
+                      <div className="h-16 w-16 min-[400px]:h-20 min-[400px]:w-20 md:h-28 md:w-28 rounded-2xl md:rounded-3xl overflow-hidden border-2 border-primary/30 shadow-md relative bg-slate-100 dark:bg-slate-800">
+                        <img
+                          src={avatarImage}
+                          alt={authorName}
+                          onError={() => {
+                            if (rawAvatarImage) {
+                              setFailedImages((prev) => ({ ...prev, [rawAvatarImage]: true }));
+                            }
+                          }}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="h-16 w-16 min-[400px]:h-20 min-[400px]:w-20 md:h-28 md:w-28 rounded-2xl md:rounded-3xl overflow-hidden border-2 border-primary/30 shadow-md relative group/avatar bg-gradient-to-br from-primary via-blue-600 to-indigo-600 flex flex-col items-center justify-center text-white p-2 md:p-3">
+                        <Building2 className="h-5 w-5 md:h-7 md:w-7 mb-0.5 text-white/90" />
+                        <span className="text-base md:text-xl font-syne font-black tracking-wider">
+                          {initials}
+                        </span>
+                        <span className="text-[8px] md:text-[9px] font-bold text-white/85 uppercase tracking-widest mt-0.5">
+                          VERIFIED
+                        </span>
+                      </div>
+                    )}
                   </div>
 
-                  {/* Content Block */}
                   <div className="flex-1 text-center md:text-left flex flex-col justify-between h-full space-y-3 sm:space-y-4">
+                    {/* Stars & Title */}
+                    <div className="flex items-center justify-center md:justify-start gap-1">
+                      {Array.from({ length: ratingCount }).map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                      ))}
+                      {current.title && (
+                        <span className="text-xs font-syne font-bold text-slate-400 dark:text-slate-500 ml-2">
+                          "{current.title}"
+                        </span>
+                      )}
+                    </div>
+
                     <div className="relative">
                       <span className="hidden sm:inline-block absolute -top-6 -left-3.5 text-[60px] md:text-[70px] font-serif leading-none select-none text-slate-200 dark:text-slate-700 pointer-events-none">
-                        &ldquo;
+                        “
                       </span>
                       
                       <p className="text-slate-700 dark:text-slate-200 text-sm sm:text-base md:text-lg leading-relaxed font-medium sm:pl-2 italic relative z-10">
@@ -176,13 +236,13 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 pt-3 border-t border-slate-100 dark:border-slate-700/80">
                       <div>
                         <h4 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">
-                          {current.author}
+                          {authorName}
                           <span className="text-slate-500 dark:text-slate-400 font-medium text-xs sm:text-sm ml-1.5">
-                            — {current.role}
+                            — {authorRole}
                           </span>
                         </h4>
                         <p className="text-primary dark:text-primary-light font-extrabold uppercase text-[10px] sm:text-[11px] tracking-wider mt-0.5">
-                          {current.companyName || current.industry}
+                          {companyName}
                         </p>
                       </div>
                     </div>
@@ -192,12 +252,12 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
             </AnimatePresence>
           </div>
 
-          {/* Mobile arrows + Dot pagination */}
+          {/* Navigation Controls on Mobile + Desktop Dots */}
           <div className="flex justify-center items-center gap-3 mt-6 sm:mt-8 select-none">
             <button
               type="button"
               onClick={handlePrev}
-              className="flex sm:hidden h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm active:scale-95 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+              className="flex sm:hidden h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm active:scale-95 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 cursor-pointer"
               aria-label="Previous testimonial"
             >
               <ChevronLeft size={16} />
@@ -227,7 +287,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
             <button
               type="button"
               onClick={handleNext}
-              className="flex sm:hidden h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm active:scale-95 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+              className="flex sm:hidden h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm active:scale-95 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 cursor-pointer"
               aria-label="Next testimonial"
             >
               <ChevronRight size={16} />

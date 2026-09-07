@@ -1,55 +1,42 @@
 import { NextResponse } from "next/server";
 
-const testimonials = [
-  {
-    id: "t1",
-    quote:
-      "Quantix transformed how we manage our stores. Inventory sync helps our team keep stock visibility clear across locations.",
-    author: "Sarah Mitchell",
-    role: "Owner",
-    companyName: "Bella Boutique",
-    industry: "Retail",
-    initials: "SM",
-    avatarColor: "bg-purple-600",
-  },
-  {
-    id: "t2",
-    quote:
-      "Table management and KDS workflows made our dining room and kitchen communication much smoother during busy service.",
-    author: "James Chen",
-    role: "General Manager",
-    companyName: "The Harbor Kitchen",
-    industry: "Restaurant",
-    initials: "JC",
-    avatarColor: "bg-blue-600",
-  },
-  {
-    id: "t3",
-    quote:
-      "The multi-location dashboard gives regional managers one place to review branches, stock movement, and daily operations.",
-    author: "Priya Sharma",
-    role: "Founder",
-    companyName: "FreshMart Chain",
-    industry: "Retail",
-    initials: "PS",
-    avatarColor: "bg-emerald-600",
-  },
-  {
-    id: "t4",
-    quote:
-      "Online ordering, reporting, and floor operations are easier for our managers to follow in one connected platform.",
-    author: "Marcus Webb",
-    role: "Director",
-    companyName: "Urban Eats Group",
-    industry: "Restaurant",
-    initials: "MW",
-    avatarColor: "bg-amber-600",
-  },
-];
-
 export async function GET() {
-  return NextResponse.json({
-    success: true,
-    data: testimonials,
-  });
+  try {
+    const backendUrl = (process.env.BACKEND_API_URL || process.env.LIVE_BACKEND_API_URL || "http://localhost:5104").replace(/\/$/, "");
+    
+    // First attempt: /api/v1/testimonials
+    let res = await fetch(`${backendUrl}/api/v1/testimonials`, {
+      cache: "no-store",
+      headers: { "Accept": "application/json" },
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      if (data && ((Array.isArray(data.data) && data.data.length > 0) || (Array.isArray(data) && data.length > 0))) {
+        return NextResponse.json(data);
+      }
+    }
+
+    // Second attempt: /api/v1/marketing/testimonials
+    const marketingRes = await fetch(`${backendUrl}/api/v1/marketing/testimonials`, {
+      cache: "no-store",
+      headers: { "Accept": "application/json" },
+    });
+
+    if (marketingRes.ok) {
+      const marketingData = await marketingRes.json();
+      return NextResponse.json(marketingData);
+    }
+
+    // If first was ok but empty data, return it
+    if (res.ok) {
+      const data = await res.json().catch(() => ({ success: true, data: [] }));
+      return NextResponse.json(data);
+    }
+
+    return NextResponse.json({ success: false, data: [] }, { status: res.status || 500 });
+  } catch (error) {
+    console.error("Failed to fetch live testimonials from backend:", error);
+    return NextResponse.json({ success: false, data: [] }, { status: 500 });
+  }
 }

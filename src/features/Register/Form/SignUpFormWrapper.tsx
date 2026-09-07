@@ -136,17 +136,17 @@ export const SignUpFormWrapper: React.FC = () => {
   return (
     <div className="w-full">
       {/* Header */}
-      <div className="mb-5 text-left">
+      <div className="mb-2 text-left">
         {planCode && (
-          <div className="mb-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 border border-orange-200 text-[11px] font-bold text-[#FF4D00] shadow-2xs">
-            <CheckCircle2 size={13} className="text-emerald-500" />
+          <div className="mb-1 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-900/60 text-[10px] font-bold text-[#FF4D00] shadow-2xs">
+            <CheckCircle2 size={11} className="text-emerald-500" />
             Selected Plan: <span className="font-mono uppercase">{planCode}</span>
           </div>
         )}
-        <h2 className="text-2xl sm:text-3xl font-syne font-bold text-slate-900 leading-tight tracking-tight">
-          Sign Up
+        <h2 className="text-lg sm:text-2xl font-syne font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
+          Create your account
         </h2>
-        <p className="text-slate-500 text-xs mt-1">
+        <p className="text-slate-500 dark:text-slate-400 text-[11px] sm:text-xs mt-0.5">
           Create your centralized merchant account to get started
         </p>
       </div>
@@ -163,7 +163,7 @@ export const SignUpFormWrapper: React.FC = () => {
       >
         {({ values, setFieldValue, isSubmitting, handleSubmit }) => (
           <Form
-            className="space-y-4"
+            className="space-y-2.5"
             noValidate
             onSubmit={(e) => {
               e.preventDefault();
@@ -180,17 +180,17 @@ export const SignUpFormWrapper: React.FC = () => {
       </Formik>
 
       {/* Footer / Login Redirection */}
-      <div className="mt-6 text-center text-xs text-slate-500">
+      <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-500 dark:text-slate-400">
         Already have an account?{' '}
         <Link
           href={
             typeof window !== 'undefined' && window.location.pathname.includes('/restaurant')
               ? '/sign-in/restaurant'
               : typeof window !== 'undefined' && window.location.pathname.includes('/retail')
-              ? '/sign-in/retail'
-              : `/sign-in${searchParams.toString() ? `?${searchParams.toString()}` : ''}`
+                ? '/sign-in/retail'
+                : `/sign-in${searchParams.toString() ? `?${searchParams.toString()}` : ''}`
           }
-          className="font-bold text-[#FF4D00] hover:text-[#E03E00] transition-colors inline-block ml-1 hover:underline"
+          className="font-bold text-[#FF4D00] hover:text-[#E03E00] transition-colors inline-block ml-0.5 hover:underline"
         >
           Sign in here
         </Link>
