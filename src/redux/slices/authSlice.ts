@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie';
 
 export interface AuthState {
   token: string | null;
@@ -6,10 +7,38 @@ export interface AuthState {
   user: Record<string, any> | null;
 }
 
+const getInitialToken = (): string | null => {
+  if (typeof window !== 'undefined') {
+    return Cookies.get('accessToken') || null;
+  }
+  return null;
+};
+
+const getInitialRefreshToken = (): string | null => {
+  if (typeof window !== 'undefined') {
+    return Cookies.get('refreshToken') || null;
+  }
+  return null;
+};
+
+const getInitialUser = (): Record<string, any> | null => {
+  if (typeof window !== 'undefined') {
+    const raw = Cookies.get('authUser');
+    if (raw) {
+      try {
+        return JSON.parse(raw);
+      } catch {
+        return null;
+      }
+    }
+  }
+  return null;
+};
+
 const initialState: AuthState = {
-  token: null,
-  refreshToken: null,
-  user: null,
+  token: getInitialToken(),
+  refreshToken: getInitialRefreshToken(),
+  user: getInitialUser(),
 };
 
 const authSlice = createSlice({

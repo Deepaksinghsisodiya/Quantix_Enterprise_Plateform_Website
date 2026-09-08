@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useAppDispatch } from '@/redux/hooks';
@@ -37,6 +37,47 @@ export const LoginWrapper: React.FC = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [login, { isLoading }] = useLoginMutation();
+
+  const buildSsoRedirectUrl = (targetUrl: string, token: string, refreshToken?: string, user?: any) => {
+    try {
+      const url = new URL(targetUrl, window.location.origin);
+      url.searchParams.set('sso_token', token);
+      if (refreshToken) url.searchParams.set('sso_refresh', refreshToken);
+      if (user) url.searchParams.set('sso_user', typeof user === 'string' ? user : JSON.stringify(user));
+      return url.toString();
+    } catch {
+      return targetUrl;
+    }
+  };
+
+  // Instant Single Sign-On (SSO) Handshake:
+  // If user is ALREADY logged in on Enterprise and arrived with a returnUrl or source (e.g. from Restaurant / Retail),
+  // immediately hand off their active session so they never have to sign in twice!
+  useEffect(() => {
+    const existingToken = Cookies.get('accessToken');
+    if (!existingToken) return;
+
+    const existingRefresh = Cookies.get('refreshToken') || '';
+    const existingUser = Cookies.get('authUser') || '';
+    const returnUrl = searchParams?.get('returnUrl') || Cookies.get('authReturnUrl') || '';
+    const source = (
+      searchParams?.get('source') ||
+      Cookies.get('authSource') ||
+      (pathname?.includes('/restaurant') ? 'restaurant' : pathname?.includes('/retail') ? 'retail' : '')
+    ).toLowerCase();
+
+    let target = returnUrl;
+    if (!target) {
+      if (source.includes('rest')) target = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3002';
+      else if (source.includes('retail')) target = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
+    }
+
+    if (target && target.startsWith('http')) {
+      Cookies.remove('authReturnUrl');
+      Cookies.remove('authSource');
+      window.location.href = buildSsoRedirectUrl(target, existingToken, existingRefresh, existingUser);
+    }
+  }, [searchParams, pathname]);
 
   const handleSignIn = async (values: LoginFormValues) => {
     try {
@@ -83,19 +124,19 @@ export const LoginWrapper: React.FC = () => {
         toast.success('Successfully authenticated. Welcome back!');
 
         if (returnUrl && returnUrl.startsWith('http')) {
-          window.location.href = returnUrl;
+          window.location.href = buildSsoRedirectUrl(returnUrl, token, refreshToken, user);
           return;
         }
 
         if (source.includes('rest')) {
           const restUrl = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3002';
-          window.location.href = restUrl;
+          window.location.href = buildSsoRedirectUrl(restUrl, token, refreshToken, user);
           return;
         }
 
         if (source.includes('retail')) {
           const retailUrl = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
-          window.location.href = retailUrl;
+          window.location.href = buildSsoRedirectUrl(retailUrl, token, refreshToken, user);
           return;
         }
 

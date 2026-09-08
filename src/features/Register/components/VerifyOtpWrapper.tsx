@@ -66,6 +66,22 @@ export const VerifyOtpWrapper: React.FC = () => {
     // Check where user originated from (Restaurant, Retail, or Enterprise)
     const targetReturnUrl = returnUrl || Cookies.get('authReturnUrl') || '';
     const targetSource = (source || Cookies.get('authSource') || '').toLowerCase();
+    const currentToken = Cookies.get('accessToken') || '';
+    const currentRefresh = Cookies.get('refreshToken') || '';
+    const currentUser = Cookies.get('authUser') || '';
+
+    const buildSso = (base: string) => {
+      if (!currentToken) return base;
+      try {
+        const u = new URL(base);
+        u.searchParams.set('sso_token', currentToken);
+        if (currentRefresh) u.searchParams.set('sso_refresh', currentRefresh);
+        if (currentUser) u.searchParams.set('sso_user', currentUser);
+        return u.toString();
+      } catch {
+        return base;
+      }
+    };
 
     // Clean up temporary registration pending cookies
     Cookies.remove('pendingMerchantId');
@@ -75,21 +91,21 @@ export const VerifyOtpWrapper: React.FC = () => {
 
     if (targetReturnUrl && targetReturnUrl.startsWith('http')) {
       toast.success('Verification successful! Redirecting to your workspace...');
-      window.location.href = targetReturnUrl;
+      window.location.href = buildSso(targetReturnUrl);
       return;
     }
 
     if (targetSource.includes('rest')) {
       const restUrl = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3002';
       toast.success('Verification successful! Redirecting to Restaurant platform...');
-      window.location.href = restUrl;
+      window.location.href = buildSso(restUrl);
       return;
     }
 
     if (targetSource.includes('retail')) {
       const retailUrl = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
       toast.success('Verification successful! Redirecting to Retail platform...');
-      window.location.href = retailUrl;
+      window.location.href = buildSso(retailUrl);
       return;
     }
 

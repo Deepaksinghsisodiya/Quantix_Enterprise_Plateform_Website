@@ -98,16 +98,18 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
 
   const current = displayTestimonials[activeIndex] || displayTestimonials[0];
   const maxChars = 180;
-  const quoteText = current?.body || current?.quote || "";
+  const quoteText = current?.body || current?.quote || (current as any)?.content || "";
   const shouldTruncate = quoteText.length > maxChars;
   const displayedQuote = shouldTruncate && !showFullQuote
     ? `${quoteText.slice(0, maxChars)}...`
     : quoteText;
 
-  const authorName = current?.personName || current?.person || current?.author || "Enterprise Leader";
-  const authorRole = current?.personRole || current?.theirRole || current?.role || "VP Operations";
-  const companyName = current?.companyName || current?.company || current?.industry || "Enterprise Merchant";
-  const ratingCount = typeof current?.rating === 'number' && current.rating > 0 ? current.rating : 5;
+  const authorName = current?.personName || current?.person || current?.author || (current as any)?.name || "Enterprise Leader";
+  const authorRole = current?.personRole || current?.theirRole || current?.role || (current as any)?.designation || "Operations Director";
+  const companyName = current?.companyName || current?.company || (current as any)?.organization || current?.industry || "Enterprise Merchant";
+  
+  const rawRating = Number(current?.rating);
+  const ratingCount = !isNaN(rawRating) && rawRating > 0 ? Math.min(5, Math.max(1, Math.round(rawRating))) : 5;
   
   // Resolve avatar URL from direct imageUrl / image or media asset file endpoint
   const rawAvatarImage = current?.imageUrl || current?.image || current?.avatarUrl || (current?.mediaAssetId ? `/api/v1/media/${current.mediaAssetId}/file` : undefined);

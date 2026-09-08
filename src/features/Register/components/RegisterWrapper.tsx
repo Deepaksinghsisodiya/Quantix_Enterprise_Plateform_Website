@@ -35,6 +35,7 @@ export const RegisterWrapper: React.FC = () => {
         };
 
         Cookies.set('accessToken', token);
+        Cookies.set('authUser', JSON.stringify(user));
         dispatch(setCredentials({ token, user }));
 
         if (typeof window !== 'undefined') {

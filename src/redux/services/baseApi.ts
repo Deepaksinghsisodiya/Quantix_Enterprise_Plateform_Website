@@ -9,7 +9,11 @@ import { getApiBaseUrl } from '@/lib/apiBaseUrl';
 const baseQuery = fetchBaseQuery({
   baseUrl: getApiBaseUrl(),
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.token;
+    // Check both Redux state and cookies synchronously so initial queries never miss the Bearer token
+    const stateToken = (getState() as RootState).auth.token;
+    const cookieToken = typeof window !== 'undefined' ? Cookies.get('accessToken') : null;
+    const token = stateToken || cookieToken;
+
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }
@@ -18,45 +22,45 @@ const baseQuery = fetchBaseQuery({
   credentials: 'include',
 });
 
-// Wrapper that handles 401 responses and tries token refresh
+// Wrapper that handles 401 responses and tries token refresh safely
 const baseQueryWithReauth: BaseQueryFn<string | any, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
+
   if (result.error && result.error.status === 401) {
-    // Only attempt refresh if we actually have an active token in the store
-    const token = (api.getState() as RootState).auth.token;
+    const token = (api.getState() as RootState).auth.token || Cookies.get('accessToken');
     const refreshToken = (api.getState() as RootState).auth.refreshToken || Cookies.get('refreshToken');
+
+    // Only attempt refresh if a refresh token is present
     if (token && refreshToken) {
-      // Attempt to refresh the access token
       const refreshResult = await baseQuery({
         url: '/auth/refresh',
         method: 'POST',
         body: { refreshToken }
       }, api, extraOptions);
+
       if (refreshResult.data) {
         const refreshData = refreshResult.data as any;
         const newAccessToken = refreshData?.data?.token || refreshData?.token || refreshData?.data?.accessToken;
         const newRefreshToken = refreshData?.data?.refreshToken || refreshData?.refreshToken || refreshToken;
+
         if (newAccessToken) {
-          Cookies.set('accessToken', newAccessToken);
-          Cookies.set('refreshToken', newRefreshToken);
-          // Update auth slice with new token
+          Cookies.set('accessToken', newAccessToken, { expires: 30 });
+          if (newRefreshToken) {
+            Cookies.set('refreshToken', newRefreshToken, { expires: 30 });
+          }
           api.dispatch(setCredentials({ token: newAccessToken, refreshToken: newRefreshToken }));
-          // Retry original request with refreshed token
           result = await baseQuery(args, api, extraOptions);
-        } else {
-          // Refresh failed (invalid response payload) – force logout
-          Cookies.remove('accessToken');
-          Cookies.remove('refreshToken');
-          api.dispatch(logout());
         }
-      } else {
-        // Refresh failed – force logout
+      } else if (refreshResult.error && (refreshResult.error.status === 401 || refreshResult.error.status === 403)) {
+        // Only force logout if the refresh attempt explicitly fails with 401/403
         Cookies.remove('accessToken');
         Cookies.remove('refreshToken');
+        Cookies.remove('authUser');
         api.dispatch(logout());
       }
     }
   }
+
   return result;
 };
 
@@ -84,5 +88,5 @@ export const baseApi = createApi({
     'Clientele',
     'Announcements',
   ],
-  endpoints: (builder) => ({}), // placeholder – add endpoints elsewhere
+  endpoints: (builder) => ({}),
 });

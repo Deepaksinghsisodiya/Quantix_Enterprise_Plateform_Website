@@ -72,6 +72,14 @@ export const contactApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Contact'],
     }),
+    submitSalesInquiry: builder.mutation<ContactApiResponse, any>({
+      query: (payload) => ({
+        url: '/contact/sales',
+        method: 'POST',
+        body: payload,
+      }),
+      invalidatesTags: ['Contact'],
+    }),
   }),
   overrideExisting: true,
 });
@@ -83,6 +91,7 @@ export const {
   useUnsubscribeNewsletterMutation,
   useSubmitSupportTicketMutation,
   useRequestCallbackMutation,
+  useSubmitSalesInquiryMutation,
 } = contactApi;
 
 export default contactApi;

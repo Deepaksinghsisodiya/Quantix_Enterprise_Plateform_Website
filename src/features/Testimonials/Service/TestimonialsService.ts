@@ -12,6 +12,7 @@ export const testimonialsApi = baseApi.injectEndpoints({
         if (Array.isArray(response?.data)) return response.data;
         if (Array.isArray(response?.data?.testimonials)) return response.data.testimonials;
         if (Array.isArray(response?.data?.items)) return response.data.items;
+        if (Array.isArray(response?.data?.data)) return response.data.data;
         if (Array.isArray(response?.testimonials)) return response.testimonials;
         return [];
       },

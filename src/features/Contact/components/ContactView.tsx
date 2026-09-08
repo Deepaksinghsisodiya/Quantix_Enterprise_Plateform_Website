@@ -79,7 +79,7 @@ export const ContactView: React.FC = () => {
 
     try {
       const res = await requestDemo(payload).unwrap();
-      if (res?.success) {
+      if (res?.success || (res && res.success !== false)) {
         setSubmittedEmail(values.email.trim());
         setIsSubmitted(true);
         resetForm();

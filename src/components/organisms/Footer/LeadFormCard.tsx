@@ -88,7 +88,7 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
     if (!cleanEmail || !emailRegex.test(cleanEmail)) {
       newErrors.email = true;
     }
-    
+
     const phoneDigits = formData.phone.replace(/\D/g, '');
     let isPhoneValid = false;
     if (formData.countryCode === '+1') {
