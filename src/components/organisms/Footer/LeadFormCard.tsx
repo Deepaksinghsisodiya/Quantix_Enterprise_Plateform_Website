@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, ChevronDown, PhoneCall, Zap } from 'lucide-react';
 import { toast } from 'sonner';
+import { ATMButton } from '@/components/atoms/ATMButton';
 import { useRequestDemoMutation } from '@/features/Contact/Service/ContactService';
 import { parseApiError } from '@/lib/errorHandler';
 
@@ -306,20 +307,15 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
 
             {/* CTA Button */}
             <div className="pt-0.5">
-              <button
+              <ATMButton
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full rounded-lg bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-syne font-extrabold text-[10.5px] tracking-wider uppercase py-2 px-3 shadow-xs shadow-primary/20 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-70 disabled:pointer-events-none"
+                isLoading={isSubmitting}
+                loadingText="Sending Request..."
+                className="w-full rounded-lg bg-primary hover:bg-primary-light active:bg-primary-dark text-white font-syne font-extrabold text-[10.5px] tracking-wider uppercase py-2 px-3 shadow-xs shadow-primary/20 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                {isSubmitting ? (
-                  <div className="h-3.5 w-3.5 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                ) : (
-                  <>
-                    <PhoneCall size={11} className="fill-white stroke-[2.5]" />
-                    <span>{buttonText}</span>
-                  </>
-                )}
-              </button>
+                <PhoneCall size={11} className="fill-white stroke-[2.5]" />
+                <span>{buttonText}</span>
+              </ATMButton>
             </div>
 
             {/* Privacy Policy disclaimer */}

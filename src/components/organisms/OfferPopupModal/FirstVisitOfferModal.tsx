@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Clock, ChevronDown, Sparkles, ArrowRight, ShieldCheck, Check } from 'lucide-react';
 import Image from 'next/image';
 import { toast } from 'sonner';
+import { ATMButton } from '@/components/atoms/ATMButton';
 import { useRequestDemoMutation } from '@/features/Contact/Service/ContactService';
 import { parseApiError } from '@/lib/errorHandler';
 
@@ -318,21 +319,16 @@ export const FirstVisitOfferModal: React.FC = () => {
 
                   {/* Submit CTA Button */}
                   <div className="pt-1">
-                    <button
+                    <ATMButton
                       type="submit"
-                      disabled={isApiSubmitting}
-                      className="w-full rounded-xl bg-gradient-to-r from-red-600 via-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 active:scale-[0.99] text-white font-syne font-black text-xs tracking-wider uppercase py-2.5 px-4 shadow-lg shadow-red-600/30 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:pointer-events-none h-10"
+                      isLoading={isApiSubmitting}
+                      loadingText="RESERVING OFFER..."
+                      className="w-full rounded-xl bg-linear-to-r from-red-600 via-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 active:scale-[0.99] text-white font-syne font-black text-xs tracking-wider uppercase py-2.5 px-4 shadow-lg shadow-red-600/30 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer h-10"
                     >
-                      {isApiSubmitting ? (
-                        <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                      ) : (
-                        <>
-                          <Sparkles size={14} className="fill-white/20" />
-                          <span>CLAIM MY 3 MONTHS FREE</span>
-                          <ArrowRight size={14} className="stroke-[2.5]" />
-                        </>
-                      )}
-                    </button>
+                      <Sparkles size={14} className="fill-white/20" />
+                      <span>CLAIM MY 3 MONTHS FREE</span>
+                      <ArrowRight size={14} className="stroke-[2.5]" />
+                    </ATMButton>
                   </div>
                 </form>
 
