@@ -118,4 +118,83 @@ export const HeroNewsTickerSkeleton: React.FC<{ className?: string }> = ({ class
   );
 };
 
+/**
+ * HeroSlideSkeleton – 1:1 Content-matching skeleton for the Hero Section.
+ */
+export const HeroSlideSkeleton: React.FC<{ className?: string }> = ({ className }) => {
+  return (
+    <section
+      className={cn(
+        "relative w-full overflow-hidden border-b border-slate-200/80 bg-white pt-24 pb-16 transition-colors dark:border-slate-800/80 dark:bg-slate-950 sm:pt-28 sm:pb-20 md:pt-32 md:pb-20 lg:pt-36 lg:pb-24 xl:pt-40 xl:pb-28",
+        className
+      )}
+    >
+      <div className="site-container relative z-10 grid grid-cols-1 content-center items-center gap-10 lg:grid-cols-12 lg:items-center lg:gap-14 xl:gap-20">
+        {/* LEFT COLUMN: Content Skeleton */}
+        <div className="flex min-w-0 flex-col items-start space-y-3.5 text-left sm:items-center sm:text-center lg:col-span-6 lg:items-start lg:text-left">
+          {/* Star pill */}
+          <ATMSkeleton className="h-6 w-64 sm:w-80 rounded-full bg-primary/10" />
+
+          {/* Badge & indicator line */}
+          <div className="flex flex-col gap-1.5 pt-0.5 sm:items-center lg:items-start">
+            <ATMSkeleton className="h-4 w-44 rounded bg-primary/20" />
+            <div className="h-1 w-12 bg-primary/30 rounded-full" />
+          </div>
+
+          {/* Heading */}
+          <div className="w-full space-y-2.5 max-w-152">
+            <ATMSkeleton className="h-8 sm:h-10 w-11/12 rounded-lg bg-slate-300/90 dark:bg-slate-700/90" />
+            <ATMSkeleton className="h-8 sm:h-10 w-3/4 rounded-lg bg-slate-300/90 dark:bg-slate-700/90" />
+          </div>
+
+          {/* Subheading */}
+          <div className="w-full space-y-2 max-w-136 pt-1">
+            <ATMSkeleton className="h-4 w-full rounded bg-slate-200 dark:bg-slate-800" />
+            <ATMSkeleton className="h-4 w-5/6 rounded bg-slate-200 dark:bg-slate-800" />
+          </div>
+
+          {/* Feature highlights row */}
+          <div className="grid w-full grid-cols-2 gap-2 pt-1 min-[480px]:grid-cols-3 lg:grid-cols-3 lg:gap-2">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 rounded-xl border border-slate-100 bg-white/95 px-2.5 py-2 dark:border-slate-800 dark:bg-slate-900/60"
+              >
+                <ATMSkeleton className="h-7 w-7 rounded-full bg-primary/10 shrink-0" />
+                <ATMSkeleton className="h-3 w-16 sm:w-20 rounded bg-slate-200 dark:bg-slate-700" />
+              </div>
+            ))}
+          </div>
+
+          {/* Buttons row */}
+          <div className="flex w-full flex-row items-center justify-start gap-2.5 pt-1 sm:w-auto sm:justify-center lg:justify-start">
+            <ATMSkeleton className="h-11 w-36 sm:w-44 rounded-xl bg-primary/30" />
+            <ATMSkeleton className="h-11 w-36 sm:w-44 rounded-xl bg-slate-200 dark:bg-slate-700" />
+          </div>
+
+          {/* News Ticker Bar */}
+          <div className="w-full mt-4 h-10.5 rounded-xl border border-slate-200/80 bg-slate-100/80 dark:border-slate-800 dark:bg-slate-900/80 p-1.5 flex items-center">
+            <HeroNewsTickerSkeleton />
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: Visual Showcase Skeleton */}
+        <div className="relative flex w-full flex-col items-center justify-center lg:col-span-6 my-auto">
+          <div className="relative w-full max-w-120 aspect-4/3 rounded-xl lg:rounded-3xl bg-[#111] p-[0.3rem] lg:p-[0.55rem] shadow-xl border border-slate-800">
+            <div className="relative h-full w-full overflow-hidden rounded-[1.2rem] bg-slate-800/80 flex items-center justify-center">
+              <ATMSkeleton className="h-12 w-12 rounded-full bg-slate-700/60" />
+            </div>
+          </div>
+          {/* Pagination dots skeleton */}
+          <div className="mt-4 lg:mt-5 flex items-center justify-center gap-2">
+            <ATMSkeleton className="h-1.5 w-7 rounded-full bg-primary/40" />
+            <ATMSkeleton className="h-1.5 w-1.5 rounded-full bg-slate-300 dark:bg-slate-700" />
+            <ATMSkeleton className="h-1.5 w-1.5 rounded-full bg-slate-300 dark:bg-slate-700" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 export default ATMSkeleton;

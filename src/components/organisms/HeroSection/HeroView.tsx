@@ -258,10 +258,14 @@ export const HeroView: React.FC<HeroViewProps> = ({
                     {/* Inner Screen with Full Rich Photography */}
                     <div className="relative h-full w-full overflow-hidden rounded-[1.2rem] bg-slate-900">
                       <Image
-                        src={slide.backgroundImage}
+                        src={slide.backgroundImage || "/images/hero_pos_terminal.jpg"}
                         alt={slide.heading}
                         fill
                         priority
+                        unoptimized={
+                          (slide.backgroundImage || "").startsWith("http") ||
+                          (slide.backgroundImage || "").startsWith("/api")
+                        }
                         sizes="(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 40vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
