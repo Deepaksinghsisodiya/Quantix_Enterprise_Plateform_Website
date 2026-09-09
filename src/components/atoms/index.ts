@@ -11,4 +11,4 @@ export { ATMSwitch } from './ATMSwitch';
 export { ATMTextArea } from './ATMTextArea';
 export { ATMTextField } from './ATMTextField';
 export { ATMOtpInput } from './ATMOtpInput';
-
+export { ATMSkeleton, TopPromoBannerSkeleton, HeroNewsTickerSkeleton } from './ATMSkeleton';

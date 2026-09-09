@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useContactModal } from '@/context/ContactModalContext';
 import { useGetAnnouncementsQuery } from '@/features/Announcements/Service/AnnouncementService';
+import { TopPromoBannerSkeleton } from '@/components/atoms';
 
 interface TopPromoBannerProps {
   scrolled: boolean;
@@ -60,16 +61,7 @@ export const TopPromoBanner: React.FC<TopPromoBannerProps> = ({ scrolled }) => {
       )}
     >
       {isLoading ? (
-        <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 animate-pulse select-none">
-          {/* Promo Text Skeleton */}
-          <div className="h-3 w-48 min-[400px]:w-64 min-[520px]:w-80 rounded bg-slate-300/80 dark:bg-slate-700/80 shrink-0" />
-          <span className="text-slate-300 dark:text-slate-700 mx-0.5 sm:mx-1 font-bold">|</span>
-          {/* CTA Link Skeleton */}
-          <div className="inline-flex items-center gap-1 shrink-0">
-            <div className="h-3 w-16 sm:w-20 rounded bg-primary/30" />
-            <ChevronRight size={12} className="stroke-[3] text-primary/40" />
-          </div>
-        </div>
+        <TopPromoBannerSkeleton />
       ) : (
         <AnimatePresence mode="wait">
           <motion.div
