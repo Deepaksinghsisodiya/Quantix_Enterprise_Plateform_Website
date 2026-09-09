@@ -5,10 +5,7 @@ import { motion } from 'framer-motion';
 import {
   Check,
   ArrowRight,
-  Headset,
-  ShieldCheck,
   LifeBuoy,
-  Sparkles,
 } from 'lucide-react';
 import { useContactModal } from '@/context/ContactModalContext';
 
@@ -106,7 +103,7 @@ export const SupportSection: React.FC<SupportSectionProps> = ({
             </div>
           </motion.div>
 
-          {/* RIGHT SIDE: Perfect Modern Graphic Image Card */}
+          {/* RIGHT SIDE: Clean Simple Photo Container */}
           <motion.div
             initial={{ opacity: 0, x: 25 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -114,56 +111,12 @@ export const SupportSection: React.FC<SupportSectionProps> = ({
             transition={{ duration: 0.6, delay: 0.15 }}
             className="lg:col-span-6 w-full flex justify-center lg:justify-end"
           >
-            <div className="relative w-full max-w-lg lg:max-w-md">
-              
-              {/* Top-Right Floating Purple Badge Icon */}
-              <div className="absolute -top-5 -right-3 sm:-right-4 z-30 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 text-white border-4 border-white dark:border-slate-950 shadow-xl">
-                <Headset className="h-7 w-7 stroke-[2.2]" />
-              </div>
-
-              {/* Main Photo Frame Card Container */}
-              <div className="relative rounded-3xl bg-slate-900/5 dark:bg-slate-800/40 border border-slate-200/90 dark:border-slate-800 p-3 shadow-2xl backdrop-blur-xs overflow-hidden">
-                
-                <div className="relative rounded-2xl overflow-hidden min-h-[350px] sm:min-h-[400px]">
-                  
-                  {/* Generated High-Res Support Executive Image */}
-                  <img
-                    src="/images/customer_support_executive.jpg"
-                    alt="24/7 Technical Support Specialist"
-                    className="w-full h-[350px] sm:h-[400px] object-cover rounded-2xl transition-transform duration-500 hover:scale-105"
-                  />
-
-                  {/* Gradient Overlay for Text Readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/20 pointer-events-none" />
-
-                  {/* Top Left Floating Status Badge */}
-                  <div className="absolute top-3 left-3 z-20 flex items-center gap-2 rounded-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-3.5 py-1.5 text-[11px] font-extrabold text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 shadow-lg">
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>24/7 Live Experts Online</span>
-                  </div>
-
-                  {/* Bottom Floating Info Pill */}
-                  <div className="absolute bottom-3 left-3 right-3 z-20 flex items-center justify-between bg-slate-900/90 backdrop-blur-md border border-slate-700/80 rounded-xl p-3 text-white shadow-xl">
-                    <div className="flex items-center gap-2.5">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-500/20 text-red-400 shrink-0">
-                        <ShieldCheck className="h-4 w-4 stroke-[2.5]" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-syne font-extrabold">Enterprise Success Specialist</p>
-                        <p className="text-[10px] text-slate-300 font-medium">1-on-1 Onboarding & Multi-Location Tech Support</p>
-                      </div>
-                    </div>
-
-                    <div className="hidden sm:flex items-center gap-1 text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">
-                      <Sparkles className="h-3 w-3" />
-                      <span>Priority SLA</span>
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-
+            <div className="w-full max-w-lg lg:max-w-md">
+              <img
+                src="/images/customer_support_executive.jpg"
+                alt="24/7 Dedicated Technical Support Specialist"
+                className="w-full h-auto max-h-[420px] object-cover rounded-2xl shadow-lg border border-slate-200/80 dark:border-slate-800"
+              />
             </div>
           </motion.div>
 

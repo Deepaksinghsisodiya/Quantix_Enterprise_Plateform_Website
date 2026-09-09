@@ -1,5 +1,4 @@
 // src/components/organisms/HeroSection/HeroSection.tsx
-// Wrapper — owns carousel state + auto-play timer. Passes all state + handlers to HeroView.
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
@@ -15,8 +14,12 @@ const HeroSection: React.FC = () => {
 
   const { data: apiBanners, isLoading } = useGetHeroBannersQuery();
 
+  // Flag to toggle between full rich dummy UI and API data
+  const USE_API_DATA = false;
+
+  // Data mapped directly from real Admin APIs, preserving full UI structure
   const slides = useMemo<HeroSlide[]>(() => {
-    if (!apiBanners || apiBanners.length === 0) {
+    if (!USE_API_DATA || !apiBanners || apiBanners.length === 0) {
       return HERO_SLIDES;
     }
 
@@ -28,21 +31,17 @@ const HeroSection: React.FC = () => {
 
       return {
         id: banner.contentId || `banner-${index}`,
-        badge: fallback.badge || 'ENTERPRISE SPOTLIGHT',
+        badge: banner.pageSlug ? banner.pageSlug.toUpperCase() : fallback.badge,
         heading: banner.title || fallback.heading,
         mobileHeadingLines: fallback.mobileHeadingLines || [banner.title, '', ''],
-        subheading: banner.body || fallback.subheading,
+        subheading: banner.body ?? fallback.subheading,
         primaryCta: {
-          label: fallback.primaryCta?.label || 'Contact Sales',
+          label: fallback.primaryCta?.label || 'Start Free Trial',
           href: banner.linkUrl || fallback.primaryCta?.href || '/contact',
         },
         secondaryCta: fallback.secondaryCta || { label: 'Request Demo', href: '/contact/demo' },
         backgroundImage: bgImage,
-        featureHighlights: fallback.featureHighlights || [
-          'Global Menu Management',
-          'Role-Based Permissions',
-          'Live Enterprise Sync',
-        ],
+        featureHighlights: fallback.featureHighlights,
       };
     });
   }, [apiBanners]);
@@ -50,11 +49,13 @@ const HeroSection: React.FC = () => {
   const slideCount = slides.length;
 
   const goToNext = useCallback(() => {
-    setActiveIndex((i) => (i + 1) % (slideCount || 1));
+    if (slideCount <= 1) return;
+    setActiveIndex((i) => (i + 1) % slideCount);
   }, [slideCount]);
 
   const goToPrev = useCallback(() => {
-    setActiveIndex((i) => (i - 1 + (slideCount || 1)) % (slideCount || 1));
+    if (slideCount <= 1) return;
+    setActiveIndex((i) => (i - 1 + slideCount) % slideCount);
   }, [slideCount]);
 
   const goTo = useCallback((index: number) => {
@@ -75,14 +76,13 @@ const HeroSection: React.FC = () => {
     };
   }, [activeIndex, isPaused, goToNext, slideCount]);
 
-  // Adjust activeIndex if slides length changes
   useEffect(() => {
     if (activeIndex >= slides.length) {
       setActiveIndex(0);
     }
   }, [slides.length, activeIndex]);
 
-  if (isLoading) {
+  if (isLoading && USE_API_DATA) {
     return <HeroSlideSkeleton />;
   }
 

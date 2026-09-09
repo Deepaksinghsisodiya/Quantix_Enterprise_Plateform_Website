@@ -14,6 +14,10 @@ export interface ClientBrandDto {
   linkUrl?: string;
   tier?: 'Enterprise' | 'Global' | 'Standard' | string;
   locationsCount?: number;
+  isFeatured?: boolean;
+  sortOrder?: number;
+  isActive?: boolean;
+  createdAt?: string;
 }
 
 export interface ApiClienteleResponse {

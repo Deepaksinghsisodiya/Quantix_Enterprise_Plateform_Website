@@ -6,6 +6,7 @@ import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';
 import { useGetFAQsQuery } from '@/features/FAQ/services/FAQServices';
+import { ATMSkeleton } from '@/components/atoms';
 import { ChevronDown, ChevronUp, ChevronRight, HelpCircle, ArrowLeft, Search } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,8 +24,8 @@ export default function HelpFAQPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const faqs = apiFaqs.length > 0 ? apiFaqs : FALLBACK_FAQS;
-  const filteredFaqs = faqs.filter(f => 
-    f.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
+  const filteredFaqs = faqs.filter(f =>
+    f.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
     f.answer.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -76,7 +77,23 @@ export default function HelpFAQPage() {
           </div>
 
           {isLoading ? (
-            <div className="text-center py-10 text-slate-500 text-xs">Loading answers...</div>
+            <div className="space-y-3">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={`faq-skel-${i}`}
+                  className="p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/60 shadow-xs flex items-center justify-between gap-4"
+                >
+                  <div className="flex items-center gap-3 w-full">
+                    <ATMSkeleton variant="rounded" className="h-6 w-6 shrink-0" />
+                    <div className="space-y-2 w-full">
+                      <ATMSkeleton variant="text" className="h-3.5 w-4/5" />
+                      <ATMSkeleton variant="text" className="h-2.5 w-2/5" />
+                    </div>
+                  </div>
+                  <ATMSkeleton variant="circular" className="h-7 w-7 shrink-0" />
+                </div>
+              ))}
+            </div>
           ) : filteredFaqs.length > 0 ? (
             <div className="space-y-3">
               {filteredFaqs.map((faq, idx) => (

@@ -64,7 +64,7 @@ export const TopPromoBannerSkeleton: React.FC<{ className?: string }> = ({ class
       <span className="text-slate-300 dark:text-slate-700 mx-0.5 sm:mx-1 font-bold">|</span>
       <div className="inline-flex items-center gap-1 shrink-0">
         <ATMSkeleton className="h-3 w-16 sm:w-20 rounded bg-primary/30" />
-        <ChevronRight size={12} className="stroke-[3] text-primary/40" />
+        <ChevronRight size={12} className="stroke-3 text-primary/40" />
       </div>
     </div>
   );
@@ -106,7 +106,7 @@ export const HeroNewsTickerSkeleton: React.FC<{ className?: string }> = ({ class
       <span className="text-slate-300 dark:text-slate-600 font-bold shrink-0 hidden md:inline">•</span>
 
       {/* Item 3: Offer */}
-      <div className="inline-flex items-center gap-1.5 shrink-0 hidden lg:inline-flex">
+      <div className="hidden lg:inline-flex items-center gap-1.5 shrink-0">
         <span className="inline-block rounded-md px-1.5 py-0.5 text-[9.5px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600/50 dark:bg-emerald-500/20 dark:text-emerald-400/50 border border-emerald-500/20">
           Offer
         </span>

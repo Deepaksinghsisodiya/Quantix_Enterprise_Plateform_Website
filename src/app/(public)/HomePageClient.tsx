@@ -83,13 +83,6 @@ export default function HomePageClient() {
         <SocialProofStatsWrapper />
       </section>
 
-      {/* 1.6 Trusted Brand Logos / Clientele Marquee */}
-      <section className="relative z-10">
-        <Suspense fallback={null}>
-          <LazyClienteleWrapper />
-        </Suspense>
-      </section>
-
       {/* 2. Core Product Suite Showcase (White BG + Bottom Border) */}
       <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <MainProductsShowcaseSection />
@@ -108,6 +101,13 @@ export default function HomePageClient() {
       {/* 5. Integrations Ecosystem Ticker (Soft Slate 50 BG + Bottom Border) */}
       <section id="integrations" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <IntegrationsTickerSection />
+      </section>
+
+      {/* 5.2 Enterprise Clientele & Brand Partners */}
+      <section id="clientele" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
+        <Suspense fallback={null}>
+          <LazyClienteleWrapper />
+        </Suspense>
       </section>
 
       {/* 5.5 Case Studies & Quantified ROI Stories */}

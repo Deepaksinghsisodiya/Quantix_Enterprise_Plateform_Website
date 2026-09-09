@@ -226,7 +226,7 @@ const PlatformModuleCard: React.FC<{
       <Link
         href={module.href}
         tabIndex={isDuplicate ? -1 : undefined}
-        className="group/module relative flex h-full flex-col justify-between overflow-hidden rounded-xl bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-slate-900/85"
+        className="group/module relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg dark:border-slate-800/80 dark:bg-slate-900/85 dark:hover:border-primary/40"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-emerald-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover/module:opacity-100 pointer-events-none" />
 
