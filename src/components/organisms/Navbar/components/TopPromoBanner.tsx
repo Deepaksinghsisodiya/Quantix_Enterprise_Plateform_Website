@@ -60,12 +60,15 @@ export const TopPromoBanner: React.FC<TopPromoBannerProps> = ({ scrolled }) => {
       )}
     >
       {isLoading ? (
-        <div className="inline-flex items-center justify-center gap-2 animate-pulse">
-          <div className="h-2 w-14 sm:w-20 bg-slate-200 dark:bg-slate-800 rounded-full" />
-          <span className="text-slate-300 dark:text-slate-700 mx-0.5">•</span>
-          <div className="h-2 w-32 sm:w-64 bg-slate-200 dark:bg-slate-800 rounded-full" />
-          <span className="text-slate-300 dark:text-slate-700 mx-0.5 sm:mx-1">|</span>
-          <div className="h-2 w-12 sm:w-16 bg-primary/30 rounded-full" />
+        <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 animate-pulse select-none">
+          {/* Promo Text Skeleton */}
+          <div className="h-3 w-48 min-[400px]:w-64 min-[520px]:w-80 rounded bg-slate-300/80 dark:bg-slate-700/80 shrink-0" />
+          <span className="text-slate-300 dark:text-slate-700 mx-0.5 sm:mx-1 font-bold">|</span>
+          {/* CTA Link Skeleton */}
+          <div className="inline-flex items-center gap-1 shrink-0">
+            <div className="h-3 w-16 sm:w-20 rounded bg-primary/30" />
+            <ChevronRight size={12} className="stroke-[3] text-primary/40" />
+          </div>
         </div>
       ) : (
         <AnimatePresence mode="wait">

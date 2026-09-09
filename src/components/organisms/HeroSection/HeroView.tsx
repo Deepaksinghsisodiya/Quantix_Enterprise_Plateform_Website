@@ -176,13 +176,40 @@ export const HeroView: React.FC<HeroViewProps> = ({
 
                 {/* Content / Skeleton */}
                 {isAnnouncementsLoading ? (
-                  <div className="min-w-0 flex-1 flex items-center gap-3 sm:gap-4 ml-3 animate-pulse overflow-hidden">
-                    <div className="h-4 w-11 sm:w-13 rounded-md bg-[#FF4F00]/20 shrink-0" />
-                    <div className="h-2.5 w-28 sm:w-44 rounded-full bg-slate-200 dark:bg-slate-700 shrink-0" />
-                    <div className="h-2.5 w-20 sm:w-36 rounded-full bg-slate-200/60 dark:bg-slate-800 shrink-0 hidden sm:block" />
-                    <span className="text-slate-300 dark:text-slate-700 shrink-0">•</span>
-                    <div className="h-4 w-11 rounded-md bg-purple-500/20 shrink-0 hidden md:block" />
-                    <div className="h-2.5 w-32 rounded-full bg-slate-200 dark:bg-slate-700 shrink-0 hidden md:block" />
+                  <div className="min-w-0 flex-1 flex items-center gap-4 ml-2 animate-pulse overflow-hidden select-none">
+                    {/* Item 1: Update */}
+                    <div className="inline-flex items-center gap-1.5 shrink-0">
+                      <span className="inline-block rounded-md px-1.5 py-0.5 text-[9.5px] font-black uppercase tracking-wider bg-orange-500/10 text-orange-600/50 dark:bg-orange-500/20 dark:text-orange-400/50 border border-orange-500/20">
+                        Update
+                      </span>
+                      <div className="h-3 w-32 sm:w-44 rounded bg-slate-300 dark:bg-slate-700" />
+                      <span className="text-slate-400 dark:text-slate-600 text-xs hidden sm:inline">—</span>
+                      <div className="h-2.5 w-44 sm:w-64 rounded bg-slate-200 dark:bg-slate-800 hidden sm:inline-block" />
+                    </div>
+
+                    <span className="text-slate-300 dark:text-slate-600 font-bold shrink-0">•</span>
+
+                    {/* Item 2: Event */}
+                    <div className="inline-flex items-center gap-1.5 shrink-0">
+                      <span className="inline-block rounded-md px-1.5 py-0.5 text-[9.5px] font-black uppercase tracking-wider bg-purple-500/10 text-purple-600/50 dark:bg-purple-500/20 dark:text-purple-400/50 border border-purple-500/20">
+                        Event
+                      </span>
+                      <div className="h-3 w-28 sm:w-36 rounded bg-slate-300 dark:bg-slate-700" />
+                      <span className="text-slate-400 dark:text-slate-600 text-xs hidden md:inline">—</span>
+                      <div className="h-2.5 w-36 sm:w-52 rounded bg-slate-200 dark:bg-slate-800 hidden md:inline-block" />
+                    </div>
+
+                    <span className="text-slate-300 dark:text-slate-600 font-bold shrink-0 hidden md:inline">•</span>
+
+                    {/* Item 3: Offer */}
+                    <div className="inline-flex items-center gap-1.5 shrink-0 hidden lg:inline-flex">
+                      <span className="inline-block rounded-md px-1.5 py-0.5 text-[9.5px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600/50 dark:bg-emerald-500/20 dark:text-emerald-400/50 border border-emerald-500/20">
+                        Offer
+                      </span>
+                      <div className="h-3 w-32 rounded bg-slate-300 dark:bg-slate-700" />
+                      <span className="text-slate-400 dark:text-slate-600 text-xs">—</span>
+                      <div className="h-2.5 w-48 rounded bg-slate-200 dark:bg-slate-800" />
+                    </div>
                   </div>
                 ) : (
                   /* Marquee Track */
