@@ -49,7 +49,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
 }) => {
   const slide = slides[activeIndex];
   const { openModal } = useContactModal();
-  const { data: announcementsData } = useGetAnnouncementsQuery();
+  const { data: announcementsData, isLoading: isAnnouncementsLoading } = useGetAnnouncementsQuery();
   const announcements =
     announcementsData && announcementsData.length > 0
       ? announcementsData
@@ -174,43 +174,55 @@ export const HeroView: React.FC<HeroViewProps> = ({
                 <div className="pointer-events-none absolute left-[92px] top-0 bottom-0 w-8 bg-gradient-to-r from-white dark:from-slate-900 to-transparent z-10" />
                 <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-slate-50 dark:from-slate-900 to-transparent z-10" />
 
-                {/* Marquee Track */}
-                <div className="min-w-0 flex-1 overflow-hidden ml-2">
-                  <div className="flex w-max shrink-0 animate-[heroTickerScroll_85s_linear_infinite] hover:[animation-play-state:paused] items-center gap-6 text-[11px] font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
-                    {[1, 2].map((group) => (
-                      <div key={group} className="flex items-center gap-6 shrink-0">
-                        {announcements.map((item, idx) => (
-                          <React.Fragment key={`${group}-${item.announcementId || idx}`}>
-                            <Link
-                              href={item.linkUrl || "/changelog"}
-                              className="inline-flex items-center gap-1.5 transition-colors hover:text-[#FF4F00]"
-                            >
-                              <span
-                                className={cn(
-                                  "inline-block rounded-md px-1.5 py-0.5 text-[9.5px] font-black uppercase tracking-wider",
-                                  item.kind === "Event"
-                                    ? "bg-purple-500/10 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400"
-                                    : item.kind === "Notice"
-                                    ? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
-                                    : "bg-orange-500/10 text-orange-600 dark:bg-orange-500/20 dark:text-orange-400"
-                                )}
-                              >
-                                {item.kind === "Notice" ? "Offer" : item.kind === "Event" ? "Event" : "Update"}
-                              </span>
-                              <span className="font-semibold text-slate-800 dark:text-slate-200">{item.title}</span>
-                              {item.body && (
-                                <span className="text-slate-500 dark:text-slate-400">
-                                  — {item.body}
-                                </span>
-                              )}
-                            </Link>
-                            <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                          </React.Fragment>
-                        ))}
-                      </div>
-                    ))}
+                {/* Content / Skeleton */}
+                {isAnnouncementsLoading ? (
+                  <div className="min-w-0 flex-1 flex items-center gap-3 sm:gap-4 ml-3 animate-pulse overflow-hidden">
+                    <div className="h-4 w-11 sm:w-13 rounded-md bg-[#FF4F00]/20 shrink-0" />
+                    <div className="h-2.5 w-28 sm:w-44 rounded-full bg-slate-200 dark:bg-slate-700 shrink-0" />
+                    <div className="h-2.5 w-20 sm:w-36 rounded-full bg-slate-200/60 dark:bg-slate-800 shrink-0 hidden sm:block" />
+                    <span className="text-slate-300 dark:text-slate-700 shrink-0">•</span>
+                    <div className="h-4 w-11 rounded-md bg-purple-500/20 shrink-0 hidden md:block" />
+                    <div className="h-2.5 w-32 rounded-full bg-slate-200 dark:bg-slate-700 shrink-0 hidden md:block" />
                   </div>
-                </div>
+                ) : (
+                  /* Marquee Track */
+                  <div className="min-w-0 flex-1 overflow-hidden ml-2">
+                    <div className="flex w-max shrink-0 animate-[heroTickerScroll_85s_linear_infinite] hover:[animation-play-state:paused] items-center gap-6 text-[11px] font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
+                      {[1, 2].map((group) => (
+                        <div key={group} className="flex items-center gap-6 shrink-0">
+                          {announcements.map((item, idx) => (
+                            <React.Fragment key={`${group}-${item.announcementId || idx}`}>
+                              <Link
+                                href={item.linkUrl || "/changelog"}
+                                className="inline-flex items-center gap-1.5 transition-colors hover:text-[#FF4F00]"
+                              >
+                                <span
+                                  className={cn(
+                                    "inline-block rounded-md px-1.5 py-0.5 text-[9.5px] font-black uppercase tracking-wider",
+                                    item.kind === "Event"
+                                      ? "bg-purple-500/10 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400"
+                                      : item.kind === "Notice"
+                                      ? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
+                                      : "bg-orange-500/10 text-orange-600 dark:bg-orange-500/20 dark:text-orange-400"
+                                  )}
+                                >
+                                  {item.kind === "Notice" ? "Offer" : item.kind === "Event" ? "Event" : "Update"}
+                                </span>
+                                <span className="font-semibold text-slate-800 dark:text-slate-200">{item.title}</span>
+                                {item.body && (
+                                  <span className="text-slate-500 dark:text-slate-400">
+                                    — {item.body}
+                                  </span>
+                                )}
+                              </Link>
+                              <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
+                            </React.Fragment>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </motion.div>
           </AnimatePresence>
