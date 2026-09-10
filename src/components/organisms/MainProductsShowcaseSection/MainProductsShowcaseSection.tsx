@@ -20,6 +20,7 @@ import {
   Store,
   LineChart,
   Users,
+  CreditCard,
   type LucideIcon,
 } from "lucide-react";
 
@@ -55,76 +56,76 @@ type ProductLine = {
 
 const PLATFORM_MODULES: PlatformModule[] = [
   {
-    title: "Multi-Location POS",
-    description: "Centralized controls for managing hundreds of store or restaurant branches.",
-    badge: "Enterprise",
-    href: "/products/enterprise-pos",
+    title: "POS",
+    description: "Fast, reliable checkout for restaurants and retail locations.",
+    badge: "Fast Checkout",
+    href: "/products/cloud-pos",
     imageSrc: "/images/ent_global_pos_bundle.png",
-    imageAlt: "Enterprise POS multi-location dashboard",
+    imageAlt: "POS checkout system",
     icon: Store,
   },
   {
-    title: "Cloud Management Hub",
-    description: "Live dashboards, global catalog visibility, and remote branch control.",
-    badge: "Cloud HQ",
-    href: "/products/cloud-pos",
+    title: "Cloud HQ",
+    description: "Manage menus, pricing, permissions and locations centrally.",
+    badge: "Central Control",
+    href: "/products/enterprise-pos",
     imageSrc: "/images/nav_cloud_bundle.png",
-    imageAlt: "Enterprise cloud management hub",
+    imageAlt: "Cloud HQ multi-location control",
     icon: Cloud,
   },
   {
-    title: "Supply Chain & Warehouse",
-    description: "Automated stock transfers, purchase orders, and warehouse sync.",
-    badge: "Inventory",
+    title: "Inventory & Cost Control",
+    description: "Know what you have, what you need and where it should go.",
+    badge: "Stock & COGS",
     href: "/products/inventory",
     imageSrc: "/images/ent_supply_chain_bundle.png",
-    imageAlt: "Enterprise supply chain and inventory management",
+    imageAlt: "Centralized inventory and stock control",
     icon: Boxes,
   },
   {
-    title: "Omnichannel Fulfillment",
-    description: "Unify e-commerce, mobile apps, and physical POS orders.",
+    title: "Online Ordering",
+    description: "Bring web, mobile, delivery and in-store orders together.",
     badge: "Omnichannel",
     href: "/products/omnichannel",
     imageSrc: "/images/ent_omnichannel_bundle.png",
-    imageAlt: "Omnichannel retail and e-commerce fulfillment",
+    imageAlt: "Online ordering and omnichannel fulfillment",
     icon: Globe2,
   },
   {
-    title: "Enterprise BI & Analytics",
-    description: "Custom data lakes, cross-store reporting, and API-driven insights.",
-    badge: "Analytics",
+    title: "Analytics & Telemetry",
+    description: "Turn sales, labor and inventory data into actionable insights.",
+    badge: "Live Telemetry",
     href: "/products/analytics",
     imageSrc: "/images/ent_bi_analytics_bundle.png",
-    imageAlt: "Enterprise business intelligence analytics",
+    imageAlt: "Business intelligence and real-time analytics",
     icon: LineChart,
   },
   {
-    title: "Digital POS Station",
-    description: "Dual-screen customer display, kitchen routing & fast line busting.",
-    badge: "Digital Station",
-    href: "/products/enterprise-pos",
-    imageSrc: "/images/foodhub_bundle_mockup.png",
-    imageAlt: "Digital POS station display screen",
-    icon: Store,
+    title: "Payments",
+    description: "Secure, integrated payment processing across locations.",
+    badge: "PCI Tier 1",
+    href: "/integrations",
+    imageSrc: "/images/nav_payment_bundle.png",
+    imageAlt: "Integrated payment processing",
+    icon: CreditCard,
   },
   {
-    title: "Mobile Kiosk & Operations",
-    description: "Self-service kiosks and handheld tablets for rapid line-busting.",
-    badge: "Mobile Kiosk",
+    title: "Kiosks & Mobile",
+    description: "Give customers and staff faster ways to place and manage orders.",
+    badge: "Line-Busting",
     href: "/products/mobile-pos",
-    imageSrc: "/images/nav_retail_bundle.png",
-    imageAlt: "Enterprise kiosk and mobile workflow",
+    imageSrc: "/images/foodhub_bundle_mockup.png",
+    imageAlt: "Self-service kiosks and mobile ordering",
     icon: Smartphone,
   },
   {
-    title: "Payment Hardware & Security",
-    description: "Contactless tap terminals, strict PIN matrices, and shift audits.",
-    badge: "Payments",
-    href: "/products/security",
-    imageSrc: "/images/nav_payment_bundle.png",
-    imageAlt: "Enterprise security and payment terminals",
-    icon: Users,
+    title: "Integrations",
+    description: "Connect Quantix with your ERP, delivery, payment and business systems.",
+    badge: "API Ecosystem",
+    href: "/integrations",
+    imageSrc: "/images/nav_retail_bundle.png",
+    imageAlt: "Enterprise ERP and API integrations",
+    icon: Code2,
   },
 ];
 
@@ -137,18 +138,18 @@ const moduleGroupItems = Array.from({ length: 3 }, () => PLATFORM_MODULES).flat(
 
 const PRODUCT_LINES: ProductLine[] = [
   {
-    eyebrow: "Centralized Master Data - Menus, Catalogs & Pricing",
-    title: "Global Catalog & Menu Management",
+    eyebrow: "Multi-Store Operations — Menus, Catalogs & Regional Pricing",
+    title: "One POS System for Every Location",
     description:
-      "Maintain strict control over your brand. Update menus, product catalogs, pricing tiers, and promotional rules globally or by region from a single Enterprise dashboard.",
+      "Maintain strict consistency across all your branches. Update menus, product catalogs, pricing tiers, and promotional rules across your network from one centralized dashboard.",
     points: [
-      { title: "One-Click Rollouts", desc: "Push menu and pricing changes instantly to hundreds of POS terminals worldwide." },
-      { title: "Regional Pricing Tiers", desc: "Create dynamic pricing models based on geographic zones or individual branch requirements." },
-      { title: "Automated Tax Compliance", desc: "Apply localized tax rates and compliance rules automatically across different territories." },
+      { title: "One-Click Instant Rollouts", desc: "Push menu and price changes to hundreds of POS terminals across all locations in seconds." },
+      { title: "Regional Pricing & Tax Rules", desc: "Set localized pricing tiers, tax calculations, and happy hour rules per territory." },
+      { title: "Role-Based Staff Permissions (RBAC)", desc: "Grant managers branch-level controls while keeping master security and pricing locked at HQ." },
     ],
     imageSrc: "/images/ent_global_pos_bundle.png",
-    imageAlt: "Enterprise master data and menu catalog management",
-    topBadge: "Dual-Screen Countertop EPOS",
+    imageAlt: "Centralized master data and menu catalog control",
+    topBadge: "Dual-Screen Countertop POS",
     bottomBadge: "Global Cloud Sync",
     href: "/products/enterprise-pos",
     ctaText: "Explore Centralized Operations",
@@ -156,36 +157,36 @@ const PRODUCT_LINES: ProductLine[] = [
     imagePosition: "right",
   },
   {
-    eyebrow: "Enterprise Supply Chain - Warehouses, Transfers & Costing",
-    title: "Advanced Inventory & Supply Chain",
+    eyebrow: "Supply Chain & Margins — Central Warehouses & Stock Transfers",
+    title: "Manage Inventory Across Every Location",
     description:
-      "Connect your POS network directly to your central warehouses. Track raw ingredient usage, automate branch stock replenishment, and monitor real-time COGS across the entire organization.",
+      "Stop managing stock store by store. Connect your registers directly to central warehouses to track ingredient usage, automate replenishment, and monitor cost of goods (COGS) in real time.",
     points: [
-      { title: "Automated Replenishment", desc: "Generate purchase orders automatically when branch stock falls below par levels." },
-      { title: "Inter-Store Transfers", desc: "Move stock effortlessly between branches and central warehouses with full audit trails." },
-      { title: "Live Recipe & Matrix Costing", desc: "Track exact margins on every dish or retail SKU globally in real-time." },
+      { title: "Automated Reordering", desc: "Generate supplier purchase orders automatically when branch inventory drops below par levels." },
+      { title: "Inter-Store Stock Transfers", desc: "Transfer inventory effortlessly between branches and warehouses with full digital audit trails." },
+      { title: "Live Recipe & Margin Costing", desc: "Know the exact ingredient cost and profit margin on every dish or retail product sold." },
     ],
     imageSrc: "/images/ent_supply_chain_bundle.png",
-    imageAlt: "Enterprise supply chain and inventory network",
+    imageAlt: "Centralized inventory management and supply chain network",
     topBadge: "Warehouse Sync",
-    bottomBadge: "Live Supply Chain",
+    bottomBadge: "Live Stock Telemetry",
     href: "/products/inventory",
-    ctaText: "Explore Enterprise Inventory",
+    ctaText: "Explore Centralized Inventory",
     icon: Boxes,
     imagePosition: "left",
   },
   {
-    eyebrow: "Unified Commerce - E-Commerce, Delivery & POS Sync",
-    title: "True Omnichannel Fulfillment",
+    eyebrow: "Unified Commerce — Web, Mobile Ordering & Counter Registers",
+    title: "Connect Online & In-Store Orders Together",
     description:
-      "Break down silos between digital and physical channels. Route online orders, delivery aggregator requests, and in-store purchases into one unified operational pipeline.",
+      "Break down the barrier between digital ordering and store counters. Route web orders, third-party delivery apps, and in-store sales into one synchronized operational flow.",
     points: [
-      { title: "Unified Order Routing", desc: "Consolidate orders from Shopify, Magento, UberEats, and direct web into a single KDS." },
-      { title: "Cross-Channel Loyalty", desc: "Allow customers to earn and redeem enterprise loyalty points online or in any branch." },
-      { title: "Click-and-Collect Infrastructure", desc: "Manage curbside pickup and BOPIS (Buy Online, Pick Up In-Store) workflows flawlessly." },
+      { title: "Unified Order Routing", desc: "Consolidate orders from web menus, delivery apps, and counter registers straight to kitchen displays." },
+      { title: "Click & Collect (BOPIS)", desc: "Let customers order online and pick up in-store or curbside with automated SMS/email ready alerts." },
+      { title: "Cross-Branch Loyalty", desc: "Allow customers to earn and redeem rewards points seamlessly online or at any branch register." },
     ],
     imageSrc: "/images/ent_omnichannel_bundle.png",
-    imageAlt: "Omnichannel order fulfillment across web and POS",
+    imageAlt: "Omnichannel order fulfillment across web and POS registers",
     topBadge: "Unified Commerce",
     bottomBadge: "Cross-Channel Sync",
     href: "/products/omnichannel",
@@ -194,21 +195,21 @@ const PRODUCT_LINES: ProductLine[] = [
     imagePosition: "right",
   },
   {
-    eyebrow: "Enterprise BI - Custom Reports, Dashboards & ERP Sync",
-    title: "API-Driven Business Intelligence",
+    eyebrow: "Real-Time Visibility — Live Sales Telemetry & Financial Reports",
+    title: "See What's Happening Across Your Business",
     description:
-      "Empower your analysts with raw data access. Use our comprehensive API to sync live sales, labor, and inventory data directly into your corporate ERP or BI tools like Snowflake and Tableau.",
+      "Turn store transactions, labor hours, and inventory data into actionable executive insights. Sync live performance data directly into your corporate ERP or accounting software.",
     points: [
-      { title: "Direct ERP Integrations", desc: "Connect natively with SAP, Oracle NetSuite, Microsoft Dynamics, and Workday." },
-      { title: "Custom Data Lakes", desc: "Export untruncated, raw transactional data via secure API webhooks or bulk CSV dumps." },
-      { title: "Cross-Branch Benchmarking", desc: "Compare labor costs, sales velocity, and profitability metrics across your entire portfolio." },
+      { title: "Live Financial Telemetry", desc: "Track hourly revenue, labor margins, and store throughput from any mobile device or laptop." },
+      { title: "Direct Accounting & ERP Sync", desc: "Connect natively with SAP, Oracle NetSuite, Microsoft Dynamics, QuickBooks, and Tableau." },
+      { title: "Portfolio Benchmarking", desc: "Compare sales velocity, labor efficiency, and profitability across all locations side-by-side." },
     ],
     imageSrc: "/images/ent_bi_analytics_bundle.png",
-    imageAlt: "Enterprise API business intelligence and reporting",
+    imageAlt: "Real-time business intelligence and reporting dashboards",
     topBadge: "Custom API Access",
     bottomBadge: "ERP & BI Integrations",
     href: "/products/analytics",
-    ctaText: "Explore API & Analytics",
+    ctaText: "Explore Analytics & Telemetry",
     icon: Code2,
     imagePosition: "left",
   },
@@ -394,16 +395,16 @@ export const MainProductsShowcaseSection: React.FC = () => {
       <div className="site-container relative z-10 mb-4 text-center sm:mb-5 mt-4 sm:mt-6">
         <span className="mb-1.5 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-primary shadow-2xs dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
           <Sparkles className="h-3 w-3 stroke-[2.4]" />
-          ENTERPRISE POS MODULES
+          COMPLETE OPERATING PLATFORM
         </span>
         <h2 className="mx-auto max-w-3xl font-syne text-xl font-semibold leading-tight tracking-tight text-slate-950 dark:text-white sm:text-3xl lg:text-4xl">
-          A Complete Cloud Ecosystem{" "}
-          <span className="mt-0.5 block font-bold text-slate-800 dark:text-slate-200 sm:inline sm:mt-0">
-            For Managing Scale
+          One Platform.{" "}
+          <span className="mt-0.5 block font-bold text-primary sm:inline sm:mt-0">
+            Every Part of Your Operation.
           </span>
         </h2>
-        <p className="mx-auto mt-1.5 max-w-xl text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-xs">
-          Explore all enterprise-grade modules designed for multi-location synchronization, security, and growth.
+        <p className="mx-auto mt-1.5 max-w-xl text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+          POS, Cloud HQ, Inventory, Online Ordering, Analytics, Payments, Kiosks & Integrations — connected across every location.
         </p>
       </div>
 

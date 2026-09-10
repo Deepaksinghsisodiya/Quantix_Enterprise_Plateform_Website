@@ -13,12 +13,15 @@ import {
   Building2,
   CloudUpload,
   Boxes,
+  ShieldCheck,
+  CheckCircle2,
+  Layers,
   Newspaper,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HeroSlide } from "./HeroData";
 import { useContactModal } from "@/context/ContactModalContext";
-import { useGetAnnouncementsQuery } from "@/features/Announcements/Service/AnnouncementService";
+import { useGetAnnouncementsQuery } from "@/features/Announcements";
 import { HeroNewsTickerSkeleton } from "@/components/atoms";
 
 export interface HeroViewProps {
@@ -44,11 +47,34 @@ export const HeroView: React.FC<HeroViewProps> = ({
 }) => {
   const slide = slides[activeIndex];
   const { openModal } = useContactModal();
+
   const { data: announcementsData, isLoading: isAnnouncementsLoading } = useGetAnnouncementsQuery();
   const announcements =
     announcementsData && announcementsData.length > 0
       ? announcementsData.filter((a) => a.isActive !== false)
-      : [];
+      : [
+          {
+            announcementId: "live-1",
+            title: "Multi-Store HQ Cloud Sync",
+            body: "Live 1-click catalog & price distribution across 50+ locations",
+            kind: "Update",
+            linkUrl: "/products/enterprise-pos",
+          },
+          {
+            announcementId: "live-2",
+            title: "Zero-Latency Offline Till Mesh",
+            body: "Keep billing and printing receipts during local broadband outages",
+            kind: "Notice",
+            linkUrl: "/resources/pos-guide",
+          },
+          {
+            announcementId: "live-3",
+            title: "Bring Your Own Processor",
+            body: "Zero variable surcharge on payment processing volume",
+            kind: "Event",
+            linkUrl: "/compare",
+          },
+        ];
 
   const formatHeading = (heading: string) => {
     const words = heading.split(" ");
@@ -88,9 +114,9 @@ export const HeroView: React.FC<HeroViewProps> = ({
         {/* LEFT COLUMN: Content (Full rich UI + Dynamic Data from API) */}
         <div className="flex min-w-0 flex-col items-start space-y-3.5 text-left sm:items-center sm:text-center lg:col-span-6 lg:items-start lg:text-left">
 
-          <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border-2 border-primary/20 bg-primary/5 px-3 py-1.5 sm:px-4 sm:py-2 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-primary shadow-xs">
-            <Star size={12} className="fill-primary text-primary shrink-0" />
-            <span className="truncate max-w-55 sm:max-w-none">#1 ENTERPRISE CLOUD POS & OMNICHANNEL PLATFORM</span>
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-emerald-700 dark:text-emerald-400 shadow-xs">
+            <ShieldCheck size={14} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
+            <span className="truncate max-w-64 sm:max-w-none">Trusted by 1,000+ Multi-Location Businesses</span>
           </div>
 
           <AnimatePresence mode="wait">
@@ -116,7 +142,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
               </h1>
 
               {slide.subheading && (
-                <p className="max-w-136 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base lg:text-[1.1rem]">
+                <p className="max-w-136 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base lg:text-[1.05rem]">
                   {slide.subheading}
                 </p>
               )}
@@ -147,22 +173,22 @@ export const HeroView: React.FC<HeroViewProps> = ({
                   className="group flex flex-1 min-w-0 min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FF4F00] px-3 sm:px-8 py-3 font-syne text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-[#e64700] hover:shadow-primary/40 active:scale-95 whitespace-nowrap"
                 >
                   <Rocket size={14} className="fill-white transition-transform group-hover:-translate-y-1 group-hover:translate-x-0.5 sm:w-4 sm:h-4 shrink-0" />
-                  <span>{slide.primaryCta?.label || "Start Free Trial"}</span>
+                  <span>{slide.primaryCta?.label || "Start Your Free Trial"}</span>
                 </a>
                 <button
                   type="button"
-                  onClick={() => openModal(slide.heading || "Request Live POS Demo", "HERO_REQUEST_DEMO")}
+                  onClick={() => openModal("Book an Enterprise Demo", "HERO_REQUEST_DEMO")}
                   className="group flex flex-1 min-w-0 min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl border-2 border-slate-900 bg-transparent px-3 sm:px-8 py-3 font-syne text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white active:scale-95 dark:border-slate-100 dark:text-slate-100 dark:hover:bg-slate-100 dark:hover:text-slate-900 whitespace-nowrap"
                 >
-                  <span>{slide.secondaryCta?.label || "Request Demo"}</span>
+                  <span>{slide.secondaryCta?.label || "Book an Enterprise Demo"}</span>
                   <ArrowRight size={14} className="transition-transform group-hover:translate-x-1 sm:w-4 sm:h-4 shrink-0" />
                 </button>
               </div>
 
-              {/* Full-Width Scrolling News Ticker */}
+              {/* Full-Width Scrolling News / Announcements Ticker */}
               {announcements.length > 0 && (
-                <div className="w-full mt-4 relative flex items-center rounded-xl border border-slate-200/80 bg-gradient-to-r from-orange-500/5 via-white to-slate-50/80 dark:from-orange-500/10 dark:via-slate-900/90 dark:to-slate-900/60 p-1.5 shadow-sm shadow-slate-200/50 dark:shadow-none overflow-hidden backdrop-blur-md min-h-10.5">
-                  <div className="relative z-20 flex items-center justify-center gap-1.5 shrink-0 rounded-lg bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-sm shadow-orange-500/30 select-none">
+                <div className="w-full mt-3 relative flex items-center rounded-xl border border-slate-200/80 bg-gradient-to-r from-orange-500/5 via-white to-slate-50/80 dark:from-orange-500/10 dark:via-slate-900/90 dark:to-slate-900/60 p-1.5 shadow-xs shadow-slate-200/50 dark:shadow-none overflow-hidden backdrop-blur-md min-h-10.5">
+                  <div className="relative z-20 flex items-center justify-center gap-1.5 shrink-0 rounded-lg bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-xs shadow-orange-500/30 select-none">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-80"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
@@ -216,6 +242,55 @@ export const HeroView: React.FC<HeroViewProps> = ({
                   )}
                 </div>
               )}
+
+              {/* Polished Platform Capabilities Strip (Blueprint Section 4) */}
+              <div className="w-full mt-3 rounded-xl border border-slate-200/80 bg-slate-50/80 p-2.5 dark:border-slate-800 dark:bg-slate-900/60 backdrop-blur-sm">
+
+                <div className="flex items-center justify-between gap-2 pb-1.5 border-b border-slate-200/60 dark:border-slate-800">
+                  <div className="flex items-center gap-1.5">
+                    <Layers size={13} className="text-primary shrink-0" />
+                    <span className="text-[11px] font-bold text-slate-900 dark:text-white tracking-tight">
+                      Everything Your Locations Need. One Connected Platform.
+                    </span>
+                  </div>
+                  <a
+                    href="#products-showcase"
+                    className="text-[10px] font-bold text-primary hover:underline flex items-center gap-0.5 shrink-0"
+                  >
+                    View 7 Modules <ArrowRight size={10} />
+                  </a>
+                </div>
+                <div className="grid grid-cols-2 gap-1.5 pt-2 sm:grid-cols-4">
+                  <div className="flex items-center gap-1.5 rounded-lg bg-white p-1.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800">
+                    <CheckCircle2 size={11} className="text-emerald-500 shrink-0" />
+                    <div className="truncate">
+                      <p className="text-[10.5px] font-bold leading-none text-slate-800 dark:text-slate-200">POS & Cloud HQ</p>
+                      <p className="text-[9px] text-slate-500 dark:text-slate-400 truncate">Central store control</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 rounded-lg bg-white p-1.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800">
+                    <CheckCircle2 size={11} className="text-emerald-500 shrink-0" />
+                    <div className="truncate">
+                      <p className="text-[10.5px] font-bold leading-none text-slate-800 dark:text-slate-200">Inventory & COGS</p>
+                      <p className="text-[9px] text-slate-500 dark:text-slate-400 truncate">Cross-store transfers</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 rounded-lg bg-white p-1.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800">
+                    <CheckCircle2 size={11} className="text-emerald-500 shrink-0" />
+                    <div className="truncate">
+                      <p className="text-[10.5px] font-bold leading-none text-slate-800 dark:text-slate-200">Online & Mobile</p>
+                      <p className="text-[9px] text-slate-500 dark:text-slate-400 truncate">Web orders & BOPIS</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 rounded-lg bg-white p-1.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800">
+                    <CheckCircle2 size={11} className="text-emerald-500 shrink-0" />
+                    <div className="truncate">
+                      <p className="text-[10.5px] font-bold leading-none text-slate-800 dark:text-slate-200">BI & Payments</p>
+                      <p className="text-[9px] text-slate-500 dark:text-slate-400 truncate">Real-time telemetry</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </AnimatePresence>
         </div>

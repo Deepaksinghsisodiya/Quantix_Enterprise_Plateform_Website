@@ -176,10 +176,10 @@ export const FooterView: React.FC<FooterViewProps> = ({
 
           {/* Navigation Links Grid (Order 3 on mobile, Order 2 on desktop) */}
           <div className="order-3 lg:order-2 col-span-1 lg:col-span-6 xl:col-span-6 grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-6 pt-1 lg:pt-0">
-            <LinkColumn title="Solutions" links={productLinks} onOpenContact={openModal} />
-            <LinkColumn title="Company" links={companyLinks} onOpenContact={openModal} />
-            <LinkColumn title="Industries" links={industryLinks} onOpenContact={openModal} />
-            <LinkColumn title="Legal" links={legalLinks} onOpenContact={openModal} />
+            <LinkColumn title="Platform" links={productLinks} onOpenContact={openModal} />
+            <LinkColumn title="Solutions" links={industryLinks} onOpenContact={openModal} />
+            <LinkColumn title="Resources" links={companyLinks} onOpenContact={openModal} />
+            <LinkColumn title="Company" links={legalLinks} onOpenContact={openModal} />
           </div>
         </div>
 

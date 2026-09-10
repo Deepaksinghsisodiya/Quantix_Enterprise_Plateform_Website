@@ -2,6 +2,7 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import HeroSection from "@/components/organisms/HeroSection/HeroSection";
+import BusinessProblemSection from "@/components/organisms/BusinessProblemSection/BusinessProblemSection";
 import MainProductsShowcaseSection from "@/components/organisms/MainProductsShowcaseSection/MainProductsShowcaseSection";
 import { MerchantTypeExplainerSection } from "@/components/organisms/MerchantExplainer/MerchantTypeExplainerSection";
 import { IntegrationsTickerSection } from "@/components/organisms/IntegrationsTicker/IntegrationsTickerSection";
@@ -11,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SupportSection from "@/components/organisms/SupportSection/SupportSection";
+import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import SocialProofStatsWrapper from "@/features/SocialProof/components/SocialProofWrapper";
 
 import dynamic from "next/dynamic";
@@ -83,6 +85,11 @@ export default function HomePageClient() {
         <SocialProofStatsWrapper />
       </section>
 
+      {/* 1.8 Business Problems: Disconnected Systems (Blueprint Step 3) */}
+      <section id="business-problems" className="scroll-mt-28">
+        <BusinessProblemSection />
+      </section>
+
       {/* 2. Core Product Suite Showcase (White BG + Bottom Border) */}
       <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <MainProductsShowcaseSection />
@@ -134,6 +141,11 @@ export default function HomePageClient() {
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}>
           <LazyFAQWrapper />
         </Suspense>
+      </section>
+
+      {/* 9. Final CTA: Run Every Location From One Platform (Blueprint Step 12) */}
+      <section id="cta" className="scroll-mt-28">
+        <CTABanner />
       </section>
 
       {/* Scroll-To-Top Button */}

@@ -2,10 +2,10 @@
 // Static copy for the CTA Banner.
 
 export const CTA_DATA = {
-  badge: "GET STARTED TODAY",
-  heading: "Ready to modernize your business?",
+  badge: "RUN EVERY LOCATION FROM ONE PLATFORM",
+  heading: "Ready to run every location from one platform?",
   subheading:
-    "Join 2,000+ businesses already using Quantix. Start your 3-day free trial — no credit card needed.",
-  primaryCta: { label: "Start Free Trial", href: "/sign-up" },
-  secondaryCta: { label: "Talk to Sales", href: "/contact" },
+    "Connect your POS, inventory, online ordering, and real-time operations across every store. Zero migration risk with white-glove onboarding.",
+  primaryCta: { label: "Start Your Free Trial", href: "/contact" },
+  secondaryCta: { label: "Book an Enterprise Demo", href: "/contact/demo" },
 };

@@ -4,32 +4,36 @@ export const RESTAURANT_SITE_URL = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'ht
 export const RETAIL_SITE_URL = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
 
 export const PRODUCT_LINKS: FooterLink[] = [
-  { href: RESTAURANT_SITE_URL, label: "Restaurant POS System" },
-  { href: RETAIL_SITE_URL, label: "Retail Register Platform" },
-  { href: "/pricing", label: "Plans & Pricing" },
+  { href: "/products/cloud-pos", label: "Cloud POS" },
+  { href: "/products/enterprise-pos", label: "Cloud HQ" },
+  { href: "/products/custom-service", label: "Inventory Management" },
+  { href: "/products/retail-pos", label: "Online Ordering" },
+  { href: "/products/enterprise-pos", label: "Enterprise Analytics" },
+  { href: "/integrations", label: "Payment Processing" },
   { href: "/integrations", label: "Integrations Ecosystem" },
-  { href: "/downloads", label: "Register Apps & Drivers" },
-];
-
-export const COMPANY_LINKS: FooterLink[] = [
-  { href: "/blog", label: "Engineering & Retail Blog", badge: "Live" },
-  { href: "/help", label: "Help & Knowledge Centre" },
-  { href: "/case-studies", label: "Customer Case Studies" },
-  { href: "/about", label: "About Quantix Enterprise" },
-  { href: "/roi-calculator", label: "ROI Savings Calculator" },
 ];
 
 export const INDUSTRY_LINKS: FooterLink[] = [
-  { href: "/solutions/fine-dining", label: "Fine Dining & Restaurants" },
-  { href: "/solutions/fashion-retail", label: "Retail & Boutiques" },
-  { href: "/solutions/grocery", label: "Supermarkets & Grocery" },
+  { href: RESTAURANT_SITE_URL, label: "Restaurants & Dining" },
+  { href: `${RESTAURANT_SITE_URL}/solutions/qsr`, label: "Quick-Service (QSR)" },
+  { href: RETAIL_SITE_URL, label: "Retail & Boutiques" },
+  { href: "/solutions/grocery", label: "Grocery & Supermarkets" },
   { href: "/solutions/franchise", label: "Multi-Store Franchises" },
 ];
 
+export const COMPANY_LINKS: FooterLink[] = [
+  { href: "/help/getting-started", label: "POS Implementation Guide" },
+  { href: "/blog", label: "Resource Hub & Blog", badge: "Live" },
+  { href: "/case-studies", label: "Customer Case Studies" },
+  { href: "/roi-calculator", label: "ROI Savings Calculator" },
+  { href: "/downloads", label: "Register Apps & Drivers" },
+];
+
 export const LEGAL_LINKS: FooterLink[] = [
-  { href: "/privacy", label: "Privacy Policy" },
-  { href: "/terms", label: "Terms of Service" },
-  { href: "/pci", label: "PCI-DSS Security" },
+  { href: "/about", label: "About Quantix" },
+  { href: "/pricing", label: "Plans & Pricing" },
+  { href: "/contact", label: "Contact Enterprise Sales" },
+  { href: "/help", label: "24/7 Technical Support" },
   { href: "/status", label: "Live System Status" },
 ];
 

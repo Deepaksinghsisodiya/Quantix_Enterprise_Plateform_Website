@@ -14,13 +14,13 @@ export const MerchantTypeExplainerSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-black uppercase tracking-wide text-primary mb-3 shadow-2xs sm:px-4 sm:text-[11px] sm:tracking-widest">
             <Sparkles size={13} className="shrink-0" />
-            <span className="truncate">ENTERPRISE SCALE ARCHITECTURE</span>
+            <span className="truncate">FLEXIBLE ARCHITECTURE</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-syne font-semibold tracking-tight leading-tight text-slate-900 dark:text-white">
-            Choose Your Enterprise <span className="text-primary">Deployment Strategy</span>
+            Choose Your <span className="text-primary">Deployment Strategy</span>
           </h2>
           <p className="mt-4 text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-2xl mx-auto">
-            Whether you need a fully managed cloud network for global scale or a highly secure on-premise hub for custom infrastructure, Quantix Enterprise adapts to your IT requirements.
+            Whether you need a fully managed cloud network for multi-location scale or a private dedicated infrastructure for corporate control, Quantix adapts to your business model.
           </p>
         </div>
 
@@ -116,9 +116,9 @@ export const MerchantTypeExplainerSection: React.FC = () => {
 
               <div className="space-y-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                 {[
-                  "Deploy on Private Servers or Custom VPCs",
-                  "Strict Data Sovereignty & Compliance (SOC2/GDPR)",
-                  "Air-Gapped Operation Capabilities",
+                  "Dedicated Private Cloud (VPC) or On-Premise Servers",
+                  "Complete Data Sovereignty & Compliance (SOC 2, GDPR, PCI Tier 1)",
+                  "Isolated Offline Operation (Air-Gapped for Critical Security)",
                   "Direct Database Access for Custom ERP Connections",
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-semibold">
