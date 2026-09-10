@@ -12,17 +12,15 @@ export const PRODUCT_LINKS: FooterLink[] = [
 ];
 
 export const COMPANY_LINKS: FooterLink[] = [
+  { href: "/blog", label: "Engineering & Retail Blog", badge: "Live" },
+  { href: "/help", label: "Help & Knowledge Centre" },
+  { href: "/case-studies", label: "Customer Case Studies" },
   { href: "/about", label: "About Quantix Enterprise" },
-  { href: "/resources/pos-guide", label: "Enterprise POS Guide", badge: "2026" },
-  { href: "/resources", label: "Resource Hub & Blueprints" },
-  { href: "/newsletter", label: "Weekly Newsletter", badge: "New" },
-  { href: "/roi-calculator", label: "ROI Savings Forecaster" },
-  { href: "/contact/sales", label: "Contact Enterprise Sales" },
+  { href: "/roi-calculator", label: "ROI Savings Calculator" },
 ];
 
 export const INDUSTRY_LINKS: FooterLink[] = [
   { href: "/solutions/fine-dining", label: "Fine Dining & Restaurants" },
-  { href: "/solutions/quick-service", label: "Quick Service (QSR)" },
   { href: "/solutions/fashion-retail", label: "Retail & Boutiques" },
   { href: "/solutions/grocery", label: "Supermarkets & Grocery" },
   { href: "/solutions/franchise", label: "Multi-Store Franchises" },
@@ -32,7 +30,6 @@ export const LEGAL_LINKS: FooterLink[] = [
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms of Service" },
   { href: "/pci", label: "PCI-DSS Security" },
-  { href: "/gdpr", label: "GDPR Compliance" },
   { href: "/status", label: "Live System Status" },
 ];
 

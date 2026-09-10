@@ -67,12 +67,9 @@ export default function HelpArticleDetailPage() {
   };
 
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
-        <div className="site-container px-4 sm:px-0 max-w-2xl">
-          {/* Breadcrumbs */}
+    <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
+      <div className="site-container px-4 sm:px-0 max-w-2xl">
+        {/* Breadcrumbs */}
           <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-6">
             <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
             <ChevronRight size={10} />
@@ -145,8 +142,5 @@ export default function HelpArticleDetailPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
-    </PublicLayout>
-  );
-}
+    );
+  }

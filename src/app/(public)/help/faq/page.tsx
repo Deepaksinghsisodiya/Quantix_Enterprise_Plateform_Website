@@ -36,13 +36,10 @@ export default function HelpFAQPage() {
   };
 
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
-        <div className="site-container max-w-3xl px-4 sm:px-0">
-          {/* Breadcrumbs */}
-          <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-6">
+    <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
+      <div className="site-container max-w-3xl px-4 sm:px-0">
+        {/* Breadcrumbs */}
+        <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-6">
             <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
             <ChevronRight size={10} />
             <Link href="/help" className="hover:text-blue-500 transition-colors">Help Centre</Link>
@@ -131,8 +128,5 @@ export default function HelpFAQPage() {
           )}
         </div>
       </main>
-
-      <Footer />
-    </PublicLayout>
-  );
-}
+    );
+  }

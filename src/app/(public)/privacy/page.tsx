@@ -2,9 +2,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
 import { ShieldCheck, Mail, Globe, CheckCircle2 } from 'lucide-react';
 
 export default function PrivacyPolicyPage() {
@@ -24,9 +21,7 @@ export default function PrivacyPolicyPage() {
   };
 
   return (
-    <PublicLayout>
-      <Navbar />
-      <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
+    <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
         <div className="site-container max-w-3xl space-y-12">
           {/* Header */}
           <div className="space-y-4">
@@ -151,7 +146,5 @@ export default function PrivacyPolicyPage() {
           </div>
         </div>
       </main>
-      <Footer />
-    </PublicLayout>
   );
 }

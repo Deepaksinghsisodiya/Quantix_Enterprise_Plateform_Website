@@ -19,110 +19,148 @@ import { toast } from "sonner";
 interface Resource {
   id: string;
   title: string;
-  category: "franchise" | "inventory" | "erp" | "security";
+  category: "all" | "blog" | "help" | "guides" | "calculators";
   categoryLabel: string;
   categoryColor: string;
   glowColor: string;
-  type: "Guide" | "Excel Tool" | "Checklist" | "Whitepaper";
+  type: "Blog" | "Help Centre" | "Video Tutorial" | "Guide" | "Calculator" | "Security";
   description: string;
   readTime: string;
   fileSize: string;
   fileName: string;
   image: string;
-  href?: string;
+  href: string;
   tags: string[];
 }
 
 const ENTERPRISE_RESOURCES: Resource[] = [
   {
-    id: "1",
-    title: "Multi-Store POS Rollout & Central Telemetry Architecture",
-    category: "franchise",
-    categoryLabel: "FRANCHISE & HQ",
+    id: "blog-main",
+    title: "Engineering & POS Innovation Blog",
+    category: "blog",
+    categoryLabel: "BLOG & ARTICLES",
+    categoryColor: "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 border-indigo-200 dark:border-indigo-900/50",
+    glowColor: "from-indigo-500/15 to-transparent",
+    type: "Blog",
+    description:
+      "Deep technical articles on sub-second barcode scanning, weigh scale calibration, and offline distributed database architecture.",
+    readTime: "Live Articles",
+    fileSize: "Online",
+    fileName: "quantix_blog_hub",
+    image: "/images/ent_guide_blueprint.png",
+    href: "/blog",
+    tags: ["POS Engineering", "Weigh Scales", "System Benchmarks"],
+  },
+  {
+    id: "help-main",
+    title: "Help & Knowledge Centre",
+    category: "help",
+    categoryLabel: "KNOWLEDGE BASE",
     categoryColor: "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-900/50",
     glowColor: "from-blue-500/15 to-transparent",
-    type: "Guide",
+    type: "Help Centre",
     description:
-      "Step-by-step architecture for deploying central menu distribution, branch price overrides, and store telemetry across 50+ locations.",
-    readTime: "8 min read",
-    fileSize: "2.1 MB",
-    fileName: "quantix_franchise_pos_architecture.pdf",
-    image: "/images/ent_guide_blueprint.png",
-    href: "/resources/pos-guide",
-    tags: ["HQ Push", "Multi-Branch", "Branch Overrides"],
+      "Official setup manuals, troubleshooting guides, hardware pairing instructions, and frequently asked questions.",
+    readTime: "Searchable Docs",
+    fileSize: "Interactive",
+    fileName: "quantix_help_centre",
+    image: "/images/ent_accounting_sync_bundle.png",
+    href: "/help",
+    tags: ["Setup Guides", "Printer Pairing", "Troubleshooting"],
   },
   {
-    id: "2",
-    title: "Real-Time Matrix Stock Sync & Warehouse Replenishment Model",
-    category: "inventory",
-    categoryLabel: "SUPPLY CHAIN",
+    id: "help-videos",
+    title: "Video Setup & Hardware Tutorials",
+    category: "help",
+    categoryLabel: "VIDEO GUIDES",
+    categoryColor: "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/50",
+    glowColor: "from-rose-500/15 to-transparent",
+    type: "Video Tutorial",
+    description:
+      "Visual step-by-step videos for unboxing terminals, connecting thermal printers, barcode scanners, and cash drawers.",
+    readTime: "HD Playlists",
+    fileSize: "Video Library",
+    fileName: "quantix_video_tutorials",
+    image: "/images/nav_payment_bundle.png",
+    href: "/help/videos",
+    tags: ["Unboxing Demos", "Hardware Setup", "Cash Drawer"],
+  },
+  {
+    id: "help-onboarding",
+    title: "Quick-Start Merchant Onboarding Guide",
+    category: "guides",
+    categoryLabel: "SETUP GUIDE",
     categoryColor: "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/50",
     glowColor: "from-emerald-500/15 to-transparent",
-    type: "Excel Tool",
-    description:
-      "Automated spreadsheet formulas for multi-outlet safety stock, reorder thresholds, variance reconciliation, and shrinkage tracking.",
-    readTime: "Excel Tool",
-    fileSize: "940 KB",
-    fileName: "quantix_inventory_safety_stock_model.xlsx",
-    image: "/images/ent_roi_analytics.png",
-    tags: ["Safety Stock", "Shrinkage Logs", "Reorder Triggers"],
-  },
-  {
-    id: "3",
-    title: "Connecting POS Telemetry to SAP & NetSuite ERP Data Lakes",
-    category: "erp",
-    categoryLabel: "ERP INTEGRATION",
-    categoryColor: "text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-900/50",
-    glowColor: "from-purple-500/15 to-transparent",
     type: "Guide",
     description:
-      "Technical guide for streaming real-time transactional sales payloads and shift ledgers using high-throughput REST webhooks.",
-    readTime: "10 min read",
-    fileSize: "3.4 MB",
-    fileName: "quantix_pos_to_erp_integration_guide.pdf",
-    image: "/images/ent_accounting_sync_bundle.png",
-    tags: ["SAP / NetSuite", "Webhooks", "COGS Ledgers"],
+      "A simple 5-step walkthrough to set up your business account, import products, configure tax rates, and process your first checkout.",
+    readTime: "5 Easy Steps",
+    fileSize: "Step-by-Step",
+    fileName: "quantix_getting_started",
+    image: "/images/ent_franchise_portal.png",
+    href: "/help/getting-started",
+    tags: ["First Checkout", "Catalog Import", "Employee PIN"],
   },
   {
-    id: "4",
-    title: "PCI-DSS Tier 1 Payment Tokenization & P2PE Security Brief",
-    category: "security",
-    categoryLabel: "SECURITY & COMPLIANCE",
+    id: "pos-guide",
+    title: "Enterprise Multi-Store POS Buying Guide",
+    category: "guides",
+    categoryLabel: "BUYING GUIDE",
     categoryColor: "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900/50",
     glowColor: "from-amber-500/15 to-transparent",
-    type: "Whitepaper",
+    type: "Guide",
     description:
-      "How Point-to-Point Encryption (P2PE) and EMV tokenization isolate branch registers from PCI scope and secure customer data.",
-    readTime: "7 min read",
-    fileSize: "1.6 MB",
-    fileName: "quantix_pci_tokenization_brief.pdf",
-    image: "/images/nav_payment_bundle.png",
-    tags: ["P2PE Encryption", "PCI-DSS Tier 1", "SAML SSO"],
+      "Complete checklist on comparing terminals, eliminating hidden card processing fees, and setting up central menu distribution.",
+    readTime: "8 min read",
+    fileSize: "Online Guide",
+    fileName: "quantix_pos_buying_guide",
+    image: "/images/ent_guide_blueprint.png",
+    href: "/resources/pos-guide",
+    tags: ["Fee Comparison", "Multi-Store HQ", "Hardware Checklist"],
   },
   {
-    id: "5",
-    title: "Enterprise Multi-Location Shift Settlement & Z-Report SOP",
-    category: "franchise",
-    categoryLabel: "SHIFT SETTLEMENT",
+    id: "roi-calc",
+    title: "POS Savings & Fee ROI Calculator",
+    category: "calculators",
+    categoryLabel: "INTERACTIVE TOOL",
+    categoryColor: "text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-900/50",
+    glowColor: "from-purple-500/15 to-transparent",
+    type: "Calculator",
+    description:
+      "Forecast your annual operational cost savings across credit card processing rates, software licensing, and hardware upkeep.",
+    readTime: "Interactive",
+    fileSize: "Online Tool",
+    fileName: "quantix_roi_calculator",
+    image: "/images/ent_roi_analytics.png",
+    href: "/roi-calculator",
+    tags: ["Card Fee Savings", "Multi-Location ROI", "Annual Forecast"],
+  },
+  {
+    id: "pci-security",
+    title: "PCI-DSS Level 1 Security & Encryption Standards",
+    category: "guides",
+    categoryLabel: "SECURITY STANDARDS",
     categoryColor: "text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-teal-200 dark:border-teal-900/50",
     glowColor: "from-teal-500/15 to-transparent",
-    type: "Checklist",
+    type: "Security",
     description:
-      "Standard operating checklist for automated blind cash counts, manager variance signoffs, and midnight consolidated Z-report filing.",
-    readTime: "Checklist",
-    fileSize: "850 KB",
-    fileName: "quantix_enterprise_settlement_sop.pdf",
-    image: "/images/ent_franchise_portal.png",
-    tags: ["Blind Cash Counts", "Manager Signoff", "Auto Z-Reports"],
+      "How Point-to-Point Encryption (P2PE) and EMV tokenization isolate branch registers from cardholder liability and fraud risks.",
+    readTime: "Security Brief",
+    fileSize: "Compliance",
+    fileName: "quantix_pci_compliance",
+    image: "/images/nav_payment_bundle.png",
+    href: "/pci",
+    tags: ["P2PE Encryption", "PCI Level 1", "Card Protection"],
   },
 ];
 
 const CATEGORY_TABS = [
   { id: "all", label: "All Resources" },
-  { id: "franchise", label: "Franchise & Multi-Store" },
-  { id: "inventory", label: "Supply Chain & Stock" },
-  { id: "erp", label: "ERP & Integrations" },
-  { id: "security", label: "Security & Compliance" },
+  { id: "blog", label: "Blog & Insights" },
+  { id: "help", label: "Help & Tutorials" },
+  { id: "guides", label: "Setup Guides" },
+  { id: "calculators", label: "Tools & Calculators" },
 ];
 
 const containerVariants: Variants = {
@@ -435,28 +473,24 @@ export default function ResourcesClient() {
 
                     {/* Card Bottom Actions */}
                     <div className="relative z-10 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-primary-dark dark:group-hover:text-primary-light"
-                        >
-                          <span>Read Online</span>
-                          <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
-                        </Link>
-                      ) : (
-                        <span className="text-[11px] font-bold text-slate-400">
-                          {item.type}
-                        </span>
-                      )}
-
-                      <button
-                        type="button"
-                        onClick={() => handleDownload(item.title, item.fileName, item.fileSize)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold transition-all cursor-pointer border border-slate-200/70 dark:border-slate-700/70 shadow-2xs"
+                      <Link
+                        href={item.href}
+                        className="inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-primary-dark dark:group-hover:text-primary-light"
                       >
-                        <Download size={12} />
-                        <span>{item.fileSize}</span>
-                      </button>
+                        <span>
+                          {item.type === 'Blog' && 'Read Article'}
+                          {item.type === 'Help Centre' && 'Open Knowledge Base'}
+                          {item.type === 'Video Tutorial' && 'Watch Tutorial'}
+                          {item.type === 'Guide' && 'Open Guide'}
+                          {item.type === 'Calculator' && 'Launch Calculator'}
+                          {item.type === 'Security' && 'View Security Specs'}
+                        </span>
+                        <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+
+                      <span className="text-[10px] font-bold px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500">
+                        {item.fileSize}
+                      </span>
                     </div>
                   </div>
                 </motion.div>

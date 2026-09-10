@@ -1,19 +1,18 @@
 # 🚀 Quantix Platform Websites — Master API Integration Status & Content Roadmap
 
 > **Backend Service:** `http://localhost:5104` (Base URL: `http://localhost:5104/api/v1`)  
-> **Swagger Live Documentation:** `http://localhost:5104/swagger/index.html` (JSON: `http://localhost:5104/swagger/v1/swagger.json`)  
-> **Total Backend Paths in Swagger:** `193 microservice routes`  
-> **Total Public Website Target APIs:** `76 endpoints`  
-> **✅ Currently Integrated in Frontend Code:** `44 endpoints` (100% Synchronized across all 3 platforms)  
-> **🟢 APIs with Active Live Database Content:** `3 Modules` (Social Proof, 27 Pricing Plans, 3 Announcements)  
-> **🟡 APIs Integrated but Empty in DB (`[]`):** `11 Modules` (Features, Blog, Testimonials, Integrations, etc.)  
-> **🟡 Pending Next Phases (In Swagger):** `32 endpoints` (Ready in backend, to be wired)  
+> **Swagger Live Documentation:** `http://localhost:5104/swagger/index.html` (JSON Spec: `http://localhost:5104/swagger/v1/swagger.json`)  
+> **Total Backend Paths in Swagger:** `393 microservice routes` across 33 Controllers/Tags  
+> **Total Public Website Target APIs:** `82 endpoints`  
+> **✅ Currently Integrated in Frontend Code:** `45 endpoints` (100% Synchronized across all 3 platforms)  
+> **🟢 APIs with Active Live Database Content:** `11 Modules` (Social Proof, 27 Pricing Plans, 3 Announcements, 3 Clientele, 2 Testimonials, 2 Case Studies, 1 Hero Banner, 4 FAQs, 4 FAQ Categories, Public Settings, Lead/Auth Forms)  
+> **🟡 APIs Integrated but Empty in DB (`[]`):** `11 Modules` (Features Grid, Blog Posts, Blog Categories, Blog Authors, Help Articles, Help Categories, Help Videos, Getting Started, Integrations, Industries, Galleries)  
 > **Target Market Standard:** 🇺🇸 USA Market (`+1` default, 10-digit masking `(xxx) xxx-xxxx`, EST timezone, USD pricing)  
-> **Websites:**  
-> - 🏢 **Enterprise Platform** (`http://localhost:3000`)  
-> - 🍽️ **Restaurant Platform** (`http://localhost:3002`)  
-> - 🛒 **Retail Platform** (`http://localhost:3001`)  
-> **Audit & Verification Date:** September 09, 2026  
+> **Active Websites:**  
+> - 🏢 **Enterprise Platform:** `http://localhost:3000`  
+> - 🍽️ **Restaurant Platform:** `http://localhost:3002`  
+> - 🛒 **Retail Platform:** `http://localhost:3001`  
+> **Last Live Audit & Verification Date:** September 10, 2026  
 
 ---
 
@@ -21,248 +20,314 @@
 
 | Metric | Count | Status | Notes |
 |:---|:---:|:---:|:---|
-| **Total Swagger Paths** | **193** | Active on `:5104` | Backend microservices controller routes |
-| **Public Website Target APIs** | **76** | Target Scope | Filtered for Marketing Websites & Merchant Portals |
-| **✅ Integrated in Frontend** | **44** | 🟢 100% Wired | Connected via RTK Query & Redux |
-| **🟢 Live Data Active in DB** | **3 Modules** | 🟢 Live on UI | Social Proof stats, 27 Pricing Plans, 3 Promo Banners |
-| **🟡 Empty in DB (`[]`) Waiting for Seeding** | **11 Modules** | 🟡 Empty State on UI | Blog, Features, Testimonials, Integrations, Case Studies, Help Centre |
-| **🟡 Pending Next Phases in Swagger** | **32** | 🟡 Ready for Wiring | Available in Swagger, ready for Phases 2–5 |
-| **⚡ Parity Discrepancy Across 3 Sites** | **0** | 🟢 100% Sync | Enterprise (:3000), Restaurant (:3002), Retail (:3001) are in sync |
+| **Total Swagger Paths** | **393** | Active on `:5104` | Full backend microservice controllers (Billing, Catalogs, Marketing, Content, etc.) |
+| **Public Website Target APIs** | **82** | Target Scope | Marketing websites, Lead Gen, Merchant Auth & Self-Service |
+| **✅ Integrated in Frontend Code** | **45** | 🟢 100% Wired | Connected via RTK Query & Redux across all 3 websites |
+| **🟢 Live Data Active in DB** | **11 Modules** | 🟢 Live on UI | Pricing (27 plans), Social Proof, Banners, Clientele (3), Testimonials (2), Case Studies (2), Hero Banner (1), FAQs (4), FAQ Categories (4), Settings |
+| **🟡 Empty in DB (`[]`) Waiting for Admin Data** | **11 Modules** | 🟡 Empty State on UI | Features, Blog, Help Articles, Integrations, Industries, Competitors, Galleries |
+| **⚡ Parity Discrepancy Across 3 Sites** | **0** | 🟢 100% Sync | Enterprise (:3000), Restaurant (:3002), Retail (:3001) are in 100% parity |
 
 ---
 
-## 2. 🟢 LIVE CONTENT VS 🟡 EMPTY DB CONTENT STATUS (44 INTEGRATED APIS)
+## 2. 🟢 KON-KON SI APIS LAG GYI HAI & CURRENT DATA STATUS (45 INTEGRATED APIS)
 
-Yeh table batata hai ki frontend me jo 44 APIs lagi hui hain, unme se **kisme database me content present hai aur UI par dikh raha hai**, aur **kisme database empty (`[]`) hai**:
+Yeh table batata hai ki teeno websites ke frontend code me kaun-kaun si APIs integrate ho chuki hain, database me unka current data kya hai, aur UI par wo kahan render ho rahi hain:
 
-### 📊 A. Content Status of Marketing & Content APIs
+### 📊 A. Marketing, Content & Brand APIs
 
-| # | Endpoint | Method | DB Content Status | Current Data in DB | UI Par Kaha Dikh Raha Hai (Page & Component) |
+| # | Endpoint | Method | DB Status | Live Data Count / Summary | UI Par Kaha Dikh Raha Hai (Page & Component) |
 |:---:|:---|:---:|:---:|:---|:---|
-| 1 | `/api/v1/marketing/social-proof` | `GET` | 🟢 **Real Data Live** | `50K+` merchants, `100M+` txns, `99.9%` uptime, `4.8` rating, `47` countries | **Homepage (`/`)** Hero Ribbon & **`/about`** (`SocialProof.tsx`) |
-| 2 | `/api/v1/marketing/pricing` | `GET` | 🟢 **Real Data Live** | **27 Active Plans & Addons** with daily rates, feature limits, bullets | **`/pricing`** page (`PricingSection.tsx`, `PricingCard.tsx`) |
-| 3 | `/api/v1/registration/pricing` | `GET` | 🟢 **Real Data Live** | **27 Active Plans** for checkout | **`/sign-up`** plan selection step (`MultiStepSignupForm.tsx`) |
+| 1 | `/api/v1/marketing/social-proof` | `GET` | 🟢 **Real Data Live** | `50,000` merchants, `1,000,000` txns, `99.9%` uptime, `4.8` rating, `47` countries | **Homepage (`/`)** Hero Ribbon & **`/about`** (`SocialProof.tsx`) |
+| 2 | `/api/v1/marketing/pricing` | `GET` | 🟢 **Real Data Live** | **27 Active Plans & Addons** (Enterprise, Restaurant, Retail plans with rates & limits) | **`/pricing`** page (`PricingSection.tsx`, `PricingCard.tsx`) |
+| 3 | `/api/v1/registration/pricing` | `GET` | 🟢 **Real Data Live** | **27 Active Plans** formatted for checkout / trial selection | **`/sign-up`** plan selection step (`MultiStepSignupForm.tsx`) |
 | 4 | `/api/v1/announcements` | `GET` | 🟢 **Real Data Live** | **3 Active Banners** (3 Mos Free, Flat 2.4% + 10¢, Switch from Legacy) | **Navbar Top Promo Bar** (`TopPromoBanner.tsx`) |
-| 5 | `/api/v1/marketing/features` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` (0 items) | **Homepage (`/`)** Core Features Grid & **`/features`** |
-| 6 | `/api/v1/marketing/testimonials` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` (0 items) | **Homepage (`/`)** Customer Reviews Slider (`Testimonials.tsx`) |
-| 7 | `/api/v1/marketing/case-studies` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` (0 items) | **`/case-studies`** listing page & Homepage ROI block |
-| 8 | `/api/v1/marketing/integrations` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` (0 items) | **Homepage Ticker**, Navbar Menu, **`/integrations`**, `/integrations/[slug]` |
-| 9 | `/api/v1/marketing/industries` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` (0 items) | **`/industries`** page & Navbar Solutions Mega-Menu |
-| 10 | `/api/v1/marketing/industries/{slug}` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":null}` | **`/industries/[slug]`** segment detail deep-dive page |
-| 11 | `/api/v1/marketing/content/resources` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` | **`/resources`** whitepapers & guides index page |
-| 12 | `/api/v1/clientele` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` (0 items) | **Homepage (`/`)** "Trusted by 50K+" Brand Logo Marquee |
+| 5 | `/api/v1/clientele` | `GET` | 🟢 **Real Data Live** | **3 Brand Logos** (Blue Bottle Coffee, Sweetgreen Kitchens, Apex Supermarkets) | **Homepage (`/`)** "Trusted by 50K+" Brand Logo Marquee (`ClienteleMarquee.tsx`) |
+| 6 | `/api/v1/testimonials` | `GET` | 🟢 **Real Data Live** | **2 Active Reviews** (Ananya Deshmukh - FreshMart, Vikram Malhotra - Urban Spice) | **Homepage (`/`)** Customer Reviews Slider (`TestimonialsSection.tsx`) |
+| 7 | `/api/v1/marketing/content/CaseStudy` | `GET` | 🟢 **Real Data Live** | **2 Real Case Studies** (Urban Gourmet Bistro: +38% Table Turns, Apex Retail: 64% Shrinkage Reduction) | **`/case-studies`** listing & Homepage ROI block (`CaseStudiesService.ts`) |
+| 8 | `/api/v1/marketing/content/HeroBanner` | `GET` | 🟢 **Real Data Live** | **1 Real Banner** ("Unified Control for Enterprise Multi-Store Networks") | **Homepage (`/`)** Hero Section Banner (`HeroBannerService.ts`) |
+| 9 | `/api/v1/marketing/features` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` (0 items) | **Homepage (`/`)** Core Features Grid & **`/features`** |
+| 10 | `/api/v1/marketing/integrations` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` (0 items) | **Homepage Ticker**, Navbar Menu, **`/integrations`**, `/integrations/[slug]` |
+| 11 | `/api/v1/marketing/industries` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` (0 items) | **`/industries`** page & Navbar Solutions Mega-Menu |
+| 12 | `/api/v1/marketing/industries/{slug}` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":null}` | **`/industries/[slug]`** segment detail deep-dive page |
+| 13 | `/api/v1/marketing/content/resources` | `GET` | 🟡 **Empty in DB (`[]`)** | 0 items | **`/resources`** whitepapers & guides index page |
+| 14 | `/api/v1/settings/public` | `GET` | 🟢 **Real Data Live** | AppName: `"Quantix"`, SupportEmail: `"deepaksinghsisodiya3@gmail.com"` | Footer, Support modals, Header info |
 
-### 📰 B. Content Status of Blog & Publishing Engine
+---
 
-| # | Endpoint | Method | DB Content Status | Current Data in DB | UI Par Kaha Dikh Raha Hai (Page & Component) |
+### 📰 B. Blog & Publishing Engine APIs
+
+| # | Endpoint | Method | DB Status | Live Data Count | UI Par Kaha Dikh Raha Hai (Page & Component) |
 |:---:|:---|:---:|:---:|:---|:---|
-| 13 | `/api/v1/blog/posts` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"totalCount": 0, "data": []}` | **`/blog`** page (Article cards grid & pagination) |
-| 14 | `/api/v1/blog/posts/{slug}` | `GET` | 🟡 **Empty in DB (`[]`)** | 0 Posts to click | **`/blog/[slug]`** full post reader view |
-| 15 | `/api/v1/blog/categories` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` | **`/blog`** top category filter tabs |
-| 16 | `/api/v1/blog/authors` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` | Article card footer & post byline |
+| 15 | `/api/v1/blog/posts` | `GET` | 🟢 **Real Data Live** | **1 Published Post** ("Sub-Second Barcode Scanning & Certified Weigh Scale POS Integration") | **`/blog`** article cards grid & pagination (`page.tsx`) |
+| 16 | `/api/v1/blog/posts/{slug}` | `GET` | 🟢 **Real Data Live** | **Full Markdown Article Live** (H2, H3, numbered lists, SEO, tags) | **`/blog/[slug]`** full post reader view (`BlogPostDetail.tsx`) |
+| 17 | `/api/v1/blog/categories` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` (Derived dynamically from post tags) | **`/blog`** top category filter tabs |
+| 18 | `/api/v1/blog/authors` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` (Fallback: "Quantix Research Team") | Blog article card footer & author bio byline |
+| 19 | `/api/v1/blog/search` | `GET` | 🟢 **Live Search Enabled** | Searches across title, tags, body, and slug | **`/blog`** search bar |
 
-### ❓ C. Content Status of Help Centre & Knowledge Base
+---
 
-| # | Endpoint | Method | DB Content Status | Current Data in DB | UI Par Kaha Dikh Raha Hai (Page & Component) |
+### ❓ C. Help Centre & Knowledge Base APIs
+
+| # | Endpoint | Method | DB Status | Live Data Count | UI Par Kaha Dikh Raha Hai (Page & Component) |
 |:---:|:---|:---:|:---:|:---|:---|
-| 17 | `/api/v1/help-centre/articles` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"totalCount": 0, "data": []}` | **`/help-centre`** knowledge search & article cards |
-| 18 | `/api/v1/help-centre/articles/{slug}` | `GET` | 🟡 **Empty in DB (`[]`)** | 0 Articles to click | **`/help-centre/[slug]`** full article reader |
-| 19 | `/api/v1/help-centre/categories` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` | **`/help-centre`** topic cards |
-| 20 | `/api/v1/help-centre/faqs` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"totalCount": 0, "data": []}` | Accordion FAQs on **`/help-centre`** & **`/pricing`** |
-| 21 | `/api/v1/help-centre/videos` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` | **`/help-centre/videos`** video tutorials library |
-| 22 | `/api/v1/help-centre/search` | `GET` | 🟡 **Empty in DB (`[]`)** | 0 search results | **`/help-centre`** search input bar |
-| 23 | `/api/v1/help-centre/getting-started` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` | **`/help-centre/getting-started`** 5-step onboarding guide |
+| 20 | `/api/v1/help-centre/faqs` | `GET` | 🟢 **Real Data Live** | **4 Active Live FAQs** (Free trial, Offline mesh mode, Contract switching, ERP sync) | Accordion FAQs on **`/help-centre`** & **`/pricing`** |
+| 21 | `/api/v1/help-centre/faqs/categories` | `GET` | 🟢 **Real Data Live** | **4 Categories** (`Billing`, `General`, `Integrations`, `Offline Mode`) | FAQ category filter tabs on `/help-centre` |
+| 22 | `/api/v1/help-centre/articles` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"totalCount": 0, "data": []}` | **`/help-centre`** knowledge search & article cards |
+| 23 | `/api/v1/help-centre/articles/{slug}` | `GET` | 🟡 **Empty in DB (`[]`)** | 0 Articles | **`/help-centre/[slug]`** article reader |
+| 24 | `/api/v1/help-centre/categories` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` | **`/help-centre`** topic cards |
+| 25 | `/api/v1/help-centre/videos` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` | **`/help-centre/videos`** video tutorials library |
+| 26 | `/api/v1/help-centre/getting-started` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` | **`/help-centre/getting-started`** 5-step onboarding guide |
+| 27 | `/api/v1/help-centre/search` | `GET` | 🟡 **Empty in DB (`[]`)** | 0 results | **`/help-centre`** search input bar |
+| 28 | `/api/v1/galleries` | `GET` | 🟡 **Empty in DB (`[]`)** | `{"success":true,"data":[]}` | Product Tour screenshot galleries |
 
-### 🎯 D. Lead Generation & Form Submission Endpoints (POST)
+---
+
+### 🎯 D. Lead Generation & Contact Form Endpoints (POST)
 
 | # | Endpoint | Method | Live DB Status | Functionality & Trigger | UI Location |
 |:---:|:---|:---:|:---:|:---|:---|
-| 24 | `/api/v1/contact/demo-request` | `POST` | 🟢 **Live DB Insertion** | Inserts new demo lead into backend `Leads` table | **1. First Visit Popup Modal**<br>**2. Footer Lead Card**<br>**3. Dedicated `/contact/demo` Page**<br>**4. Contact Sales Specialist Modal** |
-| 25 | `/api/v1/contact/form` | `POST` | 🟢 **Live DB Insertion** | Inserts general contact inquiry | **`/contact`** page form (`ContactForm.tsx`) |
-| 26 | `/api/v1/contact/sales` | `POST` | 🟢 **Live DB Insertion** | Specialized sales inquiry | **`/contact`** sales tab |
-| 27 | `/api/v1/contact/newsletter/subscribe` | `POST` | 🟢 **Live DB Insertion** | Subscribes email to newsletter database | **Footer Newsletter Box** & Popup |
-| 28 | `/api/v1/contact/newsletter/unsubscribe`| `POST` | 🟢 **Live DB Flow** | Unsubscribes email | Unsubscribe link handler |
-| 29 | `/api/v1/contact/support-ticket` | `POST` | 🟢 **Live DB Insertion** | Creates new support ticket in DB | **`/contact`** support ticket modal |
-| 30 | `/api/v1/contact/callback` | `POST` | 🟢 **Live DB Insertion** | Requests phone callback | Callback request widget |
+| 29 | `/api/v1/contact/demo-request` | `POST` | 🟢 **Live DB Insertion** | Inserts new demo lead into backend `Leads` table | **1. First Visit Popup Modal**<br>**2. Footer Lead Card**<br>**3. Dedicated `/contact/demo` Page**<br>**4. Contact Sales Specialist Modal** |
+| 30 | `/api/v1/contact/form` | `POST` | 🟢 **Live DB Insertion** | Inserts general contact inquiry | **`/contact`** page form (`ContactForm.tsx`) |
+| 31 | `/api/v1/contact/sales` | `POST` | 🟢 **Live DB Insertion** | Specialized sales enterprise inquiry | **`/contact`** sales tab |
+| 32 | `/api/v1/contact/newsletter/subscribe` | `POST` | 🟢 **Live DB Insertion** | Subscribes email to newsletter database | **Footer Newsletter Box** & Popup |
+| 33 | `/api/v1/contact/newsletter/unsubscribe`| `POST` | 🟢 **Live DB Flow** | Unsubscribes email from mailing list | Unsubscribe link handler |
+| 34 | `/api/v1/contact/support-ticket` | `POST` | 🟢 **Live DB Insertion** | Creates new support ticket in DB | **`/contact`** support ticket modal |
+| 35 | `/api/v1/contact/callback` | `POST` | 🟢 **Live DB Insertion** | Requests phone callback | Callback request widget |
+
+---
 
 ### 🔐 E. Authentication & Merchant Signup Endpoints
 
 | # | Endpoint | Method | Live Status | Functionality | UI Location |
 |:---:|:---|:---:|:---:|:---|:---|
-| 31 | `/api/v1/auth/login` | `POST` | 🟢 **Live Auth Flow** | Verifies credentials, returns JWT & Refresh token | **`/sign-in`** page |
-| 32 | `/api/v1/auth/logout` | `POST` | 🟢 **Live Auth Flow** | Invalidates session & cookie | Header Sign-Out button |
-| 33 | `/api/v1/auth/refresh` | `POST` | 🟢 **Live Auth Flow** | Background silent token refresh | Automatic interceptor |
-| 34 | `/api/v1/auth/me` | `GET` | 🟢 **Live Auth Flow** | Returns logged-in merchant profile | Protected layout / Header |
-| 35 | `/api/v1/auth/me/password` | `PUT` | 🟢 **Live Auth Flow** | Updates account password | User settings |
-| 36 | `/api/v1/auth/password/reset` | `POST` | 🟢 **Live Auth Flow** | Sends password reset OTP | **`/forgot-password`** |
-| 37 | `/api/v1/auth/password/reset/confirm` | `POST` | 🟢 **Live Auth Flow** | Confirms password change | **`/reset-password`** |
-| 38 | `/api/v1/registration/check-email` | `GET` | 🟢 **Live Validation** | Validates email uniqueness in DB | **`/sign-up`** Step 1 |
-| 39 | `/api/v1/registration/signup` | `POST` | 🟢 **Live Provisioning**| Initiates merchant trial workspace | **`/sign-up`** submission |
-| 40 | `/api/v1/registration/{id}/verify-email/send` | `POST` | 🟢 **Live Flow** | Resends 6-digit OTP code | **`/verify-email`** page |
-| 41 | `/api/v1/registration/verify-email` | `POST` | 🟢 **Live Flow** | Verifies OTP code | **`/verify-email`** input |
-| 42 | `/api/v1/registration/{id}/status` | `GET` | 🟢 **Live Flow** | Polls tenant provisioning progress | **`/provisioning`** loader |
-| 43 | `/api/v1/downloads` | `GET` | 🟡 **Requires Token** | List POS releases (Windows, Android, iOS) | **`/downloads`** page |
-| 44 | `/api/v1/downloads/latest` | `GET` | 🟡 **Requires Token** | Direct download links | Download buttons |
+| 36 | `/api/v1/auth/login` | `POST` | 🟢 **Live Auth Flow** | Verifies credentials, returns JWT & Refresh token | **`/sign-in`** page |
+| 37 | `/api/v1/auth/logout` | `POST` | 🟢 **Live Auth Flow** | Invalidates session & cookie | Header Sign-Out button |
+| 38 | `/api/v1/auth/refresh` | `POST` | 🟢 **Live Auth Flow** | Background silent token refresh | Automatic Axios/RTK interceptor |
+| 39 | `/api/v1/auth/me` | `GET` | 🟢 **Live Auth Flow** | Returns logged-in merchant profile | Protected layout / Header |
+| 40 | `/api/v1/auth/me/password` | `PUT` | 🟢 **Live Auth Flow** | Updates account password | User settings |
+| 41 | `/api/v1/auth/password/reset` | `POST` | 🟢 **Live Auth Flow** | Sends password reset OTP | **`/forgot-password`** |
+| 42 | `/api/v1/auth/password/reset/confirm` | `POST` | 🟢 **Live Auth Flow** | Confirms password change | **`/reset-password`** |
+| 43 | `/api/v1/registration/check-email` | `GET` | 🟢 **Live Validation** | Validates email uniqueness in DB | **`/sign-up`** Step 1 |
+| 44 | `/api/v1/registration/signup` | `POST` | 🟢 **Live Provisioning**| Initiates merchant trial workspace | **`/sign-up`** submission |
+| 45 | `/api/v1/registration/{id}/status` | `GET` | 🟢 **Live Flow** | Polls tenant provisioning progress | **`/provisioning`** loader |
 
 ---
 
-## 3. 🟡 KON KON SI APIS LAGANA OR BAKI HAI (32 PENDING SWAGGER APIS)
+## 3. 🟡 JISME DATA ADD KARNA HAI ADMIN SE (EXACT SWAGGER / ADMIN PAYLOADS)
 
-Backend Swagger (`http://localhost:5104/swagger/index.html`) me ready hain, jinhe website me aage wire karna baki hai:
-
-### 🚀 Phase 2: Dynamic Marketing & CMS Detail Pages (5 APIs — Priority: 🔴 HIGH)
-*In APIs se website ke sabhi inner pages (`/features/[slug]`, `/compare/[slug]`, legal pages) 100% dynamic CMS ban jayenge:*
-1. `GET /api/v1/marketing/features/{slug}` — Feature ka full deep-dive page (KDS, Tableside, Barcode Matrix).
-2. `GET /api/v1/marketing/competitors` — Competitor comparison table index (`/compare` / `/versus`).
-3. `GET /api/v1/marketing/competitors/{slug}` — Head-to-head comparison page (e.g. `/compare/toast`, `/compare/clover`).
-4. `GET /api/v1/marketing/content/{contentType}` — Dynamic CMS content collections.
-5. `GET /api/v1/marketing/content/page/{pageSlug}` — Legal & info pages (Terms, Privacy Policy, SLA).
-
-### 🔍 Phase 3: Blog, Search & Help Interactivity (8 APIs — Priority: 🟠 MEDIUM)
-6. `GET /api/v1/blog/search` — Blog search endpoint.
-7. `GET /api/v1/blog/rss` — RSS feed syndication.
-8. `GET /api/v1/help-centre/suggest` — Typeahead auto-suggest dropdown.
-9. `POST /api/v1/help-centre/articles/{id}/feedback` — Helpful / Not helpful (👍/👎) thumbs rating.
-10. `GET /api/v1/help-centre/articles/{id}/versions` — Article revision changelog.
-11. `GET /api/v1/help-centre/faqs/categories` — FAQs category filter tabs.
-12. `GET /api/v1/galleries` — Screenshots & UI media galleries directory.
-13. `GET /api/v1/galleries/{slug}` — Product tour gallery viewer.
-
-### ⚙️ Phase 4: Public Settings & Utility APIs (5 APIs — Priority: 🟠 MEDIUM)
-14. `GET /api/v1/settings/public` — Public settings (support numbers, operating hours, system config).
-15. `POST /api/v1/contact/signup` — Rapid direct signup lead endpoint.
-16. `GET /api/v1/contact/pricing` — In-contact form plan pricing info.
-17. `GET /api/v1/contact/help/search` — Inline help search widget.
-18. `GET /api/v1/settings/maintenance` — Scheduled maintenance alert banner checker.
-
-### 🛡️ Phase 5: Security (2FA), Sessions & Merchant Self-Service (14 APIs — Priority: 🔴 HIGH for Merchant Portal)
-19. `GET /api/v1/auth/mfa/setup` — 2FA QR code & secret key.
-20. `POST /api/v1/auth/mfa/enable` — Enable 2FA with authenticator code.
-21. `POST /api/v1/auth/mfa/disable` — Disable 2FA.
-22. `POST /api/v1/auth/mfa/verify` — Verify 2FA code during login.
-23. `GET /api/v1/auth/validate` — JWT token validity probe.
-24. `GET /api/v1/sessions` — Active login devices & sessions.
-25. `DELETE /api/v1/sessions/{id}` — Remote device sign-out.
-26. `GET /api/v1/merchant-self/profile` — Merchant business profile data.
-27. `PATCH /api/v1/merchant-self/profile` — Update business profile info.
-28. `GET /api/v1/merchant-self/wallet` — Platform wallet balance & transaction ledger.
-29. `GET /api/v1/merchant-self/downloads` — Licensed POS installers & license keys.
-30. `GET /api/v1/merchant-self/subscription` — Active subscription plan details & expiry.
-31. `GET /api/v1/merchant-self/invoices` — Billing invoices & downloadable PDF receipts.
-32. `GET /api/v1/notifications` — Merchant in-app notification feed.
+Aapko Admin panel ya Swagger (`http://localhost:5104/swagger/index.html`) se in 11 sections me data add karna hai. Har section ke liye exact **Endpoint**, **Method**, aur **Copy-Paste Ready JSON Payload** niche diya gaya hai:
 
 ---
 
-## 4. 📝 KISME CONTENT ADD KARNA HAI: EXACT JSON & UI CHECKLIST
-
-Database me naya content add karte hi UI par test karne ke liye exact format aur live page links:
-
-### 1. ⚡ Features Grid (`POST /api/v1/marketing/features`)
-* **Test On UI:** `http://localhost:3000` (Enterprise), `http://localhost:3002` (Restaurant), `http://localhost:3001` (Retail) par Hero Section ke niche.
-* **JSON Payload Format:**
+### 1️⃣ Features Grid (Homepage & `/features` Page)
+* **Backend Endpoint:** `POST /api/v1/marketing/content`  
+* **Content Type:** `FeatureHighlight`  
+* **UI Par Kaha Dikh Raha Hai:** Homepage Hero Section ke turant niche & `/features` page par.
+* **JSON Payload (Copy-Paste in Swagger):**
 ```json
 {
-  "title": "Kitchen Display System (KDS)",
-  "description": "Real-time kitchen order tickets routing directly to chef stations with bump bar alerts.",
-  "iconName": "ChefHat",
-  "targetPlatform": "restaurant",
-  "metricBadge": "-42% Ticket Time",
+  "contentType": "FeatureHighlight",
+  "title": "Dual-Screen POS & Kitchen Display (KDS)",
+  "body": "Real-time kitchen order tickets routing directly to chef prep stations with bump bar alerts and -42% faster ticket turnover.",
+  "imageUrl": "/images/features/kds-preview.png",
+  "linkUrl": "/features/kitchen-display-system",
   "sortOrder": 1,
-  "isActive": true
+  "isActive": true,
+  "pageSlug": "homepage-features",
+  "locale": "en"
 }
 ```
+> **Tip:** Isme `sortOrder: 2`, `sortOrder: 3` karke 4 se 6 features add karein (e.g., Tableside Mobile POS, Real-time Inventory Ledger, Offline Mesh Sync, Multi-Store Central Catalog).
 
-### 2. 📰 Blog Articles (`POST /api/v1/blog/posts`)
-* **Test On UI:** `http://localhost:3000/blog` (Listing) aur `http://localhost:3000/blog/scaling-multi-location-pos` (Detail).
-* **JSON Payload Format:**
+---
+
+### 2️⃣ Blog Engine (`POST /api/v1/blog/...`)
+Blog ko live karne ke liye **4 steps** me data add karna hota hai:
+
+#### Step 2.1: Pehle Author Add Karein
+* **Endpoint:** `POST /api/v1/blog/authors`
+* **JSON Payload:**
 ```json
 {
-  "title": "Scaling Multi-Location Franchise POS: Complete Guide",
+  "name": "Sarah Jenkins",
+  "bio": "Senior Retail Systems Architect & Cloud POS Specialist at Quantix.",
+  "photoUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80"
+}
+```
+*(Response me se `authorId` copy kar lein)*
+
+#### Step 2.2: Phir Category Add Karein
+* **Endpoint:** `POST /api/v1/blog/categories`
+* **JSON Payload:**
+```json
+{
+  "name": "Cloud POS Architecture",
+  "slug": "cloud-pos-architecture",
+  "description": "Guides and benchmarks on modern cloud-first point of sale systems."
+}
+```
+*(Response me se `categoryId` copy kar lein)*
+
+#### Step 2.3: Phir Blog Post Create Karein
+* **Endpoint:** `POST /api/v1/blog/posts`
+* **JSON Payload:**
+```json
+{
+  "title": "Scaling Multi-Location Franchise POS: The Definitive 2026 Guide",
   "slug": "scaling-multi-location-pos",
-  "excerpt": "Learn how leading multi-unit enterprises unify inventory and accounting with cloud POS.",
-  "content": "## Introduction\n\nOperating across 50+ stores requires centralized master catalogs...",
-  "coverImageUrl": "/images/blog/blog-hero-1.jpg",
-  "authorId": "guid-here",
-  "categoryId": "guid-here",
-  "readTime": "5 min read",
-  "isPublished": true
+  "excerpt": "Learn how leading multi-unit enterprises unify inventory, menu pricing, and accounting across 50+ stores with zero sync latency.",
+  "body": "## Executive Summary\n\nOperating multiple retail or restaurant outlets requires a centralized master catalog, sub-second sync, and offline resilience...\n\n### 1. Unified Master Catalog\nCentralize pricing updates across all registers instantly without downtime.",
+  "authorId": "PASTE_AUTHOR_ID_HERE",
+  "categoryId": "PASTE_CATEGORY_ID_HERE",
+  "tags": "Multi-Location, Cloud POS, Enterprise",
+  "featuredImageUrl": "https://images.unsplash.com/photo-1556742049-0a67c5574f73?w=1200&q=80",
+  "seoTitle": "Scaling Multi-Location Franchise POS Guide | Quantix",
+  "seoDescription": "Complete guide on managing multi-store POS inventory, sales, and hardware sync.",
+  "status": "Published"
 }
 ```
 
-### 3. 💬 Customer Testimonials (`POST /api/v1/marketing/testimonials`)
-* **Test On UI:** Homepage par Reviews Carousel.
-* **JSON Payload Format:**
+#### Step 2.4: Publish Post (Agar Status Draft me tha)
+* **Endpoint:** `POST /api/v1/blog/posts/{postId}/publish`
+
+---
+
+### 3️⃣ Help Centre Knowledge Base (`POST /api/v1/help-centre/...`)
+Help Centre ko live karne ke liye 2 steps:
+
+#### Step 3.1: Category Add Karein
+* **Endpoint:** `POST /api/v1/help-centre/categories` *(or swagger schema)*
 ```json
 {
-  "clientName": "Marcus Vance",
-  "clientRole": "Director of IT",
-  "companyName": "Apex Retail Group",
-  "avatarUrl": "/images/testimonials/avatar-1.jpg",
-  "comment": "Quantix handled our Black Friday volume across 40 stores with zero latency and instant sync.",
-  "rating": 5,
-  "platform": "retail",
+  "name": "Hardware Setup & Terminals",
+  "slug": "hardware-setup",
+  "description": "Thermal printer pairing, barcode scanner calibration, and cash drawers."
+}
+```
+
+#### Step 3.2: Help Article Add Karein
+* **Endpoint:** `POST /api/v1/help-centre/articles`
+* **JSON Payload:**
+```json
+{
+  "title": "How to Configure Offline Mesh Sync on Dual-Screen Registers",
+  "slug": "how-to-configure-offline-mesh-sync",
+  "body": "## Overview\nQuantix terminals automatically switch to local SQLite cache when WAN internet disconnects.\n\n### Step-by-Step Instructions\n1. Ensure Bluetooth or LAN router is active.\n2. In Register Settings, enable 'Offline Transaction Caching'.\n3. Set offline floor transaction ceiling limit ($500 per transaction).",
+  "tags": "Hardware, Offline Mode, Dual-Screen",
   "sortOrder": 1,
   "isActive": true
 }
 ```
 
-### 4. 🔌 Integrations (`POST /api/v1/marketing/integrations`)
-* **Test On UI:** `http://localhost:3000/integrations` & Homepage Ticker.
-* **JSON Payload Format:**
+---
+
+### 4️⃣ Help Centre Video Tutorials
+* **Endpoint:** `POST /api/v1/help-centre/videos`
+* **UI Par Kaha Dikh Raha Hai:** `/help-centre/videos`
+* **JSON Payload:**
+```json
+{
+  "title": "Setting Up Your First Quantix POS Terminal in 5 Minutes",
+  "description": "Watch our step-by-step walkthrough for unboxing, connecting thermal printers, and taking your first test card payment.",
+  "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "thumbnailUrl": "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=800&q=80",
+  "duration": "04:32",
+  "category": "Setup Guides",
+  "sortOrder": 1,
+  "isActive": true
+}
+```
+
+---
+
+### 5️⃣ Help Centre Getting Started Guides
+* **Endpoint:** `POST /api/v1/help-centre/getting-started`
+* **UI Par Kaha Dikh Raha Hai:** `/help-centre/getting-started`
+* **JSON Payload:**
+```json
+{
+  "stepNumber": 1,
+  "title": "Create Your Merchant Account & Define Business Profile",
+  "description": "Sign up for the 14-day full enterprise trial, enter your business EIN or tax ID, and choose your operating currency.",
+  "actionUrl": "/sign-up",
+  "actionText": "Start Free Trial",
+  "sortOrder": 1,
+  "isActive": true
+}
+```
+
+---
+
+### 6️⃣ Integrations Directory (`/integrations` Page & Homepage Ticker)
+* **Backend Endpoint:** `POST /api/v1/marketing/integrations` (or via `POST /api/v1/marketing/content`)
+* **UI Par Kaha Dikh Raha Hai:** `/integrations`, `/integrations/[slug]`, Navbar Mega-Menu, aur Homepage Ticker.
+* **JSON Payload:**
 ```json
 {
   "name": "Stripe Terminal",
   "slug": "stripe-terminal",
   "category": "PAYMENTS",
-  "logoUrl": "/images/integrations/stripe.svg",
-  "tagline": "Accept in-person chip, contactless tap, and Apple Pay tableside.",
-  "description": "Seamless integration between Quantix POS and Stripe Terminal card readers with automatic end-of-day payouts.",
+  "logoUrl": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=200&q=80",
+  "tagline": "Accept chip cards, Apple Pay, and contactless tap tableside.",
+  "description": "Seamless integration between Quantix POS and Stripe BBPOS card readers with automatic end-of-day payouts and fraud protection.",
   "sortOrder": 1,
   "isActive": true
 }
 ```
+> **Recommended Entries to Add:**
+> 1. `Stripe Terminal` (Payments)
+> 2. `QuickBooks Online` (Accounting)
+> 3. `DoorDash Drive` (Online Ordering)
+> 4. `UberEats POS Integration` (Food Delivery)
+> 5. `Shopify Central Sync` (Omnichannel Inventory)
+> 6. `Xero Cloud Accounting` (Bookkeeping)
 
-### 5. 🏢 Industry Verticals (`POST /api/v1/marketing/industries`)
-* **Test On UI:** `http://localhost:3000/industries` & Navbar Solutions Menu.
-* **JSON Payload Format:**
+---
+
+### 7️⃣ Industry Verticals / Solutions (`/industries` Page & Navbar Menu)
+* **Backend Endpoint:** `POST /api/v1/marketing/industries`  
+* **UI Par Kaha Dikh Raha Hai:** `/industries`, `/industries/[slug]`, Navbar Solutions Dropdown.
+* **JSON Payload:**
 ```json
 {
-  "industryName": "Fine Dining & Bistro",
+  "industryName": "Fine Dining & Full-Service Restaurants",
   "slug": "fine-dining",
-  "heroHeadline": "Elevate Table Service & Guest Experience",
-  "statNumber": "+28%",
+  "heroHeadline": "Elevate Table Turns, Sommelier Pairings, and Guest Hospitality",
+  "statNumber": "+32%",
   "statLabel": "Higher Table Turnover",
-  "summary": "Sophisticated course management, wine pairing notes, and split billing for upscale dining.",
+  "summary": "Sophisticated course pacing, split checks by seat, tableside mobile ordering, and KDS kitchen routing for upscale dining.",
   "sortOrder": 1,
   "isActive": true
 }
 ```
+> **Recommended Verticals to Add:**
+> 1. `Fine Dining & Full-Service Restaurants` (`fine-dining`)
+> 2. `Quick-Service (QSR) & Cafés` (`qsr-cafes`)
+> 3. `Supermarkets & Grocery Stores` (`grocery-supermarkets`)
+> 4. `Apparel, Footwear & Boutique Retail` (`apparel-boutique`)
+> 5. `Multi-Unit Franchise Chains` (`franchise-enterprise`)
 
-### 6. 🏆 Customer Case Studies (`POST /api/v1/marketing/case-studies`)
-* **Test On UI:** `http://localhost:3000/case-studies`.
-* **JSON Payload Format:**
+---
+
+### 8️⃣ Competitor Comparisons (`/compare` Page)
+* **Backend Endpoint:** `POST /api/v1/marketing/competitors`  
+* **UI Par Kaha Dikh Raha Hai:** `/compare`, `/compare/[slug]`
+* **JSON Payload:**
 ```json
 {
-  "clientName": "Urban Gourmet Bistro",
-  "industry": "Hospitality",
-  "locationCount": "12 Locations",
-  "challengeSummary": "Legacy POS caused frequent order desync and slow table turns during weekend peak hours.",
-  "solutionSummary": "Deployed Quantix dual-screen terminals with mobile tableside handhelds and KDS.",
-  "quantifiedMetric": "+38% Revenue Uplift",
-  "executiveQuote": "Quantix transformed our peak service flow completely.",
-  "quoteAuthor": "David Rossi",
-  "quoteDesignation": "Managing Partner"
-}
-```
-
-### 7. ❓ Help Centre Knowledge Base (`POST /api/v1/help-centre/articles` & `/faqs`)
-* **Test On UI:** `http://localhost:3000/help-centre` & `/pricing`.
-* **FAQ Format:**
-```json
-{
-  "question": "Can Quantix POS operate when the internet goes down?",
-  "answer": "Yes. Quantix features full local offline caching. You can continue taking orders, processing offline card payments, and printing tickets. All transactions automatically sync as soon as connectivity resumes.",
-  "category": "Offline Mode",
+  "competitorName": "Toast POS",
+  "slug": "versus-toast",
+  "headline": "Why Multi-Location Brands Switch from Toast to Quantix",
+  "quantixPros": [
+    "Zero proprietary hardware lock-in (runs on iPad, Android, Windows)",
+    "Flat 2.4% + 10¢ payment processing vs Toast's mandatory 2.99% + 15¢",
+    "Full offline mesh sync with local order cache"
+  ],
+  "competitorCons": [
+    "Requires Toast proprietary hardware",
+    "Higher transaction fee add-ons",
+    "Limited offline processing capabilities"
+  ],
   "sortOrder": 1,
   "isActive": true
 }
@@ -270,38 +335,139 @@ Database me naya content add karte hi UI par test karne ke liye exact format aur
 
 ---
 
-## 5. 🎯 LEAD GENERATION TOUCHPOINTS & PRODUCTION AUDIT
-
-Teeno websites me lead capture ke 5 primary touchpoints hain. Sabhi touchpoints me real backend APIs, USA standard phone masking/validation, aur reusable atom components (`ATMButton`, `ATMTextField`, `ATMPhoneField`, `ATMTextArea`) integrated hain:
-
-### 1. First Visit Offer Popup (`FirstVisitOfferModal.tsx`)
-- **API Endpoint:** `POST /api/v1/contact/demo-request`
-- **Location:** `src/components/organisms/OfferPopupModal/FirstVisitOfferModal.tsx`
-- **US Formatting:** Country Code default `+1`, 10-digit masking `(xxx) xxx-xxxx`, strict 10-digit validation.
-- **Reusable Component:** `<ATMButton type="submit" isLoading={isApiSubmitting} loadingText="RESERVING OFFER...">`
-
-### 2. Footer Lead Card (`LeadFormCard.tsx`)
-- **API Endpoint:** `POST /api/v1/contact/demo-request`
-- **Location:** `src/components/organisms/Footer/LeadFormCard.tsx`
-- **US Formatting:** Country Code default `+1`, 10-digit masking `(xxx) xxx-xxxx`.
-
-### 3. Dedicated Live Demo Booking Page (`/contact/demo`)
-- **API Endpoint:** `POST /api/v1/contact/demo-request`
-- **Location:** `src/app/(public)/contact/demo/page.tsx`
-- **US Formatting:** EST operational hours selection (`Morning (09:00 AM - 12:00 PM EST)`), strict 10-digit US phone.
-
-### 4. Specialist Inquiry Modal (`ContactSalesModal.tsx` / `ContactModalWrapper.tsx`)
-- **API Endpoint:** `POST /api/v1/contact/demo-request`
-- **Location:** `src/features/Contact/components/ContactSalesModal.tsx`
-
-### 5. Contact Sales Feature (`src/features/Contact/`)
-- **API Endpoints:** `POST /api/v1/contact/form` & `POST /api/v1/contact/sales`
-- **Safety Fix:** Wrapped in `<FormikProvider value={formik}>` to guarantee zero `useField()` crashes.
-
-### 6. Newsletter Subscription (`NewsletterSubscribeBox.tsx` & `NewsletterWrapper.tsx`)
-- **API Endpoint:** `POST /api/v1/contact/newsletter/subscribe`
-- **Location:** `src/components/organisms/Footer/NewsletterSubscribeBox.tsx` & `src/features/Newsletter/`
+### 9️⃣ Galleries / Product Screenshots (`/galleries`)
+* **Step 1: Gallery Album Create Karein:** `POST /api/v1/galleries`
+```json
+{
+  "title": "Quantix Dual-Screen POS Hardware & Software Tour",
+  "slug": "dual-screen-hardware-tour",
+  "body": "Hi-res photos and UI screenshots of the customer-facing display, bump bars, and cashier station.",
+  "sortOrder": 1,
+  "isActive": true
+}
+```
+* **Step 2: Gallery Image Item Add Karein:** `POST /api/v1/galleries/{galleryId}/items`
+```json
+{
+  "title": "Cashier Order Register Screen",
+  "caption": "Fast touch grid with barcode scanner support.",
+  "linkUrl": "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1200&q=80",
+  "sortOrder": 1,
+  "isActive": true
+}
+```
 
 ---
 
-> **Verified Status:** 100% Production Ready • Zero Build Errors • USA Market Standardized
+### 🔟 Naye Testimonials Add Karne Ke Liye (`POST /api/v1/testimonials`)
+* **Endpoint:** `POST /api/v1/testimonials`
+* **JSON Payload:**
+```json
+{
+  "title": "Zero Downtime during Black Friday Rush",
+  "body": "We processed over 15,000 transactions across 12 boutique apparel stores with zero latency. The local offline mesh sync gave our managers total peace of mind.",
+  "personName": "Elena Rostova",
+  "personRole": "VP of Retail Technology",
+  "companyName": "Nordic Apparel Co.",
+  "rating": 5,
+  "merchantType": "Enterprise",
+  "sortOrder": 3,
+  "isActive": true
+}
+```
+
+---
+
+### 1️⃣1️⃣ Naye Clientele Logos Add Karne Ke Liye (`POST /api/v1/clientele`)
+* **Endpoint:** `POST /api/v1/clientele`
+* **JSON Payload:**
+```json
+{
+  "title": "Chipotle Mexican Grill",
+  "websiteUrl": "https://chipotle.com",
+  "industry": "Restaurant",
+  "isFeatured": true,
+  "linkUrl": "https://chipotle.com",
+  "sortOrder": 4,
+  "isActive": true
+}
+```
+
+---
+
+## 4. 🧭 SWAGGER BACKEND MICROSERVICES ARCHITECTURE (393 ROUTES)
+
+Live Swagger specification (`http://localhost:5104/swagger/v1/swagger.json`) me 33 core microservice domains hain:
+
+```
+├── 💳 Billing & Plans (35 routes)           -> Invoices, subscriptions, usage meters, webhook listeners
+├── ⚙️ Settings (32 routes)                  -> SMTP setup, maintenance windows, public config, SMS
+├── 🏪 Merchants (29 routes)                 -> Tenant onboarding, merchant profiles, store locations
+├── 🎧 Helpdesk (26 routes)                  -> Support ticketing system, ticket replies, SLA tracking
+├── 🌐 WebsiteContent (21 routes)            -> Announcements, Clientele, Testimonials, Galleries
+├── 👤 MerchantSelf (20 routes)              -> Merchant self-service portal, downloads, wallet, profile
+├── ❓ HelpCentre (19 routes)                -> Articles, FAQ manager, video library, onboarding guides
+├── 💰 Wallet & Payouts (18 routes)          -> Multi-currency merchant wallet balance, payout ledgers
+├── 🧙 OnboardingWizard (18 routes)          -> Step-by-step setup wizard for new store registration
+├── 🔐 Registration & Auth (29 routes)       -> JWT tokens, email verification, multi-step provisioning
+├── 📰 Blog Engine (17 routes)               -> Articles, authors, category taxonomy, RSS feed
+├── 📢 Marketing CMS (16 routes)             -> Social proof, case studies, hero banners, competitor matrix
+├── 📦 Catalogs & Features (16 routes)       -> Feature catalog matrix, daily pricing, grace periods
+├── 📊 Reports & Dashboard (29 routes)       -> Live sales analytics, hourly orders, cashier reconciliation
+└── 🛡️ Compliance, Roles & Audit (35 routes) -> 2FA (MFA), GDPR data export, audit trails, RBAC permissions
+```
+
+---
+
+## 5. 🎯 LEAD GENERATION TOUCHPOINTS VERIFICATION
+
+Teeno websites me lead capture ke sabhi **5 primary touchpoints** live hain, USA phone masking/validation ke saath real backend API `/api/v1/contact/demo-request` aur `/contact/form` se connected hain:
+
+1. **First Visit Offer Popup Modal (`FirstVisitOfferModal.tsx`):**
+   - API: `POST /api/v1/contact/demo-request`
+   - Trigger: Website par aane ke 4 seconds baad popup hota hai.
+   - US Validation: Country Code `+1`, Auto-masking `(xxx) xxx-xxxx`.
+
+2. **Footer Lead Card (`LeadFormCard.tsx`):**
+   - API: `POST /api/v1/contact/demo-request`
+   - Har public page ke footer ke upar lead form.
+
+3. **Dedicated Demo Booking Page (`/contact/demo`):**
+   - API: `POST /api/v1/contact/demo-request`
+   - Operational timing slots in EST (`09:00 AM - 12:00 PM EST`).
+
+4. **Specialist Inquiry Modal (`ContactSalesModal.tsx`):**
+   - API: `POST /api/v1/contact/demo-request`
+   - Hero buttons aur Pricing custom quote CTA se open hota hai.
+
+5. **General Contact & Support Forms (`src/features/Contact/`):**
+   - APIs: `POST /api/v1/contact/form` & `POST /api/v1/contact/sales` & `POST /api/v1/contact/support-ticket`
+   - Reusable `ATMTextField`, `ATMPhoneField`, `ATMTextArea`, `ATMButton` components.
+
+6. **Footer Newsletter Box (`NewsletterSubscribeBox.tsx`):**
+   - API: `POST /api/v1/contact/newsletter/subscribe`
+
+---
+
+## 6. 🚀 QUICK START: DATA ADD KARNE KA STEP-BY-STEP PROCESS
+
+1. Browser me open karein: **`http://localhost:5104/swagger/index.html`**
+2. Jis section me data add karna hai, us Controller tag par click karein:
+   - **Features:** `Marketing` -> `POST /api/v1/marketing/content`
+   - **Blog:** `Blog` -> `POST /api/v1/blog/authors`, phir `categories`, phir `posts`
+   - **Help Articles:** `HelpCentre` -> `POST /api/v1/help-centre/articles`
+   - **FAQs:** `HelpCentre` -> `POST /api/v1/help-centre/faqs`
+   - **Testimonials:** `WebsiteContent` -> `POST /api/v1/testimonials`
+   - **Clientele:** `WebsiteContent` -> `POST /api/v1/clientele`
+   - **Announcements:** `WebsiteContent` -> `POST /api/v1/announcements`
+   - **Galleries:** `WebsiteContent` -> `POST /api/v1/galleries`
+3. "Try it out" button par click karein.
+4. Upar section 3 me diye gaye JSON Payloads me se jo chahein copy karein aur Request Body me paste karke **"Execute"** button dabayein.
+5. Response me `200 OK` ya `201 Created` aate hi website refresh karein:
+   - Enterprise: `http://localhost:3000`
+   - Restaurant: `http://localhost:3002`
+   - Retail: `http://localhost:3001`
+   Data turant live dikhne lagega!
+
+---
+> **Master Sync Status:** Enterprise, Restaurant, aur Retail teeno repositories me 100% verified aur synchronized.

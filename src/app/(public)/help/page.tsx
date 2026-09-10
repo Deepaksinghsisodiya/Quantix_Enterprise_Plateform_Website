@@ -25,61 +25,41 @@ import {
   X,
   ExternalLink,
   ChevronRight,
+  Layers,
+  FileCode,
+  Video,
 } from 'lucide-react';
 import Link from 'next/link';
 import CTABanner from '@/components/organisms/CTABanner/CTABanner';
-
-interface HelpFaq {
-  category: 'hardware' | 'offline' | 'catalog' | 'erp';
-  q: string;
-  a: string;
-}
-
-const HELP_FAQS: HelpFaq[] = [
-  {
-    category: 'offline',
-    q: 'How does register offline mode work during a store internet outage?',
-    a: 'Every Quantix register runs an embedded IndexedDB local cache. When broadband or WiFi drops, tills automatically switch to local storage within 5 milliseconds. Cashiers can continue barcode scanning, price calculations, cash settlement, and receipt printing. Once internet connectivity is restored, background sync workers batch and verify all transactions with HQ automatically.',
-  },
-  {
-    category: 'hardware',
-    q: 'What hardware receipt printers, cash drawers, and barcode scanners are supported?',
-    a: 'Quantix supports dual-band Ethernet, Wi-Fi, and Bluetooth receipt printers (Epson, Star Micronics, Citizen), standard RJ-12 cash drawers, Zebra 2D barcode imagers, and P2PE-certified EMV card terminals (Stripe BBPOS, Verifone, Ingenico).',
-  },
-  {
-    category: 'catalog',
-    q: 'How do we push a price change to only 3 specific branches without modifying the global catalog?',
-    a: 'In the Quantix HQ Dashboard, navigate to Catalog > Price Overrides. Select your target SKU, choose the specific branch cluster or location IDs, input the localized override price or promotional schedule, and click Apply. The updated price is broadcasted to the selected tills in under 200 milliseconds.',
-  },
-  {
-    category: 'erp',
-    q: 'How do we stream daily Z-reports and sales ledgers into SAP or NetSuite?',
-    a: 'Quantix provides real-time REST webhooks and gRPC event streaming. In the Developer API portal, create an endpoint subscription for the "order.settled" and "shift.closed" events. Quantix will push signed HMAC SHA-256 JSON payloads containing gross totals, item line breakdowns, tax accounts, and payment tenders directly into your ERP ingestion queue.',
-  },
-  {
-    category: 'hardware',
-    q: 'Can we pair a master register with a satellite terminal and kitchen display (KDS)?',
-    a: 'Yes. Quantix uses a local peer-to-peer WebSocket mesh. Satellite registers, server handheld tablets, and kitchen display bump bars connect directly across the local LAN subnet, ensuring kitchen tickets fire instantly even if outside WAN internet is unavailable.',
-  },
-  {
-    category: 'offline',
-    q: 'What happens if a cashier terminal experiences a hardware power failure mid-order?',
-    a: 'Active shopping carts and split bills are continuously autosaved to local persistent SQLite/IndexedDB journal files. Upon rebooting, the cashier simply enters their PIN to resume the exact in-progress order without data loss.',
-  },
-];
+import {
+  useGetHelpArticlesQuery,
+  useGetHelpCategoriesQuery,
+  useGetHelpFAQsQuery,
+} from '@/features/HelpCentre/Service/HelpCentreService';
 
 export default function HelpCenterPage() {
-  const [activeCategory, setActiveCategory] = useState<'all' | 'hardware' | 'offline' | 'catalog' | 'erp'>('all');
+  const [activeCategory, setActiveCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
 
-  const filteredFaqs = HELP_FAQS.filter((faq) => {
-    const matchesCategory = activeCategory === 'all' || faq.category === activeCategory;
+  const { data: apiArticles = [], isLoading: isArticlesLoading } = useGetHelpArticlesQuery();
+  const { data: apiCategories = [] } = useGetHelpCategoriesQuery();
+  const { data: apiFaqs = [], isLoading: isFaqsLoading } = useGetHelpFAQsQuery();
+
+  const filteredArticles = apiArticles.filter((art) => {
     const matchesSearch =
       searchQuery === '' ||
-      faq.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      faq.a.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+      art.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      art.body?.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSearch;
+  });
+
+  const filteredFaqs = apiFaqs.filter((faq) => {
+    const matchesSearch =
+      searchQuery === '' ||
+      faq.question?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      faq.answer?.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSearch;
   });
 
   return (
@@ -208,52 +188,99 @@ export default function HelpCenterPage() {
         </div>
       </section>
 
+      {/* 2.5 Live Knowledge Base Articles from API */}
+      <section className="section-py site-container px-4 sm:px-6 border-b border-slate-200/80 dark:border-slate-800/80">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+          <div>
+            <span className="text-xs font-syne font-black text-primary tracking-widest uppercase flex items-center gap-1.5">
+              <BookOpen size={14} /> OFFICIAL DOCUMENTATION & GUIDES
+            </span>
+            <h2 className="font-syne text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-1">
+              Help Articles & Setup Walkthroughs
+            </h2>
+          </div>
+          <span className="text-xs text-slate-500 font-semibold">
+            {filteredArticles.length} {filteredArticles.length === 1 ? 'Article' : 'Articles'} Published
+          </span>
+        </div>
+
+        {isArticlesLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 animate-pulse space-y-4">
+                <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-1/3" />
+                <div className="h-6 bg-slate-200 dark:bg-slate-800 rounded w-4/5" />
+                <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded" />
+              </div>
+            ))}
+          </div>
+        ) : filteredArticles.length === 0 ? (
+          <div className="p-8 text-center bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
+            <BookOpen className="mx-auto text-slate-400 mb-2" size={28} />
+            <p className="text-sm font-bold text-slate-700 dark:text-slate-300">No help articles published yet.</p>
+            <p className="text-xs text-slate-500 mt-1">Articles added in Admin will appear here instantly.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {filteredArticles.map((art) => (
+              <Link
+                key={art.id || art.slug}
+                href={`/help/article/${art.slug || art.id}`}
+                className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/50 transition-all flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="inline-block px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
+                      {art.categoryName || 'Support Guide'}
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
+                      <Clock size={11} /> 3 min read
+                    </span>
+                  </div>
+                  <h3 className="font-syne font-bold text-base text-slate-900 dark:text-white group-hover:text-primary transition-colors line-clamp-2">
+                    {art.title}
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed line-clamp-3">
+                    {art.excerpt || art.body?.replace(/#+\s/g, '').slice(0, 140)}...
+                  </p>
+                </div>
+                <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-bold text-primary">
+                  <span>Read Full Guide</span>
+                  <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </section>
+
       {/* 3. Knowledge Base FAQs */}
       <section className="section-py site-container max-w-4xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-8">
           <span className="text-xs font-syne font-black text-primary tracking-widest uppercase">
-            KNOWLEDGE BASE
+            FREQUENTLY ASKED QUESTIONS
           </span>
           <h2 className="font-syne text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-1">
-            Frequently Solved Inquiries
+            Common Answers & Troubleshooting
           </h2>
-        </div>
-
-        {/* Category Pills */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
-          {(
-            [
-              { id: 'all', label: 'All Topics' },
-              { id: 'offline', label: 'Offline Failover' },
-              { id: 'hardware', label: 'Printers & Scanners' },
-              { id: 'catalog', label: 'Price Overrides' },
-              { id: 'erp', label: 'ERP & Webhooks' },
-            ] as const
-          ).map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveCategory(tab.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                activeCategory === tab.id
-                  ? 'bg-primary text-white shadow-xs'
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
         </div>
 
         {/* FAQ Accordion */}
         <div className="space-y-3">
-          {filteredFaqs.length === 0 ? (
+          {isFaqsLoading ? (
+            <div className="space-y-3">
+              {[1, 2, 3].map((n) => (
+                <div key={n} className="p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 animate-pulse h-14" />
+              ))}
+            </div>
+          ) : filteredFaqs.length === 0 ? (
             <div className="p-8 text-center bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800">
-              <p className="text-sm font-medium text-slate-500">No help articles found matching "{searchQuery}".</p>
+              <p className="text-sm font-medium text-slate-500">No FAQs found matching "{searchQuery}".</p>
             </div>
           ) : (
             filteredFaqs.map((faq, idx) => (
               <div
-                key={idx}
+                key={faq.id || idx}
                 className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs overflow-hidden"
               >
                 <button
@@ -261,7 +288,7 @@ export default function HelpCenterPage() {
                   className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 dark:hover:bg-slate-850/50 transition-colors"
                 >
                   <span className="font-syne font-bold text-sm sm:text-base text-slate-900 dark:text-white">
-                    {faq.q}
+                    {faq.question}
                   </span>
                   <span className="p-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 shrink-0">
                     {expandedFaq === idx ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -269,7 +296,7 @@ export default function HelpCenterPage() {
                 </button>
                 {expandedFaq === idx && (
                   <div className="px-4 pb-5 sm:px-5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed border-t border-slate-100 dark:border-slate-800/80 pt-3">
-                    {faq.a}
+                    {faq.answer}
                   </div>
                 )}
               </div>

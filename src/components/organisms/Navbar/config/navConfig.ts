@@ -99,6 +99,8 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
   ],
 };
 
+export const FEATURES_MEGA_CONFIG: MegaMenuSectionData = PRODUCTS_MEGA_CONFIG;
+
 export const SOLUTIONS_MEGA_CONFIG: MegaMenuSectionData = {
   promoCards: [
     {
@@ -165,30 +167,32 @@ export const INTEGRATIONS_MEGA_CONFIG: MegaMenuSectionData = {
 export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
   promoCards: [
     {
-      badge: 'FEATURED GUIDE',
-      title: '2026 POS Buying & Setup Guide',
-      desc: 'A complete step-by-step checklist on choosing the right hardware, reducing fees, and training cashiers.',
-      ctaText: 'Read Free POS Guide',
-      href: '/resources/pos-guide',
+      badge: 'OFFICIAL SUPPORT',
+      title: 'Help Center & Setup Guides',
+      desc: 'Step-by-step documentation, terminal unboxing, printer pairing, and video tutorials.',
+      ctaText: 'Explore Help Center',
+      href: '/help',
       imageSrc: '/images/nav_cloud_bundle.png',
       badgeColor: 'text-blue-700 dark:text-blue-400 bg-blue-100/90 dark:bg-blue-900/30 border border-blue-300/40',
     },
   ],
   categories: [
     {
-      categoryTitle: 'TOOLS & CALCULATORS',
+      categoryTitle: 'LEARN & READ',
       items: [
-        { title: 'POS Savings ROI Calculator', desc: 'Calculate how much you save on card fees & labor', href: '/roi-calculator', icon: Calculator, iconColor: 'text-emerald-500' },
-        { title: 'Help & Knowledge Center', desc: 'Step-by-step setup tutorials & hardware guides', href: '/help', icon: HelpCircle, iconColor: 'text-blue-500' },
-        { title: 'POS System Comparison', desc: 'See how Quantix compares to traditional systems', href: '/compare', icon: FileSpreadsheet, iconColor: 'text-purple-500' },
+        { title: 'Blog & Insights', desc: 'Latest retail trends, POS guides & tips', href: '/blog', icon: Newspaper, iconColor: 'text-indigo-500' },
+        { title: 'Help Center', desc: 'Setup guides, troubleshooting & FAQs', href: '/help', icon: HelpCircle, iconColor: 'text-blue-500' },
+        { title: 'Video Tutorials', desc: 'Step-by-step videos for setup & hardware', href: '/help/videos', icon: PlayCircle, iconColor: 'text-rose-500' },
+        { title: 'Case Studies', desc: 'Real stories from businesses using Quantix', href: '/case-studies', icon: Users, iconColor: 'text-emerald-500' },
       ],
     },
     {
-      categoryTitle: 'SUPPORT & STORIES',
+      categoryTitle: 'TOOLS & SUPPORT',
       items: [
-        { title: 'Customer Stories', desc: 'Read how multi-unit businesses scale with Quantix', href: '/testimonials', icon: Users, iconColor: 'text-amber-500' },
-        { title: 'Live Hardware Diagnostics', desc: 'Test printers, card readers & scanners online', href: '/status', icon: Activity, iconColor: 'text-cyan-500' },
-        { title: '24/7 Priority Support', desc: 'Speak to a dedicated POS engineer anytime', href: '/contact', icon: Headset, iconColor: 'text-rose-500' },
+        { title: 'Savings Calculator', desc: 'Calculate how much you can save per year', href: '/roi-calculator', icon: Calculator, iconColor: 'text-amber-500' },
+        { title: 'Compare Systems', desc: 'See how Quantix compares to other POS systems', href: '/compare', icon: FileSpreadsheet, iconColor: 'text-purple-500' },
+        { title: 'Contact Support', desc: 'Talk to our 24/7 technical team', href: '/contact', icon: Headset, iconColor: 'text-cyan-500' },
+        { title: 'All Resources Hub', desc: 'Browse all guides, calculators & tools', href: '/resources', icon: BookOpen, iconColor: 'text-slate-600 dark:text-slate-300' },
       ],
     },
   ],

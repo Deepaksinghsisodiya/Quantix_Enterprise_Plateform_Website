@@ -4,18 +4,23 @@ export interface BlogPostDto {
   postId?: string;
   title: string;
   slug: string;
-  excerpt: string;
+  excerpt?: string;
   body?: string;
   content?: string;
   coverImage?: string;
   featuredImageUrl?: string;
+  featuredImageAssetId?: string;
   category?: string;
   categoryName?: string;
-  author: string;
+  author?: string;
+  authorName?: string;
   readTime?: string;
   publishedAt?: string;
   createdAt?: string;
   tags?: string[] | string;
+  seoTitle?: string;
+  seoDescription?: string;
+  status?: string;
 }
 
 export interface ApiBlogPostsResponse {

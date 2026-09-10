@@ -1,10 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
-import Navbar from "@/components/organisms/Navbar/Navbar";
 import { CaseStudiesWrapper } from "@/features/CaseStudies";
-import { Footer } from "@/components/organisms/Footer/Footer";
 import { Award, ArrowRight, Sparkles, CheckCircle2, ShieldCheck, PhoneCall } from "lucide-react";
 import Link from "next/link";
 
@@ -12,10 +9,7 @@ export default function CaseStudiesPage() {
   const [activeTab, setActiveTab] = useState("all");
 
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="bg-slate-50/50 dark:bg-slate-950 transition-colors duration-300 min-h-[80vh]">
+    <main className="bg-slate-50/50 dark:bg-slate-950 transition-colors duration-300 min-h-[80vh]">
         {/* Page Hero Header */}
         <section className="relative pt-12 pb-8 sm:pt-16 sm:pb-12 border-b border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-900/60 overflow-hidden">
           <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
@@ -85,9 +79,6 @@ export default function CaseStudiesPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
-    </PublicLayout>
   );
 }
 
