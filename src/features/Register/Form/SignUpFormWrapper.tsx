@@ -10,6 +10,7 @@ import Cookies from 'js-cookie';
 import { toast } from 'sonner';
 import { CheckCircle2, Sparkles } from 'lucide-react';
 import { parseApiError } from '@/lib/errorHandler';
+import { setSecureCookie } from '@/lib/cookieUtils';
 import { useCreateBasicInfoSignupMutation } from '../services/SignUpServices';
 import { INITIAL_SIGNUP_VALUES } from '../Constants/SignUpConstants';
 import { SignUpFormValues } from '../Types/SignUpTypes';
@@ -35,10 +36,10 @@ export const SignUpFormWrapper: React.FC = () => {
   // Track and save selected plan into cookies
   useEffect(() => {
     if (planId) {
-      Cookies.set('selectedPlanId', planId, { expires: 7 });
+      setSecureCookie('selectedPlanId', planId, 7);
     }
     if (planCode) {
-      Cookies.set('selectedPlanCode', planCode, { expires: 7 });
+      setSecureCookie('selectedPlanCode', planCode, 7);
     }
   }, [planId, planCode]);
 
@@ -124,14 +125,14 @@ export const SignUpFormWrapper: React.FC = () => {
         const merchantId = response.data.merchantId;
         const adminEmail = values.contactEmail.trim().toLowerCase();
 
-        // Save registration context to cookies
-        Cookies.set('pendingMerchantId', merchantId);
-        Cookies.set('pendingAdminEmail', adminEmail);
+        // Save registration context to secure cookies
+        setSecureCookie('pendingMerchantId', merchantId, 1);
+        setSecureCookie('pendingAdminEmail', adminEmail, 1);
 
         // Persist origin source and returnUrl
-        Cookies.set('authSource', effectiveSource, { expires: 1 });
+        setSecureCookie('authSource', effectiveSource, 1);
         if (effectiveReturnUrl) {
-          Cookies.set('authReturnUrl', effectiveReturnUrl, { expires: 1 });
+          setSecureCookie('authReturnUrl', effectiveReturnUrl, 1);
         }
 
         toast.success(response.message || 'Account created! Please verify your email with the OTP sent to you.');

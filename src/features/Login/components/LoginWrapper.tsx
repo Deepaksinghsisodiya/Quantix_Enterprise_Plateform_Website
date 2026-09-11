@@ -13,6 +13,7 @@ import { LoginForm } from './LoginForm';
 import { useLoginMutation } from '../Service/LoginService';
 import { ShieldCheck, Zap } from 'lucide-react';
 import { parseApiError } from '@/lib/errorHandler';
+import { setSecureCookie } from '@/lib/cookieUtils';
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -96,11 +97,11 @@ export const LoginWrapper: React.FC = () => {
       const user = response.user || response.data?.user || { email, username: email.split('@')[0] };
 
       if (token) {
-        // Save live access token to cookies
-        Cookies.set('accessToken', token, { expires: values.remember ? 30 : 1 });
-        Cookies.set('authUser', JSON.stringify(user), { expires: values.remember ? 30 : 1 });
+        // Save live access token to secure cookies
+        setSecureCookie('accessToken', token, values.remember ? 30 : 1);
+        setSecureCookie('authUser', JSON.stringify(user), values.remember ? 30 : 1);
         if (refreshToken) {
-          Cookies.set('refreshToken', refreshToken, { expires: 30 });
+          setSecureCookie('refreshToken', refreshToken, 30);
         }
 
         // Save credentials to Redux

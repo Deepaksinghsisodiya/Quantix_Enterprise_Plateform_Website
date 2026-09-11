@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useGetIndustriesQuery } from './services/IndustriesServices';
+import { useGetIndustriesQuery } from './Service/IndustriesService';
 import IndustriesSection from './IndustriesSection';
 
 export const IndustriesSectionWrapper: React.FC = () => {

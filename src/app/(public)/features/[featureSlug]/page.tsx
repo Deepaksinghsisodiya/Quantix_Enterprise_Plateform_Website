@@ -32,9 +32,6 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
-import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
-import Navbar from "@/components/organisms/Navbar/Navbar";
-import { Footer } from "@/components/organisms/Footer/Footer";
 
 type FeatureCard = {
   title: string;
@@ -1046,9 +1043,6 @@ export default function FeatureDetailPage() {
   const heroVisual = feature.visual;
 
   return (
-    <PublicLayout>
-      <Navbar />
-
     <main className="min-h-screen bg-white pt-[5.75rem] text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:pt-24">
         <section className="border-b border-slate-200/80 bg-white py-5 dark:border-slate-800/80 dark:bg-slate-950 sm:py-8 lg:py-10">
           <div className="site-container">
@@ -1253,8 +1247,5 @@ export default function FeatureDetailPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
-    </PublicLayout>
   );
 }

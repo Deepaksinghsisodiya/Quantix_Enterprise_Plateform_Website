@@ -2,9 +2,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
 import { ChevronRight, ArrowLeft, Terminal, Copy, Check, ShieldCheck, Cpu } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
@@ -54,10 +51,7 @@ export default function HelpAPIDocsPage() {
   };
 
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
+    <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
         <div className="site-container px-4 sm:px-0">
           {/* Breadcrumbs */}
           <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-6">
@@ -195,8 +189,5 @@ export default function HelpAPIDocsPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
-    </PublicLayout>
   );
 }

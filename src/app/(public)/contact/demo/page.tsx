@@ -2,9 +2,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
 import { useRequestDemoMutation } from '@/features/Contact/Service/ContactService';
 import { parseApiError } from '@/lib/errorHandler';
 import { ATMButton } from '@/components/atoms/ATMButton';
@@ -109,10 +106,7 @@ export default function ContactDemoPage() {
   };
 
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="pt-32 sm:pt-36 bg-slate-50/50 dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-24 transition-colors duration-300 font-sans">
+    <main className="pt-32 sm:pt-36 bg-slate-50/50 dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-24 transition-colors duration-300 font-sans">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumbs with adequate top spacing */}
           <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-8">
@@ -374,8 +368,5 @@ export default function ContactDemoPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
-    </PublicLayout>
   );
 }

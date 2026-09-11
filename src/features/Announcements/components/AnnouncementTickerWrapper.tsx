@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useGetAnnouncementsQuery } from '../services/AnnouncementServices';
+import { useGetAnnouncementsQuery } from '../Service/AnnouncementService';
 import AnnouncementTicker from './AnnouncementTicker';
 import { FALLBACK_ANNOUNCEMENTS } from '../constants/fallbackAnnouncements';
 

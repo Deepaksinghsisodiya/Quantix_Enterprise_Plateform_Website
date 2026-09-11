@@ -4,9 +4,6 @@
 import React from 'react';
 import { notFound, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
 import { ChevronRight, ArrowLeft, User, BookOpen, Clock, Heart } from 'lucide-react';
 
 interface Author {
@@ -52,10 +49,7 @@ export default function BlogAuthorPage() {
   }
 
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
+    <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
         <div className="site-container px-4 sm:px-0 max-w-2xl">
           {/* Breadcrumbs */}
           <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-6">
@@ -115,8 +109,5 @@ export default function BlogAuthorPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
-    </PublicLayout>
   );
 }

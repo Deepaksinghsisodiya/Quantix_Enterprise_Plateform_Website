@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "@/redux/store";
 import { ReactNode, useEffect } from "react";
 import Cookies from "js-cookie";
+import { setSecureCookie } from "@/lib/cookieUtils";
 import { setCredentials } from "@/redux/slices/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 
@@ -20,15 +21,15 @@ function AuthInitializer({ children }: { children: ReactNode }) {
     const ssoUser = urlParams.get("sso_user");
 
     if (ssoToken) {
-      Cookies.set("accessToken", ssoToken, { expires: 30 });
+      setSecureCookie("accessToken", ssoToken, 30);
       if (ssoRefresh) {
-        Cookies.set("refreshToken", ssoRefresh, { expires: 30 });
+        setSecureCookie("refreshToken", ssoRefresh, 30);
       }
       let user = undefined;
       if (ssoUser) {
         try {
           user = JSON.parse(ssoUser);
-          Cookies.set("authUser", JSON.stringify(user), { expires: 30 });
+          setSecureCookie("authUser", JSON.stringify(user), 30);
         } catch {
           user = undefined;
         }

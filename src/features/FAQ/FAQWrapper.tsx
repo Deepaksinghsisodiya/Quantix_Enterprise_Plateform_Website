@@ -2,7 +2,7 @@
 
 // src/features/FAQ/FAQWrapper.tsx
 import React from 'react';
-import { useGetFAQsQuery } from './services/FAQServices';
+import { useGetFAQsQuery } from './Service/FAQService';
 import FAQSection from './FAQSection';
 
 /**

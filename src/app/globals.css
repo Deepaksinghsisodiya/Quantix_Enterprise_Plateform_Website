@@ -3,7 +3,7 @@
 @theme {
   --font-sans: var(--font-lato), system-ui, -apple-system, sans-serif;
   --font-display: var(--font-lato), system-ui, -apple-system, sans-serif;
-  --font-syne: var(--font-lato), system-ui, -apple-system, sans-serif;
+  --font-syne: var(--font-syne), system-ui, -apple-system, sans-serif;
 
   /* Dynamic Custom Variables mapping to Tailwind - Vibrant Culinary Flame Orange & Paprika Palette */
   --color-primary: #FF4D00;

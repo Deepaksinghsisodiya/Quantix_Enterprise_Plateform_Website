@@ -2,9 +2,6 @@
 "use client";
 
 import React from "react";
-import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
-import Navbar from "@/components/organisms/Navbar/Navbar";
-import { Footer } from "@/components/organisms/Footer/Footer";
 import { ListTodo, GitMerge, Hourglass, HelpCircle, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
@@ -90,10 +87,7 @@ const ROADMAP_QUARTERS: {
 
 export default function RoadmapPage() {
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <div className="bg-white dark:bg-slate-950 transition-colors duration-300 flex-1">
+    <div className="bg-white dark:bg-slate-950 transition-colors duration-300 flex-1">
         
         {/* Header Hero */}
         <section className="py-20 bg-slate-50 dark:bg-slate-900/60 border-b border-slate-100 dark:border-slate-800/80 transition-colors text-center">
@@ -194,8 +188,5 @@ export default function RoadmapPage() {
         </section>
 
       </div>
-
-      <Footer />
-    </PublicLayout>
   );
 }

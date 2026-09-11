@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import type { IntegrationDto } from '../Types/IntegrationsType';
+import type { IntegrationDto } from '../Types/IntegrationTypes';
 import { INTEGRATION_DETAIL_SLUGS } from '../dummyData/integrationCatalog';
 
 type IntegrationCardProps = {

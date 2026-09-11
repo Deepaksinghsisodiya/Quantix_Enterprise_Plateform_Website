@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import { useGetIntegrationsQuery } from './services/IntegrationsServices';
+import { useGetIntegrationsQuery } from './Service/IntegrationsService';
 import IntegrationGrid from './IntegrationGrid';
 
 export const IntegrationsWrapper: React.FC = () => {

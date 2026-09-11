@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import DownloadsWrapper from '@/features/Downloads/components/DownloadsWrapper';
+import DownloadsWrapper from '@/features/Downloads';
 
 export default function DownloadsPage() {
   return (

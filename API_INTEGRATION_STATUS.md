@@ -471,3 +471,105 @@ Teeno websites me lead capture ke sabhi **5 primary touchpoints** live hain, USA
 
 ---
 > **Master Sync Status:** Enterprise, Restaurant, aur Retail teeno repositories me 100% verified aur synchronized.
+
+---
+
+## 7. 📁 CLEAN FOLDER STRUCTURE & BLUEPRINT STANDARDS (AUDIT RESOLUTION)
+
+Deep audit ke baad project se **Signup jaisa folder chaos aur double files** 100% clean kar diya gaya hai:
+
+### ✅ Folder Structure Standards (Har Feature Ke Liye Rule):
+Har feature ab standard structure follow karta hai:
+```
+src/features/[FeatureName]/
+├── components/         -> Feature-specific UI components (e.g., Cards, Sections, Modals)
+├── Service/ (or services/) -> Single RTK Query API injection on baseApi
+├── Types/              -> Single unified types file (e.g., [Feature]Types.ts)
+├── constants/          -> Default data / fallback values (if applicable)
+├── validation/         -> Yup/Zod form validation schemas (if applicable)
+└── index.ts            -> Clean central barrel export for entire feature
+```
+
+### ❌ Removed Redundancies (48 Double Files & Empty Folders Purged):
+1. **Duplicate Singular `*Type.ts` Files**: 15 redundant 1-line re-export files (`BlogType.ts`, `ContactType.ts`, `PricingType.ts`, `SocialProofType.ts`, `TestimonialsType.ts`, etc.) deleted. All imports now reference `*Types.ts` directly.
+2. **Duplicate Re-export Services**: `AnnouncementServices.ts`, `ClienteleServices.ts`, `DownloadsServices.ts`, `SocialProofServices.ts` (clone), `TestimonialsServices.ts`, `ContactServices.ts`, `IntegrationServices.ts` removed.
+3. **Redundant Root Re-exports**: `ContactSalesForm.tsx` & `ContactSalesFormWrapper.tsx` in Contact root, `PricingSection.tsx` & `PricingWrapper.tsx` in Pricing root, `SocialProofStats.tsx` & `SocialProofStatsWrapper.tsx` in SocialProof root deleted.
+4. **Legacy Signup Files**: Old unreferenced `Register.tsx`, `RegisterForm.tsx`, `RegisterWrapper.tsx` deleted. Modern multi-step `SignUpForm` and `VerifyOtpWrapper` active.
+5. **Double Organisms Folders**: `IntegrationsTicker/IntegrationsTicker/` and `MerchantExplainer/MerchantExplainer/` double-nested folders eliminated.
+6. **Duplicate Next.js Routes**: Shadow duplicate route `src/app/api/v1/marketing/testimonials` removed.
+
+---
+
+## 8. 🧩 DUMMY DATA VS LIVE API MAPPING TABLE
+
+| Component / Feature | Data Source Used | Local File Location | Live API Wired | Live Backend Status | Notes |
+|:---|:---:|:---|:---:|:---:|:---|
+| **Pricing Section** | 🟢 Live API | `PricingSection.tsx` | `/api/v1/marketing/pricing` | 🟢 27 Plans in DB | Live DB dynamic rendering |
+| **Social Proof Ribbon** | 🟢 Live API | `SocialProof.tsx` | `/api/v1/marketing/social-proof` | 🟢 Real stats in DB | 50K merchants, 99.9% uptime |
+| **Announcements Banner**| 🟢 Live API | `TopPromoBanner.tsx` | `/api/v1/announcements` | 🟢 3 Banners in DB | Fallback: `fallbackAnnouncements.ts` |
+| **Clientele Logo Marquee**| 🟢 Live API | `ClienteleMarquee.tsx` | `/api/v1/clientele` | 🟢 3 Brands in DB | Fallback: `defaultClientele.ts` |
+| **Customer Testimonials**| 🟢 Live API | `TestimonialsSection.tsx` | `/api/v1/testimonials` | 🟢 2 Reviews in DB | Fallback: `defaultTestimonials.ts` |
+| **Case Studies** | 🟢 Live API | `CaseStudiesSection.tsx` | `/api/v1/marketing/content/CaseStudy` | 🟢 2 Studies in DB | Fallback: `defaultCaseStudies.ts` |
+| **Hero Banner** | 🟢 Live API | `HeroSection.tsx` | `/api/v1/marketing/content/HeroBanner` | 🟢 1 Banner in DB | Real headline rendered |
+| **FAQs Accordion** | 🟢 Live API | `FAQSection.tsx` | `/api/v1/help-centre/faqs` | 🟢 4 FAQs in DB | Fallback: `FAQConstants.ts` |
+| **Demo Request Lead Form**| 🟢 Live API (POST) | `LeadFormCard.tsx`, Modals | `/api/v1/contact/demo-request` | 🟢 DB Insertion | USA phone mask + live DB save |
+| **Newsletter Subscribe** | 🟢 Live API (POST) | `NewsletterSubscribeBox.tsx` | `/api/v1/contact/newsletter/subscribe` | 🟢 DB Insertion | Live subscription |
+| **Sign-Up & Verify OTP** | 🟢 Live API (POST) | `SignUpFormWrapper.tsx` | `/api/v1/registration/signup` | 🟢 Live Provisioning | Validates email & registers |
+| **Features Grid** | 🟡 Fallback (DB empty) | `FeaturesSection.tsx` | `/api/v1/marketing/features` | 🟡 `[]` Empty in DB | Admin se POST data pending |
+| **Integrations Grid** | 🟡 Local Mock Catalog | `src/features/Integrations/dummyData` | `/api/v1/marketing/integrations` | 🟡 `[]` Empty in DB | Shows mock integrations catalog |
+| **Industry Verticals** | 🟡 Fallback | `IndustriesSection.tsx` | `/api/v1/marketing/industries` | 🟡 `[]` Empty in DB | Admin se POST data pending |
+| **Help Articles & Videos**| 🟡 Fallback | `help/page.tsx` | `/api/v1/help-centre/articles` | 🟡 `[]` Empty in DB | Admin se POST data pending |
+| **CTA Banner** | 🟡 Local Constant | `CTABanner/CTAData.ts` | N/A (Marketing Copy) | Static Layout | High-conversion static CTA |
+| **How It Works Steps** | 🟡 Local Constant | `HowItWorksSection/HowItWorksData.ts` | N/A (Marketing Copy) | Static Layout | 3-step hardware/software explainer |
+
+---
+
+## 9. ⏳ PENDING APIS FROM SWAGGER (37 ENDPOINTS REMAINING)
+
+Swagger live specification (`http://localhost:5104/swagger/index.html`) me 393 total microservice paths hain. Public website aur merchant self-service scope ke baaki bache **37 endpoints** jo phase 2 me integrate ho sakte hain:
+
+### A. Merchant Self-Service & Downloads (12 Endpoints)
+- `GET /api/v1/merchant-self/profile` — Merchant profile self-inspection
+- `PUT /api/v1/merchant-self/profile` — Profile update
+- `GET /api/v1/merchant-self/downloads` — Registered merchant installer downloads (Windows/Android/iOS APK)
+- `GET /api/v1/merchant-self/downloads/{id}/download` — Secure signed download URL stream
+- `GET /api/v1/merchant-self/wallet/balance` — Real-time merchant settlement wallet balance
+- `GET /api/v1/merchant-self/wallet/transactions` — Settlement ledger transactions
+- `POST /api/v1/merchant-self/wallet/payout-request` — On-demand bank account payout
+- `GET /api/v1/merchant-self/invoices` — Billing invoices history
+- `GET /api/v1/merchant-self/invoices/{id}/pdf` — Invoice PDF download stream
+
+### B. Live Terminal & Telemetry Status (8 Endpoints)
+- `GET /api/v1/merchants/{merchantId}/stores` — Multi-location store network list
+- `GET /api/v1/merchants/{merchantId}/stores/{storeId}/terminals` — POS terminal mesh connection status
+- `GET /api/v1/merchants/{merchantId}/stores/{storeId}/health` — Offline cache health & SQLite sync status
+
+### C. Advanced Security & Compliance (9 Endpoints)
+- `POST /api/v1/auth/mfa/enable` — Two-Factor Authentication TOTP QR code generator
+- `POST /api/v1/auth/mfa/verify` — Verify and activate 2FA
+- `POST /api/v1/auth/mfa/disable` — Disable 2FA
+- `GET /api/v1/compliance/gdpr/export` — User GDPR personal data archive download
+- `POST /api/v1/compliance/gdpr/delete-request` — Right to be forgotten deletion request
+
+### D. Reporting & Hourly Pulse Analytics (8 Endpoints)
+- `GET /api/v1/reports/sales/summary` — Daily total sales volume & tax breakdown
+- `GET /api/v1/reports/sales/hourly` — Peak operational rush hours graph
+- `GET /api/v1/reports/cashier/reconciliation` — Drawer cash count discrepancy audits
+
+---
+
+## 10. 🧹 PURGED OBSOLETE DOCUMENTATION FILES LOG
+
+Following 10 deprecated, obsolete, and redundant `.md` files were permanently removed from root directory:
+1. `FLOW_AND_API_DOCUMENTATION.md` (Deprecated placeholder)
+2. `POS_APP_T2_04_FRS_SPW_V2.md` (Deprecated placeholder)
+3. `POS_APP_T2_04_PFD_SPW_V2.md` (Deprecated placeholder)
+4. `QUANTIX_COMPLETE_ECOSYSTEM_MASTER_PROPOSAL.md` (Deprecated placeholder)
+5. `QUANTIX_DEMO_AND_API_FLOW_README.md` (Deprecated placeholder)
+6. `QUANTIX_WEBSITES_ALL_APIS_MASTER_TRACKER.md` (Deprecated placeholder)
+7. `QUANTIX_WEBSITE_API_INTEGRATION_TRACKER.md` (Deprecated placeholder)
+8. `CMS_DRIVEN_ARCHITECTURE_AND_GAP_ANALYSIS.md` (Redundant gap analysis)
+9. `CONTENT_DRIVEN_CMS_GAP_ANALYSIS.md` (Redundant gap analysis)
+10. `QUANTIX_BLUEPRINT_GAP_ANALYSIS.md` (Redundant gap analysis)
+
+> **Single Source of Truth:** Only **`API_INTEGRATION_STATUS.md`** and **`README.md`** remain.

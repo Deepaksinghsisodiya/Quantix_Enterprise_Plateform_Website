@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import type { RootState } from '../store';
 import { logout, setCredentials } from '../slices/authSlice';
 import { getApiBaseUrl } from '@/lib/apiBaseUrl';
+import { setSecureCookie, removeCookie } from '@/lib/cookieUtils';
 
 // Base query with Authorization header
 const baseQuery = fetchBaseQuery({
@@ -44,18 +45,18 @@ const baseQueryWithReauth: BaseQueryFn<string | any, unknown, FetchBaseQueryErro
         const newRefreshToken = refreshData?.data?.refreshToken || refreshData?.refreshToken || refreshToken;
 
         if (newAccessToken) {
-          Cookies.set('accessToken', newAccessToken, { expires: 30 });
+          setSecureCookie('accessToken', newAccessToken, 30);
           if (newRefreshToken) {
-            Cookies.set('refreshToken', newRefreshToken, { expires: 30 });
+            setSecureCookie('refreshToken', newRefreshToken, 30);
           }
           api.dispatch(setCredentials({ token: newAccessToken, refreshToken: newRefreshToken }));
           result = await baseQuery(args, api, extraOptions);
         }
       } else if (refreshResult.error && (refreshResult.error.status === 401 || refreshResult.error.status === 403)) {
         // Only force logout if the refresh attempt explicitly fails with 401/403
-        Cookies.remove('accessToken');
-        Cookies.remove('refreshToken');
-        Cookies.remove('authUser');
+        removeCookie('accessToken');
+        removeCookie('refreshToken');
+        removeCookie('authUser');
         api.dispatch(logout());
       }
     }

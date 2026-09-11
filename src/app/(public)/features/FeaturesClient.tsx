@@ -31,7 +31,7 @@ import {
   Zap,
 } from "lucide-react";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
-import TestimonialsWrapper from "@/features/Testimonials/components/TestimonialsWrapper";
+import TestimonialsWrapper from "@/features/Testimonials";
 
 interface EnterpriseFeatureItem {
   slug: string;

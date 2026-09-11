@@ -2,9 +2,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
 import { 
   ShoppingBag, ShieldCheck, CreditCard, BarChart3, Package, BellRing, 
   FileSpreadsheet, ArrowLeft, ArrowRight, Play, CheckCircle2, RefreshCw 
@@ -401,9 +398,7 @@ export default function ProductTourPage() {
   };
 
   return (
-    <PublicLayout>
-      <Navbar />
-      <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
+    <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
         {/* Intro view */}
         {phase === 'intro' && (
           <div className="site-container max-w-xl text-center py-16 space-y-6">
@@ -574,7 +569,5 @@ export default function ProductTourPage() {
           </div>
         )}
       </main>
-      <Footer />
-    </PublicLayout>
   );
 }

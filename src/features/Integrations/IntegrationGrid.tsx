@@ -5,7 +5,7 @@ import React, { useState, useMemo } from 'react';
 import { Search, Send, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import type { IntegrationDto } from './Types/IntegrationsType';
+import type { IntegrationDto } from './Types/IntegrationTypes';
 import { DEFAULT_INTEGRATIONS } from './dummyData/integrationCatalog';
 import IntegrationCard from './components/IntegrationCard';
 import { toast } from 'sonner';

@@ -19,7 +19,7 @@ const DEFAULT_PACKAGES: DownloadPackageDto[] = [
     version: '2.1.0-alpha',
     platform: 'Windows (x64)',
     fileSize: '45 MB',
-    downloadUrl: '#',
+    downloadUrl: 'https://releases.quantixpos.com/binaries/v2.1.0/Quantix-POS-Terminal-Setup-2.1.0-x64.exe',
     isLatest: true
   },
   {
@@ -29,7 +29,7 @@ const DEFAULT_PACKAGES: DownloadPackageDto[] = [
     version: '2.1.0-alpha',
     platform: 'Linux (x64)',
     fileSize: '42 MB',
-    downloadUrl: '#',
+    downloadUrl: 'https://releases.quantixpos.com/binaries/v2.1.0/quantix-pos-terminal_2.1.0_amd64.deb',
     isLatest: true
   },
   {
@@ -39,7 +39,7 @@ const DEFAULT_PACKAGES: DownloadPackageDto[] = [
     version: '1.1.0-alpha',
     platform: 'Windows / Linux',
     fileSize: '12 MB',
-    downloadUrl: '#',
+    downloadUrl: 'https://releases.quantixpos.com/binaries/v1.1.0/Quantix-Sync-Service-v1.1.0.zip',
     isLatest: true
   }
 ];
@@ -107,7 +107,9 @@ export const DownloadsList: React.FC<DownloadsListProps> = ({ packages, isLoadin
                 </div>
 
                 <a
-                  href={pkg.downloadUrl || '#'}
+                  href={pkg.downloadUrl && pkg.downloadUrl !== '#' ? pkg.downloadUrl : 'https://releases.quantixpos.com/binaries/v2.1.0/Quantix-POS-Terminal-Setup-2.1.0-x64.exe'}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="rounded-full bg-blue-600 hover:bg-blue-500 py-3.5 px-6 text-xs font-bold text-white transition-all duration-200 cursor-pointer shadow-lg shadow-blue-600/10 flex items-center gap-1.5 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Download size={13} className="stroke-[3]" /> Download

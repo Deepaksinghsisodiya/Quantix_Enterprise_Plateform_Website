@@ -1,6 +1,6 @@
 // src/features/Features/FeaturesWrapper.tsx
 import React from 'react';
-import { useGetFeaturesQuery } from './services/FeaturesServices';
+import { useGetFeaturesQuery } from './Service/FeaturesService';
 import FeaturesSection from './FeaturesSection';
 
 export const FeaturesWrapper: React.FC = () => {

@@ -2,9 +2,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
 import { ChevronRight, ArrowLeft, ArrowRight, Play, Cloud, ShieldCheck, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';

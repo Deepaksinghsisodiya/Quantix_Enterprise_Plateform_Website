@@ -5,7 +5,7 @@ import React from "react";
 import { useFormik, FormikProvider } from "formik";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useSubmitContactFormMutation } from "../services/ContactServices";
+import { useSubmitContactFormMutation } from "../Service/ContactService";
 import { ContactSalesFormValues } from "../Types/ContactTypes";
 import { ContactSalesForm } from "./ContactSalesForm";
 import { contactSalesValidationSchema } from "../validation/ContactValidation";

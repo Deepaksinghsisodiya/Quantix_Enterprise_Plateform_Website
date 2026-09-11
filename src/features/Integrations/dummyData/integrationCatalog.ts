@@ -1,4 +1,4 @@
-import type { IntegrationDto } from '../Types/IntegrationsType';
+import type { IntegrationDto } from '../Types/IntegrationTypes';
 
 export const DEFAULT_INTEGRATIONS: IntegrationDto[] = [
   {

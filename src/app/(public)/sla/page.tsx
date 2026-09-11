@@ -1,8 +1,5 @@
 // src/app/(public)/sla/page.tsx
 import React from 'react';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
 import { ShieldCheck, Clock3, Headset, Server } from 'lucide-react';
 
 const SLA_POINTS = [
@@ -25,9 +22,7 @@ const SLA_POINTS = [
 
 export default function ServiceLevelAgreementPage() {
   return (
-    <PublicLayout>
-      <Navbar />
-      <main className="min-h-screen bg-white pb-16 pt-24 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white">
+    <main className="min-h-screen bg-white pb-16 pt-24 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white">
         <div className="site-container max-w-5xl space-y-10 sm:space-y-12">
           <div className="mx-auto max-w-2xl space-y-4 text-center">
             <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/20 bg-blue-500/10 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-500 dark:text-blue-400 shadow-sm">
@@ -97,7 +92,5 @@ export default function ServiceLevelAgreementPage() {
           </section>
         </div>
       </main>
-      <Footer />
-    </PublicLayout>
   );
 }

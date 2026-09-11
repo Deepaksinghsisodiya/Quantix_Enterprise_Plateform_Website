@@ -29,7 +29,7 @@ import FAQSection from "@/features/FAQ/FAQSection";
 import type { FAQItem } from "@/features/FAQ/Types/FAQTypes";
 import { RequestDemoButton } from "@/components/atoms/RequestDemoButton";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
-import TestimonialsWrapper from "@/features/Testimonials/components/TestimonialsWrapper";
+import TestimonialsWrapper from "@/features/Testimonials";
 import { MainProductsShowcaseSection } from "@/components/organisms/MainProductsShowcaseSection/MainProductsShowcaseSection";
 
 type ProductPoint = {

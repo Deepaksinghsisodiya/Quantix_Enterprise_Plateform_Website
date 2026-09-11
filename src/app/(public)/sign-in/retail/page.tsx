@@ -2,13 +2,13 @@
 'use client';
 
 import React, { Suspense, useEffect } from 'react';
-import Cookies from 'js-cookie';
+import { setSecureCookie } from '@/lib/cookieUtils';
 import SplitAuthLayout from '@/components/organisms/SplitAuthLayout/SplitAuthLayout';
 import LoginFormWrapper from '@/features/Login/components/LoginWrapper';
 
 export default function RetailSignInPage() {
   useEffect(() => {
-    Cookies.set('authSource', 'retail', { expires: 1 });
+    setSecureCookie('authSource', 'retail', 1);
   }, []);
 
   return (

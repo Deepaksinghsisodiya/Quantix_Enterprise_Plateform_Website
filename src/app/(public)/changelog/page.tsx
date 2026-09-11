@@ -2,9 +2,6 @@
 "use client";
 
 import React from "react";
-import { PublicLayout } from "@/components/organisms/PublicLayout/PublicLayout";
-import Navbar from "@/components/organisms/Navbar/Navbar";
-import { Footer } from "@/components/organisms/Footer/Footer";
 import { Sparkles, Calendar, Tag, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
@@ -62,10 +59,7 @@ const CHANGELOG_ENTRIES: ChangelogEntry[] = [
 
 export default function ChangelogPage() {
   return (
-    <PublicLayout>
-      <Navbar />
-
-      <div className="bg-white dark:bg-slate-950 transition-colors duration-300 flex-1">
+    <div className="bg-white dark:bg-slate-950 transition-colors duration-300 flex-1">
         
         {/* Header Hero */}
         <section className="py-20 bg-slate-50 dark:bg-slate-900/60 border-b border-slate-100 dark:border-slate-800/80 transition-colors text-center">
@@ -151,8 +145,5 @@ export default function ChangelogPage() {
         </section>
 
       </div>
-
-      <Footer />
-    </PublicLayout>
   );
 }

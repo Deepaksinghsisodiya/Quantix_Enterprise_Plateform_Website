@@ -19,7 +19,7 @@ import dynamic from "next/dynamic";
 
 const LazyClienteleWrapper = dynamic(() => import("@/features/Clientele/components/ClienteleWrapper"), { ssr: false });
 const LazyCaseStudiesSection = dynamic(() => import("@/features/CaseStudies/components/CaseStudiesWrapper"), { ssr: false });
-const LazyTestimonialsSection = dynamic(() => import("@/features/Testimonials/components/TestimonialsWrapper"), { ssr: false });
+const LazyTestimonialsSection = dynamic(() => import("@/features/Testimonials"), { ssr: false });
 const LazyFAQWrapper = dynamic(() => import("@/features/FAQ/components/FAQWrapper"), { ssr: false });
 
 export default function HomePageClient() {

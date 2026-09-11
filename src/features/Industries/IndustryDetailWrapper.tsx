@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useParams } from 'next/navigation';
-import { useGetIndustryBySlugQuery } from './services/IndustriesServices';
+import { useGetIndustryBySlugQuery } from './Service/IndustriesService';
 import IndustryDetail from './IndustryDetail';
 
 export const IndustryDetailWrapper: React.FC = () => {

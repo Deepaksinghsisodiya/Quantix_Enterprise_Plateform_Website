@@ -2,10 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
-import { useGetFAQsQuery } from '@/features/FAQ/services/FAQServices';
+import { useGetFAQsQuery } from '@/features/FAQ';
 import { ATMSkeleton } from '@/components/atoms';
 import { ChevronDown, ChevronUp, ChevronRight, HelpCircle, ArrowLeft, Search } from 'lucide-react';
 import Link from 'next/link';

@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { SocialProof } from './SocialProof';
-import { useGetSocialProofQuery } from '../services/SocialProofServices';
+import { useGetSocialProofQuery } from '../Service/SocialProofService';
 
 export interface SocialProofWrapperProps {
   className?: string;

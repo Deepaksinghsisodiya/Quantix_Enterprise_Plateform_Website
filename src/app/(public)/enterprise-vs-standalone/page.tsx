@@ -3,9 +3,6 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
 import { Cloud, HardDrive, Check, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -24,9 +21,7 @@ export default function EnterpriseVsStandalonePage() {
   const [activeTab, setActiveTab] = useState<'enterprise' | 'standalone'>('enterprise');
 
   return (
-    <PublicLayout>
-      <Navbar />
-      <main className="pt-32 sm:pt-40 bg-slate-950 min-h-screen text-white pb-16">
+    <main className="pt-32 sm:pt-40 bg-slate-950 min-h-screen text-white pb-16">
         <div className="site-container text-center mb-16 space-y-4">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary shadow-sm">
             DEPLOYMENT BLUEPRINTS
@@ -164,7 +159,5 @@ export default function EnterpriseVsStandalonePage() {
           </div>
         </div>
       </main>
-      <Footer />
-    </PublicLayout>
   );
 }

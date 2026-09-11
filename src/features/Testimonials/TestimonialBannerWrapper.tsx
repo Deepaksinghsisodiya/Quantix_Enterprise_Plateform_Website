@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useGetTestimonialsQuery } from './services/TestimonialsServices';
+import { useGetTestimonialsQuery } from './Service/TestimonialsService';
 import TestimonialBanner from './TestimonialBanner';
 
 export const TestimonialBannerWrapper: React.FC = () => {

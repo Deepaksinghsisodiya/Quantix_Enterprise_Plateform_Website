@@ -2,9 +2,6 @@
 'use client';
 
 import React from 'react';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
 import { Shield, WifiOff, RefreshCw, Key, HelpCircle, ArrowRight, Video, Download } from 'lucide-react';
 import Link from 'next/link';
 
@@ -35,9 +32,7 @@ const TOKEN_TIERS = [
 
 export default function StandalonePOSPage() {
   return (
-    <PublicLayout>
-      <Navbar />
-      <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
+    <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
         {/* Hero Section with HSL tokens */}
         <div className="site-container text-center mb-16 space-y-6 max-w-3xl">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 shadow-sm">
@@ -151,7 +146,5 @@ export default function StandalonePOSPage() {
           </div>
         </div>
       </main>
-      <Footer />
-    </PublicLayout>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useGetTestimonialsQuery } from './services/TestimonialsServices';
+import { useGetTestimonialsQuery } from './Service/TestimonialsService';
 import TestimonialsSection from './TestimonialsSection';
 
 export const TestimonialsSectionWrapper: React.FC = () => {

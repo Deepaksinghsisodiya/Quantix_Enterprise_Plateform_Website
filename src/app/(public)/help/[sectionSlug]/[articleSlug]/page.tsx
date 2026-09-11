@@ -4,9 +4,6 @@
 import React, { useState } from 'react';
 import { notFound, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
-import Navbar from '@/components/organisms/Navbar/Navbar';
-import { Footer } from '@/components/organisms/Footer/Footer';
 import { ChevronRight, ArrowLeft, ThumbsUp, ThumbsDown, BookOpen, Clock, Heart } from 'lucide-react';
 import { toast } from 'sonner';
 

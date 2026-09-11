@@ -16,7 +16,7 @@ import {
   SiUbereats,
 } from "react-icons/si";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
-import TestimonialsWrapper from "@/features/Testimonials/components/TestimonialsWrapper";
+import TestimonialsWrapper from "@/features/Testimonials";
 
 // Custom authentic Authorize.Net Icon Component
 function AuthorizeNetIcon({ size = 20 }: { size?: number }) {
