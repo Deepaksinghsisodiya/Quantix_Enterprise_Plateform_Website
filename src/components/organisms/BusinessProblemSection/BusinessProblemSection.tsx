@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { AlertTriangle, Layers, TrendingDown, ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -127,13 +128,13 @@ export const BusinessProblemSection: React.FC = () => {
             </div>
           </div>
 
-          <a
-            href="#products-showcase"
+          <Link
+            href="/products"
             className="group flex w-full md:w-auto shrink-0 cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-5 sm:px-6 py-3 sm:py-3.5 font-syne text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md shadow-orange-500/25 transition-all hover:shadow-lg hover:shadow-orange-500/35 hover:brightness-105 active:scale-98 whitespace-nowrap"
           >
             <span>See The Connected Platform</span>
             <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

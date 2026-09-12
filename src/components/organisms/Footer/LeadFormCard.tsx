@@ -34,7 +34,7 @@ const COUNTRY_CODES = [
 ];
 
 export const LeadFormCard: React.FC<LeadFormCardProps> = ({
-  heading = "Get 2 Months of Free EPOS Rental",
+  heading = "Get 2 Months Free Cloud POS",
   subheading,
   badgeText = "FOR BUSINESS",
   buttonText = "SPEAK WITH OUR TEAM",

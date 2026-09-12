@@ -49,8 +49,8 @@ export const RESTAURANT_SITE_URL = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'ht
 export const RETAIL_SITE_URL = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
 
 export const PRIMARY_LINKS: NavLink[] = [
-  { label: 'Solutions', href: '/products', desc: 'Complete Restaurant & Retail Cloud POS Software', hasMegaMenu: true },
-  { label: 'Features', href: '/solutions', desc: 'Tailored workflows for Dining, Takeaways & Retail Stores', hasMegaMenu: true },
+  { label: 'Solutions', href: '/solutions', desc: 'Tailored workflows for Dining, Takeaways & Retail Stores', hasMegaMenu: true },
+  { label: 'Features', href: '/features', desc: 'Complete Restaurant & Retail Cloud POS Software', hasMegaMenu: true },
   { label: 'Integrations', href: '/integrations', desc: 'Card readers, online delivery apps & accounting sync', hasMegaMenu: true },
   { label: 'Why Quantix', href: '/why-quantix', desc: 'ROI proof, enterprise comparison & customer success', hasMegaMenu: true },
   { label: 'Resources', href: '/resources', desc: 'Help guides, setup tutorials & software downloads', hasMegaMenu: true },
@@ -230,22 +230,6 @@ export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
 export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[0],
-    icon: Sparkles,
-    imageSrc: '/images/nav_restaurant_bundle.png',
-    badge: 'CORE POS SUITE',
-    groups: [
-      {
-        title: 'SOFTWARE CAPABILITIES',
-        items: [
-          { title: 'Restaurant POS System', desc: 'Table floor plans & kitchen billing', href: '/products/restaurant-pos', icon: Utensils },
-          { title: 'Retail Register', desc: 'Barcode scanner & cash drawer', href: '/products/retail-pos', icon: Store },
-          { title: 'Cloud Multi-Store HQ', desc: 'Manage menus & multi-store sales', href: '/products/cloud-pos', icon: Cloud },
-        ],
-      },
-    ],
-  },
-  {
-    ...PRIMARY_LINKS[1],
     icon: Layers,
     imageSrc: '/images/ent_global_pos_bundle.png',
     badge: 'INDUSTRY SOLUTIONS',
@@ -259,6 +243,22 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
           { title: 'Convenience & Grocery', desc: 'Weight scales & fast till', href: '/solutions/grocery', icon: Store },
           { title: 'Bars & Nightclubs', desc: 'Bar tabs & quick reorders', href: '/solutions/bars', icon: Flame },
           { title: 'Vape & Smoke Shops', desc: 'Age checks & SKU catalogs', href: '/solutions/smoke-shops', icon: Layers },
+        ],
+      },
+    ],
+  },
+  {
+    ...PRIMARY_LINKS[1],
+    icon: Sparkles,
+    imageSrc: '/images/nav_restaurant_bundle.png',
+    badge: 'CORE POS SUITE',
+    groups: [
+      {
+        title: 'SOFTWARE CAPABILITIES',
+        items: [
+          { title: 'Restaurant POS System', desc: 'Table floor plans & kitchen billing', href: '/products/restaurant-pos', icon: Utensils },
+          { title: 'Retail Register', desc: 'Barcode scanner & cash drawer', href: '/products/retail-pos', icon: Store },
+          { title: 'Cloud Multi-Store HQ', desc: 'Manage menus & multi-store sales', href: '/products/cloud-pos', icon: Cloud },
         ],
       },
     ],

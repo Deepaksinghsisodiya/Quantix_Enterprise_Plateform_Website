@@ -250,12 +250,12 @@ export const HeroView: React.FC<HeroViewProps> = ({
                       Everything Your Locations Need. One Connected Platform.
                     </span>
                   </div>
-                  <a
-                    href="#products-showcase"
+                  <Link
+                    href="/products"
                     className="text-[10px] font-bold text-primary hover:underline flex items-center gap-0.5 shrink-0"
                   >
                     View 7 Modules <ArrowRight size={10} />
-                  </a>
+                  </Link>
                 </div>
                 <div className="grid grid-cols-2 gap-1.5 pt-2 sm:grid-cols-4">
                   <div className="flex items-center gap-1.5 rounded-lg bg-white p-1.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800">

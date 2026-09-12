@@ -86,19 +86,19 @@ export default function NotFound() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
             <Link
-              href="/products/restaurant-pos"
+              href="/solutions/restaurants"
               className="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/60 dark:bg-darkSurface/50 hover:border-primary/40 hover:bg-white dark:hover:bg-darkSurface transition-all text-xs font-syne font-bold text-slate-800 dark:text-slate-200"
             >
               <Utensils size={14} className="text-amber-500 shrink-0" />
-              <span className="truncate">Restaurant POS</span>
+              <span className="truncate">Restaurant Solutions</span>
             </Link>
 
             <Link
-              href="/products/retail-pos"
+              href="/solutions/grocery"
               className="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/60 dark:bg-darkSurface/50 hover:border-primary/40 hover:bg-white dark:hover:bg-darkSurface transition-all text-xs font-syne font-bold text-slate-800 dark:text-slate-200"
             >
               <Store size={14} className="text-emerald-500 shrink-0" />
-              <span className="truncate">Retail Register</span>
+              <span className="truncate">Retail Solutions</span>
             </Link>
 
             <Link

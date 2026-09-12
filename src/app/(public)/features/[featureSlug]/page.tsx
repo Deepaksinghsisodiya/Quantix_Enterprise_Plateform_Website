@@ -312,7 +312,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
       bottomBadge: "Table session connected to POS",
     },
     primaryCta: { label: "Enable QR Ordering", href: "/contact/sales" },
-    secondaryCta: { label: "Explore Table POS", href: "/products/restaurant-pos" },
+    secondaryCta: { label: "Explore Table POS", href: "/solutions/restaurants" },
     overviewTitle: "A smoother table ordering experience",
     overviewDesc:
       "QR ordering should reduce friction without removing service control. Guests get speed, while teams keep table context, prep routing, and payment visibility.",
@@ -392,7 +392,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
       bottomBadge: "Prep stations and expo aligned",
     },
     primaryCta: { label: "Plan KDS Setup", href: "/contact/sales" },
-    secondaryCta: { label: "Explore Restaurant POS", href: "/products/restaurant-pos" },
+    secondaryCta: { label: "Explore Restaurant POS", href: "/solutions/restaurants" },
     overviewTitle: "Built for real kitchen pressure",
     overviewDesc:
       "KDS gives kitchen teams a clear operating screen for order priority, prep stages, station ownership, and front-of-house coordination.",
@@ -792,7 +792,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
       bottomBadge: "Prices, promos and availability synced",
     },
     primaryCta: { label: "Plan Menu Boards", href: "/contact/sales" },
-    secondaryCta: { label: "Explore Restaurant POS", href: "/products/restaurant-pos" },
+    secondaryCta: { label: "Explore Restaurant POS", href: "/solutions/restaurants" },
     overviewTitle: "Display menus that stay operational",
     overviewDesc:
       "Menu boards should look good to guests and remain simple for operators. Quantix connects visual displays to menu and promotion workflows.",

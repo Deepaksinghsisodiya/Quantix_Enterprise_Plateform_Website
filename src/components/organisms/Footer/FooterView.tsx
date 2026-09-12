@@ -94,41 +94,75 @@ const SocialButton = ({ social }: { social: SocialLink }) => {
   );
 };
 
-const LinkColumn = ({ title, links, onOpenContact }: { title: string; links: FooterLink[]; onOpenContact: () => void }) => (
+const LinkColumn = ({
+  title,
+  links,
+  currentPath,
+  onOpenContact,
+}: {
+  title: string;
+  links: FooterLink[];
+  currentPath: string;
+  onOpenContact: () => void;
+}) => (
   <div className="flex flex-col space-y-4">
     <div>
       <h4 className="font-syne font-bold text-slate-900 dark:text-white text-[13px] sm:text-sm uppercase tracking-wider inline-block pb-1.5 border-b-2 border-primary">
         {title}
       </h4>
     </div>
-    <ul className="flex flex-col space-y-4 sm:space-y-5 pt-1.5">
-      {links.map((link) => (
-        <li key={link.label}>
-          {link.href === '/contact' || link.href.startsWith('/contact/sales') ? (
-            <button
-              onClick={() => onOpenContact()}
-              className="text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary-light transition-all duration-200 text-xs sm:text-[13px] font-medium group inline-flex items-center gap-1.5 w-full text-left cursor-pointer hover:translate-x-1"
-            >
-              <span className="group-hover:text-primary transition-colors">{link.label}</span>
-              <ArrowRight
-                size={12}
-                className="opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-primary shrink-0 stroke-[2.5]"
-              />
-            </button>
-          ) : (
-            <Link
-              href={link.href}
-              className="text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary-light transition-all duration-200 text-xs sm:text-[13px] font-medium group inline-flex items-center gap-1.5 cursor-pointer hover:translate-x-1"
-            >
-              <span className="group-hover:text-primary transition-colors">{link.label}</span>
-              <ArrowRight
-                size={12}
-                className="opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-primary shrink-0 stroke-[2.5]"
-              />
-            </Link>
-          )}
-        </li>
-      ))}
+    <ul className="flex flex-col space-y-2.5 sm:space-y-3 pt-1.5">
+      {links.map((link) => {
+        const isActive = currentPath === link.href;
+
+        return (
+          <li key={link.label}>
+            {link.href === '/contact' || link.href.startsWith('/contact/sales') ? (
+              <button
+                onClick={() => onOpenContact()}
+                className={`transition-all duration-200 text-xs sm:text-[13px] group inline-flex items-center gap-1.5 w-full text-left cursor-pointer hover:translate-x-1 ${
+                  isActive
+                    ? 'text-primary font-bold dark:text-primary-light'
+                    : 'text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary-light font-medium'
+                }`}
+              >
+                <span className={isActive ? 'text-primary dark:text-primary-light font-bold' : 'group-hover:text-primary transition-colors'}>
+                  {link.label}
+                </span>
+                <ArrowRight
+                  size={12}
+                  className={`transition-all duration-200 text-primary shrink-0 stroke-[2.5] ${
+                    isActive
+                      ? 'opacity-100 translate-x-0'
+                      : 'opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0'
+                  }`}
+                />
+              </button>
+            ) : (
+              <Link
+                href={link.href}
+                className={`transition-all duration-200 text-xs sm:text-[13px] group inline-flex items-center gap-1.5 cursor-pointer hover:translate-x-1 ${
+                  isActive
+                    ? 'text-primary font-bold dark:text-primary-light'
+                    : 'text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary-light font-medium'
+                }`}
+              >
+                <span className={isActive ? 'text-primary dark:text-primary-light font-bold' : 'group-hover:text-primary transition-colors'}>
+                  {link.label}
+                </span>
+                <ArrowRight
+                  size={12}
+                  className={`transition-all duration-200 text-primary shrink-0 stroke-[2.5] ${
+                    isActive
+                      ? 'opacity-100 translate-x-0'
+                      : 'opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0'
+                  }`}
+                />
+              </Link>
+            )}
+          </li>
+        );
+      })}
     </ul>
   </div>
 );
@@ -144,15 +178,15 @@ export const FooterView: React.FC<FooterViewProps> = ({
   const { openModal } = useContactModal();
 
   return (
-    <footer className="bg-slate-50/50 dark:bg-slate-950 text-slate-500 pt-8 pb-6 sm:pt-10 sm:pb-8 border-t border-slate-200/80 dark:border-slate-800/80 mt-auto w-full transition-colors duration-300 overflow-hidden relative">
+    <footer className="bg-slate-50/50 dark:bg-slate-950 text-slate-500 pt-12 pb-8 sm:pt-14 sm:pb-10 lg:pt-16 lg:pb-12 border-t border-slate-200/80 dark:border-slate-800/80 mt-auto w-full transition-colors duration-300 overflow-hidden relative">
       <div className="absolute top-0 right-0 w-1/3 h-full bg-linear-to-l from-primary/2 to-transparent pointer-events-none" />
       
       <div className="site-container relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 xl:gap-8 items-start mb-6 lg:mb-10">
           {/* Brand Info (Order 1 on mobile, Order 1 on desktop) */}
-          <div className="order-1 lg:order-1 col-span-1 lg:col-span-3 xl:col-span-3 flex flex-col space-y-4 sm:space-y-5 text-center lg:text-left items-center lg:items-start">
+          <div className="order-1 lg:order-1 col-span-1 lg:col-span-3 xl:col-span-3 flex flex-col space-y-4 sm:space-y-5 text-left items-start">
             <BrandLogo pathname={pathname} />
-            <p className="text-xs sm:text-[13px] font-medium leading-relaxed text-slate-500 dark:text-slate-400 max-w-xs text-center lg:text-left">
+            <p className="text-xs sm:text-[13px] font-medium leading-relaxed text-slate-500 dark:text-slate-400 max-w-xs text-left">
               Quantix Enterprise is the next-gen EPOS & Cloud management platform for restaurants, retail, and franchise chains.
             </p>
 
@@ -176,14 +210,14 @@ export const FooterView: React.FC<FooterViewProps> = ({
 
           {/* Navigation Links Grid (Order 3 on mobile, Order 2 on desktop) */}
           <div className="order-3 lg:order-2 col-span-1 lg:col-span-6 xl:col-span-6 grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-6 pt-1 lg:pt-0">
-            <LinkColumn title="Platform" links={productLinks} onOpenContact={openModal} />
-            <LinkColumn title="Solutions" links={industryLinks} onOpenContact={openModal} />
-            <LinkColumn title="Resources" links={companyLinks} onOpenContact={openModal} />
-            <LinkColumn title="Company" links={legalLinks} onOpenContact={openModal} />
+            <LinkColumn title="Platform" links={productLinks} currentPath={pathname} onOpenContact={openModal} />
+            <LinkColumn title="Solutions" links={industryLinks} currentPath={pathname} onOpenContact={openModal} />
+            <LinkColumn title="Resources" links={companyLinks} currentPath={pathname} onOpenContact={openModal} />
+            <LinkColumn title="Company" links={legalLinks} currentPath={pathname} onOpenContact={openModal} />
           </div>
         </div>
 
-        <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-0">
+        <div className="pt-6 sm:pt-8 mt-8 sm:mt-10 border-t border-slate-200/80 dark:border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-0">
           <p className="text-slate-400 font-medium text-xs order-2 lg:order-1 text-center sm:text-left">{FOOTER_COPYRIGHT}</p>
           
           <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-5 lg:gap-6 order-1 lg:order-2">
@@ -193,11 +227,38 @@ export const FooterView: React.FC<FooterViewProps> = ({
             </div>
             
             <div className="flex gap-1.5">
-              <Link href="/privacy" className="text-[11px] font-medium text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors px-1.5">Privacy</Link>
+              <Link
+                href="/privacy"
+                className={`text-[11px] transition-colors px-1.5 ${
+                  pathname === '/privacy'
+                    ? 'text-primary font-bold dark:text-primary-light'
+                    : 'text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
+                }`}
+              >
+                Privacy
+              </Link>
               <span className="text-slate-300 dark:text-slate-700">•</span>
-              <Link href="/terms" className="text-[11px] font-medium text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors px-1.5">Terms</Link>
+              <Link
+                href="/terms"
+                className={`text-[11px] transition-colors px-1.5 ${
+                  pathname === '/terms'
+                    ? 'text-primary font-bold dark:text-primary-light'
+                    : 'text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
+                }`}
+              >
+                Terms
+              </Link>
               <span className="text-slate-300 dark:text-slate-700">•</span>
-              <Link href="/pci" className="text-[11px] font-medium text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors px-1.5">Security</Link>
+              <Link
+                href="/pci"
+                className={`text-[11px] transition-colors px-1.5 ${
+                  pathname === '/pci'
+                    ? 'text-primary font-bold dark:text-primary-light'
+                    : 'text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
+                }`}
+              >
+                Security
+              </Link>
             </div>
           </div>
         </div>
