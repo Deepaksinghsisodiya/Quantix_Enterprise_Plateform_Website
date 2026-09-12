@@ -43,14 +43,14 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
       {/* Render Desktop Mega Menu Dropdowns */}
       <AnimatePresence mode="wait">
         {openMegaMenu === 'Solutions' && (
-          <SolutionsMegaMenu
+          <ProductsMegaMenu
             onClose={() => onSetOpenMegaMenu(null)}
             onMouseEnter={() => onSetOpenMegaMenu('Solutions')}
             onMouseLeave={() => onSetOpenMegaMenu(null)}
           />
         )}
         {openMegaMenu === 'Features' && (
-          <ProductsMegaMenu
+          <SolutionsMegaMenu
             onClose={() => onSetOpenMegaMenu(null)}
             onMouseEnter={() => onSetOpenMegaMenu('Features')}
             onMouseLeave={() => onSetOpenMegaMenu(null)}

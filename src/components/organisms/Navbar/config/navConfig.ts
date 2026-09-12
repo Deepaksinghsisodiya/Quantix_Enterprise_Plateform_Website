@@ -82,19 +82,19 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
     {
       categoryTitle: 'RESTAURANT & FOODSERVICE SOFTWARE',
       items: [
-        { title: 'Restaurant POS System', desc: 'Table floor plans, kitchen orders & fast billing', href: '/products/restaurant-pos', icon: Utensils, iconColor: 'text-amber-500' },
+        { title: 'Restaurant POS System', desc: 'Table floor plans, kitchen orders & fast billing', href: '/solutions/restaurants', icon: Utensils, iconColor: 'text-amber-500' },
       ],
     },
     {
       categoryTitle: 'RETAIL & STORE SOFTWARE',
       items: [
-        { title: 'Retail POS System', desc: 'Barcode scanner checkout, variants & offline till', href: '/products/retail-pos', icon: Store, iconColor: 'text-emerald-500' },
+        { title: 'Retail POS System', desc: 'Barcode scanner checkout, variants & offline till', href: '/solutions/grocery', icon: Store, iconColor: 'text-emerald-500' },
       ],
     },
     {
       categoryTitle: 'MULTI-STORE CLOUD CONTROL',
       items: [
-        { title: 'Cloud Multi-Store POS System', desc: 'Central menus, prices, stock transfers & live store sales', href: '/products/cloud-pos', icon: Cloud, iconColor: 'text-sky-500' },
+        { title: 'Cloud Multi-Store POS System', desc: 'Central menus, prices, stock transfers & live store sales', href: '/features/multi-store', icon: Cloud, iconColor: 'text-sky-500' },
       ],
     },
   ],
@@ -230,9 +230,25 @@ export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
 export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[0],
+    icon: Sparkles,
+    imageSrc: '/images/nav_restaurant_bundle.png',
+    badge: 'PLATFORM SOLUTIONS',
+    groups: [
+      {
+        title: 'PLATFORM SYSTEMS',
+        items: [
+          { title: 'Restaurant POS System', desc: 'Table floor plans & kitchen billing', href: '/solutions/restaurants', icon: Utensils },
+          { title: 'Retail Register', desc: 'Barcode scanner & cash drawer', href: '/solutions/grocery', icon: Store },
+          { title: 'Cloud Multi-Store HQ', desc: 'Manage menus & multi-store sales', href: '/features/multi-store', icon: Cloud },
+        ],
+      },
+    ],
+  },
+  {
+    ...PRIMARY_LINKS[1],
     icon: Layers,
     imageSrc: '/images/ent_global_pos_bundle.png',
-    badge: 'INDUSTRY SOLUTIONS',
+    badge: 'ENTERPRISE FEATURES',
     groups: [
       {
         title: 'BY BUSINESS TYPE',
@@ -243,22 +259,6 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
           { title: 'Convenience & Grocery', desc: 'Weight scales & fast till', href: '/solutions/grocery', icon: Store },
           { title: 'Bars & Nightclubs', desc: 'Bar tabs & quick reorders', href: '/solutions/bars', icon: Flame },
           { title: 'Vape & Smoke Shops', desc: 'Age checks & SKU catalogs', href: '/solutions/smoke-shops', icon: Layers },
-        ],
-      },
-    ],
-  },
-  {
-    ...PRIMARY_LINKS[1],
-    icon: Sparkles,
-    imageSrc: '/images/nav_restaurant_bundle.png',
-    badge: 'CORE POS SUITE',
-    groups: [
-      {
-        title: 'SOFTWARE CAPABILITIES',
-        items: [
-          { title: 'Restaurant POS System', desc: 'Table floor plans & kitchen billing', href: '/products/restaurant-pos', icon: Utensils },
-          { title: 'Retail Register', desc: 'Barcode scanner & cash drawer', href: '/products/retail-pos', icon: Store },
-          { title: 'Cloud Multi-Store HQ', desc: 'Manage menus & multi-store sales', href: '/products/cloud-pos', icon: Cloud },
         ],
       },
     ],
