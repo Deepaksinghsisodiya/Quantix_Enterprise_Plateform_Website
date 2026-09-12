@@ -1,6 +1,5 @@
 'use client';
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -17,12 +16,16 @@ import {
   CheckCircle2,
   Layers,
   Newspaper,
+  ExternalLink,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HeroSlide } from "./HeroData";
 import { useContactModal } from "@/context/ContactModalContext";
 import { useGetAnnouncementsQuery } from "@/features/Announcements";
 import { HeroNewsTickerSkeleton } from "@/components/atoms";
+import { useAppSelector } from "@/redux/hooks";
+import Cookies from "js-cookie";
 
 export interface HeroViewProps {
   slides: HeroSlide[];
@@ -47,6 +50,24 @@ export const HeroView: React.FC<HeroViewProps> = ({
 }) => {
   const slide = slides[activeIndex];
   const { openModal } = useContactModal();
+
+  const { token, user } = useAppSelector((state) => state.auth);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const cookieToken = typeof window !== 'undefined' ? (Cookies.get('accessToken') || Cookies.get('authUser')) : null;
+    setIsLoggedIn(Boolean(token || user || cookieToken));
+  }, [token, user]);
+
+  const getAdminPortalUrl = () => {
+    if (typeof window !== 'undefined') {
+      const hostname = window.location.hostname;
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return 'http://localhost:4173/login';
+      }
+    }
+    return process.env.NEXT_PUBLIC_ADMIN_PORTAL_URL || 'https://quantixadmin.foreteksolution.in/';
+  };
 
   const { data: announcementsData, isLoading: isAnnouncementsLoading } = useGetAnnouncementsQuery();
   const announcements =
@@ -168,13 +189,26 @@ export const HeroView: React.FC<HeroViewProps> = ({
 
               {/* Buttons (Primary + Secondary) */}
               <div className="flex w-full flex-row items-center justify-start gap-2.5 pt-1 sm:w-auto sm:justify-center lg:justify-start">
-                <a
-                  href={slide.primaryCta?.href || "/contact"}
-                  className="group flex flex-1 min-w-0 min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FF4F00] px-3 sm:px-8 py-3 font-syne text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-[#e64700] hover:shadow-primary/40 active:scale-95 whitespace-nowrap"
-                >
-                  <Rocket size={14} className="fill-white transition-transform group-hover:-translate-y-1 group-hover:translate-x-0.5 sm:w-4 sm:h-4 shrink-0" />
-                  <span>{slide.primaryCta?.label || "Start Your Free Trial"}</span>
-                </a>
+                {isLoggedIn ? (
+                  <a
+                    href={getAdminPortalUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-1 min-w-0 min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-3 sm:px-8 py-3 font-syne text-[10px] sm:text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:brightness-110 hover:shadow-orange-500/40 active:scale-95 whitespace-nowrap"
+                  >
+                    <Sparkles size={14} className="text-amber-200 fill-amber-200 transition-transform group-hover:scale-110 sm:w-4 sm:h-4 shrink-0" />
+                    <span>Launch Admin Portal</span>
+                    <ExternalLink size={13} className="text-white/80 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:w-3.5 sm:h-3.5 shrink-0" />
+                  </a>
+                ) : (
+                  <Link
+                    href={slide.primaryCta?.href || "/sign-up"}
+                    className="group flex flex-1 min-w-0 min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FF4F00] px-3 sm:px-8 py-3 font-syne text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-[#e64700] hover:shadow-primary/40 active:scale-95 whitespace-nowrap"
+                  >
+                    <Rocket size={14} className="fill-white transition-transform group-hover:-translate-y-1 group-hover:translate-x-0.5 sm:w-4 sm:h-4 shrink-0" />
+                    <span>{slide.primaryCta?.label || "Start Your Free Trial"}</span>
+                  </Link>
+                )}
                 <button
                   type="button"
                   onClick={() => openModal("Book an Enterprise Demo", "HERO_REQUEST_DEMO")}

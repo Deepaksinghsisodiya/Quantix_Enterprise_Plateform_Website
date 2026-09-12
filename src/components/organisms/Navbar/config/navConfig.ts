@@ -362,12 +362,17 @@ export const isPrimaryLinkActive = (link: { label: string; href: string }, pathn
 
   // Solutions routes
   if (link.label === 'Solutions') {
-    return pathname === '/products' || pathname.startsWith('/products/');
+    return pathname === '/solutions' || pathname.startsWith('/solutions/');
   }
 
   // Features routes
   if (link.label === 'Features') {
-    return pathname === '/solutions' || pathname.startsWith('/solutions/');
+    return (
+      pathname === '/features' ||
+      pathname.startsWith('/features/') ||
+      pathname === '/products' ||
+      pathname.startsWith('/products/')
+    );
   }
 
   // Integrations routes

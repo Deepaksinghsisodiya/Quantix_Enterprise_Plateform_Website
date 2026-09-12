@@ -64,6 +64,42 @@ function AuthInitializer({ children }: { children: ReactNode }) {
     if (token) {
       dispatch(setCredentials({ token, refreshToken, user }));
     }
+
+    // 3. Automatic cross-platform link SSO handover
+    const handleCrossSiteClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement).closest("a");
+      if (!anchor || !anchor.href) return;
+
+      const href = anchor.href;
+      const isSisterPlatform =
+        (href.includes("localhost:3000") ||
+         href.includes("localhost:3001") ||
+         href.includes("localhost:3002") ||
+         href.includes("foreteksolution.in")) &&
+        !href.startsWith(window.location.origin);
+
+      if (isSisterPlatform) {
+        const activeToken = Cookies.get("accessToken");
+        if (activeToken) {
+          try {
+            const url = new URL(href);
+            if (!url.searchParams.has("sso_token")) {
+              url.searchParams.set("sso_token", activeToken);
+              const activeRefresh = Cookies.get("refreshToken");
+              if (activeRefresh) url.searchParams.set("sso_refresh", activeRefresh);
+              const activeUser = Cookies.get("authUser");
+              if (activeUser) url.searchParams.set("sso_user", activeUser);
+              anchor.href = url.toString();
+            }
+          } catch {
+            // graceful fallback
+          }
+        }
+      }
+    };
+
+    document.addEventListener("click", handleCrossSiteClick, { capture: true });
+    return () => document.removeEventListener("click", handleCrossSiteClick, { capture: true });
   }, [dispatch]);
 
   return <>{children}</>;
