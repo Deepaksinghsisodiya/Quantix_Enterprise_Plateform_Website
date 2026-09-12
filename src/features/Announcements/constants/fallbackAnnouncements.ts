@@ -11,7 +11,7 @@ export const FALLBACK_ANNOUNCEMENTS: AnnouncementDto[] = [
     title: 'Quantix POS v4.2 Released',
     body: 'New multi-terminal sync, faster checkout, and advanced kitchen display integration now live.',
     kind: 'News',
-    linkUrl: '/changelog',
+    linkUrl: undefined,
     sortOrder: 1,
     isActive: true,
     isPinned: true,

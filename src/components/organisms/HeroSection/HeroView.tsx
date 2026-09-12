@@ -204,15 +204,12 @@ export const HeroView: React.FC<HeroViewProps> = ({
                     <HeroNewsTickerSkeleton />
                   ) : (
                     <div className="min-w-0 flex-1 overflow-hidden ml-2">
-                      <div className="flex w-max shrink-0 animate-[heroTickerScroll_85s_linear_infinite] hover:[animation-play-state:paused] items-center gap-6 text-[11px] font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
+                      <div className="flex w-max shrink-0 animate-[heroTickerScroll_85s_linear_infinite] hover:[animation-play-state:paused] items-center gap-6 text-[11px] font-medium text-slate-700 dark:text-slate-300 select-none">
                         {[1, 2].map((group) => (
                           <div key={group} className="flex items-center gap-6 shrink-0">
                             {announcements.map((item, idx) => (
                               <React.Fragment key={`${group}-${item.announcementId || idx}`}>
-                                <Link
-                                  href={item.linkUrl || "/changelog"}
-                                  className="inline-flex items-center gap-1.5 transition-colors hover:text-[#FF4F00]"
-                                >
+                                <div className="inline-flex items-center gap-1.5">
                                   <span
                                     className={cn(
                                       "inline-block rounded-md px-1.5 py-0.5 text-[9.5px] font-black uppercase tracking-wider",
@@ -231,7 +228,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
                                       — {item.body}
                                     </span>
                                   )}
-                                </Link>
+                                </div>
                                 <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
                               </React.Fragment>
                             ))}

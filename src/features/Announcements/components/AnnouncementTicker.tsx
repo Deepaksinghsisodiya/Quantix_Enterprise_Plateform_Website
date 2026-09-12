@@ -157,14 +157,11 @@ export default function AnnouncementTicker({
     >
       <div className="flex h-11 w-full items-center sm:h-12 md:h-[50px]">
         {/* Left badge */}
-        <Link
-          href="/changelog"
-          className="relative z-10 flex h-full shrink-0 items-center gap-2 border-r border-white/10 bg-white/[0.12] px-3 text-[11px] font-black uppercase tracking-normal text-white outline-none transition-colors hover:text-primary-light focus-visible:ring-2 focus-visible:ring-primary/70 sm:px-5 sm:text-xs"
-        >
+        <div className="relative z-10 flex h-full shrink-0 items-center gap-2 border-r border-white/10 bg-white/[0.12] px-3 text-[11px] font-black uppercase tracking-normal text-white select-none sm:px-5 sm:text-xs">
           <Megaphone className="h-3.5 w-3.5 shrink-0 text-primary-light" />
           <span className="hidden sm:inline">Announcements</span>
           <span className="sm:hidden">News</span>
-        </Link>
+        </div>
 
         {/* Scrolling track */}
         <div className="min-w-0 flex-1 overflow-hidden">
