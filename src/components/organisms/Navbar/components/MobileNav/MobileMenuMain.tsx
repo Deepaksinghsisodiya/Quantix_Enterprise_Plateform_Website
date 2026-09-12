@@ -16,7 +16,7 @@ import {
   Building2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { MOBILE_MENU_SECTIONS, QUICK_MOBILE_TOOLS } from '../../config/navConfig';
+import { MOBILE_MENU_SECTIONS, QUICK_MOBILE_TOOLS, isPrimaryLinkActive } from '../../config/navConfig';
 import type { MobileMenuSection, QuickMobileTool } from '../../config/navTypes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { logout } from '@/redux/slices/authSlice';
@@ -123,7 +123,7 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
     pathname === href || (href !== '/' && href !== '#' && pathname.startsWith(`${href}/`));
 
   const isMobileSectionActive = (section: MobileMenuSection) =>
-    isMenuHrefActive(section.href) ||
+    isPrimaryLinkActive(section, pathname) ||
     section.groups?.some((group) => group.items?.some((item) => isMenuHrefActive(item.href)));
 
   return (

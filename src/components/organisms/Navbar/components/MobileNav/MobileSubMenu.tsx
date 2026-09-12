@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { MobileMenuSection } from '../../config/navTypes';
+import { getActiveMenuHref } from '../../config/navConfig';
 
 interface MobileSubMenuProps {
   activeSection: MobileMenuSection;
@@ -21,8 +22,13 @@ export const MobileSubMenu: React.FC<MobileSubMenuProps> = ({
   onBack,
   onClose,
 }) => {
-  const isMenuHrefActive = (href: string) =>
-    pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
+  const allSubItems = React.useMemo(() => {
+    return activeSection.groups.flatMap((group) => group.items);
+  }, [activeSection]);
+
+  const activeSubHref = React.useMemo(() => {
+    return getActiveMenuHref(allSubItems, pathname);
+  }, [allSubItems, pathname]);
 
   return (
     <motion.div
@@ -87,7 +93,7 @@ export const MobileSubMenu: React.FC<MobileSubMenuProps> = ({
               <div className="grid auto-rows-fr grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {group.items.map((item) => {
                   const ItemIcon = item.icon;
-                  const isItemActive = isMenuHrefActive(item.href);
+                  const isItemActive = item.href === activeSubHref;
 
                   return (
                     <Link

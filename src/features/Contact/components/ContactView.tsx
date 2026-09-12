@@ -23,6 +23,7 @@ import {
   Sparkles,
   Layers,
   HelpCircle,
+  ChevronRight,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { ATMTextField, ATMPhoneField, ATMButton } from '@/components/atoms';
@@ -105,20 +106,28 @@ export const ContactView: React.FC = () => {
   return (
     <div className="w-full font-sans min-h-screen text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-950 transition-colors duration-300">
       {/* ─── 1. Page Hero Header (Exact site-wide standard with page-hero-header) ─── */}
-      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header text-center">
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-80 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-orange-500/10 via-amber-500/5 to-transparent pointer-events-none -z-10" />
 
-        <div className="site-container relative z-10 max-w-3xl mx-auto px-4 sm:px-6">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-orange-500/10 dark:bg-orange-500/15 border border-orange-500/25 text-xs font-bold uppercase tracking-wider text-[#FF4D00] mb-3 shadow-2xs">
-            <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Fast Response • Usually Under 15 Mins</span>
+        <div className="site-container relative z-10 page-nav-header space-y-3 text-left">
+          <div className="nav-breadcrumb text-slate-500 dark:text-slate-400">
+            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+            <ChevronRight size={11} />
+            <span className="text-primary font-bold">Contact</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-syne font-black tracking-tight text-slate-950 dark:text-white leading-tight">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-orange-500/10 dark:bg-orange-500/15 border border-orange-500/25 text-xs font-bold uppercase tracking-wider text-[#FF4D00] shadow-2xs">
+              <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Fast Response • Usually Under 15 Mins</span>
+            </div>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-syne font-black tracking-tight text-slate-950 dark:text-white leading-tight max-w-3xl">
             Talk with an <span className="text-[#FF4D00]">Enterprise POS</span> Specialist
           </h1>
 
-          <p className="mt-2.5 text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium max-w-xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium max-w-xl leading-relaxed">
             Get a tailored 15-minute live demo, custom rollout quote, and claim our 100% free POS trial.
           </p>
         </div>

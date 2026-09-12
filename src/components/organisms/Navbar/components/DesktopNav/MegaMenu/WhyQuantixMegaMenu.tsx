@@ -7,21 +7,21 @@ import { usePathname } from 'next/navigation';
 import { Sparkles, Check, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MegaMenuWrapper } from './MegaMenuWrapper';
-import { RESOURCES_MEGA_CONFIG, getActiveMenuHref } from '../../../config/navConfig';
+import { WHY_QUANTIX_MEGA_CONFIG, getActiveMenuHref } from '../../../config/navConfig';
 
-interface ResourcesMegaMenuProps {
+interface WhyQuantixMegaMenuProps {
   onClose: () => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
 
-export const ResourcesMegaMenu: React.FC<ResourcesMegaMenuProps> = ({
+export const WhyQuantixMegaMenu: React.FC<WhyQuantixMegaMenuProps> = ({
   onClose,
   onMouseEnter,
   onMouseLeave,
 }) => {
   const pathname = usePathname();
-  const { promoCards, categories } = RESOURCES_MEGA_CONFIG;
+  const { promoCards, categories } = WHY_QUANTIX_MEGA_CONFIG;
 
   const allMenuItems = React.useMemo(() => {
     return categories.flatMap((cat) => cat.items);
@@ -34,19 +34,19 @@ export const ResourcesMegaMenu: React.FC<ResourcesMegaMenuProps> = ({
   return (
     <MegaMenuWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8 w-full">
-        {/* Left Column: Featured Guides (4 cols, flush left) */}
+        {/* Left Column: Featured Proof Card */}
         {promoCards && promoCards.length > 0 && (
           <div className="flex flex-col border-slate-200/80 pr-0 dark:border-slate-800/80 lg:col-span-4 lg:border-r lg:pr-7 h-full">
             {promoCards.map((card, idx) => (
               <Link
                 key={idx}
-                href={card.href || '/resources'}
+                href={card.href || '/why-quantix'}
                 onClick={onClose}
-                className="group/card relative flex flex-col justify-between h-full gap-3.5 p-4.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500/40 hover:bg-slate-50/50 dark:hover:bg-slate-850 transition-all duration-300 shadow-2xs hover:shadow-md overflow-hidden"
+                className="group/card relative flex flex-col justify-between h-full gap-3.5 p-4.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary/40 hover:bg-slate-50/50 dark:hover:bg-slate-850 transition-all duration-300 shadow-2xs hover:shadow-md overflow-hidden"
               >
                 <div className="relative w-full h-44 sm:h-48 lg:h-46.25 rounded-xl overflow-hidden shrink-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs flex items-center justify-center p-2.5">
                   <Image
-                    src={card.imageSrc || '/images/nav_cloud_bundle.png'}
+                    src={card.imageSrc || '/images/ent_bi_analytics_bundle.png'}
                     alt={card.title}
                     fill
                     sizes="280px"
@@ -68,12 +68,17 @@ export const ResourcesMegaMenu: React.FC<ResourcesMegaMenuProps> = ({
                     {card.desc}
                   </p>
                 </div>
+
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] font-syne font-black text-primary group-hover/card:underline">
+                  <span>{card.ctaText || 'Learn More'}</span>
+                  <ChevronRight size={13} className="group-hover/card:translate-x-1 transition-transform" />
+                </div>
               </Link>
             ))}
           </div>
         )}
 
-        {/* Right Columns: 2 Ultra-Modern 2-Line Item Grids (8 cols / 2 sub-cols, wide) */}
+        {/* Right Columns: 2 Evaluative Item Grids */}
         <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
           {categories.map((cat) => (
             <div key={cat.categoryTitle} className="space-y-2.5">
@@ -142,7 +147,6 @@ export const ResourcesMegaMenu: React.FC<ResourcesMegaMenuProps> = ({
                         </div>
                       </div>
 
-                      {/* Hover Chevron Arrow on Right Side */}
                       <ChevronRight
                         size={14}
                         className={cn(

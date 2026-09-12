@@ -52,8 +52,9 @@ export const PRIMARY_LINKS: NavLink[] = [
   { label: 'Solutions', href: '/products', desc: 'Complete Restaurant & Retail Cloud POS Software', hasMegaMenu: true },
   { label: 'Features', href: '/solutions', desc: 'Tailored workflows for Dining, Takeaways & Retail Stores', hasMegaMenu: true },
   { label: 'Integrations', href: '/integrations', desc: 'Card readers, online delivery apps & accounting sync', hasMegaMenu: true },
+  { label: 'Why Quantix', href: '/why-quantix', desc: 'ROI proof, enterprise comparison & customer success', hasMegaMenu: true },
+  { label: 'Resources', href: '/resources', desc: 'Help guides, setup tutorials & software downloads', hasMegaMenu: true },
   { label: 'Pricing', href: '/pricing', desc: 'Affordable monthly plans with 3 Months Free trial' },
-  { label: 'Resources', href: '/resources', desc: 'Help guides, ROI calculator & setup tutorials', hasMegaMenu: true },
 ];
 
 export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
@@ -164,12 +165,43 @@ export const INTEGRATIONS_MEGA_CONFIG: MegaMenuSectionData = {
   ],
 };
 
+export const WHY_QUANTIX_MEGA_CONFIG: MegaMenuSectionData = {
+  promoCards: [
+    {
+      badge: 'ENTERPRISE PROOF',
+      title: 'Why 50,000+ Chains Choose Quantix',
+      desc: 'Discover how multi-location operators eliminate hardware lock-in, achieve 99.99% uptime, and increase table turns by 38%.',
+      ctaText: 'Calculate Your ROI',
+      href: '/roi-calculator',
+      imageSrc: '/images/ent_bi_analytics_bundle.png',
+      badgeColor: 'text-primary dark:text-primary-light bg-primary/10 border border-primary/20',
+    },
+  ],
+  categories: [
+    {
+      categoryTitle: 'COMPARE & EVALUATE',
+      items: [
+        { title: 'Enterprise vs Standalone', desc: 'Multi-store cloud HQ vs single isolated till', href: '/enterprise-vs-standalone', icon: Building2, iconColor: 'text-blue-500' },
+        { title: 'Competitor Comparisons', desc: 'Why leading brands switch from Toast, Square & Clover', href: '/compare', icon: FileSpreadsheet, iconColor: 'text-purple-500' },
+        { title: 'ROI Savings Calculator', desc: 'Calculate your annual processing & hardware savings', href: '/roi-calculator', icon: Calculator, iconColor: 'text-amber-500' },
+      ],
+    },
+    {
+      categoryTitle: 'PROVEN SUCCESS & REVIEWS',
+      items: [
+        { title: 'Case Studies & ROI Stories', desc: 'Real quantifiable metrics from multi-unit operators', href: '/case-studies', icon: BarChart3, iconColor: 'text-emerald-500' },
+        { title: 'Customer Testimonials', desc: 'Read authentic reviews from enterprise founders & GMs', href: '/testimonials', icon: Star, iconColor: 'text-orange-500' },
+      ],
+    },
+  ],
+};
+
 export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
   promoCards: [
     {
       badge: 'OFFICIAL SUPPORT',
       title: 'Help Center & Setup Guides',
-      desc: 'Step-by-step documentation, terminal unboxing, printer pairing, and video tutorials.',
+      desc: 'Step-by-step documentation, terminal unboxing, printer pairing, and operational guides.',
       ctaText: 'Explore Help Center',
       href: '/help',
       imageSrc: '/images/nav_cloud_bundle.png',
@@ -182,17 +214,14 @@ export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
       items: [
         { title: 'Blog & Insights', desc: 'Latest retail trends, POS guides & tips', href: '/blog', icon: Newspaper, iconColor: 'text-indigo-500' },
         { title: 'Help Center', desc: 'Setup guides, troubleshooting & FAQs', href: '/help', icon: HelpCircle, iconColor: 'text-blue-500' },
-        { title: 'Video Tutorials', desc: 'Step-by-step videos for setup & hardware', href: '/help/videos', icon: PlayCircle, iconColor: 'text-rose-500' },
-        { title: 'Case Studies', desc: 'Real stories from businesses using Quantix', href: '/case-studies', icon: Users, iconColor: 'text-emerald-500' },
+        { title: 'Getting Started Guide', desc: '5-step terminal onboarding & configuration', href: '/help/getting-started', icon: BookOpen, iconColor: 'text-emerald-500' },
       ],
     },
     {
-      categoryTitle: 'TOOLS & SUPPORT',
+      categoryTitle: 'TOOLS & DOWNLOADS',
       items: [
-        { title: 'Savings Calculator', desc: 'Calculate how much you can save per year', href: '/roi-calculator', icon: Calculator, iconColor: 'text-amber-500' },
-        { title: 'Compare Systems', desc: 'See how Quantix compares to other POS systems', href: '/compare', icon: FileSpreadsheet, iconColor: 'text-purple-500' },
-        { title: 'Contact Support', desc: 'Talk to our 24/7 technical team', href: '/contact', icon: Headset, iconColor: 'text-cyan-500' },
-        { title: 'All Resources Hub', desc: 'Browse all guides, calculators & tools', href: '/resources', icon: BookOpen, iconColor: 'text-slate-600 dark:text-slate-300' },
+        { title: 'Software Downloads', desc: 'Windows .exe, Linux .deb & Android APK binaries', href: '/downloads', icon: Download, iconColor: 'text-purple-500' },
+        { title: '24/7 Priority Support', desc: 'Talk to our dedicated POS engineering team', href: '/contact', icon: Headset, iconColor: 'text-cyan-500' },
       ],
     },
   ],
@@ -253,19 +282,34 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
     ],
   },
   {
+    ...PRIMARY_LINKS[3],
+    icon: Star,
+    imageSrc: '/images/ent_bi_analytics_bundle.png',
+    badge: 'WHY QUANTIX',
+    groups: [
+      {
+        title: 'ROI & EVALUATION',
+        items: [
+          { title: 'Enterprise vs Standalone', desc: 'Multi-store vs single till', href: '/enterprise-vs-standalone', icon: Building2 },
+          { title: 'Competitor Comparisons', desc: 'Why switch from Toast/Square', href: '/compare', icon: FileSpreadsheet },
+          { title: 'ROI Savings Calculator', desc: 'Calculate annual savings', href: '/roi-calculator', icon: Calculator },
+          { title: 'Case Studies & Stories', desc: 'Real customer ROI results', href: '/case-studies', icon: BarChart3 },
+          { title: 'Customer Testimonials', desc: 'Operator reviews & ratings', href: '/testimonials', icon: Star },
+        ],
+      },
+    ],
+  },
+  {
     ...PRIMARY_LINKS[4],
     icon: BookOpen,
     imageSrc: '/images/nav_cloud_bundle.png',
-    badge: 'GUIDES & SUPPORT',
+    badge: 'GUIDES & DOWNLOADS',
     groups: [
       {
-        title: 'TOOLS & SUPPORT',
+        title: 'LEARNING & SUPPORT',
         items: [
-          { title: 'ROI Savings Calculator', desc: 'Calculate monthly savings', href: '/roi-calculator', icon: Calculator },
           { title: 'Help & Knowledge Center', desc: 'Setup tutorials & guides', href: '/help', icon: HelpCircle },
-          { title: 'POS System Comparison', desc: 'Side-by-side feature matrix', href: '/compare', icon: FileSpreadsheet },
-          { title: 'Customer Stories', desc: 'Real customer case studies', href: '/testimonials', icon: Users },
-          { title: 'Live Hardware Diagnostics', desc: 'Test scanners & printers online', href: '/status', icon: Activity },
+          { title: 'Software Downloads', desc: 'Windows & Android binaries', href: '/downloads', icon: Download },
           { title: '24/7 Priority Support', desc: 'Speak to a POS engineer', href: '/contact', icon: Headset },
         ],
       },
@@ -275,7 +319,84 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
 
 export const QUICK_MOBILE_TOOLS: QuickMobileTool[] = [
   { label: 'ROI Calculator', href: '/roi-calculator', icon: Calculator },
+  { label: 'Why Quantix', href: '/why-quantix', icon: Star },
   { label: 'Help Center', href: '/help', icon: HelpCircle },
   { label: 'Pricing', href: '/pricing', icon: Sparkles },
-  { label: 'Contact Us', href: '/contact', icon: Headset },
 ];
+
+/**
+ * Determines whether a primary top-level navigation link is currently active based on pathname.
+ */
+export const isPrimaryLinkActive = (link: { label: string; href: string }, pathname: string): boolean => {
+  if (!pathname) return false;
+
+  // Direct match or child route match of link.href
+  if (pathname === link.href || (link.href !== '/' && pathname.startsWith(`${link.href}/`))) {
+    return true;
+  }
+
+  // Why Quantix routes
+  if (link.label === 'Why Quantix') {
+    const whyQuantixRoutes = [
+      '/why-quantix',
+      '/enterprise-vs-standalone',
+      '/compare',
+      '/roi-calculator',
+      '/case-studies',
+      '/testimonials',
+    ];
+    return whyQuantixRoutes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
+  }
+
+  // Resources routes
+  if (link.label === 'Resources') {
+    const resourcesRoutes = [
+      '/resources',
+      '/help',
+      '/downloads',
+      '/contact',
+      '/blog',
+    ];
+    return resourcesRoutes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
+  }
+
+  // Solutions routes
+  if (link.label === 'Solutions') {
+    return pathname === '/products' || pathname.startsWith('/products/');
+  }
+
+  // Features routes
+  if (link.label === 'Features') {
+    return pathname === '/solutions' || pathname.startsWith('/solutions/');
+  }
+
+  // Integrations routes
+  if (link.label === 'Integrations') {
+    return pathname === '/integrations' || pathname.startsWith('/integrations/');
+  }
+
+  return false;
+};
+
+/**
+ * Finds the single most specific active item href from a list of navigation items.
+ * Prevents multiple items (e.g. /help and /help/getting-started) from showing active at the same time.
+ */
+export const getActiveMenuHref = (
+  items: Array<{ href: string }>,
+  pathname: string
+): string | null => {
+  if (!pathname || !items || items.length === 0) return null;
+
+  // 1. Exact match has highest priority
+  const exact = items.find((item) => item.href === pathname);
+  if (exact) return exact.href;
+
+  // 2. Longest prefix match if not an exact match
+  const prefixMatches = items
+    .filter((item) => item.href !== '/' && item.href !== '#' && pathname.startsWith(`${item.href}/`))
+    .sort((a, b) => b.href.length - a.href.length);
+
+  return prefixMatches.length > 0 ? prefixMatches[0].href : null;
+};
+

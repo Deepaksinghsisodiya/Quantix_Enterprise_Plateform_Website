@@ -65,31 +65,33 @@ export default function HelpCenterPage() {
   return (
     <>
       {/* 1. Hero Header */}
-      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header text-center">
-        <div className="site-container relative z-10 px-4 sm:px-6">
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
+        <div className="site-container relative z-10 page-nav-header space-y-3 text-left">
           {/* Breadcrumb */}
-          <div className="mb-4 inline-flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+          <div className="nav-breadcrumb text-slate-500 dark:text-slate-400">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
             <ChevronRight size={12} />
             <span className="text-primary font-bold">Help Center</span>
           </div>
 
-          <div className="max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
-              <LifeBuoy size={13} className="text-primary" />
-              <span>24/7 Enterprise Technical Support</span>
+          <div className="max-w-3xl space-y-4 text-left">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
+                <LifeBuoy size={13} className="text-primary" />
+                <span>24/7 Enterprise Technical Support</span>
+              </div>
             </div>
 
             <h1 className="font-syne text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 dark:text-white leading-tight tracking-tight">
               How Can We Help You Today?
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium max-w-xl mx-auto">
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium max-w-xl">
               Search setup guides, offline failover protocols, hardware driver setup, and ERP integration documentation.
             </p>
 
             {/* Live Search Input */}
-            <div className="pt-2 max-w-xl mx-auto relative">
+            <div className="pt-2 max-w-xl relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <input
                 type="text"

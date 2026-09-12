@@ -7,6 +7,7 @@ import { PRIMARY_LINKS } from '../../config/navConfig';
 import { ProductsMegaMenu } from './MegaMenu/ProductsMegaMenu';
 import { SolutionsMegaMenu } from './MegaMenu/SolutionsMegaMenu';
 import { IntegrationsMegaMenu } from './MegaMenu/IntegrationsMegaMenu';
+import { WhyQuantixMegaMenu } from './MegaMenu/WhyQuantixMegaMenu';
 import { ResourcesMegaMenu } from './MegaMenu/ResourcesMegaMenu';
 
 interface DesktopNavProps {
@@ -59,6 +60,13 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
           <IntegrationsMegaMenu
             onClose={() => onSetOpenMegaMenu(null)}
             onMouseEnter={() => onSetOpenMegaMenu('Integrations')}
+            onMouseLeave={() => onSetOpenMegaMenu(null)}
+          />
+        )}
+        {openMegaMenu === 'Why Quantix' && (
+          <WhyQuantixMegaMenu
+            onClose={() => onSetOpenMegaMenu(null)}
+            onMouseEnter={() => onSetOpenMegaMenu('Why Quantix')}
             onMouseLeave={() => onSetOpenMegaMenu(null)}
           />
         )}

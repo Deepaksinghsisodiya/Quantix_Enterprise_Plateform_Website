@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { NavLink } from '../../config/navTypes';
+import { isPrimaryLinkActive } from '../../config/navConfig';
 
 interface DesktopNavItemProps {
   link: NavLink;
@@ -23,8 +24,8 @@ export const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
 }) => {
   const isDropdown = Boolean(link.hasMegaMenu);
   const isMenuOpen = openMegaMenu === link.label;
-  const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(`${link.href}/`));
-  const isHighlighted = openMegaMenu ? isMenuOpen : isActive;
+  const isActive = isPrimaryLinkActive(link, pathname);
+  const isHighlighted = isMenuOpen || isActive;
 
   return (
     <li

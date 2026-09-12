@@ -4,14 +4,12 @@ import React, { Suspense, useEffect, useState } from "react";
 import HeroSection from "@/components/organisms/HeroSection/HeroSection";
 import BusinessProblemSection from "@/components/organisms/BusinessProblemSection/BusinessProblemSection";
 import MainProductsShowcaseSection from "@/components/organisms/MainProductsShowcaseSection/MainProductsShowcaseSection";
-import { MerchantTypeExplainerSection } from "@/components/organisms/MerchantExplainer/MerchantTypeExplainerSection";
 import { IntegrationsTickerSection } from "@/components/organisms/IntegrationsTicker/IntegrationsTickerSection";
 import HowItWorksSection from "@/components/organisms/HowItWorksSection/HowItWorksSection";
 import { ATMLoader } from "@/components/atoms/ATMLoader";
 import { cn } from "@/lib/utils";
 import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import SupportSection from "@/components/organisms/SupportSection/SupportSection";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import SocialProofStatsWrapper from "@/features/SocialProof/components/SocialProofWrapper";
 
@@ -95,38 +93,28 @@ export default function HomePageClient() {
         <MainProductsShowcaseSection />
       </section>
 
-      {/* 3. Solutions by Enterprise Scale (Soft Slate 50 BG + Bottom Border) */}
-      <section id="solutions" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
-        <MerchantTypeExplainerSection />
-      </section>
-
-      {/* 4. Workflow Step-by-Step (White BG + Bottom Border) */}
-      <section id="how-it-works" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
+      {/* 3. Workflow Step-by-Step (Soft Slate 50 BG + Bottom Border) */}
+      <section id="how-it-works" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <HowItWorksSection />
       </section>
 
-      {/* 5. Integrations Ecosystem Ticker (Soft Slate 50 BG + Bottom Border) */}
-      <section id="integrations" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
+      {/* 4. Integrations Ecosystem Ticker (White BG + Bottom Border) */}
+      <section id="integrations" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <IntegrationsTickerSection />
       </section>
 
-      {/* 5.2 Enterprise Clientele & Brand Partners */}
-      <section id="clientele" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
+      {/* 5. Enterprise Clientele & Brand Partners */}
+      <section id="clientele" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <Suspense fallback={null}>
           <LazyClienteleWrapper />
         </Suspense>
       </section>
 
-      {/* 5.5 Case Studies & Quantified ROI Stories */}
+      {/* 6. Case Studies & Quantified ROI Stories */}
       <section id="case-studies" className={cn("scroll-mt-28 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}>
           <LazyCaseStudiesSection />
         </Suspense>
-      </section>
-
-      {/* 6. 24/7 Platform Technical Support (White BG + Bottom Border) */}
-      <section id="support" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
-        <SupportSection platformName="Quantix Enterprise" />
       </section>
 
       {/* 7. Social Proof & Customer Reviews (Soft Slate 50 BG + Bottom Border) */}

@@ -128,8 +128,8 @@ html {
   max-width: var(--site-max-width);
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
   min-width: 0;
 }
 
@@ -250,8 +250,8 @@ html {
 
 /* Standard Section Vertical Spacing - Compact & proportional on mobile, spacious on desktop */
 .section-py {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 @media (min-width: 640px) {
@@ -407,16 +407,43 @@ html {
     radial-gradient(ellipse at 10% 90%, rgba(245, 158, 11, 0.06) 0%, transparent 40%);
 }
 
-.page-hero-header {
-  padding-top: clamp(5.75rem, 9vw, 8rem) !important;
+/* ─── Global Page Shell Standard (Navbar Clearance + Left Aligned Top Nav) ─── */
+.page-shell {
+  padding-top: clamp(5.75rem, 8vw, 7.5rem) !important;
   padding-bottom: clamp(1.75rem, 3.5vw, 3rem) !important;
+  min-height: 85vh;
+  width: 100%;
+}
+
+.page-hero-header {
+  padding-top: clamp(5.75rem, 8vw, 7.5rem) !important;
+  padding-bottom: clamp(1rem, 2.5vw, 2.25rem) !important;
+}
+
+/* Page Top Navigation & Hero Header - Always Left-Aligned across window and mobile */
+.page-nav-header {
+  text-align: left !important;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.page-nav-header .nav-breadcrumb,
+.nav-breadcrumb {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
 }
 
 :root {
-  --section-py-mobile: 2rem;
-  --section-py-sm: 2.75rem;
-  --section-py-md: 3.5rem;
-  --section-py-lg: 4.25rem;
+  --section-py-mobile: 1.25rem;
+  --section-py-sm: 2rem;
+  --section-py-md: 2.75rem;
+  --section-py-lg: 3.5rem;
 }
 
 .py-10,

@@ -191,79 +191,92 @@ export default function EnterpriseBlogPage() {
   return (
     <div className="w-full text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-950 transition-colors duration-300 overflow-x-hidden">
       {/* 1. Hero Header Section */}
-      <section className="relative pt-28 sm:pt-36 md:pt-40 pb-12 sm:pb-16 bg-linear-to-b from-slate-50/70 via-white to-white dark:from-slate-950 dark:via-slate-900/30 dark:to-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden text-center">
+      <section className="relative page-hero-header bg-linear-to-b from-slate-50/70 via-white to-white dark:from-slate-950 dark:via-slate-900/30 dark:to-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-75 bg-primary/10 blur-[130px] rounded-full pointer-events-none -z-10" />
 
-        <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
-            <Sparkles size={13} className="text-primary" />
-            <span>Live Publications Hub</span>
+        <div className="site-container page-nav-header space-y-3 text-left">
+          {/* Breadcrumb */}
+          <div className="nav-breadcrumb text-slate-500 dark:text-slate-400">
+            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+            <ChevronRight size={12} />
+            <Link href="/help" className="hover:text-primary transition-colors">Resources</Link>
+            <ChevronRight size={12} />
+            <span className="text-primary font-bold">Blog</span>
           </div>
 
-          <h1 className="font-syne text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white leading-[1.12] tracking-tight">
-            Quantix Platform Blog
-          </h1>
+          <div className="space-y-4 text-left">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
+                <Sparkles size={13} className="text-primary" />
+                <span>Live Publications Hub</span>
+              </div>
+            </div>
 
-          <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed">
-            Direct publications and technical documentation streaming in real time from the backend database.
-          </p>
+            <h1 className="font-syne text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white leading-[1.12] tracking-tight max-w-4xl">
+              Quantix Platform Blog
+            </h1>
 
-          {/* Search Input Bar */}
-          <div className="pt-4 max-w-xl mx-auto">
-            <div className="relative flex items-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs focus-within:ring-2 focus-within:ring-primary/20 transition-all p-1">
-              <Search className="h-4 w-4 text-slate-400 dark:text-slate-500 ml-3.5 shrink-0" />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setCurrentPage(1);
-                }}
-                placeholder="Search live articles by keyword, tag, or topic..."
-                className="w-full bg-transparent px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none"
-              />
-              {search && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearch('');
+            <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium max-w-2xl leading-relaxed">
+              Direct publications and technical documentation streaming in real time from the backend database.
+            </p>
+
+            {/* Search Input Bar */}
+            <div className="pt-2 max-w-xl">
+              <div className="relative flex items-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs focus-within:ring-2 focus-within:ring-primary/20 transition-all p-1">
+                <Search className="h-4 w-4 text-slate-400 dark:text-slate-500 ml-3.5 shrink-0" />
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
                     setCurrentPage(1);
                   }}
-                  className="p-1.5 mr-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
-                >
-                  <X size={15} />
-                </button>
-              )}
+                  placeholder="Search live articles by keyword, tag, or topic..."
+                  className="w-full bg-transparent px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none"
+                />
+                {search && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearch('');
+                      setCurrentPage(1);
+                    }}
+                    className="p-1.5 mr-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                  >
+                    <X size={15} />
+                  </button>
+                )}
+              </div>
             </div>
+
+            {/* Category Filter Tabs (Generated from live posts) */}
+            {categories.length > 1 && (
+              <div className="pt-2 flex flex-wrap items-center justify-start gap-2">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => {
+                      setActiveCategory(cat);
+                      setCurrentPage(1);
+                    }}
+                    className={`px-4 py-2 rounded-xl text-xs font-syne font-bold transition-all border capitalize cursor-pointer ${
+                      activeCategory === cat
+                        ? 'bg-primary border-primary text-white shadow-xs'
+                        : 'bg-slate-100 dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary/40'
+                    }`}
+                  >
+                    {cat === 'all' ? 'All Articles' : cat}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-
-          {/* Category Filter Tabs (Generated from live posts) */}
-          {categories.length > 1 && (
-            <div className="pt-4 flex flex-wrap items-center justify-center gap-2">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => {
-                    setActiveCategory(cat);
-                    setCurrentPage(1);
-                  }}
-                  className={`px-4 py-2 rounded-xl text-xs font-syne font-bold transition-all border capitalize cursor-pointer ${
-                    activeCategory === cat
-                      ? 'bg-primary border-primary text-white shadow-xs'
-                      : 'bg-slate-100 dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary/40'
-                  }`}
-                >
-                  {cat === 'all' ? 'All Articles' : cat}
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       </section>
 
       {/* 2. Main Content Container */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-10">
+      <div className="site-container py-8 sm:py-12 space-y-8 sm:space-y-10">
         {/* Loading Skeletons */}
         {isLoading && (
           <div className="space-y-8 animate-pulse">

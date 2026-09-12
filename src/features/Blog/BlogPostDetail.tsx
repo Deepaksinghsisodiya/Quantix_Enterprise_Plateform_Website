@@ -137,7 +137,7 @@ export const BlogPostDetail: React.FC<BlogPostDetailProps> = ({
   return (
     <article className="w-full text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-950 transition-colors duration-300 overflow-x-hidden">
       {/* Hero Header */}
-      <section className="relative pt-24 sm:pt-32 md:pt-36 pb-10 sm:pb-14 bg-linear-to-b from-slate-50/80 via-white to-white dark:from-slate-950 dark:via-slate-900/30 dark:to-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
+      <section className="relative page-hero-header bg-linear-to-b from-slate-50/80 via-white to-white dark:from-slate-950 dark:via-slate-900/30 dark:to-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
         <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 space-y-5 sm:space-y-6">
           <div className="flex items-center justify-between gap-3">
             <Link

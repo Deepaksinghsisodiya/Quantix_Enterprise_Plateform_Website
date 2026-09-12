@@ -60,7 +60,7 @@ export const DownloadsList: React.FC<DownloadsListProps> = ({ packages, isLoadin
           {downloadPackages.map((pkg) => (
             <div
               key={pkg.packageId}
-              className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/20 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all duration-300 hover:border-blue-500/40 dark:hover:border-blue-500/40 hover:bg-white dark:hover:bg-slate-900/40 relative overflow-hidden group"
+              className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/20 p-4 sm:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6 transition-all duration-300 hover:border-blue-500/40 dark:hover:border-blue-500/40 hover:bg-white dark:hover:bg-slate-900/40 relative overflow-hidden group"
             >
               {pkg.isLatest && (
                 <div className="absolute top-0 right-0 bg-emerald-500/10 border-l border-b border-emerald-550/20 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-extrabold text-[9px] uppercase tracking-wider px-3.5 py-1 rounded-bl-xl flex items-center gap-1">

@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Check, X, Shield, ArrowRight, Zap, Coins, Layers, Lock, Cpu, Server, CheckCircle2 } from 'lucide-react';
+import { Check, X, Shield, ArrowRight, Zap, Coins, Layers, Lock, Cpu, Server, CheckCircle2, ChevronRight, Sparkles } from 'lucide-react';
 import CTABanner from '@/components/organisms/CTABanner/CTABanner';
 
 interface Competitor {
@@ -74,29 +74,41 @@ export default function CompareCompetitorsPage() {
   const [selectedCompetitor, setSelectedCompetitor] = useState<Competitor>(COMPETITORS[0]);
 
   return (
-    <div className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
+    <main className="page-shell bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-300">
       {/* Header Banner */}
-      <div className="site-container text-center mb-12 sm:mb-16 space-y-4 px-4 sm:px-6">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3.5 py-1 text-[11px] font-black uppercase tracking-wider text-primary shadow-xs">
-          UNBIASED ARCHITECTURE COMPARISON
+      <div className="site-container page-nav-header space-y-3 text-left">
+        <div className="nav-breadcrumb text-slate-500 dark:text-slate-400">
+          <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+          <ChevronRight size={12} />
+          <Link href="/why-quantix" className="hover:text-primary transition-colors">Why Quantix</Link>
+          <ChevronRight size={12} />
+          <span className="text-primary font-bold">Compare POS</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-syne font-black tracking-tight uppercase leading-tight">
+
+        <div>
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3.5 py-1 text-[10px] font-black uppercase tracking-wider text-primary shadow-xs">
+            <Sparkles size={12} />
+            UNBIASED ARCHITECTURE COMPARISON
+          </div>
+        </div>
+
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-syne font-black tracking-tight uppercase leading-tight text-slate-950 dark:text-white max-w-4xl">
           Quantix vs Legacy POS Platforms
         </h1>
-        <p className="max-w-3xl mx-auto text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
+        <p className="max-w-3xl text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
           See why fast-growing multi-location retail and restaurant chains choose Quantix over walled-garden systems: true zero-latency offline operations, Bring-Your-Own processor freedom, and zero variable transaction cuts.
         </p>
       </div>
 
-      <div className="site-container max-w-6xl space-y-10 px-4 sm:px-6">
+      <div className="site-container max-w-6xl space-y-6 sm:space-y-8">
         {/* Selector Tabs */}
-        <div className="flex flex-wrap gap-2 justify-center">
+        <div className="flex flex-wrap gap-2.5 justify-start">
           {COMPETITORS.map((comp) => (
             <button
               key={comp.slug}
               type="button"
               onClick={() => setSelectedCompetitor(comp)}
-              className={`px-5 py-2.5 sm:py-3 rounded-2xl text-xs font-bold transition-all border cursor-pointer ${
+              className={`px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-xs font-bold transition-all border cursor-pointer ${
                 selectedCompetitor.slug === comp.slug
                   ? 'bg-primary border-primary text-white shadow-lg shadow-primary/25 scale-102'
                   : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-400 hover:border-primary/40'
@@ -108,50 +120,50 @@ export default function CompareCompetitorsPage() {
         </div>
 
         {/* Comparison Matrix Box */}
-        <div className="rounded-3xl border border-slate-200 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/40 p-6 sm:p-10 backdrop-blur-md relative overflow-hidden shadow-xl">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary-light to-amber-500" />
+        <div className="rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/40 p-3.5 sm:p-6 md:p-8 backdrop-blur-md relative overflow-hidden shadow-xl">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-amber-500 to-primary" />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {/* Feature Column Labels (Desktop) */}
-            <div className="space-y-6 hidden md:block">
-              <div className="h-14 flex items-end pb-3 text-xs font-black text-slate-400 uppercase tracking-wider">
+            <div className="space-y-4 hidden md:block">
+              <div className="min-h-[3.5rem] flex items-end pb-3 text-xs font-black text-slate-400 uppercase tracking-wider">
                 Evaluation Criteria
               </div>
-              <div className="h-16 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
+              <div className="min-h-[4.25rem] py-2 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
                 Offline Continuity Architecture
               </div>
-              <div className="h-16 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
+              <div className="min-h-[4.25rem] py-2 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
                 Payment Processor Freedom
               </div>
-              <div className="h-16 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
+              <div className="min-h-[4.25rem] py-2 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
                 Multi-Location HQ Management
               </div>
-              <div className="h-16 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
+              <div className="min-h-[4.25rem] py-2 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
                 Hardware Independence
               </div>
-              <div className="h-16 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
+              <div className="min-h-[4.25rem] py-2 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
                 ERP & Open API Telemetry
               </div>
-              <div className="h-16 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
+              <div className="min-h-[4.25rem] py-2 flex items-center text-xs font-bold text-slate-700 dark:text-slate-300">
                 Pricing & Variable Fees
               </div>
             </div>
 
             {/* Quantix Column (Champion) */}
-            <div className="bg-primary/5 dark:bg-primary/10 border-2 border-primary/30 rounded-2xl p-5 sm:p-6 space-y-6 relative shadow-md">
-              <div className="absolute -top-3 right-4 text-[9px] font-black text-white bg-primary px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
+            <div className="bg-primary/5 dark:bg-primary/10 border-2 border-primary/40 rounded-2xl p-5 sm:p-6 space-y-4 relative shadow-md">
+              <div className="absolute -top-3 right-4 text-[9px] font-black text-white bg-primary px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
                 Recommended Choice
               </div>
-              <div className="h-14 flex flex-col justify-end">
+              <div className="min-h-[3.5rem] flex flex-col justify-end">
                 <span className="text-base sm:text-lg font-syne font-black text-slate-900 dark:text-white uppercase tracking-tight">
                   Quantix Platform
                 </span>
                 <span className="text-[11px] text-primary font-bold">Unified Operating Platform</span>
               </div>
               
-              <div className="space-y-6 text-left">
+              <div className="space-y-4 text-left">
                 {/* 1. Offline */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">Offline Continuity Architecture</span>
                   <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-start gap-1.5">
                     <CheckCircle2 size={16} className="shrink-0 mt-0.5" />
@@ -160,7 +172,7 @@ export default function CompareCompetitorsPage() {
                 </div>
 
                 {/* 2. Payments */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">Payment Processor Freedom</span>
                   <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-start gap-1.5">
                     <CheckCircle2 size={16} className="shrink-0 mt-0.5" />
@@ -169,7 +181,7 @@ export default function CompareCompetitorsPage() {
                 </div>
 
                 {/* 3. Multi-location */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">Multi-Location HQ Management</span>
                   <span className="text-xs font-bold text-slate-900 dark:text-white flex items-start gap-1.5">
                     <CheckCircle2 size={16} className="text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
@@ -178,7 +190,7 @@ export default function CompareCompetitorsPage() {
                 </div>
 
                 {/* 4. Hardware */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">Hardware Independence</span>
                   <span className="text-xs font-bold text-slate-900 dark:text-white flex items-start gap-1.5">
                     <CheckCircle2 size={16} className="text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
@@ -187,7 +199,7 @@ export default function CompareCompetitorsPage() {
                 </div>
 
                 {/* 5. APIs */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">ERP & Open API Telemetry</span>
                   <span className="text-xs font-bold text-slate-900 dark:text-white flex items-start gap-1.5">
                     <CheckCircle2 size={16} className="text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
@@ -196,7 +208,7 @@ export default function CompareCompetitorsPage() {
                 </div>
 
                 {/* 6. Pricing */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">Pricing & Variable Fees</span>
                   <span className="text-xs font-black text-slate-900 dark:text-white font-mono">
                     Predictable Flat SaaS (0% Transaction Tax)
@@ -206,17 +218,17 @@ export default function CompareCompetitorsPage() {
             </div>
 
             {/* Selected Competitor Column */}
-            <div className="bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 space-y-6 shadow-sm">
-              <div className="h-14 flex flex-col justify-end">
+            <div className="bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4 shadow-sm">
+              <div className="min-h-[3.5rem] flex flex-col justify-end">
                 <span className="text-base sm:text-lg font-syne font-black text-slate-600 dark:text-slate-400 uppercase tracking-tight">
                   {selectedCompetitor.name}
                 </span>
-                <span className="text-[11px] text-slate-400">{selectedCompetitor.category}</span>
+                <span className="text-[11px] text-slate-400 font-medium">{selectedCompetitor.category}</span>
               </div>
               
-              <div className="space-y-6 text-left">
+              <div className="space-y-4 text-left">
                 {/* 1. Offline */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">Offline Continuity Architecture</span>
                   <span className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-start gap-1.5">
                     <X size={16} className="text-rose-500 shrink-0 mt-0.5" />
@@ -225,7 +237,7 @@ export default function CompareCompetitorsPage() {
                 </div>
 
                 {/* 2. Payments */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">Payment Processor Freedom</span>
                   <span className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-start gap-1.5">
                     <X size={16} className="text-rose-500 shrink-0 mt-0.5" />
@@ -234,7 +246,7 @@ export default function CompareCompetitorsPage() {
                 </div>
 
                 {/* 3. Multi-location */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">Multi-Location HQ Management</span>
                   <span className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-start gap-1.5">
                     <X size={16} className="text-rose-500 shrink-0 mt-0.5" />
@@ -243,7 +255,7 @@ export default function CompareCompetitorsPage() {
                 </div>
 
                 {/* 4. Hardware */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">Hardware Independence</span>
                   <span className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-start gap-1.5">
                     <X size={16} className="text-rose-500 shrink-0 mt-0.5" />
@@ -252,7 +264,7 @@ export default function CompareCompetitorsPage() {
                 </div>
 
                 {/* 5. APIs */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">ERP & Open API Telemetry</span>
                   <span className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-start gap-1.5">
                     <X size={16} className="text-rose-500 shrink-0 mt-0.5" />
@@ -261,7 +273,7 @@ export default function CompareCompetitorsPage() {
                 </div>
 
                 {/* 6. Pricing */}
-                <div className="h-16 flex flex-col justify-center gap-1">
+                <div className="min-h-[4.25rem] py-2 flex flex-col justify-center gap-1">
                   <span className="text-[9px] font-bold text-slate-400 uppercase md:hidden">Pricing & Variable Fees</span>
                   <span className="text-xs font-mono text-slate-600 dark:text-slate-400">
                     {selectedCompetitor.pricing}
@@ -273,12 +285,12 @@ export default function CompareCompetitorsPage() {
 
           {/* Deep Dive Link to competitor slug */}
           <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
+            <p className="text-xs text-slate-600 dark:text-slate-400 font-medium text-center sm:text-left">
               <strong className="text-slate-900 dark:text-white">Summary verdict:</strong> {selectedCompetitor.verdict}
             </p>
             <Link
               href={`/compare/${selectedCompetitor.slug}`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-xs uppercase tracking-wider hover:bg-primary-dark transition-all cursor-pointer shrink-0 shadow-xs"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-bold text-xs uppercase tracking-wider hover:bg-primary-dark transition-all cursor-pointer shrink-0 shadow-md shadow-primary/20"
             >
               <span>Full Quantix vs {selectedCompetitor.name} Breakdown</span>
               <ArrowRight size={13} />
@@ -288,7 +300,7 @@ export default function CompareCompetitorsPage() {
 
         {/* 3 Strategic Advantage Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl space-y-3 shadow-xs">
+          <div className="bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-4 sm:p-6 lg:p-7 rounded-2xl sm:rounded-3xl space-y-3 shadow-xs">
             <div className="h-10 w-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
               <Zap size={18} />
             </div>
@@ -300,7 +312,7 @@ export default function CompareCompetitorsPage() {
             </p>
           </div>
 
-          <div className="bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl space-y-3 shadow-xs">
+          <div className="bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-4 sm:p-6 lg:p-7 rounded-2xl sm:rounded-3xl space-y-3 shadow-xs">
             <div className="h-10 w-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center border border-amber-500/20">
               <Coins size={18} />
             </div>
@@ -312,7 +324,7 @@ export default function CompareCompetitorsPage() {
             </p>
           </div>
 
-          <div className="bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl space-y-3 shadow-xs">
+          <div className="bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-4 sm:p-6 lg:p-7 rounded-2xl sm:rounded-3xl space-y-3 shadow-xs">
             <div className="h-10 w-10 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center border border-emerald-500/20">
               <Shield size={18} />
             </div>
@@ -327,10 +339,9 @@ export default function CompareCompetitorsPage() {
       </div>
 
       {/* Global CTA Banner */}
-      <div className="mt-16">
+      <div className="mt-10 sm:mt-16">
         <CTABanner />
       </div>
-    </div>
+    </main>
   );
 }
-
