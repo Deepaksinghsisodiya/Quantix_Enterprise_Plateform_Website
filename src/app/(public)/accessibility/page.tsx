@@ -19,14 +19,14 @@ export default function AccessibilityPage() {
         {/* Accessibility prose */}
         <div className="space-y-8 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium border-t border-gray-100 dark:border-slate-900 pt-8">
           <section className="space-y-3">
-            <h2 className="text-sm font-syne font-bold uppercase tracking-tight text-slate-900 dark:text-white font-semibold">1. Standard Commitment</h2>
+            <h2 className="text-sm font-syne font-bold uppercase tracking-tight text-slate-900 dark:text-white">1. Standard Commitment</h2>
             <p>
               Quantix Technologies is committed to accessibility. Our interfaces map directly to WCAG 2.1 Level AA parameters to ensure screen-reader clarity, high-contrast layouts, and easy tab-focus controls.
             </p>
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-sm font-syne font-bold uppercase tracking-tight text-slate-900 dark:text-white font-semibold">2. Assistive Adaptations</h2>
+            <h2 className="text-sm font-syne font-bold uppercase tracking-tight text-slate-900 dark:text-white">2. Assistive Adaptations</h2>
             <p>
               Standard POS setups include customizable font scales, voice command checkout modulations, and high-contrast dark theme modifications suitable for visual impairments.
             </p>

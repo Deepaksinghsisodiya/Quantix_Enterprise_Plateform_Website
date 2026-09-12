@@ -250,7 +250,7 @@ export default function ProductTourPage() {
       previewComponent: () => (
         <div className="h-full flex flex-col justify-between p-6">
           <div className="space-y-4">
-            <h4 className="text-xs font-bold text-white uppercase font-syne tracking-wider font-semibold">Stock Warnings</h4>
+            <h4 className="text-xs font-bold text-white uppercase font-syne tracking-wider">Stock Warnings</h4>
             <div className="space-y-2">
               {inventoryStock.map((stock, idx) => (
                 <div key={idx} className="bg-slate-950 border border-slate-850 p-4 rounded-2xl flex justify-between items-center">
@@ -344,7 +344,7 @@ export default function ProductTourPage() {
       previewComponent: () => (
         <div className="h-full flex flex-col justify-between p-6">
           <div className="space-y-4">
-            <h4 className="text-xs font-bold text-white uppercase font-syne tracking-wider font-semibold">Close Register Z-Report</h4>
+            <h4 className="text-xs font-bold text-white uppercase font-syne tracking-wider">Close Register Z-Report</h4>
             <div className="bg-slate-950 border border-slate-850 p-4 rounded-2xl space-y-2 text-[9px] text-slate-400 font-medium">
               <div className="flex justify-between">
                 <span>Total Cash Transactions</span>

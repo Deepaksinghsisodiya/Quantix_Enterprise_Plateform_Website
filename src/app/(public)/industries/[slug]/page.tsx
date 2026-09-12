@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import IndustryDetailWrapper from "@/features/Industries/components/IndustryDetailWrapper";
+import IndustryDetailWrapper from "@/features/Industries/IndustryDetailWrapper";
 
 export default function IndustryDetailPage() {
   return (

@@ -19,21 +19,21 @@ export default function CookiePolicyPage() {
         {/* Cookie policy prose */}
         <div className="space-y-8 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium border-t border-gray-100 dark:border-slate-900 pt-8">
           <section className="space-y-3">
-            <h2 className="text-sm font-syne font-bold uppercase tracking-tight text-slate-900 dark:text-white font-semibold">1. Use of Cookies</h2>
+            <h2 className="text-sm font-syne font-bold uppercase tracking-tight text-slate-900 dark:text-white">1. Use of Cookies</h2>
             <p>
               Our web dashboards and platforms deploy browser cookies to ensure correct session persistence, remember dashboard layout customizations, and analyze visitor telemetry.
             </p>
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-sm font-syne font-bold uppercase tracking-tight text-slate-900 dark:text-white font-semibold">2. Managing Preferences</h2>
+            <h2 className="text-sm font-syne font-bold uppercase tracking-tight text-slate-900 dark:text-white">2. Managing Preferences</h2>
             <p>
               Users can at any point update their browser security options to block first-party or third-party cookies. Note that preventing essential cookie handshakes may disable active POS authentication.
             </p>
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-sm font-syne font-bold uppercase tracking-tight text-slate-900 dark:text-white font-semibold">3. Telemetry Analytics</h2>
+            <h2 className="text-sm font-syne font-bold uppercase tracking-tight text-slate-900 dark:text-white">3. Telemetry Analytics</h2>
             <p>
               Diagnostic logs collect loading delays and interface clicks to help us optimize terminal responsiveness. All telemetry profiles operate anonymously.
             </p>

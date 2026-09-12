@@ -151,7 +151,7 @@ export default function HelpAPIDocsPage() {
 
                 {/* Payload Schema */}
                 <div className="space-y-2.5">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
                     <Terminal size={12} /> Request Payload template
                   </span>
                   <div className="relative rounded-xl bg-slate-950 p-4 border border-slate-900">
@@ -169,7 +169,7 @@ export default function HelpAPIDocsPage() {
 
                 {/* Response Schema */}
                 <div className="space-y-2.5">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
                     <Cpu size={12} /> Response payload schema
                   </span>
                   <div className="relative rounded-xl bg-slate-950 p-4 border border-slate-900">
