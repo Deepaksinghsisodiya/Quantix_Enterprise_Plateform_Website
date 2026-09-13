@@ -56,15 +56,15 @@ export const TopPromoBannerSkeleton: React.FC<{ className?: string }> = ({ class
   return (
     <div
       className={cn(
-        'inline-flex items-center justify-center gap-1.5 sm:gap-2 animate-pulse select-none',
+        'inline-flex items-center justify-center gap-2 animate-pulse select-none px-4',
         className
       )}
     >
-      <ATMSkeleton className="h-3 w-48 min-[400px]:w-64 min-[520px]:w-80 rounded bg-slate-300/80 dark:bg-slate-700/80 shrink-0" />
-      <span className="text-slate-300 dark:text-slate-700 mx-0.5 sm:mx-1 font-bold">|</span>
+      <ATMSkeleton className="h-3 w-40 sm:w-64 md:w-80 rounded bg-slate-800 shrink-0" />
+      <span className="text-slate-700 hidden min-[360px]:inline">|</span>
       <div className="inline-flex items-center gap-1 shrink-0">
-        <ATMSkeleton className="h-3 w-16 sm:w-20 rounded bg-primary/30" />
-        <ChevronRight size={12} className="stroke-3 text-primary/40" />
+        <ATMSkeleton className="h-3 w-14 sm:w-16 rounded bg-orange-500/30" />
+        <ChevronRight size={12} className="stroke-[2.5] text-orange-400/40" />
       </div>
     </div>
   );

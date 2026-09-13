@@ -2,7 +2,6 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import HeroSection from "@/components/organisms/HeroSection/HeroSection";
-import BusinessProblemSection from "@/components/organisms/BusinessProblemSection/BusinessProblemSection";
 import MainProductsShowcaseSection from "@/components/organisms/MainProductsShowcaseSection/MainProductsShowcaseSection";
 import { IntegrationsTickerSection } from "@/components/organisms/IntegrationsTicker/IntegrationsTickerSection";
 import HowItWorksSection from "@/components/organisms/HowItWorksSection/HowItWorksSection";
@@ -15,7 +14,6 @@ import SocialProofStatsWrapper from "@/features/SocialProof/components/SocialPro
 
 import dynamic from "next/dynamic";
 
-const LazyClienteleWrapper = dynamic(() => import("@/features/Clientele/components/ClienteleWrapper"), { ssr: false });
 const LazyCaseStudiesSection = dynamic(() => import("@/features/CaseStudies/components/CaseStudiesWrapper"), { ssr: false });
 const LazyTestimonialsSection = dynamic(() => import("@/features/Testimonials"), { ssr: false });
 const LazyFAQWrapper = dynamic(() => import("@/features/FAQ/components/FAQWrapper"), { ssr: false });
@@ -83,11 +81,6 @@ export default function HomePageClient() {
         <SocialProofStatsWrapper />
       </section>
 
-      {/* 1.8 Business Problems: Disconnected Systems (Blueprint Step 3) */}
-      <section id="business-problems" className="scroll-mt-28">
-        <BusinessProblemSection />
-      </section>
-
       {/* 2. Core Product Suite Showcase (White BG + Bottom Border) */}
       <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <MainProductsShowcaseSection />
@@ -103,35 +96,28 @@ export default function HomePageClient() {
         <IntegrationsTickerSection />
       </section>
 
-      {/* 5. Enterprise Clientele & Brand Partners */}
-      <section id="clientele" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
-        <Suspense fallback={null}>
-          <LazyClienteleWrapper />
-        </Suspense>
-      </section>
-
-      {/* 6. Case Studies & Quantified ROI Stories */}
+      {/* 5. Case Studies & Quantified ROI Stories */}
       <section id="case-studies" className={cn("scroll-mt-28 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}>
           <LazyCaseStudiesSection />
         </Suspense>
       </section>
 
-      {/* 7. Social Proof & Customer Reviews (Soft Slate 50 BG + Bottom Border) */}
+      {/* 6. Social Proof & Customer Reviews (Soft Slate 50 BG + Bottom Border) */}
       <section id="testimonials" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}>
           <LazyTestimonialsSection />
         </Suspense>
       </section>
 
-      {/* 8. Frequently Asked Questions (White BG) */}
+      {/* 7. Frequently Asked Questions (White BG) */}
       <section id="faq" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}>
           <LazyFAQWrapper />
         </Suspense>
       </section>
 
-      {/* 9. Final CTA: Run Every Location From One Platform (Blueprint Step 12) */}
+      {/* 8. Final CTA: Run Every Location From One Platform (Blueprint Step 12) */}
       <section id="cta" className="scroll-mt-28">
         <CTABanner />
       </section>

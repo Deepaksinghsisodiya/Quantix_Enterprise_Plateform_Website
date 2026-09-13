@@ -66,21 +66,23 @@ const HeroSection: React.FC = () => {
     setIsPaused((p) => !p);
   }, []);
 
-  // Auto-play effect
+  // Auto-play effect with mounted guard
   useEffect(() => {
+    let isMounted = true;
     if (isPaused || slideCount <= 1) return;
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(goToNext, HERO_AUTO_PLAY_INTERVAL_MS);
+    timeoutRef.current = setTimeout(() => {
+      if (isMounted) {
+        goToNext();
+      }
+    }, HERO_AUTO_PLAY_INTERVAL_MS);
     return () => {
+      isMounted = false;
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [activeIndex, isPaused, goToNext, slideCount]);
 
-  useEffect(() => {
-    if (activeIndex >= slides.length) {
-      setActiveIndex(0);
-    }
-  }, [slides.length, activeIndex]);
+  const safeActiveIndex = activeIndex >= slideCount ? 0 : activeIndex;
 
   if (isLoading && USE_API_DATA) {
     return <HeroSlideSkeleton />;
@@ -89,7 +91,7 @@ const HeroSection: React.FC = () => {
   return (
     <HeroView
       slides={slides}
-      activeIndex={activeIndex}
+      activeIndex={safeActiveIndex}
       isPaused={isPaused}
       onNext={goToNext}
       onPrev={goToPrev}

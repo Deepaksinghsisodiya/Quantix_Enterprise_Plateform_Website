@@ -1,5 +1,6 @@
 'use client';
 
+// src/components/organisms/Footer/FooterView.tsx
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,22 +8,22 @@ import { ShieldCheck, ArrowRight } from "lucide-react";
 import { BrandLogo } from "../Navbar/components/BrandLogo";
 import { useContactModal } from "@/context/ContactModalContext";
 import { LeadFormCard } from "./LeadFormCard";
-import NewsletterWrapper from "@/features/Newsletter";
-import {
-  FooterLink,
-  SocialLink,
-} from "./types/FooterTypes";
+import { FooterLink, SocialLink } from "./types/FooterTypes";
 import {
   FOOTER_COPYRIGHT,
   FOOTER_COMPLIANCE,
   SOCIAL_LINKS,
+  PRODUCT_LINKS,
+  INDUSTRY_LINKS,
+  COMPANY_LINKS,
+  LEGAL_LINKS,
 } from "./dummyData/FooterData";
 
 export interface FooterViewProps {
-  productLinks: FooterLink[];
-  companyLinks: FooterLink[];
-  industryLinks: FooterLink[];
-  legalLinks: FooterLink[];
+  productLinks?: FooterLink[];
+  companyLinks?: FooterLink[];
+  industryLinks?: FooterLink[];
+  legalLinks?: FooterLink[];
   socialLinks?: SocialLink[];
 }
 
@@ -67,18 +68,18 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 const SocialButton = ({ social }: { social: SocialLink }) => {
   const icon = social.icon.toLowerCase();
   
-  let brandClasses = "text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-primary hover:text-white hover:border-primary";
+  let brandClasses = "text-slate-600 bg-white border-slate-200 hover:bg-[#FF4F00] hover:text-white hover:border-[#FF4F00]";
   
   if (icon === 'linkedin') {
-    brandClasses = "text-[#0A66C2] bg-[#0A66C2]/10 border-[#0A66C2]/30 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]";
+    brandClasses = "text-[#0A66C2] bg-[#0A66C2]/10 border-[#0A66C2]/20 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]";
   } else if (icon === 'twitter' || icon === 'x') {
-    brandClasses = "text-slate-950 dark:text-white bg-slate-900/10 dark:bg-white/10 border-slate-300 dark:border-slate-700 hover:bg-black hover:text-white hover:border-black dark:hover:bg-white dark:hover:text-black";
+    brandClasses = "text-slate-700 bg-white border-slate-200 hover:bg-black hover:text-white hover:border-black";
   } else if (icon === 'youtube') {
-    brandClasses = "text-[#FF0000] bg-[#FF0000]/10 border-[#FF0000]/30 hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000]";
+    brandClasses = "text-[#FF0000] bg-[#FF0000]/10 border-[#FF0000]/20 hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000]";
   } else if (icon === 'instagram') {
-    brandClasses = "text-[#E4405F] bg-[#E4405F]/10 border-[#E4405F]/30 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white hover:border-transparent";
+    brandClasses = "text-[#E4405F] bg-[#E4405F]/10 border-[#E4405F]/20 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white hover:border-transparent";
   } else if (icon === 'facebook') {
-    brandClasses = "text-[#1877F2] bg-[#1877F2]/10 border-[#1877F2]/30 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]";
+    brandClasses = "text-[#1877F2] bg-[#1877F2]/10 border-[#1877F2]/20 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]";
   }
 
   return (
@@ -105,13 +106,13 @@ const LinkColumn = ({
   currentPath: string;
   onOpenContact: () => void;
 }) => (
-  <div className="flex flex-col space-y-4">
+  <div className="flex flex-col space-y-2.5 sm:space-y-3.5">
     <div>
-      <h4 className="font-syne font-bold text-slate-900 dark:text-white text-[13px] sm:text-sm uppercase tracking-wider inline-block pb-1.5 border-b-2 border-primary">
+      <h4 className="font-syne font-bold text-slate-900 text-[11px] sm:text-[13px] uppercase tracking-wider inline-block pb-1 border-b-2 border-[#FF4F00]">
         {title}
       </h4>
     </div>
-    <ul className="flex flex-col space-y-2.5 sm:space-y-3 pt-1.5">
+    <ul className="flex flex-col space-y-2 sm:space-y-2.5 pt-0.5">
       {links.map((link) => {
         const isActive = currentPath === link.href;
 
@@ -120,18 +121,23 @@ const LinkColumn = ({
             {link.href === '/contact' || link.href.startsWith('/contact/sales') ? (
               <button
                 onClick={() => onOpenContact()}
-                className={`transition-all duration-200 text-xs sm:text-[13px] group inline-flex items-center gap-1.5 w-full text-left cursor-pointer hover:translate-x-1 ${
+                className={`transition-all duration-200 text-xs sm:text-[13px] group inline-flex items-center flex-wrap gap-1.5 w-full text-left cursor-pointer hover:translate-x-1 leading-snug py-0.5 ${
                   isActive
-                    ? 'text-primary font-bold dark:text-primary-light'
-                    : 'text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary-light font-medium'
+                    ? 'text-[#FF4F00] font-bold'
+                    : 'text-slate-600 hover:text-[#FF4F00] font-medium'
                 }`}
               >
-                <span className={isActive ? 'text-primary dark:text-primary-light font-bold' : 'group-hover:text-primary transition-colors'}>
+                <span className={isActive ? 'text-[#FF4F00] font-bold' : 'group-hover:text-[#FF4F00] transition-colors'}>
                   {link.label}
                 </span>
+                {link.badge && (
+                  <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-md bg-orange-500/10 border border-orange-500/25 text-[#FF4F00] font-bold shrink-0">
+                    {link.badge}
+                  </span>
+                )}
                 <ArrowRight
-                  size={12}
-                  className={`transition-all duration-200 text-primary shrink-0 stroke-[2.5] ${
+                  size={11}
+                  className={`transition-all duration-200 text-[#FF4F00] shrink-0 stroke-[2.5] ${
                     isActive
                       ? 'opacity-100 translate-x-0'
                       : 'opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0'
@@ -141,18 +147,23 @@ const LinkColumn = ({
             ) : (
               <Link
                 href={link.href}
-                className={`transition-all duration-200 text-xs sm:text-[13px] group inline-flex items-center gap-1.5 cursor-pointer hover:translate-x-1 ${
+                className={`transition-all duration-200 text-xs sm:text-[13px] group inline-flex items-center flex-wrap gap-1.5 cursor-pointer hover:translate-x-1 leading-snug py-0.5 ${
                   isActive
-                    ? 'text-primary font-bold dark:text-primary-light'
-                    : 'text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary-light font-medium'
+                    ? 'text-[#FF4F00] font-bold'
+                    : 'text-slate-600 hover:text-[#FF4F00] font-medium'
                 }`}
               >
-                <span className={isActive ? 'text-primary dark:text-primary-light font-bold' : 'group-hover:text-primary transition-colors'}>
+                <span className={isActive ? 'text-[#FF4F00] font-bold' : 'group-hover:text-[#FF4F00] transition-colors'}>
                   {link.label}
                 </span>
+                {link.badge && (
+                  <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-md bg-orange-500/10 border border-orange-500/25 text-[#FF4F00] font-bold shrink-0">
+                    {link.badge}
+                  </span>
+                )}
                 <ArrowRight
-                  size={12}
-                  className={`transition-all duration-200 text-primary shrink-0 stroke-[2.5] ${
+                  size={11}
+                  className={`transition-all duration-200 text-[#FF4F00] shrink-0 stroke-[2.5] ${
                     isActive
                       ? 'opacity-100 translate-x-0'
                       : 'opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0'
@@ -168,100 +179,112 @@ const LinkColumn = ({
 );
 
 export const FooterView: React.FC<FooterViewProps> = ({
-  productLinks,
-  companyLinks,
-  industryLinks,
-  legalLinks,
+  productLinks = PRODUCT_LINKS,
+  companyLinks = COMPANY_LINKS,
+  industryLinks = INDUSTRY_LINKS,
+  legalLinks = LEGAL_LINKS,
   socialLinks = SOCIAL_LINKS,
 }) => {
   const pathname = usePathname();
   const { openModal } = useContactModal();
 
   return (
-    <footer className="bg-slate-50/50 dark:bg-slate-950 text-slate-500 pt-12 pb-8 sm:pt-14 sm:pb-10 lg:pt-16 lg:pb-12 border-t border-slate-200/80 dark:border-slate-800/80 mt-auto w-full transition-colors duration-300 overflow-hidden relative">
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-linear-to-l from-primary/2 to-transparent pointer-events-none" />
-      
-      <div className="site-container relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 xl:gap-8 items-start mb-6 lg:mb-10">
-          {/* Brand Info (Order 1 on mobile, Order 1 on desktop) */}
-          <div className="order-1 lg:order-1 col-span-1 lg:col-span-3 xl:col-span-3 flex flex-col space-y-4 sm:space-y-5 text-left items-start">
-            <BrandLogo pathname={pathname} />
-            <p className="text-xs sm:text-[13px] font-medium leading-relaxed text-slate-500 dark:text-slate-400 max-w-xs text-left">
-              Quantix Enterprise is the next-gen EPOS & Cloud management platform for restaurants, retail, and franchise chains.
-            </p>
+    <footer className="bg-slate-50 text-slate-600 pt-10 sm:pt-14 lg:pt-16 pb-8 sm:pb-12 border-t border-slate-200/90 w-full relative overflow-hidden transition-colors duration-300">
+      {/* Background Soft Glow & Ambient Highlights */}
+      <div className="absolute top-0 right-0 w-[500px] h-[300px] bg-gradient-to-b from-orange-500/[0.04] to-transparent blur-3xl pointer-events-none -z-0" />
+      <div className="absolute bottom-0 left-1/4 w-[400px] h-[200px] bg-gradient-to-t from-amber-500/[0.02] to-transparent blur-3xl pointer-events-none -z-0" />
 
-            {/* Vibrant Social Links Row */}
-            {socialLinks && socialLinks.length > 0 && (
-              <div className="flex items-center gap-2 pt-1 sm:pt-2">
-                {socialLinks.map((social) => (
-                  <SocialButton key={social.ariaLabel} social={social} />
-                ))}
+      <div className="site-container px-4 sm:px-6 relative z-10">
+        
+        {/* ======================================================= */}
+        {/* MAIN FOOTER GRID: Brand & Directory (Left) + Form (Right) */}
+        {/* ======================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-start mb-8 sm:mb-12">
+          
+          {/* ----------------------------------------------------- */}
+          {/* LEFT: Brand Info & 4-Column Directory (7 cols on lg, 8 on xl) */}
+          {/* ----------------------------------------------------- */}
+          <div className="lg:col-span-7 xl:col-span-8 space-y-6 sm:space-y-8">
+            {/* Top Brand Block */}
+            <div className="space-y-3 sm:space-y-3.5 text-left">
+              <BrandLogo pathname={pathname} />
+              <p className="text-xs sm:text-sm font-normal leading-relaxed text-slate-500 max-w-md">
+                Quantix Enterprise is the next-generation EPOS & autonomous cloud management platform engineered for multi-location restaurants, high-throughput retail, and franchise chains.
+              </p>
+
+              {/* Live Platform Status Beacon & Social Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-[10px] sm:text-[11px] font-mono font-semibold text-emerald-700 shadow-2xs max-w-full">
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600" />
+                  </span>
+                  <span className="truncate">All Systems Operational (99.99% Uptime)</span>
+                </div>
+
+                {socialLinks && socialLinks.length > 0 && (
+                  <div className="flex items-center gap-1.5">
+                    {socialLinks.map((social) => (
+                      <SocialButton key={social.ariaLabel} social={social} />
+                    ))}
+                  </div>
+                )}
               </div>
-            )}
+            </div>
 
-            {/* Live Newsletter Subscribe Box */}
-            <NewsletterWrapper className="pt-2 w-full max-w-xs" />
+            {/* 4-Column Navigation Directory (2x2 on mobile, 4-col on tablet/desktop) */}
+            <div className="pt-3 border-t border-slate-200/90 grid grid-cols-2 sm:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-6 sm:gap-y-8">
+              <LinkColumn title="Platform" links={productLinks} currentPath={pathname} onOpenContact={openModal} />
+              <LinkColumn title="Solutions" links={industryLinks} currentPath={pathname} onOpenContact={openModal} />
+              <LinkColumn title="Resources" links={companyLinks} currentPath={pathname} onOpenContact={openModal} />
+              <LinkColumn title="Company" links={legalLinks} currentPath={pathname} onOpenContact={openModal} />
+            </div>
           </div>
 
-          {/* Lead Capture Form Card (Order 2 on mobile, Order 3 on desktop) */}
-          <div className="order-2 lg:order-3 col-span-1 lg:col-span-3 xl:col-span-3 flex justify-center lg:justify-end w-full max-w-full sm:max-w-md lg:max-w-85 mx-auto lg:mx-0">
+          {/* ----------------------------------------------------- */}
+          {/* RIGHT: Lead Capture Form Card (5 cols on lg, 4 on xl) */}
+          {/* ----------------------------------------------------- */}
+          <div className="lg:col-span-5 xl:col-span-4 w-full flex justify-center lg:justify-end">
             <LeadFormCard className="w-full" />
           </div>
 
-          {/* Navigation Links Grid (Order 3 on mobile, Order 2 on desktop) */}
-          <div className="order-3 lg:order-2 col-span-1 lg:col-span-6 xl:col-span-6 grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-6 pt-1 lg:pt-0">
-            <LinkColumn title="Platform" links={productLinks} currentPath={pathname} onOpenContact={openModal} />
-            <LinkColumn title="Solutions" links={industryLinks} currentPath={pathname} onOpenContact={openModal} />
-            <LinkColumn title="Resources" links={companyLinks} currentPath={pathname} onOpenContact={openModal} />
-            <LinkColumn title="Company" links={legalLinks} currentPath={pathname} onOpenContact={openModal} />
-          </div>
         </div>
 
-        <div className="pt-6 sm:pt-8 mt-8 sm:mt-10 border-t border-slate-200/80 dark:border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-0">
-          <p className="text-slate-400 font-medium text-xs order-2 lg:order-1 text-center sm:text-left">{FOOTER_COPYRIGHT}</p>
-          
-          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-5 lg:gap-6 order-1 lg:order-2">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800">
-              <ShieldCheck className="text-emerald-500" size={13} />
-              <span>{FOOTER_COMPLIANCE}</span>
-            </div>
-            
-            <div className="flex gap-1.5">
-              <Link
-                href="/privacy"
-                className={`text-[11px] transition-colors px-1.5 ${
-                  pathname === '/privacy'
-                    ? 'text-primary font-bold dark:text-primary-light'
-                    : 'text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
-                }`}
-              >
-                Privacy
-              </Link>
-              <span className="text-slate-300 dark:text-slate-700">•</span>
-              <Link
-                href="/terms"
-                className={`text-[11px] transition-colors px-1.5 ${
-                  pathname === '/terms'
-                    ? 'text-primary font-bold dark:text-primary-light'
-                    : 'text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
-                }`}
-              >
-                Terms
-              </Link>
-              <span className="text-slate-300 dark:text-slate-700">•</span>
-              <Link
-                href="/pci"
-                className={`text-[11px] transition-colors px-1.5 ${
-                  pathname === '/pci'
-                    ? 'text-primary font-bold dark:text-primary-light'
-                    : 'text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
-                }`}
-              >
-                Security
-              </Link>
-            </div>
+        {/* ======================================================= */}
+        {/* BOTTOM ROW: Copyright, Security Pill & Quick Legal Links */}
+        {/* ======================================================= */}
+        <div className="pt-6 sm:pt-8 border-t border-slate-200/90 flex flex-col lg:flex-row items-center justify-between gap-3.5 sm:gap-4 text-xs">
+          {/* Security Compliance Badge */}
+          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-2xl sm:rounded-full bg-white border border-slate-200/90 text-[10px] sm:text-[11px] font-mono text-slate-600 text-center max-w-full order-1 lg:order-2 shadow-2xs">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+            <span>{FOOTER_COMPLIANCE}</span>
           </div>
+
+          {/* Quick Legal Links */}
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-slate-500 text-[11px] font-medium order-2 lg:order-3 text-center">
+            <Link href="/privacy" className="hover:text-[#FF4F00] transition-colors py-0.5">
+              Privacy Policy
+            </Link>
+            <span className="text-slate-300 select-none">•</span>
+            <Link href="/terms" className="hover:text-[#FF4F00] transition-colors py-0.5">
+              Terms
+            </Link>
+            <span className="text-slate-300 select-none">•</span>
+            <Link href="/security" className="hover:text-[#FF4F00] transition-colors py-0.5">
+              Security
+            </Link>
+            <span className="text-slate-300 select-none">•</span>
+            <Link href="/status" className="hover:text-[#FF4F00] transition-colors inline-flex items-center gap-1 py-0.5">
+              <span>Status</span>
+            </Link>
+          </div>
+
+          {/* Copyright Text */}
+          <p className="text-slate-500 font-medium text-center lg:text-left order-3 lg:order-1 text-[11px] sm:text-xs">
+            {FOOTER_COPYRIGHT}
+          </p>
         </div>
+
       </div>
     </footer>
   );
