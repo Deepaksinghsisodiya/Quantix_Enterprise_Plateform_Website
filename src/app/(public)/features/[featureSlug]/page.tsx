@@ -7,31 +7,46 @@ import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import {
+  Activity,
   ArrowRight,
+  ArrowUpRight,
   Check,
+  CheckCircle2,
   ChefHat,
   ChevronRight,
   Clock,
   Cloud,
+  Cpu,
   CreditCard,
   Database,
+  Flame,
   Globe2,
+  Layers,
   Layout,
+  Lock,
   Monitor,
   Printer,
   QrCode,
   ReceiptText,
+  RefreshCw,
+  Scale,
+  Scan,
   ShieldCheck,
   ShoppingBag,
   Smartphone,
   Sparkles,
   Store,
   Tablet,
+  Terminal,
   Timer,
+  Truck,
+  Users,
   Utensils,
   Zap,
   type LucideIcon,
 } from "lucide-react";
+import FAQWrapper from "@/features/FAQ/FAQWrapper";
+import CTABanner from "@/components/organisms/CTABanner";
 
 type FeatureCard = {
   title: string;
@@ -39,22 +54,7 @@ type FeatureCard = {
   icon: LucideIcon;
 };
 
-const CARD_IMAGE_BY_KEYWORD: Array<{ keywords: string[]; src: string; alt: string }> = [
-  { keywords: ["kitchen", "prep", "recipe", "food", "dining"], src: "/images/ent_global_pos_bundle.png", alt: "Restaurant kitchen workflow" },
-  { keywords: ["order", "ordering", "checkout", "customer", "guest", "pickup", "delivery"], src: "/images/ent_omnichannel_bundle.png", alt: "Connected ordering workflow" },
-  { keywords: ["table", "floor", "cafe", "restaurant"], src: "/images/nav_restaurant_bundle.png", alt: "Restaurant service floor" },
-  { keywords: ["stock", "inventory", "supplier", "catalog", "product", "barcode", "shelf"], src: "/images/ent_supply_chain_bundle.png", alt: "Inventory and catalog workflow" },
-  { keywords: ["mobile", "handheld", "app", "portal"], src: "/images/nav_restaurant_bundle.png", alt: "Mobile POS workflow" },
-  { keywords: ["payment", "bill", "cash", "refund", "discount", "loyalty", "reward"], src: "/images/nav_payment_bundle.png", alt: "POS checkout workflow" },
-];
 
-const getCardImage = (title: string) => {
-  const normalizedTitle = title.toLowerCase();
-  return CARD_IMAGE_BY_KEYWORD.find(({ keywords }) => keywords.some((keyword) => normalizedTitle.includes(keyword))) ?? {
-    src: "/images/ent_global_pos_bundle.png",
-    alt: "Quantix platform workflow",
-  };
-};
 
 type FeatureVisual = {
   imageSrc: string;
@@ -77,6 +77,7 @@ interface FeatureData {
   techSpec: string;
   relatedFeatures: { title: string; slug: string }[];
   visual?: FeatureVisual;
+  workflowVisual?: FeatureVisual;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
   overviewTitle?: string;
@@ -95,40 +96,259 @@ const FEATURES_DATA: Record<string, FeatureData> = {
   "smart-inventory": {
     slug: "smart-inventory",
     title: "Smart Inventory & Recipe Costing",
-    tagline: "Track raw ingredient costs and calculate perfect profit margins.",
+    tagline: "Track raw ingredient costs down to the gram and calculate true gross margins.",
     desc:
-      "Never guess your actual margins. Smart inventory tracks individual item variations, raw recipe details, ingredient wastes log, and automated supplier draft orders, preserving accurate profit metrics across all locations.",
-    benefits: ["Recipe costing down to the gram", "Automatic low-stock supplier email alerts", "Integrated waste logging dashboards"],
-    techSpec: "Syncs stock levels in real-time using secure JSON webhooks mapped directly to standard warehouse APIs.",
+      "Eliminate guesswork and margin leakage. Smart Inventory connects every POS ring to real-time ingredient depletion, batch lot tracking, automated vendor par-order replenishment, and waste logging across all branch locations.",
+    benefits: [
+      "Recipe costing and ingredient depletion down to the gram",
+      "Automated par-level supplier draft purchase orders",
+      "Integrated waste, spoilage, and shrinkage logging",
+      "Central commissary prep & inter-branch transfer sync",
+    ],
+    techSpec:
+      "Event-driven inventory depletion ledger with FIFO/LIFO cost accounting, real-time JSON webhooks for ERP/EDI suppliers, and barcode GRN scanner receiving protocols.",
+    visual: {
+      imageSrc: "/images/nav_retail_bundle.png",
+      imageAlt: "Smart recipe costing and inventory depletion dashboard",
+      topBadge: "Real-Time Depletion",
+      bottomBadge: "Recipe Costing & Par POs",
+    },
+    workflowVisual: {
+      imageSrc: "/images/ent_supply_chain_bundle.png",
+      imageAlt: "Live ingredient cost breakdown and yield calculation",
+      topBadge: "Gram-Level Precision",
+      bottomBadge: "Margin Protection Audit",
+    },
+    primaryCta: { label: "Start Inventory Setup", href: "/contact/sales" },
+    secondaryCta: { label: "Explore Retail POS", href: "/solutions#retail-pos" },
+    overviewTitle: "Every ounce, gram, and cent accounted for",
+    overviewDesc:
+      "From high-volume cocktail pours and bakery flour sacks to retail barcode SKUs, Quantix keeps stock balances aligned with your actual financial ledger.",
+    capabilities: [
+      { title: "Gram-Level Depletion", desc: "Automatically deduct buns, patties, cheeses, and sauces as orders clear the POS register.", icon: Scale },
+      { title: "Automated Par Orders", desc: "Generate supplier POs automatically the moment branch inventory hits safety buffer thresholds.", icon: Layout },
+      { title: "Wastage & Spoilage Logs", desc: "Track daily kitchen prep waste, burned dishes, and expired goods with mandatory reason codes.", icon: ShieldCheck },
+      { title: "Commissary Batch Prep", desc: "Track bulk prep recipes in central kitchens and dispatch pre-portioned units to satellite outlets.", icon: ChefHat },
+      { title: "Loading Dock GRN Audits", desc: "Scan incoming supplier deliveries with handheld barcode scanners to catch vendor shortfalls.", icon: Scan },
+      { title: "Dynamic Margin Tracking", desc: "Audit dish gross margins dynamically as supplier ingredient prices fluctuate in the market.", icon: Database },
+    ],
+    workflowTitle: "From vendor delivery to register checkout",
+    workflowDesc:
+      "Raw goods flow cleanly through purchase orders, dock receiving, recipe preparation, and POS deduction without blind spots.",
+    workflowItems: [
+      { title: "Define recipe formulas", desc: "Build sub-recipes and master dish yields with exact ingredient weights and unit costs.", icon: Layout },
+      { title: "Receive vendor shipments", desc: "Audit incoming cases at the dock, verifying packing slips against digital purchase orders.", icon: Scan },
+      { title: "Ring sales at register", desc: "Front-of-house staff take orders while ingredients deduct from stock balances in real time.", icon: ReceiptText },
+      { title: "Monitor par buffers", desc: "Real-time safety stock meters flag fast-moving items before the kitchen 86s a key dish.", icon: Timer },
+      { title: "Auto-draft PO replenishment", desc: "Consolidate supplier reorders across branches into scheduled vendor purchase orders.", icon: Cloud },
+      { title: "Audit shrinkage variance", desc: "Compare theoretical stock calculations with physical cycle counts to eliminate theft.", icon: ShieldCheck },
+    ],
+    useCaseTitle: "Operational environments it protects",
+    useCaseDesc:
+      "Engineered for high-volume dining, central production commissaries, and fast-moving retail stores.",
+    useCases: [
+      { title: "Full-service restaurants", desc: "Track protein portions, high-value steaks, seafood, and liquor pour costs down to the cent.", icon: Utensils },
+      { title: "Bakeries & coffee roasters", desc: "Manage flour sacks, dairy gallons, coffee beans, and daily unsold pastry batch waste.", icon: Store },
+      { title: "Central commissaries", desc: "Coordinate large batch sauces, marinades, and prep distributions to multiple branches.", icon: ChefHat },
+      { title: "Franchise networks", desc: "Standardize ingredient specs and supplier pricing across corporate and franchise units.", icon: Cloud },
+    ],
+    faqs: [
+      {
+        question: "How does real-time recipe depletion work?",
+        answer:
+          "When a cashier rings up a menu item, the recipe engine breaks it down into its constituent bill of materials (e.g. 150g beef, 1 brioche bun, 30g sauce) and deducts those exact quantities from stock in real time.",
+      },
+      {
+        question: "Can Quantix auto-order stock from our suppliers?",
+        answer:
+          "Yes. You can set minimum par levels and reorder thresholds. Once stock dips below par, Quantix generates draft purchase orders ready for one-click approval or automated EDI dispatch.",
+      },
+      {
+        question: "Does it support barcode scanning for receiving?",
+        answer:
+          "Yes. Staff can use standard Bluetooth or USB barcode scanners to check in vendor delivery crates and detect missing or damaged items before signing goods received notes (GRN).",
+      },
+      {
+        question: "Can we track waste and staff meals separately?",
+        answer:
+          "Yes. Dedicated reason codes allow managers to log prep waste, dropped items, expired perishables, and staff comps without skewing actual sales margin calculations.",
+      },
+    ],
     relatedFeatures: [
-      { title: "Offline Registers database", slug: "offline-registers" },
-      { title: "Interactive restaurant floor manager", slug: "table-management" },
+      { title: "Kitchen Display System (KDS)", slug: "kitchen-display" },
+      { title: "Enterprise Supply Chain & Replenishment", slug: "supply-chain" },
     ],
   },
   "offline-registers": {
     slug: "offline-registers",
     title: "Offline Standalone Register POS",
-    tagline: "Process sales and print thermal bills completely without internet.",
+    tagline: "Continuous checkout, cash handling, and thermal bill printing without internet.",
     desc:
-      "Secure continuous billing operations even during network failovers. The register utilizes a secure local IndexedDB database on your hard drive to record sales, authorize PIN access, and print thermal receipt papers natively, backing up logs upon connection restores.",
-    benefits: ["No server connectivity dependencies", "High-speed local IndexedDB lookups", "Encrypted local cache storage logs"],
-    techSpec: "Utilizes high-performance local SQLite / IndexedDB databases with local course-pacing backup buffers.",
+      "Eliminate revenue loss during internet disruptions. Quantix offline registers utilize encrypted local storage and SQLite till meshes to ring sales, authorize cashier PINs, and print receipts natively—syncing back to the cloud the instant connectivity is restored.",
+    benefits: [
+      "100% operational autonomy during broadband and fiber outages",
+      "Sub-millisecond local database lookups for instant barcode scans",
+      "Local thermal receipt and order ticket printing over LAN",
+      "Automated background cloud reconciliation with zero data loss",
+    ],
+    techSpec:
+      "Local IndexedDB and SQLite database engine with peer-to-peer local network till synchronization, encrypted local transaction journal queuing, and automated CRDT conflict resolution.",
+    visual: {
+      imageSrc: "/images/ent_global_pos_bundle.png",
+      imageAlt: "Offline standalone POS terminal countertop checkout",
+      topBadge: "Offline Local Mesh",
+      bottomBadge: "Zero Downtime Billing",
+    },
+    workflowVisual: {
+      imageSrc: "/images/nav_retail_bundle.png",
+      imageAlt: "High-speed retail counter checkout during network outage",
+      topBadge: "Continuous Ringing",
+      bottomBadge: "Local Cache Protected",
+    },
+    primaryCta: { label: "Test Offline Till", href: "/contact/sales" },
+    secondaryCta: { label: "Explore Retail POS", href: "/solutions#retail-pos" },
+    overviewTitle: "Never tell a customer your system is down",
+    overviewDesc:
+      "When cloud-only POS systems crash during storms or ISP dropouts, Quantix keeps registers ringing, lines moving, and cash drawers opening seamlessly.",
+    capabilities: [
+      { title: "Local Database Engine", desc: "Product catalogs, barcodes, prices, and tax tables are cached locally on each till.", icon: Database },
+      { title: "Zero-Lag Scanning", desc: "Scan barcodes and search customer lookup tables with sub-millisecond local response.", icon: Scan },
+      { title: "Local Thermal Printing", desc: "Print kitchen dockets and customer receipts over local Ethernet or Bluetooth without WAN.", icon: Printer },
+      { title: "Encrypted Offline Ledger", desc: "Record cash, store credit, and queued card authorizations in AES-256 encrypted local files.", icon: ShieldCheck },
+      { title: "Peer Till Mesh", desc: "Registers share active tab balances over local Wi-Fi router mesh even when external internet is severed.", icon: Zap },
+      { title: "Auto Cloud Sync", desc: "The moment broadband reconnects, queued sales upload in background batches without lag.", icon: Cloud },
+    ],
+    workflowTitle: "Failover, ringing, and background recovery",
+    workflowDesc:
+      "Staff experience zero interruption when the internet drops. The POS switches silently to local mode and recovers on its own.",
+    workflowItems: [
+      { title: "Internet disconnects", desc: "Register detects loss of connection and switches seamlessly to offline local mode.", icon: Zap },
+      { title: "Cashier rings sales", desc: "Staff scan items, apply discounts, and accept tender with zero interface delay.", icon: ReceiptText },
+      { title: "Print slips locally", desc: "Thermal printers spit customer receipts and kitchen tickets directly over LAN.", icon: Printer },
+      { title: "Queue transactions", desc: "Every payment and balance update is secured inside the encrypted local till journal.", icon: Database },
+      { title: "Connection returns", desc: "System verifies cloud handshake and streams journal entries in the background.", icon: Cloud },
+      { title: "Reconcile balances", desc: "Central inventory and accounting balances reconcile automatically with zero duplicates.", icon: Check },
+    ],
+    useCaseTitle: "Mission-critical reliability scenarios",
+    useCaseDesc:
+      "Built for businesses where even a 5-minute outage results in lost revenue, walkouts, and frustrated customers.",
+    useCases: [
+      { title: "Peak dinner rush", desc: "Keep dining room tickets firing to the kitchen even during stormy weather dropouts.", icon: Utensils },
+      { title: "High-traffic supermarkets", desc: "Process long checkout lines continuously with instant local barcode lookups.", icon: Store },
+      { title: "Food trucks & pop-ups", desc: "Operate in remote festival locations and farmers markets with spotty cellular coverage.", icon: ShoppingBag },
+      { title: "Subway & basement venues", desc: "Reliable cashiering in underground shopping concourses and concrete cellars.", icon: Cloud },
+    ],
+    faqs: [
+      {
+        question: "What happens when our internet connection suddenly drops?",
+        answer:
+          "Nothing stops. The register switches instantly to local offline mode. Cashiers can continue scanning barcodes, selecting menu items, applying discounts, and printing receipts.",
+      },
+      {
+        question: "Can we take credit card payments while offline?",
+        answer:
+          "Yes. Offline store-and-forward card processing allows encrypted pre-authorizations to be queued locally and processed the moment network connection is restored.",
+      },
+      {
+        question: "Do kitchen printers still work without internet?",
+        answer:
+          "Yes. As long as your local Wi-Fi router or Ethernet network is powered on, registers communicate directly with kitchen printers and KDS screens over LAN.",
+      },
+      {
+        question: "Will offline transactions cause data conflicts when syncing back?",
+        answer:
+          "No. Quantix uses conflict-free replicated data types (CRDT) and sequence-numbered journals to ensure all sales and inventory deductions merge cleanly without duplicates.",
+      },
+    ],
     relatedFeatures: [
-      { title: "Smart inventory metrics", slug: "smart-inventory" },
       { title: "Kitchen Display System (KDS)", slug: "kitchen-display" },
+      { title: "Multi-Location Cloud HQ & Franchise Command", slug: "multi-store" },
     ],
   },
   "table-management": {
     slug: "table-management",
     title: "Table Management & Floor Layouts",
-    tagline: "Interactive floor layouts, visual course alerts, and split checks.",
+    tagline: "Interactive multi-room visual floor plans, course firing, and split checks.",
     desc:
-      "Maximize table turn velocities. Design interactive custom floor layouts, fire courses course pacing directly to different KDS screens, and handle complex customer check splits instantly at the terminal register.",
-    benefits: ["Drag & drop floor builder layouts", "Dynamic multi-course KDS routing triggers", "Instant check splitting modules"],
-    techSpec: "Interactive HTML5 canvas grids connected directly to state telemetry handlers.",
+      "Maximize dining room turns and eliminate server section chaos. Design custom multi-room floor layouts, track table occupancy timers, fire course sequences directly to kitchen stations, and split complex customer checks effortlessly.",
+    benefits: [
+      "Interactive drag-and-drop floor plan designer with multi-room zones",
+      "Color-coded table occupancy timers and turn velocity telemetry",
+      "Synchronized course pacing and direct kitchen firing triggers",
+      "Flexible bill splitting by seat, item, percentage, or custom amount",
+    ],
+    techSpec:
+      "Interactive vector canvas engine with real-time WebSocket seat state synchronization, distributed table locking, course-timer event handlers, and guest spend telemetry.",
+    visual: {
+      imageSrc: "/images/rest_qr_table_bundle.png",
+      imageAlt: "Interactive restaurant floor plan and table management screen",
+      topBadge: "Multi-Room Floor Maps",
+      bottomBadge: "Course Firing & Split Bills",
+    },
+    workflowVisual: {
+      imageSrc: "/images/nav_restaurant_bundle.png",
+      imageAlt: "Waitstaff tableside service in a fine dining floor layout",
+      topBadge: "Tableside Pacing",
+      bottomBadge: "Server Section Balancer",
+    },
+    primaryCta: { label: "Design Floor Plan", href: "/contact/sales" },
+    secondaryCta: { label: "Explore Restaurant POS", href: "/solutions#restaurant-pos" },
+    overviewTitle: "Turn tables faster without rushing guests",
+    overviewDesc:
+      "From intimate bistros with outdoor patios to massive multi-floor dining halls, Quantix provides the visual clarity servers and hosts need to orchestrate service.",
+    capabilities: [
+      { title: "Custom Floor Canvas", desc: "Draw round tables, booths, bar counters, and outdoor patio decks with exact seat counts.", icon: Layout },
+      { title: "Table Status Timers", desc: "Color-coded rings show seated time, order placed, food served, and payment pending.", icon: Timer },
+      { title: "Server Section Balancing", desc: "Assign dining sections to waitstaff to balance covers and prevent server overload.", icon: Users },
+      { title: "Course Pacing Firing", desc: "Hold and fire appetizers, main courses, and desserts in coordinated rhythm to the kitchen.", icon: ChefHat },
+      { title: "Seat-Level Check Splits", desc: "Split bills effortlessly by individual guest seat, custom items, or equal card shares.", icon: ReceiptText },
+      { title: "Live Table Telemetry", desc: "Track average turn times, spend per cover, and section revenue in real-time dashboards.", icon: Monitor },
+    ],
+    workflowTitle: "From host greeting to table reset",
+    workflowDesc:
+      "Every table moves through a clear operational sequence: seating, order capture, course pacing, bill split, and cleanup reset.",
+    workflowItems: [
+      { title: "Seat guests & open tab", desc: "Host assigns guests to an available table, instantly notifying the designated section server.", icon: Users },
+      { title: "Take seat-level order", desc: "Waitstaff capture food choices, drink modifiers, and allergies directly tied to seat numbers.", icon: Smartphone },
+      { title: "Fire course sequence", desc: "Starters fire immediately while entrees remain on hold until the server signals the KDS.", icon: ChefHat },
+      { title: "Track table duration", desc: "Visual table timers alert servers when drinks run dry or courses exceed prep targets.", icon: Timer },
+      { title: "Split & settle check", desc: "Guests split the check by seat or percentage; payments process tableside on mobile tablets.", icon: CreditCard },
+      { title: "Bussing & table reset", desc: "Bus staff mark table clean, notifying the host stand that the table is ready for reseating.", icon: Check },
+    ],
+    useCaseTitle: "Hospitality setups it elevates",
+    useCaseDesc:
+      "Tailored for dining concepts where floor organization directly impacts guest satisfaction and table turnover.",
+    useCases: [
+      { title: "Full-service bistros", desc: "Coordinate multiple courses, wine pairings, and attentive server service.", icon: Utensils },
+      { title: "Multi-level dining halls", desc: "Manage main dining, mezzanine seating, outdoor garden patios, and bar lounges.", icon: Store },
+      { title: "Brewpubs & sports bars", desc: "Transfer guest tabs seamlessly between high-top bar tables and dining booths.", icon: Flame },
+      { title: "Hotel restaurants", desc: "Route room bill charges, banquet bookings, and walk-in breakfast seatings.", icon: Cloud },
+    ],
+    faqs: [
+      {
+        question: "Can we create custom layouts for outdoor patios and private dining rooms?",
+        answer:
+          "Yes. You can build separate floor tabs for multiple dining rooms, patio decks, rooftop bars, and private banquet spaces with custom table shapes and numbers.",
+      },
+      {
+        question: "How does course pacing work with the kitchen?",
+        answer:
+          "Servers can enter the full order upfront and mark items as 'Hold'. When guests finish starters, a single tap fires the main course to kitchen KDS screens.",
+      },
+      {
+        question: "Can waitstaff split a check by seat or custom percentage?",
+        answer:
+          "Yes. Checks can be split by guest seat, divided equally across 2 to 10 credit cards, or split by individual drinks and shared appetizer items in seconds.",
+      },
+      {
+        question: "Does it show how long guests have been seated?",
+        answer:
+          "Yes. Tables feature color-coded elapsed time rings (e.g. green < 30 min, yellow 30-60 min, red > 75 min) so managers can spot delayed service or impending turns.",
+      },
+    ],
     relatedFeatures: [
-      { title: "Offline Registers database", slug: "offline-registers" },
       { title: "Kitchen Display System (KDS)", slug: "kitchen-display" },
+      { title: "Offline Standalone Register POS", slug: "offline-registers" },
     ],
   },
   "online-ordering": {
@@ -146,13 +366,19 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Responsive web ordering portal with server-rendered menus, secure checkout handoff, POS order injection, KDS routing, availability sync, customer status messaging, and fulfillment channel rules.",
     visual: {
-      imageSrc: "/images/online_ordering_3d.png",
+      imageSrc: "/images/ent_omnichannel_bundle.png",
       imageAlt: "Branded online ordering portal connected to POS workflows",
       topBadge: "Direct ordering",
       bottomBadge: "Website, POS and kitchen connected",
     },
+    workflowVisual: {
+      imageSrc: "/images/rest_qr_table_bundle.png",
+      imageAlt: "Direct online web ordering checkout and kitchen ticket inject",
+      topBadge: "Zero Marketplace Commissions",
+      bottomBadge: "Direct Kitchen Inject",
+    },
     primaryCta: { label: "Launch Ordering", href: "/contact/sales" },
-    secondaryCta: { label: "View Website Platform", href: "/products/websites" },
+    secondaryCta: { label: "Explore Restaurant POS", href: "/solutions#restaurant-pos" },
     overviewTitle: "Everything direct online ordering needs",
     overviewDesc:
       "The portal gives customers a polished ordering journey while operators keep menu control, prep routing, payments, and handoff status inside the Quantix platform.",
@@ -226,13 +452,19 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Locked-down kiosk mode interface for touchscreen ordering, menu availability sync, integrated payment terminal status, thermal receipt printing, and POS/KDS order routing.",
     visual: {
-      imageSrc: "/images/online_ordering_3d.png",
+      imageSrc: "/images/ent_qsr_kiosk_bundle.png",
       imageAlt: "Self-service kiosk ordering workflow connected to POS and kitchen display",
-      topBadge: "Guest self-ordering",
-      bottomBadge: "Connected POS + KDS workflow",
+      topBadge: "Guest Self-Ordering",
+      bottomBadge: "Connected POS + KDS",
     },
-    primaryCta: { label: "Start Kiosk Setup", href: "/sign-up" },
-    secondaryCta: { label: "Contact Sales", href: "/contact/sales" },
+    workflowVisual: {
+      imageSrc: "/images/nav_retail_bundle.png",
+      imageAlt: "Touchscreen self-checkout kiosk station and receipt printer",
+      topBadge: "Guided Modifier Flow",
+      bottomBadge: "Direct Kitchen Dispatch",
+    },
+    primaryCta: { label: "Start Kiosk Setup", href: "/contact/sales" },
+    secondaryCta: { label: "Explore Retail POS", href: "/solutions#retail-pos" },
     overviewTitle: "What the kiosk module handles",
     overviewDesc:
       "The kiosk experience should feel simple to guests, while still giving operators the control they need over menus, payments, kitchen routing, receipts, and staff exceptions.",
@@ -306,13 +538,19 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Tokenized table sessions with browser-based ordering, menu availability sync, table mapping, secure checkout handoff, POS order creation, KDS routing, and staff service alerts.",
     visual: {
-      imageSrc: "/images/mobile_app_3d.png",
+      imageSrc: "/images/rest_qr_table_bundle.png",
       imageAlt: "Tableside QR ordering mobile workflow",
       topBadge: "Scan to order",
       bottomBadge: "Table session connected to POS",
     },
+    workflowVisual: {
+      imageSrc: "/images/nav_restaurant_bundle.png",
+      imageAlt: "Tableside QR code ordering and instant bill pay",
+      topBadge: "Tableside Scan & Pay",
+      bottomBadge: "Instant Table Ticket",
+    },
     primaryCta: { label: "Enable QR Ordering", href: "/contact/sales" },
-    secondaryCta: { label: "Explore Table POS", href: "/solutions/restaurants" },
+    secondaryCta: { label: "Explore Restaurant POS", href: "/solutions#restaurant-pos" },
     overviewTitle: "A smoother table ordering experience",
     overviewDesc:
       "QR ordering should reduce friction without removing service control. Guests get speed, while teams keep table context, prep routing, and payment visibility.",
@@ -386,13 +624,19 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Low-latency order event stream with station routing rules, prep timers, ticket bump states, local network fallback, role-specific displays, and POS/KDS status synchronization.",
     visual: {
-      imageSrc: "/images/kitchen_display_3d.png",
-      imageAlt: "Kitchen display system station workflow",
+      imageSrc: "/images/rest_ghost_kitchen_bundle.png",
+      imageAlt: "Kitchen display system station workflow in commercial kitchen",
       topBadge: "Live kitchen routing",
       bottomBadge: "Prep stations and expo aligned",
     },
+    workflowVisual: {
+      imageSrc: "/images/nav_restaurant_bundle.png",
+      imageAlt: "Commercial kitchen display system active station tickets and bump workflow",
+      topBadge: "Active Station Prep",
+      bottomBadge: "Zero Lost Paper Tickets",
+    },
     primaryCta: { label: "Plan KDS Setup", href: "/contact/sales" },
-    secondaryCta: { label: "Explore Restaurant POS", href: "/solutions/restaurants" },
+    secondaryCta: { label: "Explore Restaurant POS", href: "/solutions#restaurant-pos" },
     overviewTitle: "Built for real kitchen pressure",
     overviewDesc:
       "KDS gives kitchen teams a clear operating screen for order priority, prep stages, station ownership, and front-of-house coordination.",
@@ -466,13 +710,19 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Dispatch workflow layer with POS order state, KDS readiness events, driver assignment fields, delivery zone rules, customer notification triggers, and fulfillment status synchronization.",
     visual: {
-      imageSrc: "/images/hero-local.png",
+      imageSrc: "/images/ent_delivery_dispatch_bundle.png",
       imageAlt: "Delivery dispatch and order handoff workflow",
       topBadge: "Dispatch control",
       bottomBadge: "Orders, drivers and kitchen aligned",
     },
+    workflowVisual: {
+      imageSrc: "/images/ent_omnichannel_bundle.png",
+      imageAlt: "Real-time delivery driver assignment and dispatch hub",
+      topBadge: "Driver Dispatch Queue",
+      bottomBadge: "Kitchen Readiness Synced",
+    },
     primaryCta: { label: "Plan Delivery Flow", href: "/contact/sales" },
-    secondaryCta: { label: "View Online Ordering", href: "/products/websites" },
+    secondaryCta: { label: "Explore Restaurant POS", href: "/solutions#restaurant-pos" },
     overviewTitle: "Dispatch built around the restaurant floor",
     overviewDesc:
       "Delivery management keeps fulfillment close to POS and kitchen readiness, so staff know what is accepted, preparing, ready, assigned, and completed.",
@@ -546,13 +796,19 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Customer profile and campaign workflow with POS purchase history, reward balance tracking, offer rules, redemption controls, segment filters, and checkout-level loyalty visibility.",
     visual: {
-      imageSrc: "/images/demo-thumb-ai.png",
+      imageSrc: "/images/rest_loyalty_crm_bundle.png",
       imageAlt: "Marketing and loyalty customer dashboard",
       topBadge: "Customer growth",
       bottomBadge: "Rewards connected to checkout",
     },
+    workflowVisual: {
+      imageSrc: "/images/nav_payment_bundle.png",
+      imageAlt: "Automated customer rewards and checkout coupon redemption",
+      topBadge: "Automated Loyalty Rewards",
+      bottomBadge: "Redeem at Register",
+    },
     primaryCta: { label: "Build Loyalty", href: "/contact/sales" },
-    secondaryCta: { label: "Explore Online Ordering", href: "/products/websites" },
+    secondaryCta: { label: "Explore Restaurant POS", href: "/solutions#restaurant-pos" },
     overviewTitle: "Loyalty that operators can actually use",
     overviewDesc:
       "The marketing layer turns POS activity into useful customer context, then makes rewards and campaigns visible where staff and customers interact.",
@@ -626,13 +882,19 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Payment workflow layer using gateway tokenization, TLS-protected checkout handoff, payment status callbacks, refund and void controls, tip capture states, and POS receipt reconciliation.",
     visual: {
-      imageSrc: "/images/demo-thumb.jpg",
+      imageSrc: "/images/nav_payment_bundle.png",
       imageAlt: "Secure POS payment terminal and checkout workflow",
       topBadge: "Tokenized checkout",
       bottomBadge: "Payments connected to POS",
     },
+    workflowVisual: {
+      imageSrc: "/images/ent_global_pos_bundle.png",
+      imageAlt: "Integrated card payment terminal with tokenized checkout",
+      topBadge: "Card-Present Checkout",
+      bottomBadge: "PCI-DSS Tier 1 Ready",
+    },
     primaryCta: { label: "Secure Checkout", href: "/contact/sales" },
-    secondaryCta: { label: "PCI Details", href: "/pci" },
+    secondaryCta: { label: "Explore Retail POS", href: "/solutions#retail-pos" },
     overviewTitle: "Payment control across every channel",
     overviewDesc:
       "Secure payment workflows need clear status, staff controls, customer trust, and reliable reconciliation across POS, online ordering, kiosks, and QR checkout.",
@@ -706,13 +968,19 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Role-aware owner dashboard with POS event summaries, sales snapshots, branch filters, inventory signals, staff activity, alert rules, and secure mobile session controls.",
     visual: {
-      imageSrc: "/images/mobile_app_3d.png",
+      imageSrc: "/images/ent_roi_analytics.png",
       imageAlt: "Owner mobile dashboard for POS operations",
       topBadge: "Owner visibility",
       bottomBadge: "Live sales and alerts",
     },
+    workflowVisual: {
+      imageSrc: "/images/nav_cloud_bundle.png",
+      imageAlt: "Live business KPI telemetry and cashier audit alerts",
+      topBadge: "Mobile Business Telemetry",
+      bottomBadge: "Shift Audits & Revenue Alerts",
+    },
     primaryCta: { label: "Plan Owner App", href: "/contact/sales" },
-    secondaryCta: { label: "View Enterprise POS", href: "/products/enterprise-pos" },
+    secondaryCta: { label: "Explore Cloud POS", href: "/solutions#multi-store-pos" },
     overviewTitle: "What owners can monitor quickly",
     overviewDesc:
       "The owner app is designed for quick, trustworthy visibility instead of deep admin work. It highlights the operating signals owners check repeatedly.",
@@ -786,13 +1054,19 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Display-ready menu board workflow with branch menu sync, layout blocks, availability flags, scheduled dayparts, promo groups, image assets, and screen assignment controls.",
     visual: {
-      imageSrc: "/images/hero-cafe.jpg",
+      imageSrc: "/images/rest_digital_menu_board.png",
       imageAlt: "Digital menu board display in a cafe counter environment",
       topBadge: "Live menu display",
       bottomBadge: "Prices, promos and availability synced",
     },
+    workflowVisual: {
+      imageSrc: "/images/rest_qr_table_bundle.png",
+      imageAlt: "Digital counter menu board synced to POS catalog",
+      topBadge: "Daypart Menu Rotations",
+      bottomBadge: "86'd Items Auto-Hidden",
+    },
     primaryCta: { label: "Plan Menu Boards", href: "/contact/sales" },
-    secondaryCta: { label: "Explore Restaurant POS", href: "/solutions/restaurants" },
+    secondaryCta: { label: "Explore Restaurant POS", href: "/solutions#restaurant-pos" },
     overviewTitle: "Display menus that stay operational",
     overviewDesc:
       "Menu boards should look good to guests and remain simple for operators. Quantix connects visual displays to menu and promotion workflows.",
@@ -851,6 +1125,254 @@ const FEATURES_DATA: Record<string, FeatureData> = {
       { title: "Customer Loyalty & Marketing Engine", slug: "marketing-loyalty" },
     ],
   },
+  "multi-store": {
+    slug: "multi-store",
+    title: "Multi-Location Cloud HQ & Franchise Command",
+    tagline: "Centralized control for menus, regional pricing, staff security, and multi-unit telemetry.",
+    desc:
+      "Maintain total operational consistency across your entire franchise network. Deploy master catalog rollouts, coordinate store pricing tiers, calculate automated corporate royalties, and enforce granular role-based permissions from a single executive dashboard.",
+    benefits: [
+      "1-Click master catalog broadcast to 500+ locations in < 2.4s",
+      "Automated franchise royalty ledger and remittance accounting",
+      "Territory and regional tax/pricing tier management",
+      "Granular role-based staff access controls (RBAC)",
+    ],
+    techSpec:
+      "Distributed cloud command matrix with real-time WebSocket telemetry, bi-directional POS synchronization, automated conflict resolution, and enterprise SAML 2.0 / OAuth identity federation.",
+    visual: {
+      imageSrc: "/images/nav_cloud_bundle.png",
+      imageAlt: "Enterprise multi-store cloud management and POS terminal network",
+      topBadge: "500+ Franchise Locations",
+      bottomBadge: "< 2.4s Global Catalog Sync",
+    },
+    workflowVisual: {
+      imageSrc: "/images/ent_global_pos_bundle.png",
+      imageAlt: "Enterprise cloud headquarters multi-unit control matrix and till mesh",
+      topBadge: "Autonomous Peer Mesh",
+      bottomBadge: "Zero Downtime Till Sync",
+    },
+    primaryCta: { label: "Schedule HQ Demo", href: "/contact/sales" },
+    secondaryCta: { label: "Explore Cloud POS", href: "/solutions#multi-store-pos" },
+    overviewTitle: "Scale without operational chaos",
+    overviewDesc:
+      "Multi-store operations require strict standardization paired with local flexibility. Quantix provides the tools to manage 50 to 500+ locations seamlessly.",
+    capabilities: [
+      { title: "Master Catalog Rollout", desc: "Push menu items, combos, modifiers, and seasonal campaigns network-wide in seconds.", icon: Cloud },
+      { title: "Franchise Royalty Engine", desc: "Auto-reconcile corporate sales percentages, marketing fund fees, and royalties.", icon: Layout },
+      { title: "Granular RBAC Security", desc: "Define role permissions, cashier overrides, and multi-level manager refund limits.", icon: ShieldCheck },
+      { title: "Regional Pricing Rules", desc: "Set location-specific tax rules, happy hours, and price tiers per territory.", icon: Layout },
+      { title: "Store Peer Mesh Till", desc: "Ensure continuous offline billing even during broadband outages with peer sync.", icon: Zap },
+      { title: "Consolidated BI Reporting", desc: "View real-time sales velocity, labor ratios, and branch rankings in one view.", icon: Monitor },
+    ],
+    workflowTitle: "Centralized governance meets store autonomy",
+    workflowDesc:
+      "HQ manages catalogs, pricing boundaries, and analytics, while branch managers focus on frontline service speed and guest satisfaction.",
+    workflowItems: [
+      { title: "Catalog updates", desc: "Draft and stage menu changes centrally before scheduling live release.", icon: Layout },
+      { title: "Targeted broadcast", desc: "Deploy updates to specific store clusters, franchise territories, or all units.", icon: Cloud },
+      { title: "Terminal sync", desc: "Store registers receive updates peer-to-peer without interrupting active billing.", icon: Monitor },
+      { title: "Live telemetry", desc: "Sales, transaction volume, and cashier performance flow back to HQ in real time.", icon: Timer },
+      { title: "Audit logging", desc: "Track every price override, discount, and manager authorization with timestamps.", icon: ShieldCheck },
+      { title: "Automated closing", desc: "End-of-day batches and royalty ledgers reconcile automatically without lag.", icon: ReceiptText },
+    ],
+    useCaseTitle: "Enterprise networks it powers",
+    useCaseDesc:
+      "Designed for multi-unit restaurant operators, franchise systems, and regional retail store groups.",
+    useCases: [
+      { title: "Franchise networks", desc: "Maintain strict brand standards across independent franchisee operators.", icon: Cloud },
+      { title: "Corporate restaurant chains", desc: "Standardize recipes, central prep commissaries, and localized menus.", icon: Utensils },
+      { title: "Retail conglomerates", desc: "Control multi-tier inventory and barcode pricing across nationwide branches.", icon: ShoppingBag },
+      { title: "Stadiums and arenas", desc: "Manage 100+ concession stalls and hawker mobile terminals from one server.", icon: Zap },
+    ],
+    faqs: [
+      {
+        question: "How fast do menu changes push to store registers?",
+        answer:
+          "Updates typically broadcast across hundreds of POS terminals within 2.4 seconds with zero billing interruption.",
+      },
+      {
+        question: "Can individual stores have different prices?",
+        answer:
+          "Yes. Quantix supports regional pricing tiers, airport concessions, and territory-based tax rules.",
+      },
+      {
+        question: "What happens if a branch loses internet?",
+        answer:
+          "Stores continue ringing sales normally via local offline till mesh, syncing back to HQ automatically when connection returns.",
+      },
+    ],
+    relatedFeatures: [
+      { title: "Real-Time BI Analytics & Telemetry", slug: "bi-analytics" },
+      { title: "Enterprise Supply Chain & Replenishment", slug: "supply-chain" },
+    ],
+  },
+  "bi-analytics": {
+    slug: "bi-analytics",
+    title: "Real-Time BI Analytics & Telemetry",
+    tagline: "Live sales telemetry, labor cost ratios, and automated executive dashboards.",
+    desc:
+      "Turn millions of raw POS register transactions into real-time business intelligence. Monitor hourly sales velocity, store throughput, cashier discount overrides, inventory shrinkage, and margin leakage from any mobile device or executive desktop.",
+    benefits: [
+      "Sub-second live sales and hourly store throughput velocity",
+      "COGS margin tracking and recipe cost audit alerts",
+      "Cashier discount, void, and refund audit telemetry",
+      "Automated scheduled executive email reports and exports",
+    ],
+    techSpec:
+      "High-throughput event-stream data pipelines delivering live transactional aggregates, customizable SQL data connectors, and direct native bridges to Snowflake, BigQuery, and PowerBI.",
+    visual: {
+      imageSrc: "/images/ent_bi_analytics_bundle.png",
+      imageAlt: "Executive business intelligence telemetry dashboard",
+      topBadge: "Real-time Telemetry",
+      bottomBadge: "Sub-Second BI Pipelines",
+    },
+    workflowVisual: {
+      imageSrc: "/images/ent_roi_analytics.png",
+      imageAlt: "Real-time transactional sales velocity and hourly throughput",
+      topBadge: "Live Sales Curves",
+      bottomBadge: "Recipe Margin Leakage Audits",
+    },
+    primaryCta: { label: "Explore BI Analytics", href: "/contact/sales" },
+    secondaryCta: { label: "Explore Cloud POS", href: "/solutions#multi-store-pos" },
+    overviewTitle: "Complete visibility into operational profitability",
+    overviewDesc:
+      "Make decisions grounded in live transactional data rather than waiting for month-end accounting reports.",
+    capabilities: [
+      { title: "Hourly Velocity", desc: "Track sales curves, register volume, and customer ticket sizes across every branch.", icon: Timer },
+      { title: "Margin Auditing", desc: "Audit dish and product gross margins dynamically against shifting ingredient costs.", icon: Database },
+      { title: "Cashier Telemetry", desc: "Identify unusual refund patterns, excessive voids, and cashier discount behavior.", icon: ShieldCheck },
+      { title: "Data Lake Bridges", desc: "Export clean relational transaction data to Snowflake, BigQuery, and PostgreSQL.", icon: Cloud },
+      { title: "Labor Cost Sync", desc: "Measure labor spend against live sales revenue to optimize staff scheduling shifts.", icon: Clock },
+      { title: "Mobile Executive View", desc: "Monitor multi-unit performance on your phone while away from the office.", icon: Smartphone },
+    ],
+    workflowTitle: "From store register till to executive insights",
+    workflowDesc:
+      "Every checkout ring, card swipe, refund, and stock transfer feeds the live analytics engine instantaneously.",
+    workflowItems: [
+      { title: "Transaction capture", desc: "Tills stream encrypted transaction receipts as they complete.", icon: ReceiptText },
+      { title: "Instant aggregation", desc: "Sales, taxes, discounts, and costs aggregate into real-time dashboards.", icon: Database },
+      { title: "Anomaly detection", desc: "Automated alerts flag stock shrinkage, unusual voids, and margin dips.", icon: ShieldCheck },
+      { title: "Executive view", desc: "Executives see company-wide trends, regional benchmarks, and store rankings.", icon: Monitor },
+      { title: "Automated distribution", desc: "Scheduled daily flash reports land in managerial email inboxes automatically.", icon: Cloud },
+      { title: "Historical trends", desc: "Compare year-over-year seasonality, campaign lift, and promotional ROI.", icon: Timer },
+    ],
+    useCaseTitle: "Who relies on Quantix BI",
+    useCaseDesc:
+      "From single-store operators optimizing shift labor to corporate CFOs managing nationwide store profitability.",
+    useCases: [
+      { title: "Multi-Unit CFOs", desc: "Monitor consolidated group P&L, sales tax liabilities, and cash balances.", icon: Cloud },
+      { title: "Store General Managers", desc: "Track shift targets, hourly cashier speed, and prep turnaround times.", icon: Store },
+      { title: "Franchise Operators", desc: "Benchmark store profitability against corporate franchise averages.", icon: Utensils },
+      { title: "Inventory Controllers", desc: "Track waste variance, unrecorded shrinkage, and supplier price inflation.", icon: ShoppingBag },
+    ],
+    faqs: [
+      {
+        question: "Is the data updated in real time or batched overnight?",
+        answer:
+          "Data streams continuously in real-time with sub-second latency from active POS registers.",
+      },
+      {
+        question: "Can we export data into our corporate data warehouse?",
+        answer:
+          "Yes. Quantix provides direct webhooks, REST APIs, and automated nightly CSV/Parquet data lake exports.",
+      },
+    ],
+    relatedFeatures: [
+      { title: "Multi-Location Cloud HQ & Franchise Command", slug: "multi-store" },
+      { title: "Owner App & Live Business Dashboard", slug: "owner-app" },
+    ],
+  },
+  "supply-chain": {
+    slug: "supply-chain",
+    title: "Enterprise Supply Chain & Replenishment",
+    tagline: "Central warehouse transfers, automated par-level POs, and dock GRN receiving.",
+    desc:
+      "Connect your store registers directly to central distribution warehouses and commissary kitchens. Automate supplier purchase orders when shelf stock dips below safety par levels, conduct barcode GRN delivery audits at loading docks, and transfer stock seamlessly between regional branches.",
+    benefits: [
+      "Automated par-level purchase order generation with supplier lead-time buffers",
+      "Inter-store stock routing and warehouse-to-branch transfers with digital audit trails",
+      "Loading dock GRN barcode receiving audits to prevent inventory shrinkage",
+      "Live ingredient depletion and recipe margin costing across all locations",
+    ],
+    techSpec:
+      "Enterprise inventory engine supporting multi-tier warehouses, lot and batch tracking, FIFO cost accounting, automated electronic data interchange (EDI) vendor purchase orders, and inter-branch transit tracking.",
+    visual: {
+      imageSrc: "/images/ent_supply_chain_bundle.png",
+      imageAlt: "Centralized supply chain and inventory replenishment network",
+      topBadge: "Central Warehouse Sync",
+      bottomBadge: "Automated Par-Level POs",
+    },
+    workflowVisual: {
+      imageSrc: "/images/nav_retail_bundle.png",
+      imageAlt: "Warehouse receiving, pallet verification, and branch replenishment",
+      topBadge: "Dock Receiving GRN",
+      bottomBadge: "Central Commissary Network",
+    },
+    primaryCta: { label: "Plan Supply Chain Setup", href: "/contact/sales" },
+    secondaryCta: { label: "Explore Cloud POS", href: "/solutions#multi-store-pos" },
+    overviewTitle: "End-to-end stock control from vendor to till",
+    overviewDesc:
+      "Stop managing inventory in silos. Unify store shelves, central commissary kitchens, and supplier purchase orders in one automated flow.",
+    capabilities: [
+      { title: "Automated Par POs", desc: "Trigger reorders automatically when warehouse or branch stock hits safety buffers.", icon: Layout },
+      { title: "Inter-Store Transfers", desc: "Transfer goods between branches or commissaries with dual-party approval trails.", icon: Store },
+      { title: "Loading Dock GRN", desc: "Verify vendor delivery quantities and invoices with barcode scanners before signoff.", icon: ShieldCheck },
+      { title: "Live Ingredient COGS", desc: "Deplete raw inventory down to the gram as orders ring up at the POS.", icon: ChefHat },
+      { title: "Lot & Expiry Tracking", desc: "Track batch numbers, expiration dates, and FIFO rotation to minimize spoilage.", icon: Database },
+      { title: "Supplier Lead Variance", desc: "Calculate predictive safety stock based on vendor reliability and seasonal spikes.", icon: Timer },
+    ],
+    workflowTitle: "Clean supply chain flow across all facilities",
+    workflowDesc:
+      "From vendor purchase orders to warehouse receiving, inter-branch transit, and customer checkout depletion.",
+    workflowItems: [
+      { title: "Stock monitoring", desc: "POS sales continuously update branch and central warehouse balance sheets.", icon: Database },
+      { title: "Auto-PO trigger", desc: "Par levels automatically create supplier purchase orders for manager review.", icon: Layout },
+      { title: "Dock verification", desc: "Store receivers scan deliveries to detect supplier shortfalls or damaged goods.", icon: ShieldCheck },
+      { title: "Transit routing", desc: "Inter-branch stock transfers generate digital transfer manifests and receipt logs.", icon: Store },
+      { title: "Checkout deduction", desc: "Transactions deduct inventory in real time down to the bill of materials.", icon: ReceiptText },
+      { title: "Shrinkage audit", desc: "Variance reports compare theoretical stock with physical cycle counts.", icon: Monitor },
+    ],
+    useCaseTitle: "Supply chain operations it powers",
+    useCaseDesc:
+      "Built for retail supermarket chains, restaurant commissary kitchens, and regional multi-store groups.",
+    useCases: [
+      { title: "Central commissary kitchens", desc: "Prep bulk dishes and distribute them to dozens of satellite dining branches.", icon: Utensils },
+      { title: "Retail supermarket chains", desc: "Manage centralized warehouse bulk purchases and daily branch replenishment.", icon: ShoppingBag },
+      { title: "Franchise networks", desc: "Supply proprietary branded ingredients and packaging to franchisees cleanly.", icon: Cloud },
+      { title: "Multi-branch retail", desc: "Rebalance stock between slow and fast-moving store locations dynamically.", icon: Store },
+    ],
+    faqs: [
+      {
+        question: "Can purchase orders be sent to vendors automatically?",
+        answer:
+          "Yes. Purchase orders can be generated automatically and either sent directly to vendors via EDI/email or held for manager approval.",
+      },
+      {
+        question: "Does it support inter-store stock transfers?",
+        answer:
+          "Yes. Staff can request, dispatch, track transit status, and confirm receipt of items between branches with full digital audit trails.",
+      },
+    ],
+    relatedFeatures: [
+      { title: "Smart Inventory & Recipe Costing", slug: "smart-inventory" },
+      { title: "Multi-Location Cloud HQ & Franchise Command", slug: "multi-store" },
+    ],
+  },
+};
+
+// Aliases mapping legacy or alternative feature slugs to canonical pages
+const SLUG_ALIASES: Record<string, string> = {
+  "kitchen-kds": "kitchen-display",
+  "offline-mesh": "offline-registers",
+  "security-sso": "secure-payments",
+  "loyalty-crm": "marketing-loyalty",
+  "central-menu": "menu-boards",
+  "erp-connectors": "multi-store",
+  "purchase-orders": "supply-chain",
+  "stadium-pos": "multi-store",
+  "dual-pricing": "secure-payments",
+  "open-api": "multi-store",
+  "sla-support": "multi-store",
 };
 
 const motionTransition = { duration: 0.55, ease: [0.16, 1, 0.3, 1] as const };
@@ -859,15 +1381,79 @@ const fadeUp = {
   visible: { opacity: 1, y: 0 },
 };
 
-const FeatureCardGrid: React.FC<{
+const SoftwareStageFrame: React.FC<{
+  imageSrc: string;
+  imageAlt: string;
+  slug: string;
+  topBadge?: string;
+  bottomBadge?: string;
+  priority?: boolean;
+}> = ({ imageSrc, imageAlt, slug, topBadge, bottomBadge, priority = false }) => (
+  <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-gradient-to-b from-slate-50/90 via-white to-slate-100/60 dark:from-slate-900/90 dark:via-slate-900/50 dark:to-slate-950 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300">
+    {/* macOS Window Chrome Header */}
+    <div className="flex items-center justify-between border-b border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-slate-900/80 px-3.5 sm:px-4 py-2 sm:py-2.5 backdrop-blur-md">
+      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-rose-500/90" />
+        <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-amber-400/90" />
+        <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-emerald-500/90" />
+      </div>
+
+      <div className="flex items-center gap-1.5 rounded-md border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 px-2.5 sm:px-3 py-1 font-mono text-[9px] sm:text-[10px] font-semibold text-slate-600 dark:text-slate-400 max-w-[140px] min-[400px]:max-w-[200px] sm:max-w-xs truncate shadow-2xs">
+        <Lock className="h-2.5 w-2.5 text-emerald-500 shrink-0" />
+        <span className="truncate">quantix.network/cloud-hq/{slug}</span>
+      </div>
+
+      <div className="flex items-center gap-1.5 text-[8.5px] sm:text-[9.5px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400 shrink-0">
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+        </span>
+        <span className="hidden min-[480px]:inline">Mesh Active</span>
+      </div>
+    </div>
+
+    {/* Stage Image Viewport with Floating Transparent Hardware Cutout */}
+    <div className="relative h-64 min-[420px]:h-72 sm:h-84 md:h-96 w-full flex items-center justify-center p-4 sm:p-6 overflow-hidden">
+      {/* Ambient radial glow behind the transparent cutout hardware */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <div className="h-4/5 w-4/5 rounded-full bg-gradient-to-tr from-primary/15 via-primary/5 to-transparent blur-3xl" />
+      </div>
+
+      <Image
+        src={imageSrc}
+        alt={imageAlt}
+        fill
+        priority={priority}
+        sizes="(max-width: 1024px) 94vw, 48vw"
+        className="object-contain p-2 sm:p-5 drop-shadow-[0_18px_32px_rgba(0,0,0,0.16)] transition-transform duration-700 hover:scale-105"
+      />
+
+      {topBadge && (
+        <div className="absolute right-2.5 top-2.5 sm:right-4 sm:top-4 z-20 inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-white/95 px-2.5 py-1 text-[9px] sm:text-[10px] font-bold text-slate-800 shadow-md backdrop-blur-md dark:border-slate-700/80 dark:bg-slate-900/95 dark:text-slate-100 max-w-[75%] sm:max-w-[85%] truncate">
+          <Activity className="h-3 w-3 text-emerald-500 animate-pulse shrink-0" />
+          <span className="truncate">{topBadge}</span>
+        </div>
+      )}
+
+      {bottomBadge && (
+        <div className="absolute bottom-2.5 left-2.5 sm:bottom-4 sm:left-4 z-20 inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-white/95 px-2.5 py-1 text-[9px] sm:text-[10px] font-bold text-slate-800 shadow-md backdrop-blur-md dark:border-slate-700/80 dark:bg-slate-900/95 dark:text-slate-100 max-w-[75%] sm:max-w-[85%] truncate">
+          <ShieldCheck className="h-3.5 w-3.5 text-primary shrink-0" />
+          <span className="truncate">{bottomBadge}</span>
+        </div>
+      )}
+    </div>
+  </div>
+);
+
+const CapabilitiesBentoSection: React.FC<{
   title: string;
   description: string;
   items: FeatureCard[];
   eyebrow?: string;
-}> = ({ title, description, items, eyebrow = "Feature capabilities" }) => (
-  <section className="border-b border-slate-200/80 bg-slate-50/70 py-5 dark:border-slate-800/80 dark:bg-slate-900/45 sm:py-8">
+}> = ({ title, description, items, eyebrow = "Enterprise Capabilities" }) => (
+  <section className="border-b border-slate-200/80 bg-slate-50/50 py-12 dark:border-slate-800/80 dark:bg-slate-900/30 sm:py-16">
     <div className="site-container">
-      <div className="mx-auto mb-5 max-w-3xl text-center sm:mb-7">
+      <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-12">
         <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
           <Sparkles className="h-3 w-3 stroke-[2.4]" />
           {eyebrow}
@@ -880,10 +1466,10 @@ const FeatureCardGrid: React.FC<{
         </p>
       </div>
 
-      <div className="grid auto-rows-fr grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
+      <div className="grid auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5">
         {items.map((item, index) => {
           const Icon = item.icon;
-          const image = getCardImage(item.title);
+          const stepNum = String(index + 1).padStart(2, "0");
 
           return (
             <motion.div
@@ -891,38 +1477,39 @@ const FeatureCardGrid: React.FC<{
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-70px" }}
-              transition={{ ...motionTransition, delay: index * 0.04 }}
-              className="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-sm shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-lg hover:shadow-slate-200/70 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none"
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ ...motionTransition, delay: index * 0.05 }}
+              className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 dark:border-slate-800/90 dark:bg-slate-900/80 dark:shadow-none"
             >
-              <div className="relative aspect-[16/8] overflow-hidden bg-slate-100 dark:bg-slate-950">
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 30vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/5 to-transparent" />
-                <span className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/90 px-2 py-1 text-[9px] font-black uppercase tracking-wider text-slate-800 shadow-sm">
-                  <Icon className="h-3 w-3 text-primary" />
-                  Quantix workflow
-                </span>
-              </div>
-              <div className="flex flex-1 flex-col p-3.5 sm:p-4">
-                <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white dark:text-primary-light">
-                  <Icon className="h-4 w-4 stroke-[2.4]" />
+              {/* Subtle top glow bar on hover */}
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+              <div>
+                <div className="mb-4 flex items-center justify-between">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-primary/20 bg-gradient-to-br from-primary/15 to-primary/5 text-primary shadow-xs transition-colors duration-300 group-hover:border-primary/40 group-hover:bg-primary group-hover:text-white dark:text-primary-light">
+                    <Icon className="h-5 w-5 stroke-[2.2]" />
+                  </div>
+                  <span className="font-mono text-xs font-black text-slate-300 transition-colors group-hover:text-primary/70 dark:text-slate-700">
+                    {stepNum}
+                  </span>
                 </div>
-                <h3 className="font-syne text-base font-black leading-tight text-slate-950 dark:text-white">
+
+                <h3 className="font-syne text-lg font-black leading-snug text-slate-950 dark:text-white">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+                <p className="mt-2.5 text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
                   {item.desc}
                 </p>
-                <div className="mt-auto flex items-center gap-2 pt-3 text-[9px] font-black uppercase tracking-wider text-primary/80">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                  Connected operations
-                </div>
+              </div>
+
+              <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-slate-800/80">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Enterprise Module
+                </span>
+                <span className="text-[11px] font-bold text-slate-400 transition-colors group-hover:text-primary">
+                  Ready &rarr;
+                </span>
               </div>
             </motion.div>
           );
@@ -932,27 +1519,27 @@ const FeatureCardGrid: React.FC<{
   </section>
 );
 
-const WorkflowSection: React.FC<{ feature: FeatureData }> = ({ feature }) => {
+const WorkflowPipelineSection: React.FC<{ feature: FeatureData; slug: string }> = ({ feature, slug }) => {
   if (!feature.workflowItems?.length) return null;
 
-  const visual = feature.visual;
+  const visual = feature.workflowVisual || feature.visual;
 
   return (
-    <section className="border-b border-slate-200/80 bg-white py-5 dark:border-slate-800/80 dark:bg-slate-950 sm:py-8">
+    <section className="border-b border-slate-200/80 bg-white py-12 dark:border-slate-800/80 dark:bg-slate-950 sm:py-16">
       <div className="site-container">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             transition={motionTransition}
-            className="space-y-5 lg:col-span-6"
+            className="space-y-6 lg:col-span-6"
           >
             <div>
               <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
                 <Database className="h-3 w-3 stroke-[2.4]" />
-                Connected workflow
+                Connected Workflow Pipeline
               </span>
               <h2 className="max-w-2xl font-syne text-2xl font-black leading-tight text-slate-950 dark:text-white sm:text-4xl">
                 {feature.workflowTitle}
@@ -962,26 +1549,30 @@ const WorkflowSection: React.FC<{ feature: FeatureData }> = ({ feature }) => {
               </p>
             </div>
 
-            <div className="grid gap-3">
-              {feature.workflowItems.map((item) => {
+            <div className="relative space-y-3 pl-2 before:absolute before:left-5 before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-primary/50 before:via-primary/20 before:to-transparent">
+              {feature.workflowItems.map((item, index) => {
                 const Icon = item.icon;
+                const stepNum = String(index + 1).padStart(2, "0");
 
                 return (
                   <div
                     key={item.title}
-                    className="flex h-full items-start gap-2.5 rounded-xl border border-slate-200/80 bg-white p-3 shadow-sm dark:border-slate-800 dark:bg-slate-900/70 sm:gap-3 sm:p-3.5"
+                    className="relative flex items-start gap-4 rounded-xl border border-slate-200/80 bg-white p-3.5 shadow-sm transition-all duration-200 hover:border-primary/40 hover:bg-slate-50/70 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:bg-slate-900"
                   >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary dark:text-primary-light">
-                      <Icon className="h-4 w-4 stroke-[2.4]" />
-                    </span>
-                    <span>
-                      <span className="block font-syne text-sm font-black text-slate-950 dark:text-white">
-                        {item.title}
-                      </span>
-                      <span className="mt-1 block text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+                    <div className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-[11px] font-mono font-bold text-white shadow-sm">
+                      {stepNum}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <Icon className="h-3.5 w-3.5 text-primary shrink-0" />
+                        <h4 className="font-syne text-sm font-black text-slate-950 dark:text-white truncate">
+                          {item.title}
+                        </h4>
+                      </div>
+                      <p className="mt-1 text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-400">
                         {item.desc}
-                      </span>
-                    </span>
+                      </p>
+                    </div>
                   </div>
                 );
               })}
@@ -993,37 +1584,41 @@ const WorkflowSection: React.FC<{ feature: FeatureData }> = ({ feature }) => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ ...motionTransition, delay: 0.08 }}
-            className="lg:col-span-6"
+            transition={{ ...motionTransition, delay: 0.1 }}
+            className="space-y-4 lg:col-span-6"
           >
             {visual ? (
-              <div className="group/image relative overflow-hidden rounded-lg border border-slate-200/90 bg-white p-2 shadow-xl shadow-slate-200/60 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 sm:aspect-[16/10]">
-                  <Image
-                    src={visual.imageSrc}
-                    alt={visual.imageAlt}
-                    fill
-                    sizes="(max-width: 1024px) 92vw, 44vw"
-                    className="object-cover transition-transform duration-700 group-hover/image:scale-[1.03]"
-                  />
-                </div>
-                <div className="absolute right-2 top-2 z-20 inline-flex max-w-[74%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8px] font-extrabold uppercase tracking-normal text-slate-800 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 sm:right-4 sm:top-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-wider">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                  {visual.topBadge}
-                </div>
-                <div className="absolute bottom-2 left-2 z-20 inline-flex max-w-[78%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8.5px] font-extrabold leading-none text-slate-700 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200 sm:bottom-4 sm:left-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[11px]">
-                  <ShieldCheck className="h-3 w-3 shrink-0 text-primary sm:h-3.5 sm:w-3.5" />
-                  {visual.bottomBadge}
-                </div>
-              </div>
+              <SoftwareStageFrame
+                imageSrc={visual.imageSrc}
+                imageAlt={visual.imageAlt}
+                slug={slug}
+                topBadge={visual.topBadge}
+                bottomBadge={visual.bottomBadge}
+              />
             ) : (
-              <div className="rounded-lg border border-slate-200/90 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/60">
+              <div className="rounded-2xl border border-slate-200/90 bg-slate-50 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/60 sm:p-8">
                 <span className="text-[10px] font-black uppercase tracking-wider text-primary">Technical specs</span>
                 <p className="mt-3 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
                   {feature.techSpec}
                 </p>
               </div>
             )}
+
+            {/* Architecture Telemetry Pills */}
+            <div className="grid grid-cols-3 gap-3">
+              <div className="rounded-xl border border-slate-200/80 bg-slate-50 p-3 text-center dark:border-slate-800 dark:bg-slate-900/50">
+                <div className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Sync Latency</div>
+                <div className="mt-0.5 font-mono text-sm font-black text-slate-950 dark:text-white">&lt; 120ms</div>
+              </div>
+              <div className="rounded-xl border border-slate-200/80 bg-slate-50 p-3 text-center dark:border-slate-800 dark:bg-slate-900/50">
+                <div className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Protocol</div>
+                <div className="mt-0.5 font-mono text-sm font-black text-slate-950 dark:text-white">gRPC Mesh</div>
+              </div>
+              <div className="rounded-xl border border-slate-200/80 bg-slate-50 p-3 text-center dark:border-slate-800 dark:bg-slate-900/50">
+                <div className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Availability</div>
+                <div className="mt-0.5 font-mono text-sm font-black text-emerald-600 dark:text-emerald-400">99.99%</div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -1031,10 +1626,76 @@ const WorkflowSection: React.FC<{ feature: FeatureData }> = ({ feature }) => {
   );
 };
 
+const UseCasesSection: React.FC<{
+  title: string;
+  description: string;
+  items: FeatureCard[];
+}> = ({ title, description, items }) => (
+  <section className="border-b border-slate-200/80 bg-slate-50/50 py-12 dark:border-slate-800/80 dark:bg-slate-900/30 sm:py-16">
+    <div className="site-container">
+      <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-12">
+        <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
+          <Layers className="h-3 w-3 stroke-[2.4]" />
+          Industry Deployment
+        </span>
+        <h2 className="font-syne text-2xl font-black leading-tight text-slate-950 dark:text-white sm:text-4xl">
+          {title}
+        </h2>
+        <p className="mx-auto mt-3 max-w-2xl text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
+          {description}
+        </p>
+      </div>
+
+      <div className="grid auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 sm:gap-5">
+        {items.map((item, index) => {
+          const Icon = item.icon;
+          const stepNum = String(index + 1).padStart(2, "0");
+
+          return (
+            <motion.div
+              key={item.title}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ ...motionTransition, delay: index * 0.05 }}
+              className="group flex h-full flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg dark:border-slate-800/90 dark:bg-slate-900/80"
+            >
+              <div>
+                <div className="mb-3 flex items-center justify-between">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white dark:text-primary-light">
+                    <Icon className="h-4 w-4 stroke-[2.2]" />
+                  </div>
+                  <span className="font-mono text-[11px] font-bold text-slate-400 dark:text-slate-600">
+                    USE CASE {stepNum}
+                  </span>
+                </div>
+
+                <h3 className="font-syne text-base font-black leading-snug text-slate-950 dark:text-white">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-400">
+                  {item.desc}
+                </p>
+              </div>
+
+              <div className="mt-5 flex items-center gap-1.5 text-[10px] font-bold text-primary">
+                <CheckCircle2 className="h-3 w-3" />
+                <span>Verified Deployment</span>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
+
 export default function FeatureDetailPage() {
   const params = useParams();
   const featureSlug = params.featureSlug as string;
-  const feature = FEATURES_DATA[featureSlug];
+  const canonicalSlug = SLUG_ALIASES[featureSlug] || featureSlug;
+  const feature = FEATURES_DATA[canonicalSlug];
 
   if (!feature) {
     notFound();
@@ -1043,209 +1704,224 @@ export default function FeatureDetailPage() {
   const heroVisual = feature.visual;
 
   return (
-    <main className="min-h-screen bg-white pt-[5.75rem] text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:pt-24">
-        <section className="border-b border-slate-200/80 bg-white py-5 dark:border-slate-800/80 dark:bg-slate-950 sm:py-8 lg:py-10">
-          <div className="site-container">
-            <div className="mb-4 flex flex-wrap items-center gap-1.5 text-[8.5px] font-black uppercase tracking-normal text-slate-400 dark:text-slate-500 sm:mb-6 sm:text-[10px] sm:tracking-wider">
-              <Link href="/" className="transition-colors hover:text-primary">Home</Link>
-              <ChevronRight size={10} />
-              <Link href="/features" className="transition-colors hover:text-primary">Features</Link>
-              <ChevronRight size={10} />
-              <span className="truncate text-primary">{feature.title}</span>
-            </div>
+    <main className="min-h-screen bg-white text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white">
+      {/* ─── 1. Page Hero Header (Using site-wide standard .page-hero-header) ─── */}
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
+        {/* Ambient Radial Lighting */}
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-64 bg-linear-to-b from-primary/15 via-primary/5 to-transparent blur-3xl -z-10" />
 
-            <div className="grid grid-cols-1 items-center gap-5 lg:grid-cols-12 lg:gap-10 xl:gap-12">
-              <motion.div
-                variants={fadeUp}
-                initial="hidden"
-                animate="visible"
-                transition={motionTransition}
-                className="space-y-3.5 lg:col-span-6"
-              >
-                <div>
-                  <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
-                    <Sparkles className="h-3 w-3 stroke-[2.4]" />
-                    Feature breakdown
-                  </span>
-                  <h1 className="max-w-2xl font-syne text-[1.72rem] font-black leading-[1.05] tracking-normal text-slate-950 dark:text-white min-[380px]:text-[1.95rem] sm:text-5xl sm:tracking-tight lg:text-[3.2rem]">
-                    {feature.title}
-                  </h1>
-                </div>
-
-                <p className="text-[10px] font-black uppercase tracking-wider text-primary dark:text-primary-light sm:text-sm">
-                  {feature.tagline}
-                </p>
-                <p className="max-w-xl text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
-                  {feature.desc}
-                </p>
-
-                <div className="grid gap-2 pt-0.5 sm:grid-cols-2">
-                  {feature.benefits.map((benefit) => (
-                    <div
-                      key={benefit}
-                      className="flex items-start gap-2 rounded-lg border border-slate-200/80 bg-white px-2.5 py-2 shadow-xs dark:border-slate-800 dark:bg-slate-900/70 sm:gap-3 sm:rounded-xl sm:px-3 sm:py-2.5"
-                    >
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-light">
-                        <Check className="h-3.5 w-3.5 stroke-[3]" />
-                      </span>
-                      <span className="text-xs font-bold leading-relaxed text-slate-700 dark:text-slate-300">
-                        {benefit}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {(feature.primaryCta || feature.secondaryCta) && (
-                  <div className="flex flex-row gap-3 pt-2">
-                    {feature.primaryCta && (
-                      <Link
-                        href={feature.primaryCta.href}
-                        className="inline-flex h-10 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary px-2.5 font-syne text-[9px] font-extrabold uppercase tracking-normal text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-dark active:scale-95 sm:h-12 sm:flex-none sm:gap-2.5 sm:rounded-full sm:px-6 sm:text-xs sm:tracking-wider"
-                      >
-                        {feature.primaryCta.label}
-                        <ArrowRight className="h-4 w-4 stroke-[2.6]" />
-                      </Link>
-                    )}
-                    {feature.secondaryCta && (
-                      <Link
-                        href={feature.secondaryCta.href}
-                        className="inline-flex h-10 min-w-0 flex-1 items-center justify-center rounded-xl border border-slate-300 bg-white px-2.5 font-syne text-[9px] font-extrabold uppercase tracking-normal text-slate-900 transition-all duration-200 hover:border-primary/40 hover:text-primary active:scale-95 dark:border-slate-700 dark:bg-slate-900 dark:text-white sm:h-12 sm:flex-none sm:rounded-full sm:px-6 sm:text-xs sm:tracking-wider"
-                      >
-                        {feature.secondaryCta.label}
-                      </Link>
-                    )}
-                  </div>
-                )}
-              </motion.div>
-
-              <motion.div
-                variants={fadeUp}
-                initial="hidden"
-                animate="visible"
-                transition={{ ...motionTransition, delay: 0.08 }}
-                className="lg:col-span-6"
-              >
-                {heroVisual ? (
-                  <div className="group/image relative overflow-hidden rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 dark:border-slate-800/90 dark:bg-slate-900/70 dark:shadow-none sm:rounded-2xl sm:p-2 sm:shadow-xl">
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950 min-[430px]:aspect-[16/11] sm:rounded-xl sm:aspect-[16/10]">
-                      <Image
-                        src={heroVisual.imageSrc}
-                        alt={heroVisual.imageAlt}
-                        fill
-                        priority
-                        sizes="(max-width: 1024px) 92vw, 44vw"
-                        className="object-cover transition-transform duration-700 group-hover/image:scale-[1.03]"
-                      />
-                    </div>
-                    <div className="absolute right-2 top-2 z-20 inline-flex max-w-[74%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8px] font-extrabold uppercase tracking-normal text-slate-800 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 sm:right-4 sm:top-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-wider">
-                      <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                      {heroVisual.topBadge}
-                    </div>
-                    <div className="absolute bottom-2 left-2 z-20 inline-flex max-w-[78%] items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2 py-1 text-[8.5px] font-extrabold leading-none text-slate-700 shadow-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200 sm:bottom-4 sm:left-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[11px]">
-                      <ShieldCheck className="h-3 w-3 shrink-0 text-primary sm:h-3.5 sm:w-3.5" />
-                      {heroVisual.bottomBadge}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="rounded-lg border border-slate-200/90 bg-slate-50 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/60 sm:p-8">
-                    <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-wider text-primary dark:text-primary-light">
-                      <Database className="h-3.5 w-3.5" />
-                      Technical telemetry specs
-                    </span>
-                    <p className="mt-4 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
-                      {feature.techSpec}
-                    </p>
-                  </div>
-                )}
-              </motion.div>
-            </div>
+        <div className="site-container">
+          <div className="mb-4 flex flex-wrap items-center gap-1.5 text-[8.5px] font-black uppercase tracking-normal text-slate-400 dark:text-slate-500 sm:mb-6 sm:text-[10px] sm:tracking-wider">
+            <Link href="/" className="transition-colors hover:text-primary">Home</Link>
+            <ChevronRight size={10} />
+            <Link href="/features" className="transition-colors hover:text-primary">Features</Link>
+            <ChevronRight size={10} />
+            <span className="truncate text-primary">{feature.title}</span>
           </div>
-        </section>
 
-        {feature.capabilities?.length ? (
-          <FeatureCardGrid
-            title={feature.overviewTitle ?? "Core feature capabilities"}
-            description={feature.overviewDesc ?? feature.desc}
-            items={feature.capabilities}
-          />
-        ) : null}
-
-        <WorkflowSection feature={feature} />
-
-        {feature.useCases?.length ? (
-          <FeatureCardGrid
-            eyebrow="Use cases"
-            title={feature.useCaseTitle ?? "Where this feature fits"}
-            description={feature.useCaseDesc ?? "Use this module across the service moments where it creates the most operational clarity."}
-            items={feature.useCases}
-          />
-        ) : null}
-
-        {feature.faqs?.length ? (
-          <section className="bg-white py-12 dark:bg-slate-950 sm:py-16">
-            <div className="site-container">
-              <div className="mx-auto mb-8 max-w-3xl text-center">
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={motionTransition}
+              className="space-y-4 lg:col-span-6"
+            >
+              <div>
                 <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary-light">
-                  <Clock className="h-3 w-3 stroke-[2.4]" />
-                  Common questions
+                  <Sparkles className="h-3 w-3 stroke-[2.4]" />
+                  Enterprise Module
                 </span>
-                <h2 className="font-syne text-2xl font-black leading-tight text-slate-950 dark:text-white sm:text-4xl">
-                  {feature.title} FAQs
-                </h2>
+                <h1 className="max-w-2xl font-syne text-[1.85rem] font-black leading-[1.08] tracking-normal text-slate-950 dark:text-white min-[380px]:text-[2.1rem] sm:text-5xl sm:tracking-tight lg:text-[3.2rem]">
+                  {feature.title}
+                </h1>
               </div>
 
-              <div className={`grid gap-4 ${feature.faqs.length === 1 ? "mx-auto max-w-xl" : "mx-auto max-w-5xl md:grid-cols-2"}`}>
-                {feature.faqs.map((faq) => (
+              <p className="text-xs font-black uppercase tracking-wider text-primary dark:text-primary-light sm:text-sm">
+                {feature.tagline}
+              </p>
+              <p className="max-w-xl text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
+                {feature.desc}
+              </p>
+
+              <div className="grid gap-2 pt-1 sm:grid-cols-2">
+                {feature.benefits.map((benefit) => (
                   <div
-                    key={faq.question}
-                    className="rounded-lg border border-slate-200/90 bg-slate-50/70 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/60"
+                    key={benefit}
+                    className="flex items-start gap-2.5 rounded-xl border border-slate-200/80 bg-white px-3 py-2.5 shadow-xs dark:border-slate-800 dark:bg-slate-900/70"
                   >
-                    <h3 className="font-syne text-sm font-black leading-snug text-slate-950 dark:text-white">
-                      {faq.question}
-                    </h3>
-                    <p className="mt-2 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-400">
-                      {faq.answer}
-                    </p>
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-light">
+                      <Check className="h-3.5 w-3.5 stroke-[3]" />
+                    </span>
+                    <span className="text-xs font-bold leading-relaxed text-slate-700 dark:text-slate-300">
+                      {benefit}
+                    </span>
                   </div>
                 ))}
               </div>
-            </div>
-          </section>
-        ) : null}
 
-        <section className="border-t border-slate-200/80 bg-slate-50/70 py-12 dark:border-slate-800/80 dark:bg-slate-900/45">
-          <div className="site-container">
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
-              <div className="rounded-lg border border-slate-200/90 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/70 lg:col-span-5">
-                <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-wider text-primary dark:text-primary-light">
-                  <Database className="h-3.5 w-3.5" />
-                  Technical specs
+              {(feature.primaryCta || feature.secondaryCta) && (
+                <div className="flex flex-col sm:flex-row gap-3 pt-3">
+                  {feature.primaryCta && (
+                    <Link
+                      href={feature.primaryCta.href}
+                      className="inline-flex h-11 w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-primary px-5 font-syne text-xs font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/25 transition-all duration-200 hover:bg-primary-dark active:scale-95 sm:h-12 sm:rounded-full sm:px-7"
+                    >
+                      {feature.primaryCta.label}
+                      <ArrowRight className="h-4 w-4 stroke-[2.6]" />
+                    </Link>
+                  )}
+                  {feature.secondaryCta && (
+                    <Link
+                      href={feature.secondaryCta.href}
+                      className="inline-flex h-11 w-full sm:w-auto items-center justify-center rounded-xl border border-slate-300 bg-white px-5 font-syne text-xs font-extrabold uppercase tracking-wider text-slate-900 transition-all duration-200 hover:border-primary/40 hover:text-primary active:scale-95 dark:border-slate-700 dark:bg-slate-900 dark:text-white sm:h-12 sm:rounded-full sm:px-7"
+                    >
+                      {feature.secondaryCta.label}
+                    </Link>
+                  )}
+                </div>
+              )}
+            </motion.div>
+
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ ...motionTransition, delay: 0.1 }}
+              className="lg:col-span-6"
+            >
+              {heroVisual ? (
+                <SoftwareStageFrame
+                  imageSrc={heroVisual.imageSrc}
+                  imageAlt={heroVisual.imageAlt}
+                  slug={canonicalSlug}
+                  topBadge={heroVisual.topBadge}
+                  bottomBadge={heroVisual.bottomBadge}
+                  priority
+                />
+              ) : (
+                <div className="rounded-2xl border border-slate-200/90 bg-slate-50 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/60 sm:p-8">
+                  <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-wider text-primary dark:text-primary-light">
+                    <Database className="h-3.5 w-3.5" />
+                    Technical telemetry specs
+                  </span>
+                  <p className="mt-4 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
+                    {feature.techSpec}
+                  </p>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── 2. Capabilities Bento Grid (No repeated mockups) ─── */}
+      {feature.capabilities?.length ? (
+        <CapabilitiesBentoSection
+          title={feature.overviewTitle ?? "Core feature capabilities"}
+          description={feature.overviewDesc ?? feature.desc}
+          items={feature.capabilities}
+        />
+      ) : null}
+
+      {/* ─── 3. Connected Workflow Pipeline ─── */}
+      <WorkflowPipelineSection feature={feature} slug={canonicalSlug} />
+
+      {/* ─── 4. Industry Use Cases ─── */}
+      {feature.useCases?.length ? (
+        <UseCasesSection
+          title={feature.useCaseTitle ?? "Enterprise Deployment Matrix"}
+          description={feature.useCaseDesc ?? "Architected for high-concurrency enterprise locations and mission-critical multi-brand stores."}
+          items={feature.useCases}
+        />
+      ) : null}
+
+      {/* ─── 5. Technical Telemetry & Security Matrix ─── */}
+      <section className="border-t border-slate-200/80 bg-white py-12 dark:border-slate-800/80 dark:bg-slate-950 sm:py-16">
+        <div className="site-container">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
+            {/* Left: Terminal Specs */}
+            <div className="rounded-2xl border border-slate-200/90 bg-slate-900 text-slate-200 p-6 shadow-xl dark:border-slate-800 lg:col-span-5">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                <span className="flex items-center gap-2 text-[11px] font-mono font-bold text-emerald-400">
+                  <Terminal className="h-3.5 w-3.5" />
+                  quantix_spec.json
                 </span>
-                <p className="mt-3 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
-                  {feature.techSpec}
+                <span className="text-[10px] font-mono text-slate-500">v4.18-RELEASE</span>
+              </div>
+              <div className="mt-4 space-y-3 font-mono text-xs text-slate-300">
+                <div className="flex justify-between border-b border-slate-800/60 pb-2">
+                  <span className="text-slate-500">Architecture</span>
+                  <span className="font-semibold text-emerald-400">Edge Mesh + Cloud Sync</span>
+                </div>
+                <div className="flex justify-between border-b border-slate-800/60 pb-2">
+                  <span className="text-slate-500">Data Transfer</span>
+                  <span className="font-semibold text-slate-200">TLS 1.3 / gRPC WebSockets</span>
+                </div>
+                <div className="flex justify-between border-b border-slate-800/60 pb-2">
+                  <span className="text-slate-500">Failover Model</span>
+                  <span className="font-semibold text-amber-400">Zero-Drop Local SQLite</span>
+                </div>
+                <div className="flex justify-between pb-1">
+                  <span className="text-slate-500">Compliance</span>
+                  <span className="font-semibold text-slate-200">SOC2 Type II / PCI-DSS L1</span>
+                </div>
+              </div>
+              <div className="mt-5 rounded-xl border border-slate-800 bg-slate-950/80 p-3.5 text-xs font-medium leading-relaxed text-slate-400">
+                {feature.techSpec}
+              </div>
+            </div>
+
+            {/* Right: Related Features */}
+            <div className="flex flex-col justify-between lg:col-span-7">
+              <div>
+                <span className="mb-2 inline-block text-[10px] font-black uppercase tracking-wider text-primary">
+                  Interconnected Ecosystem
+                </span>
+                <h3 className="font-syne text-xl font-black text-slate-950 dark:text-white sm:text-2xl">
+                  Explore Complementary Modules
+                </h3>
+                <p className="mt-2 text-xs font-medium text-slate-600 dark:text-slate-400 sm:text-sm">
+                  Every Quantix module shares unified telemetry, realtime audit records, and bi-directional catalog sync.
                 </p>
               </div>
 
-              <div className="lg:col-span-7">
-                <h3 className="mb-4 text-xs font-black uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                  Related feature breakdowns
-                </h3>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  {feature.relatedFeatures.map((relatedFeature) => (
-                    <Link key={relatedFeature.slug} href={`/features/${relatedFeature.slug}`}>
-                      <div className="group flex items-center justify-between rounded-lg border border-slate-200/90 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:text-primary dark:border-slate-800 dark:bg-slate-900/70">
-                        <span className="text-xs font-black uppercase tracking-tight text-slate-900 transition-colors group-hover:text-primary dark:text-white">
-                          {relatedFeature.title}
-                        </span>
-                        <ChevronRight className="h-4 w-4 text-slate-400 transition-colors group-hover:text-primary" />
-                      </div>
-                    </Link>
-                  ))}
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {feature.relatedFeatures.map((relatedFeature) => (
+                  <Link key={relatedFeature.slug} href={`/features/${relatedFeature.slug}`}>
+                    <div className="group flex items-center justify-between rounded-xl border border-slate-200/90 bg-slate-50/70 p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-white hover:shadow-md dark:border-slate-800 dark:bg-slate-900/60 dark:hover:bg-slate-900">
+                      <span className="text-xs font-bold text-slate-900 transition-colors group-hover:text-primary dark:text-white">
+                        {relatedFeature.title}
+                      </span>
+                      <ArrowUpRight className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Bottom Mini CTA */}
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-primary/20 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-4">
+                <div className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                  Ready to deploy across 10 to 500+ outlets?
                 </div>
+                <Link
+                  href="/book-demo"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 font-syne text-xs font-black uppercase tracking-wider text-white shadow-md transition-all hover:bg-primary-dark"
+                >
+                  Schedule Demo
+                  <ArrowRight className="h-3 w-3" />
+                </Link>
               </div>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* ─── 6. Frequently Asked Questions (Exact matching Homepage FAQS) ─── */}
+      <FAQWrapper />
+
+      {/* ─── 7. Global Conversion CTA Banner ─── */}
+      <CTABanner />
+    </main>
   );
 }

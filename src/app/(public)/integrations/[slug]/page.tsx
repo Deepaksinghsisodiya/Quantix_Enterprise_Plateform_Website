@@ -19,7 +19,9 @@ import {
 import { FAQWrapper } from "@/features/FAQ";
 import type { FAQItem } from "@/features/FAQ/Types/FAQTypes";
 import { RequestDemoButton } from "@/components/atoms/RequestDemoButton";
+import { ConnectIntegrationButton } from "@/components/atoms/ConnectIntegrationButton";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
+import TestimonialsWrapper from "@/features/Testimonials";
 
 type IntegrationStep = {
   step: string;
@@ -372,84 +374,141 @@ export default async function IntegrationDetailPage({
     square: "/brands/integrations/square.svg",
     doordash: "/brands/integrations/doordash.svg",
     "uber-eats": "/brands/integrations/ubereats.svg",
+    ubereats: "/brands/integrations/ubereats.svg",
     grubhub: "/brands/integrations/grubhub.svg",
     quickbooks: "/brands/integrations/quickbooks.svg",
     xero: "/brands/integrations/xero.svg",
+    shopify: "/brands/integrations/shopify.svg",
     "google-pay": "/brands/integrations/gpay.svg",
     "apple-pay": "/brands/integrations/applepay.svg",
     clover: "/brands/integrations/clover.svg",
   };
   const logoUrl = logoPaths[slug] || "/brands/integrations/stripe.svg";
 
-  return (
-    <>
-      {/* 1. Hero Section (Standard Benchmark) */}
-      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
-        <div className="site-container relative z-10 px-4 sm:px-6">
-          <div className="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
-            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-            <ChevronRight size={12} />
-            <Link href="/integrations" className="hover:text-primary transition-colors">Integrations</Link>
-            <ChevronRight size={12} />
-            <span className="text-primary font-bold truncate max-w-55 sm:max-w-none">{integration.name}</span>
-          </div>
+  const imageMap: Record<string, string> = {
+    stripe: "/images/ent_stripe_pos_bundle.png",
+    "authorize-net": "/images/ent_venues_pos.png",
+    square: "/images/nav_payment_bundle.png",
+    doordash: "/images/ent_delivery_dispatch_bundle.png",
+    "uber-eats": "/images/rest_ghost_kitchen_bundle.png",
+    ubereats: "/images/rest_ghost_kitchen_bundle.png",
+    quickbooks: "/images/ent_accounting_sync_bundle.png",
+    xero: "/images/ent_accounting_sync_bundle.png",
+    shopify: "/images/ent_omnichannel_bundle.png",
+  };
+  const heroImage =
+    imageMap[slug] ||
+    (integration.category === "PAYMENTS"
+      ? "/images/ent_stripe_pos_bundle.png"
+      : integration.category === "DELIVERY"
+      ? "/images/ent_delivery_dispatch_bundle.png"
+      : integration.category === "ACCOUNTING"
+      ? "/images/ent_accounting_sync_bundle.png"
+      : "/images/ent_global_pos_bundle.png");
 
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
-            <div className="space-y-4 lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-black uppercase tracking-wider text-primary shadow-xs">
-                <Sparkles size={14} />
-                <span>{integration.category} INTEGRATION</span>
+  const TRUST_METRICS = [
+    { label: "Webhook SLA", value: "99.99%", desc: "Enterprise SLA" },
+    { label: "Injection Speed", value: "< 200ms", desc: "Direct to Kitchen" },
+    { label: "Accuracy Rate", value: "100%", desc: "Zero Ticket Errors" },
+    { label: "Security", value: "PCI-DSS", desc: "Level 1 Certified" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-orange-100 selection:text-orange-900">
+      {/* 1. Hero Section (Aligned with globals.css .page-hero-header) */}
+      <section className="bg-white page-hero-header border-b border-slate-200/80 relative overflow-hidden">
+        {/* Subtle Architectural Dot Pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px] sm:[background-size:24px_24px] pointer-events-none opacity-60" />
+
+        {/* Soft Ambient Radial Warmth */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 bg-gradient-to-b from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
+
+        <div className="site-container relative z-10 px-4 sm:px-6">
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="Breadcrumb" className="mb-3.5 sm:mb-5 inline-flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs font-semibold text-slate-500">
+            <Link href="/" className="hover:text-[#FF4F00] transition-colors">Home</Link>
+            <ChevronRight size={12} className="text-slate-400 shrink-0" />
+            <Link href="/integrations" className="hover:text-[#FF4F00] transition-colors">Integrations</Link>
+            <ChevronRight size={12} className="text-slate-400 shrink-0" />
+            <span className="text-[#FF4F00] font-bold truncate max-w-[170px] sm:max-w-none">{integration.name}</span>
+          </nav>
+
+          <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-12 lg:gap-12">
+            <div className="space-y-3.5 sm:space-y-4 lg:col-span-7">
+              {/* Category Pill Badge */}
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#FF4F00] shadow-2xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF4F00] animate-pulse" />
+                <Sparkles size={12} className="text-[#FF4F00]" />
+                <span>{integration.category} VERIFIED CONNECTOR</span>
               </div>
 
-              <h1 className="font-syne text-3xl font-black leading-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
-                Quantix + {integration.name}
+              {/* Main Heading */}
+              <h1 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-950 leading-[1.2] sm:leading-[1.16] tracking-tight">
+                Quantix + <span className="text-[#FF4F00]">{integration.name}</span>
               </h1>
 
-              <p className="max-w-xl text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
+              {/* Tagline */}
+              <p className="max-w-xl text-xs sm:text-sm md:text-base font-medium leading-relaxed text-slate-600">
                 {integration.tagline}
               </p>
 
-              <p className="max-w-xl text-xs font-medium leading-relaxed text-slate-500 dark:text-slate-400">
+              {/* Description */}
+              <p className="max-w-xl text-xs sm:text-sm font-normal leading-relaxed text-slate-500">
                 {integration.description}
               </p>
 
-              <div className="flex flex-row items-center gap-2.5 sm:gap-3.5 pt-4 w-full sm:w-auto">
-                <Link
-                  href="/sign-up"
-                  className="flex-1 sm:flex-initial flex h-11 sm:h-12 items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-primary px-3 sm:px-8 font-syne text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-md shadow-primary/20 transition-all hover:bg-primary-dark active:scale-95 text-center min-w-0 cursor-pointer"
-                >
-                  <span className="truncate">Connect {integration.name}</span>
-                  <ArrowRight size={13} className="shrink-0" />
-                </Link>
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3.5 pt-2 sm:pt-4 w-full sm:w-auto">
+                <ConnectIntegrationButton
+                  integrationName={integration.name}
+                  integrationSlug={slug}
+                  className="w-full sm:w-auto flex h-11 sm:h-12 items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-primary px-5 sm:px-8 font-syne text-xs font-extrabold uppercase tracking-wider text-white shadow-md shadow-primary/25 transition-all hover:bg-primary-dark active:scale-95 text-center cursor-pointer group"
+                />
                 <RequestDemoButton
                   title={`Setup ${integration.name} Integration`}
                   buttonText="INTEGRATION_SETUP"
-                  label="Request Help"
-                  className="flex-1 sm:flex-initial flex h-11 sm:h-12 items-center justify-center gap-1.5 sm:gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 sm:px-8 font-syne text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer text-center min-w-0"
+                  label="Request Setup Help"
+                  className="w-full sm:w-auto flex h-11 sm:h-12 items-center justify-center gap-1.5 sm:gap-2 rounded-xl border border-slate-300 bg-white px-5 sm:px-8 font-syne text-xs font-extrabold uppercase tracking-wider text-slate-800 shadow-2xs hover:bg-slate-50 active:scale-95 cursor-pointer text-center transition-all"
                 />
+              </div>
+
+              {/* 4 Trust Metrics Bar */}
+              <div className="pt-4 sm:pt-6 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 max-w-xl">
+                {TRUST_METRICS.map((metric, idx) => (
+                  <div
+                    key={idx}
+                    className="px-2.5 py-2 sm:px-3 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-50/90 border border-slate-200/80 backdrop-blur-xs text-center shadow-2xs"
+                  >
+                    <div className="font-syne font-extrabold text-sm sm:text-base text-slate-950">
+                      {metric.value}
+                    </div>
+                    <div className="text-[10px] sm:text-[11px] font-semibold text-slate-700 leading-tight">
+                      {metric.label}
+                    </div>
+                    <div className="text-[9px] text-slate-400 mt-0.5 hidden sm:block">
+                      {metric.desc}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
             {/* 3D Hardware Bundle with Verified Connector Badge */}
-            <div className="lg:col-span-5">
-              <div className="relative aspect-4/3 w-full flex items-center justify-center p-2 group">
+            <div className="lg:col-span-5 flex items-center justify-center">
+              <div className="relative aspect-4/3 w-full max-w-md lg:max-w-lg mx-auto flex items-center justify-center p-2 group">
+
                 <Image
-                  src={
-                    integration.id === "stripe" ? "/images/ent_stripe_pos_bundle.png" :
-                    integration.category === "PAYMENTS" ? "/images/ent_stripe_pos_bundle.png" :
-                    integration.category === "DELIVERY" ? "/images/ent_delivery_dispatch_bundle.png" :
-                    integration.category === "ACCOUNTING" ? "/images/ent_bi_analytics_bundle.png" :
-                    integration.category === "INVENTORY" ? "/images/ent_supply_chain_bundle.png" :
-                    "/images/ent_global_pos_bundle.png"
-                  }
+                  src={heroImage}
                   alt={`${integration.name} 3D integration bundle`}
                   fill
                   priority
                   sizes="(max-width: 1024px) 92vw, 42vw"
-                  className="object-contain p-2 drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                  className="object-contain p-2 drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-4 left-4 z-20 inline-flex items-center gap-2.5 rounded-2xl border border-slate-200/80 bg-white/95 px-4 py-2.5 shadow-xl backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95">
-                  <div className="relative h-8 w-8 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center p-1 border border-slate-200/60 dark:border-slate-700">
+
+                {/* Verified Connector Badge */}
+                <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-20 inline-flex items-center gap-2 sm:gap-2.5 rounded-xl sm:rounded-2xl border border-slate-200/90 bg-white/95 px-2.5 py-1.5 sm:px-3.5 sm:py-2 shadow-xl backdrop-blur-md">
+                  <div className="relative h-7 w-7 sm:h-8 sm:w-8 rounded-lg bg-slate-50 flex items-center justify-center p-1 border border-slate-200/60 shrink-0">
                     <Image
                       src={logoUrl}
                       alt={`${integration.name} logo`}
@@ -460,10 +519,10 @@ export default async function IntegrationDetailPage({
                     />
                   </div>
                   <div>
-                    <span className="block font-syne text-xs font-black text-slate-900 dark:text-white leading-tight">
+                    <span className="block font-syne text-[11px] sm:text-xs font-black text-slate-900 leading-tight">
                       {integration.name}
                     </span>
-                    <span className="block text-[9px] font-extrabold uppercase tracking-wider text-primary">
+                    <span className="block text-[8px] sm:text-[9px] font-extrabold uppercase tracking-wider text-[#FF4F00]">
                       Verified Connector
                     </span>
                   </div>
@@ -474,29 +533,36 @@ export default async function IntegrationDetailPage({
         </div>
       </section>
 
-      {/* 2. Features Grid */}
-      <section className="section-py bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80">
+      {/* 2. Capabilities Grid (Standard .section-py from globals.css) */}
+      <section className="section-py bg-slate-50/50 border-b border-slate-200/80">
         <div className="site-container px-4 sm:px-6">
-          <div className="text-center mb-10 max-w-2xl mx-auto">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-primary block mb-2">CAPABILITIES</span>
-            <h2 className="font-syne text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-tight">
+          <div className="text-center section-header-mb max-w-2xl mx-auto">
+            <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-[#FF4F00] block mb-2">CAPABILITIES</span>
+            <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 leading-tight">
               What You Get With {integration.name}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-2">
+            <p className="text-xs sm:text-sm text-slate-500 font-medium mt-2">
               Full enterprise feature breakdown of the Quantix + {integration.name} integration.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5 md:gap-6">
             {integration.features.map((feat) => (
-              <div key={feat.title} className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all">
+              <div
+                key={feat.title}
+                className="p-4 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md hover:border-orange-500/40 transition-all duration-300 group"
+              >
                 <div className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500/10 text-[#FF4F00] group-hover:bg-[#FF4F00] group-hover:text-white transition-colors duration-200">
                     <Check className="h-3.5 w-3.5 stroke-3" />
                   </span>
                   <div>
-                    <h3 className="font-syne font-extrabold text-sm text-slate-900 dark:text-white">{feat.title}</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1 leading-relaxed">{feat.desc}</p>
+                    <h3 className="font-syne font-extrabold text-sm sm:text-base text-slate-900 group-hover:text-[#FF4F00] transition-colors duration-200">
+                      {feat.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-500 font-normal mt-1 leading-relaxed">
+                      {feat.desc}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -505,31 +571,41 @@ export default async function IntegrationDetailPage({
         </div>
       </section>
 
-      {/* 3. How It Works Steps */}
-      <section className="section-py bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80">
-        <div className="site-container max-w-3xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 max-w-lg mx-auto">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-primary block mb-2">FAST ONBOARDING</span>
-            <h2 className="font-syne text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-tight">
+      {/* 3. Fast Onboarding Steps (2-Col Responsive Grid with .section-py) */}
+      <section className="section-py bg-white border-b border-slate-200/80">
+        <div className="site-container max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="text-center section-header-mb max-w-xl mx-auto">
+            <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-[#FF4F00] block mb-2">FAST ONBOARDING</span>
+            <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 leading-tight">
               How to Connect {integration.name}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-2">
+            <p className="text-xs sm:text-sm text-slate-500 font-medium mt-2">
               Get up and running in 4 simple steps. Most locations go live in under 10 minutes.
             </p>
           </div>
 
-          <div className="space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-5">
             {integration.howItWorks.map((step) => (
-              <div key={step.step} className="flex items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-2xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+              <div
+                key={step.step}
+                className="flex items-start gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-orange-500/40 hover:bg-white transition-all duration-300 shadow-2xs"
+              >
                 <span
-                  className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl font-syne font-black text-lg sm:text-xl"
-                  style={{ backgroundColor: integration.color + "15", color: integration.color }}
+                  className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl font-syne font-black text-base sm:text-lg shadow-2xs"
+                  style={{
+                    backgroundColor: (integration.id === "square" ? "#FF4F00" : integration.color) + "15",
+                    color: integration.id === "square" ? "#FF4F00" : integration.color,
+                  }}
                 >
                   {step.step}
                 </span>
                 <div>
-                  <h3 className="font-syne font-extrabold text-base text-slate-900 dark:text-white">{step.title}</h3>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium mt-1 leading-relaxed">{step.desc}</p>
+                  <h3 className="font-syne font-extrabold text-sm sm:text-base text-slate-900">
+                    {step.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 font-normal mt-1 leading-relaxed">
+                    {step.desc}
+                  </p>
                 </div>
               </div>
             ))}
@@ -537,30 +613,15 @@ export default async function IntegrationDetailPage({
         </div>
       </section>
 
-      {/* 4. Benefits */}
-      <section className="section-py bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80">
-        <div className="site-container max-w-3xl mx-auto px-4 sm:px-6">
-          <h2 className="font-syne text-2xl sm:text-3xl font-black text-slate-900 dark:text-white text-center mb-8">
-            Why Businesses Love This Integration
-          </h2>
-          <div className="space-y-3">
-            {integration.benefits.map((benefit) => (
-              <div key={benefit} className="flex items-start gap-3 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: integration.color + "15", color: integration.color }}>
-                  <Check className="h-3.5 w-3.5 stroke-3" />
-                </span>
-                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300">{benefit}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* 5. FAQ Section (Fetches Live API FAQs) */}
+      {/* 5. Customer Testimonials */}
+      <TestimonialsWrapper />
+
+      {/* 6. FAQ Section (Fetches Live API FAQs) */}
       <FAQWrapper fallbackFaqs={integration.faqs} />
 
-      {/* 6. Production CTA Banner */}
+      {/* 7. Production CTA Banner */}
       <CTABanner />
-    </>
+    </div>
   );
 }

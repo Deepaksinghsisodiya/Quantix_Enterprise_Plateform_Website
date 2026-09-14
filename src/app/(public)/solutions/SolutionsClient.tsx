@@ -2,277 +2,333 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence, type Variants } from "framer-motion";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   Building2,
-  Coffee,
-  Flame,
-  Globe2,
+  Cloud,
   Layers,
-  Scan,
   ShoppingBag,
   Sparkles,
   Store,
-  Tag,
   Tv,
   Utensils,
   Zap,
+  Scale,
+  Scan,
+  ChefHat,
+  Clock,
+  ShieldCheck,
+  LineChart,
+  Boxes,
+  ExternalLink,
+  CheckCircle2,
+  type LucideIcon,
 } from "lucide-react";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import TestimonialsWrapper from "@/features/Testimonials";
 
-interface EnterpriseSector {
-  id: string;
-  slug: string;
+export const RESTAURANT_SITE_URL = process.env.NEXT_PUBLIC_RESTAURANT_URL || "http://localhost:3002";
+export const RETAIL_SITE_URL = process.env.NEXT_PUBLIC_RETAIL_URL || "http://localhost:3001";
+
+interface SolutionFeature {
   title: string;
-  category: "all" | "franchise" | "hospitality" | "retail" | "venues";
-  badge: string;
   desc: string;
-  image: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
-  accentColor: string;
-  glowColor: string;
-  features: string[];
+  icon: LucideIcon;
+  badge: string;
 }
 
-const SECTORS: EnterpriseSector[] = [
-  {
-    id: "franchise-chains",
-    slug: "franchise",
-    title: "Multi-Unit Franchises & Restaurant Groups",
-    category: "franchise",
-    badge: "CENTRAL HQ",
-    desc: "Centralized menu catalog distribution, franchise royalty tracking, regional price tiers, and consolidated P&L telemetry.",
-    image: "/images/ent_franchise_portal.png",
-    icon: Building2,
-    accentColor: "text-primary dark:text-primary-light bg-primary/10 border-primary/20",
-    glowColor: "from-primary/15 to-transparent",
-    features: ["HQ Broadcast", "Royalty Ledger", "Multi-Branch P&L"],
-  },
-  {
-    id: "global-retail",
-    slug: "grocery",
-    title: "Global Retail & Supermarket Chains",
-    category: "retail",
-    badge: "SCALE & MULTI-LANE",
-    desc: "High-speed barcode scanner billing, certified weighing scales, automated vendor purchase orders, and inter-store stock routing.",
-    image: "/images/ent_global_pos_bundle.png",
-    icon: ShoppingBag,
-    accentColor: "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/50",
-    glowColor: "from-emerald-500/15 to-transparent",
-    features: ["Scale Integration", "Auto Vendor POs", "Inter-Store Stock"],
-  },
-  {
-    id: "venues-stadiums",
-    slug: "venues",
-    title: "Stadiums, Arenas & Large Entertainment Venues",
-    category: "venues",
-    badge: "HIGH-BURST OFFLINE",
-    desc: "Sub-second offline transactions during peak event rushes, mobile hawker POS terminals, and zone-based inventory dispatching.",
-    image: "/images/ent_venues_pos.png",
-    icon: Zap,
-    accentColor: "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-900/50",
-    glowColor: "from-blue-500/15 to-transparent",
-    features: ["Sub-80ms Burst", "Mobile Hawkers", "Zone Dispatch"],
-  },
-  {
-    id: "supply-chain-hq",
-    slug: "supply-chain",
-    title: "Enterprise Supply Chain & Global Logistics",
-    category: "franchise",
-    badge: "WAREHOUSE MATRIX",
-    desc: "Real-time central warehouse replenishment, lot/batch tracking, multi-tier safety stock alerts, and automated EDI supplier links.",
-    image: "/images/ent_supply_chain_bundle.png",
-    icon: Layers,
-    accentColor: "text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-900/50",
-    glowColor: "from-purple-500/15 to-transparent",
-    features: ["Central Warehouse", "Lot & Batch", "EDI Supplier Links"],
-  },
-  {
-    id: "fine-dining-groups",
-    slug: "fine-dining",
-    title: "Fine Dining Groups & Luxury Hospitality",
-    category: "hospitality",
-    badge: "PACING & WINE VIP",
-    desc: "Multi-course pacing, sommelier cellar inventory, tableside split checks, VIP clienteling, and private event banquet logs.",
-    image: "/images/ent_fine_dining_bundle.png",
-    icon: Utensils,
-    accentColor: "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900/50",
-    glowColor: "from-amber-500/15 to-transparent",
-    features: ["Course Pacing", "Sommelier Cellar", "VIP Profiles"],
-  },
-  {
-    id: "dine-in-restaurants",
-    slug: "restaurants",
-    title: "Dine-In Restaurants & Foodservice",
-    category: "hospitality",
-    badge: "TABLE OPS & KDS",
-    desc: "Interactive visual floor plans, course-paced kitchen ticket routing, tableside handheld order taking, and flexible bill splitting.",
-    image: "/images/nav_restaurant_bundle.png",
-    icon: Utensils,
-    accentColor: "text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/40 border-orange-200 dark:border-orange-900/50",
-    glowColor: "from-orange-500/15 to-transparent",
-    features: ["Visual Floor Plans", "Course Pacing", "Tableside Split"],
-  },
-  {
-    id: "cafes-bakeries",
-    slug: "cafes",
-    title: "Cafes, Bakeries & Coffee Bars",
-    category: "hospitality",
-    badge: "BARISTA SPEED",
-    desc: "One-tap beverage modifiers, barista espresso KDS queues, automated sticky cup tag printing, and pastry recipe costing.",
-    image: "/images/ent_cafe_bakery_bundle.png",
-    icon: Coffee,
-    accentColor: "text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900/50",
-    glowColor: "from-amber-600/15 to-transparent",
-    features: ["Barista Speed Screen", "Sticky Cup Labels", "Recipe Costing"],
-  },
-  {
-    id: "bars-nightclubs",
-    slug: "bars",
-    title: "Bars, Nightclubs & High-Volume Lounges",
-    category: "hospitality",
-    badge: "QUICK TABS & TIPS",
-    desc: "Lightning-fast pre-authorized bar tabs, high-speed speed screens, pour controls, and automated shift tip splitting.",
-    image: "/images/ent_bars_nightclubs_bundle.png",
-    icon: Flame,
-    accentColor: "text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-900/50",
-    glowColor: "from-purple-500/15 to-transparent",
-    features: ["Instant Bar Tabs", "Speed Screens", "Tip Pooling"],
-  },
-  {
-    id: "boutiques-apparel",
-    slug: "apparel",
-    title: "Boutiques & Apparel Fashion Retail",
-    category: "retail",
-    badge: "SIZE & COLOR MATRIX",
-    desc: "Multi-attribute size, color, and style variant matrices, barcode label generation, and swift omnichannel return handling.",
-    image: "/images/nav_retail_bundle.png",
-    icon: ShoppingBag,
-    accentColor: "text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-950/40 border-pink-200 dark:border-pink-900/50",
-    glowColor: "from-pink-500/15 to-transparent",
-    features: ["Variant Matrix", "Barcode Tagging", "Cross-Store Returns"],
-  },
-  {
-    id: "qsr-kiosks",
-    slug: "quick-service",
-    title: "High-Volume QSR & Self-Service Kiosks",
-    category: "hospitality",
-    badge: "15-SEC TURNOVER",
-    desc: "15-second counter turnover, interactive self-ordering kiosks, multi-station kitchen KDS displays, and delivery aggregator auto-injection.",
-    image: "/images/ent_qsr_kiosk_bundle.png",
-    icon: Tv,
-    accentColor: "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/50",
-    glowColor: "from-rose-500/15 to-transparent",
-    features: ["Self-Kiosks", "Multi-KDS", "Delivery Injection"],
-  },
-];
+interface SolutionItem {
+  id: string;
+  number: string;
+  title: string;
+  eyebrow: string;
+  tagline: string;
+  description: string;
+  imageSrc: string;
+  imageAlt: string;
+  topBadge: string;
+  bottomBadge: string;
+  externalSiteUrl?: string;
+  externalSiteLabel?: string;
+  internalHref: string;
+  internalCtaLabel: string;
+  accentGradient: string;
+  glowColor: string;
+  icon: LucideIcon;
+  subSectors: { label: string; href: string }[];
+  features: SolutionFeature[];
+  imagePosition: "left" | "right";
+}
 
 const FILTER_TABS = [
-  { id: "all", label: "All Sectors" },
-  { id: "franchise", label: "Franchises & Supply Chain" },
-  { id: "hospitality", label: "Enterprise Hospitality" },
-  { id: "retail", label: "Multi-Store Retail" },
-  { id: "venues", label: "Stadiums & Venues" },
+  { id: "all", label: "All Solutions", icon: Sparkles },
+  { id: "restaurant", label: "Restaurant POS", icon: Utensils },
+  { id: "retail", label: "Retail POS", icon: ShoppingBag },
+  { id: "multistore", label: "Multi-Store Cloud HQ", icon: Cloud },
 ];
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.06,
-    },
+const SOLUTIONS_DATA: SolutionItem[] = [
+  {
+    id: "restaurant",
+    number: "01",
+    title: "Restaurant POS Solution",
+    eyebrow: "HOSPITALITY & DINING ARCHITECTURE",
+    tagline: "Purpose-Built for Dine-In, Kitchen Operations & Tableside Speed",
+    description:
+      "A complete dining room, kitchen management, and mobile ordering platform engineered for high-volume hospitality. Sync kitchen displays, table seating, and course pacing seamlessly across front-of-house and back-of-house.",
+    imageSrc: "/images/nav_restaurant_bundle.png",
+    imageAlt: "Restaurant POS Terminal, Kitchen KDS and Handheld Till",
+    topBadge: "Dual-Screen POS + Kitchen KDS",
+    bottomBadge: "Zero-Latency Station Mesh",
+    externalSiteUrl: RESTAURANT_SITE_URL,
+    externalSiteLabel: "Visit Restaurant Site",
+    internalHref: "/solutions/restaurants",
+    internalCtaLabel: "Explore Restaurant Architecture",
+    accentGradient: "from-amber-500 via-orange-500 to-[#FF4F00]",
+    glowColor: "rgba(245, 158, 11, 0.15)",
+    icon: Utensils,
+    imagePosition: "right",
+    subSectors: [
+      { label: "Dine-In Restaurants", href: "/solutions/restaurants" },
+      { label: "Fine Dining Groups", href: "/solutions/fine-dining" },
+      { label: "Cafes & Bakeries", href: "/solutions/cafes" },
+      { label: "Bars & Nightclubs", href: "/solutions/bars" },
+      { label: "Quick-Service (QSR)", href: "/solutions/quick-service" },
+    ],
+    features: [
+      {
+        title: "Kitchen Display System (KDS)",
+        desc: "Color-coded order routing to grill, fry, cold, and expo prep stations with live countdown bump timers.",
+        icon: Tv,
+        badge: "KDS Stations",
+      },
+      {
+        title: "Interactive Table Floor Plans",
+        desc: "Visual multi-room dining room layouts, guest turnover timers, server section balancing, and live table status.",
+        icon: Utensils,
+        badge: "Table Ops",
+      },
+      {
+        title: "Synchronized Course Pacing",
+        desc: "Fire starters, mains, and desserts in automated sequences to eliminate kitchen ticket bottlenecks.",
+        icon: Clock,
+        badge: "Course Pacing",
+      },
+      {
+        title: "Tableside Handhelds & Split Checks",
+        desc: "Equip waitstaff with mobile handhelds for tableside tap-to-pay and flexible seat-by-seat bill splitting.",
+        icon: Sparkles,
+        badge: "Mobile EMV",
+      },
+      {
+        title: "Live Recipe & Food Costing",
+        desc: "Deduct raw ingredients automatically as dishes clear the POS to audit recipe margins and eliminate kitchen waste.",
+        icon: ChefHat,
+        badge: "Margin Sync",
+      },
+    ],
   },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 15 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
-};
+  {
+    id: "retail",
+    number: "02",
+    title: "Retail POS Solution",
+    eyebrow: "RETAIL & STORE COMMERCE ARCHITECTURE",
+    tagline: "High-Throughput Cashier Checkout, Weighing Scales & Stock Transfers",
+    description:
+      "Engineered for modern retail stores handling thousands of daily transactions. Accelerate checkout speeds with instant laser barcode scanning, certified weighing scales, and multi-location inventory replenishment.",
+    imageSrc: "/images/ent_global_pos_bundle.png",
+    imageAlt: "Retail Cashier POS Terminal with Weighing Scale and Barcode Scanner",
+    topBadge: "Sub-Second Barcode + Scale Sync",
+    bottomBadge: "Offline-First Checkout Engine",
+    externalSiteUrl: RETAIL_SITE_URL,
+    externalSiteLabel: "Visit Retail Site",
+    internalHref: "/solutions/grocery",
+    internalCtaLabel: "Explore Retail Architecture",
+    accentGradient: "from-emerald-500 via-teal-500 to-cyan-500",
+    glowColor: "rgba(16, 185, 129, 0.15)",
+    icon: ShoppingBag,
+    imagePosition: "left",
+    subSectors: [
+      { label: "Supermarkets & Grocery", href: "/solutions/grocery" },
+      { label: "Boutiques & Apparel", href: "/solutions/apparel" },
+      { label: "Convenience Stores", href: "/solutions/grocery" },
+      { label: "Specialty Retail Stores", href: "/solutions/apparel" },
+    ],
+    features: [
+      {
+        title: "High-Speed Barcode Laser Checkout",
+        desc: "Sub-second barcode scanning for high-density checkouts with multi-SKU lookups and offline till redundancy.",
+        icon: Scan,
+        badge: "Sub-Second",
+      },
+      {
+        title: "Certified Weighing Scale Integration",
+        desc: "NTEP-certified scale pairing with automatic tare weight deduction for produce, delis, and bulk goods.",
+        icon: Scale,
+        badge: "NTEP Certified",
+      },
+      {
+        title: "Size & Color Variant SKU Matrix",
+        desc: "Manage multidimensional product matrices (style, size, color, brand) with integrated barcode tag printing.",
+        icon: Layers,
+        badge: "SKU Matrix",
+      },
+      {
+        title: "Automated Par-Level Purchase Orders",
+        desc: "Trigger supplier PO reorders automatically when warehouse or store shelf inventory falls below safety par levels.",
+        icon: Boxes,
+        badge: "Auto-PO Engine",
+      },
+      {
+        title: "Inter-Store Stock Routing & Transfers",
+        desc: "Transfer stock between regional store branches and central warehouses with automated dock GRN audits.",
+        icon: Store,
+        badge: "Stock Transfers",
+      },
+    ],
+  },
+  {
+    id: "multistore",
+    number: "03",
+    title: "Multi Store Cloud POS System",
+    eyebrow: "ENTERPRISE CLOUD COMMAND ARCHITECTURE",
+    tagline: "Central Command Matrix for 50+ Unit Franchises & Enterprise Chains",
+    description:
+      "Take total command over your multi-location enterprise. Deploy catalog updates across 500+ locations in seconds, monitor consolidated store P&L telemetry, and maintain zero-latency offline continuity.",
+    imageSrc: "/images/ent_franchise_portal.png",
+    imageAlt: "Multi Store Enterprise Cloud Management Portal",
+    topBadge: "500+ Franchise Locations Synced",
+    bottomBadge: "100% Offline Mesh Till Network",
+    internalHref: "/solutions/franchise",
+    internalCtaLabel: "Explore Enterprise HQ",
+    accentGradient: "from-[#FF4F00] via-purple-600 to-indigo-600",
+    glowColor: "rgba(255, 79, 0, 0.15)",
+    icon: Cloud,
+    imagePosition: "right",
+    subSectors: [
+      { label: "Multi-Unit Franchises", href: "/solutions/franchise" },
+      { label: "Supply Chain & Warehouses", href: "/solutions/supply-chain" },
+      { label: "Arenas & Mega-Venues", href: "/solutions/venues" },
+      { label: "Enterprise Retail Chains", href: "/features/multi-store" },
+    ],
+    features: [
+      {
+        title: "One-Click Master Catalog Broadcast",
+        desc: "Deploy menu updates, holiday promotions, combo meals, and localized pricing tiers to 500+ locations in < 2.4s.",
+        icon: Cloud,
+        badge: "< 2.4s Global Sync",
+      },
+      {
+        title: "Consolidated Multi-Unit P&L Telemetry",
+        desc: "Monitor hourly sales velocity, store throughput, labor margins, and cashier performance from an executive dashboard.",
+        icon: LineChart,
+        badge: "Executive BI",
+      },
+      {
+        title: "Automated Franchise Royalty Ledger",
+        desc: "Automatically calculate corporate franchise royalties, marketing fund fees, and store remittances with zero accounting lag.",
+        icon: Building2,
+        badge: "Royalty Ledger",
+      },
+      {
+        title: "Granular Role-Based Access Control (RBAC)",
+        desc: "Centralized employee permissions, cashier override audit trails, and multi-tier manager refund authorizations.",
+        icon: ShieldCheck,
+        badge: "Enterprise RBAC",
+      },
+      {
+        title: "Zero-Latency Offline Till Mesh",
+        desc: "Peer mesh tills continue processing sales seamlessly even when local internet or WAN broadband goes completely dark.",
+        icon: Zap,
+        badge: "100% Offline Mesh",
+      },
+    ],
+  },
+];
 
 export default function SolutionsClient() {
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
-  const filteredSectors = SECTORS.filter((s) => {
+  const visibleSolutions = SOLUTIONS_DATA.filter((sol) => {
     if (selectedFilter === "all") return true;
-    return s.category === selectedFilter;
+    return sol.id === selectedFilter;
   });
 
   return (
-    <>
-      {/* Dynamic Animated Hero Header */}
+    <div className="w-full overflow-x-hidden">
+      {/* ========================================================================= */}
+      {/* 1. HERO HEADER SECTION (using global .page-hero-header)                   */}
+      {/* ========================================================================= */}
       <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-200/80 dark:border-slate-800 relative overflow-hidden">
-        {/* Animated Breathing Ambient Light */}
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.25, 0.45, 0.25],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 bg-linear-to-b from-primary/20 via-primary/10 to-transparent blur-3xl pointer-events-none -z-10"
-        />
+        {/* Soft Ambient Radial Light */}
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-64 bg-linear-to-b from-primary/15 via-primary/5 to-transparent blur-3xl -z-10" />
 
-        <div className="site-container text-center max-w-3xl mx-auto px-4">
+        <div className="site-container text-center max-w-4xl mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[11px] sm:text-xs font-black uppercase tracking-wider text-primary mb-3 shadow-xs"
+            transition={{ duration: 0.35 }}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10.5px] sm:text-xs font-black uppercase tracking-widest text-primary mb-3 sm:mb-4 shadow-xs"
           >
-            <Sparkles size={13} className="text-primary animate-pulse" />
-            <span>ENTERPRISE SOLUTIONS</span>
+            <Sparkles size={13} className="text-primary" />
+            <span>ENTERPRISE POS SOLUTIONS</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.1 }}
-            className="font-syne text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-[1.18] tracking-tight"
+            transition={{ duration: 0.4, delay: 0.08 }}
+            className="font-syne text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white leading-[1.18] sm:leading-[1.15] tracking-tight text-balance"
           >
-            Tailored For Global Enterprise Operations
+            Three Purpose-Built Solutions.{" "}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary via-primary-light to-amber-500 block sm:inline">
+              Every Feature Inside.
+            </span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.2 }}
-            className="mt-3 text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium max-w-xl mx-auto leading-relaxed"
+            transition={{ duration: 0.4, delay: 0.16 }}
+            className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-normal max-w-2xl mx-auto leading-relaxed"
           >
-            Purpose-built POS platforms and cloud HQ infrastructure engineered for 50+ unit franchise groups, high-capacity stadiums, and retail conglomerates.
+            Purpose-built operating platforms for dining hospitality, high-volume retail stores, and multi-location enterprise chains.
           </motion.p>
 
-          {/* Smooth Sliding Pill Category Tabs */}
+          {/* ========================================================================= */}
+          {/* SLIDING PILL FILTER BAR (Consistent with Products & Features pages)       */}
+          {/* ========================================================================= */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.3 }}
-            className="mt-5 sm:mt-6 flex items-center sm:justify-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none snap-x touch-pan-x"
+            transition={{ duration: 0.4, delay: 0.24 }}
+            className="mt-5 sm:mt-7 flex items-center sm:justify-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none snap-x touch-pan-x"
           >
             {FILTER_TABS.map((tab) => {
-              const isActive = selectedFilter === tab.id;
+              const isSelected = selectedFilter === tab.id;
+              const TabIcon = tab.icon;
+
               return (
                 <button
                   key={tab.id}
+                  type="button"
                   onClick={() => setSelectedFilter(tab.id)}
-                  className={`relative px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-colors duration-200 shrink-0 snap-center cursor-pointer ${
-                    isActive
-                      ? "text-white"
-                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800"
+                  className={`group relative px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-syne font-bold transition-all duration-300 shrink-0 select-none snap-center flex items-center gap-1.5 cursor-pointer ${
+                    isSelected
+                      ? "text-white shadow-md shadow-primary/25"
+                      : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800"
                   }`}
                 >
-                  {isActive && (
+                  {isSelected && (
                     <motion.div
-                      layoutId="activeEnterpriseFilterPill"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      className="absolute inset-0 bg-primary rounded-xl shadow-xs shadow-primary/30 ring-2 ring-primary/20 z-0"
+                      layoutId="activeSolutionFilter"
+                      transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                      className="absolute inset-0 rounded-full bg-linear-to-r from-primary via-primary-light to-primary-dark z-0"
                     />
                   )}
+                  <TabIcon className="relative z-10 h-3.5 w-3.5 stroke-[2.2] shrink-0" />
                   <span className="relative z-10">{tab.label}</span>
                 </button>
               );
@@ -281,109 +337,222 @@ export default function SolutionsClient() {
         </div>
       </section>
 
-      {/* Fluid Animated Solutions Grid (Seamless White Canvas) */}
-      <section className="section-py bg-white dark:bg-slate-950">
-        <div className="site-container px-4 sm:px-6">
-          <motion.div
-            layout
-            variants={containerVariants}
-            initial="hidden"
-            animate="show"
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredSectors.map((item) => {
-                const Icon = item.icon;
+      {/* ========================================================================= */}
+      {/* 2. THE SOLUTIONS SHOWCASE (using global .section-py)                       */}
+      {/* ========================================================================= */}
+      <div className="divide-y divide-slate-200/80 dark:divide-slate-800/80">
+        <AnimatePresence mode="wait">
+          {visibleSolutions.map((sol) => {
+            const isRight = sol.imagePosition === "right";
+            const SolIcon = sol.icon;
 
-                return (
-                  <motion.div
-                    key={item.slug}
-                    layout
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="show"
-                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
-                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                    className="h-full"
-                  >
-                    <Link
-                      href={`/solutions/${item.slug}`}
-                      className="group relative p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-xl hover:border-primary/50 transition-all duration-300 flex flex-col justify-between h-full overflow-hidden"
+            return (
+              <motion.section
+                key={sol.id}
+                id={sol.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.35 }}
+                className="section-py relative overflow-hidden bg-white dark:bg-slate-950"
+              >
+                {/* Soft Ambient Radial Background Aura */}
+                <div
+                  className="pointer-events-none absolute top-1/3 -translate-y-1/2 w-80 sm:w-96 h-80 sm:h-96 rounded-full blur-3xl opacity-25 -z-10"
+                  style={{
+                    background: sol.glowColor,
+                    left: isRight ? "auto" : "5%",
+                    right: isRight ? "5%" : "auto",
+                  }}
+                />
+
+                <div className="site-container px-3 sm:px-6">
+                  
+                  {/* ------------------------------------------------------------- */}
+                  {/* TOP HALF: 2-COLUMN HERO (Text Story + Large Hardware Visual)  */}
+                  {/* ------------------------------------------------------------- */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
+                    
+                    {/* TEXT CONTENT COLUMN */}
+                    <div
+                      className={`space-y-4 sm:space-y-5 lg:col-span-6 ${!isRight ? "lg:order-2" : "lg:order-1"}`}
                     >
-                      {/* Subtle Ambient Hover Glow */}
-                      <div
-                        className={`absolute top-0 right-0 w-32 h-32 bg-linear-to-br ${item.glowColor} rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
-                      />
-
-                      <div className="relative z-10 space-y-3">
-                        {/* Top Row: Icon + Badge */}
-                        <div className="flex items-center justify-between gap-2">
-                          <div className="h-8 w-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center border border-primary/20 group-hover:bg-primary group-hover:text-white transition-colors duration-300 shadow-xs">
-                            <Icon size={16} className="stroke-[2.2]" />
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${item.accentColor}`}>
-                              {item.badge}
-                            </span>
-                          </div>
+                      {/* Eyebrow & Number Badge */}
+                      <div className="flex items-center gap-2.5">
+                        <span className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4F00] to-orange-600 text-xs font-mono font-black text-white shadow-xs">
+                          {sol.number}
+                        </span>
+                        <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/25 bg-orange-500/10 px-3 py-0.5 text-[10.5px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-[#FF4F00]">
+                          <SolIcon className="h-3 w-3 stroke-[2.2]" />
+                          <span>{sol.eyebrow}</span>
                         </div>
+                      </div>
 
-                        {/* 100% Free-Floating Transparent 3D Hardware Bundle */}
-                        <div className="relative h-32 sm:h-36 w-full flex items-center justify-center my-0.5">
-                          <motion.img
-                            src={item.image}
-                            alt={item.title}
-                            className="w-full h-full object-contain drop-shadow-md transition-transform duration-300 ease-out group-hover:scale-108 group-hover:-translate-y-1"
-                            loading="lazy"
-                          />
-                        </div>
+                      {/* Headline & Tagline */}
+                      <div className="space-y-1 sm:space-y-1.5">
+                        <h2 className="font-syne text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-slate-950 dark:text-white leading-[1.18] sm:leading-[1.15] tracking-tight">
+                          {sol.title}
+                        </h2>
+                        <p className="text-xs sm:text-sm md:text-base font-syne font-bold text-[#FF4F00]">
+                          {sol.tagline}
+                        </p>
+                      </div>
 
-                        {/* Title & Description */}
-                        <div>
-                          <h3 className="font-syne font-black text-base text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-200 line-clamp-1">
-                            {item.title}
-                          </h3>
-                          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-2">
-                            {item.desc}
-                          </p>
-                        </div>
+                      {/* Description */}
+                      <p className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-normal leading-relaxed">
+                        {sol.description}
+                      </p>
 
-                        {/* Feature Tags */}
-                        <div className="flex flex-wrap gap-1.5 pt-1">
-                          {item.features.map((feat) => (
-                            <span
-                              key={feat}
-                              className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60"
+                      {/* Specialized Verticals Served */}
+                      <div className="space-y-1.5 pt-0.5">
+                        <span className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">
+                          SPECIALIZED VERTICALS SERVED:
+                        </span>
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                          {sol.subSectors.map((sec) => (
+                            <Link
+                              key={sec.label}
+                              href={sec.href}
+                              className="text-[11px] sm:text-xs font-syne font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-orange-500 hover:text-[#FF4F00] transition-colors"
                             >
-                              {feat}
-                            </span>
+                              {sec.label}
+                            </Link>
                           ))}
                         </div>
                       </div>
 
-                      {/* Card Bottom CTA Link */}
-                      <div className="relative z-10 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-primary group-hover:text-primary-dark dark:group-hover:text-primary-light">
-                        <span className="flex items-center gap-1">
-                          Explore Sector Solution
-                        </span>
-                        <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-                          <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+                      {/* CTAs: Full width on mobile, inline on desktop */}
+                      <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                        <Link
+                          href={sol.internalHref}
+                          className="group inline-flex min-h-[44px] sm:min-h-[46px] items-center justify-center gap-2 rounded-xl bg-linear-to-r from-primary via-primary-light to-primary-dark px-5 sm:px-6 py-2.5 font-syne text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md shadow-orange-500/25 hover:shadow-lg hover:brightness-105 active:scale-95 transition-all text-center"
+                        >
+                          <span>{sol.internalCtaLabel}</span>
+                          <ArrowRight className="h-3.5 w-3.5 stroke-[2.5] transition-transform group-hover:translate-x-1" />
+                        </Link>
+
+                        {sol.externalSiteUrl && (
+                          <a
+                            href={sol.externalSiteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex min-h-[44px] sm:min-h-[46px] items-center justify-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 sm:px-5 py-2.5 font-syne text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 hover:border-orange-500 hover:text-[#FF4F00] transition-colors active:scale-95 text-center"
+                          >
+                            <span>{sol.externalSiteLabel}</span>
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* HARDWARE IMAGE STAGE */}
+                    <div
+                      className={`relative lg:col-span-6 flex items-center justify-center ${!isRight ? "lg:order-1" : "lg:order-2"}`}
+                    >
+                      {/* Floating Terminal Stage Container */}
+                      <div className="group relative w-full h-56 sm:h-72 md:h-80 lg:h-96 max-w-xl mx-auto rounded-2xl sm:rounded-3xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/90 dark:border-slate-800/90 p-3 sm:p-6 flex items-center justify-center shadow-xl overflow-hidden">
+                        {/* Subtle Ambient Radial Glow */}
+                        <div className="pointer-events-none absolute inset-0 bg-radial from-orange-500/10 to-transparent blur-2xl" />
+
+                        {/* Hardware Image */}
+                        <Image
+                          src={sol.imageSrc}
+                          alt={sol.imageAlt}
+                          fill
+                          sizes="(max-width: 1024px) 92vw, 45vw"
+                          className="object-contain p-2 sm:p-4 transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_35px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_20px_40px_rgba(0,0,0,0.7)]"
+                        />
+
+                        {/* Top Floating Badge (mobile safe) */}
+                        <div className="pointer-events-none absolute top-2.5 sm:top-4 right-2.5 sm:right-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-white/95 px-2.5 sm:px-3 py-1 text-[9px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-800 shadow-md backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100">
+                          <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-[#FF4F00]" />
+                          </span>
+                          <span className="truncate max-w-[150px] sm:max-w-none">{sol.topBadge}</span>
+                        </div>
+
+                        {/* Bottom Floating Badge (mobile safe) */}
+                        <div className="pointer-events-none absolute bottom-2.5 sm:bottom-4 left-2.5 sm:left-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-white/95 px-2.5 sm:px-3 py-1 text-[9px] sm:text-xs font-extrabold text-slate-700 shadow-md backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200">
+                          <ShieldCheck className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-[#FF4F00] shrink-0" />
+                          <span className="truncate max-w-[150px] sm:max-w-none">{sol.bottomBadge}</span>
                         </div>
                       </div>
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </section>
+                    </div>
 
-      {/* Customer Testimonials */}
+                  </div>
+
+                  {/* ------------------------------------------------------------- */}
+                  {/* BOTTOM HALF: "FEATURES INSIDE" GRID (5 Real Features)         */}
+                  {/* ------------------------------------------------------------- */}
+                  <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-slate-100 dark:border-slate-800/80">
+                    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-1.5 sm:gap-2 mb-4 sm:mb-6">
+                      <div className="space-y-0.5">
+                        <div className="inline-flex items-center gap-1.5 text-[10.5px] sm:text-xs font-mono font-bold uppercase tracking-widest text-[#FF4F00]">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#FF4F00]" />
+                          <span>CORE CAPABILITIES MATRIX</span>
+                        </div>
+                        <h3 className="font-syne text-lg sm:text-xl md:text-2xl font-black text-slate-950 dark:text-white">
+                          Features Inside {sol.title}
+                        </h3>
+                      </div>
+                      <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-400 dark:text-slate-500">
+                        5 NATIVE MODULES BUILT-IN
+                      </span>
+                    </div>
+
+                    {/* 5-Card Grid: 1 col on mobile, 2 cols on tablet, 3 cols on desktop */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                      {sol.features.map((feat) => {
+                        const FeatIcon = feat.icon;
+
+                        return (
+                          <div
+                            key={feat.title}
+                            className="group p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-50/60 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-800 hover:border-orange-500/60 hover:bg-white dark:hover:bg-slate-900 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 flex flex-col justify-between"
+                          >
+                            <div className="space-y-2.5">
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-orange-500/10 text-[#FF4F00] group-hover:bg-[#FF4F00] group-hover:text-white transition-colors shadow-xs">
+                                  <FeatIcon className="h-4 w-4 sm:h-4.5 sm:w-4.5 stroke-[2.2]" />
+                                </span>
+
+                                <span className="text-[9px] sm:text-[9.5px] font-mono font-bold uppercase tracking-wider text-orange-700 dark:text-orange-300 bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 rounded-full">
+                                  {feat.badge}
+                                </span>
+                              </div>
+
+                              <h4 className="font-syne text-sm sm:text-base font-bold text-slate-950 dark:text-white group-hover:text-[#FF4F00] transition-colors">
+                                {feat.title}
+                              </h4>
+
+                              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-normal leading-relaxed">
+                                {feat.desc}
+                              </p>
+                            </div>
+
+                            <div className="pt-3 mt-2 border-t border-slate-200/50 dark:border-slate-800/50 flex items-center gap-1.5 text-[11px] sm:text-xs font-syne font-bold text-slate-500 group-hover:text-[#FF4F00] transition-colors">
+                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                              <span className="truncate">Included in {sol.title.replace(" POS Solution", "").replace(" POS System", "")}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                </div>
+              </motion.section>
+            );
+          })}
+        </AnimatePresence>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 3. TESTIMONIALS & CTA BANNER                                              */}
+      {/* ========================================================================= */}
       <TestimonialsWrapper />
-
-      {/* Production Ready CTA Banner */}
       <CTABanner />
-    </>
+    </div>
   );
 }

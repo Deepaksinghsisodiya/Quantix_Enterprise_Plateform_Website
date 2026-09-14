@@ -784,22 +784,20 @@ export const MainProductsShowcaseSection: React.FC = () => {
             <button
               type="button"
               onClick={() => setDesktopPage(0)}
-              className={`text-xs font-semibold px-3 py-1 rounded-full transition-all duration-300 ${
-                desktopPage === 0
+              className={`text-xs font-semibold px-3 py-1 rounded-full transition-all duration-300 ${desktopPage === 0
                   ? "bg-orange-500/10 text-[#FF4F00] border border-orange-500/25"
                   : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
-              }`}
+                }`}
             >
               01 • In-Store & Operations (Cards 01–04)
             </button>
             <button
               type="button"
               onClick={() => setDesktopPage(1)}
-              className={`text-xs font-semibold px-3 py-1 rounded-full transition-all duration-300 ${
-                desktopPage === 1
+              className={`text-xs font-semibold px-3 py-1 rounded-full transition-all duration-300 ${desktopPage === 1
                   ? "bg-orange-500/10 text-[#FF4F00] border border-orange-500/25"
                   : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
-              }`}
+                }`}
             >
               02 • Enterprise BI & Ecosystem (Cards 05–08)
             </button>
@@ -829,11 +827,10 @@ export const MainProductsShowcaseSection: React.FC = () => {
                   type="button"
                   onClick={() => setDesktopPage(p as 0 | 1)}
                   aria-label={`Jump to page ${p + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    desktopPage === p
+                  className={`h-1.5 rounded-full transition-all duration-300 ${desktopPage === p
                       ? "w-7 bg-[#FF4F00]"
                       : "w-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
-                  }`}
+                    }`}
                 />
               ))}
             </div>
@@ -846,11 +843,10 @@ export const MainProductsShowcaseSection: React.FC = () => {
                   type="button"
                   onClick={() => scrollToIndex(i)}
                   aria-label={`Jump to module ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === deckIndex
+                  className={`h-1.5 rounded-full transition-all duration-300 ${i === deckIndex
                       ? "w-6 bg-[#FF4F00]"
                       : "w-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
-                  }`}
+                    }`}
                 />
               ))}
             </div>

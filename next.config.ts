@@ -7,6 +7,15 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"]
   },
+  async redirects() {
+    return [
+      {
+        source: "/login",
+        destination: "/sign-in",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
