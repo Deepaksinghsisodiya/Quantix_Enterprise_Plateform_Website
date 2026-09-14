@@ -45,7 +45,7 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
-import FAQSection from "@/features/FAQ/FAQSection";
+import { FAQWrapper } from "@/features/FAQ";
 import type { FAQItem } from "@/features/FAQ/Types/FAQTypes";
 import { RequestDemoButton } from "@/components/atoms/RequestDemoButton";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
@@ -724,8 +724,8 @@ export default async function IndustrySolutionPage({
       {/* 4. Customer Social Proof */}
       <TestimonialsWrapper />
 
-      {/* 5. Sector FAQ Section */}
-      <FAQSection faqs={industry.faqs} />
+      {/* 5. Sector FAQ Section (Fetches Live API FAQs) */}
+      <FAQWrapper fallbackFaqs={industry.faqs} />
 
       {/* 6. Production CTA Banner */}
       <CTABanner />

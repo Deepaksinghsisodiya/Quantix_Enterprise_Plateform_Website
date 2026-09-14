@@ -16,10 +16,19 @@ export const faqApi = baseApi.injectEndpoints({
     /** GET /help-centre/faqs — returns all FAQs sorted by order */
     getFAQs: builder.query<FAQItem[], void>({
       query: () => FAQ_ENDPOINT,
-      transformResponse: (response: ApiFAQResponse) => {
-        const items = response?.success && Array.isArray(response?.data)
-          ? response.data
-          : [];
+      transformResponse: (response: any) => {
+        let items: FAQItem[] = [];
+        if (Array.isArray(response)) {
+          items = response;
+        } else if (response?.success && Array.isArray(response?.data)) {
+          items = response.data;
+        } else if (Array.isArray(response?.data)) {
+          items = response.data;
+        } else if (Array.isArray(response?.data?.faqs)) {
+          items = response.data.faqs;
+        } else if (Array.isArray(response?.faqs)) {
+          items = response.faqs;
+        }
         return sortByOrder(items);
       },
       providesTags: ['FAQ'],
@@ -28,10 +37,19 @@ export const faqApi = baseApi.injectEndpoints({
     /** GET /help-centre/faqs?category=General — filter by category */
     getFAQsByCategory: builder.query<FAQItem[], string>({
       query: (category) => FAQ_CATEGORY_ENDPOINT(category),
-      transformResponse: (response: ApiFAQResponse) => {
-        const items = response?.success && Array.isArray(response?.data)
-          ? response.data
-          : [];
+      transformResponse: (response: any) => {
+        let items: FAQItem[] = [];
+        if (Array.isArray(response)) {
+          items = response;
+        } else if (response?.success && Array.isArray(response?.data)) {
+          items = response.data;
+        } else if (Array.isArray(response?.data)) {
+          items = response.data;
+        } else if (Array.isArray(response?.data?.faqs)) {
+          items = response.data.faqs;
+        } else if (Array.isArray(response?.faqs)) {
+          items = response.faqs;
+        }
         return sortByOrder(items);
       },
       providesTags: (_result, _error, category) => [{ type: 'FAQ', id: category }],

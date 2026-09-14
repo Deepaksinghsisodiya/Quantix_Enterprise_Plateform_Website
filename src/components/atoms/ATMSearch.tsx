@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useMemo, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 import { cn } from '../../lib/utils';

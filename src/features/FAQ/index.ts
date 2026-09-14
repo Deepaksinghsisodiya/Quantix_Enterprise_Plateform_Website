@@ -3,7 +3,7 @@
 
 // Components
 export { FAQSection } from './FAQSection';
-export { FAQWrapper } from './FAQWrapper';
+export { FAQWrapper, type FAQWrapperProps } from './FAQWrapper';
 export { FAQAccordionItem } from './components/FAQAccordionItem';
 export { FAQSkeleton } from './components/FAQSkeleton';
 

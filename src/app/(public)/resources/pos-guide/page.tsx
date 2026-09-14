@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
-import FAQSection from "@/features/FAQ/FAQSection";
+import { FAQWrapper } from "@/features/FAQ";
 import type { FAQItem } from "@/features/FAQ/Types/FAQTypes";
 
 interface BlueprintChapter {
@@ -716,8 +716,8 @@ export default function EnterprisePosGuidePage() {
         </div>
       </section>
 
-      {/* 3. Real Enterprise Architecture FAQ (Shared 2-Column Responsive Layout) */}
-      <FAQSection faqs={GUIDE_FAQS} />
+      {/* 3. Real Enterprise Architecture FAQ (Fetches Live API FAQs) */}
+      <FAQWrapper fallbackFaqs={GUIDE_FAQS} />
 
       {/* 4. Production CTA Banner */}
       <CTABanner />

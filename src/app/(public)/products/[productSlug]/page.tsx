@@ -25,7 +25,7 @@ import {
   Utensils,
   type LucideIcon,
 } from "lucide-react";
-import FAQSection from "@/features/FAQ/FAQSection";
+import { FAQWrapper } from "@/features/FAQ";
 import type { FAQItem } from "@/features/FAQ/Types/FAQTypes";
 import { RequestDemoButton } from "@/components/atoms/RequestDemoButton";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
@@ -430,8 +430,8 @@ export default async function ProductDetailPage({
       {/* 4. Customer Social Proof */}
       <TestimonialsWrapper />
 
-      {/* 5. Product FAQ Section */}
-      <FAQSection faqs={product.faqs} />
+      {/* 5. Product FAQ Section (Fetches Live API FAQs) */}
+      <FAQWrapper fallbackFaqs={product.faqs} />
 
       {/* 6. Production CTA Banner */}
       <CTABanner />

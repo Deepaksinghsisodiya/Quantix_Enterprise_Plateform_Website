@@ -43,34 +43,34 @@ export const CTAView: React.FC<CTAViewProps> = ({
     telemetryChips && telemetryChips.length > 0
       ? telemetryChips
       : [
-          {
-            id: "offline-mesh",
-            label: "100% Offline LAN Mesh",
-            dotColor: "bg-emerald-500",
-            pingColor: "bg-emerald-400",
-          },
-          {
-            id: "cloud-sync",
-            label: "Real-Time Cloud HQ Sync",
-            dotColor: "bg-[#FF4F00]",
-            pingColor: "bg-orange-400",
-          },
-          {
-            id: "security",
-            label: "SOC-2 & PCI-DSS Certified",
-            dotColor: "bg-blue-500",
-            pingColor: "bg-blue-400",
-          },
-        ];
+        {
+          id: "offline-mesh",
+          label: "100% Offline LAN Mesh",
+          dotColor: "bg-emerald-500",
+          pingColor: "bg-emerald-400",
+        },
+        {
+          id: "cloud-sync",
+          label: "Real-Time Cloud HQ Sync",
+          dotColor: "bg-[#FF4F00]",
+          pingColor: "bg-orange-400",
+        },
+        {
+          id: "security",
+          label: "SOC-2 & PCI-DSS Certified",
+          dotColor: "bg-blue-500",
+          pingColor: "bg-blue-400",
+        },
+      ];
 
   const badges: string[] =
     trustBadges && trustBadges.length > 0
       ? trustBadges
       : [
-          "14-Day Full Enterprise Access",
-          "Zero Setup Fees or Hidden Costs",
-          "Dedicated White-Glove Onboarding",
-        ];
+        "14-Day Full Enterprise Access",
+        "Zero Setup Fees or Hidden Costs",
+        "Dedicated White-Glove Onboarding",
+      ];
 
   return (
     <section
@@ -117,14 +117,12 @@ export const CTAView: React.FC<CTAViewProps> = ({
               >
                 <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2 shrink-0">
                   <span
-                    className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
-                      chip.pingColor || 'bg-emerald-400'
-                    }`}
+                    className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${chip.pingColor || 'bg-emerald-400'
+                      }`}
                   />
                   <span
-                    className={`relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 ${
-                      chip.dotColor || 'bg-emerald-500'
-                    }`}
+                    className={`relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 ${chip.dotColor || 'bg-emerald-500'
+                      }`}
                   />
                 </span>
                 <span className="whitespace-nowrap">{chip.label}</span>

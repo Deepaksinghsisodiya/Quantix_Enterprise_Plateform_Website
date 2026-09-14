@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import TestimonialsWrapper from "@/features/Testimonials";
+import { FAQWrapper } from "@/features/FAQ";
 
 interface ProductCardItem {
   slug: string;
@@ -345,6 +346,9 @@ export default function ProductsPage() {
 
       {/* Customer Testimonials */}
       <TestimonialsWrapper />
+
+      {/* Live FAQs from API */}
+      <FAQWrapper />
 
       {/* Production Ready CTA Banner */}
       <CTABanner />

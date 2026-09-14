@@ -57,7 +57,8 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
               ))
             ) : (
               faqs.map((faq, index) => {
-                const itemId = faq.id || faq.faqId || `${faq.question}-${index}`;
+                const anyFaq = faq as any;
+                const itemId = faq.id || faq.faqId || anyFaq._id || `${faq.question || 'faq'}-${index}`;
                 return (
                   <FAQAccordionItem
                     key={itemId}

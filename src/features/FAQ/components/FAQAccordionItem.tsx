@@ -12,6 +12,10 @@ export const FAQAccordionItem: React.FC<FAQAccordionItemProps> = ({
   isOpen,
   onToggle,
 }) => {
+  const anyFaq = faq as any;
+  const questionText = faq.question || anyFaq.title || anyFaq.q || 'Frequently Asked Question';
+  const answerText = faq.answer || anyFaq.content || anyFaq.a || anyFaq.description || '';
+
   return (
     <div
       className={cn(
@@ -31,7 +35,7 @@ export const FAQAccordionItem: React.FC<FAQAccordionItemProps> = ({
         <div className="flex-1 pr-1">
           {/* Question Text */}
           <h3 className="font-syne font-bold text-slate-900 dark:text-white text-xs sm:text-sm leading-snug group-hover:text-[#FF4F00] transition-colors duration-200">
-            {faq.question}
+            {questionText}
           </h3>
         </div>
 
@@ -67,7 +71,7 @@ export const FAQAccordionItem: React.FC<FAQAccordionItemProps> = ({
           >
             <div className="px-3.5 sm:px-4 pb-3.5 sm:pb-4 pt-1 border-t border-slate-100 dark:border-slate-800/80 mx-3.5 sm:mx-4">
               <p className="text-xs sm:text-[13px] text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                {faq.answer}
+                {answerText}
               </p>
             </div>
           </motion.div>

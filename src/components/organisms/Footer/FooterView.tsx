@@ -8,6 +8,7 @@ import { ShieldCheck, ArrowRight } from "lucide-react";
 import { BrandLogo } from "../Navbar/components/BrandLogo";
 import { useContactModal } from "@/context/ContactModalContext";
 import { LeadFormCard } from "./LeadFormCard";
+import { NewsletterSubscribeBox } from "./NewsletterSubscribeBox";
 import { FooterLink, SocialLink } from "./types/FooterTypes";
 import {
   FOOTER_COPYRIGHT,
@@ -67,9 +68,9 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 
 const SocialButton = ({ social }: { social: SocialLink }) => {
   const icon = social.icon.toLowerCase();
-  
+
   let brandClasses = "text-slate-600 bg-white border-slate-200 hover:bg-[#FF4F00] hover:text-white hover:border-[#FF4F00]";
-  
+
   if (icon === 'linkedin') {
     brandClasses = "text-[#0A66C2] bg-[#0A66C2]/10 border-[#0A66C2]/20 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]";
   } else if (icon === 'twitter' || icon === 'x') {
@@ -121,11 +122,10 @@ const LinkColumn = ({
             {link.href === '/contact' || link.href.startsWith('/contact/sales') ? (
               <button
                 onClick={() => onOpenContact()}
-                className={`transition-all duration-200 text-xs sm:text-[13px] group inline-flex items-center flex-wrap gap-1.5 w-full text-left cursor-pointer hover:translate-x-1 leading-snug py-0.5 ${
-                  isActive
+                className={`transition-all duration-200 text-xs sm:text-[13px] group inline-flex items-center flex-wrap gap-1.5 w-full text-left cursor-pointer hover:translate-x-1 leading-snug py-0.5 ${isActive
                     ? 'text-[#FF4F00] font-bold'
                     : 'text-slate-600 hover:text-[#FF4F00] font-medium'
-                }`}
+                  }`}
               >
                 <span className={isActive ? 'text-[#FF4F00] font-bold' : 'group-hover:text-[#FF4F00] transition-colors'}>
                   {link.label}
@@ -137,21 +137,19 @@ const LinkColumn = ({
                 )}
                 <ArrowRight
                   size={11}
-                  className={`transition-all duration-200 text-[#FF4F00] shrink-0 stroke-[2.5] ${
-                    isActive
+                  className={`transition-all duration-200 text-[#FF4F00] shrink-0 stroke-[2.5] ${isActive
                       ? 'opacity-100 translate-x-0'
                       : 'opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0'
-                  }`}
+                    }`}
                 />
               </button>
             ) : (
               <Link
                 href={link.href}
-                className={`transition-all duration-200 text-xs sm:text-[13px] group inline-flex items-center flex-wrap gap-1.5 cursor-pointer hover:translate-x-1 leading-snug py-0.5 ${
-                  isActive
+                className={`transition-all duration-200 text-xs sm:text-[13px] group inline-flex items-center flex-wrap gap-1.5 cursor-pointer hover:translate-x-1 leading-snug py-0.5 ${isActive
                     ? 'text-[#FF4F00] font-bold'
                     : 'text-slate-600 hover:text-[#FF4F00] font-medium'
-                }`}
+                  }`}
               >
                 <span className={isActive ? 'text-[#FF4F00] font-bold' : 'group-hover:text-[#FF4F00] transition-colors'}>
                   {link.label}
@@ -163,11 +161,10 @@ const LinkColumn = ({
                 )}
                 <ArrowRight
                   size={11}
-                  className={`transition-all duration-200 text-[#FF4F00] shrink-0 stroke-[2.5] ${
-                    isActive
+                  className={`transition-all duration-200 text-[#FF4F00] shrink-0 stroke-[2.5] ${isActive
                       ? 'opacity-100 translate-x-0'
                       : 'opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0'
-                  }`}
+                    }`}
                 />
               </Link>
             )}
@@ -189,22 +186,22 @@ export const FooterView: React.FC<FooterViewProps> = ({
   const { openModal } = useContactModal();
 
   return (
-    <footer className="bg-slate-50 text-slate-600 pt-10 sm:pt-14 lg:pt-16 pb-8 sm:pb-12 border-t border-slate-200/90 w-full relative overflow-hidden transition-colors duration-300">
+    <footer className="bg-slate-50 text-slate-600 pt-6 sm:pt-8 lg:pt-9 pb-4 sm:pb-5 border-t border-slate-200/90 w-full relative overflow-hidden transition-colors duration-300">
       {/* Background Soft Glow & Ambient Highlights */}
       <div className="absolute top-0 right-0 w-[500px] h-[300px] bg-gradient-to-b from-orange-500/[0.04] to-transparent blur-3xl pointer-events-none -z-0" />
       <div className="absolute bottom-0 left-1/4 w-[400px] h-[200px] bg-gradient-to-t from-amber-500/[0.02] to-transparent blur-3xl pointer-events-none -z-0" />
 
       <div className="site-container px-4 sm:px-6 relative z-10">
-        
+
         {/* ======================================================= */}
         {/* MAIN FOOTER GRID: Brand & Directory (Left) + Form (Right) */}
         {/* ======================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-start mb-8 sm:mb-12">
-          
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-start mb-4 sm:mb-5">
+
           {/* ----------------------------------------------------- */}
           {/* LEFT: Brand Info & 4-Column Directory (7 cols on lg, 8 on xl) */}
           {/* ----------------------------------------------------- */}
-          <div className="lg:col-span-7 xl:col-span-8 space-y-6 sm:space-y-8">
+          <div className="lg:col-span-7 xl:col-span-8 space-y-5 sm:space-y-6">
             {/* Top Brand Block */}
             <div className="space-y-3 sm:space-y-3.5 text-left">
               <BrandLogo pathname={pathname} />
@@ -230,10 +227,15 @@ export const FooterView: React.FC<FooterViewProps> = ({
                   </div>
                 )}
               </div>
+
+              {/* Live Newsletter Subscribe Box (with direct API mutation) */}
+              <div className="pt-2 max-w-sm">
+                <NewsletterSubscribeBox />
+              </div>
             </div>
 
             {/* 4-Column Navigation Directory (2x2 on mobile, 4-col on tablet/desktop) */}
-            <div className="pt-3 border-t border-slate-200/90 grid grid-cols-2 sm:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-6 sm:gap-y-8">
+            <div className="pt-3 border-t border-slate-200/90 grid grid-cols-2 sm:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-5 sm:gap-y-6">
               <LinkColumn title="Platform" links={productLinks} currentPath={pathname} onOpenContact={openModal} />
               <LinkColumn title="Solutions" links={industryLinks} currentPath={pathname} onOpenContact={openModal} />
               <LinkColumn title="Resources" links={companyLinks} currentPath={pathname} onOpenContact={openModal} />
@@ -253,7 +255,7 @@ export const FooterView: React.FC<FooterViewProps> = ({
         {/* ======================================================= */}
         {/* BOTTOM ROW: Copyright, Security Pill & Quick Legal Links */}
         {/* ======================================================= */}
-        <div className="pt-6 sm:pt-8 border-t border-slate-200/90 flex flex-col lg:flex-row items-center justify-between gap-3.5 sm:gap-4 text-xs">
+        <div className="pt-3.5 sm:pt-4 border-t border-slate-200/90 flex flex-col lg:flex-row items-center justify-between gap-3 text-xs">
           {/* Security Compliance Badge */}
           <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-2xl sm:rounded-full bg-white border border-slate-200/90 text-[10px] sm:text-[11px] font-mono text-slate-600 text-center max-w-full order-1 lg:order-2 shadow-2xs">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />

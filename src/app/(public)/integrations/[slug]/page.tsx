@@ -16,7 +16,7 @@ import {
   BarChart3,
   type LucideIcon,
 } from "lucide-react";
-import FAQSection from "@/features/FAQ/FAQSection";
+import { FAQWrapper } from "@/features/FAQ";
 import type { FAQItem } from "@/features/FAQ/Types/FAQTypes";
 import { RequestDemoButton } from "@/components/atoms/RequestDemoButton";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
@@ -556,8 +556,8 @@ export default async function IntegrationDetailPage({
         </div>
       </section>
 
-      {/* 5. FAQ Section */}
-      <FAQSection faqs={integration.faqs} />
+      {/* 5. FAQ Section (Fetches Live API FAQs) */}
+      <FAQWrapper fallbackFaqs={integration.faqs} />
 
       {/* 6. Production CTA Banner */}
       <CTABanner />

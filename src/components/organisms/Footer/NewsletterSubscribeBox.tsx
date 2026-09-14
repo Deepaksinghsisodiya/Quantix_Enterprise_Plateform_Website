@@ -82,12 +82,12 @@ export const NewsletterSubscribeBox: React.FC<NewsletterSubscribeBoxProps> = ({
             onChange={(e) => setEmail(e.target.value)}
             placeholder={placeholder}
             disabled={isLoading}
-            className="w-full h-9 pl-8.5 pr-20 text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all shadow-2xs"
+            className="w-full h-9 pl-8.5 pr-20 text-xs rounded-xl bg-white border border-slate-200/90 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#FF4F00] focus:ring-2 focus:ring-[#FF4F00]/15 transition-all shadow-2xs"
           />
           <button
             type="submit"
             disabled={isLoading}
-            className="absolute right-1 top-1 bottom-1 px-3 bg-primary hover:bg-primary/90 text-white text-[11px] font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer disabled:opacity-50"
+            className="absolute right-1 top-1 bottom-1 px-3 bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] hover:opacity-95 text-white text-[11px] font-syne font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer disabled:opacity-50 shadow-xs"
           >
             {isLoading ? (
               <Loader2 size={12} className="animate-spin" />
