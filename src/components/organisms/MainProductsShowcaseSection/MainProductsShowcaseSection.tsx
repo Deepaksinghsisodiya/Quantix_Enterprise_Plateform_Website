@@ -108,8 +108,8 @@ const PLATFORM_DECK_MODULES: PlatformModule[] = [
     specBadge: "⏱ -42% Ticket Time",
     highlights: ["Station Bump Alerts", "Course Pacing", "Curbside Sync"],
     href: "/products/omnichannel",
-    imageSrc: "/images/prod_kitchen_display.png",
-    imageAlt: "Kitchen display and omnichannel fulfillment",
+    imageSrc: "/images/ent_kitchen_kds_transparent.png",
+    imageAlt: "Kitchen display system and omnichannel fulfillment",
     icon: ChefHat,
   },
   {
