@@ -2,7 +2,7 @@
 'use client';
 
 import React from "react";
-import { ArrowLeft, Calendar, User, BookOpen, Tag, Clock, Share2, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Calendar, User, BookOpen, Tag, Clock, Share2, CheckCircle2, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { BlogPostDto } from "./Types/BlogTypes";
@@ -49,14 +49,14 @@ export const BlogPostDetail: React.FC<BlogPostDetailProps> = ({
   if (isLoading) {
     return (
       <div className="pt-24 sm:pt-32 pb-20 w-full max-w-4xl mx-auto px-4 sm:px-6 animate-pulse space-y-6 sm:space-y-8">
-        <div className="h-5 w-28 bg-slate-200 dark:bg-slate-800 rounded-full" />
-        <div className="h-10 sm:h-14 w-4/5 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
-        <div className="h-5 w-1/2 bg-slate-200 dark:bg-slate-800 rounded-lg" />
-        <div className="h-60 sm:h-96 w-full bg-slate-200 dark:bg-slate-800 rounded-2xl sm:rounded-3xl" />
+        <div className="h-5 w-28 bg-slate-200 dark:bg-slate-800 rounded-md" />
+        <div className="h-10 sm:h-14 w-4/5 bg-slate-200 dark:bg-slate-800 rounded-md" />
+        <div className="h-5 w-1/2 bg-slate-200 dark:bg-slate-800 rounded-md" />
+        <div className="h-60 sm:h-96 w-full bg-slate-200 dark:bg-slate-800 rounded-md" />
         <div className="space-y-3 pt-4">
-          <div className="h-4 w-full bg-slate-200 dark:bg-slate-800 rounded" />
-          <div className="h-4 w-full bg-slate-200 dark:bg-slate-800 rounded" />
-          <div className="h-4 w-3/4 bg-slate-200 dark:bg-slate-800 rounded" />
+          <div className="h-4 w-full bg-slate-200 dark:bg-slate-800 rounded-md" />
+          <div className="h-4 w-full bg-slate-200 dark:bg-slate-800 rounded-md" />
+          <div className="h-4 w-3/4 bg-slate-200 dark:bg-slate-800 rounded-md" />
         </div>
       </div>
     );
@@ -66,10 +66,10 @@ export const BlogPostDetail: React.FC<BlogPostDetailProps> = ({
   if (!post) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center pt-28 pb-16 w-full max-w-lg mx-auto text-center px-4">
-        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-500 mb-5 shadow-xs">
+        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-500 mb-5 shadow-xs">
           <BookOpen className="h-7 w-7 sm:h-8 sm:w-8" />
         </div>
-        <span className="text-[10px] sm:text-[11px] font-syne font-black uppercase tracking-widest text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded-full mb-3">
+        <span className="text-[10px] sm:text-[11px] font-syne font-black uppercase tracking-widest text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded-md mb-3">
           404 • Article Not Found
         </span>
         <h1 className="text-xl sm:text-2xl md:text-3xl font-syne font-extrabold text-slate-950 dark:text-white mb-2">
@@ -80,7 +80,7 @@ export const BlogPostDetail: React.FC<BlogPostDetailProps> = ({
         </p>
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl bg-primary hover:bg-primary-dark text-white font-syne font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-md bg-primary hover:bg-primary-dark text-white font-syne font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer"
         >
           <ArrowLeft className="h-4 w-4" />
           <span>Back to All Articles</span>
@@ -139,19 +139,21 @@ export const BlogPostDetail: React.FC<BlogPostDetailProps> = ({
       {/* Hero Header */}
       <section className="relative page-hero-header bg-linear-to-b from-slate-50/80 via-white to-white dark:from-slate-950 dark:via-slate-900/30 dark:to-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
         <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 space-y-5 sm:space-y-6">
-          <div className="flex items-center justify-between gap-3">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-1.5 text-xs font-syne font-bold text-slate-500 hover:text-primary transition-colors uppercase tracking-wider"
-            >
-              <ArrowLeft size={14} />
-              <span>Back to Blog</span>
-            </Link>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="nav-breadcrumb text-slate-500 dark:text-slate-400 flex items-center gap-1.5 text-xs font-semibold">
+              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+              <ChevronRight size={11} />
+              <Link href="/resources" className="hover:text-primary transition-colors">Resources</Link>
+              <ChevronRight size={11} />
+              <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
+              <ChevronRight size={11} />
+              <span className="text-primary font-bold truncate max-w-[200px] sm:max-w-xs">{post.title}</span>
+            </div>
 
             <button
               type="button"
               onClick={handleShare}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold transition-all cursor-pointer shrink-0"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold transition-all cursor-pointer shrink-0"
             >
               <Share2 size={13} />
               <span>Share</span>
@@ -159,7 +161,7 @@ export const BlogPostDetail: React.FC<BlogPostDetailProps> = ({
           </div>
 
           <div>
-            <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-syne font-black uppercase tracking-widest text-primary border border-primary/30 bg-primary/10 px-3 sm:px-3.5 py-1 rounded-full">
+            <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-syne font-black uppercase tracking-widest text-primary border border-primary/30 bg-primary/10 px-3 sm:px-3.5 py-1 rounded-md">
               <Tag size={11} />
               {category}
             </span>
@@ -197,7 +199,7 @@ export const BlogPostDetail: React.FC<BlogPostDetailProps> = ({
       {/* Featured Cover Image */}
       {imageUrl && (
         <section className="w-full max-w-4xl mx-auto px-4 sm:px-6 -mt-4 sm:-mt-6 mb-8 sm:mb-12">
-          <div className="relative w-full h-52 min-[480px]:h-64 sm:h-80 md:h-96 lg:h-112 rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md">
+          <div className="relative w-full h-52 min-[480px]:h-64 sm:h-80 md:h-96 lg:h-112 rounded-md overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md">
             <Image
               src={imageUrl}
               alt={post.title}
@@ -253,9 +255,9 @@ export const BlogPostDetail: React.FC<BlogPostDetailProps> = ({
                       return (
                         <div
                           key={itemIdx}
-                          className="flex items-start gap-3 sm:gap-3.5 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800"
+                          className="flex items-start gap-3 sm:gap-3.5 p-3.5 sm:p-4 rounded-md bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800"
                         >
-                          <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-primary text-white text-xs font-black font-syne shrink-0 mt-0.5">
+                          <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-md bg-primary text-white text-xs font-black font-syne shrink-0 mt-0.5">
                             {num}
                           </span>
                           <p className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300 leading-relaxed break-words">
@@ -305,7 +307,7 @@ export const BlogPostDetail: React.FC<BlogPostDetailProps> = ({
               {tagsList.map((tag: string, idx: number) => (
                 <span
                   key={idx}
-                  className="text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-lg sm:rounded-xl"
+                  className="text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-md"
                 >
                   #{tag}
                 </span>
@@ -315,8 +317,8 @@ export const BlogPostDetail: React.FC<BlogPostDetailProps> = ({
         )}
 
         {/* Author Card Footer */}
-        <div className="mt-10 sm:mt-12 p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-6">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+        <div className="mt-10 sm:mt-12 p-4 sm:p-6 md:p-8 rounded-md bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-6 shadow-2xs">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-md bg-primary/10 text-primary flex items-center justify-center shrink-0">
             <User size={24} />
           </div>
           <div>

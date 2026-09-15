@@ -376,15 +376,14 @@ export default function EnterprisePosGuidePage() {
         <div className="site-container px-4 sm:px-6">
           {/* Breadcrumb row & Actions */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-6 border-b border-slate-100 dark:border-slate-800 text-xs">
-            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-medium">
-              <Link href="/resources" className="hover:text-primary transition-colors flex items-center gap-1">
-                <ArrowLeft size={13} />
-                <span>Resources Hub</span>
-              </Link>
-              <span>/</span>
-              <span className="text-slate-900 dark:text-white font-bold flex items-center gap-1.5">
+            <div className="nav-breadcrumb text-slate-500 dark:text-slate-400 flex items-center gap-1.5 font-semibold">
+              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+              <ChevronRight size={11} />
+              <Link href="/resources" className="hover:text-primary transition-colors">Resources</Link>
+              <ChevronRight size={11} />
+              <span className="text-primary font-bold flex items-center gap-1.5">
                 <Flame size={13} className="text-primary" />
-                <span>Enterprise Architecture Blueprint</span>
+                <span>POS Architecture Blueprint</span>
               </span>
             </div>
 
@@ -392,7 +391,7 @@ export default function EnterprisePosGuidePage() {
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:text-primary transition-all cursor-pointer shadow-2xs text-xs"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:text-primary transition-all cursor-pointer shadow-2xs text-xs"
               >
                 <Copy size={12} />
                 <span>Share</span>
@@ -400,10 +399,10 @@ export default function EnterprisePosGuidePage() {
               <button
                 type="button"
                 onClick={handleExportPDF}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-bold transition-all cursor-pointer shadow-xs text-xs"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-primary hover:bg-primary-dark text-white font-bold transition-all cursor-pointer shadow-xs text-xs"
               >
                 <Download size={12} />
-                <span>Export PDF (2.1 MB)</span>
+                <span>Export PDF</span>
               </button>
             </div>
           </div>
@@ -411,8 +410,8 @@ export default function EnterprisePosGuidePage() {
           {/* Title & Readiness Gauge */}
           <div className="pt-6 sm:pt-8 flex flex-col md:flex-row md:items-center justify-between gap-5">
             <div className="space-y-2 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[11px] sm:text-xs font-black uppercase tracking-wider text-primary shadow-xs">
-                <Sparkles size={13} className="text-primary animate-pulse" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-[10.5px] sm:text-xs font-black uppercase tracking-wider text-primary shadow-xs">
+                <Sparkles size={12} className="text-primary animate-pulse" />
                 <span>ENTERPRISE ARCHITECTURE PLAYBOOK</span>
               </div>
               <h1 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white leading-[1.18] tracking-tight">
@@ -424,14 +423,14 @@ export default function EnterprisePosGuidePage() {
             </div>
 
             {/* Readiness Meter Card */}
-            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs flex items-center gap-4 shrink-0">
+            <div className="p-3.5 sm:p-4 rounded-md bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs flex items-center gap-3.5 sm:gap-4 shrink-0">
               <div>
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Rollout Readiness</p>
-                <p className="text-xl font-mono font-black text-primary">{completionPercentage}%</p>
+                <p className="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider">Rollout Readiness</p>
+                <p className="text-lg sm:text-xl font-mono font-black text-primary">{completionPercentage}%</p>
               </div>
-              <div className="w-24 sm:w-28 h-2.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+              <div className="w-20 sm:w-28 h-2 sm:h-2.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
                 <div
-                  className="h-full bg-linear-to-r from-primary to-amber-500 rounded-full transition-all duration-300"
+                  className="h-full bg-gradient-to-r from-primary to-amber-500 rounded-full transition-all duration-300"
                   style={{ width: `${completionPercentage}%` }}
                 />
               </div>
@@ -457,14 +456,14 @@ export default function EnterprisePosGuidePage() {
                   key={ch.id}
                   type="button"
                   onClick={() => handleChapterChange(idx)}
-                  className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer border shrink-0 snap-center ${
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-md text-xs font-bold whitespace-nowrap transition-all cursor-pointer border shrink-0 snap-center ${
                     isActive
-                      ? "bg-primary border-primary text-white shadow-xs shadow-primary/25 scale-102 ring-2 ring-primary/20"
+                      ? "bg-primary border-primary text-white shadow-xs shadow-primary/25 scale-[1.01]"
                       : "bg-slate-50 dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary/40"
                   }`}
                 >
                   <span
-                    className={`h-5 w-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold ${
+                    className={`h-4.5 w-4.5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold ${
                       isActive
                         ? "bg-white text-primary"
                         : isDone
@@ -481,8 +480,8 @@ export default function EnterprisePosGuidePage() {
           </div>
 
           {/* Main Interactive Display Box */}
-          <div className="p-5 sm:p-7 md:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl space-y-6 sm:space-y-8 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-primary via-primary-light to-amber-500" />
+          <div className="p-4 sm:p-6 md:p-8 rounded-md bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl space-y-6 sm:space-y-8 relative overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-orange-500 to-amber-500" />
 
             {/* Chapter Top Row: Title + Telemetry Metrics */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-5">
@@ -496,17 +495,17 @@ export default function EnterprisePosGuidePage() {
               </div>
 
               {/* 3 Telemetry Metrics */}
-              <div className="grid grid-cols-3 gap-2 shrink-0">
-                <div className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 text-center">
-                  <p className="text-[9px] text-slate-400 font-bold uppercase">Latency</p>
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-2 shrink-0">
+                <div className="px-2.5 sm:px-3 py-1.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 text-center">
+                  <p className="text-[8.5px] sm:text-[9px] text-slate-400 font-bold uppercase">Latency</p>
                   <p className="text-xs font-mono font-black text-primary">{chapter.telemetryMetrics.latency}</p>
                 </div>
-                <div className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 text-center">
-                  <p className="text-[9px] text-slate-400 font-bold uppercase">Throughput</p>
+                <div className="px-2.5 sm:px-3 py-1.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 text-center">
+                  <p className="text-[8.5px] sm:text-[9px] text-slate-400 font-bold uppercase">Throughput</p>
                   <p className="text-xs font-mono font-black text-slate-900 dark:text-white">{chapter.telemetryMetrics.syncSpeed}</p>
                 </div>
-                <div className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 text-center">
-                  <p className="text-[9px] text-slate-400 font-bold uppercase">SLA Uptime</p>
+                <div className="px-2.5 sm:px-3 py-1.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 text-center">
+                  <p className="text-[8.5px] sm:text-[9px] text-slate-400 font-bold uppercase">SLA Uptime</p>
                   <p className="text-xs font-mono font-black text-emerald-500">{chapter.telemetryMetrics.uptime}</p>
                 </div>
               </div>
@@ -526,7 +525,7 @@ export default function EnterprisePosGuidePage() {
                 </div>
 
                 {/* Pro-Tip Callout Box */}
-                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-800 dark:text-amber-300 font-medium leading-relaxed flex items-start gap-2.5">
+                <div className="p-3.5 sm:p-4 rounded-md bg-orange-500/10 border border-orange-500/20 text-xs text-orange-900 dark:text-orange-200 font-medium leading-relaxed flex items-start gap-2.5">
                   <span className="text-base leading-none">💡</span>
                   <div>
                     <strong className="font-bold mr-1">Enterprise Architecture Rule:</strong>
@@ -549,7 +548,7 @@ export default function EnterprisePosGuidePage() {
                           key={idx}
                           type="button"
                           onClick={() => toggleChecklist(itemId)}
-                          className={`w-full text-left p-3 rounded-xl border text-xs font-medium flex items-start gap-2.5 transition-all cursor-pointer ${
+                          className={`w-full text-left p-3 rounded-md border text-xs font-medium flex items-start gap-2.5 transition-all cursor-pointer ${
                             isChecked
                               ? "bg-primary/10 border-primary/30 text-primary-dark dark:text-primary-light shadow-2xs"
                               : "bg-slate-50 dark:bg-slate-800/50 border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary/30"
@@ -574,13 +573,13 @@ export default function EnterprisePosGuidePage() {
 
               {/* Right Column: Visual Topology Sandbox & Code Payload */}
               <div className="lg:col-span-5 space-y-4">
-                <div className="p-4 sm:p-5 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 space-y-3.5 shadow-2xs">
+                <div className="p-4 sm:p-5 rounded-md bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 space-y-3 shadow-2xs">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-slate-700 dark:text-slate-300">
                       <Cpu size={14} className="text-primary" />
                       <span>Enterprise Edge Topology</span>
                     </div>
-                    <span className="text-[10px] font-mono text-emerald-500 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-mono text-emerald-500 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-md">
                       Local Node Active
                     </span>
                   </div>
@@ -588,7 +587,7 @@ export default function EnterprisePosGuidePage() {
                   {/* 3 Topology Nodes */}
                   <div className="space-y-2">
                     <div
-                      className={`p-3 rounded-xl border transition-all ${
+                      className={`p-3 rounded-md border transition-all ${
                         simTriggered
                           ? "bg-primary/10 border-primary/40 shadow-xs"
                           : "bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800"
@@ -609,7 +608,7 @@ export default function EnterprisePosGuidePage() {
                       <span className="h-1.5 w-1.5 rounded-full bg-primary animate-ping" />
                     </div>
 
-                    <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+                    <div className="p-3 rounded-md bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
                       <div className="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
                         <span>{chapter.nodes.node2.name}</span>
                         <span className="text-[10px] font-mono text-slate-400">{chapter.nodes.node2.status}</span>
@@ -625,7 +624,7 @@ export default function EnterprisePosGuidePage() {
                       <span className="h-1.5 w-1.5 rounded-full bg-primary animate-ping" />
                     </div>
 
-                    <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+                    <div className="p-3 rounded-md bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
                       <div className="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
                         <span>{chapter.nodes.node3.name}</span>
                         <span className="text-[10px] font-mono text-slate-400">{chapter.nodes.node3.status}</span>
@@ -642,7 +641,7 @@ export default function EnterprisePosGuidePage() {
                       type="button"
                       disabled={simRunning}
                       onClick={handleSimulate}
-                      className="w-full py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-bold text-xs uppercase tracking-wider shadow-xs flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-98"
+                      className="w-full py-2.5 rounded-md bg-primary hover:bg-primary-dark text-white font-bold text-xs uppercase tracking-wider shadow-xs flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-98"
                     >
                       {simRunning ? (
                         <RefreshCw size={13} className="animate-spin" />
@@ -663,7 +662,7 @@ export default function EnterprisePosGuidePage() {
                 </div>
 
                 {/* Code Box */}
-                <div className="p-4 rounded-2xl bg-slate-900 text-slate-100 border border-slate-800 space-y-2 shadow-2xs">
+                <div className="p-4 rounded-md bg-slate-900 text-slate-100 border border-slate-800 space-y-2 shadow-2xs">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-slate-300">
                       <Code2 size={13} className="text-primary" />
@@ -671,7 +670,7 @@ export default function EnterprisePosGuidePage() {
                     </div>
                     <span className="text-[10px] font-mono text-slate-500">JSON API Schema</span>
                   </div>
-                  <pre className="text-[10.5px] font-mono bg-slate-950 p-3 rounded-xl overflow-x-auto text-emerald-400 border border-slate-800/80">
+                  <pre className="text-[10.5px] font-mono bg-slate-950 p-3 rounded-md overflow-x-auto text-emerald-400 border border-slate-800/80">
                     {chapter.codeSnippet}
                   </pre>
                 </div>
@@ -684,7 +683,7 @@ export default function EnterprisePosGuidePage() {
                 type="button"
                 disabled={activeChapterIndex === 0}
                 onClick={() => handleChapterChange(Math.max(0, activeChapterIndex - 1))}
-                className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-xs font-bold transition-all border ${
                   activeChapterIndex === 0
                     ? "opacity-40 cursor-not-allowed border-slate-200 dark:border-slate-800 text-slate-400"
                     : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:border-primary/40 cursor-pointer shadow-2xs"
@@ -702,7 +701,7 @@ export default function EnterprisePosGuidePage() {
                 type="button"
                 disabled={activeChapterIndex === CHAPTERS.length - 1}
                 onClick={() => handleChapterChange(Math.min(CHAPTERS.length - 1, activeChapterIndex + 1))}
-                className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-xs font-bold transition-all border ${
                   activeChapterIndex === CHAPTERS.length - 1
                     ? "opacity-40 cursor-not-allowed border-slate-200 dark:border-slate-800 text-slate-400"
                     : "bg-primary border-primary text-white hover:bg-primary-dark cursor-pointer shadow-xs"

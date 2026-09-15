@@ -58,16 +58,22 @@ export default function CaseStudyDetailPage() {
   }
 
   return (
-    <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
-      <div className="site-container px-4 sm:px-0">
-        {/* Breadcrumbs */}
-        <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-6">
-          <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
-          <ChevronRight size={10} />
-          <Link href="/testimonials" className="hover:text-blue-500 transition-colors">Testimonials</Link>
-          <ChevronRight size={10} />
-          <span className="text-slate-600 dark:text-slate-400">{study.merchantName} Case Study</span>
+    <main className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-white pb-16 transition-colors duration-300">
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header mb-8 sm:mb-12">
+        <div className="site-container relative z-10 page-nav-header space-y-4 text-left">
+          {/* Breadcrumbs */}
+          <div className="nav-breadcrumb text-slate-500 dark:text-slate-400">
+            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+            <ChevronRight size={12} className="text-slate-400 shrink-0" />
+            <Link href="/why-quantix" className="hover:text-primary transition-colors">Why Quantix</Link>
+            <ChevronRight size={12} className="text-slate-400 shrink-0" />
+            <Link href="/testimonials" className="hover:text-primary transition-colors">Testimonials</Link>
+            <ChevronRight size={12} className="text-slate-400 shrink-0" />
+            <span className="text-primary font-bold">{study.merchantName} Case Study</span>
+          </div>
         </div>
+      </section>
+      <div className="site-container px-4 sm:px-0">
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center max-w-5xl mx-auto mb-16">
           {/* Left side details */}

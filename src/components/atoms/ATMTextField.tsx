@@ -10,7 +10,9 @@ export interface ATMTextFieldProps extends React.InputHTMLAttributes<HTMLInputEl
   name: string;
   label?: string;
   leftIcon?: React.ReactNode;
+  prefixIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  suffixIcon?: React.ReactNode;
   error?: string;
   helperText?: string;
   required?: boolean;
@@ -18,14 +20,18 @@ export interface ATMTextFieldProps extends React.InputHTMLAttributes<HTMLInputEl
 
 export const ATMTextField: React.FC<ATMTextFieldProps> = ({
   label,
-  leftIcon,
-  rightIcon,
+  leftIcon: explicitLeftIcon,
+  prefixIcon,
+  rightIcon: explicitRightIcon,
+  suffixIcon,
   error: explicitError,
   helperText,
   required,
   type = 'text',
   ...props
 }) => {
+  const leftIcon = explicitLeftIcon ?? prefixIcon;
+  const rightIcon = explicitRightIcon ?? suffixIcon;
   const [field, meta] = useField(props.name);
   const [showPassword, setShowPassword] = useState(false);
 

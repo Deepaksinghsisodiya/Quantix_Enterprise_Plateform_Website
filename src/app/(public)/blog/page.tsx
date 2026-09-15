@@ -199,14 +199,14 @@ export default function EnterpriseBlogPage() {
           <div className="nav-breadcrumb text-slate-500 dark:text-slate-400">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
             <ChevronRight size={12} />
-            <Link href="/help" className="hover:text-primary transition-colors">Resources</Link>
+            <Link href="/resources" className="hover:text-primary transition-colors">Resources</Link>
             <ChevronRight size={12} />
             <span className="text-primary font-bold">Blog</span>
           </div>
 
           <div className="space-y-4 text-left">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
                 <Sparkles size={13} className="text-primary" />
                 <span>Live Publications Hub</span>
               </div>
@@ -222,7 +222,7 @@ export default function EnterpriseBlogPage() {
 
             {/* Search Input Bar */}
             <div className="pt-2 max-w-xl">
-              <div className="relative flex items-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs focus-within:ring-2 focus-within:ring-primary/20 transition-all p-1">
+              <div className="relative flex items-center bg-white dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800 shadow-xs focus-within:ring-2 focus-within:ring-primary/20 transition-all p-1">
                 <Search className="h-4 w-4 text-slate-400 dark:text-slate-500 ml-3.5 shrink-0" />
                 <input
                   type="text"
@@ -260,7 +260,7 @@ export default function EnterpriseBlogPage() {
                       setActiveCategory(cat);
                       setCurrentPage(1);
                     }}
-                    className={`px-4 py-2 rounded-xl text-xs font-syne font-bold transition-all border capitalize cursor-pointer ${
+                    className={`px-4 py-2 rounded-md text-xs font-syne font-bold transition-all border capitalize cursor-pointer ${
                       activeCategory === cat
                         ? 'bg-primary border-primary text-white shadow-xs'
                         : 'bg-slate-100 dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary/40'
@@ -282,7 +282,7 @@ export default function EnterpriseBlogPage() {
           <div className="space-y-8 animate-pulse">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="h-80 rounded-3xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800" />
+                <div key={i} className="h-80 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800" />
               ))}
             </div>
           </div>
@@ -290,13 +290,13 @@ export default function EnterpriseBlogPage() {
 
         {/* Error State */}
         {!isLoading && isError && (
-          <div className="text-center py-16 px-4 max-w-md mx-auto rounded-3xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 space-y-3">
+          <div className="text-center py-16 px-4 max-w-md mx-auto rounded-md bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 space-y-3">
             <h3 className="font-syne text-lg font-bold text-red-700 dark:text-red-400">Unable to load blog feed</h3>
             <p className="text-xs text-red-600/80">API connection error. Please ensure the backend on port 5104 is online.</p>
             <button
               type="button"
               onClick={() => refetch()}
-              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-primary text-white text-xs font-bold font-syne uppercase tracking-wider cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-md bg-primary text-white text-xs font-bold font-syne uppercase tracking-wider cursor-pointer"
             >
               <RefreshCw size={13} />
               <span>Retry</span>
@@ -306,14 +306,14 @@ export default function EnterpriseBlogPage() {
 
         {/* Controls & Live Data Status Bar */}
         {!isLoading && !isError && posts.length > 0 && (
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-md bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 shadow-2xs">
             <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
               <Database size={14} className="text-primary" />
               <span>
                 Live Database: <strong className="text-slate-950 dark:text-white font-bold">{filteredPosts.length}</strong> of {posts.length} {posts.length === 1 ? 'article' : 'articles'}
               </span>
               {selectedTag && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-[11px]">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-primary/10 text-primary border border-primary/20 text-[11px]">
                   #{selectedTag}
                   <button
                     type="button"
@@ -332,7 +332,7 @@ export default function EnterpriseBlogPage() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs font-syne font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer"
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md px-3 py-1.5 text-xs font-syne font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer"
               >
                 <option value="latest">Latest Published</option>
                 <option value="quick">Quick Reads</option>
@@ -356,7 +356,7 @@ export default function EnterpriseBlogPage() {
                   setSelectedTag(selectedTag === tag ? '' : tag);
                   setCurrentPage(1);
                 }}
-                className={`text-xs font-bold px-3 py-1 rounded-xl transition-all border cursor-pointer ${
+                className={`text-xs font-bold px-3 py-1 rounded-md transition-all border cursor-pointer ${
                   selectedTag === tag
                     ? 'bg-primary border-primary text-white shadow-xs'
                     : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-primary/40'
@@ -384,7 +384,7 @@ export default function EnterpriseBlogPage() {
                 return (
                   <article
                     key={postId}
-                    className="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-3xl overflow-hidden shadow-2xs hover:shadow-xl hover:border-primary/50 transition-all duration-300 flex flex-col justify-between group"
+                    className="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-md overflow-hidden shadow-2xs hover:shadow-xl hover:border-primary/50 transition-all duration-300 flex flex-col justify-between group"
                   >
                     <div>
                       {/* High-res Image with overlay badge */}
@@ -398,7 +398,7 @@ export default function EnterpriseBlogPage() {
                         />
                         <div className="absolute inset-0 bg-linear-to-t from-slate-950/60 via-transparent to-transparent" />
                         <div className="absolute top-3 left-3 flex items-center gap-2">
-                          <span className="text-[10px] font-syne font-black uppercase tracking-wider text-white bg-primary/90 backdrop-blur-xs px-2.5 py-1 rounded-lg shadow-xs">
+                          <span className="text-[10px] font-syne font-black uppercase tracking-wider text-white bg-primary/90 backdrop-blur-xs px-2.5 py-1 rounded-md shadow-xs">
                             {category}
                           </span>
                         </div>
@@ -439,10 +439,10 @@ export default function EnterpriseBlogPage() {
                     {/* Card Footer */}
                     <div className="p-5 sm:p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 mt-4 flex items-center justify-between">
                       <div className="flex items-center gap-2 text-xs text-slate-500">
-                        <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-[10px]">
+                        <div className="w-6 h-6 rounded-md bg-primary/10 text-primary flex items-center justify-center font-bold text-[10px]">
                           {author[0] || 'Q'}
                         </div>
-                        <span className="font-medium truncate max-w-[120px]">{author}</span>
+                        <span className="font-medium truncate max-w-30">{author}</span>
                       </div>
 
                       <Link
@@ -465,7 +465,7 @@ export default function EnterpriseBlogPage() {
                   type="button"
                   onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
-                  className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:border-primary cursor-pointer transition-all"
+                  className="p-2.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:border-primary cursor-pointer transition-all"
                 >
                   <ChevronLeft size={16} />
                 </button>
@@ -477,7 +477,7 @@ export default function EnterpriseBlogPage() {
                       key={pageNum}
                       type="button"
                       onClick={() => handlePageChange(pageNum)}
-                      className={`w-10 h-10 rounded-xl font-syne font-bold text-xs transition-all border cursor-pointer ${
+                      className={`w-10 h-10 rounded-md font-syne font-bold text-xs transition-all border cursor-pointer ${
                         currentPage === pageNum
                           ? 'bg-primary border-primary text-white shadow-xs'
                           : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary/40'
@@ -492,7 +492,7 @@ export default function EnterpriseBlogPage() {
                   type="button"
                   onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                   disabled={currentPage === totalPages}
-                  className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:border-primary cursor-pointer transition-all"
+                  className="p-2.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:border-primary cursor-pointer transition-all"
                 >
                   <ChevronRight size={16} />
                 </button>
@@ -503,8 +503,8 @@ export default function EnterpriseBlogPage() {
 
         {/* Empty State (When DB has 0 posts or search has 0 results) */}
         {!isLoading && !isError && filteredPosts.length === 0 && (
-          <div className="text-center py-20 px-4 max-w-md mx-auto rounded-3xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 space-y-3">
-            <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-2">
+          <div className="text-center py-20 px-4 max-w-md mx-auto rounded-md bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 space-y-3">
+            <div className="w-14 h-14 rounded-md bg-primary/10 text-primary flex items-center justify-center mx-auto mb-2">
               <BookOpen size={24} />
             </div>
             <h3 className="font-syne text-xl font-bold text-slate-950 dark:text-white">
@@ -524,7 +524,7 @@ export default function EnterpriseBlogPage() {
                   setActiveCategory('all');
                   setCurrentPage(1);
                 }}
-                className="mt-2 px-5 py-2.5 rounded-xl bg-primary text-white text-xs font-syne font-bold uppercase tracking-wider cursor-pointer"
+                className="mt-2 px-5 py-2.5 rounded-md bg-primary text-white text-xs font-syne font-bold uppercase tracking-wider cursor-pointer"
               >
                 Reset Filters
               </button>
@@ -533,8 +533,8 @@ export default function EnterpriseBlogPage() {
         )}
 
         {/* 4. Newsletter Dispatch Card */}
-        <div className="mt-16 p-8 sm:p-12 rounded-3xl bg-linear-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 dark:border-primary/30 text-center space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-[11px] font-syne font-bold uppercase tracking-wider">
+        <div className="mt-16 p-8 sm:p-12 rounded-md bg-linear-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 dark:border-primary/30 text-center space-y-4 shadow-2xs">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-primary/10 text-primary text-[11px] font-syne font-bold uppercase tracking-wider">
             <Sparkles size={12} />
             <span>Monthly Systems Dispatch</span>
           </div>

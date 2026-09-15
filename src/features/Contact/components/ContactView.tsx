@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { ATMTextField, ATMPhoneField, ATMButton } from '@/components/atoms';
+import CTABanner from '@/components/organisms/CTABanner/CTABanner';
 import { useRequestDemoMutation } from '../Service/ContactService';
 import { parseApiError } from '@/lib/errorHandler';
 import { cn } from '@/lib/utils';
@@ -112,12 +113,14 @@ export const ContactView: React.FC = () => {
         <div className="site-container relative z-10 page-nav-header space-y-3 text-left">
           <div className="nav-breadcrumb text-slate-500 dark:text-slate-400">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-            <ChevronRight size={11} />
+            <ChevronRight size={11} className="text-slate-400 shrink-0" />
+            <Link href="/resources" className="hover:text-primary transition-colors">Resources</Link>
+            <ChevronRight size={11} className="text-slate-400 shrink-0" />
             <span className="text-primary font-bold">Contact</span>
           </div>
 
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-orange-500/10 dark:bg-orange-500/15 border border-orange-500/25 text-xs font-bold uppercase tracking-wider text-[#FF4D00] shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-orange-500/10 dark:bg-orange-500/15 border border-orange-500/25 text-xs font-bold uppercase tracking-wider text-[#FF4D00] shadow-2xs">
               <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
               <span>Fast Response • Usually Under 15 Mins</span>
             </div>
@@ -141,14 +144,14 @@ export const ContactView: React.FC = () => {
           <div className="lg:col-span-5 space-y-3.5 sm:space-y-4">
 
             {/* 🎁 Eye-Catching Special Offer Card */}
-            <div className="bg-linear-to-br from-orange-500 via-orange-600 to-amber-600 rounded-2xl sm:rounded-3xl p-4.5 sm:p-5 text-white shadow-lg shadow-orange-500/20 relative overflow-hidden">
+            <div className="bg-linear-to-br from-orange-500 via-orange-600 to-amber-600 rounded-md p-4.5 sm:p-5 text-white shadow-lg shadow-orange-500/20 relative overflow-hidden">
               <div className="absolute top-0 right-0 -mr-6 -mt-6 w-24 h-24 bg-white/10 rounded-full blur-xl pointer-events-none" />
               
               <div className="flex items-center gap-2 mb-2">
-                <span className="p-1.5 rounded-lg bg-white/20 text-white backdrop-blur-xs">
+                <span className="p-1.5 rounded-md bg-white/20 text-white backdrop-blur-xs">
                   <Gift size={15} />
                 </span>
-                <span className="text-[10.5px] font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full text-white">
+                <span className="text-[10.5px] font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-md text-white">
                   Limited-Time Offer
                 </span>
               </div>
@@ -177,7 +180,7 @@ export const ContactView: React.FC = () => {
             </div>
 
             {/* Direct Connect Box */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-xs space-y-2.5">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-md p-4 sm:p-5 shadow-xs space-y-2.5">
               <h3 className="text-[11px] font-syne font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 Prefer to Reach Us Directly?
               </h3>
@@ -185,10 +188,10 @@ export const ContactView: React.FC = () => {
               {/* Call Link */}
               <a
                 href="tel:+18005550199"
-                className="flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-slate-50 hover:bg-orange-50 dark:bg-slate-800/60 dark:hover:bg-orange-950/30 border border-slate-200/60 dark:border-slate-700/60 transition-colors group"
+                className="flex items-center justify-between p-2.5 sm:p-3 rounded-md bg-slate-50 hover:bg-orange-50 dark:bg-slate-800/60 dark:hover:bg-orange-950/30 border border-slate-200/60 dark:border-slate-700/60 transition-colors group"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="h-8.5 w-8.5 rounded-lg bg-orange-500/10 text-[#FF4D00] flex items-center justify-center shrink-0">
+                  <div className="h-8.5 w-8.5 rounded-md bg-orange-500/10 text-[#FF4D00] flex items-center justify-center shrink-0">
                     <Phone size={15} />
                   </div>
                   <div>
@@ -204,10 +207,10 @@ export const ContactView: React.FC = () => {
               {/* Email Link */}
               <a
                 href="mailto:enterprise@quantixpos.com"
-                className="flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-slate-50 hover:bg-orange-50 dark:bg-slate-800/60 dark:hover:bg-orange-950/30 border border-slate-200/60 dark:border-slate-700/60 transition-colors group"
+                className="flex items-center justify-between p-2.5 sm:p-3 rounded-md bg-slate-50 hover:bg-orange-50 dark:bg-slate-800/60 dark:hover:bg-orange-950/30 border border-slate-200/60 dark:border-slate-700/60 transition-colors group"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="h-8.5 w-8.5 rounded-lg bg-orange-500/10 text-[#FF4D00] flex items-center justify-center shrink-0">
+                  <div className="h-8.5 w-8.5 rounded-md bg-orange-500/10 text-[#FF4D00] flex items-center justify-center shrink-0">
                     <Mail size={15} />
                   </div>
                   <div className="min-w-0">
@@ -234,7 +237,7 @@ export const ContactView: React.FC = () => {
             </div>
 
             {/* Social Proof Bar */}
-            <div className="flex items-center justify-between p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs text-xs">
+            <div className="flex items-center justify-between p-3 rounded-md bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs text-xs">
               <div className="flex items-center gap-2">
                 <div className="flex text-amber-400">
                   {[...Array(5)].map((_, i) => (
@@ -252,7 +255,7 @@ export const ContactView: React.FC = () => {
 
           {/* ════ RIGHT: High-Converting Friction-Free Form (7 cols) ════ */}
           <div className="lg:col-span-7">
-            <div className="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-xl shadow-slate-200/50 dark:shadow-none">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-md p-4 sm:p-6 lg:p-7 shadow-xl shadow-slate-200/50 dark:shadow-none">
 
               <div className="mb-3.5 sm:mb-4">
                 <h2 className="text-base sm:text-xl font-syne font-bold text-slate-950 dark:text-white">
@@ -266,27 +269,26 @@ export const ContactView: React.FC = () => {
               <AnimatePresence mode="wait">
                 {isSubmitted ? (
                   <motion.div
-                    key="submitted"
+                    key="success"
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="py-8 text-center space-y-2.5"
+                    className="py-10 text-center space-y-3 font-sans"
                   >
-                    <div className="h-12 w-12 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto shadow-sm">
-                      <CheckCircle2 size={26} />
+                    <div className="h-12 w-12 rounded-md bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto shadow-sm">
+                      <CheckCircle2 size={24} className="stroke-3" />
                     </div>
-                    <h3 className="text-lg sm:text-xl font-syne font-bold text-slate-900 dark:text-white">
-                      Request Received!
+                    <h3 className="font-syne text-xl font-bold text-slate-950 dark:text-white">
+                      Request Confirmed!
                     </h3>
-                    <p className="text-xs sm:text-[13px] text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
-                      We&apos;ve assigned a solutions architect to your request. Expect a reply at{' '}
-                      <span className="font-semibold text-slate-900 dark:text-white">{submittedEmail}</span> within 15 minutes.
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
+                      Thank you! A senior enterprise architect will connect at <strong className="text-slate-900 dark:text-white font-bold">{submittedEmail}</strong> in under 15 minutes.
                     </p>
                     <div className="pt-2">
                       <button
                         type="button"
                         onClick={() => setIsSubmitted(false)}
-                        className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition-colors cursor-pointer"
+                        className="px-4 py-2 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition-colors cursor-pointer"
                       >
                         Submit Another Request
                       </button>
@@ -298,45 +300,44 @@ export const ContactView: React.FC = () => {
                     validationSchema={contactSchema}
                     onSubmit={handleFormSubmit}
                   >
-                    {({ values, setFieldValue, isSubmitting }) => {
-                      const selectedOption =
-                        INQUIRY_OPTIONS.find((opt) => opt.label === values.inquiryType) || INQUIRY_OPTIONS[0];
+                    {({ values, errors, touched, setFieldValue, isSubmitting }) => {
+                      const selectedOption = INQUIRY_OPTIONS.find((o) => o.label === values.inquiryType) || INQUIRY_OPTIONS[0];
                       const SelectedIcon = selectedOption.icon;
 
                       return (
-                        <Form className="space-y-2.5 font-sans">
-                          {/* Row 1: Merchant Company Name & Full Name (Like SignUpForm Row 1) */}
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <Form className="space-y-3 sm:space-y-3.5">
+                          {/* Row 1: Full Name & Company Name */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
                             <ATMTextField
-                              name="companyName"
-                              label="Company / Brand Name"
-                              placeholder="Company / Brand Name"
-                              leftIcon={<Building2 size={14} />}
+                              name="fullName"
+                              label="Your Full Name"
+                              leftIcon={<User size={14} />}
+                              placeholder="Alex Mercer"
                               required
                             />
                             <ATMTextField
-                              name="fullName"
-                              label="Full Name"
-                              placeholder="Full Name"
-                              leftIcon={<User size={14} />}
+                              name="companyName"
+                              label="Company / Brand Name"
+                              leftIcon={<Building2 size={14} />}
+                              placeholder="Apex Retail Group"
                               required
                             />
                           </div>
 
-                          {/* Row 2: Work Email (Like SignUpForm Row 2) */}
+                          {/* Row 2: Work Email */}
                           <ATMTextField
                             name="email"
                             type="email"
-                            label="Work Email"
-                            placeholder="work.email@company.com"
+                            label="Work Email Address"
                             leftIcon={<Mail size={14} />}
+                            placeholder="alex@apexretail.com"
                             required
                           />
 
-                          {/* Row 3: Contact Phone (Like SignUpForm Row 3 with +1 country flag) */}
+                          {/* Row 3: Phone (With ATMPhoneField) */}
                           <ATMPhoneField
                             name="phone"
-                            label="Phone Number"
+                            label="Direct Contact Number"
                             placeholder="(555) 000-0000"
                             required
                           />
@@ -349,7 +350,7 @@ export const ContactView: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => setIsTypeDropdownOpen(!isTypeDropdownOpen)}
-                              className="w-full h-9 sm:h-9.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/15 px-3 text-xs sm:text-[13px] font-normal transition-all duration-200 text-slate-900 dark:text-white bg-white dark:bg-slate-900 flex items-center justify-between shadow-2xs cursor-pointer select-none text-left"
+                              className="w-full h-9 sm:h-9.5 rounded-md border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/15 px-3 text-xs sm:text-[13px] font-normal transition-all duration-200 text-slate-900 dark:text-white bg-white dark:bg-slate-900 flex items-center justify-between shadow-2xs cursor-pointer select-none text-left"
                             >
                               <div className="flex items-center gap-2 min-w-0">
                                 <SelectedIcon size={14} className="text-[#FF4D00] shrink-0" />
@@ -368,7 +369,7 @@ export const ContactView: React.FC = () => {
 
                             {/* Custom Popover Dropdown (Like SignUpForm) */}
                             {isTypeDropdownOpen && (
-                              <div className="absolute top-full left-0 mt-1 w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl shadow-slate-200/50 dark:shadow-black/50 z-50 overflow-hidden py-1 animate-in fade-in zoom-in-95 duration-150">
+                              <div className="absolute top-full left-0 mt-1 w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md shadow-xl shadow-slate-200/50 dark:shadow-black/50 z-50 overflow-hidden py-1 animate-in fade-in zoom-in-95 duration-150">
                                 {INQUIRY_OPTIONS.map((opt) => {
                                   const isSelected = values.inquiryType === opt.label;
                                   const OptionIcon = opt.icon;
@@ -414,7 +415,7 @@ export const ContactView: React.FC = () => {
                                 value={values.message}
                                 onChange={(e) => setFieldValue('message', e.target.value)}
                                 placeholder="E.g. number of registers, locations, target deployment date..."
-                                className="w-full h-16 sm:h-18 rounded-xl border pl-8.5 pr-3 pt-2 text-xs sm:text-[13px] font-medium outline-none transition-all duration-200 text-slate-900 dark:text-white bg-white dark:bg-slate-900 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-2xs border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/15 resize-none"
+                                className="w-full h-16 sm:h-18 rounded-md border pl-8.5 pr-3 pt-2 text-xs sm:text-[13px] font-medium outline-none transition-all duration-200 text-slate-900 dark:text-white bg-white dark:bg-slate-900 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-2xs border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/15 resize-none"
                               />
                               <span className="absolute left-3 top-2.5 text-slate-400 pointer-events-none">
                                 <MessageSquare size={14} />
@@ -462,6 +463,9 @@ export const ContactView: React.FC = () => {
         </div>
 
       </section>
+
+      {/* ─── 3. Global CTA Banner ─── */}
+      <CTABanner />
     </div>
   );
 };

@@ -4,8 +4,9 @@
 import React, { useState } from 'react';
 import { notFound, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronRight, ArrowLeft, ThumbsUp, ThumbsDown, BookOpen, Clock, Heart } from 'lucide-react';
+import { ChevronRight, ThumbsUp, ThumbsDown, BookOpen, Clock, Heart } from 'lucide-react';
 import { toast } from 'sonner';
+import CTABanner from '@/components/organisms/CTABanner/CTABanner';
 
 interface ArticleDetail {
   slug: string;
@@ -64,80 +65,97 @@ export default function HelpArticleDetailPage() {
   };
 
   return (
-    <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
-      <div className="site-container px-4 sm:px-0 max-w-2xl">
-        {/* Breadcrumbs */}
-          <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-6">
-            <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
-            <ChevronRight size={10} />
-            <Link href="/help" className="hover:text-blue-500 transition-colors">Help Centre</Link>
-            <ChevronRight size={10} />
-            <Link href={`/help/${article.categorySlug}`} className="hover:text-blue-500 transition-colors">{article.category}</Link>
-            <ChevronRight size={10} />
-            <span className="text-slate-600 dark:text-slate-400">Article Details</span>
-          </div>
+    <main className="min-h-screen bg-slate-50/50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-300">
+      {/* ─── 1. Page Hero Header (Standard .page-hero-header) ─── */}
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-80 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-orange-500/10 via-amber-500/5 to-transparent pointer-events-none -z-10" />
 
-          <div className="flex items-center gap-2.5 mb-8">
-            <Link href={`/help/${article.categorySlug}`}>
-              <span className="h-8 w-8 rounded-full border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 flex items-center justify-center text-slate-600 dark:text-slate-400 transition-all cursor-pointer">
-                <ArrowLeft size={14} />
-              </span>
+        <div className="site-container relative z-10 page-nav-header space-y-4 text-left">
+          {/* Breadcrumbs */}
+          <div className="nav-breadcrumb text-slate-500 dark:text-slate-400">
+            <Link href="/" className="hover:text-primary transition-colors">
+              Home
             </Link>
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 dark:text-blue-400">ARTICLE DETAILS</span>
-              <h1 className="text-2xl sm:text-4xl font-syne font-black uppercase text-slate-900 dark:text-white leading-tight">
-                {article.title}
-              </h1>
-              <div className="flex items-center gap-3 text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1.5">
-                <span className="flex items-center gap-1"><BookOpen size={12} /> {article.category}</span>
-                <span className="h-1 w-1 bg-slate-400 rounded-full" />
-                <span className="flex items-center gap-1"><Clock size={12} /> {article.readTime}</span>
-              </div>
+            <ChevronRight size={11} className="text-slate-400 shrink-0" />
+            <Link href="/resources" className="hover:text-primary transition-colors">
+              Resources
+            </Link>
+            <ChevronRight size={11} className="text-slate-400 shrink-0" />
+            <Link href={`/help/${article.categorySlug}`} className="hover:text-primary transition-colors">
+              {article.category}
+            </Link>
+            <ChevronRight size={11} className="text-slate-400 shrink-0" />
+            <span className="text-primary font-bold">Article Details</span>
+          </div>
+
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-orange-500/10 dark:bg-orange-500/15 border border-orange-500/25 text-xs font-bold uppercase tracking-wider text-[#FF4D00] shadow-2xs">
+              <BookOpen size={13} className="text-[#FF4D00]" />
+              <span>{article.category}</span>
             </div>
           </div>
 
-          {/* Article Body */}
-          <div className="space-y-6 text-sm leading-relaxed text-slate-750 dark:text-slate-300 font-medium">
-            {article.body.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-syne font-black tracking-tight text-slate-950 dark:text-white leading-tight max-w-3xl uppercase">
+            {article.title}
+          </h1>
 
-          {/* Tips Box */}
-          {article.tips && (
-            <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 mt-8 space-y-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
-                <Heart size={13} /> Manager tips & recommendations
-              </span>
-              <p className="text-xs text-slate-700 dark:text-slate-350 leading-relaxed font-semibold">
-                {article.tips}
-              </p>
-            </div>
-          )}
-
-          {/* Helpfulness Widget */}
-          <div className="border-t border-gray-250 dark:border-slate-900 mt-12 pt-8 text-center space-y-4">
-            <h4 className="text-xs font-bold uppercase text-slate-900 dark:text-white">Was this article helpful?</h4>
-            {voted ? (
-              <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Thank you for helping us optimize our support matrix!</p>
-            ) : (
-              <div className="flex justify-center gap-3">
-                <button
-                  onClick={() => handleVote('up')}
-                  className="rounded-full border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 px-5 py-2.5 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
-                >
-                  <ThumbsUp size={13} className="text-emerald-500" /> Yes, it helped
-                </button>
-                <button
-                  onClick={() => handleVote('down')}
-                  className="rounded-full border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 px-5 py-2.5 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
-                >
-                  <ThumbsDown size={13} className="text-red-500" /> No, I need more details
-                </button>
-              </div>
-            )}
+          <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-medium">
+            <span className="flex items-center gap-1.5">
+              <Clock size={13} className="text-primary" /> {article.readTime}
+            </span>
           </div>
         </div>
-      </main>
-    );
-  }
+      </section>
+
+      {/* ─── 2. Article Content Section (Standard .section-py) ─── */}
+      <section className="section-py site-container max-w-3xl">
+
+        {/* Article Body */}
+        <div className="space-y-6 text-sm leading-relaxed text-slate-700 dark:text-slate-300 font-medium">
+          {article.body.map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </div>
+
+        {/* Tips Box */}
+        {article.tips && (
+          <div className="rounded-md bg-amber-500/10 border border-amber-500/20 p-5 mt-8 space-y-2">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
+              <Heart size={13} /> Manager tips & recommendations
+            </span>
+            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-semibold">
+              {article.tips}
+            </p>
+          </div>
+        )}
+
+        {/* Helpfulness Widget */}
+        <div className="border-t border-gray-200 dark:border-slate-800/80 mt-12 pt-8 text-center space-y-4">
+          <h4 className="text-xs font-bold uppercase text-slate-900 dark:text-white">Was this article helpful?</h4>
+          {voted ? (
+            <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Thank you for helping us optimize our support matrix!</p>
+          ) : (
+            <div className="flex justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => handleVote('up')}
+                className="rounded-md border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 px-5 py-2.5 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+              >
+                <ThumbsUp size={13} className="text-emerald-500" /> Yes, it helped
+              </button>
+              <button
+                type="button"
+                onClick={() => handleVote('down')}
+                className="rounded-md border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 px-5 py-2.5 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+              >
+                <ThumbsDown size={13} className="text-red-500" /> No, I need more details
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <CTABanner />
+    </main>
+  );
+}

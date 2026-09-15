@@ -221,7 +221,7 @@ export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
       categoryTitle: 'TOOLS & DOWNLOADS',
       items: [
         { title: 'Software Downloads', desc: 'Windows .exe, Linux .deb & Android APK binaries', href: '/downloads', icon: Download, iconColor: 'text-purple-500' },
-        { title: '24/7 Priority Support', desc: 'Talk to our dedicated POS engineering team', href: '/contact', icon: Headset, iconColor: 'text-cyan-500' },
+        { title: '24/7 Priority Support', desc: 'Talk to our dedicated POS engineering team', href: '/#support', icon: Headset, iconColor: 'text-cyan-500' },
       ],
     },
   ],
@@ -310,7 +310,7 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
         items: [
           { title: 'Help & Knowledge Center', desc: 'Setup tutorials & guides', href: '/help', icon: HelpCircle },
           { title: 'Software Downloads', desc: 'Windows & Android binaries', href: '/downloads', icon: Download },
-          { title: '24/7 Priority Support', desc: 'Speak to a POS engineer', href: '/contact', icon: Headset },
+          { title: '24/7 Priority Support', desc: 'Speak to a POS engineer', href: '/#support', icon: Headset },
         ],
       },
     ],
@@ -354,7 +354,6 @@ export const isPrimaryLinkActive = (link: { label: string; href: string }, pathn
       '/resources',
       '/help',
       '/downloads',
-      '/contact',
       '/blog',
     ];
     return resourcesRoutes.some((route) => pathname === route || pathname.startsWith(`${route}/`));

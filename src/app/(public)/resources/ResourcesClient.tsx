@@ -1,510 +1,650 @@
-"use client";
+// src/app/(public)/resources/ResourcesClient.tsx
+'use client';
 
-import React, { useState, useMemo } from "react";
-import Link from "next/link";
-import { motion, AnimatePresence, type Variants } from "framer-motion";
+import React, { useState, useMemo } from 'react';
+import Link from 'next/link';
 import {
-  ArrowRight,
-  Clock,
-  Download,
-  Search,
+  ChevronRight,
+  ChevronDown,
   Sparkles,
-  X,
+  Search,
+  Check,
+  ArrowRight,
+  HelpCircle,
+  Download,
+  Terminal,
+  Video,
+  FileText,
+  Headset,
+  BookOpen,
+  Newspaper,
+  ShieldCheck,
+  Cpu,
+  Layers,
   CheckCircle2,
-} from "lucide-react";
-import CTABanner from "@/components/organisms/CTABanner/CTABanner";
-import TestimonialsWrapper from "@/features/Testimonials";
-import { toast } from "sonner";
+  Server,
+  Zap,
+  Code2,
+  Lock,
+} from 'lucide-react';
+import CTABanner from '@/components/organisms/CTABanner/CTABanner';
 
-interface Resource {
+/* ─────────── Types & Data ─────────── */
+interface ResourcePillar {
   id: string;
+  num: string;
   title: string;
-  category: "all" | "blog" | "help" | "guides" | "calculators";
-  categoryLabel: string;
-  categoryColor: string;
-  glowColor: string;
-  type: "Blog" | "Help Centre" | "Video Tutorial" | "Guide" | "Calculator" | "Security";
-  description: string;
-  readTime: string;
-  fileSize: string;
-  fileName: string;
-  image: string;
+  badge: string;
+  category: 'all' | 'docs' | 'tools' | 'dev';
+  desc: string;
+  icon: React.ElementType;
   href: string;
-  tags: string[];
+  linkText: string;
+  color: {
+    icon: string;
+    iconBg: string;
+    iconBorder: string;
+    badge: string;
+    badgeBg: string;
+    indicator: string;
+  };
+  points: string[];
+  stats: { v: string; l: string }[];
+  preview: React.ReactNode;
 }
 
-const ENTERPRISE_RESOURCES: Resource[] = [
+const RESOURCE_PILLARS: ResourcePillar[] = [
   {
-    id: "blog-main",
-    title: "Engineering & POS Innovation Blog",
-    category: "blog",
-    categoryLabel: "BLOG & ARTICLES",
-    categoryColor: "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 border-indigo-200 dark:border-indigo-900/50",
-    glowColor: "from-indigo-500/15 to-transparent",
-    type: "Blog",
-    description:
-      "Deep technical articles on sub-second barcode scanning, weigh scale calibration, and offline distributed database architecture.",
-    readTime: "Live Articles",
-    fileSize: "Online",
-    fileName: "quantix_blog_hub",
-    image: "/images/ent_guide_blueprint.png",
-    href: "/blog",
-    tags: ["POS Engineering", "Weigh Scales", "System Benchmarks"],
-  },
-  {
-    id: "help-main",
-    title: "Help & Knowledge Centre",
-    category: "help",
-    categoryLabel: "KNOWLEDGE BASE",
-    categoryColor: "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-900/50",
-    glowColor: "from-blue-500/15 to-transparent",
-    type: "Help Centre",
-    description:
-      "Official setup manuals, troubleshooting guides, hardware pairing instructions, and frequently asked questions.",
-    readTime: "Searchable Docs",
-    fileSize: "Interactive",
-    fileName: "quantix_help_centre",
-    image: "/images/ent_accounting_sync_bundle.png",
-    href: "/help",
-    tags: ["Setup Guides", "Printer Pairing", "Troubleshooting"],
-  },
-  {
-    id: "help-videos",
-    title: "Video Setup & Hardware Tutorials",
-    category: "help",
-    categoryLabel: "VIDEO GUIDES",
-    categoryColor: "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/50",
-    glowColor: "from-rose-500/15 to-transparent",
-    type: "Video Tutorial",
-    description:
-      "Visual step-by-step videos for unboxing terminals, connecting thermal printers, barcode scanners, and cash drawers.",
-    readTime: "HD Playlists",
-    fileSize: "Video Library",
-    fileName: "quantix_video_tutorials",
-    image: "/images/nav_payment_bundle.png",
-    href: "/help/videos",
-    tags: ["Unboxing Demos", "Hardware Setup", "Cash Drawer"],
-  },
-  {
-    id: "help-onboarding",
-    title: "Quick-Start Merchant Onboarding Guide",
-    category: "guides",
-    categoryLabel: "SETUP GUIDE",
-    categoryColor: "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/50",
-    glowColor: "from-emerald-500/15 to-transparent",
-    type: "Guide",
-    description:
-      "A simple 5-step walkthrough to set up your business account, import products, configure tax rates, and process your first checkout.",
-    readTime: "5 Easy Steps",
-    fileSize: "Step-by-Step",
-    fileName: "quantix_getting_started",
-    image: "/images/ent_franchise_portal.png",
-    href: "/help/getting-started",
-    tags: ["First Checkout", "Catalog Import", "Employee PIN"],
-  },
-  {
-    id: "pos-guide",
-    title: "Enterprise Multi-Store POS Buying Guide",
-    category: "guides",
-    categoryLabel: "BUYING GUIDE",
-    categoryColor: "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900/50",
-    glowColor: "from-amber-500/15 to-transparent",
-    type: "Guide",
-    description:
-      "Complete checklist on comparing terminals, eliminating hidden card processing fees, and setting up central menu distribution.",
-    readTime: "8 min read",
-    fileSize: "Online Guide",
-    fileName: "quantix_pos_buying_guide",
-    image: "/images/ent_guide_blueprint.png",
-    href: "/resources/pos-guide",
-    tags: ["Fee Comparison", "Multi-Store HQ", "Hardware Checklist"],
-  },
-  {
-    id: "roi-calc",
-    title: "POS Savings & Fee ROI Calculator",
-    category: "calculators",
-    categoryLabel: "INTERACTIVE TOOL",
-    categoryColor: "text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-900/50",
-    glowColor: "from-purple-500/15 to-transparent",
-    type: "Calculator",
-    description:
-      "Forecast your annual operational cost savings across credit card processing rates, software licensing, and hardware upkeep.",
-    readTime: "Interactive",
-    fileSize: "Online Tool",
-    fileName: "quantix_roi_calculator",
-    image: "/images/ent_roi_analytics.png",
-    href: "/roi-calculator",
-    tags: ["Card Fee Savings", "Multi-Location ROI", "Annual Forecast"],
-  },
-  {
-    id: "pci-security",
-    title: "PCI-DSS Level 1 Security & Encryption Standards",
-    category: "guides",
-    categoryLabel: "SECURITY STANDARDS",
-    categoryColor: "text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-teal-200 dark:border-teal-900/50",
-    glowColor: "from-teal-500/15 to-transparent",
-    type: "Security",
-    description:
-      "How Point-to-Point Encryption (P2PE) and EMV tokenization isolate branch registers from cardholder liability and fraud risks.",
-    readTime: "Security Brief",
-    fileSize: "Compliance",
-    fileName: "quantix_pci_compliance",
-    image: "/images/nav_payment_bundle.png",
-    href: "/pci",
-    tags: ["P2PE Encryption", "PCI Level 1", "Card Protection"],
-  },
-];
-
-const CATEGORY_TABS = [
-  { id: "all", label: "All Resources" },
-  { id: "blog", label: "Blog & Insights" },
-  { id: "help", label: "Help & Tutorials" },
-  { id: "guides", label: "Setup Guides" },
-  { id: "calculators", label: "Tools & Calculators" },
-];
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.06,
+    id: 'help',
+    num: '01',
+    title: 'Help Center & Setup Manuals',
+    badge: 'CORE MANUALS',
+    category: 'docs',
+    desc: 'Comprehensive step-by-step guides for register unboxing, receipt printer pairing, local offline LAN synchronization, and daily cashier operations.',
+    icon: HelpCircle,
+    href: '/help',
+    linkText: 'Explore Help Center',
+    color: {
+      icon: '#2563EB',
+      iconBg: '#EFF6FF',
+      iconBorder: '#BFDBFE',
+      badge: '#1D4ED8',
+      badgeBg: '#EFF6FF',
+      indicator: '#3B82F6',
     },
+    points: ['Hardware unboxing & printer setup', 'Offline LAN till failover guide', 'Shift close & reconciliation workflows'],
+    stats: [{ v: '150+', l: 'Setup Guides' }, { v: '<3min', l: 'Avg Read Time' }, { v: '24/7', l: 'Searchable' }],
+    preview: (
+      <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 space-y-3 font-sans">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Knowledge Search</span>
+          <span className="text-[10px] font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded">
+            Live Database
+          </span>
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 bg-slate-800/90 px-3 py-2 rounded-lg border border-slate-700/80">
+            <Search size={13} className="text-slate-400 shrink-0" />
+            <span className="text-xs text-slate-300 font-mono">Epson TM-T88VI Printer Pairing...</span>
+          </div>
+          <div className="p-2.5 rounded-lg bg-emerald-950/25 border border-emerald-800/40 flex items-center justify-between">
+            <span className="text-xs font-semibold text-emerald-300">✓ ESC/POS Driver Auto-Configured</span>
+            <span className="text-[10px] font-mono text-emerald-400">0.2s</span>
+          </div>
+        </div>
+      </div>
+    ),
   },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 15 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
-};
+  {
+    id: 'downloads',
+    num: '02',
+    title: 'Software Downloads & Client Binaries',
+    badge: 'CLIENT BINARIES',
+    category: 'tools',
+    desc: 'Self-contained register installers, touch screen drivers, and background synchronization daemons for Windows, Linux, and Android POS terminals.',
+    icon: Download,
+    href: '/downloads',
+    linkText: 'View Downloads Catalog',
+    color: {
+      icon: '#7C3AED',
+      iconBg: '#F5F3FF',
+      iconBorder: '#DDD6FE',
+      badge: '#6D28D9',
+      badgeBg: '#F5F3FF',
+      indicator: '#8B5CF6',
+    },
+    points: ['Native Windows x64 & Linux binaries', 'EV Code Signed & SHA-256 verified', 'Silent command-line fleet deployment'],
+    stats: [{ v: 'v2.1.0', l: 'Stable Release' }, { v: '3 OS', l: 'Cross-Platform' }, { v: '0s', l: 'Setup Downtime' }],
+    preview: (
+      <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 space-y-3 font-sans">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Release Verification</span>
+          <span className="text-[10px] font-bold text-indigo-400 bg-indigo-950/60 border border-indigo-800/60 px-2 py-0.5 rounded">
+            EV Signed
+          </span>
+        </div>
+        <div className="space-y-1.5 font-mono text-[11px]">
+          <div className="flex justify-between text-slate-400">
+            <span>Package:</span>
+            <span className="text-slate-200">Quantix-Setup-2.1.0.exe</span>
+          </div>
+          <div className="flex justify-between text-slate-400">
+            <span>SHA-256:</span>
+            <span className="text-emerald-400 truncate max-w-[170px]">9f83c1b6a72e811e5f...</span>
+          </div>
+          <div className="mt-2 p-2 rounded bg-slate-800 text-purple-300 text-[10px] truncate border border-slate-700">
+            $ Quantix-Setup.exe /S /ALLUSERS
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'api',
+    num: '03',
+    title: 'Developer REST & Webhook APIs',
+    badge: 'DEVELOPER PORTAL',
+    category: 'dev',
+    desc: 'Connect external ERPs, custom accounting software, warehouse inventory trackers, and delivery aggregators with our developer-first API documentation.',
+    icon: Terminal,
+    href: '/help/api',
+    linkText: 'Explore API Reference',
+    color: {
+      icon: '#0D9488',
+      iconBg: '#F0FDFA',
+      iconBorder: '#99F6E4',
+      badge: '#0F766E',
+      badgeBg: '#F0FDFA',
+      indicator: '#14B8A6',
+    },
+    points: ['Sub-20ms transaction ingest latency', 'Real-time order webhook callbacks', 'OAuth2 token authentication & HMAC sha256'],
+    stats: [{ v: '<20ms', l: 'Sync Latency' }, { v: '120/m', l: 'Rate Limit' }, { v: '100%', l: 'REST & gRPC' }],
+    preview: (
+      <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 space-y-2.5 font-mono text-xs">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+          <span className="text-emerald-400 font-bold">POST /api/v1/transactions</span>
+          <span className="text-[10px] text-slate-400">201 CREATED</span>
+        </div>
+        <pre className="text-slate-300 text-[11px] leading-relaxed overflow-x-auto bg-slate-950 p-2.5 rounded-lg border border-slate-800/80">
+{`{
+  "terminalId": "trm_991",
+  "amount": 49.99,
+  "currency": "USD",
+  "inventoryDeducted": true
+}`}
+        </pre>
+      </div>
+    ),
+  },
+  {
+    id: 'videos',
+    num: '04',
+    title: 'Video Tutorials & Masterclasses',
+    badge: 'VIDEO GUIDES',
+    category: 'docs',
+    desc: 'Visual walkthroughs of POS register workflows, manager overrides, table floor layout editing, and inventory variance reconciliations.',
+    icon: Video,
+    href: '/help/videos',
+    linkText: 'Watch Video Guides',
+    color: {
+      icon: '#EA580C',
+      iconBg: '#FFF7ED',
+      iconBorder: '#FED7AA',
+      badge: '#C2410C',
+      badgeBg: '#FFF7ED',
+      indicator: '#FF4F00',
+    },
+    points: ['Visual cashier training playlists', 'Split bill & table management masterclass', 'Hardware troubleshooting clips'],
+    stats: [{ v: '4K UHD', l: 'Video Quality' }, { v: '12+', l: 'Playlists' }, { v: '0s', l: 'Sign-in Barrier' }],
+    preview: (
+      <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 space-y-3 font-sans">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Interactive Masterclass</span>
+          <span className="text-[10px] font-bold text-amber-400 bg-amber-950/60 border border-amber-800/60 px-2 py-0.5 rounded">
+            Featured
+          </span>
+        </div>
+        <div className="relative aspect-video rounded-lg bg-linear-to-tr from-slate-950 via-slate-800 to-orange-950/40 border border-slate-700/80 flex items-center justify-center group overflow-hidden">
+          <div className="h-10 w-10 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-lg shadow-primary/30">
+            <Video size={16} className="ml-0.5" />
+          </div>
+          <div className="absolute bottom-2 left-2 right-2 flex justify-between text-[10px] font-mono text-slate-300 bg-slate-950/80 px-2 py-1 rounded">
+            <span>Cashier Speed Run</span>
+            <span className="text-primary font-bold">4:18</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'pos-guide',
+    num: '05',
+    title: 'POS Buying & Migration Guide',
+    badge: 'EXPERT STRATEGY',
+    category: 'docs',
+    desc: 'Unbiased hardware longevity benchmarks, hidden processing fee audits, and proven step-by-step POS migration playbooks for retail & dining.',
+    icon: FileText,
+    href: '/resources/pos-guide',
+    linkText: 'Read POS Guide',
+    color: {
+      icon: '#059669',
+      iconBg: '#ECFDF5',
+      iconBorder: '#A7F3D0',
+      badge: '#047857',
+      badgeBg: '#ECFDF5',
+      indicator: '#10B981',
+    },
+    points: ['Avoid proprietary hardware lock-ins', 'Interchange-plus vs flat fee analysis', 'Zero-downtime multi-store catalog switch'],
+    stats: [{ v: '100% Free', l: 'Public Guide' }, { v: '40% Cut', l: 'Fee Reduction' }, { v: '1-Day', l: 'Data Migration' }],
+    preview: (
+      <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 space-y-3 font-sans">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Fee Audit Matrix</span>
+          <span className="text-[10px] font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded">
+            Verified
+          </span>
+        </div>
+        <div className="space-y-2">
+          <div className="flex justify-between items-center text-xs p-2 rounded bg-emerald-900/20 border border-emerald-800/40 text-emerald-300">
+            <span className="font-bold">✓ Quantix POS</span>
+            <span>Flat 2.4% + 10¢</span>
+          </div>
+          <div className="flex justify-between items-center text-xs p-2 rounded bg-slate-800/50 text-slate-500 line-through">
+            <span>Legacy Vendor</span>
+            <span>3.5% + Monthly SaaS</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'support',
+    num: '06',
+    title: '24/7 Priority Support & Direct Hotline',
+    badge: 'DEDICATED SUPPORT',
+    category: 'tools',
+    desc: 'Connect directly with certified POS systems engineers, schedule a 15-minute live architecture demo, or request urgent deployment assistance.',
+    icon: Headset,
+    href: '/contact',
+    linkText: 'Talk with a POS Specialist',
+    color: {
+      icon: '#D97706',
+      iconBg: '#FFFBEB',
+      iconBorder: '#FDE68A',
+      badge: '#B45309',
+      badgeBg: '#FFFBEB',
+      indicator: '#F59E0B',
+    },
+    points: ['Under 15-minute response SLA', 'Direct phone & email engineering desk', 'Free menu, SKU & catalog import'],
+    stats: [{ v: '<15m', l: 'Response SLA' }, { v: '24/7/365', l: 'Support Window' }, { v: '$0', l: 'Onboarding Fee' }],
+    preview: (
+      <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 space-y-3 font-sans">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div className="flex items-center gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-xs font-bold text-emerald-400">Engineers Online</span>
+          </div>
+          <span className="text-[10px] font-mono text-slate-400">USA & Global</span>
+        </div>
+        <div className="space-y-2 text-xs">
+          <div className="p-2.5 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-between">
+            <span className="text-slate-400 font-mono">Hotline:</span>
+            <span className="font-bold text-white">+1 (800) 555-0199</span>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-between">
+            <span className="text-slate-400 font-mono">SLA:</span>
+            <span className="font-bold text-emerald-400">Guaranteed &lt; 15 Mins</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+];
 
 export default function ResourcesClient() {
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [search, setSearch] = useState("");
+  const [openId, setOpenId] = useState<string>('help');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'docs' | 'tools' | 'dev'>('all');
 
-  const filtered = useMemo(() => {
-    return ENTERPRISE_RESOURCES.filter((item) => {
-      const matchCat = activeCategory === "all" || item.category === activeCategory;
-      const matchSearch =
-        !search.trim() ||
-        item.title.toLowerCase().includes(search.toLowerCase()) ||
-        item.description.toLowerCase().includes(search.toLowerCase()) ||
-        item.type.toLowerCase().includes(search.toLowerCase());
+  const toggle = (id: string) => setOpenId((prev) => (prev === id ? '' : id));
 
-      return matchCat && matchSearch;
+  const filteredPillars = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
+    return RESOURCE_PILLARS.filter((p) => {
+      const matchCat = activeCategory === 'all' || p.category === activeCategory;
+      const matchQuery =
+        !q ||
+        p.title.toLowerCase().includes(q) ||
+        p.desc.toLowerCase().includes(q) ||
+        p.badge.toLowerCase().includes(q) ||
+        p.points.some((pt) => pt.toLowerCase().includes(q));
+      return matchCat && matchQuery;
     });
-  }, [activeCategory, search]);
-
-  const handleDownload = (title: string, fileName: string, size: string) => {
-    toast.success(`Downloading: ${title}`, {
-      description: `Saved as ${fileName} (${size}). Download started.`,
-    });
-  };
+  }, [searchQuery, activeCategory]);
 
   return (
-    <>
-      {/* 1. Clean Hero Header */}
-      <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-200/80 dark:border-slate-800 relative overflow-hidden">
-        {/* Animated Breathing Ambient Light */}
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.25, 0.45, 0.25],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 bg-linear-to-b from-primary/20 via-primary/10 to-transparent blur-3xl pointer-events-none -z-10"
+    <div className="min-h-screen bg-[#FAFAFA] dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-300">
+
+      {/* ══════════ 1. HERO SECTION (Why Quantix Style) ══════════ */}
+      <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-100 dark:border-slate-800/80 relative overflow-hidden">
+        {/* Subtle dot grid */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20"
+          style={{ backgroundImage: 'radial-gradient(#E2E8F0 1px, transparent 1px)', backgroundSize: '24px 24px' }}
         />
+        {/* Warm top ambient glow */}
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-175 h-72 bg-gradient-to-b from-orange-400/15 via-amber-400/5 to-transparent blur-3xl pointer-events-none" />
 
-        <div className="site-container text-center max-w-3xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[11px] sm:text-xs font-black uppercase tracking-wider text-primary mb-3 shadow-xs"
-          >
-            <Sparkles size={13} className="text-primary animate-pulse" />
-            <span>ENTERPRISE PLAYBOOKS & BLUEPRINTS</span>
-          </motion.div>
+        <div className="site-container relative z-10 px-4 sm:px-6">
+          {/* Breadcrumb - Direct Home > Resources */}
+          <nav aria-label="Breadcrumb" className="mb-4 sm:mb-5 flex items-center gap-1.5 text-xs font-semibold text-slate-400 dark:text-slate-500">
+            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+            <ChevronRight size={12} className="text-slate-300 dark:text-slate-600" />
+            <span className="text-primary font-bold">Resources</span>
+          </nav>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.1 }}
-            className="font-syne text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-[1.18] tracking-tight"
-          >
-            Enterprise POS Blueprints & Architecture Toolkits
-          </motion.h1>
+          {/* Pill Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-orange-50 dark:bg-orange-950/40 border border-orange-200/80 dark:border-orange-800/50 text-xs font-black uppercase tracking-widest text-[#FF4F00] mb-5 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF4F00] animate-pulse" />
+            <Sparkles size={12} />
+            Enterprise Resource Center
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.2 }}
-            className="mt-3 text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium max-w-xl mx-auto leading-relaxed"
-          >
-            Technical blueprints, ERP telemetry guidelines, and shift settlement SOPs for multi-unit enterprise operations.
-          </motion.p>
+          {/* Big Typography Heading with Gradient (Why Quantix Style) */}
+          <h1 className="font-syne text-[2rem] sm:text-[2.5rem] lg:text-[3.25rem] font-extrabold tracking-tight leading-[1.12] text-slate-950 dark:text-white max-w-3xl mb-4">
+            The Complete Toolkit for POS{' '}
+            <span
+              className="relative inline-block"
+              style={{
+                background: 'linear-gradient(135deg, #FF4F00 0%, #F59E0B 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              Implementation &amp; Scale
+            </span>
+          </h1>
 
-          {/* Search Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.25 }}
-            className="mt-4 max-w-md mx-auto"
-          >
-            <div className="relative flex items-center bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-2xs focus-within:ring-2 focus-within:ring-primary/20 transition-all p-1">
-              <Search className="h-4 w-4 text-slate-400 dark:text-slate-500 ml-3 shrink-0" />
+          <p className="max-w-2xl text-sm sm:text-[0.9375rem] text-slate-600 dark:text-slate-400 font-medium leading-[1.75] mb-7 sm:mb-9">
+            Setup manuals, downloadable register binaries, developer REST APIs, and expert video guides.
+            Everything your operations team and developers need to deploy Quantix POS across all locations.
+          </p>
+
+          {/* Trust Stats Strip (Why Quantix 4-column strip) */}
+          <div className="mt-7 sm:mt-8 pt-6 sm:pt-7 border-t border-slate-100 dark:border-slate-800/80">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-0">
+              {[
+                { v: '150+', l: 'Setup Guides & Manuals', sub: 'Printers, registers & LAN setup', accent: '#FF4F00' },
+                { v: '100%', l: 'Native Offline Architecture', sub: 'Sub-second till synchronization', accent: '#059669' },
+                { v: '3 Platforms', l: 'Windows, Linux & Android', sub: 'EV Code Signed installers', accent: '#2563EB' },
+                { v: '<15 Mins', l: 'Priority Support SLA', sub: 'Direct solutions engineer hotline', accent: '#7C3AED' },
+              ].map((s, i) => (
+                <div
+                  key={s.l}
+                  className={`flex flex-col px-4 sm:px-6 py-4 sm:py-0 rounded-xl sm:rounded-none ${
+                    i !== 0 ? 'sm:border-l sm:border-slate-100 dark:sm:border-slate-800/80' : ''
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="w-1 h-10 rounded-full shrink-0 hidden sm:block mt-1" style={{ background: s.accent }} />
+                    <div className="w-full">
+                      <div className="font-syne font-black text-xl sm:text-2xl leading-none tracking-tight mb-1" style={{ color: s.accent }}>
+                        {s.v}
+                      </div>
+                      <div className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-slate-200 mb-0.5 leading-snug">
+                        {s.l}
+                      </div>
+                      <div className="text-[10px] sm:text-[11px] text-slate-400 dark:text-slate-500 leading-snug hidden sm:block">
+                        {s.sub}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════ 2. INTERACTIVE EXPLORER (Why Quantix Accordion Style) ══════════ */}
+      <section className="section-py">
+        <div className="site-container px-4 sm:px-6">
+
+          {/* Search & Category Filter Controls */}
+          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
+            {/* Search Input */}
+            <div className="relative flex-1 max-w-md">
               <input
                 type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search architecture blueprints, ERP guides, security briefs..."
-                className="w-full bg-transparent px-2.5 py-1.5 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search guides, downloads, APIs, or manuals..."
+                className="w-full h-10 sm:h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs sm:text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-[#FF4F00] focus:ring-2 focus:ring-[#FF4F00]/15 outline-none transition-all shadow-xs"
               />
-              {search && (
+              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+              {searchQuery && (
                 <button
                   type="button"
-                  onClick={() => setSearch("")}
-                  className="p-1 mr-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
                 >
-                  <X size={14} />
+                  Clear
                 </button>
               )}
             </div>
-          </motion.div>
 
-          {/* Smooth Sliding Pill Category Tabs */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.3 }}
-            className="mt-5 sm:mt-6 flex items-center sm:justify-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none snap-x touch-pan-x"
-          >
-            {CATEGORY_TABS.map((tab) => {
-              const isActive = activeCategory === tab.id;
-              return (
+            {/* Category Filter Pills */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+              {[
+                { id: 'all', label: 'All Resources' },
+                { id: 'docs', label: 'Setup & Guides' },
+                { id: 'tools', label: 'Tools & Downloads' },
+                { id: 'dev', label: 'Developer APIs' },
+              ].map((cat) => (
                 <button
-                  key={tab.id}
-                  onClick={() => setActiveCategory(tab.id)}
-                  className={`relative px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-colors duration-200 shrink-0 snap-center cursor-pointer ${
-                    isActive
-                      ? "text-white"
-                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800"
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setActiveCategory(cat.id as any)}
+                  className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer border ${
+                    activeCategory === cat.id
+                      ? 'bg-primary border-primary text-white shadow-xs'
+                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-300'
                   }`}
                 >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeEnterpriseResourceFilterPill"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      className="absolute inset-0 bg-primary rounded-xl shadow-xs shadow-primary/30 ring-2 ring-primary/20 z-0"
-                    />
-                  )}
-                  <span className="relative z-10">{tab.label}</span>
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile Quick-Jump Badge Strip */}
+          <div
+            className="lg:hidden mb-4 flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-none"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
+            {filteredPillars.map((p) => {
+              const Icon = p.icon;
+              const isActive = openId === p.id;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => toggle(p.id)}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl border text-[11px] font-syne font-bold whitespace-nowrap shrink-0 transition-all duration-200 active:scale-95 cursor-pointer"
+                  style={
+                    isActive
+                      ? { background: '#FF4F00', color: '#fff', borderColor: '#FF4F00', boxShadow: '0 2px 8px rgba(255,79,0,0.3)' }
+                      : { background: '#fff', color: '#475569', borderColor: '#E2E8F0' }
+                  }
+                >
+                  <Icon size={12} style={{ color: isActive ? '#fff' : p.color.icon }} />
+                  {p.badge}
                 </button>
               );
             })}
-          </motion.div>
-        </div>
-      </section>
+          </div>
 
-      {/* 2. Flagship Blueprint Bento Spotlight */}
-      <section className="py-8 sm:py-10 bg-slate-50/60 dark:bg-slate-900/30 border-b border-slate-200/80 dark:border-slate-800">
-        <div className="site-container px-4 sm:px-6">
-          <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-            <div className="lg:col-span-7 space-y-3.5">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-[10px] font-black uppercase tracking-wider text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
-                  FLAGSHIP ARCHITECTURE BLUEPRINT
-                </span>
-                <span className="text-xs text-slate-400 font-bold flex items-center gap-1">
-                  <Clock size={12} />
-                  8 min read • PDF Download
-                </span>
-              </div>
+          {/* Accordion list */}
+          <div className="space-y-3 sm:space-y-4">
+            {filteredPillars.map((p) => {
+              const Icon = p.icon;
+              const isOpen = openId === p.id;
 
-              <h2 className="font-syne text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-white leading-tight">
-                Multi-Store POS Rollout & Central Telemetry Architecture
-              </h2>
-
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                Complete technical reference for multi-outlet catalog distribution, regional price overrides, zero-latency offline mesh, and SQL data lake exports.
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                {[
-                  "Zero-latency sub-4ms local IndexedDB till caching",
-                  "Central menu distribution to 50+ branches in < 15 seconds",
-                  "SAP & NetSuite ERP automated daily sales sync",
-                  "PCI-DSS Tier 1 P2PE encryption & Okta SAML 2.0 SSO",
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 text-xs text-slate-700 dark:text-slate-300 font-medium"
+              return (
+                <div
+                  key={p.id}
+                  className="rounded-2xl border transition-all duration-300 overflow-hidden bg-white dark:bg-slate-900"
+                  style={{
+                    borderColor: isOpen ? '#E5E7EB' : '#F1F5F9',
+                    boxShadow: isOpen ? '0 4px 24px rgba(0,0,0,0.06)' : '0 1px 3px rgba(0,0,0,0.04)',
+                  }}
+                >
+                  {/* ── Tab Row ── */}
+                  <button
+                    type="button"
+                    onClick={() => toggle(p.id)}
+                    className="w-full text-left flex items-center gap-3 sm:gap-4 px-4 sm:px-5 md:px-6 py-3.5 sm:py-4 md:py-5 cursor-pointer relative select-none"
                   >
-                    <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="pt-2 flex flex-wrap items-center gap-3">
-                <Link
-                  href="/resources/pos-guide"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-bold text-xs shadow-xs transition-all cursor-pointer"
-                >
-                  <span>Read Full Blueprint</span>
-                  <ArrowRight size={13} />
-                </Link>
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleDownload(
-                      "Enterprise POS Architecture Blueprint",
-                      "quantix_enterprise_pos_blueprint_2026.pdf",
-                      "2.1 MB"
-                    )
-                  }
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-all cursor-pointer border border-slate-200/80 dark:border-slate-700"
-                >
-                  <Download size={13} />
-                  <span>Download PDF (2.1 MB)</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Free-Floating 3D Blueprint Mockup */}
-            <div className="lg:col-span-5 relative h-56 sm:h-64 flex items-center justify-center">
-              <img
-                src="/images/ent_guide_blueprint.png"
-                alt="Enterprise POS Architecture Blueprint"
-                className="w-full h-full object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Fluid Animated Resources Grid */}
-      <section className="section-py bg-white dark:bg-slate-950">
-        <div className="site-container px-4 sm:px-6">
-          <div className="mb-6 sm:mb-8 flex items-center justify-between">
-            <div>
-              <h2 className="font-syne text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-                Enterprise Operations Toolkits & SOPs
-              </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
-                Showing {filtered.length} enterprise technical documents
-              </p>
-            </div>
-          </div>
-
-          <motion.div
-            layout
-            variants={containerVariants}
-            initial="hidden"
-            animate="show"
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
-          >
-            <AnimatePresence mode="popLayout">
-              {filtered.map((item) => (
-                <motion.div
-                  key={item.id}
-                  layout
-                  variants={itemVariants}
-                  initial="hidden"
-                  animate="show"
-                  exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                  className="h-full"
-                >
-                  <div className="group relative p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-xl hover:border-primary/50 transition-all duration-300 flex flex-col justify-between h-full overflow-hidden">
-                    {/* Subtle Ambient Hover Glow */}
+                    {/* Colored left indicator bar */}
                     <div
-                      className={`absolute top-0 right-0 w-32 h-32 bg-linear-to-br ${item.glowColor} rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
+                      className="absolute left-0 top-0 bottom-0 w-1 rounded-r-full transition-all duration-300"
+                      style={{ background: isOpen ? p.color.indicator : 'transparent' }}
                     />
 
-                    <div className="relative z-10 space-y-3">
-                      {/* Top Row: Category Badge + Read Time */}
-                      <div className="flex items-center justify-between gap-2">
-                        <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${item.categoryColor}`}>
-                          {item.categoryLabel}
+                    {/* Step number badge */}
+                    <span
+                      className="hidden sm:flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-lg text-[10px] sm:text-[11px] font-syne font-black shrink-0 transition-colors border"
+                      style={{
+                        background: isOpen ? p.color.iconBg : '#F8FAFC',
+                        color: isOpen ? p.color.icon : '#94A3B8',
+                        borderColor: isOpen ? p.color.iconBorder : '#E2E8F0',
+                      }}
+                    >
+                      {p.num}
+                    </span>
+
+                    {/* Icon */}
+                    <div
+                      className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-xl flex items-center justify-center shrink-0 border transition-transform duration-200"
+                      style={{
+                        background: p.color.iconBg,
+                        borderColor: p.color.iconBorder,
+                        transform: isOpen ? 'scale(1.05)' : 'scale(1)',
+                      }}
+                    >
+                      <Icon size={18} style={{ color: p.color.icon }} strokeWidth={2.2} />
+                    </div>
+
+                    {/* Title & Badge */}
+                    <div className="flex-1 min-w-0">
+                      <div className="mb-0.5 sm:mb-1">
+                        <span
+                          className="text-[8px] sm:text-[9px] font-syne font-black uppercase tracking-widest px-2 sm:px-2.5 py-0.5 rounded-full border"
+                          style={{ color: p.color.badge, background: p.color.badgeBg, borderColor: p.color.iconBorder }}
+                        >
+                          {p.badge}
                         </span>
-                        <span className="text-[11px] text-slate-400 font-bold flex items-center gap-1">
-                          <Clock size={11} />
-                          {item.readTime}
-                        </span>
                       </div>
-
-                      {/* 100% Free-Floating Transparent 3D Hardware Bundle */}
-                      <div className="relative h-32 sm:h-36 w-full flex items-center justify-center my-0.5">
-                        <motion.img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-contain drop-shadow-md transition-transform duration-300 ease-out group-hover:scale-108 group-hover:-translate-y-1"
-                          loading="lazy"
-                        />
-                      </div>
-
-                      {/* Title & Description */}
-                      <div>
-                        <h3 className="font-syne font-black text-base text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-200 line-clamp-1">
-                          {item.title}
-                        </h3>
-                        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-2">
-                          {item.description}
-                        </p>
-                      </div>
-
-                      {/* Feature Capability Tags */}
-                      <div className="flex flex-wrap gap-1.5 pt-1">
-                        {item.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                      <div className="text-[0.8125rem] sm:text-sm md:text-[0.9375rem] font-syne font-bold leading-tight text-slate-900 dark:text-white">
+                        {p.title}
                       </div>
                     </div>
 
-                    {/* Card Bottom Actions */}
-                    <div className="relative z-10 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                      <Link
-                        href={item.href}
-                        className="inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-primary-dark dark:group-hover:text-primary-light"
-                      >
-                        <span>
-                          {item.type === 'Blog' && 'Read Article'}
-                          {item.type === 'Help Centre' && 'Open Knowledge Base'}
-                          {item.type === 'Video Tutorial' && 'Watch Tutorial'}
-                          {item.type === 'Guide' && 'Open Guide'}
-                          {item.type === 'Calculator' && 'Launch Calculator'}
-                          {item.type === 'Security' && 'View Security Specs'}
-                        </span>
-                        <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
-                      </Link>
-
-                      <span className="text-[10px] font-bold px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500">
-                        {item.fileSize}
-                      </span>
+                    {/* Toggle Chevron */}
+                    <div
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center shrink-0 transition-all duration-200 bg-slate-100 dark:bg-slate-800 text-slate-400"
+                      style={isOpen ? { background: '#FF4F00', color: '#fff' } : undefined}
+                    >
+                      <ChevronDown
+                        size={15}
+                        style={{
+                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 0.3s',
+                        }}
+                      />
                     </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+                  </button>
+
+                  {/* ── Expanded Panel ── */}
+                  {isOpen && (
+                    <div className="px-4 sm:px-5 md:px-6 pb-5 sm:pb-6 md:pb-8 pt-0 border-t border-slate-100 dark:border-slate-800">
+                      <div className="flex flex-col lg:grid lg:grid-cols-2 gap-5 sm:gap-6 mt-4 sm:mt-5">
+
+                        {/* ── LEFT: Description + Points + Stats + CTA ── */}
+                        <div className="flex flex-col gap-4 sm:gap-5 order-1">
+                          <p className="text-[0.8125rem] sm:text-sm text-slate-600 dark:text-slate-400 leading-[1.8] font-medium">
+                            {p.desc}
+                          </p>
+
+                          {/* Core capabilities checklist */}
+                          <div>
+                            <p className="text-[9px] sm:text-[10px] font-syne font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2">
+                              Key Inclusions
+                            </p>
+                            <div className="space-y-1.5 sm:space-y-2">
+                              {p.points.map((pt) => (
+                                <div
+                                  key={pt}
+                                  className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60"
+                                >
+                                  <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center shrink-0 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600">
+                                    <Check size={10} strokeWidth={3} />
+                                  </div>
+                                  <span className="text-[11px] sm:text-xs font-semibold text-slate-800 dark:text-slate-200 leading-snug">
+                                    {pt}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Stat Chips */}
+                          <div className="grid grid-cols-3 gap-2">
+                            {p.stats.map((st) => (
+                              <div
+                                key={st.l}
+                                className="flex flex-col items-center justify-center text-center px-2 py-3 rounded-xl border border-orange-200/80 dark:border-orange-900/40 bg-orange-50/50 dark:bg-orange-950/20"
+                              >
+                                <span className="text-[0.8125rem] sm:text-sm md:text-base font-syne font-black text-[#FF4F00]">
+                                  {st.v}
+                                </span>
+                                <span className="text-[9px] sm:text-[10px] text-slate-500 dark:text-slate-400 leading-tight mt-0.5">
+                                  {st.l}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Action CTA Link */}
+                          <div>
+                            <Link
+                              href={p.href}
+                              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all shadow-md shadow-primary/25 cursor-pointer w-full sm:w-auto"
+                            >
+                              <span>{p.linkText}</span>
+                              <ArrowRight size={14} />
+                            </Link>
+                          </div>
+                        </div>
+
+                        {/* ── RIGHT: Live Visual Preview Card ── */}
+                        <div className="order-2 flex flex-col justify-center">
+                          {p.preview}
+                        </div>
+
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
         </div>
       </section>
 
-      {/* Customer Testimonials */}
-      <TestimonialsWrapper />
-
-      {/* Production Ready CTA Banner */}
+      {/* ══════════ 3. GLOBAL CTA BANNER ══════════ */}
       <CTABanner />
-    </>
+    </div>
   );
 }

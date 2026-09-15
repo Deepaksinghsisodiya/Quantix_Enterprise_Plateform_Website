@@ -4,7 +4,8 @@
 import React from 'react';
 import { notFound, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronRight, ArrowLeft, BookOpen, ShieldAlert, Sparkles } from 'lucide-react';
+import { ChevronRight, BookOpen, ShieldAlert, Sparkles } from 'lucide-react';
+import CTABanner from '@/components/organisms/CTABanner/CTABanner';
 
 interface Article {
   slug: string;
@@ -55,53 +56,65 @@ export default function HelpSectionPage() {
   }
 
   return (
-    <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-16 transition-colors duration-300">
-      <div className="site-container px-4 sm:px-0 max-w-3xl">
-        {/* Breadcrumbs */}
-        <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-6">
-            <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
-            <ChevronRight size={10} />
-            <Link href="/help" className="hover:text-blue-500 transition-colors">Help Centre</Link>
-            <ChevronRight size={10} />
-            <span className="text-slate-600 dark:text-slate-400">{section.title}</span>
+    <main className="min-h-screen bg-slate-50/50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-300">
+      {/* ─── 1. Page Hero Header (Standard .page-hero-header) ─── */}
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-80 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-orange-500/10 via-amber-500/5 to-transparent pointer-events-none -z-10" />
+
+        <div className="site-container relative z-10 page-nav-header space-y-4 text-left">
+          {/* Breadcrumbs */}
+          <div className="nav-breadcrumb text-slate-500 dark:text-slate-400">
+            <Link href="/" className="hover:text-primary transition-colors">
+              Home
+            </Link>
+            <ChevronRight size={11} className="text-slate-400 shrink-0" />
+            <Link href="/resources" className="hover:text-primary transition-colors">
+              Resources
+            </Link>
+            <ChevronRight size={11} className="text-slate-400 shrink-0" />
+            <span className="text-primary font-bold">{section.title}</span>
           </div>
 
-          <div className="flex items-center gap-2.5 mb-10 border-b border-gray-250 dark:border-slate-900 pb-6">
-            <Link href="/help">
-              <span className="h-8 w-8 rounded-full border border-gray-300 dark:border-slate-800 hover:bg-gray-100 dark:hover:bg-slate-900 flex items-center justify-center text-slate-600 dark:text-slate-400 transition-all cursor-pointer">
-                <ArrowLeft size={14} />
-              </span>
-            </Link>
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 dark:text-blue-400">CATEGORY CATALOG</span>
-              <h1 className="text-2xl sm:text-4xl font-syne font-black uppercase text-slate-900 dark:text-white leading-tight">
-                {section.title}
-              </h1>
-              <p className="text-slate-550 dark:text-slate-400 text-xs sm:text-sm font-medium mt-1">
-                {section.description}
-              </p>
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-orange-500/10 dark:bg-orange-500/15 border border-orange-500/25 text-xs font-bold uppercase tracking-wider text-[#FF4D00] shadow-2xs">
+              <Sparkles size={13} className="text-[#FF4D00]" />
+              <span>Category Catalog</span>
             </div>
           </div>
 
-          {/* Articles list */}
-          <div className="space-y-4">
-            {section.articles.map((art) => (
-              <Link key={art.slug} href={`/help/${section.slug}/${art.slug}`}>
-                <div className="rounded-2xl border border-gray-250 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/20 p-5 hover:border-blue-500/30 transition-all cursor-pointer flex justify-between items-center group mb-4">
-                  <div className="space-y-1">
-                    <span className="text-xs font-bold uppercase block text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">
-                      {art.title}
-                    </span>
-                    <span className="text-[11px] text-slate-550 dark:text-slate-400 block font-medium">
-                      {art.desc}
-                    </span>
-                  </div>
-                  <ChevronRight size={16} className="text-slate-400 group-hover:text-blue-500 transition-colors" />
-                </div>
-              </Link>
-            ))}
-          </div>
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-syne font-black tracking-tight text-slate-950 dark:text-white leading-tight max-w-3xl uppercase">
+            {section.title}
+          </h1>
+
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium max-w-2xl leading-relaxed">
+            {section.description}
+          </p>
         </div>
-      </main>
-    );
-  }
+      </section>
+
+      {/* ─── 2. Articles List Section (Standard .section-py) ─── */}
+      <section className="section-py site-container max-w-3xl">
+        {/* Articles list */}
+        <div className="space-y-3">
+          {section.articles.map((art) => (
+            <Link key={art.slug} href={`/help/${section.slug}/${art.slug}`}>
+              <div className="rounded-md border border-gray-200 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/20 p-5 hover:border-primary/40 dark:hover:border-primary/40 transition-all cursor-pointer flex justify-between items-center group shadow-2xs">
+                <div className="space-y-1">
+                  <span className="text-xs sm:text-sm font-bold uppercase block text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                    {art.title}
+                  </span>
+                  <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 block font-medium">
+                    {art.desc}
+                  </span>
+                </div>
+                <ChevronRight size={16} className="text-slate-400 group-hover:text-primary transition-colors shrink-0 ml-4" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <CTABanner />
+    </main>
+  );
+}

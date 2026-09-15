@@ -5,10 +5,14 @@ import React from 'react';
 import { useGetCaseStudiesQuery } from '../Service/CaseStudiesService';
 import CaseStudiesSection from './CaseStudiesSection';
 
-export const CaseStudiesWrapper: React.FC = () => {
+export interface CaseStudiesWrapperProps {
+  hideHeader?: boolean;
+}
+
+export const CaseStudiesWrapper: React.FC<CaseStudiesWrapperProps> = ({ hideHeader = false }) => {
   const { data: studies = [], isLoading } = useGetCaseStudiesQuery();
 
-  return <CaseStudiesSection studies={studies} isLoading={isLoading} />;
+  return <CaseStudiesSection studies={studies} isLoading={isLoading} hideHeader={hideHeader} />;
 };
 
 export default CaseStudiesWrapper;

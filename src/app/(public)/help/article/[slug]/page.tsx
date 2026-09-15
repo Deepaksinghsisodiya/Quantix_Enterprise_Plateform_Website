@@ -18,6 +18,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import CTABanner from '@/components/organisms/CTABanner/CTABanner';
 import { useGetHelpArticleBySlugQuery, useGetHelpArticlesQuery } from '@/features/HelpCentre/Service/HelpCentreService';
 
 export default function DynamicHelpArticlePage() {
@@ -53,10 +54,10 @@ export default function DynamicHelpArticlePage() {
     return (
       <main className="pt-24 min-h-screen bg-white dark:bg-slate-950 pb-20">
         <div className="site-container max-w-3xl px-4 sm:px-6 animate-pulse space-y-6">
-          <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-1/4" />
-          <div className="h-10 bg-slate-200 dark:bg-slate-800 rounded w-3/4" />
-          <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-1/3" />
-          <div className="h-64 bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+          <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded-md w-1/4" />
+          <div className="h-10 bg-slate-200 dark:bg-slate-800 rounded-md w-3/4" />
+          <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded-md w-1/3" />
+          <div className="h-64 bg-slate-200 dark:bg-slate-800 rounded-md" />
         </div>
       </main>
     );
@@ -71,7 +72,7 @@ export default function DynamicHelpArticlePage() {
           <p className="text-sm text-slate-500">The requested documentation article could not be located in our active knowledge base.</p>
           <Link
             href="/help"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-xs shadow-md"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-primary text-white font-bold text-xs shadow-md"
           >
             <ArrowLeft size={14} /> Back to Help Centre
           </Link>
@@ -84,50 +85,47 @@ export default function DynamicHelpArticlePage() {
   const paragraphs = (article.body || '').split('\n').filter((p) => p.trim().length > 0);
 
   return (
-    <main className="pt-24 bg-white dark:bg-slate-950 min-h-screen text-slate-900 dark:text-white pb-20 transition-colors duration-300">
-      <div className="site-container px-4 sm:px-6 max-w-3xl">
-        {/* Breadcrumbs */}
-        <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-6">
-          <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-          <ChevronRight size={11} />
-          <Link href="/help" className="hover:text-primary transition-colors">Help Centre</Link>
-          <ChevronRight size={11} />
-          <span className="text-primary truncate max-w-[200px]">{article.title}</span>
-        </div>
+    <main className="min-h-screen bg-slate-50/50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-300">
+      {/* ─── 1. Page Hero Header (Standard .page-hero-header) ─── */}
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-80 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-orange-500/10 via-amber-500/5 to-transparent pointer-events-none -z-10" />
 
-        {/* Back Link & Header */}
-        <div className="space-y-4 mb-8">
-          <Link
-            href="/help"
-            className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-primary transition-colors"
-          >
-            <span className="h-7 w-7 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center">
-              <ArrowLeft size={13} />
-            </span>
-            <span>Back to All Help Guides</span>
-          </Link>
-
-          <div className="space-y-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
-                {article.categoryName || 'Support Knowledge Base'}
-              </span>
-              <span className="text-[11px] text-slate-400 font-semibold flex items-center gap-1">
-                <Clock size={12} /> 3 min read
-              </span>
-              {article.updatedAt && (
-                <span className="text-[11px] text-slate-400 font-semibold flex items-center gap-1">
-                  <Calendar size={12} /> Updated {new Date(article.updatedAt).toLocaleDateString()}
-                </span>
-              )}
-            </div>
-
-            <h1 className="text-2xl sm:text-4xl font-syne font-black text-slate-950 dark:text-white leading-tight">
-              {article.title}
-            </h1>
+        <div className="site-container relative z-10 page-nav-header space-y-4 text-left max-w-3xl">
+          {/* Breadcrumbs */}
+          <div className="nav-breadcrumb text-slate-500 dark:text-slate-400">
+            <Link href="/" className="hover:text-primary transition-colors">
+              Home
+            </Link>
+            <ChevronRight size={11} className="text-slate-400 shrink-0" />
+            <Link href="/resources" className="hover:text-primary transition-colors">
+              Resources
+            </Link>
+            <ChevronRight size={11} className="text-slate-400 shrink-0" />
+            <span className="text-primary font-bold truncate max-w-xs">{article.title}</span>
           </div>
-        </div>
 
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
+              {article.categoryName || 'Support Knowledge Base'}
+            </span>
+            <span className="text-[11px] text-slate-400 font-semibold flex items-center gap-1">
+              <Clock size={12} /> 3 min read
+            </span>
+            {article.updatedAt && (
+              <span className="text-[11px] text-slate-400 font-semibold flex items-center gap-1">
+                <Calendar size={12} /> Updated {new Date(article.updatedAt).toLocaleDateString()}
+              </span>
+            )}
+          </div>
+
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-syne font-black text-slate-950 dark:text-white leading-tight uppercase">
+            {article.title}
+          </h1>
+        </div>
+      </section>
+
+      {/* ─── 2. Article Content Section (Standard .section-py) ─── */}
+      <section className="section-py site-container max-w-3xl">
         {/* Article Body Container */}
         <article className="prose prose-slate dark:prose-invert max-w-none border-t border-slate-200/80 dark:border-slate-800/80 pt-8 space-y-4">
           {paragraphs.map((para, idx) => {
@@ -148,7 +146,7 @@ export default function DynamicHelpArticlePage() {
             if (para.startsWith('1. ') || para.startsWith('2. ') || para.startsWith('3. ') || para.startsWith('4. ')) {
               return (
                 <div key={idx} className="flex items-start gap-3 pl-2 py-1 text-sm text-slate-700 dark:text-slate-300">
-                  <span className="h-5 w-5 rounded-full bg-primary/10 text-primary text-xs font-black flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="h-5 w-5 rounded-md bg-primary/10 text-primary text-xs font-black flex items-center justify-center shrink-0 mt-0.5">
                     {para.slice(0, 1)}
                   </span>
                   <span>{para.slice(3)}</span>
@@ -182,14 +180,14 @@ export default function DynamicHelpArticlePage() {
                 <button
                   type="button"
                   onClick={() => handleVote('up')}
-                  className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all"
+                  className="px-4 py-2 rounded-md border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all"
                 >
                   <ThumbsUp size={13} className="text-emerald-500" /> Yes
                 </button>
                 <button
                   type="button"
                   onClick={() => handleVote('down')}
-                  className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all"
+                  className="px-4 py-2 rounded-md border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all"
                 >
                   <ThumbsDown size={13} className="text-rose-500" /> No
                 </button>
@@ -199,7 +197,7 @@ export default function DynamicHelpArticlePage() {
             <button
               type="button"
               onClick={handleCopyLink}
-              className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 cursor-pointer transition-all"
+              className="p-2 rounded-md border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 cursor-pointer transition-all"
               title="Copy Article Link"
             >
               <Share2 size={14} />
@@ -218,7 +216,7 @@ export default function DynamicHelpArticlePage() {
                 <Link
                   key={rel.id || rel.slug}
                   href={`/help/article/${rel.slug || rel.id}`}
-                  className="p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 hover:border-primary/40 transition-all group"
+                  className="p-4 rounded-md border border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 hover:border-primary/40 transition-all group"
                 >
                   <span className="text-[10px] font-bold uppercase text-primary">
                     {rel.categoryName || 'Guide'}
@@ -231,7 +229,9 @@ export default function DynamicHelpArticlePage() {
             </div>
           </div>
         )}
-      </div>
+      </section>
+
+      <CTABanner />
     </main>
   );
 }

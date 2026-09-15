@@ -11,6 +11,7 @@ import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import SocialProofStatsWrapper from "@/features/SocialProof/components/SocialProofWrapper";
+import SupportSection from "@/components/organisms/SupportSection/SupportSection";
 
 import dynamic from "next/dynamic";
 
@@ -103,14 +104,19 @@ export default function HomePageClient() {
         </Suspense>
       </section>
 
-      {/* 6. Social Proof & Customer Reviews (Soft Slate 50 BG + Bottom Border) */}
+      {/* 6. 24/7 Dedicated Enterprise Technical Support */}
+      <section id="support" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
+        <SupportSection platformName="Quantix Enterprise" />
+      </section>
+
+      {/* 7. Social Proof & Customer Reviews (Soft Slate 50 BG + Bottom Border) */}
       <section id="testimonials" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}>
           <LazyTestimonialsSection />
         </Suspense>
       </section>
 
-      {/* 7. Frequently Asked Questions (White BG) */}
+      {/* 8. Frequently Asked Questions (White BG) */}
       <section id="faq" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
         <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}>
           <LazyFAQWrapper />

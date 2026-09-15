@@ -71,6 +71,8 @@ export default function HelpCenterPage() {
           <div className="nav-breadcrumb text-slate-500 dark:text-slate-400">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
             <ChevronRight size={12} />
+            <Link href="/resources" className="hover:text-primary transition-colors">Resources</Link>
+            <ChevronRight size={12} />
             <span className="text-primary font-bold">Help Center</span>
           </div>
 
@@ -98,7 +100,7 @@ export default function HelpCenterPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search troubleshooting guides (e.g. offline till, printer pairing, SAP webhook)..."
-                className="w-full pl-11 pr-10 py-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-sm font-medium text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-primary shadow-xs transition-all"
+                className="w-full pl-11 pr-10 py-3.5 rounded-md bg-slate-50 dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-sm font-medium text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-primary shadow-xs transition-all"
               />
               {searchQuery && (
                 <button
@@ -118,73 +120,73 @@ export default function HelpCenterPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Link
             href="/resources/pos-guide"
-            className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
+            className="p-4 sm:p-5 rounded-md bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
           >
             <div>
-              <div className="h-10 w-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                <BookOpen size={20} />
+              <div className="h-9 w-9 rounded-md bg-orange-500/10 text-[#FF4F00] flex items-center justify-center mb-3 group-hover:bg-[#FF4F00] group-hover:text-white transition-colors">
+                <BookOpen size={18} />
               </div>
-              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white">Master POS Blueprint</h3>
+              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white group-hover:text-primary transition-colors">Master POS Blueprint</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                 Step-by-step offline topology and hybrid cloud architecture.
               </p>
             </div>
             <span className="text-[11px] font-bold text-primary flex items-center gap-1 mt-4">
-              Explore Guide <ArrowRight size={12} />
+              Explore Guide <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
           </Link>
 
           <Link
-            href="/api-docs"
-            className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
+            href="/help/api"
+            className="p-4 sm:p-5 rounded-md bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
           >
             <div>
-              <div className="h-10 w-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                <Terminal size={20} />
+              <div className="h-9 w-9 rounded-md bg-orange-500/10 text-[#FF4F00] flex items-center justify-center mb-3 group-hover:bg-[#FF4F00] group-hover:text-white transition-colors">
+                <Terminal size={18} />
               </div>
-              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white">Developer API Portal</h3>
+              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white group-hover:text-primary transition-colors">Developer API Portal</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                 REST webhook endpoints, payload samples, and gRPC specs.
               </p>
             </div>
             <span className="text-[11px] font-bold text-primary flex items-center gap-1 mt-4">
-              View API Docs <ArrowRight size={12} />
+              View API Docs <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
           </Link>
 
           <Link
             href="/roi-calculator"
-            className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
+            className="p-4 sm:p-5 rounded-md bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
           >
             <div>
-              <div className="h-10 w-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                <FileText size={20} />
+              <div className="h-9 w-9 rounded-md bg-orange-500/10 text-[#FF4F00] flex items-center justify-center mb-3 group-hover:bg-[#FF4F00] group-hover:text-white transition-colors">
+                <FileText size={18} />
               </div>
-              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white">ROI Calculator</h3>
+              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white group-hover:text-primary transition-colors">ROI Calculator</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                 Forecast multi-store operational savings vs legacy POS systems.
               </p>
             </div>
             <span className="text-[11px] font-bold text-primary flex items-center gap-1 mt-4">
-              Calculate Savings <ArrowRight size={12} />
+              Calculate Savings <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
           </Link>
 
           <Link
             href="/contact"
-            className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
+            className="p-4 sm:p-5 rounded-md bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group cursor-pointer"
           >
             <div>
-              <div className="h-10 w-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                <Headphones size={20} />
+              <div className="h-9 w-9 rounded-md bg-orange-500/10 text-[#FF4F00] flex items-center justify-center mb-3 group-hover:bg-[#FF4F00] group-hover:text-white transition-colors">
+                <Headphones size={18} />
               </div>
-              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white">Priority SLA Hotline</h3>
+              <h3 className="font-syne font-bold text-sm text-slate-900 dark:text-white group-hover:text-primary transition-colors">Priority SLA Hotline</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                 24/7 dedicated engineering support for live enterprise venues.
               </p>
             </div>
             <span className="text-[11px] font-bold text-primary flex items-center gap-1 mt-4">
-              Contact Engineers <ArrowRight size={12} />
+              Contact Engineers <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
             </span>
           </Link>
         </div>
@@ -207,46 +209,46 @@ export default function HelpCenterPage() {
         </div>
 
         {isArticlesLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {[1, 2, 3].map((n) => (
-              <div key={n} className="p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 animate-pulse space-y-4">
-                <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-1/3" />
-                <div className="h-6 bg-slate-200 dark:bg-slate-800 rounded w-4/5" />
-                <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded" />
+              <div key={n} className="p-5 sm:p-6 rounded-md border border-slate-200/80 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 animate-pulse space-y-4">
+                <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded-md w-1/3" />
+                <div className="h-6 bg-slate-200 dark:bg-slate-800 rounded-md w-4/5" />
+                <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded-md" />
               </div>
             ))}
           </div>
         ) : filteredArticles.length === 0 ? (
-          <div className="p-8 text-center bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
+          <div className="p-8 text-center bg-slate-50 dark:bg-slate-900/50 rounded-md border border-dashed border-slate-200 dark:border-slate-800">
             <BookOpen className="mx-auto text-slate-400 mb-2" size={28} />
             <p className="text-sm font-bold text-slate-700 dark:text-slate-300">No help articles published yet.</p>
             <p className="text-xs text-slate-500 mt-1">Articles added in Admin will appear here instantly.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {filteredArticles.map((art) => (
               <Link
                 key={art.id || art.slug}
                 href={`/help/article/${art.slug || art.id}`}
-                className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/50 transition-all flex flex-col justify-between group"
+                className="p-5 sm:p-6 rounded-md bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-primary/50 transition-all flex flex-col justify-between group cursor-pointer"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="inline-block px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
+                    <span className="inline-block px-2.5 py-0.5 rounded-md text-[9.5px] sm:text-[10px] font-black uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
                       {art.categoryName || 'Support Guide'}
                     </span>
                     <span className="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
                       <Clock size={11} /> 3 min read
                     </span>
                   </div>
-                  <h3 className="font-syne font-bold text-base text-slate-900 dark:text-white group-hover:text-primary transition-colors line-clamp-2">
+                  <h3 className="font-syne font-bold text-sm sm:text-base text-slate-900 dark:text-white group-hover:text-primary transition-colors line-clamp-2">
                     {art.title}
                   </h3>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed line-clamp-3">
                     {art.excerpt || art.body?.replace(/#+\s/g, '').slice(0, 140)}...
                   </p>
                 </div>
-                <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-bold text-primary">
+                <div className="pt-3.5 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-bold text-primary">
                   <span>Read Full Guide</span>
                   <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -272,32 +274,32 @@ export default function HelpCenterPage() {
           {isFaqsLoading ? (
             <div className="space-y-3">
               {[1, 2, 3].map((n) => (
-                <div key={n} className="p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 animate-pulse h-14" />
+                <div key={n} className="p-4 rounded-md border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 animate-pulse h-14" />
               ))}
             </div>
           ) : filteredFaqs.length === 0 ? (
-            <div className="p-8 text-center bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800">
+            <div className="p-8 text-center bg-slate-50 dark:bg-slate-900 rounded-md border border-slate-200/80 dark:border-slate-800">
               <p className="text-sm font-medium text-slate-500">No FAQs found matching "{searchQuery}".</p>
             </div>
           ) : (
             filteredFaqs.map((faq, idx) => (
               <div
                 key={faq.id || idx}
-                className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs overflow-hidden"
+                className="rounded-md border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs overflow-hidden"
               >
                 <button
                   onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
-                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 dark:hover:bg-slate-850/50 transition-colors"
+                  className="w-full p-4 sm:p-4.5 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 dark:hover:bg-slate-850/50 transition-colors"
                 >
-                  <span className="font-syne font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                  <span className="font-syne font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                     {faq.question}
                   </span>
-                  <span className="p-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 shrink-0">
-                    {expandedFaq === idx ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  <span className="p-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 shrink-0">
+                    {expandedFaq === idx ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
                   </span>
                 </button>
                 {expandedFaq === idx && (
-                  <div className="px-4 pb-5 sm:px-5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed border-t border-slate-100 dark:border-slate-800/80 pt-3">
+                  <div className="px-4 pb-4 sm:px-4.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed border-t border-slate-100 dark:border-slate-800/80 pt-3">
                     {faq.answer}
                   </div>
                 )}
