@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <div ref={navRef} className="fixed top-0 left-0 z-50 w-full flex flex-col">
+      <div ref={navRef} className="fixed top-0 left-0 z-50 w-full flex flex-col bg-white dark:bg-slate-950">
         {/* Top Promo Banner - Collapses smoothly on scroll */}
         <TopPromoBanner scrolled={scrolled} />
 
@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
           role="navigation"
           aria-label="Main Navigation"
           className={cn(
-            'w-full bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 relative transition-all duration-300',
+            'w-full bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800 relative transition-all duration-300',
             scrolled ? 'shadow-md shadow-slate-900/5 py-1.5 sm:py-2.5' : 'shadow-sm py-2 sm:py-3'
           )}
           onMouseLeave={closeMegaMenu}
