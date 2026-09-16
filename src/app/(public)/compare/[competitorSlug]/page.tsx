@@ -467,6 +467,7 @@ export default function CompetitorComparePage() {
             </table>
         </div>
       </div>
+    </div>
 
       {/* Global CTA Banner */}
       <CTABanner />
