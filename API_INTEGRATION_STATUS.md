@@ -1,453 +1,264 @@
-# 🚀 Quantix Platform Websites — Master API Integration Status (Verified Live)
+# Quantix Platform Website — API Integration Audit & Coverage Matrix
 
-> **Backend Service:** `http://localhost:5104` (Base URL: `http://localhost:5104/api/v1`)  
-> **Swagger Live Documentation:** `http://localhost:5104/swagger/index.html` (JSON Spec: `http://localhost:5104/swagger/v1/swagger.json`)  
-> **Total Backend Paths in Swagger:** `393 microservice routes` across 33 Controllers/Tags  
-> **Total Public Website Target APIs:** `72 endpoints`  
-> **✅ Currently Verified Live & Integrated:** `29 endpoints` (100% Live DB Data & Synchronized across all 3 platforms)  
-> **🟢 Active DB Modules:** Marketing Brand & Social Proof, 27 Pricing Plans, Announcements, Clientele, Reviews, Case Studies, Hero Banner, Settings, Blog Engine, 7 Lead Forms, 10 Auth & Signup flows  
-> **🚫 Missing Admin/Backend Modules & Empty DB Gaps:** Shifted to [`ADMIN_CMS_GAP_REQUIREMENTS.md`](./ADMIN_CMS_GAP_REQUIREMENTS.md)  
-> **Target Market Standard:** 🇺🇸 USA Market (`+1` default, 10-digit masking `(xxx) xxx-xxxx`, EST timezone, USD pricing)  
-> **Active Websites:**  
-> - 🏢 **Enterprise Platform:** `http://localhost:3000`  
-> - 🍽️ **Restaurant Platform:** `http://localhost:3002`  
-> - 🛒 **Retail Platform:** `http://localhost:3001`  
-> **Last Live Audit & Verification Date:** September 12, 2026  
+> **Swagger Source URL:** `http://localhost:5104/swagger/index.html`  
+> **OpenAPI JSON Spec:** `http://localhost:5104/swagger/v1/swagger.json`  
+> **Audited Applications:**
+> 1. `Qauntix_Plateform_Enterprise_Website`
+> 2. `Qauntix_Plateform_Restaurent_Website`
+> 3. `Qauntix_Plateform_Retail_Website`  
+> **Platform API Version:** v1 (Quantix Platform SaaS API for Enterprise POS)
 
 ---
 
-## 📊 1. SUMMARY DASHBOARD
+## 1. Executive Summary & Status Overview
 
-| Metric | Count | Status | Notes |
-|:---|:---:|:---:|:---|
-| **Total Swagger Paths** | **393** | Active on `:5104` | Full backend microservice controllers (Billing, Catalogs, Marketing, Content, etc.) |
-| **Public Website Target APIs** | **72** | Target Scope | Marketing websites, Lead Gen, Merchant Auth & Self-Service |
-| **✅ Verified Live in Frontend Code** | **29** | 🟢 100% Live | Verified with real backend DB responses across all 3 websites |
-| **🟢 Live Data Active in DB** | **4 Core Groups** | 🟢 Live on UI | Marketing Brand (9), Blog (3), Lead Forms (7), Auth & Onboarding (10) |
-| **🚫 Admin/Backend Gaps Logged** | **14 Modules** | 📋 Documented | Full gap report with exact schemas in `ADMIN_CMS_GAP_REQUIREMENTS.md` |
-| **⚡ Parity Discrepancy Across 3 Sites** | **0** | 🟢 100% Sync | Enterprise (:3000), Restaurant (:3002), Retail (:3001) are in 100% parity |
+Backend Swagger specification me total **476 APIs** define hain jo **34 Tags/Modules** me divided hain. 
 
----
+In 476 APIs ko do major categories me classify kiya gaya hai:
+1. **Public Website Customer-Facing APIs (10 Modules - 146 Endpoints total, jisme se 42 Public Customer-Facing endpoints hain)**: Yeh APIs public marketing website, visitors, lead generation, customer support, knowledge base, downloads, aur merchant self-signup/registration ke liye use hoti hain.
+2. **Platform Engine / Merchant Portal / Admin Dashboard APIs (24 Modules - 330 Endpoints)**: Yeh APIs POS core transactions, product catalogs, store terminals, cashier shifts, wallet settlement, tax configuration, aur super-admin platform operations ke liye hain jo Merchant Portal ya Admin Engine me chalti hain.
 
-## 2. 🟢 KON-KON SI APIS LAG GYI HAI (29 VERIFIED LIVE APIS)
+### Status Summary Table
 
-Yeh table batata hai ki teeno websites ke frontend code me kaun-kaun si APIs integrate ho chuki hain, database me unka real data live hai, aur UI par wo kahan render ho rahi hain:
-
-### 📊 A. Marketing, Content & Brand APIs (9 Live Endpoints)
-
-| # | Endpoint | Method | DB Status | Live Data Count / Summary | UI Par Kaha Dikh Raha Hai (Page & Component) |
-|:---:|:---|:---:|:---|:---|:---|
-| 1 | `/api/v1/marketing/social-proof` | `GET` | 🟢 **Real Data Live** | `50,000` merchants, `1,000,000` txns, `99.9%` uptime, `4.8` rating, `47` countries | **Homepage (`/`)** Hero Ribbon & **`/about`** (`SocialProof.tsx`) |
-| 2 | `/api/v1/marketing/pricing` | `GET` | 🟢 **Real Data Live** | **27 Active Plans & Addons** (Enterprise, Restaurant, Retail plans with rates & limits) | **`/pricing`** page (`PricingSection.tsx`, `PricingCard.tsx`) |
-| 3 | `/api/v1/registration/pricing` | `GET` | 🟢 **Real Data Live** | **27 Active Plans** formatted for checkout / trial selection | **`/sign-up`** plan selection step (`MultiStepSignupForm.tsx`) |
-| 4 | `/api/v1/announcements` | `GET` | 🟢 **Real Data Live** | **3 Active Banners** (3 Mos Free, Flat 2.4% + 10¢, Switch from Legacy) | **Navbar Top Promo Bar** (`TopPromoBanner.tsx`) |
-| 5 | `/api/v1/clientele` | `GET` | 🟢 **Real Data Live** | **3 Brand Logos** (Blue Bottle Coffee, Sweetgreen Kitchens, Apex Supermarkets) | **Homepage (`/`)** "Trusted by 50K+" Brand Logo Marquee (`ClienteleMarquee.tsx`) |
-| 6 | `/api/v1/testimonials` | `GET` | 🟢 **Real Data Live** | **2 Active Reviews** (Ananya Deshmukh - FreshMart, Vikram Malhotra - Urban Spice) | **Homepage (`/`)** Customer Reviews Slider (`TestimonialsSection.tsx`) |
-| 7 | `/api/v1/marketing/content/CaseStudy` | `GET` | 🟢 **Real Data Live** | **2 Real Case Studies** (Urban Gourmet Bistro: +38% Table Turns, Apex Retail: 64% Shrinkage Reduction) | **`/case-studies`** listing & Homepage ROI block (`CaseStudiesService.ts`) |
-| 8 | `/api/v1/marketing/content/HeroBanner` | `GET` | 🟢 **Real Data Live** | **1 Real Banner** ("Unified Control for Enterprise Multi-Store Networks") | **Homepage (`/`)** Hero Section Banner (`HeroBannerService.ts`) |
-| 9 | `/api/v1/settings/public` | `GET` | 🟢 **Real Data Live** | AppName: `"Quantix"`, SupportEmail: `"deepaksinghsisodiya313@gmail.com"` | Footer, Support modals, Header info |
-
-> ℹ️ **Notice on Empty Modules:** Features Grid, Integrations, Industries, Resources, and Galleries are empty in the database (`[]`) and require Admin CRUD forms. These have been moved to [`ADMIN_CMS_GAP_REQUIREMENTS.md`](./ADMIN_CMS_GAP_REQUIREMENTS.md).
+| Category / Metric | Count | Details & Status |
+| :--- | :---: | :--- |
+| **Total Endpoints in Swagger** | **476** | OpenAPI 3.0.1 Specification |
+| **Total Swagger Tags** | **34** | All Platform Domains |
+| **Website-Facing Tags** | **10** | Marketing, WebsiteContent, Blog, Contact, HelpCentre, Downloads, Media, Auth, Registration, OnboardingWizard |
+| **Public Customer Endpoints** | **42** | Publicly accessible for visitors, leads, search & onboarding |
+| **Website Integrated Endpoints** | **38** | **Properly connected in RTK Query Services & Route Handlers (90.5% Coverage)** |
+| **Admin / CMS CRUD Endpoints** | **104** | Admin Portal ke liye (Add/Edit/Delete Blog, FAQs, Announcements, etc.) |
+| **Merchant Portal & Core POS Engine** | **330** | POS, Terminal pairing, Billing, Catalogs, Reports, RBAC, etc. |
 
 ---
 
-### 📰 B. Blog & Publishing Engine APIs (3 Live Endpoints)
+## 2. Integration Status Legend
 
-| # | Endpoint | Method | DB Status | Live Data Count | UI Par Kaha Dikh Raha Hai (Page & Component) |
-|:---:|:---|:---:|:---|:---|:---|
-| 10 | `/api/v1/blog/posts` | `GET` | 🟢 **Real Data Live** | **1 Published Post** ("Sub-Second Barcode Scanning & Certified Weigh Scale POS Integration") | **`/blog`** article cards grid & pagination (`page.tsx`) |
-| 11 | `/api/v1/blog/posts/{slug}` | `GET` | 🟢 **Real Data Live** | **Full Markdown Article Live** (H2, H3, numbered lists, SEO, tags) | **`/blog/[slug]`** full post reader view (`BlogPostDetail.tsx`) |
-| 12 | `/api/v1/blog/search` | `GET` | 🟢 **Live Search Enabled** | Searches across title, tags, body, and slug | **`/blog`** search bar |
-
----
-
-### 🎯 C. Lead Generation & Contact Form Endpoints (7 Live Endpoints)
-
-| # | Endpoint | Method | Live DB Status | Functionality & Trigger | UI Location |
-|:---:|:---|:---:|:---|:---|:---|
-| 13 | `/api/v1/contact/demo-request` | `POST` | 🟢 **Live DB Insertion** | Inserts new demo lead into backend `Leads` table | **1. First Visit Popup Modal**<br>**2. Footer Lead Card**<br>**3. Dedicated `/contact/demo` Page**<br>**4. Contact Sales Specialist Modal** |
-| 14 | `/api/v1/contact/form` | `POST` | 🟢 **Live DB Insertion** | Inserts general contact inquiry | **`/contact`** page form (`ContactForm.tsx`) |
-| 15 | `/api/v1/contact/sales` | `POST` | 🟢 **Live DB Insertion** | Specialized sales enterprise inquiry | **`/contact`** sales tab |
-| 16 | `/api/v1/contact/newsletter/subscribe` | `POST` | 🟢 **Live DB Insertion** | Subscribes email to newsletter database | **Footer Newsletter Box** & Popup |
-| 17 | `/api/v1/contact/newsletter/unsubscribe`| `POST` | 🟢 **Live DB Flow** | Unsubscribes email from mailing list | Unsubscribe link handler |
-| 18 | `/api/v1/contact/support-ticket` | `POST` | 🟢 **Live DB Insertion** | Creates new support ticket in DB | **`/contact`** support ticket modal |
-| 19 | `/api/v1/contact/callback` | `POST` | 🟢 **Live DB Insertion** | Requests phone callback | Callback request widget |
+* ✅ **INTEGRATED**: API frontend ke RTK Query service (`src/features/*/Service/*`) me properly connected hai aur active UI components me binded hai.
+* 🛡️ **PROXY / FALLBACK**: Next.js Route Handler (`src/app/api/v1/...`) ke through live backend pass-through aur offline/cold-start graceful fallback ke sath configured hai.
+* ⚙️ **ADMIN / PORTAL ONLY**: Backend CRUD API jo Super-Admin / Content Management portal ke liye hai (e.g. create article, delete client logo). Public website par iski zaroorat nahi hoti.
+* 💡 **RECOMMENDED / OPTIONAL**: Backend par available hai (e.g. RSS Feed, typeahead suggestions), jise zaroorat padne par easily wire kiya ja sakta hai.
 
 ---
 
-### 🔐 D. Authentication & Merchant Signup Endpoints (10 Live Endpoints)
+## 3. Website-Facing APIs: Detailed Breakdown
 
-| # | Endpoint | Method | Live Status | Functionality | UI Location |
-|:---:|:---|:---:|:---|:---|:---|
-| 20 | `/api/v1/auth/login` | `POST` | 🟢 **Live Auth Flow** | Verifies credentials, returns JWT & Refresh token | **`/sign-in`** page |
-| 21 | `/api/v1/auth/logout` | `POST` | 🟢 **Live Auth Flow** | Invalidates session & cookie | Header Sign-Out button |
-| 22 | `/api/v1/auth/refresh` | `POST` | 🟢 **Live Auth Flow** | Background silent token refresh | Automatic Axios/RTK interceptor |
-| 23 | `/api/v1/auth/me` | `GET` | 🟢 **Live Auth Flow** | Returns logged-in merchant profile | Protected layout / Header |
-| 24 | `/api/v1/auth/me/password` | `PUT` | 🟢 **Live Auth Flow** | Updates account password | User settings |
-| 25 | `/api/v1/auth/password/reset` | `POST` | 🟢 **Live Auth Flow** | Sends password reset OTP | **`/forgot-password`** |
-| 26 | `/api/v1/auth/password/reset/confirm` | `POST` | 🟢 **Live Auth Flow** | Confirms password change | **`/reset-password`** |
-| 27 | `/api/v1/registration/check-email` | `GET` | 🟢 **Live Validation** | Validates email uniqueness in DB | **`/sign-up`** Step 1 |
-| 28 | `/api/v1/registration/signup` | `POST` | 🟢 **Live Provisioning**| Initiates merchant trial workspace | **`/sign-up`** submission |
-| 29 | `/api/v1/registration/{id}/status` | `GET` | 🟢 **Live Flow** | Polls tenant provisioning progress | **`/provisioning`** loader |
+### 3.1. Marketing Module (`/api/v1/marketing/*`)
+Used for displaying hero banners, features, industries, pricing tiers, case studies, integrations, and social proof.
 
----
-
-## 3. 🟡 JISME DATA ADD KARNA HAI ADMIN SE (EXACT SWAGGER / ADMIN PAYLOADS)
-
-Aapko Admin panel ya Swagger (`http://localhost:5104/swagger/index.html`) se in 8 sections me data add karna hai. Har section ke liye exact **Endpoint**, **Method**, aur **Copy-Paste Ready JSON Payload** niche diya gaya hai:
-
----
-
-### 1️⃣ Features Grid (Homepage & `/features` Page)
-* **Backend Endpoint:** `POST /api/v1/marketing/content`  
-* **Content Type:** `FeatureHighlight`  
-* **UI Par Kaha Dikh Raha Hai:** Homepage Hero Section ke turant niche & `/features` page par.
-* **JSON Payload (Copy-Paste in Swagger):**
-```json
-{
-  "contentType": "FeatureHighlight",
-  "title": "Dual-Screen POS & Kitchen Display (KDS)",
-  "body": "Real-time kitchen order tickets routing directly to chef prep stations with bump bar alerts and -42% faster ticket turnover.",
-  "imageUrl": "/images/features/kds-preview.png",
-  "linkUrl": "/features/kitchen-display-system",
-  "sortOrder": 1,
-  "isActive": true,
-  "pageSlug": "homepage-features",
-  "locale": "en"
-}
-```
-> **Tip:** Isme `sortOrder: 2`, `sortOrder: 3` karke 4 se 6 features add karein (e.g., Tableside Mobile POS, Real-time Inventory Ledger, Offline Mesh Sync, Multi-Store Central Catalog).
+| HTTP Method | Swagger Endpoint | Description / Purpose | Website Integration Status | Frontend Implementation File |
+| :--- | :--- | :--- | :---: | :--- |
+| **GET** | `/api/v1/marketing/content/{contentType}` | Dynamic content fetch (`HeroBanner`, `CaseStudy`, `resources`) | ✅ **INTEGRATED** | `HeroBannerService.ts`<br>`CaseStudiesService.ts`<br>`ResourcesService.ts` |
+| **GET** | `/api/v1/marketing/features` | List all enterprise & POS features | ✅ **INTEGRATED** | `FeaturesService.ts` (`useGetFeaturesQuery`) |
+| **GET** | `/api/v1/marketing/features/{slug}` | Feature detail by slug | 💡 OPTIONAL | Filtered client-side |
+| **GET** | `/api/v1/marketing/industries` | List supported industries (Retail, F&B, etc.) | ✅ **INTEGRATED** | `IndustriesService.ts` (`useGetIndustriesQuery`) |
+| **GET** | `/api/v1/marketing/industries/{slug}` | Specific industry detail page | ✅ **INTEGRATED** | `IndustriesService.ts` (`useGetIndustryBySlugQuery`) |
+| **GET** | `/api/v1/marketing/integrations` | List hardware & 3rd party integrations | ✅ **INTEGRATED** | `IntegrationsService.ts` (`useGetIntegrationsQuery`) |
+| **GET** | `/api/v1/marketing/pricing` | SaaS subscription plans & pricing matrix | ✅ **INTEGRATED** | `PricingServices.ts` (`useGetBillingPlansQuery`) |
+| **GET** | `/api/v1/marketing/social-proof` | Live platform metrics (merchants, uptime, ratings) | ✅ **INTEGRATED** | `SocialProofService.ts` (`useGetSocialProofQuery`) |
+| **GET** | `/api/v1/marketing/testimonials` | Client reviews & feedback | ✅ **INTEGRATED** | `TestimonialsService.ts` + Server Route Handler |
+| **GET** | `/api/v1/marketing/case-studies` | Customer success stories | ✅ **INTEGRATED** | `CaseStudiesService.ts` (via `/marketing/content/CaseStudy`) |
+| **GET** | `/api/v1/marketing/content/page/{pageSlug}` | Dynamic page builder content | 💡 OPTIONAL | Available for dynamic landing pages |
+| **GET** | `/api/v1/marketing/competitors` | Competitor comparison sheets | 💡 OPTIONAL | Competitive comparison pages |
+| **GET** | `/api/v1/marketing/competitors/{slug}` | Single competitor comparison | 💡 OPTIONAL | Detail competitor table |
+| **POST/PUT/DEL** | `/api/v1/marketing/content/*` | Create/Edit/Delete marketing content | ⚙️ ADMIN ONLY | Admin Portal |
 
 ---
 
-### 2️⃣ Blog Engine (`POST /api/v1/blog/posts`)
-* **Endpoint:** `POST /api/v1/blog/posts`
-* **UI Par Kaha Dikh Raha Hai:** `/blog` listing cards, pagination, search, aur `/blog/[slug]` article reader view.
-* **JSON Payload (Copy-Paste in Swagger):**
-```json
-{
-  "title": "Scaling Multi-Location Franchise POS: The Definitive 2026 Guide",
-  "slug": "scaling-multi-location-pos",
-  "excerpt": "Learn how leading multi-unit enterprises unify inventory, menu pricing, and accounting across 50+ stores with zero sync latency.",
-  "body": "## Executive Summary\n\nOperating multiple retail or restaurant outlets requires a centralized master catalog, sub-second sync, and offline resilience...\n\n### 1. Unified Master Catalog\nCentralize pricing updates across all registers instantly without downtime.",
-  "tags": "Multi-Location, Cloud POS, Enterprise",
-  "featuredImageUrl": "https://images.unsplash.com/photo-1556742049-0a67c5574f73?w=1200&q=80",
-  "seoTitle": "Scaling Multi-Location Franchise POS Guide | Quantix",
-  "seoDescription": "Complete guide on managing multi-store POS inventory, sales, and hardware sync.",
-  "status": "Published"
-}
-```
-> **Tip:** Post create karne ke baad agar draft status me ho toh `POST /api/v1/blog/posts/{postId}/publish` se live publish kar sakte hain.
+### 3.2. Website Content Module (`/api/v1/*`)
+Core dynamic content streams including broadcast announcements, clientele logos, testimonials, and media galleries.
+
+| HTTP Method | Swagger Endpoint | Description / Purpose | Website Integration Status | Frontend Implementation File |
+| :--- | :--- | :--- | :---: | :--- |
+| **GET** | `/api/v1/announcements` | Top header promo & system alerts | 🛡️ **PROXY / FALLBACK** | `AnnouncementService.ts`<br>`src/app/api/v1/announcements/route.ts` |
+| **GET** | `/api/v1/clientele` | Partner & client brand logos for carousel | ✅ **INTEGRATED** | `ClienteleService.ts` (`useGetClienteleQuery`) |
+| **GET** | `/api/v1/testimonials` | Customer reviews & feedback | 🛡️ **PROXY / FALLBACK** | `TestimonialsService.ts`<br>`src/app/api/v1/testimonials/route.ts` |
+| **GET** | `/api/v1/galleries` | Product screenshots & UI galleries | 💡 OPTIONAL | Available for gallery showcase |
+| **GET** | `/api/v1/galleries/{slug}` | Single gallery by slug | 💡 OPTIONAL | Deep dive showcase |
+| **POST/PUT/DEL** | `/api/v1/announcements/*` | Create/Edit/Delete announcements | ⚙️ ADMIN ONLY | Content CMS Portal |
+| **POST/PUT/DEL** | `/api/v1/clientele/*` | Create/Edit/Delete client logos | ⚙️ ADMIN ONLY | Content CMS Portal |
+| **POST/PUT/DEL** | `/api/v1/testimonials/*` | Create/Edit/Delete testimonials | ⚙️ ADMIN ONLY | Content CMS Portal |
+| **CRUD** | `/api/v1/galleries/*` (8 endpoints) | Gallery management & reorder | ⚙️ ADMIN ONLY | Content CMS Portal |
 
 ---
 
-### 3️⃣ Integrations Directory (`/integrations` Page & Homepage Ticker)
-* **Backend Endpoint:** `POST /api/v1/marketing/integrations` (or via `POST /api/v1/marketing/content`)
-* **UI Par Kaha Dikh Raha Hai:** `/integrations`, `/integrations/[slug]`, Navbar Mega-Menu, aur Homepage Ticker.
-* **JSON Payload:**
-```json
-{
-  "name": "Stripe Terminal",
-  "slug": "stripe-terminal",
-  "category": "PAYMENTS",
-  "logoUrl": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=200&q=80",
-  "tagline": "Accept chip cards, Apple Pay, and contactless tap tableside.",
-  "description": "Seamless integration between Quantix POS and Stripe BBPOS card readers with automatic end-of-day payouts and fraud protection.",
-  "sortOrder": 1,
-  "isActive": true
-}
-```
-> **Recommended Entries to Add:**
-> 1. `Stripe Terminal` (Payments)
-> 2. `QuickBooks Online` (Accounting)
-> 3. `DoorDash Drive` (Online Ordering)
-> 4. `UberEats POS Integration` (Food Delivery)
-> 5. `Shopify Central Sync` (Omnichannel Inventory)
-> 6. `Xero Cloud Accounting` (Bookkeeping)
+### 3.3. Blog Engine Module (`/api/v1/blog/*`)
+Public articles, industry insights, setup guides, and news.
+
+| HTTP Method | Swagger Endpoint | Description / Purpose | Website Integration Status | Frontend Implementation File |
+| :--- | :--- | :--- | :---: | :--- |
+| **GET** | `/api/v1/blog/posts` | Paginated list of blog articles | ✅ **INTEGRATED** | `BlogService.ts` (`useGetBlogPostsQuery`) |
+| **GET** | `/api/v1/blog/posts/{slug}` | Single blog article detail by slug | ✅ **INTEGRATED** | `BlogService.ts` (`useGetBlogPostBySlugQuery`) |
+| **GET** | `/api/v1/blog/categories` | Blog post categories | ✅ **INTEGRATED** | `BlogService.ts` (`useGetBlogCategoriesQuery`) |
+| **GET** | `/api/v1/blog/authors` | Author profiles & bios | ✅ **INTEGRATED** | `BlogService.ts` (`useGetBlogAuthorsQuery`) |
+| **GET** | `/api/v1/blog/search` | Server-side keyword search for articles | 💡 OPTIONAL | Currently filtered client-side in UI |
+| **GET** | `/api/v1/blog/rss` | XML RSS Feed for blog syndication | 💡 OPTIONAL | RSS feed generation |
+| **POST/PUT/DEL** | `/api/v1/blog/posts/*` (5 endpoints) | Publish, archive, edit blog posts | ⚙️ ADMIN ONLY | Blog CMS Admin |
+| **CRUD** | `/api/v1/blog/categories/*` | Manage blog categories | ⚙️ ADMIN ONLY | Blog CMS Admin |
+| **CRUD** | `/api/v1/blog/authors/*` | Manage author profiles | ⚙️ ADMIN ONLY | Blog CMS Admin |
 
 ---
 
-### 4️⃣ Industry Verticals / Solutions (`/industries` Page & Navbar Menu)
-* **Backend Endpoint:** `POST /api/v1/marketing/industries`  
-* **UI Par Kaha Dikh Raha Hai:** `/industries`, `/industries/[slug]`, Navbar Solutions Dropdown.
-* **JSON Payload:**
-```json
-{
-  "industryName": "Fine Dining & Full-Service Restaurants",
-  "slug": "fine-dining",
-  "heroHeadline": "Elevate Table Turns, Sommelier Pairings, and Guest Hospitality",
-  "statNumber": "+32%",
-  "statLabel": "Higher Table Turnover",
-  "summary": "Sophisticated course pacing, split checks by seat, tableside mobile ordering, and KDS kitchen routing for upscale dining.",
-  "sortOrder": 1,
-  "isActive": true
-}
-```
-> **Recommended Verticals to Add:**
-> 1. `Fine Dining & Full-Service Restaurants` (`fine-dining`)
-> 2. `Quick-Service (QSR) & Cafés` (`qsr-cafes`)
-> 3. `Supermarkets & Grocery Stores` (`grocery-supermarkets`)
-> 4. `Apparel, Footwear & Boutique Retail` (`apparel-boutique`)
-> 5. `Multi-Unit Franchise Chains` (`franchise-enterprise`)
+### 3.4. Contact & Inquiries Module (`/api/v1/contact/*`)
+Lead generation, demo booking, sales outreach, callbacks, and support tickets.
+
+| HTTP Method | Swagger Endpoint | Description / Purpose | Website Integration Status | Frontend Implementation File |
+| :--- | :--- | :--- | :---: | :--- |
+| **POST** | `/api/v1/contact/form` | General contact us inquiry submission | ✅ **INTEGRATED** | `ContactService.ts` (`useSubmitContactFormMutation`) |
+| **POST** | `/api/v1/contact/demo-request` | Schedule personalized POS demo | ✅ **INTEGRATED** | `ContactService.ts` (`useRequestDemoMutation`) |
+| **POST** | `/api/v1/contact/newsletter/subscribe` | Newsletter subscription | 🛡️ **PROXY / FALLBACK** | `ContactService.ts`<br>`src/app/api/v1/contact/newsletter/subscribe/route.ts` |
+| **POST** | `/api/v1/contact/newsletter/unsubscribe` | Unsubscribe from email list | ✅ **INTEGRATED** | `ContactService.ts` (`useUnsubscribeNewsletterMutation`) |
+| **POST** | `/api/v1/contact/support-ticket` | Submit visitor support ticket | ✅ **INTEGRATED** | `ContactService.ts` (`useSubmitSupportTicketMutation`) |
+| **POST** | `/api/v1/contact/callback` | Request an instant phone callback | ✅ **INTEGRATED** | `ContactService.ts` (`useRequestCallbackMutation`) |
+| **POST** | `/api/v1/contact/sales` | Submit custom enterprise sales request | ✅ **INTEGRATED** | `ContactService.ts` (`useSubmitSalesInquiryMutation`) |
+| **GET** | `/api/v1/contact/pricing` | Inquiry-related pricing metadata | 💡 OPTIONAL | Handled by `/marketing/pricing` |
+| **POST** | `/api/v1/contact/signup` | Direct quick-signup via contact | 💡 OPTIONAL | Handled by `/registration/signup` |
+| **GET** | `/api/v1/contact/help/search` | Quick help search in contact modal | 💡 OPTIONAL | Help search handled by HelpCentre |
+| **GET/POST** | `/api/v1/contact/leads/*` (3 endpoints) | View and convert inbound sales leads | ⚙️ ADMIN ONLY | CRM / Sales Portal |
 
 ---
 
-### 5️⃣ Competitor Comparisons (`/compare` Page)
-* **Backend Endpoint:** `POST /api/v1/marketing/competitors`  
-* **UI Par Kaha Dikh Raha Hai:** `/compare`, `/compare/[slug]`
-* **JSON Payload:**
-```json
-{
-  "competitorName": "Toast POS",
-  "slug": "versus-toast",
-  "headline": "Why Multi-Location Brands Switch from Toast to Quantix",
-  "quantixPros": [
-    "Zero proprietary hardware lock-in (runs on iPad, Android, Windows)",
-    "Flat 2.4% + 10¢ payment processing vs Toast's mandatory 2.99% + 15¢",
-    "Full offline mesh sync with local order cache"
-  ],
-  "competitorCons": [
-    "Requires Toast proprietary hardware",
-    "Higher transaction fee add-ons",
-    "Limited offline processing capabilities"
-  ],
-  "sortOrder": 1,
-  "isActive": true
-}
-```
+### 3.5. Help Centre & Knowledge Base (`/api/v1/help-centre/*`)
+Customer self-service, documentation, FAQs, setup tutorials, and video guides.
+
+| HTTP Method | Swagger Endpoint | Description / Purpose | Website Integration Status | Frontend Implementation File |
+| :--- | :--- | :--- | :---: | :--- |
+| **GET** | `/api/v1/help-centre/articles` | List knowledge base articles | ✅ **INTEGRATED** | `HelpCentreService.ts` (`useGetHelpArticlesQuery`) |
+| **GET** | `/api/v1/help-centre/articles/{slug}` | Single help article by slug | ✅ **INTEGRATED** | `HelpCentreService.ts` (`useGetHelpArticleBySlugQuery`) |
+| **GET** | `/api/v1/help-centre/categories` | Help centre topic categories | ✅ **INTEGRATED** | `HelpCentreService.ts` (`useGetHelpCategoriesQuery`) |
+| **GET** | `/api/v1/help-centre/faqs` | List all FAQ questions & answers | ✅ **INTEGRATED** | `HelpCentreService.ts` & `FAQService.ts` (`useGetFAQsQuery`) |
+| **GET** | `/api/v1/help-centre/faqs?category={c}` | Filter FAQs by category | ✅ **INTEGRATED** | `FAQService.ts` (`useGetFAQsByCategoryQuery`) |
+| **GET** | `/api/v1/help-centre/videos` | Video tutorials & walkthroughs | ✅ **INTEGRATED** | `HelpCentreService.ts` (`useGetHelpVideosQuery`) |
+| **GET** | `/api/v1/help-centre/search?q={q}` | Full-text knowledge base search | ✅ **INTEGRATED** | `HelpCentreService.ts` (`useSearchHelpQuery`) |
+| **GET** | `/api/v1/help-centre/getting-started` | Quick-start onboarding guide | ✅ **INTEGRATED** | `HelpCentreService.ts` (`useGetGettingStartedQuery`) |
+| **GET** | `/api/v1/help-centre/suggest` | Search suggestions / typeahead | 💡 OPTIONAL | Autocomplete assistance |
+| **GET** | `/api/v1/help-centre/faqs/categories` | Explicit category list for FAQs | 💡 OPTIONAL | Categories derived from FAQ list |
+| **POST** | `/api/v1/help-centre/articles/{id}/feedback` | Article helpful rating (thumbs up/down) | 💡 OPTIONAL | Article feedback widget |
+| **GET** | `/api/v1/help-centre/articles/{id}/versions` | Article revision history | ⚙️ ADMIN ONLY | Knowledge Base CMS Admin |
+| **CRUD** | `/api/v1/help-centre/articles/*` | Create/Edit/Delete articles | ⚙️ ADMIN ONLY | Knowledge Base CMS Admin |
+| **CRUD** | `/api/v1/help-centre/faqs/*` | Create/Edit/Delete/Reorder FAQs | ⚙️ ADMIN ONLY | Knowledge Base CMS Admin |
 
 ---
 
-### 6️⃣ Galleries / Product Screenshots (`/galleries`)
-* **Step 1: Gallery Album Create Karein:** `POST /api/v1/galleries`
-```json
-{
-  "title": "Quantix Dual-Screen POS Hardware & Software Tour",
-  "slug": "dual-screen-hardware-tour",
-  "body": "Hi-res photos and UI screenshots of the customer-facing display, bump bars, and cashier station.",
-  "sortOrder": 1,
-  "isActive": true
-}
-```
-* **Step 2: Gallery Image Item Add Karein:** `POST /api/v1/galleries/{galleryId}/items`
-```json
-{
-  "title": "Cashier Order Register Screen",
-  "caption": "Fast touch grid with barcode scanner support.",
-  "linkUrl": "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1200&q=80",
-  "sortOrder": 1,
-  "isActive": true
-}
-```
+### 3.6. Downloads Module (`/api/v1/downloads/*`)
+Desktop terminal installer, tablet sync utilities, and hardware drivers.
+
+| HTTP Method | Swagger Endpoint | Description / Purpose | Website Integration Status | Frontend Implementation File |
+| :--- | :--- | :--- | :---: | :--- |
+| **GET** | `/api/v1/downloads` | List all available download packages | ✅ **INTEGRATED** | `DownloadsService.ts` (`useGetDownloadsQuery`) |
+| **GET** | `/api/v1/downloads/latest` | Fetch latest POS terminal binary | ✅ **INTEGRATED** | `DownloadsService.ts` (`useGetLatestDownloadQuery`) |
+| **POST/PUT/DEL** | `/api/v1/downloads/*` | Upload/Edit/Delete software packages | ⚙️ ADMIN ONLY | Release Management Portal |
 
 ---
 
-### 7️⃣ Naye Testimonials Add Karne Ke Liye (`POST /api/v1/testimonials`)
-* **Endpoint:** `POST /api/v1/testimonials`
-* **JSON Payload:**
-```json
-{
-  "title": "Zero Downtime during Black Friday Rush",
-  "body": "We processed over 15,000 transactions across 12 boutique apparel stores with zero latency. The local offline mesh sync gave our managers total peace of mind.",
-  "personName": "Elena Rostova",
-  "personRole": "VP of Retail Technology",
-  "companyName": "Nordic Apparel Co.",
-  "rating": 5,
-  "merchantType": "Enterprise",
-  "sortOrder": 3,
-  "isActive": true
-}
-```
+### 3.7. Media Assets Module (`/api/v1/media/*`)
+Media streaming service for blog images, customer logos, avatars, and hero graphics.
+
+| HTTP Method | Swagger Endpoint | Description / Purpose | Website Integration Status | Frontend Implementation File |
+| :--- | :--- | :--- | :---: | :--- |
+| **GET** | `/api/v1/media/{assetId}/file` | Stream raw media image / file by Asset ID | ✅ **INTEGRATED** | `HeroSection.tsx`<br>`BlogPostDetail.tsx`<br>`ClienteleMarquee.tsx`<br>`TestimonialsSection.tsx` |
+| **GET** | `/api/v1/media/{assetId}` | Get asset metadata | 💡 OPTIONAL | Metadata lookup |
+| **CRUD** | `/api/v1/media/*` (6 endpoints) | Upload, delete, folder management | ⚙️ ADMIN ONLY | Media Library CMS |
 
 ---
 
-### 8️⃣ Naye Clientele Logos Add Karne Ke Liye (`POST /api/v1/clientele`)
-* **Endpoint:** `POST /api/v1/clientele`
-* **JSON Payload:**
-```json
-{
-  "title": "Chipotle Mexican Grill",
-  "websiteUrl": "https://chipotle.com",
-  "industry": "Restaurant",
-  "isFeatured": true,
-  "linkUrl": "https://chipotle.com",
-  "sortOrder": 4,
-  "isActive": true
-}
-```
+### 3.8. Authentication Module (`/api/v1/auth/*`)
+User authentication, token renewal, session retrieval, password management.
+
+| HTTP Method | Swagger Endpoint | Description / Purpose | Website Integration Status | Frontend Implementation File |
+| :--- | :--- | :--- | :---: | :--- |
+| **POST** | `/api/v1/auth/login` | Merchant / User login | ✅ **INTEGRATED** | `LoginService.ts` (`useLoginMutation`) |
+| **POST** | `/api/v1/auth/logout` | Invalidate token & clear cookies | ✅ **INTEGRATED** | `LoginService.ts` (`useLogoutMutation`) |
+| **POST** | `/api/v1/auth/refresh` | Refresh expired JWT token | ✅ **INTEGRATED** | `baseApi.ts` (Automatic silent re-auth) |
+| **GET** | `/api/v1/auth/me` | Fetch authenticated user profile | ✅ **INTEGRATED** | `ProfileService.ts` & `AuthProvider.tsx` |
+| **PUT** | `/api/v1/auth/me/password` | Update user password | ✅ **INTEGRATED** | `ProfileService.ts` (`useChangePasswordMutation`) |
+| **POST** | `/api/v1/auth/password/reset` | Request password reset email | ✅ **INTEGRATED** | `LoginService.ts` (`useRequestPasswordResetMutation`) |
+| **POST** | `/api/v1/auth/password/reset/confirm` | Complete password reset with token | ✅ **INTEGRATED** | `LoginService.ts` (`useConfirmPasswordResetMutation`) |
+| **GET** | `/api/v1/auth/validate` | Token validity check | 💡 OPTIONAL | Covered by `GET /auth/me` |
+| **GET/POST** | `/api/v1/auth/mfa/*` (4 endpoints) | Setup, enable, verify, disable MFA | 💡 OPTIONAL | Enhanced 2FA settings in user profile |
 
 ---
 
-## 4. 🧭 SWAGGER BACKEND MICROSERVICES ARCHITECTURE (393 ROUTES)
+### 3.9. Registration & Onboarding Module (`/api/v1/registration/*` & `/api/v1/onboarding-wizard/*`)
+Self-service merchant registration, OTP email verification, tenant provisioning, and onboarding checkout.
 
-Live Swagger specification (`http://localhost:5104/swagger/v1/swagger.json`) me 33 core microservice domains hain:
-
-```
-├── 💳 Billing & Plans (35 routes)           -> Invoices, subscriptions, usage meters, webhook listeners
-├── ⚙️ Settings (32 routes)                  -> SMTP setup, maintenance windows, public config, SMS
-├── 🏪 Merchants (29 routes)                 -> Tenant onboarding, merchant profiles, store locations
-├── 🎧 Helpdesk (26 routes)                  -> Support ticketing system, ticket replies, SLA tracking
-├── 🌐 WebsiteContent (21 routes)            -> Announcements, Clientele, Testimonials, Galleries
-├── 👤 MerchantSelf (20 routes)              -> Merchant self-service portal, downloads, wallet, profile
-├── 💰 Wallet & Payouts (18 routes)          -> Multi-currency merchant wallet balance, payout ledgers
-├── 🧙 OnboardingWizard (18 routes)          -> Step-by-step setup wizard for new store registration
-├── 🔐 Registration & Auth (29 routes)       -> JWT tokens, email verification, multi-step provisioning
-├── 📰 Blog Engine (17 routes)               -> Articles, authors, category taxonomy, RSS feed
-├── 📢 Marketing CMS (16 routes)             -> Social proof, case studies, hero banners, competitor matrix
-├── 📦 Catalogs & Features (16 routes)       -> Feature catalog matrix, daily pricing, grace periods
-├── 📊 Reports & Dashboard (29 routes)       -> Live sales analytics, hourly orders, cashier reconciliation
-└── 🛡️ Compliance, Roles & Audit (35 routes) -> 2FA (MFA), GDPR data export, audit trails, RBAC permissions
-```
+| HTTP Method | Swagger Endpoint | Description / Purpose | Website Integration Status | Frontend Implementation File |
+| :--- | :--- | :--- | :---: | :--- |
+| **GET** | `/api/v1/registration/check-email` | Real-time email uniqueness check | ✅ **INTEGRATED** | `RegisterServices.ts` (`useCheckEmailQuery`) |
+| **POST** | `/api/v1/registration/signup` | Register new merchant organization | ✅ **INTEGRATED** | `RegisterServices.ts` (`useSignupMutation` / `registerUser`) |
+| **POST** | `/api/v1/registration/{merchantId}/verify-email/send` | Send OTP verification email | ✅ **INTEGRATED** | `RegisterServices.ts` (`useSendOtpMutation`) |
+| **POST** | `/api/v1/registration/verify-email` | Verify 6-digit OTP code | ✅ **INTEGRATED** | `RegisterServices.ts` (`useVerifyEmailCodeMutation`) |
+| **GET** | `/api/v1/registration/{merchantId}/status` | Check merchant registration status | ✅ **INTEGRATED** | `RegisterServices.ts` (`useGetSignupStatusQuery`) |
+| **GET** | `/api/v1/registration/pricing` | Registration plan tier list | ✅ **INTEGRATED** | `PricingServices.ts` (`useGetRegistrationPlansQuery`) |
+| **POST** | `/api/v1/onboarding-wizard/{merchantId}/provision` | Provision merchant database & tenant | ✅ **INTEGRATED** | `RegisterServices.ts` (`useProvisionMerchantMutation`) |
+| **POST** | `/api/v1/onboarding-wizard/{merchantId}/activate` | Activate newly provisioned tenant | ✅ **INTEGRATED** | `RegisterServices.ts` (`useActivateMerchantMutation`) |
+| **POST** | `/api/v1/onboarding-wizard/{merchantId}/payment` | Process initial subscription payment | ✅ **INTEGRATED** | `RegisterServices.ts` (`useProcessPaymentMutation`) |
+| **GET/POST** | `/api/v1/onboarding-wizard/{merchantId}/kyc/*` | Upload business identity & KYC docs | 💡 OPTIONAL | Merchant Portal Onboarding |
+| **GET** | `/api/v1/registration/queue` | Admin pending registration queue | ⚙️ ADMIN ONLY | Super-Admin Console |
+| **POST** | `/api/v1/registration/manual` | Manual override registration | ⚙️ ADMIN ONLY | Super-Admin Console |
 
 ---
 
-## 5. 🎯 LEAD GENERATION TOUCHPOINTS VERIFICATION
+## 4. Platform Engine / Merchant Portal Modules Reference (330 Endpoints)
 
-Teeno websites me lead capture ke sabhi **5 primary touchpoints** live hain, USA phone masking/validation ke saath real backend API `/api/v1/contact/demo-request` aur `/contact/form` se connected hain:
+Swagger me available baaki **24 Tags (330 Endpoints)** website ke liye nahi, balki **Merchant Portal**, **Admin Back-Office**, aur **POS Hardware Client Engine** ke liye hain:
 
-1. **First Visit Offer Popup Modal (`FirstVisitOfferModal.tsx`):**
-   - API: `POST /api/v1/contact/demo-request`
-   - Trigger: Website par aane ke 4 seconds baad popup hota hai.
-   - US Validation: Country Code `+1`, Auto-masking `(xxx) xxx-xxxx`.
-
-2. **Footer Lead Card (`LeadFormCard.tsx`):**
-   - API: `POST /api/v1/contact/demo-request`
-   - Har public page ke footer ke upar lead form.
-
-3. **Dedicated Demo Booking Page (`/contact/demo`):**
-   - API: `POST /api/v1/contact/demo-request`
-   - Operational timing slots in EST (`09:00 AM - 12:00 PM EST`).
-
-4. **Specialist Inquiry Modal (`ContactSalesModal.tsx`):**
-   - API: `POST /api/v1/contact/demo-request`
-   - Hero buttons aur Pricing custom quote CTA se open hota hai.
-
-5. **General Contact & Support Forms (`src/features/Contact/`):**
-   - APIs: `POST /api/v1/contact/form` & `POST /api/v1/contact/sales` & `POST /api/v1/contact/support-ticket`
-   - Reusable `ATMTextField`, `ATMPhoneField`, `ATMTextArea`, `ATMButton` components.
-
-6. **Footer Newsletter Box (`NewsletterSubscribeBox.tsx`):**
-   - API: `POST /api/v1/contact/newsletter/subscribe`
-
----
-
-## 6. 🚀 QUICK START: DATA ADD KARNE KA STEP-BY-STEP PROCESS
-
-1. Browser me open karein: **`http://localhost:5104/swagger/index.html`**
-2. Jis section me data add karna hai, us Controller tag par click karein:
-   - **Features:** `Marketing` -> `POST /api/v1/marketing/content`
-   - **Blog:** `Blog` -> `POST /api/v1/blog/authors`, phir `categories`, phir `posts`
-   - **Testimonials:** `WebsiteContent` -> `POST /api/v1/testimonials`
-   - **Clientele:** `WebsiteContent` -> `POST /api/v1/clientele`
-   - **Announcements:** `WebsiteContent` -> `POST /api/v1/announcements`
-   - **Galleries:** `WebsiteContent` -> `POST /api/v1/galleries`
-3. "Try it out" button par click karein.
-4. Upar section 3 me diye gaye JSON Payloads me se jo chahein copy karein aur Request Body me paste karke **"Execute"** button dabayein.
-5. Response me `200 OK` ya `201 Created` aate hi website refresh karein:
-   - Enterprise: `http://localhost:3000`
-   - Restaurant: `http://localhost:3002`
-   - Retail: `http://localhost:3001`
-   Data turant live dikhne lagega!
-
----
-> **Master Sync Status:** Enterprise, Restaurant, aur Retail teeno repositories me 100% verified aur synchronized.
+| Tag Name | Endpoints | Purpose & Target Domain |
+| :--- | :---: | :--- |
+| **Audit** | 5 | Security audit trail & compliance export logs |
+| **Billing** | 35 | Invoicing, payment gateway intents, stripe/razorpay webhooks, billing cycles |
+| **Bridge** | 11 | Hardware bridge to physical POS receipt printers, cash drawers & barcode scanners |
+| **Catalogs** | 16 | POS Product catalogs, categories, SKU pricing, inventory modifiers |
+| **Commission** | 7 | Partner & affiliate commission tracking and payouts |
+| **Compliance** | 16 | Tax, AML, and business KYC compliance records |
+| **Dashboard** | 14 | Real-time POS sales analytics, revenue graphs, hourly metrics |
+| **Deboarding** | 12 | Merchant termination, store offboarding, data retention policies |
+| **Health** | 1 | Cluster health & readiness probe (`/api/v1/health`) |
+| **Helpdesk** | 26 | Internal merchant ticketing, SLA tracking, agent assignments |
+| **Merchants** | 29 | Super-admin merchant CRUD, franchise branching, store locations |
+| **MerchantSelf** | 20 | Merchant self-service profile, operating hours, tax IDs, store settings |
+| **Notifications** | 3 | Real-time in-app notification center |
+| **PaymentMethods** | 2 | Supported merchant payment rails (UPI, Card, Cash, Gift Cards) |
+| **Reports** | 15 | End-of-day Z-reports, sales register exports, tax accounting sheets |
+| **Roles** | 9 | Role-based access control (RBAC), cashier vs manager permissions |
+| **Sessions** | 5 | Cash register till shift open/close session balancing |
+| **Settings** | 32 | Global POS enterprise configurations, feature flags, receipt templates |
+| **Tax** | 15 | GST, VAT, and regional sales tax rules and exemptions |
+| **Terminals** | 7 | POS Terminal device binding, MAC address pairing, remote lock/wipe |
+| **Tokens** | 17 | Developer API keys, OAuth client credentials, webhooks |
+| **Users** | 8 | Store staff, manager, and cashier user management |
+| **Wallet** | 18 | Merchant settlement wallet, ledger balances, store credit |
+| **Withdrawals** | 7 | Bank payouts, automated NEFT/IMPS withdrawals |
 
 ---
 
-## 7. 📁 CLEAN FOLDER STRUCTURE & BLUEPRINT STANDARDS (AUDIT RESOLUTION)
+## 5. Architectural Quality Highlights
 
-Deep audit ke baad project se **Signup jaisa folder chaos aur double files** 100% clean kar diya gaya hai:
+1. **Clean RTK Query Architecture (`baseApi.ts`)**:
+   - Centralized `baseQueryWithReauth` with automatic token refresh on `401 Unauthorized`.
+   - Dual-token retrieval: Synchronously reads both Redux state and secure cookies (`accessToken`, `refreshToken`), preventing race conditions on initial SSR hydration.
+   - Tag-based cache invalidation (`providesTags` & `invalidatesTags`) across all modules.
 
-### ✅ Folder Structure Standards (Har Feature Ke Liye Rule):
-Har feature ab standard structure follow karta hai:
-```
-src/features/[FeatureName]/
-├── components/         -> Feature-specific UI components (e.g., Cards, Sections, Modals)
-├── Service/ (or services/) -> Single RTK Query API injection on baseApi
-├── Types/              -> Single unified types file (e.g., [Feature]Types.ts)
-├── constants/          -> Default data / fallback values (if applicable)
-├── validation/         -> Yup/Zod form validation schemas (if applicable)
-└── index.ts            -> Clean central barrel export for entire feature
-```
+2. **Zero-CORS Next.js Rewrites**:
+   - `next.config.ts` proxies all `/api/v1/:path*` requests directly to backend `http://localhost:5104/api/v1/:path*`.
+   - Browser client uses clean relative paths without exposing internal backend ports.
 
-### ❌ Removed Redundancies (48 Double Files & Empty Folders Purged):
-1. **Duplicate Singular `*Type.ts` Files**: 15 redundant 1-line re-export files (`BlogType.ts`, `ContactType.ts`, `PricingType.ts`, `SocialProofType.ts`, `TestimonialsType.ts`, etc.) deleted. All imports now reference `*Types.ts` directly.
-2. **Duplicate Re-export Services**: `AnnouncementServices.ts`, `ClienteleServices.ts`, `DownloadsServices.ts`, `SocialProofServices.ts` (clone), `TestimonialsServices.ts`, `ContactServices.ts`, `IntegrationServices.ts` removed.
-3. **Redundant Root Re-exports**: `ContactSalesForm.tsx` & `ContactSalesFormWrapper.tsx` in Contact root, `PricingSection.tsx` & `PricingWrapper.tsx` in Pricing root, `SocialProofStats.tsx` & `SocialProofStatsWrapper.tsx` in SocialProof root deleted.
-4. **Legacy Signup Files**: Old unreferenced `Register.tsx`, `RegisterForm.tsx`, `RegisterWrapper.tsx` deleted. Modern multi-step `SignUpForm` and `VerifyOtpWrapper` active.
-5. **Double Organisms Folders**: `IntegrationsTicker/IntegrationsTicker/` and `MerchantExplainer/MerchantExplainer/` double-nested folders eliminated.
-6. **Duplicate Next.js Routes**: Shadow duplicate route `src/app/api/v1/marketing/testimonials` removed.
+3. **High-Resilience Server Route Handlers**:
+   - For mission-critical endpoints like Announcements and Newsletter, dedicated Next.js route handlers (`src/app/api/v1/...`) proxy the call to the live backend with a 3-4s timeout. If the backend database is empty or cold, high-fidelity fallback data is returned seamlessly without breaking the UI.
+
+4. **Media Resolution Consistency**:
+   - Frontend image loaders dynamically resolve media assets via `/api/v1/media/{assetId}/file` with automatic fallback to static image paths if the asset ID is empty.
 
 ---
 
-## 8. 🧩 DUMMY DATA VS LIVE API MAPPING TABLE
+## 6. Actionable Findings & Recommendations
 
-| Component / Feature | Data Source Used | Local File Location | Live API Wired | Live Backend Status | Notes |
-|:---|:---:|:---|:---:|:---:|:---|
-| **Pricing Section** | 🟢 Live API | `PricingSection.tsx` | `/api/v1/marketing/pricing` | 🟢 27 Plans in DB | Live DB dynamic rendering |
-| **Social Proof Ribbon** | 🟢 Live API | `SocialProof.tsx` | `/api/v1/marketing/social-proof` | 🟢 Real stats in DB | 50K merchants, 99.9% uptime |
-| **Announcements Banner**| 🟢 Live API | `TopPromoBanner.tsx` | `/api/v1/announcements` | 🟢 3 Banners in DB | Fallback: `fallbackAnnouncements.ts` |
-| **Clientele Logo Marquee**| 🟢 Live API | `ClienteleMarquee.tsx` | `/api/v1/clientele` | 🟢 3 Brands in DB | Fallback: `defaultClientele.ts` |
-| **Customer Testimonials**| 🟢 Live API | `TestimonialsSection.tsx` | `/api/v1/testimonials` | 🟢 2 Reviews in DB | Fallback: `defaultTestimonials.ts` |
-| **Case Studies** | 🟢 Live API | `CaseStudiesSection.tsx` | `/api/v1/marketing/content/CaseStudy` | 🟢 2 Studies in DB | Fallback: `defaultCaseStudies.ts` |
-| **Hero Banner** | 🟢 Live API | `HeroSection.tsx` | `/api/v1/marketing/content/HeroBanner` | 🟢 1 Banner in DB | Real headline rendered |
-| **Demo Request Lead Form**| 🟢 Live API (POST) | `LeadFormCard.tsx`, Modals | `/api/v1/contact/demo-request` | 🟢 DB Insertion | USA phone mask + live DB save |
-| **Newsletter Subscribe** | 🟢 Live API (POST) | `NewsletterSubscribeBox.tsx` | `/api/v1/contact/newsletter/subscribe` | 🟢 DB Insertion | Live subscription |
-| **Sign-Up & Verify OTP** | 🟢 Live API (POST) | `SignUpFormWrapper.tsx` | `/api/v1/registration/signup` | 🟢 Live Provisioning | Validates email & registers |
-| **Features Grid** | 🟡 Fallback (DB empty) | `FeaturesSection.tsx` | `/api/v1/marketing/features` | 🟡 `[]` Empty in DB | Admin se POST data pending |
-| **Integrations Grid** | 🟡 Local Mock Catalog | `src/features/Integrations/dummyData` | `/api/v1/marketing/integrations` | 🟡 `[]` Empty in DB | Shows mock integrations catalog |
-| **Industry Verticals** | 🟡 Fallback | `IndustriesSection.tsx` | `/api/v1/marketing/industries` | 🟡 `[]` Empty in DB | Admin se POST data pending |
-| **CTA Banner** | 🟡 Local Constant | `CTABanner/CTAData.ts` | N/A (Marketing Copy) | Static Layout | High-conversion static CTA |
-| **How It Works Steps** | 🟡 Local Constant | `HowItWorksSection/HowItWorksData.ts` | N/A (Marketing Copy) | Static Layout | 3-step hardware/software explainer |
-
----
-
-## 9. ⏳ PENDING APIS FROM SWAGGER (37 ENDPOINTS REMAINING)
-
-Swagger live specification (`http://localhost:5104/swagger/index.html`) me 393 total microservice paths hain. Public website aur merchant self-service scope ke baaki bache **37 endpoints** jo phase 2 me integrate ho sakte hain:
-
-### A. Merchant Self-Service & Downloads (12 Endpoints)
-- `GET /api/v1/merchant-self/profile` — Merchant profile self-inspection
-- `PUT /api/v1/merchant-self/profile` — Profile update
-- `GET /api/v1/merchant-self/downloads` — Registered merchant installer downloads (Windows/Android/iOS APK)
-- `GET /api/v1/merchant-self/downloads/{id}/download` — Secure signed download URL stream
-- `GET /api/v1/merchant-self/wallet/balance` — Real-time merchant settlement wallet balance
-- `GET /api/v1/merchant-self/wallet/transactions` — Settlement ledger transactions
-- `POST /api/v1/merchant-self/wallet/payout-request` — On-demand bank account payout
-- `GET /api/v1/merchant-self/invoices` — Billing invoices history
-- `GET /api/v1/merchant-self/invoices/{id}/pdf` — Invoice PDF download stream
-
-### B. Live Terminal & Telemetry Status (8 Endpoints)
-- `GET /api/v1/merchants/{merchantId}/stores` — Multi-location store network list
-- `GET /api/v1/merchants/{merchantId}/stores/{storeId}/terminals` — POS terminal mesh connection status
-- `GET /api/v1/merchants/{merchantId}/stores/{storeId}/health` — Offline cache health & SQLite sync status
-
-### C. Advanced Security & Compliance (9 Endpoints)
-- `POST /api/v1/auth/mfa/enable` — Two-Factor Authentication TOTP QR code generator
-- `POST /api/v1/auth/mfa/verify` — Verify and activate 2FA
-- `POST /api/v1/auth/mfa/disable` — Disable 2FA
-- `GET /api/v1/compliance/gdpr/export` — User GDPR personal data archive download
-- `POST /api/v1/compliance/gdpr/delete-request` — Right to be forgotten deletion request
-
-### D. Reporting & Hourly Pulse Analytics (8 Endpoints)
-- `GET /api/v1/reports/sales/summary` — Daily total sales volume & tax breakdown
-- `GET /api/v1/reports/sales/hourly` — Peak operational rush hours graph
-- `GET /api/v1/reports/cashier/reconciliation` — Drawer cash count discrepancy audits
-
----
-
-## 10. 🧹 PURGED OBSOLETE DOCUMENTATION FILES LOG
-
-Following 10 deprecated, obsolete, and redundant `.md` files were permanently removed from root directory:
-1. `FLOW_AND_API_DOCUMENTATION.md` (Deprecated placeholder)
-2. `POS_APP_T2_04_FRS_SPW_V2.md` (Deprecated placeholder)
-3. `POS_APP_T2_04_PFD_SPW_V2.md` (Deprecated placeholder)
-4. `QUANTIX_COMPLETE_ECOSYSTEM_MASTER_PROPOSAL.md` (Deprecated placeholder)
-5. `QUANTIX_DEMO_AND_API_FLOW_README.md` (Deprecated placeholder)
-6. `QUANTIX_WEBSITES_ALL_APIS_MASTER_TRACKER.md` (Deprecated placeholder)
-7. `QUANTIX_WEBSITE_API_INTEGRATION_TRACKER.md` (Deprecated placeholder)
-8. `CMS_DRIVEN_ARCHITECTURE_AND_GAP_ANALYSIS.md` (Redundant gap analysis)
-9. `CONTENT_DRIVEN_CMS_GAP_ANALYSIS.md` (Redundant gap analysis)
-10. `QUANTIX_BLUEPRINT_GAP_ANALYSIS.md` (Redundant gap analysis)
-
-> **Single Source of Truth:** Only **`API_INTEGRATION_STATUS.md`** and **`README.md`** remain.
+1. **Testimonials Dual Support**:
+   - Swagger me dono endpoints hain: `GET /api/v1/testimonials` (WebsiteContent) aur `GET /api/v1/marketing/testimonials` (Marketing). Next.js server route handler (`src/app/api/v1/testimonials/route.ts`) me dono ka fallback implemented hai, isliye zero failure risk hai.
+2. **Dynamic Search for Blog**:
+   - Swagger me `GET /api/v1/blog/search?q={query}` endpoint ready hai. Website me abhi client-side search hai jo fast hai. Future me server-side search connect kiya ja sakta hai.
+3. **Blog RSS Feed**:
+   - Backend par `GET /api/v1/blog/rss` available hai, jise website footer me RSS icon ke sath link kiya ja sakta hai.
+4. **Help Centre Suggestions**:
+   - `GET /api/v1/help-centre/suggest` typeahead endpoint available hai Help Centre search bar ke autocomplete ke liye.
+![alt text](image.png)
