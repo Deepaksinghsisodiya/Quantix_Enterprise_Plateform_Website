@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
@@ -82,7 +82,7 @@ const PLATFORM_DECK_MODULES: PlatformModule[] = [
     specBadge: "☁ < 2.4s Global Sync",
     highlights: ["One-Click Rollout", "Granular RBAC", "Pricing Tiers"],
     href: "/products/enterprise-pos",
-    imageSrc: "/images/nav_cloud_bundle.png",
+    imageSrc: "/images/nav_cloud_bundle_v2.png",
     imageAlt: "Central Cloud HQ Matrix",
     icon: Cloud,
   },
@@ -121,7 +121,7 @@ const PLATFORM_DECK_MODULES: PlatformModule[] = [
     specBadge: "📊 Sub-Second BI",
     highlights: ["Hourly Sales Velocity", "Data Lake Pipe", "Labor Margin Audits"],
     href: "/products/analytics",
-    imageSrc: "/images/ent_bi_analytics_bundle.png",
+    imageSrc: "/images/ent_bi_analytics_bundle_v2.png",
     imageAlt: "Executive business intelligence telemetry",
     icon: LineChart,
   },
@@ -306,7 +306,7 @@ const PRODUCT_LINES: ProductLine[] = [
         badge: "99.99% Enterprise SLA",
       },
     ],
-    imageSrc: "/images/ent_bi_analytics_bundle.png",
+    imageSrc: "/images/ent_bi_analytics_bundle_v2.png",
     imageAlt: "Real-time business intelligence and reporting dashboards",
     topBadge: "Real-Time Data Lake",
     bottomBadge: "ERP & BI Integrations",

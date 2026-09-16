@@ -1,4 +1,4 @@
-// src/app/(public)/features/[featureSlug]/page.tsx
+﻿// src/app/(public)/features/[featureSlug]/page.tsx
 "use client";
 
 import React from "react";
@@ -974,7 +974,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
       bottomBadge: "Live sales and alerts",
     },
     workflowVisual: {
-      imageSrc: "/images/nav_cloud_bundle.png",
+      imageSrc: "/images/nav_cloud_bundle_v2.png",
       imageAlt: "Live business KPI telemetry and cashier audit alerts",
       topBadge: "Mobile Business Telemetry",
       bottomBadge: "Shift Audits & Revenue Alerts",
@@ -1140,7 +1140,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "Distributed cloud command matrix with real-time WebSocket telemetry, bi-directional POS synchronization, automated conflict resolution, and enterprise SAML 2.0 / OAuth identity federation.",
     visual: {
-      imageSrc: "/images/nav_cloud_bundle.png",
+      imageSrc: "/images/nav_cloud_bundle_v2.png",
       imageAlt: "Enterprise multi-store cloud management and POS terminal network",
       topBadge: "500+ Franchise Locations",
       bottomBadge: "< 2.4s Global Catalog Sync",
@@ -1221,7 +1221,7 @@ const FEATURES_DATA: Record<string, FeatureData> = {
     techSpec:
       "High-throughput event-stream data pipelines delivering live transactional aggregates, customizable SQL data connectors, and direct native bridges to Snowflake, BigQuery, and PowerBI.",
     visual: {
-      imageSrc: "/images/ent_bi_analytics_bundle.png",
+      imageSrc: "/images/ent_bi_analytics_bundle_v2.png",
       imageAlt: "Executive business intelligence telemetry dashboard",
       topBadge: "Real-time Telemetry",
       bottomBadge: "Sub-Second BI Pipelines",

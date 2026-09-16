@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
@@ -107,7 +107,7 @@ const FEATURES: FeatureCardItem[] = [
     badge: "ENTERPRISE FLAGSHIP",
     specBadge: "< 2.4s Global Sync",
     desc: "Centralized cloud governance for 50+ unit franchise networks. Deploy master menus, localized pricing tiers, corporate royalties, and granular RBAC security.",
-    image: "/images/nav_cloud_bundle.png",
+    image: "/images/nav_cloud_bundle_v2.png",
     icon: Building2,
     accentColor: "text-primary dark:text-primary-light bg-primary/10 border-primary/20",
     glowColor: "rgba(255, 77, 0, 0.18)",
@@ -231,7 +231,7 @@ const FEATURES: FeatureCardItem[] = [
     badge: "DATA LAKES",
     specBadge: "Sub-Second BI",
     desc: "Transform millions of store transactions into live executive telemetry. Track sales velocity, labor margins, cashier shrinkage, and export to SQL lakes.",
-    image: "/images/ent_bi_analytics_bundle.png",
+    image: "/images/ent_bi_analytics_bundle_v2.png",
     icon: LineChart,
     accentColor: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
     glowColor: "rgba(16, 185, 129, 0.18)",

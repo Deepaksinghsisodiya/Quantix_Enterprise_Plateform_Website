@@ -1,4 +1,4 @@
-import {
+﻿import {
   Cloud,
   Layers,
   Monitor,
@@ -173,7 +173,7 @@ export const WHY_QUANTIX_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Discover how multi-location operators eliminate hardware lock-in, achieve 99.99% uptime, and increase table turns by 38%.',
       ctaText: 'Calculate Your ROI',
       href: '/roi-calculator',
-      imageSrc: '/images/ent_bi_analytics_bundle.png',
+      imageSrc: '/images/ent_bi_analytics_bundle_v2.png',
       badgeColor: 'text-primary dark:text-primary-light bg-primary/10 border border-primary/20',
     },
   ],
@@ -204,7 +204,7 @@ export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
       desc: 'Step-by-step documentation, terminal unboxing, printer pairing, and operational guides.',
       ctaText: 'Explore Help Center',
       href: '/help',
-      imageSrc: '/images/nav_cloud_bundle.png',
+      imageSrc: '/images/nav_cloud_bundle_v2.png',
       badgeColor: 'text-blue-700 dark:text-blue-400 bg-blue-100/90 dark:bg-blue-900/30 border border-blue-300/40',
     },
   ],
@@ -284,7 +284,7 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[3],
     icon: Star,
-    imageSrc: '/images/ent_bi_analytics_bundle.png',
+    imageSrc: '/images/ent_bi_analytics_bundle_v2.png',
     badge: 'WHY QUANTIX',
     groups: [
       {
@@ -302,7 +302,7 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[4],
     icon: BookOpen,
-    imageSrc: '/images/nav_cloud_bundle.png',
+    imageSrc: '/images/nav_cloud_bundle_v2.png',
     badge: 'GUIDES & DOWNLOADS',
     groups: [
       {

@@ -1,4 +1,4 @@
-export interface HowItWorksStep {
+﻿export interface HowItWorksStep {
   number: string;
   badgeLabel: string;
   badgeIconName: "reach" | "process" | "delivery";
@@ -27,7 +27,7 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     badgeColor: "bg-orange-500/10 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border-orange-500/25",
     title: "Connect Enterprise Nodes & Catalogs",
     description: "Plug in dual-screen tills, barcode scanners, and import multi-store catalogs, price tiers, and inventory ledgers with zero downtime.",
-    imageSrc: "/images/ent_bi_analytics_bundle.png",
+    imageSrc: "/images/ent_bi_analytics_bundle_v2.png",
     imageAlt: "Connect enterprise terminals and sync catalogs",
     bullets: [
       "Bulk schema migration for legacy POS, ERP, and regional price lists.",
@@ -57,7 +57,7 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     badgeColor: "bg-amber-500/10 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400 border-amber-500/25",
     title: "Configure Multi-Store Routing & Controls",
     description: "Set up automated commissary reorder triggers, offline LAN mesh failover, role-based cashier permissions, and regional tax groups.",
-    imageSrc: "/images/nav_cloud_bundle.png",
+    imageSrc: "/images/nav_cloud_bundle_v2.png",
     imageAlt: "Configure franchise rules, mesh routing, and security permissions",
     bullets: [
       "Automated branch replenishment and inter-store inventory transfers.",
