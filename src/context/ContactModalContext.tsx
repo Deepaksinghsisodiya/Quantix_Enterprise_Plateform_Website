@@ -1,8 +1,17 @@
 'use client';
 
 import React, { createContext, useContext, useState } from 'react';
-import { ContactSalesModal } from '@/components/organisms/ContactModal/ContactSalesModal';
-import { ChangePasswordModal } from '@/features/Profile/components/ChangePasswordModal';
+import dynamic from 'next/dynamic';
+
+const ContactSalesModal = dynamic(
+  () => import('@/components/organisms/ContactModal/ContactSalesModal').then((mod) => mod.ContactSalesModal),
+  { ssr: false }
+);
+
+const ChangePasswordModal = dynamic(
+  () => import('@/features/Profile/components/ChangePasswordModal').then((mod) => mod.ChangePasswordModal),
+  { ssr: false }
+);
 
 interface ContactModalContextType {
   isModalOpen: boolean;
@@ -58,16 +67,20 @@ export const ContactModalProvider: React.FC<{ children: React.ReactNode }> = ({ 
       }}
     >
       {children}
-      <ContactSalesModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        title={modalTitle}
-        buttonText={modalButtonText}
-      />
-      <ChangePasswordModal
-        isOpen={isPasswordModalOpen}
-        onClose={closePasswordModal}
-      />
+      {isModalOpen && (
+        <ContactSalesModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          title={modalTitle}
+          buttonText={modalButtonText}
+        />
+      )}
+      {isPasswordModalOpen && (
+        <ChangePasswordModal
+          isOpen={isPasswordModalOpen}
+          onClose={closePasswordModal}
+        />
+      )}
     </ContactModalContext.Provider>
   );
 };

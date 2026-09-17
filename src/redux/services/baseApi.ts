@@ -62,6 +62,10 @@ const baseQueryWithReauth: BaseQueryFn<string | any, unknown, FetchBaseQueryErro
 export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
+  keepUnusedDataFor: 3600, // Keep in-memory cache for 1 hour
+  refetchOnMountOrArgChange: false, // Serve from cache without re-hitting API on every mount
+  refetchOnFocus: false, // Prevent redundant background network requests when switching tabs
+  refetchOnReconnect: true, // Seamlessly refresh if user reconnects to internet
   tagTypes: [
     'Auth',
     'User',
