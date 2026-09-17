@@ -12,20 +12,20 @@ OFFICIAL PLATFORM ARCHITECTURE:
 - We do not manufacture or sell proprietary hardware.
 
 EXACT VERIFIED PRODUCTS & MODULES:
-1. Multi-Location POS (/products/enterprise-pos):
+1. Multi-Location POS (/features/enterprise-pos):
    - Centralized HQ dashboard to control menus, catalog pricing, and staff roles across 50+ branches in 1 click.
    - Role-Based Access Control (RBAC) with manager PIN overrides for discounts, voids, and returns.
 
-2. Cloud Management Hub (/products/cloud-pos):
+2. Cloud Management Hub (/features/cloud-pos):
    - Real-time multi-store sales telemetry, hourly store traffic, and average ticket size.
    - Offline-First Engine: Continue checkout, barcode scanning, and receipt printing during internet outages, auto-syncing when reconnected.
 
-3. Supply Chain & Inventory (/products/inventory):
+3. Supply Chain & Inventory (/features/inventory):
    - Real-time stock tracking across retail stores, restaurants, and central warehouses.
    - 1-click inter-branch stock transfers with full audit trails.
    - Automated purchase order triggers when inventory hits minimum par-levels.
 
-4. Delivery & Omnichannel Fulfillment (/products/omnichannel):
+4. Delivery & Omnichannel Fulfillment (/features/omnichannel):
    - Third-Party Marketplaces: Direct injection of DoorDash and Uber Eats orders into POS & KDS without extra tablets.
    - Branded Direct Online Ordering: 0% commission online ordering for customer takeout, store pickup, and direct delivery.
    - E-commerce inventory sync with web stores.
@@ -34,10 +34,10 @@ EXACT VERIFIED PRODUCTS & MODULES:
    - Stripe Enterprise (/integrations/stripe): Credit/debit card processing, Apple Pay, Google Pay, Contactless Tap-to-Pay, and automated daily deposit reconciliation.
    - Authorize.Net Vault (/integrations/authorize-net): High-volume merchant gateway, automated end-of-day batch settlements, customer card vaulting, and Advanced Fraud Detection (AFDS).
 
-6. Enterprise BI & Analytics (/products/analytics):
+6. Enterprise BI & Analytics (/features/analytics):
    - Consolidated cross-store revenue comparison, gross margin telemetry, and exportable financial reports (QuickBooks/Xero journal sync).
 
-7. Open APIs & ERP Sync (/products/integrations):
+7. Open APIs & ERP Sync (/features/integrations):
    - High-speed REST & Webhook APIs to connect enterprise ERPs (SAP, Oracle NetSuite) and accounting platforms.
 
 OFFICIAL PRICING TIERS (/pricing):
@@ -110,7 +110,7 @@ export function getSmartLocalResponse(query: string): { reply: string; isActiona
   // Multi-Location POS & Cloud HQ
   if (q.includes('multi-location') || q.includes('multi-store') || q.includes('hq') || q.includes('central') || q.includes('branch') || q.includes('chain')) {
     return {
-      reply: "Our Multi-Location POS (/products/enterprise-pos) allows you to control menus, prices, and staff permissions across 50+ branches in 1 click, with live branch revenue telemetry and central headquarters reporting.",
+      reply: "Our Multi-Location POS (/features/enterprise-pos) allows you to control menus, prices, and staff permissions across 50+ branches in 1 click, with live branch revenue telemetry and central headquarters reporting.",
       isActionable: true,
       actionType: 'BOOK_DEMO',
     };
@@ -119,7 +119,7 @@ export function getSmartLocalResponse(query: string): { reply: string; isActiona
   // Supply Chain & Warehouse
   if (q.includes('supply') || q.includes('warehouse') || q.includes('stock') || q.includes('inventory') || q.includes('transfer')) {
     return {
-      reply: "Our Supply Chain & Inventory module (/products/inventory) provides real-time stock visibility across all stores and warehouses, 1-click inter-branch transfers with audit trails, and automated purchase order reorder triggers.",
+      reply: "Our Supply Chain & Inventory module (/features/inventory) provides real-time stock visibility across all stores and warehouses, 1-click inter-branch transfers with audit trails, and automated purchase order reorder triggers.",
       isActionable: true,
       actionType: 'BOOK_DEMO',
     };
@@ -128,7 +128,7 @@ export function getSmartLocalResponse(query: string): { reply: string; isActiona
   // BI & Analytics
   if (q.includes('analytics') || q.includes('report') || q.includes('bi') || q.includes('data')) {
     return {
-      reply: "Our Enterprise BI & Analytics (/products/analytics) provides cross-store revenue comparisons, hourly traffic heatmaps, gross margin tracking, and financial journal exports to QuickBooks and Xero.",
+      reply: "Our Enterprise BI & Analytics (/features/analytics) provides cross-store revenue comparisons, hourly traffic heatmaps, gross margin tracking, and financial journal exports to QuickBooks and Xero.",
       isActionable: true,
       actionType: 'BOOK_DEMO',
     };

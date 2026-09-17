@@ -5,7 +5,7 @@ import { TestimonialDto, ApiTestimonialsResponse } from '../Types/TestimonialsTy
 export const testimonialsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getTestimonials: builder.query<TestimonialDto[], void>({
-      query: () => '/marketing/testimonials',
+      query: () => '/testimonials',
       transformResponse: (response: any) => {
         if (!response) return [];
         if (Array.isArray(response)) return response;

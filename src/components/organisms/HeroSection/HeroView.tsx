@@ -93,7 +93,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
           title: 'Multi-Store HQ Cloud Sync',
           body: 'Live 1-click catalog & price distribution across 50+ locations',
           kind: 'Update',
-          linkUrl: '/products/enterprise-pos',
+          linkUrl: '/features/enterprise-pos',
         },
         {
           announcementId: 'live-2',
@@ -489,7 +489,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
               </span>
             </div>
             <Link
-              href="/products"
+              href="/features"
               className="text-xs font-bold text-[#FF4F00] hover:underline flex items-center gap-1 shrink-0"
             >
               <span>View 7 Modules</span>

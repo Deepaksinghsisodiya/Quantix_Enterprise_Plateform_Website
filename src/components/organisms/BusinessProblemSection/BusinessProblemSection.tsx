@@ -197,7 +197,7 @@ export const BusinessProblemSection: React.FC = () => {
 
           {/* Right: High-Converting CTA Button */}
           <Link
-            href="/products"
+            href="/features"
             className="group relative z-10 flex w-full md:w-auto shrink-0 cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-xl bg-gradient-to-r from-[#FF4F00] via-[#FF5F1A] to-[#FF6B2B] px-6 sm:px-8 py-3.5 sm:py-4 font-syne text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-orange-500/35 transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/50 hover:brightness-110 active:scale-[0.98] whitespace-nowrap min-h-[48px]"
           >
             {/* Shimmer Light Bar */}

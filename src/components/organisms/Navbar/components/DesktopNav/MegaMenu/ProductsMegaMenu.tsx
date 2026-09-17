@@ -35,7 +35,7 @@ export const ProductsMegaMenu: React.FC<ProductsMegaMenuProps> = ({
               return (
                 <Link
                   key={idx}
-                  href={card.href || '/products'}
+                  href={card.href || '/features'}
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noopener noreferrer' : undefined}
                   onClick={onClose}

@@ -4,14 +4,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const host = process.env.NEXT_PUBLIC_APP_URL || 'https://www.quantix.com';
   const routes = [
     '',
-    '/products',
-    '/products/restaurant-pos',
-    '/products/retail-pos',
-    '/products/cloud-pos',
-    '/products/enterprise-pos',
-    '/products/websites',
-    '/products/mobile-application',
-    '/products/custom-service',
+    '/features',
+    '/features/restaurant-pos',
+    '/features/retail-pos',
+    '/features/cloud-pos',
+    '/features/enterprise-pos',
+    '/features/websites',
+    '/features/mobile-application',
+    '/features/custom-service',
     '/solutions',
     '/solutions/fine-dining',
     '/solutions/quick-service',
@@ -67,6 +67,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${host}${route}`,
     lastModified: new Date(),
     changeFrequency: route === '' ? 'daily' : 'weekly',
-    priority: route === '' ? 1.0 : route.startsWith('/products') ? 0.9 : 0.8,
+    priority: route === '' ? 1.0 : route.startsWith('/features') ? 0.9 : 0.8,
   }));
 }

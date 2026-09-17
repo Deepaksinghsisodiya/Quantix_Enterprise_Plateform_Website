@@ -1,4 +1,4 @@
-﻿import {
+import {
   Cloud,
   Layers,
   Monitor,
@@ -368,9 +368,7 @@ export const isPrimaryLinkActive = (link: { label: string; href: string }, pathn
   if (link.label === 'Features') {
     return (
       pathname === '/features' ||
-      pathname.startsWith('/features/') ||
-      pathname === '/products' ||
-      pathname.startsWith('/products/')
+      pathname.startsWith('/features/')
     );
   }
 

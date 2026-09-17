@@ -21,7 +21,7 @@ export const FALLBACK_ANNOUNCEMENTS: AnnouncementDto[] = [
     title: 'Cloud Dashboard 2.0 Launch',
     body: 'Real-time multi-store analytics, automated P&L reports, and AI-powered sales forecasting.',
     kind: 'News',
-    linkUrl: '/products/cloud-pos',
+    linkUrl: '/features/cloud-pos',
     sortOrder: 2,
     isActive: true,
     isPinned: false,

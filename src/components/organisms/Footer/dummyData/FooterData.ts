@@ -4,10 +4,10 @@ export const RESTAURANT_SITE_URL = process.env.NEXT_PUBLIC_RESTAURANT_URL || 'ht
 export const RETAIL_SITE_URL = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
 
 export const PRODUCT_LINKS: FooterLink[] = [
-  { href: "/products/cloud-pos", label: "Cloud POS" },
-  { href: "/products/enterprise-pos", label: "Enterprise Cloud HQ" },
-  { href: "/products/restaurant-pos", label: "Restaurant POS & KDS" },
-  { href: "/products/retail-pos", label: "Retail Register POS" },
+  { href: "/features/cloud-pos", label: "Cloud POS" },
+  { href: "/features/enterprise-pos", label: "Enterprise Cloud HQ" },
+  { href: "/features/restaurant-pos", label: "Restaurant POS & KDS" },
+  { href: "/features/retail-pos", label: "Retail Register POS" },
   { href: "/pricing", label: "Plans & Pricing" },
   { href: "/integrations", label: "Integrations Ecosystem" },
 ];

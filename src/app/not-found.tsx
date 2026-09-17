@@ -66,7 +66,7 @@ export default function NotFound() {
           </Link>
 
           <Link
-            href="/products"
+            href="/features"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-darkSurface border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 font-syne font-bold text-xs uppercase tracking-wider hover:border-primary/40 hover:text-primary transition-all hover:scale-105 active:scale-95"
           >
             <span>Explore Modules</span>
