@@ -16,7 +16,7 @@ export function getSecureCookieOptions(days?: number): Cookies.CookieAttributes 
   const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
 
   let domain: string | undefined = undefined;
-  if (hostname.endsWith('foreteksolution.in')) {
+  if (hostname.includes('foreteksolution.in')) {
     domain = '.foreteksolution.in';
   } else if (process.env.NEXT_PUBLIC_COOKIE_DOMAIN) {
     domain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN;

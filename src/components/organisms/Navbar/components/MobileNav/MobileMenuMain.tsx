@@ -20,6 +20,7 @@ import { MOBILE_MENU_SECTIONS, QUICK_MOBILE_TOOLS, isPrimaryLinkActive } from '.
 import type { MobileMenuSection, QuickMobileTool } from '../../config/navTypes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { logout } from '@/redux/slices/authSlice';
+import { removeCookie } from '@/lib/cookieUtils';
 import Cookies from 'js-cookie';
 import { toast } from 'sonner';
 import { useContactModal } from '@/context/ContactModalContext';
@@ -89,9 +90,9 @@ export const MobileMenuMain: React.FC<MobileMenuMainProps> = ({
 
   const handleLogout = () => {
     try {
-      Cookies.remove('accessToken');
-      Cookies.remove('refreshToken');
-      Cookies.remove('authUser');
+      removeCookie('accessToken');
+      removeCookie('refreshToken');
+      removeCookie('authUser');
       if (typeof window !== 'undefined') {
         localStorage.setItem('quantix_has_logged_out', 'true');
         setHasLoggedOut(true);

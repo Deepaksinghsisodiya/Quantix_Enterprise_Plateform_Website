@@ -4,7 +4,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { logout } from '@/redux/slices/authSlice';
-import Cookies from 'js-cookie';
+import { removeCookie } from '@/lib/cookieUtils';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useGetProfileQuery } from '../Service/ProfileService';
@@ -77,9 +77,9 @@ export const ProfileDropdown: React.FC = () => {
 
   const handleLogout = () => {
     try {
-      Cookies.remove('accessToken');
-      Cookies.remove('refreshToken');
-      Cookies.remove('authUser');
+      removeCookie('accessToken');
+      removeCookie('refreshToken');
+      removeCookie('authUser');
       if (typeof window !== 'undefined') {
         localStorage.setItem('quantix_has_logged_out', 'true');
       }

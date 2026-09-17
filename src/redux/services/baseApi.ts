@@ -52,12 +52,6 @@ const baseQueryWithReauth: BaseQueryFn<string | any, unknown, FetchBaseQueryErro
           api.dispatch(setCredentials({ token: newAccessToken, refreshToken: newRefreshToken }));
           result = await baseQuery(args, api, extraOptions);
         }
-      } else if (refreshResult.error && (refreshResult.error.status === 401 || refreshResult.error.status === 403)) {
-        // Only force logout if the refresh attempt explicitly fails with 401/403
-        removeCookie('accessToken');
-        removeCookie('refreshToken');
-        removeCookie('authUser');
-        api.dispatch(logout());
       }
     }
   }

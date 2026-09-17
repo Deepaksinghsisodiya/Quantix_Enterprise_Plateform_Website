@@ -97,6 +97,10 @@ export const LoginWrapper: React.FC = () => {
       const user = response.user || response.data?.user || { email, username: email.split('@')[0] };
 
       if (token) {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('quantix_has_logged_out');
+        }
+
         // Save live access token to secure cookies
         setSecureCookie('accessToken', token, values.remember ? 30 : 1);
         setSecureCookie('authUser', JSON.stringify(user), values.remember ? 30 : 1);

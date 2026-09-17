@@ -20,6 +20,29 @@ function AuthInitializer({ children }: { children: ReactNode }) {
     const ssoRefresh = urlParams.get("sso_refresh");
     const ssoUser = urlParams.get("sso_user");
 
+    // Function to re-sync auth state from cookies
+    const syncFromCookies = () => {
+      const token = Cookies.get("accessToken");
+      const refreshToken = Cookies.get("refreshToken");
+      const authUserCookie = Cookies.get("authUser");
+      let user = undefined;
+
+      if (authUserCookie) {
+        try {
+          user = JSON.parse(authUserCookie);
+        } catch {
+          user = undefined;
+        }
+      }
+
+      if (token) {
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("quantix_has_logged_out");
+        }
+        dispatch(setCredentials({ token, refreshToken, user }));
+      }
+    };
+
     if (ssoToken) {
       setSecureCookie("accessToken", ssoToken, 30);
       if (ssoRefresh) {
@@ -35,6 +58,9 @@ function AuthInitializer({ children }: { children: ReactNode }) {
         }
       }
 
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("quantix_has_logged_out");
+      }
       dispatch(setCredentials({ token: ssoToken, refreshToken: ssoRefresh || null, user }));
 
       // Clean SSO query parameters smoothly from the address bar
@@ -47,25 +73,21 @@ function AuthInitializer({ children }: { children: ReactNode }) {
       return;
     }
 
-    // 2. Local Cookie Hydration
-    const token = Cookies.get("accessToken");
-    const refreshToken = Cookies.get("refreshToken");
-    const authUserCookie = Cookies.get("authUser");
-    let user = undefined;
+    // 2. Local Cookie Hydration on initial mount
+    syncFromCookies();
 
-    if (authUserCookie) {
-      try {
-        user = JSON.parse(authUserCookie);
-      } catch {
-        user = undefined;
+    // 3. Keep in sync when user switches tabs or refocuses window
+    const handleFocus = () => syncFromCookies();
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        syncFromCookies();
       }
-    }
+    };
 
-    if (token) {
-      dispatch(setCredentials({ token, refreshToken, user }));
-    }
+    window.addEventListener("focus", handleFocus);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
-    // 3. Automatic cross-platform link SSO handover
+    // 4. Automatic cross-platform link SSO handover
     const handleCrossSiteClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest("a");
       if (!anchor || !anchor.href) return;
@@ -75,6 +97,9 @@ function AuthInitializer({ children }: { children: ReactNode }) {
         (href.includes("localhost:3000") ||
          href.includes("localhost:3001") ||
          href.includes("localhost:3002") ||
+         href.includes("possaaswebsite") ||
+         href.includes("quantixrestaurant") ||
+         href.includes("quantixretail") ||
          href.includes("foreteksolution.in")) &&
         !href.startsWith(window.location.origin);
 
@@ -99,7 +124,11 @@ function AuthInitializer({ children }: { children: ReactNode }) {
     };
 
     document.addEventListener("click", handleCrossSiteClick, { capture: true });
-    return () => document.removeEventListener("click", handleCrossSiteClick, { capture: true });
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      document.removeEventListener("click", handleCrossSiteClick, { capture: true });
+    };
   }, [dispatch]);
 
   return <>{children}</>;
