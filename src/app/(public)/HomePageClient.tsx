@@ -16,7 +16,6 @@ import SupportSection from "@/components/organisms/SupportSection/SupportSection
 
 import dynamic from "next/dynamic";
 
-const LazyCaseStudiesSection = dynamic(() => import("@/features/CaseStudies/components/CaseStudiesWrapper"), { ssr: false });
 const LazyTestimonialsSection = dynamic(() => import("@/features/Testimonials"), { ssr: false });
 const LazyFAQWrapper = dynamic(() => import("@/features/FAQ/components/FAQWrapper"), { ssr: false });
 
@@ -103,14 +102,7 @@ export default function HomePageClient() {
         <IntegrationsTickerSection />
       </section>
 
-      {/* 5. Case Studies & Quantified ROI Stories */}
-      <section id="case-studies" className={cn("scroll-mt-28 transition-colors duration-300")}>
-        <Suspense fallback={<ATMLoader fullScreen variant="spinner" size="lg" />}>
-          <LazyCaseStudiesSection />
-        </Suspense>
-      </section>
-
-      {/* 6. 24/7 Dedicated Enterprise Technical Support */}
+      {/* 5. 24/7 Dedicated Enterprise Technical Support */}
       <section id="support" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <SupportSection platformName="Quantix Enterprise" />
       </section>

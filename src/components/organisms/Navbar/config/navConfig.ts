@@ -182,7 +182,6 @@ export const WHY_QUANTIX_MEGA_CONFIG: MegaMenuSectionData = {
       categoryTitle: 'COMPARE & EVALUATE',
       items: [
         { title: 'Enterprise vs Standalone', desc: 'Multi-store cloud HQ vs single isolated till', href: '/enterprise-vs-standalone', icon: Building2, iconColor: 'text-blue-500' },
-        { title: 'Competitor Comparisons', desc: 'Why leading brands switch from Toast, Square & Clover', href: '/compare', icon: FileSpreadsheet, iconColor: 'text-purple-500' },
         { title: 'ROI Savings Calculator', desc: 'Calculate your annual processing & hardware savings', href: '/roi-calculator', icon: Calculator, iconColor: 'text-amber-500' },
       ],
     },
@@ -291,7 +290,6 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
         title: 'ROI & EVALUATION',
         items: [
           { title: 'Enterprise vs Standalone', desc: 'Multi-store vs single till', href: '/enterprise-vs-standalone', icon: Building2 },
-          { title: 'Competitor Comparisons', desc: 'Why switch from Toast/Square', href: '/compare', icon: FileSpreadsheet },
           { title: 'ROI Savings Calculator', desc: 'Calculate annual savings', href: '/roi-calculator', icon: Calculator },
           { title: 'Case Studies & Stories', desc: 'Real customer ROI results', href: '/case-studies', icon: BarChart3 },
           { title: 'Customer Testimonials', desc: 'Operator reviews & ratings', href: '/testimonials', icon: Star },
@@ -340,7 +338,6 @@ export const isPrimaryLinkActive = (link: { label: string; href: string }, pathn
     const whyQuantixRoutes = [
       '/why-quantix',
       '/enterprise-vs-standalone',
-      '/compare',
       '/roi-calculator',
       '/case-studies',
       '/testimonials',

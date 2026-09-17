@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { AlertTriangle, Layers, TrendingDown, ArrowRight, CheckCircle2, ShieldAlert } from "lucide-react";
+import { AlertTriangle, Layers, TrendingDown, ArrowRight, CheckCircle2, ShieldAlert, Zap } from "lucide-react";
 
 export const BusinessProblemSection: React.FC = () => {
   const problems = [
@@ -16,6 +16,10 @@ export const BusinessProblemSection: React.FC = () => {
       description:
         "One location is completely stocked out of bestsellers while another branch holds surplus stock that gathers dust and expires.",
       impact: "Lost revenue, high food waste & inventory shrinkage",
+      fix: [
+        "Multi-Store Auto-Dispatch & Stock Rebalancing Engine",
+        "1-Tap Inter-Branch Warehouse Transfer & GRN Audit",
+      ],
     },
     {
       num: "02",
@@ -26,6 +30,10 @@ export const BusinessProblemSection: React.FC = () => {
       description:
         "Headquarters has to manually update price changes, menu modifiers, and promotional rules location by location across disconnected tills.",
       impact: "Human errors, pricing inconsistencies & margin erosion",
+      fix: [
+        "Centralized 1-Click Menu & Price Push Across All Outlets",
+        "Real-Time Modifier, Combo & Promo Sync to Every Till",
+      ],
     },
     {
       num: "03",
@@ -36,6 +44,10 @@ export const BusinessProblemSection: React.FC = () => {
       description:
         "Executive teams wait days or weeks for end-of-month spreadsheets from individual stores rather than seeing live sales telemetry as it happens.",
       impact: "Slow decision making & zero visibility on labor margins",
+      fix: [
+        "Live Hourly Sales & Financial Telemetry BI Dashboard",
+        "Automated Multi-Location P&L, Labor & Waste Analytics",
+      ],
     },
   ];
 
@@ -158,6 +170,34 @@ export const BusinessProblemSection: React.FC = () => {
                     <p className="text-xs font-semibold leading-snug text-rose-950 dark:text-rose-200">
                       {prob.impact}
                     </p>
+                  </div>
+                </div>
+
+                {/* ✅ Quantix Resolution Strip (Green Contrast) */}
+                <div className="relative z-10 mt-3 rounded-xl sm:rounded-2xl border border-emerald-200/80 dark:border-emerald-900/50 bg-gradient-to-br from-emerald-50/90 via-green-50/40 to-white dark:from-emerald-950/40 dark:via-slate-900/60 dark:to-emerald-950/20 p-3 sm:p-4 transition-colors shadow-sm">
+                  {/* Resolution Micro Header */}
+                  <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 pb-2 border-b border-emerald-200/60 dark:border-emerald-900/40">
+                    <div className="flex items-center gap-1.5">
+                      <Zap size={12} className="text-emerald-600 dark:text-emerald-400" />
+                      <span>QUANTIX RESOLUTION</span>
+                    </div>
+                    <span className="text-[9px] font-mono font-black tracking-widest bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 px-1.5 py-0.5 rounded">
+                      SOLVED
+                    </span>
+                  </div>
+
+                  {/* Fix Items */}
+                  <div className="mt-2 space-y-1.5">
+                    {prob.fix.map((fixItem, fixIdx) => (
+                      <div key={fixIdx} className="flex items-start gap-2">
+                        <div className="mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-emerald-500/20">
+                          <CheckCircle2 size={10} className="text-emerald-600 dark:text-emerald-400" />
+                        </div>
+                        <p className="text-xs font-semibold leading-snug text-emerald-950 dark:text-emerald-200">
+                          {fixItem}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </motion.div>

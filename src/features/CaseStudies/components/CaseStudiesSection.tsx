@@ -1,12 +1,13 @@
-// src/features/CaseStudies/components/CaseStudiesSection.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { CaseStudyDto } from '../Types/CaseStudiesTypes';
+import { DEFAULT_CASE_STUDIES } from '../constants/defaultCaseStudies';
 import { CaseStudyCard } from './CaseStudyCard';
-import { TrendingUp, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import { TrendingUp, ArrowRight, Sparkles, ChevronLeft, ChevronRight, Utensils, Store, Building2, Layers } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export interface CaseStudiesSectionProps {
   studies?: CaseStudyDto[];
@@ -14,21 +15,58 @@ export interface CaseStudiesSectionProps {
   hideHeader?: boolean;
 }
 
+const CATEGORY_TABS = [
+  { id: 'all', label: 'All Industries', icon: Sparkles },
+  { id: 'restaurant', label: 'Restaurants & QSR', icon: Utensils },
+  { id: 'retail', label: 'Retail & Supermarkets', icon: Store },
+  { id: 'hospitality', label: 'Hospitality & Bars', icon: Building2 },
+];
+
 export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
   studies = [],
   isLoading = false,
   hideHeader = false,
 }) => {
-  // Only live API studies — no dummy fallback data
-  const displayStudies = studies;
+  // Use real API studies when available, fallback to rich verified default data
+  const rawStudies = studies && studies.length > 0 ? studies : DEFAULT_CASE_STUDIES;
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  const displayStudies = useMemo(() => {
+    if (selectedCategory === 'all') return rawStudies;
+    if (selectedCategory === 'restaurant') {
+      return rawStudies.filter(
+        (s) =>
+          s.industry.toLowerCase().includes('restaurant') ||
+          s.industry.toLowerCase().includes('qsr') ||
+          s.industry.toLowerCase().includes('dining')
+      );
+    }
+    if (selectedCategory === 'retail') {
+      return rawStudies.filter(
+        (s) =>
+          s.industry.toLowerCase().includes('retail') ||
+          s.industry.toLowerCase().includes('grocery') ||
+          s.industry.toLowerCase().includes('market')
+      );
+    }
+    if (selectedCategory === 'hospitality') {
+      return rawStudies.filter(
+        (s) =>
+          s.industry.toLowerCase().includes('hospitality') ||
+          s.industry.toLowerCase().includes('bars') ||
+          s.industry.toLowerCase().includes('venues')
+      );
+    }
+    return rawStudies;
+  }, [rawStudies, selectedCategory]);
 
   // Mobile carousel state (1 card at a time)
   const [mobileIdx, setMobileIdx] = useState<number>(0);
   const [direction, setDirection] = useState<number>(0);
 
-  // Desktop pagination state (3 cards per page if > 3 studies)
+  // Desktop pagination state
   const [desktopPage, setDesktopPage] = useState<number>(0);
-  const desktopPageSize = 3;
+  const desktopPageSize = 6;
   const totalDesktopPages = Math.ceil(displayStudies.length / desktopPageSize);
   const desktopStart = desktopPage * desktopPageSize;
   const currentDesktopStudies = displayStudies.slice(desktopStart, desktopStart + desktopPageSize);
@@ -42,10 +80,6 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
     setDirection(-1);
     setMobileIdx((prev) => (prev > 0 ? prev - 1 : displayStudies.length - 1));
   };
-
-  if (!isLoading && displayStudies.length === 0) {
-    return null;
-  }
 
   return (
     <section
@@ -104,6 +138,34 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
             ))}
           </div>
         )}
+
+        {/* Industry Category Filter Pills */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8 sm:mb-10">
+          {CATEGORY_TABS.map((tab) => {
+            const Icon = tab.icon;
+            const isSelected = selectedCategory === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => {
+                  setSelectedCategory(tab.id);
+                  setDesktopPage(0);
+                  setMobileIdx(0);
+                }}
+                className={cn(
+                  "inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-[13px] font-syne font-bold transition-all duration-200 cursor-pointer shadow-2xs",
+                  isSelected
+                    ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md scale-105"
+                    : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-slate-800 hover:border-orange-500/40 hover:text-primary"
+                )}
+              >
+                <Icon className={cn("w-3.5 h-3.5 stroke-[2.2]", isSelected ? "text-orange-400 dark:text-orange-600" : "text-slate-400")} />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
 
         {/* ======================================================= */}
         {/* DESKTOP VIEW (>= md): Clean 2 or 3-Column Paginated Grid */}

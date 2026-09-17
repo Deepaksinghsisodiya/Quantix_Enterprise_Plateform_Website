@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const host = process.env.NEXT_PUBLIC_APP_URL || 'https://www.quantix.com';
+  const host = process.env.NEXT_PUBLIC_APP_URL || 'https://possaaswebsite.foreteksolutions.in';
   const routes = [
     '',
     '/features',

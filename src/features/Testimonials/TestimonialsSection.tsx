@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { ChevronLeft, ChevronRight, Building2, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Building2, Star, ArrowRight, BarChart3 } from "lucide-react";
 import { TestimonialDto } from "./Types/TestimonialsTypes";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -294,6 +295,21 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
             >
               <ChevronRight size={16} />
             </button>
+          </div>
+
+          {/* Link to Full Case Studies Page */}
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-center pt-6 border-t border-slate-200/70 dark:border-slate-800/80">
+            <span className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400">
+              Looking for quantified enterprise ROI and real financial breakdowns?
+            </span>
+            <Link
+              href="/case-studies"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-primary hover:text-primary-dark underline-offset-4 hover:underline transition-colors group"
+            >
+              <BarChart3 className="w-4 h-4 text-primary" />
+              <span>Explore All Case Studies & Stories</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+            </Link>
           </div>
         </div>
       </div>

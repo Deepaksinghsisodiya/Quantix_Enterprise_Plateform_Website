@@ -16,15 +16,12 @@ import {
   ShieldCheck,
   CheckCircle2,
   Layers,
-  Newspaper,
   ExternalLink,
   Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { HeroSlide } from './HeroData';
 import { useContactModal } from '@/context/ContactModalContext';
-import { useGetAnnouncementsQuery } from '@/features/Announcements';
-import { HeroNewsTickerSkeleton } from '@/components/atoms';
 import { useAppSelector } from '@/redux/hooks';
 import Cookies from 'js-cookie';
 
@@ -82,34 +79,6 @@ export const HeroView: React.FC<HeroViewProps> = ({
     );
   };
 
-  const { data: announcementsData, isLoading: isAnnouncementsLoading } =
-    useGetAnnouncementsQuery();
-  const announcements =
-    announcementsData && announcementsData.length > 0
-      ? announcementsData.filter((a) => a.isActive !== false)
-      : [
-        {
-          announcementId: 'live-1',
-          title: 'Multi-Store HQ Cloud Sync',
-          body: 'Live 1-click catalog & price distribution across 50+ locations',
-          kind: 'Update',
-          linkUrl: '/features/enterprise-pos',
-        },
-        {
-          announcementId: 'live-2',
-          title: 'Zero-Latency Offline Till Mesh',
-          body: 'Keep billing and printing receipts during local broadband outages',
-          kind: 'Notice',
-          linkUrl: '/resources/pos-guide',
-        },
-        {
-          announcementId: 'live-3',
-          title: 'Bring Your Own Processor',
-          body: 'Zero variable surcharge on payment processing volume',
-          kind: 'Event',
-          linkUrl: '/compare',
-        },
-      ];
 
   const formatHeading = (heading: string) => {
     const words = heading.split(' ');
@@ -287,63 +256,6 @@ export const HeroView: React.FC<HeroViewProps> = ({
                     <ArrowRight size={14} className="transition-transform group-hover:translate-x-1 shrink-0" />
                   </motion.button>
                 </motion.div>
-
-                {/* News / Announcements Ticker */}
-                {announcements.length > 0 && (
-                  <div className="w-full mt-2 relative flex items-center rounded-xl border border-slate-200/80 bg-slate-50/80 dark:border-slate-800 dark:bg-slate-900/60 p-1.5 shadow-2xs overflow-hidden backdrop-blur-xs min-h-10">
-                    <div className="relative z-20 flex items-center justify-center gap-1.5 shrink-0 rounded-lg bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-xs select-none">
-                      <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-80"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                      </span>
-                      <Newspaper size={12} className="shrink-0 text-white" />
-                      <span>Updates</span>
-                    </div>
-
-                    <div className="pointer-events-none absolute left-[88px] top-0 bottom-0 w-6 bg-gradient-to-r from-slate-50 dark:from-slate-900 to-transparent z-10" />
-                    <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-slate-50 dark:from-slate-900 to-transparent z-10" />
-
-                    {isAnnouncementsLoading ? (
-                      <HeroNewsTickerSkeleton />
-                    ) : (
-                      <div className="min-w-0 flex-1 overflow-hidden ml-2">
-                        <div className="flex w-max shrink-0 animate-[heroTickerScroll_85s_linear_infinite] hover:[animation-play-state:paused] items-center gap-6 text-[11px] font-medium text-slate-700 dark:text-slate-300 select-none">
-                          {[1, 2].map((group) => (
-                            <div key={group} className="flex items-center gap-6 shrink-0">
-                              {announcements.map((item, idx) => (
-                                <React.Fragment key={`${group}-${item.announcementId || idx}`}>
-                                  <div className="inline-flex items-center gap-1.5">
-                                    <span
-                                      className={cn(
-                                        'inline-block rounded-md px-1.5 py-0.5 text-[9.5px] font-black uppercase tracking-wider',
-                                        item.kind === 'Event'
-                                          ? 'bg-purple-500/10 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400'
-                                          : item.kind === 'Notice'
-                                            ? 'bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400'
-                                            : 'bg-orange-500/10 text-orange-600 dark:bg-orange-500/20 dark:text-orange-400'
-                                      )}
-                                    >
-                                      {item.kind === 'Notice' ? 'Offer' : item.kind === 'Event' ? 'Event' : 'Update'}
-                                    </span>
-                                    <span className="font-semibold text-slate-800 dark:text-slate-200">
-                                      {item.title}
-                                    </span>
-                                    {item.body && (
-                                      <span className="text-slate-500 dark:text-slate-400 hidden sm:inline">
-                                        — {item.body}
-                                      </span>
-                                    )}
-                                  </div>
-                                  <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
-                                </React.Fragment>
-                              ))}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
               </motion.div>
             </AnimatePresence>
           </div>
@@ -497,54 +409,104 @@ export const HeroView: React.FC<HeroViewProps> = ({
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 pt-2.5 sm:grid-cols-4">
-            <motion.div
-              whileHover={{ y: -2, scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-              className="flex items-center gap-2 rounded-xl bg-white p-2.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 shadow-2xs hover:border-orange-500/30 transition-colors cursor-default"
-            >
-              <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
-              <div className="truncate">
-                <p className="text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200">POS & Cloud HQ</p>
-                <p className="text-[9.5px] text-slate-500 dark:text-slate-400 truncate">Central store control</p>
-              </div>
-            </motion.div>
+          <div className="grid grid-cols-2 gap-2 pt-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+            <Link href="/features/cloud-pos" className="block">
+              <motion.div
+                whileHover={{ y: -2, scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                className="flex items-center gap-2 rounded-xl bg-white p-2.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 shadow-2xs hover:border-orange-500/40 transition-colors h-full"
+              >
+                <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+                <div className="truncate">
+                  <p className="text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200">POS</p>
+                  <p className="text-[9.5px] text-slate-500 dark:text-slate-400 truncate">Fast orders & checkout</p>
+                </div>
+              </motion.div>
+            </Link>
 
-            <motion.div
-              whileHover={{ y: -2, scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-              className="flex items-center gap-2 rounded-xl bg-white p-2.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 shadow-2xs hover:border-orange-500/30 transition-colors cursor-default"
-            >
-              <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
-              <div className="truncate">
-                <p className="text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200">Inventory & COGS</p>
-                <p className="text-[9.5px] text-slate-500 dark:text-slate-400 truncate">Cross-store transfers</p>
-              </div>
-            </motion.div>
+            <Link href="/features/enterprise-pos" className="block">
+              <motion.div
+                whileHover={{ y: -2, scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                className="flex items-center gap-2 rounded-xl bg-white p-2.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 shadow-2xs hover:border-orange-500/40 transition-colors h-full"
+              >
+                <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+                <div className="truncate">
+                  <p className="text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200">Cloud HQ</p>
+                  <p className="text-[9.5px] text-slate-500 dark:text-slate-400 truncate">Central store control</p>
+                </div>
+              </motion.div>
+            </Link>
 
-            <motion.div
-              whileHover={{ y: -2, scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-              className="flex items-center gap-2 rounded-xl bg-white p-2.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 shadow-2xs hover:border-orange-500/30 transition-colors cursor-default"
-            >
-              <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
-              <div className="truncate">
-                <p className="text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200">Online & Mobile</p>
-                <p className="text-[9.5px] text-slate-500 dark:text-slate-400 truncate">Web orders & BOPIS</p>
-              </div>
-            </motion.div>
+            <Link href="/features/inventory" className="block">
+              <motion.div
+                whileHover={{ y: -2, scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                className="flex items-center gap-2 rounded-xl bg-white p-2.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 shadow-2xs hover:border-orange-500/40 transition-colors h-full"
+              >
+                <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+                <div className="truncate">
+                  <p className="text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200">Inventory</p>
+                  <p className="text-[9.5px] text-slate-500 dark:text-slate-400 truncate">Stock & transfers</p>
+                </div>
+              </motion.div>
+            </Link>
 
-            <motion.div
-              whileHover={{ y: -2, scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-              className="flex items-center gap-2 rounded-xl bg-white p-2.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 shadow-2xs hover:border-orange-500/30 transition-colors cursor-default"
-            >
-              <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
-              <div className="truncate">
-                <p className="text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200">BI & Payments</p>
-                <p className="text-[9.5px] text-slate-500 dark:text-slate-400 truncate">Real-time telemetry</p>
-              </div>
-            </motion.div>
+            <Link href="/features/omnichannel" className="block">
+              <motion.div
+                whileHover={{ y: -2, scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                className="flex items-center gap-2 rounded-xl bg-white p-2.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 shadow-2xs hover:border-orange-500/40 transition-colors h-full"
+              >
+                <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+                <div className="truncate">
+                  <p className="text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200">Online Orders</p>
+                  <p className="text-[9.5px] text-slate-500 dark:text-slate-400 truncate">Web, mobile & BOPIS</p>
+                </div>
+              </motion.div>
+            </Link>
+
+            <Link href="/features/analytics" className="block">
+              <motion.div
+                whileHover={{ y: -2, scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                className="flex items-center gap-2 rounded-xl bg-white p-2.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 shadow-2xs hover:border-orange-500/40 transition-colors h-full"
+              >
+                <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+                <div className="truncate">
+                  <p className="text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200">Analytics</p>
+                  <p className="text-[9.5px] text-slate-500 dark:text-slate-400 truncate">Real-time telemetry</p>
+                </div>
+              </motion.div>
+            </Link>
+
+            <Link href="/pricing" className="block">
+              <motion.div
+                whileHover={{ y: -2, scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                className="flex items-center gap-2 rounded-xl bg-white p-2.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 shadow-2xs hover:border-orange-500/40 transition-colors h-full"
+              >
+                <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+                <div className="truncate">
+                  <p className="text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200">Payments</p>
+                  <p className="text-[9.5px] text-slate-500 dark:text-slate-400 truncate">Integrated processing</p>
+                </div>
+              </motion.div>
+            </Link>
+
+            <Link href="/integrations" className="block col-span-2 min-[540px]:col-span-1">
+              <motion.div
+                whileHover={{ y: -2, scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                className="flex items-center gap-2 rounded-xl bg-white p-2.5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 shadow-2xs hover:border-orange-500/40 transition-colors h-full"
+              >
+                <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+                <div className="truncate">
+                  <p className="text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200">Integrations</p>
+                  <p className="text-[9.5px] text-slate-500 dark:text-slate-400 truncate">ERP & ecosystem</p>
+                </div>
+              </motion.div>
+            </Link>
           </div>
         </div>
 

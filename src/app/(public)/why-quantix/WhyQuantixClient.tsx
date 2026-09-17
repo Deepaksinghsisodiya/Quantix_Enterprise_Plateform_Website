@@ -56,31 +56,35 @@ const PILLARS = [
     ),
   },
   {
-    id: 'compare',
+    id: 'case-studies',
     num: '02',
-    title: 'Competitor Comparisons',
-    badge: 'UNBIASED MATRIX',
-    desc: 'See how Quantix stacks up against Toast, Square, Clover, and Lightspeed with zero proprietary hardware lock-in.',
-    icon: FileSpreadsheet,
-    href: '/compare',
-    linkText: 'View POS Comparisons',
-    color: { icon: '#7C3AED', iconBg: '#F5F3FF', iconBorder: '#DDD6FE', badge: '#6D28D9', badgeBg: '#F5F3FF', indicator: '#8B5CF6', statColor: '#5B21B6' },
-    points: ['Flat 2.4% + 10¢ processing', 'No proprietary terminals', 'Sub-second barcode scanning'],
-    stats: [{ v: '2.4%', l: 'Flat Rate' }, { v: '$0', l: 'Lock-in Fee' }, { v: '1-Day', l: 'Migration' }],
+    title: 'Customer Case Studies & ROI',
+    badge: 'PROVEN OUTCOMES',
+    desc: 'Discover authentic transformations from 120+ outlet restaurant groups and retail chains achieving quantified ROI.',
+    icon: BarChart3,
+    href: '/case-studies',
+    linkText: 'Explore Case Studies',
+    color: { icon: '#059669', iconBg: '#ECFDF5', iconBorder: '#A7F3D0', badge: '#047857', badgeBg: '#ECFDF5', indicator: '#10B981', statColor: '#065F46' },
+    points: ['$1.4M annual inventory savings', '64% shrinkage reduction', '48h per store rollout'],
+    stats: [{ v: '$1.4M+', l: 'Max Saved' }, { v: '-64%', l: 'Shrinkage' }, { v: '48h', l: 'Rollout Speed' }],
     preview: (
-      <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-700">
-          <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">POS Comparison</span>
-          <span className="text-[9px] font-bold bg-green-900/50 text-green-400 px-2 py-0.5 rounded-md border border-green-700/50">Live Data</span>
+      <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-mono text-emerald-400 font-bold uppercase">FoodFlow Group (120 Outlets)</span>
+          <span className="text-[9px] font-bold bg-emerald-900/50 text-emerald-300 px-2 py-0.5 rounded border border-emerald-700/50">Verified ROI</span>
         </div>
-        <div className="divide-y divide-slate-700">
-          <div className="flex items-center justify-between px-4 py-3 bg-green-900/20">
-            <span className="text-xs font-bold text-green-300">✓ Quantix POS</span>
-            <span className="text-xs font-semibold text-green-400">2.4% + 10¢ · No Lock-in</span>
+        <p className="text-xs text-slate-300 font-medium leading-relaxed">
+          Zero database desync during Friday peak dinner rush with offline till mesh and instant KDS station routing.
+        </p>
+        <div className="flex items-center gap-3 pt-1 border-t border-slate-700/60">
+          <div>
+            <span className="text-sm font-syne font-black text-emerald-400">+$1.4M</span>
+            <span className="text-[9px] font-mono text-slate-400 ml-1">Saved / yr</span>
           </div>
-          <div className="flex items-center justify-between px-4 py-3 opacity-40">
-            <span className="text-xs text-slate-400 line-through">Legacy POS</span>
-            <span className="text-xs text-slate-500 line-through">3.2% + forced fees</span>
+          <div className="h-3 w-px bg-slate-700" />
+          <div>
+            <span className="text-sm font-syne font-black text-white">99.99%</span>
+            <span className="text-[9px] font-mono text-slate-400 ml-1">Cloud SLA</span>
           </div>
         </div>
       </div>

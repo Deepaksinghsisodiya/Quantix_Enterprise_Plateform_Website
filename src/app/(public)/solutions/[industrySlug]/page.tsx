@@ -548,6 +548,14 @@ const INDUSTRIES_DATA: Record<string, IndustrySolution> = {
   },
 };
 
+const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
+  "qsr": "quick-service",
+  "retail": "fashion-retail",
+  "dining": "restaurants",
+  "bakery": "cafes",
+  "supermarket": "grocery",
+};
+
 export function generateStaticParams() {
   return Object.keys(INDUSTRIES_DATA).map((industrySlug) => ({ industrySlug }));
 }
@@ -558,7 +566,8 @@ export async function generateMetadata({
   params: Promise<{ industrySlug: string }>;
 }): Promise<Metadata> {
   const { industrySlug } = await params;
-  const industry = INDUSTRIES_DATA[industrySlug];
+  const canonicalSlug = INDUSTRY_SLUG_ALIASES[industrySlug] || industrySlug;
+  const industry = INDUSTRIES_DATA[canonicalSlug];
   if (!industry) {
     return { title: "Solutions | Quantix Enterprise" };
   }
@@ -579,7 +588,8 @@ export default async function IndustrySolutionPage({
     notFound();
   }
 
-  let industry = INDUSTRIES_DATA[industrySlug];
+  const canonicalSlug = INDUSTRY_SLUG_ALIASES[industrySlug] || industrySlug;
+  let industry = INDUSTRIES_DATA[canonicalSlug];
   if (!industry) {
     industry = {
       slug: industrySlug,

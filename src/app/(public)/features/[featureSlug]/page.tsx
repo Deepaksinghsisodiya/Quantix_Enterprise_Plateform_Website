@@ -1,4 +1,4 @@
-﻿// src/app/(public)/features/[featureSlug]/page.tsx
+// src/app/(public)/features/[featureSlug]/page.tsx
 "use client";
 
 import React from "react";
@@ -1362,6 +1362,18 @@ const FEATURES_DATA: Record<string, FeatureData> = {
 
 // Aliases mapping legacy or alternative feature slugs to canonical pages
 const SLUG_ALIASES: Record<string, string> = {
+  // Core Platform & Navigation Slugs
+  "cloud-pos": "offline-registers",
+  "enterprise-pos": "multi-store",
+  "inventory": "smart-inventory",
+  "omnichannel": "online-ordering",
+  "analytics": "bi-analytics",
+  "mobile-pos": "self-service-kiosk",
+  "restaurant-pos": "table-management",
+  "retail-pos": "supply-chain",
+  "payments": "secure-payments",
+
+  // Specialized Workflows
   "kitchen-kds": "kitchen-display",
   "offline-mesh": "offline-registers",
   "security-sso": "secure-payments",
@@ -1373,6 +1385,14 @@ const SLUG_ALIASES: Record<string, string> = {
   "dual-pricing": "secure-payments",
   "open-api": "multi-store",
   "sla-support": "multi-store",
+  "integrations": "multi-store",
+  "hardware": "offline-registers",
+  "reporting": "bi-analytics",
+  "pos": "offline-registers",
+  "mobile": "self-service-kiosk",
+  "table": "table-management",
+  "kitchen": "kitchen-display",
+  "kds": "kitchen-display",
 };
 
 const motionTransition = { duration: 0.55, ease: [0.16, 1, 0.3, 1] as const };
@@ -1695,11 +1715,7 @@ export default function FeatureDetailPage() {
   const params = useParams();
   const featureSlug = params.featureSlug as string;
   const canonicalSlug = SLUG_ALIASES[featureSlug] || featureSlug;
-  const feature = FEATURES_DATA[canonicalSlug];
-
-  if (!feature) {
-    notFound();
-  }
+  const feature = FEATURES_DATA[canonicalSlug] || FEATURES_DATA["multi-store"];
 
   const heroVisual = feature.visual;
 

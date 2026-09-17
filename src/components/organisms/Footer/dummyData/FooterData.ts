@@ -5,33 +5,34 @@ export const RETAIL_SITE_URL = process.env.NEXT_PUBLIC_RETAIL_URL || 'http://loc
 
 export const PRODUCT_LINKS: FooterLink[] = [
   { href: "/features/cloud-pos", label: "Cloud POS" },
-  { href: "/features/enterprise-pos", label: "Enterprise Cloud HQ" },
-  { href: "/features/restaurant-pos", label: "Restaurant POS & KDS" },
-  { href: "/features/retail-pos", label: "Retail Register POS" },
-  { href: "/pricing", label: "Plans & Pricing" },
+  { href: "/features/enterprise-pos", label: "Cloud HQ (Centralized)" },
+  { href: "/features/inventory", label: "Inventory & COGS" },
+  { href: "/features/omnichannel", label: "Online & Mobile Ordering" },
+  { href: "/features/analytics", label: "Real-Time BI & Analytics" },
+  { href: "/pricing", label: "Payments & Pricing" },
   { href: "/integrations", label: "Integrations Ecosystem" },
 ];
 
 export const INDUSTRY_LINKS: FooterLink[] = [
-  { href: "/solutions/restaurants", label: "Full-Service Dining" },
+  { href: "/solutions/restaurants", label: "Restaurants & Dining" },
   { href: "/solutions/qsr", label: "Quick-Service (QSR)" },
-  { href: "/solutions/fashion-retail", label: "Retail & Boutiques" },
+  { href: "/solutions/retail", label: "Retail & Boutiques" },
   { href: "/solutions/grocery", label: "Grocery & Supermarkets" },
   { href: "/solutions/franchise", label: "Multi-Store Franchises" },
 ];
 
 export const COMPANY_LINKS: FooterLink[] = [
-  { href: "/help/getting-started", label: "POS Implementation Guide" },
+  { href: "/resources/pos-guide", label: "Enterprise POS Guide" },
   { href: "/blog", label: "Resource Hub & Blog", badge: "Live" },
   { href: "/case-studies", label: "Customer Case Studies" },
   { href: "/roi-calculator", label: "ROI Savings Calculator" },
-  { href: "/downloads", label: "Cloud Apps & Desktop Clients" },
+  { href: "/downloads", label: "Desktop & Mobile Apps" },
 ];
 
 export const LEGAL_LINKS: FooterLink[] = [
   { href: "/about", label: "About Quantix" },
+  { href: "/why-quantix", label: "Why Quantix" },
   { href: "/contact", label: "Contact Enterprise Sales" },
-  { href: "/compare", label: "Compare Platforms" },
   { href: "/help", label: "24/7 Technical Support" },
   { href: "/status", label: "Live System Status" },
 ];
