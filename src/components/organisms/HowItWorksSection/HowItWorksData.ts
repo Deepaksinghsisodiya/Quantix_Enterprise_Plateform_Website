@@ -1,4 +1,4 @@
-﻿export interface HowItWorksStep {
+export interface HowItWorksStep {
   number: string;
   badgeLabel: string;
   badgeIconName: "reach" | "process" | "delivery";
@@ -25,8 +25,8 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     badgeLabel: "Step 01 — Connect",
     badgeIconName: "reach",
     badgeColor: "bg-orange-500/10 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border-orange-500/25",
-    title: "Connect Enterprise Nodes & Catalogs",
-    description: "Plug in dual-screen tills, barcode scanners, and import multi-store catalogs, price tiers, and inventory ledgers with zero downtime.",
+    title: "Connect Your Systems",
+    description: "Connect your existing POS, ERP, payments, CRM and business systems with zero downtime and automated catalog migration.",
     imageSrc: "/images/ent_bi_analytics_bundle_v2.png",
     imageAlt: "Connect enterprise terminals and sync catalogs",
     bullets: [
@@ -55,8 +55,8 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     badgeLabel: "Step 02 — Configure",
     badgeIconName: "process",
     badgeColor: "bg-amber-500/10 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400 border-amber-500/25",
-    title: "Configure Multi-Store Routing & Controls",
-    description: "Set up automated commissary reorder triggers, offline LAN mesh failover, role-based cashier permissions, and regional tax groups.",
+    title: "Configure Your Organization",
+    description: "Set up locations, menus, pricing, permissions, taxes and inventory rules centrally from Cloud HQ.",
     imageSrc: "/images/nav_cloud_bundle_v2.png",
     imageAlt: "Configure franchise rules, mesh routing, and security permissions",
     bullets: [
@@ -82,11 +82,11 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
   },
   {
     number: "03",
-    badgeLabel: "Step 03 — Operate",
+    badgeLabel: "Step 03 — Launch",
     badgeIconName: "delivery",
     badgeColor: "bg-emerald-500/10 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 border-emerald-500/25",
-    title: "Deploy Fleet & Monitor Central Cloud HQ",
-    description: "Execute lightning-fast transactions across 500+ terminals, maintain continuous offline sales, and track real-time telemetry from Cloud HQ.",
+    title: "Launch Across Your Network",
+    description: "Deploy POS to your locations and manage your entire operation from Cloud HQ. Our team handles the rollout with you.",
     imageSrc: "/images/ent_global_pos_bundle.png",
     imageAlt: "Monitor global sales velocity and real-time cloud operations",
     bullets: [

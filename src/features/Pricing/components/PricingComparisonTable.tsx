@@ -113,9 +113,9 @@ export const PricingComparisonTable: React.FC = () => {
   };
 
   return (
-    <div className="mt-20 sm:mt-32 max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto">
       {/* Title */}
-      <div className="text-center mb-8 sm:mb-12">
+      <div className="text-center mb-6 sm:mb-10">
         <div className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-3 shadow-2xs">
           <Layers size={13} className="text-[#FF4D00]" />
           DETAILED FEATURE MATRIX

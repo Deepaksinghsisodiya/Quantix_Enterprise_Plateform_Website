@@ -100,6 +100,12 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
           <p className="mx-auto mt-2 sm:mt-3 max-w-2xl text-xs sm:text-sm md:text-base font-normal leading-relaxed text-slate-600 dark:text-slate-400">
             Configure your catalog, pair hardware terminals, and orchestrate real-time multi-location sales from one connected platform.
           </p>
+
+          {/* Implementation Reassurance Pill (Blueprint Section 7) */}
+          <div className="mt-3.5 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-500/15 px-3 py-1 text-[11px] sm:text-xs font-semibold text-emerald-700 dark:text-emerald-300 shadow-2xs">
+            <ShieldCheck size={13} className="text-emerald-500 shrink-0" />
+            <span>Dedicated Onboarding Reassurance: Our team handles migration and rollout with you.</span>
+          </div>
         </div>
 
         {/* ============================================================ */}

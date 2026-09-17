@@ -21,6 +21,7 @@ export interface PlanLimitItem {
   limitCode?: string;
   limitName?: string;
   value?: number;
+  maxValue?: number;
   unitPricePerDay?: number;
   limitUnit?: string;
 }

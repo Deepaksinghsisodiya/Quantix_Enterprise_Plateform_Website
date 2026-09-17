@@ -11,6 +11,7 @@ import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import SocialProofStatsWrapper from "@/features/SocialProof/components/SocialProofWrapper";
+import { BusinessProblemSection } from "@/components/organisms/BusinessProblemSection/BusinessProblemSection";
 import SupportSection from "@/components/organisms/SupportSection/SupportSection";
 
 import dynamic from "next/dynamic";
@@ -80,6 +81,11 @@ export default function HomePageClient() {
       {/* 1.5 Live Social Proof & Platform Stats Counter */}
       <section className="-mt-6 sm:-mt-10 relative z-20 site-container px-4 sm:px-6 mb-8">
         <SocialProofStatsWrapper />
+      </section>
+
+      {/* 1.8 Business Problems: Disconnected Systems (Blueprint Section 10) */}
+      <section id="business-problems" className="scroll-mt-28">
+        <BusinessProblemSection />
       </section>
 
       {/* 2. Core Product Suite Showcase (White BG + Bottom Border) */}
