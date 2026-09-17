@@ -216,6 +216,52 @@ export const PricingSection: React.FC = () => {
       {/* ─── 2. Pricing Plans Section (Proper py-12 sm:py-16 lg:py-20) ─── */}
       <section className="py-12 sm:py-16 lg:py-20 relative bg-slate-50/50 dark:bg-slate-950/50 border-b border-slate-200/80 dark:border-slate-800/80" id="pricing">
         <div className="site-container px-4 sm:px-6 lg:px-8">
+          {/* Quick Plan Matcher by Business Scale */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-5 sm:mb-6 text-center">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
+              <Sparkles size={12} className="text-[#FF4D00]" />
+              Quick Match by Scale:
+            </span>
+            <div className="inline-flex items-center rounded-xl bg-slate-100 dark:bg-slate-800/80 p-1 border border-slate-200/80 dark:border-slate-700/80 flex-wrap justify-center gap-1">
+              <button
+                type="button"
+                onClick={() => setActiveCategory('standalone')}
+                className={cn(
+                  'px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1',
+                  activeCategory === 'standalone'
+                    ? 'bg-white dark:bg-slate-900 text-[#FF4D00] shadow-xs ring-1 ring-slate-200/80 dark:ring-slate-700'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                )}
+              >
+                🛒 Single Store (1 Till)
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveCategory('cloud')}
+                className={cn(
+                  'px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1',
+                  activeCategory === 'cloud'
+                    ? 'bg-white dark:bg-slate-900 text-[#FF4D00] shadow-xs ring-1 ring-slate-200/80 dark:ring-slate-700'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                )}
+              >
+                ⚡ Multi-Till &amp; Cloud (2–10 Tills)
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveCategory('enterprise')}
+                className={cn(
+                  'px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1',
+                  activeCategory === 'enterprise'
+                    ? 'bg-white dark:bg-slate-900 text-[#FF4D00] shadow-xs ring-1 ring-slate-200/80 dark:ring-slate-700'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                )}
+              >
+                🏢 Multi-Chain Network (15–100+ Outlets)
+              </button>
+            </div>
+          </div>
+
           {/* Main Category Switcher (Ascending Price Order: Standalone -> Cloud -> Enterprise) */}
           <div className="flex justify-center mb-6 sm:mb-8">
             <div className="grid grid-cols-3 gap-1 sm:gap-2 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 shadow-sm w-full max-w-xl mx-auto">

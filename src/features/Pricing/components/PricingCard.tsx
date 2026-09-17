@@ -18,10 +18,30 @@ export const PricingCard: React.FC<PricingCardProps> = ({
   const pricePerDay = Number(plan?.planPricePerDay ?? 0);
   const monthlyPrice = Math.round(pricePerDay * 30);
   const annualPrice = Math.round(pricePerDay * 365 * 0.84); // 16% annual discount
+  const yearlySavings = Math.round(monthlyPrice * 12 - annualPrice);
   const isAnnual = billing === 'annual' || billing === 'Annual';
   const displayPrice = isAnnual ? annualPrice : monthlyPrice;
   const priceSuffix = isAnnual ? '/year' : '/month';
   const effectivePerDay = isAnnual ? (annualPrice / 365).toFixed(1) : pricePerDay.toFixed(0);
+
+  // Module Unlock Highlight from API
+  const unlockHighlight = React.useMemo(() => {
+    const name = displayName.toLowerCase();
+    const code = (plan?.planCode || '').toLowerCase();
+    if (name.includes('basic') || code.includes('basic')) {
+      return { icon: '✓', label: 'Core POS & 100% Offline Billing Engine' };
+    }
+    if (name.includes('pro') || code.includes('pro')) {
+      return { icon: '✨', label: 'Unlocks Advance Inventory & Real-Time Cloud BI' };
+    }
+    if (name.includes('advance') || code.includes('adv')) {
+      return { icon: '🚀', label: 'Unlocks Multi-Branch Kitchen & Warehouse Dispatch' };
+    }
+    if (name.includes('enterprise') || code.includes('ent')) {
+      return { icon: '🏢', label: 'Unlocks Multi-Brand Bridge Sync & 10 Storefronts' };
+    }
+    return { icon: '✓', label: 'All 23 Core Modules Included' };
+  }, [displayName, plan?.planCode]);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -130,6 +150,20 @@ export const PricingCard: React.FC<PricingCardProps> = ({
           </span>
         </div>
 
+        {/* Live Annual Savings Badge (API Calculated) */}
+        {isAnnual && yearlySavings > 0 && (
+          <div
+            className={cn(
+              'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold tracking-wide mt-1.5 mb-1',
+              isPopular
+                ? 'bg-white/20 text-white border border-white/30'
+                : 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60'
+            )}
+          >
+            <span>⚡ You Save ${yearlySavings.toLocaleString()} / year</span>
+          </div>
+        )}
+
         {/* Billing note & Commission */}
         <p
           className={cn(
@@ -137,7 +171,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
             isPopular ? 'text-white/80' : 'text-slate-500 dark:text-slate-400'
           )}
         >
-          {isAnnual ? 'Billed annually (save 16%)' : 'Billed monthly'} • 0% Commission
+          {isAnnual ? 'Billed annually' : 'Billed monthly'} • 0% Commission
         </p>
 
         {/* Short Description */}
@@ -155,7 +189,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
         {/* Key Capacity Highlight */}
         <div
           className={cn(
-            'rounded-xl p-2.5 mb-3.5 text-xs font-medium flex items-center justify-between gap-2',
+            'rounded-xl p-2.5 mb-2 text-xs font-medium flex items-center justify-between gap-2',
             isPopular
               ? 'bg-white/10 text-white border border-white/15'
               : 'bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-slate-100 dark:border-slate-800'
@@ -172,6 +206,29 @@ export const PricingCard: React.FC<PricingCardProps> = ({
               {productsCount.toLocaleString()} SKUs
             </span>
           ) : null}
+        </div>
+
+        {/* Flexible Add-on Note from API */}
+        <div
+          className={cn(
+            'text-[10px] font-medium text-left px-1 mb-3',
+            isPopular ? 'text-white/75' : 'text-slate-400 dark:text-slate-500'
+          )}
+        >
+          + Add extra tills anytime for just $2/day
+        </div>
+
+        {/* Module Unlock Highlight Badge (API Feature Differentiation) */}
+        <div
+          className={cn(
+            'px-2.5 py-1.5 rounded-lg text-[11px] font-bold mb-3.5 flex items-center gap-1.5',
+            isPopular
+              ? 'bg-white/15 text-white border border-white/20'
+              : 'bg-orange-500/8 text-[#FF4D00] border border-orange-500/20 dark:bg-orange-500/10'
+          )}
+        >
+          <span className="shrink-0">{unlockHighlight.icon}</span>
+          <span className="truncate">{unlockHighlight.label}</span>
         </div>
 
         {/* Top 3 Selling Points */}

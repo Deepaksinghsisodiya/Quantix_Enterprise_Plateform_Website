@@ -1,8 +1,5 @@
-// src/features/Pricing/components/PricingComparisonTable.tsx
-'use client';
-
-import React, { useState } from 'react';
-import { Check, Minus, Sparkles, Layers, ChevronDown, Monitor, Cloud, Building2 } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Check, Minus, Sparkles, Layers, ChevronDown, Monitor, Cloud, Building2, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface FeatureItem {
@@ -73,6 +70,7 @@ const TIERS: { key: TierKey; label: string; sub: string; icon: any; popular?: bo
 
 export const PricingComparisonTable: React.FC = () => {
   const [selectedMobileTier, setSelectedMobileTier] = useState<TierKey>('cloud');
+  const [searchQuery, setSearchQuery] = useState('');
   const [openCategories, setOpenCategories] = useState<{ [key: number]: boolean }>({
     0: true,
     1: true,
@@ -83,6 +81,22 @@ export const PricingComparisonTable: React.FC = () => {
   const toggleCategory = (index: number) => {
     setOpenCategories((prev) => ({ ...prev, [index]: !prev[index] }));
   };
+
+  const filteredData = useMemo(() => {
+    if (!searchQuery.trim()) return COMPARISON_DATA;
+    const q = searchQuery.toLowerCase().trim();
+    return COMPARISON_DATA.map((group) => ({
+      ...group,
+      features: group.features.filter(
+        (f) => f.name.toLowerCase().includes(q) || group.category.toLowerCase().includes(q)
+      ),
+    })).filter((group) => group.features.length > 0);
+  }, [searchQuery]);
+
+  const totalFilteredCount = useMemo(
+    () => filteredData.reduce((acc, g) => acc + g.features.length, 0),
+    [filteredData]
+  );
 
   const renderValue = (val: boolean | string, isPopular = false) => {
     if (typeof val === 'boolean') {
@@ -115,7 +129,7 @@ export const PricingComparisonTable: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto">
       {/* Title */}
-      <div className="text-center mb-6 sm:mb-10">
+      <div className="text-center mb-6 sm:mb-8">
         <div className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-3 shadow-2xs">
           <Layers size={13} className="text-[#FF4D00]" />
           DETAILED FEATURE MATRIX
@@ -127,6 +141,51 @@ export const PricingComparisonTable: React.FC = () => {
           Everything included with zero hidden surprises. Compare standalone, cloud, and enterprise tiers side by side.
         </p>
       </div>
+
+      {/* Feature Search Box */}
+      <div className="max-w-md mx-auto mb-6 sm:mb-8 px-2">
+        <div className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search 23 modules (e.g. KDS, Barcode, Offline, Inventory, API)..."
+            className="w-full h-10 sm:h-11 pl-10 pr-9 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs sm:text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-[#FF4D00] focus:ring-2 focus:ring-[#FF4D00]/15 outline-none transition-all shadow-xs"
+          />
+          <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 cursor-pointer"
+            >
+              <X size={14} />
+            </button>
+          )}
+        </div>
+        {searchQuery && (
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 text-center">
+            Showing {totalFilteredCount} matching module(s)
+          </p>
+        )}
+      </div>
+
+      {/* Empty Search Result State */}
+      {filteredData.length === 0 && (
+        <div className="text-center py-10 px-4 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 mb-8 max-w-xl mx-auto">
+          <p className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">
+            No modules matching &ldquo;{searchQuery}&rdquo;
+          </p>
+          <p className="text-xs text-slate-500 mb-3">Try searching for &apos;Inventory&apos;, &apos;KDS&apos;, &apos;Offline&apos;, or &apos;API&apos;.</p>
+          <button
+            type="button"
+            onClick={() => setSearchQuery('')}
+            className="text-xs font-bold text-[#FF4D00] hover:underline cursor-pointer"
+          >
+            Clear search to show all 23 core modules &rarr;
+          </button>
+        </div>
+      )}
 
       {/* ─────────────────────────────────────────────────────────────
           1. MOBILE VIEW: Native Segmented App Experience (< 768px)
@@ -146,27 +205,15 @@ export const PricingComparisonTable: React.FC = () => {
                   className={cn(
                     'py-2 px-1.5 rounded-xl flex flex-col items-center justify-center transition-all cursor-pointer text-center relative',
                     isSelected
-                      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xs'
+                      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md scale-[1.02]'
                       : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                   )}
                 >
-                  {tier.popular && (
-                    <span className="absolute -top-2 left-1/2 -translate-x-1/2 rounded-full bg-amber-400 text-slate-950 px-1.5 py-0 text-[8px] font-extrabold uppercase tracking-wide whitespace-nowrap shadow-2xs">
-                      Popular
-                    </span>
-                  )}
-                  <div className="flex items-center gap-1">
-                    <Icon size={12} />
-                    <span className="text-[11px] font-bold leading-tight line-clamp-1">{tier.label}</span>
-                  </div>
-                  <span
-                    className={cn(
-                      'text-[9px] font-medium mt-0.5',
-                      isSelected
-                        ? 'text-white/75 dark:text-slate-700'
-                        : 'text-slate-400 dark:text-slate-500'
-                    )}
-                  >
+                  <Icon size={16} className={isSelected ? 'text-[#FF4D00]' : 'text-slate-400'} />
+                  <span className="text-[11px] font-syne font-bold leading-tight mt-1">
+                    {tier.label}
+                  </span>
+                  <span className="text-[9px] opacity-75 font-mono">
                     {tier.sub}
                   </span>
                 </button>
@@ -177,7 +224,7 @@ export const PricingComparisonTable: React.FC = () => {
 
         {/* Mobile Accordion Groups */}
         <div className="space-y-4">
-          {COMPARISON_DATA.map((group, groupIdx) => {
+          {filteredData.map((group, groupIdx) => {
             const isOpen = openCategories[groupIdx] !== false;
             return (
               <div
@@ -258,7 +305,7 @@ export const PricingComparisonTable: React.FC = () => {
           </thead>
 
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-xs">
-            {COMPARISON_DATA.map((group, groupIdx) => (
+            {filteredData.map((group, groupIdx) => (
               <React.Fragment key={groupIdx}>
                 <tr className="bg-slate-100/60 dark:bg-slate-800/50 font-syne font-bold text-slate-900 dark:text-white">
                   <td colSpan={4} className="py-3 px-6 text-xs tracking-wide text-slate-700 dark:text-slate-300">
