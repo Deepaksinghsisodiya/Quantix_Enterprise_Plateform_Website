@@ -4,7 +4,7 @@ import React, { Suspense } from "react";
 import HeroSection from "@/components/organisms/HeroSection/HeroSection";
 import FeaturesSection from "@/features/Features/FeaturesSection";
 import { IntegrationsTickerSection } from "@/components/organisms/IntegrationsTicker/IntegrationsTickerSection";
-import HowItWorksSection from "@/components/organisms/HowItWorksSection/HowItWorksSection";
+import { HowItWorksSection } from "@/features/HowItWorks";
 import { ATMLoader } from "@/components/atoms/ATMLoader";
 import { cn } from "@/lib/utils";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
