@@ -17,3 +17,4 @@ export {
   HeroNewsTickerSkeleton,
   HeroSlideSkeleton,
 } from './ATMSkeleton';
+export { WhatsAppFloatingButton } from './WhatsAppFloatingButton';

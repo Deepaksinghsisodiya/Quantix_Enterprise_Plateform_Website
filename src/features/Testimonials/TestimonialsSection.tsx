@@ -7,6 +7,8 @@ import { ChevronLeft, ChevronRight, Building2, Star, ArrowRight, BarChart3 } fro
 import { TestimonialDto } from "./Types/TestimonialsTypes";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { DEFAULT_TESTIMONIALS } from "./constants/defaultTestimonials";
+
 export interface TestimonialsSectionProps {
   testimonials?: TestimonialDto[];
   isLoading?: boolean;
@@ -20,8 +22,8 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   const [showFullQuote, setShowFullQuote] = useState(false);
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
 
-  // Only live API testimonials - no dummy data
-  const displayTestimonials = testimonials;
+  // Use live API testimonials if available, otherwise fallback seamlessly to curated testimonials
+  const displayTestimonials = testimonials && testimonials.length > 0 ? testimonials : DEFAULT_TESTIMONIALS;
 
   if (isLoading) {
     return (

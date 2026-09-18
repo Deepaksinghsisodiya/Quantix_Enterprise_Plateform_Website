@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { IndustryProvider } from "@/context/IndustryContext";
 import { ContactModalProvider } from "@/context/ContactModalContext";
 import { FloatingContactButton } from "@/components/atoms/FloatingContactButton";
+import { WhatsAppFloatingButton } from "@/components/atoms/WhatsAppFloatingButton";
 import { FirstVisitOfferModal } from "@/components/organisms/OfferPopupModal/FirstVisitOfferModal";
 import { motion, useScroll, useSpring } from "framer-motion";
 
@@ -37,6 +38,7 @@ export const PublicLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </Suspense>
           <FloatingContactButton />
+          <WhatsAppFloatingButton />
           <FirstVisitOfferModal />
           <AIAssistantModal />
         </div>

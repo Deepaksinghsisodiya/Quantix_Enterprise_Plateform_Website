@@ -110,10 +110,10 @@ export const HeroView: React.FC<HeroViewProps> = ({
     >
       <div className="site-container relative z-10 grid grid-cols-1 content-center items-center gap-6 lg:grid-cols-12 lg:items-center lg:gap-14 xl:gap-20">
         {/* LEFT COLUMN: Content */}
-        <div className="flex min-w-0 flex-col items-start space-y-3.5 text-left sm:items-center sm:text-center lg:col-span-6 lg:items-start lg:text-left">
+        <div className="flex min-w-0 flex-col items-start space-y-3.5 text-left sm:items-center sm:text-center lg:col-span-6 lg:items-start lg:text-left lg:min-h-[500px] lg:justify-center">
           <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border-2 border-primary/20 bg-primary/5 px-3 py-1.5 sm:px-4 sm:py-2 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-primary shadow-xs">
             <Star size={12} className="fill-primary text-primary shrink-0" />
-            <span className="truncate max-w-55 sm:max-w-none">
+            <span className="whitespace-normal sm:whitespace-nowrap">
               #1 ENTERPRISE POS & MULTI-LOCATION OS PLATFORM
             </span>
           </div>
@@ -148,16 +148,16 @@ export const HeroView: React.FC<HeroViewProps> = ({
 
               {/* Feature Cards Row */}
               {slide.featureHighlights && slide.featureHighlights.length > 0 && (
-                <div className="grid w-full grid-cols-2 gap-2 pt-1 min-[480px]:grid-cols-3 lg:grid-cols-3 lg:gap-2">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 pt-1">
                   {slide.featureHighlights.map((feat, idx) => (
                     <div
                       key={feat}
-                      className="flex flex-row items-center gap-2 rounded-xl border border-slate-100 bg-white/95 px-2.5 py-1.5 shadow-xs transition-transform hover:-translate-y-0.5 dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none sm:px-2.5 sm:py-2 lg:flex-col xl:flex-row xl:gap-2.5"
+                      className="inline-flex items-center gap-1.5 rounded-xl border border-slate-100 bg-white/95 px-2.5 py-1.5 shadow-xs transition-transform hover:-translate-y-0.5 dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none sm:px-3 sm:py-2"
                     >
-                      <div className="flex h-6.5 w-6.5 shrink-0 items-center justify-center rounded-full bg-primary/10 sm:h-7.5 sm:w-7.5">
+                      <div className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-primary/10">
                         {getFeatureIcon(idx)}
                       </div>
-                      <span className="text-left text-[10px] font-bold leading-tight text-slate-800 dark:text-slate-200 sm:text-[11px] lg:text-center xl:text-left">
+                      <span className="text-left text-[10px] sm:text-[11px] font-bold leading-tight text-slate-800 dark:text-slate-200 whitespace-nowrap">
                         {feat}
                       </span>
                     </div>
@@ -165,20 +165,21 @@ export const HeroView: React.FC<HeroViewProps> = ({
                 </div>
               )}
 
-              {/* Buttons */}
-              <div className="flex w-full flex-row items-center justify-start gap-2.5 pt-1 sm:w-auto sm:justify-center lg:justify-start">
+              {/* Buttons: Clean side-by-side with shortened labels on mobile */}
+              <div className="flex w-full flex-row items-center justify-start gap-2 sm:gap-3 pt-1 sm:w-auto sm:justify-center lg:justify-start">
                 {isLoggedIn ? (
                   <a
                     href={getAdminPortalUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex flex-1 min-w-0 min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-3 sm:px-8 py-3 font-syne text-[10px] sm:text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:brightness-110 hover:shadow-orange-500/40 active:scale-95 whitespace-nowrap"
+                    className="group flex flex-1 sm:flex-initial sm:w-auto min-w-0 h-10.5 sm:min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-2.5 sm:px-8 py-2.5 sm:py-3 font-syne text-[11px] sm:text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:brightness-110 hover:shadow-orange-500/40 active:scale-95 whitespace-nowrap"
                   >
                     <Sparkles
                       size={14}
                       className="text-amber-200 fill-amber-200 transition-transform group-hover:scale-110 sm:w-4 sm:h-4 shrink-0"
                     />
-                    <span>Launch Admin Portal</span>
+                    <span className="sm:hidden">Launch Admin</span>
+                    <span className="hidden sm:inline">Launch Admin Portal</span>
                     <ExternalLink
                       size={13}
                       className="text-white/80 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:w-3.5 sm:h-3.5 shrink-0"
@@ -187,13 +188,14 @@ export const HeroView: React.FC<HeroViewProps> = ({
                 ) : (
                   <Link
                     href={slide.primaryCta?.href || "/contact"}
-                    className="group flex flex-1 min-w-0 min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FF4F00] px-3 sm:px-8 py-3 font-syne text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-[#e64700] hover:shadow-primary/40 active:scale-95 whitespace-nowrap"
+                    className="group flex flex-1 sm:flex-initial sm:w-auto min-w-0 h-10.5 sm:min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FF4F00] px-2.5 sm:px-8 py-2.5 sm:py-3 font-syne text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-[#e64700] hover:shadow-primary/40 active:scale-95 whitespace-nowrap"
                   >
                     <Rocket
                       size={14}
                       className="fill-white transition-transform group-hover:-translate-y-1 group-hover:translate-x-0.5 sm:w-4 sm:h-4 shrink-0"
                     />
-                    <span>{slide.primaryCta?.label || "Start Free Trial"}</span>
+                    <span className="sm:hidden">Free Trial</span>
+                    <span className="hidden sm:inline">{slide.primaryCta?.label || "Start Free Trial"}</span>
                   </Link>
                 )}
                 <button
@@ -204,9 +206,10 @@ export const HeroView: React.FC<HeroViewProps> = ({
                       "HERO_REQUEST_DEMO"
                     )
                   }
-                  className="group flex flex-1 min-w-0 min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl border-2 border-slate-900 bg-transparent px-3 sm:px-8 py-3 font-syne text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white active:scale-95 dark:border-slate-100 dark:text-slate-100 dark:hover:bg-slate-100 dark:hover:text-slate-900 whitespace-nowrap"
+                  className="group flex flex-1 sm:flex-initial sm:w-auto min-w-0 h-10.5 sm:min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl border-2 border-slate-900 bg-transparent px-2.5 sm:px-8 py-2.5 sm:py-3 font-syne text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white active:scale-95 dark:border-slate-100 dark:text-slate-100 dark:hover:bg-slate-100 dark:hover:text-slate-900 whitespace-nowrap"
                 >
-                  <span>{slide.secondaryCta?.label || "Request Demo"}</span>
+                  <span className="sm:hidden">Book Demo</span>
+                  <span className="hidden sm:inline">{slide.secondaryCta?.label || "Request Demo"}</span>
                   <ArrowRight
                     size={14}
                     className="transition-transform group-hover:translate-x-1 sm:w-4 sm:h-4 shrink-0"
@@ -218,7 +221,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
         </div>
 
         {/* RIGHT COLUMN: Visual Showcase */}
-        <div className="relative flex w-full flex-col items-center justify-center overflow-visible lg:col-span-6 my-auto">
+        <div className="relative flex w-full flex-col items-center justify-center overflow-visible lg:col-span-6 my-auto lg:h-[500px]">
           <div className="relative w-full max-w-120 flex items-center justify-center">
             {/* Background Decorative Rings */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[125%] h-[125%] -z-10 pointer-events-none hidden lg:block">
