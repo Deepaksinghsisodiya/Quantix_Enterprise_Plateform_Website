@@ -1,0 +1,131 @@
+import {
+  Store,
+  Boxes,
+  ChefHat,
+  LineChart,
+  Smartphone,
+  CreditCard,
+  Code2,
+  Cloud,
+  Globe2,
+} from "lucide-react";
+import { FeatureModule, PlatformExtension } from "../Types/features.types";
+
+export const FEATURE_MODULES: FeatureModule[] = [
+  {
+    id: "cloud-pos",
+    number: "01",
+    tabLabel: "Cloud POS & Mesh Tills",
+    shortMobileName: "POS",
+    category: "Storefront Checkout",
+    statusBadge: "100% Offline Mesh",
+    title: "One POS System for Every Branch Location",
+    description:
+      "Maintain strict menu, pricing, and promotional consistency across 500+ franchise branches or retail stores with sub-second sync and offline resilience.",
+    bullets: [
+      "Offline-first mesh network keeps registers ringing during WAN cuts with automatic peer sync.",
+      "1-Click master price, promo, and combo rollouts pushed across all branches in < 2.4 seconds.",
+      "Granular role-based staff permissions with HQ-centralized refund caps and master overrides.",
+    ],
+    stat: {
+      label: "Global Master Sync",
+      value: "< 2.4s",
+    },
+    imageSrc: "/images/ent_global_pos_bundle.png",
+    imageAlt: "Dual-Screen Countertop POS Terminal",
+    topBadge: "Dual-Screen POS",
+    bottomBadge: "Peer Mesh Auto-Sync",
+    href: "/features/cloud-pos",
+    ctaText: "Explore POS Architecture",
+    icon: Store,
+  },
+  {
+    id: "central-inventory",
+    number: "02",
+    tabLabel: "Central Inventory & COGS",
+    shortMobileName: "Stock",
+    category: "Supply Chain & Warehousing",
+    statusBadge: "Auto-PO Active",
+    title: "Manage Inventory Across Every Central Warehouse",
+    description:
+      "Connect store registers directly to central commissaries and suppliers to track ingredient depletion, prevent shrinkage, and automate restocking.",
+    bullets: [
+      "Automated PO engine triggers replenishment orders when branch stock drops below par levels.",
+      "Inter-store warehouse stock transfers with 1-click digital manifests and loading dock audit trails.",
+      "Real-time ingredient recipe costing down to the exact gram to safeguard multi-unit profit margins.",
+    ],
+    stat: {
+      label: "Inventory Shrinkage",
+      value: "-18%",
+    },
+    imageSrc: "/images/ent_supply_chain_bundle.png",
+    imageAlt: "Centralized Supply Chain and Warehouse Inventory",
+    topBadge: "Warehouse Sync",
+    bottomBadge: "Live Stock Telemetry",
+    href: "/features/inventory",
+    ctaText: "Explore Supply Chain",
+    icon: Boxes,
+  },
+  {
+    id: "kitchen-kds",
+    number: "03",
+    tabLabel: "Kitchen KDS & Omnichannel",
+    shortMobileName: "KDS",
+    category: "Kitchen Display & Dispatch",
+    statusBadge: "Smart Prep Pacing",
+    title: "Connect Online, Delivery & Counter Orders Together",
+    description:
+      "Eliminate tablet clutter by routing third-party delivery apps, web orders, and counter sales through one intelligent bump-bar kitchen display system.",
+    bullets: [
+      "Unified multi-channel routing directs delivery, web, and dine-in orders into dedicated station screens.",
+      "Intelligent course pacing synchronizes cook times across grill, fryer, and assembly lines.",
+      "Real-time order readiness screens for pickup guests and third-party delivery drivers.",
+    ],
+    stat: {
+      label: "Avg Ticket Latency",
+      value: "-42%",
+    },
+    imageSrc: "/images/ent_kitchen_kds_transparent.png",
+    imageAlt: "Enterprise Kitchen KDS Bump Bar",
+    topBadge: "Smart Prep Pacing",
+    bottomBadge: "Multi-Channel Route",
+    href: "/features/omnichannel",
+    ctaText: "Explore Kitchen Flow",
+    icon: ChefHat,
+  },
+  {
+    id: "executive-bi",
+    number: "04",
+    tabLabel: "Executive BI Telemetry",
+    shortMobileName: "Live BI",
+    category: "Enterprise Intelligence",
+    statusBadge: "Sub-Second BI",
+    title: "Real-Time Multi-Unit Sales & Margin Telemetry",
+    description:
+      "Replace delayed month-end spreadsheets with live sales velocity, labor margin optimization, and direct ERP data pipelines straight to executive dashboards.",
+    bullets: [
+      "Sub-second multi-location GMV, basket size, and tender breakdown streamed to mobile BI.",
+      "Live labor margin monitoring prevents store-level overstaffing during operational lulls.",
+      "Native bidirectional connectors for SAP, Oracle NetSuite, Snowflake, and BigQuery.",
+    ],
+    stat: {
+      label: "ERP Event Pipeline",
+      value: "Sub-Second",
+    },
+    imageSrc: "/images/ent_bi_analytics_bundle_v2.png",
+    imageAlt: "Executive Enterprise BI Telemetry Dashboard",
+    topBadge: "Executive BI Lake",
+    bottomBadge: "Sub-Second Telemetry",
+    href: "/features/analytics",
+    ctaText: "Explore Executive BI",
+    icon: LineChart,
+  },
+];
+
+export const PLATFORM_ECOSYSTEM_CHIPS: PlatformExtension[] = [
+  { id: "kiosks", title: "Self-Ordering Kiosks", badge: "+28% Avg Ticket", icon: Smartphone, href: "/features/mobile-pos" },
+  { id: "payments", title: "Unified EMV Terminals", badge: "Zero Lock-in", icon: CreditCard, href: "/integrations" },
+  { id: "cloud-hq", title: "Multi-Store Cloud HQ", badge: "< 2.4s Sync", icon: Cloud, href: "/features/enterprise-pos" },
+  { id: "webhooks", title: "ERP & Open Webhooks", badge: "393+ Endpoints", icon: Code2, href: "/integrations" },
+  { id: "mesh-till", title: "Peer-to-Peer Mesh Till", badge: "Offline Resilient", icon: Globe2, href: "/features/cloud-pos" },
+];

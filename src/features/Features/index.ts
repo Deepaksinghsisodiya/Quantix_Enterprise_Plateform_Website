@@ -1,6 +1,6 @@
-// src/features/Features/index.ts
-export { default as FeaturesSection } from './FeaturesSection';
-export { default as FeaturesWrapper } from './FeaturesWrapper';
-export * from './Service/FeaturesService';
-export * from './Types/FeaturesTypes';
-export { default } from './FeaturesWrapper';
+export * from "./Types/features.types";
+export * from "./constants/featuresData";
+export * from "./components/FeaturesVaultView";
+export * from "./FeaturesSection";
+export { default } from "./FeaturesSection";
+export { FeaturesSection as defaultExport } from "./FeaturesSection";
