@@ -9,7 +9,7 @@ import { ATMLoader } from "@/components/atoms/ATMLoader";
 import { cn } from "@/lib/utils";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import SocialProofStatsWrapper from "@/features/SocialProof/components/SocialProofWrapper";
-import { BusinessProblemSection } from "@/components/organisms/BusinessProblemSection/BusinessProblemSection";
+import { BusinessProblemSection } from "@/features/BusinessProblems";
 import SupportSection from "@/components/organisms/SupportSection/SupportSection";
 
 import dynamic from "next/dynamic";
@@ -60,7 +60,7 @@ export default function HomePageClient() {
       </section>
 
       {/* 1.5 Live Social Proof & Platform Stats Counter */}
-      <section className="-mt-6 sm:-mt-10 relative z-20 site-container px-4 sm:px-6 mb-8">
+      <section className="mt-4 sm:-mt-10 relative z-20 site-container px-3 sm:px-6 mb-8 sm:mb-12">
         <SocialProofStatsWrapper />
       </section>
 
