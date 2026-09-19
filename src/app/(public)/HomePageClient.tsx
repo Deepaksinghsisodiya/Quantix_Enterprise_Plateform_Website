@@ -61,7 +61,7 @@ export default function HomePageClient() {
       </section>
 
       {/* 1.5 Live Social Proof & Platform Stats Counter */}
-      <section className="mt-4 sm:-mt-10 relative z-20 site-container px-3 sm:px-6 mb-8 sm:mb-12">
+      <section className="-mt-3 sm:-mt-8 lg:-mt-10 relative z-20 site-container px-3 sm:px-6 mb-6 sm:mb-8">
         <SocialProofStatsWrapper />
       </section>
 
@@ -75,13 +75,13 @@ export default function HomePageClient() {
         <FeaturesSection />
       </section>
 
-      {/* 2.5 Complete Operating Platform POS Modules Deck (The 2-Slide 4-Cards Interactive Slider) */}
-      <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
+      {/* 2.5 Complete Operating Platform POS Modules Deck (The 2-Slide 4-Cards Interactive Slider on Soft Slate 50) */}
+      <section id="products-showcase" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <PlatformModulesDeck />
       </section>
 
-      {/* 3. Workflow Step-by-Step (Soft Slate 50 BG + Bottom Border) */}
-      <section id="how-it-works" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
+      {/* 3. Workflow Step-by-Step (White BG + Bottom Border) */}
+      <section id="how-it-works" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <HowItWorksSection />
       </section>
 

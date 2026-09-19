@@ -31,10 +31,9 @@ export const BusinessProblemSection: React.FC = () => {
   };
 
   return (
-    <section className="relative overflow-hidden py-10 sm:py-16 lg:py-20 pb-24 sm:pb-20 bg-gradient-to-b from-slate-50/90 via-[#fdfcfa] to-slate-50/80 dark:from-slate-950 dark:via-slate-900/70 dark:to-slate-950 text-slate-900 dark:text-white border-y border-slate-200/80 dark:border-slate-800/80 transition-colors">
-      {/* Background Ambience: Subtle Quantix Orange Radial + Blueprint Dot Matrix */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-10%,rgba(255,79,0,0.08),transparent_70%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] opacity-40 dark:opacity-20" />
+    <section className="relative overflow-hidden py-12 lg:py-14 bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-y border-slate-200/80 dark:border-slate-800/80 transition-colors">
+      {/* Background Ambience: Soft Quantix Orange Glow */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-10%,rgba(255,79,0,0.05),transparent_70%)]" />
 
       <div className="site-container relative z-10 px-3.5 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         

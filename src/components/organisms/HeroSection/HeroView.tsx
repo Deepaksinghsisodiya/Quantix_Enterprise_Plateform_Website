@@ -100,7 +100,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
 
   return (
     <section
-      className="relative w-full overflow-hidden border-b border-slate-200/80 bg-white pt-24 pb-16 transition-colors dark:border-slate-800/80 dark:bg-slate-950 sm:pt-28 sm:pb-20 md:pt-32 md:pb-20 lg:pt-36 lg:pb-24 xl:pt-40 xl:pb-28"
+      className="relative w-full overflow-hidden border-b border-slate-200/80 bg-white pt-24 pb-5 transition-colors dark:border-slate-800/80 dark:bg-slate-950 sm:pt-26 sm:pb-12 md:pt-28 md:pb-14 lg:pt-28 lg:pb-14 xl:pt-30 xl:pb-14"
       onPointerEnter={(e) => {
         if (e.pointerType === "mouse") onMouseEnter();
       }}
@@ -110,7 +110,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
     >
       <div className="site-container relative z-10 grid grid-cols-1 content-center items-center gap-6 lg:grid-cols-12 lg:items-center lg:gap-14 xl:gap-20">
         {/* LEFT COLUMN: Content */}
-        <div className="flex min-w-0 flex-col items-start space-y-3.5 text-left sm:items-center sm:text-center lg:col-span-6 lg:items-start lg:text-left lg:min-h-[500px] lg:justify-center">
+        <div className="flex min-w-0 flex-col items-start space-y-3.5 text-left sm:items-center sm:text-center lg:col-span-6 lg:items-start lg:text-left lg:min-h-[420px] lg:justify-center">
           <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border-2 border-primary/20 bg-primary/5 px-3 py-1.5 sm:px-4 sm:py-2 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-primary shadow-xs">
             <Star size={12} className="fill-primary text-primary shrink-0" />
             <span className="whitespace-normal sm:whitespace-nowrap">
@@ -295,7 +295,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
 
           {/* Dots Pagination Below Hardware Screen */}
           {slides.length > 1 && (
-            <div className="mt-4 lg:mt-5 flex items-center justify-center z-20">
+            <div className="mt-3 sm:mt-4 lg:mt-5 flex items-center justify-center z-20">
               {slides.map((item, i) => (
                 <button
                   key={item.id}

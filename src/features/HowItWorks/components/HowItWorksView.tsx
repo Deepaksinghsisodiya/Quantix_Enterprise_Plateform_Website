@@ -18,7 +18,7 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   return (
-    <div className="relative w-full overflow-hidden py-10 sm:py-16 lg:py-24 text-slate-900 transition-colors dark:text-white">
+    <div className="relative w-full overflow-hidden py-12 lg:py-14 text-slate-900 transition-colors dark:text-white">
       {/* Background Depth Ambient Glow */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_50%_at_50%_-10%,rgba(255,79,0,0.06),transparent_70%)]" />
 

@@ -90,10 +90,7 @@ export const IntegrationsTickerSection: React.FC = () => {
   const deliveryList = integrations.filter((i) => i.category === 'DELIVERY');
 
   return (
-    <section className="py-14 sm:py-20 lg:py-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden relative select-none transition-colors">
-      {/* Dynamic Background Ambiance Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
-      
+    <section className="py-12 lg:py-14 bg-white dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden relative select-none transition-colors">
       {/* Reactive Ambient Glow that tracks current highlighted partner color */}
       <motion.div
         animate={{
@@ -141,10 +138,7 @@ export const IntegrationsTickerSection: React.FC = () => {
           setActiveId(null);
         }}
       >
-        <div className="relative rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-slate-50/70 dark:bg-slate-900/40 backdrop-blur-2xl p-6 xl:p-9 shadow-2xl overflow-hidden">
-          {/* Subtle Circuit Matrix Grid Background */}
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#FF4F00_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.04]" />
-
+        <div className="relative rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-slate-900/90 backdrop-blur-2xl p-6 xl:p-9 shadow-xl shadow-slate-200/40 dark:shadow-none overflow-hidden">
           <div className="relative z-10 flex items-center justify-between">
             {/* ----------------------------------------- */}
             {/* LEFT SPOKE: Payments Cluster (3 Nodes)    */}

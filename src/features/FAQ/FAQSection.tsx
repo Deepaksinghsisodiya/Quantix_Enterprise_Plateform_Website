@@ -24,7 +24,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
 
   return (
     <section
-      className="py-12 sm:py-16 lg:py-20 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300 relative overflow-hidden"
+      className="py-12 lg:py-14 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300 relative overflow-hidden"
       id="faq"
     >
       <div className="site-container px-4 sm:px-6 lg:px-8 relative z-10">

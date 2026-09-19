@@ -8,7 +8,7 @@ import { FeaturesVaultView } from "./components/FeaturesVaultView";
 
 export const FeaturesSection: React.FC = () => {
   return (
-    <section id="features" className="relative overflow-hidden py-10 sm:py-16 lg:py-24 text-slate-900 transition-colors dark:text-white">
+    <section id="features" className="relative overflow-hidden py-12 lg:py-14 text-slate-900 transition-colors dark:text-white">
       {/* Background Depth Ambience */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-15%,rgba(255,79,0,0.06),transparent_70%)]" />
 

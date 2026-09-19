@@ -335,7 +335,7 @@ export const PlatformModulesDeck: React.FC = () => {
   }, [scrollNext, scrollPrev]);
 
   return (
-    <section id="complete-platform-section" className="relative overflow-hidden py-10 sm:py-14 lg:py-16 text-slate-900 transition-colors dark:text-white">
+    <section id="complete-platform-section" className="relative overflow-hidden py-12 lg:py-14 text-slate-900 transition-colors dark:text-white">
       <div className="site-container relative z-10">
         {/* Section Header with Desktop & Mobile Controls */}
         <div className="mb-6 sm:mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
