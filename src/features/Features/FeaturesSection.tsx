@@ -6,7 +6,14 @@ import { Sparkles, ArrowRight } from "lucide-react";
 import { FEATURE_MODULES, PLATFORM_ECOSYSTEM_CHIPS } from "./constants/featuresData";
 import { FeaturesVaultView } from "./components/FeaturesVaultView";
 
-export const FeaturesSection: React.FC = () => {
+export interface FeaturesSectionProps {
+  features?: any[];
+  isLoading?: boolean;
+  isError?: boolean;
+  onRetry?: () => void;
+}
+
+export const FeaturesSection: React.FC<FeaturesSectionProps> = () => {
   return (
     <section id="features" className="relative overflow-hidden py-12 lg:py-14 text-slate-900 transition-colors dark:text-white">
       {/* Background Depth Ambience */}

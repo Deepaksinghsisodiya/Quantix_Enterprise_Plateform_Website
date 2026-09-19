@@ -1,18 +1,9 @@
-export interface SupportPillar {
-  id: string;
-  title: string;
-  badge: string;
-  description: string;
-  iconName: string;
-  points: string[];
-}
-
-export interface SupportTrustBadge {
-  id: string;
-  title: string;
-  subtitle: string;
-  iconName: string;
-}
+import {
+  SupportPillar,
+  SupportTrustBadge,
+  SupportChannel,
+  SupportSlaMetric,
+} from '../Types/support.types';
 
 export const SUPPORT_TRUST_BADGES: SupportTrustBadge[] = [
   {
@@ -93,5 +84,75 @@ export const SUPPORT_PILLARS: SupportPillar[] = [
       'Payment terminal pairing & network check',
       'Live cloud data sync verification',
     ],
+  },
+];
+
+export const SUPPORT_SLA_METRICS: SupportSlaMetric[] = [
+  {
+    id: 'first-response',
+    label: 'First Response SLA',
+    value: '< 60s',
+    subtext: 'Live phone & priority chat pickup',
+    iconName: 'Zap',
+  },
+  {
+    id: 'resolution-rate',
+    label: 'First-Call Resolution',
+    value: '94.8%',
+    subtext: 'Issues solved without escalations',
+    iconName: 'ShieldCheck',
+  },
+  {
+    id: 'uptime-support',
+    label: 'Technical Availability',
+    value: '24/7/365',
+    subtext: 'Engineers on standby around the clock',
+    iconName: 'Clock',
+  },
+  {
+    id: 'client-satisfaction',
+    label: 'CSAT Rating',
+    value: '4.9 / 5',
+    subtext: 'Over 2,500+ verified branch reviews',
+    iconName: 'UserCheck',
+  },
+];
+
+export const SUPPORT_CHANNELS: SupportChannel[] = [
+  {
+    id: 'hotline',
+    title: 'Priority Phone Hotline',
+    description: 'Instant direct voice channel connecting your store managers directly to Level-2 technical architects.',
+    iconName: 'PhoneCall',
+    highlightColor: '#FF4F00',
+    slaTag: '< 45s Ring Time',
+    features: ['Direct engineer line', 'Shift manager bypass', 'Zero IVR maze'],
+  },
+  {
+    id: 'chat',
+    title: 'Real-Time Operator Chat',
+    description: 'Live in-app and dashboard messaging for quick menu modifier questions, hardware pairing, or shift balancing.',
+    iconName: 'MessageSquare',
+    highlightColor: '#2563eb',
+    slaTag: '< 60s Pickup',
+    features: ['In-dashboard messenger', 'Screenshare diagnosis', 'Audit receipts export'],
+  },
+  {
+    id: 'remote-desk',
+    title: 'Remote Terminal Assist',
+    description: 'Encrypted screen-takeover diagnostic sessions to resolve complex peripheral printer or barcode bugs on site.',
+    iconName: 'MonitorCheck',
+    highlightColor: '#059669',
+    slaTag: 'Sub-Minute Remote',
+    features: ['Encrypted LAN access', 'Silent peripheral reset', 'Zero till lockup'],
+  },
+  {
+    id: 'dedicated-tam',
+    title: 'Dedicated Account Executive',
+    description: 'Assigned Enterprise Technical Account Manager for multi-unit store rollouts, ERP hooks, and quarterly audits.',
+    iconName: 'Users',
+    highlightColor: '#7c3aed',
+    slaTag: 'Assigned Leader',
+    features: ['Quarterly QBR review', 'Dedicated Slack bridge', 'Custom menu migrations'],
   },
 ];

@@ -18,3 +18,21 @@ export interface SupportSectionProps {
   platformName?: string;
   className?: string;
 }
+
+export interface SupportChannel {
+  id: string;
+  title: string;
+  description: string;
+  iconName: string;
+  highlightColor: string;
+  slaTag: string;
+  features: string[];
+}
+
+export interface SupportSlaMetric {
+  id: string;
+  label: string;
+  value: string;
+  subtext: string;
+  iconName: string;
+}
