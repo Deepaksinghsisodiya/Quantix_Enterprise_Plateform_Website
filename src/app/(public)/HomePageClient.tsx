@@ -3,6 +3,7 @@
 import React, { Suspense } from "react";
 import HeroSection from "@/components/organisms/HeroSection/HeroSection";
 import FeaturesSection from "@/features/Features/FeaturesSection";
+import PlatformModulesDeck from "@/components/organisms/PlatformModulesDeck/PlatformModulesDeck";
 import { IntegrationsTickerSection } from "@/components/organisms/IntegrationsTicker/IntegrationsTickerSection";
 import { HowItWorksSection } from "@/features/HowItWorks";
 import { ATMLoader } from "@/components/atoms/ATMLoader";
@@ -72,6 +73,11 @@ export default function HomePageClient() {
       {/* 2. Core Features Suite Showcase (White BG + Bottom Border) */}
       <section id="features" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <FeaturesSection />
+      </section>
+
+      {/* 2.5 Complete Operating Platform POS Modules Deck (The 2-Slide 4-Cards Interactive Slider) */}
+      <section id="products-showcase" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
+        <PlatformModulesDeck />
       </section>
 
       {/* 3. Workflow Step-by-Step (Soft Slate 50 BG + Bottom Border) */}
