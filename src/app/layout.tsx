@@ -77,7 +77,7 @@ export default function RootLayout({
       className="h-full antialiased"
       suppressHydrationWarning
     >
-      <body className={`${lato.variable} ${syne.variable} font-sans antialiased min-h-full flex flex-col bg-gray-50 dark:bg-slate-950 transition-colors duration-300`} suppressHydrationWarning>
+      <body className={`${lato.variable} ${syne.variable} font-sans antialiased min-h-full flex flex-col bg-white transition-colors duration-300`} suppressHydrationWarning>
         <Providers>
           {children}
           <Toaster richColors position="top-center" closeButton theme="dark" />

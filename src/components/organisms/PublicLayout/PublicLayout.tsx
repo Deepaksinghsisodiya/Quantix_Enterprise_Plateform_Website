@@ -30,7 +30,7 @@ export const PublicLayout = ({ children }: { children: React.ReactNode }) => {
           style={{ scaleX }}
         />
         <div className={cn(
-          "min-h-screen flex flex-col justify-between bg-gray-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden w-full relative pb-16 md:pb-0"
+          "min-h-screen flex flex-col justify-between bg-white text-slate-900 transition-colors duration-300 overflow-x-hidden w-full relative pb-16 md:pb-0"
         )}>
           <Suspense fallback={null}>
             <div className="flex-1 flex flex-col w-full">

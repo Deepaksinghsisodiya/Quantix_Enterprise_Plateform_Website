@@ -84,6 +84,15 @@
 
 html {
   scroll-behavior: smooth;
+  /*
+   * LIGHT-ONLY SITE: Force color-scheme to light.
+   * This prevents the browser from auto-applying dark-mode styles
+   * (e.g. dark scrollbars, dark form inputs, dark system UI) based on
+   * the user's OS/browser dark mode preference (prefers-color-scheme: dark).
+   * Without this, even if our CSS is correct, the browser itself can
+   * invert native controls on dark-mode systems.
+   */
+  color-scheme: light;
 }
 
 :root {

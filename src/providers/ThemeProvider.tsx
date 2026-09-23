@@ -8,33 +8,39 @@ interface ThemeProviderProps {
 }
 
 /**
- * ThemeProvider synchronises the UI theme (dark/light) with the Redux store.
- * It reads the current theme from the store and applies the appropriate class
- * to the <html> element. On mount it also restores any persisted theme from
- * localStorage to avoid a flash of the wrong theme.
+ * ThemeProvider — Enterprise Website is intentionally LIGHT-ONLY.
+ *
+ * Root Cause Fix (2026-09-23):
+ * Previously, this provider was restoring a stale 'dark' value from localStorage
+ * and applying the 'dark' class to <html>, which caused the site to appear dark
+ * on any browser/system where dark mode had ever been saved — regardless of OS theme.
+ *
+ * Fix: We force 'light' on every mount. The 'dark' class is always removed from
+ * <html>. No localStorage value can override this. This ensures consistent
+ * white/light background for ALL users on ALL systems and browsers.
  */
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const theme = useSelector((state: RootState) => state.theme.mode);
 
-  // Hydrate persisted theme once on client mount
+  // On mount: always force light theme — clear any stale dark from localStorage
   useEffect(() => {
-    const persisted = localStorage.getItem('quantix-theme') as 'light' | 'dark' | null;
-    if (persisted && persisted !== theme) {
-      dispatch(setTheme(persisted));
+    // Clear any previously persisted dark theme
+    localStorage.removeItem('quantix-theme');
+    // Ensure Redux store is set to light
+    if (theme !== 'light') {
+      dispatch(setTheme('light'));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Apply class to <html> whenever theme changes
+  // Always keep <html> without 'dark' class — this site is light-only
   useEffect(() => {
     const html = document.documentElement;
-    if (theme === 'dark') {
-      html.classList.add('dark');
-    } else {
-      html.classList.remove('dark');
-    }
-    // Persist for next loads
-    localStorage.setItem('quantix-theme', theme);
+    // Remove dark class unconditionally — enterprise site is light-only
+    html.classList.remove('dark');
+    // Also ensure color-scheme is explicitly light to prevent browser auto-dark
+    html.style.colorScheme = 'light';
   }, [theme]);
 
   return <>{children}</>;
