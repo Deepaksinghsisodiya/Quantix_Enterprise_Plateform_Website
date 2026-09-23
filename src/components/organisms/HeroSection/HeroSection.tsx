@@ -15,7 +15,7 @@ const HeroSection: React.FC = () => {
   const { data: apiBanners, isLoading } = useGetHeroBannersQuery();
 
   // Flag to toggle between full rich dummy UI and API data
-  const USE_API_DATA = false;
+  const USE_API_DATA = true;
 
   // Data mapped directly from real Admin APIs, preserving full UI structure
   const slides = useMemo<HeroSlide[]>(() => {
@@ -25,23 +25,32 @@ const HeroSection: React.FC = () => {
 
     return apiBanners.map((banner, index) => {
       const fallback = HERO_SLIDES[index % HERO_SLIDES.length];
-      const bgImage = banner.imageAssetId
-        ? `/api/v1/media/${banner.imageAssetId}/file`
+      const assetId = banner.mediaAssetId || banner.imageAssetId;
+      const bgImage = assetId
+        ? `/api/v1/media/${assetId}/file`
         : banner.imageUrl || fallback.backgroundImage;
 
+      const heading = banner.heading || banner.title || fallback.heading;
+
       return {
-        id: banner.contentId || `banner-${index}`,
-        badge: banner.pageSlug ? banner.pageSlug.toUpperCase() : fallback.badge,
-        heading: banner.title || fallback.heading,
-        mobileHeadingLines: fallback.mobileHeadingLines || [banner.title, '', ''],
-        subheading: banner.body ?? fallback.subheading,
+        id: banner.heroSlideId || banner.contentId || `banner-${index}`,
+        badge: banner.badge || fallback.badge,
+        heading: heading,
+        mobileHeadingLines: fallback.mobileHeadingLines || [heading, '', ''],
+        subheading: banner.subheading ?? banner.body ?? fallback.subheading,
         primaryCta: {
-          label: fallback.primaryCta?.label || 'Start Free Trial',
-          href: banner.linkUrl || fallback.primaryCta?.href || '/contact',
+          label: banner.primaryCtaLabel || fallback.primaryCta?.label || 'Start Free Trial',
+          href: banner.primaryCtaUrl || banner.linkUrl || fallback.primaryCta?.href || '/contact',
         },
-        secondaryCta: fallback.secondaryCta || { label: 'Request Demo', href: '/contact/demo' },
+        secondaryCta: {
+          label: banner.secondaryCtaLabel || fallback.secondaryCta?.label || 'Book an Enterprise Demo',
+          href: banner.secondaryCtaUrl || fallback.secondaryCta?.href || '/contact/demo',
+        },
         backgroundImage: bgImage,
-        featureHighlights: fallback.featureHighlights,
+        featureHighlights:
+          banner.featureHighlights && banner.featureHighlights.length > 0
+            ? banner.featureHighlights
+            : fallback.featureHighlights,
       };
     });
   }, [apiBanners]);

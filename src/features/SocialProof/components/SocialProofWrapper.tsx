@@ -3,18 +3,18 @@
 
 import React from 'react';
 import { SocialProof } from './SocialProof';
-import { useGetSocialProofQuery } from '../Service/SocialProofService';
+import { useGetSocialProofMetricsQuery } from '../Service/SocialProofService';
 
 export interface SocialProofWrapperProps {
   className?: string;
 }
 
 export const SocialProofWrapper: React.FC<SocialProofWrapperProps> = ({ className = "" }) => {
-  const { data: stats = null, isLoading } = useGetSocialProofQuery();
+  const { data: metrics = null, isLoading } = useGetSocialProofMetricsQuery();
 
   return (
     <SocialProof
-      stats={stats}
+      metrics={metrics}
       isLoading={isLoading}
       className={className}
     />

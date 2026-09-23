@@ -113,7 +113,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   const authorRole = current?.personRole || current?.theirRole || current?.role || (current as any)?.designation || "Operations Director";
   const companyName = current?.companyName || current?.company || (current as any)?.organization || current?.industry || "Enterprise Chain";
   const industry = current?.industry || "Enterprise";
-  const highlightStat = current?.highlightStat;
+  const highlightStat = current?.highlightStat || current?.metricText;
   const statLabel = current?.statLabel;
 
   const rawRating = Number(current?.rating);

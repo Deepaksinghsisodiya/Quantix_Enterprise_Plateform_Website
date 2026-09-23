@@ -32,6 +32,7 @@ export interface TestimonialDto {
   published?: boolean;
   isActive?: boolean;
   highlightStat?: string;
+  metricText?: string;
   statLabel?: string;
   videoUrl?: string;
   duration?: string;

@@ -5,7 +5,7 @@ import { HeroBannerItem } from '../Types/HeroBannerTypes';
 export const heroBannerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getHeroBanners: builder.query<HeroBannerItem[], void>({
-      query: () => '/marketing/content/HeroBanner',
+      query: () => '/hero-slides?siteVariant=Enterprise',
       transformResponse: (response: any): HeroBannerItem[] => {
         if (!response) return [];
         let items: any[] = [];
