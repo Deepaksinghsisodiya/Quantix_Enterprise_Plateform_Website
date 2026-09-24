@@ -330,6 +330,45 @@ export async function generateMetadata({
   };
 }
 
+async function getApiIntegration(slug: string): Promise<IntegrationDetail | null> {
+  try {
+    const backendUrl = process.env.BACKEND_API_URL || "http://localhost:5104";
+    const res = await fetch(`${backendUrl}/api/v1/integrations/slug/${encodeURIComponent(slug)}?siteVariant=Enterprise`, {
+      next: { revalidate: 60 },
+      headers: { Accept: "application/json" },
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    if (!json?.success || !json?.data) return null;
+    const d = json.data;
+
+    const parseJson = (str: string | undefined, fallback: any) => {
+      if (!str) return fallback;
+      try {
+        const parsed = JSON.parse(str);
+        return Array.isArray(parsed) && parsed.length > 0 ? parsed : fallback;
+      } catch {
+        return fallback;
+      }
+    };
+
+    return {
+      id: d.slug || slug,
+      name: d.name,
+      category: d.categoryLabel || d.category || "ECOSYSTEM",
+      color: d.accent || "#f97316",
+      tagline: d.tagline || d.description,
+      description: d.description,
+      features: parseJson(d.featuresJson, []),
+      howItWorks: parseJson(d.setupStepsJson, []),
+      benefits: parseJson(d.benefitsJson, []),
+      faqs: parseJson(d.faqsJson, []),
+    };
+  } catch {
+    return null;
+  }
+}
+
 export default async function IntegrationDetailPage({
   params,
 }: {
@@ -337,7 +376,9 @@ export default async function IntegrationDetailPage({
 }) {
   const { slug } = await params;
 
-  let integration = INTEGRATIONS_DATA[slug] || (slug === "ubereats" ? INTEGRATIONS_DATA["uber-eats"] : undefined);
+  const apiIntegration = await getApiIntegration(slug);
+  const staticIntegration = INTEGRATIONS_DATA[slug] || (slug === "ubereats" ? INTEGRATIONS_DATA["uber-eats"] : undefined);
+  let integration = apiIntegration || staticIntegration;
   if (!integration) {
     integration = {
       id: slug,

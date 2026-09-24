@@ -6,7 +6,7 @@ import { useGetIntegrationsQuery } from './Service/IntegrationsService';
 import IntegrationGrid from './IntegrationGrid';
 
 export const IntegrationsWrapper: React.FC = () => {
-  const { data: integrations = [], isLoading } = useGetIntegrationsQuery();
+  const { data: integrations = [], isLoading } = useGetIntegrationsQuery({ siteVariant: 'Enterprise' });
 
   return (
     <section className="pt-32 sm:pt-40 pb-16 sm:pb-24 text-slate-900 dark:text-white min-h-[80vh] relative transition-colors duration-300">
