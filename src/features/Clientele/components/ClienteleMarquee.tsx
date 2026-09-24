@@ -34,6 +34,7 @@ const getCategoryIcon = (industry?: string, category?: string) => {
 // Single Brand Card (High-End Enterprise Card - Option 1)
 const BrandCard = ({ brand, idx }: { brand: ClientBrandDto; idx: number }) => {
   const [imgError, setImgError] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
   const brandName = brand.title || brand.name || 'Brand Partner';
   const brandIndustry = brand.industry || brand.category || 'Enterprise';
   const Icon = getCategoryIcon(brand.industry, brand.category);
@@ -71,15 +72,24 @@ const BrandCard = ({ brand, idx }: { brand: ClientBrandDto; idx: number }) => {
       </div>
 
       {/* Center: Brand Logo in Crisp Backplate Viewport */}
-      <div className="h-16 w-full flex items-center justify-center bg-slate-50/80 dark:bg-slate-800/40 rounded-xl p-2.5 border border-slate-100 dark:border-slate-800/70 relative z-10">
+      <div className="relative h-16 w-full flex items-center justify-center bg-slate-50/80 dark:bg-slate-800/40 rounded-xl p-2.5 border border-slate-100 dark:border-slate-800/70 z-10 overflow-hidden">
         {logoUrl ? (
-          <img
-            src={logoUrl}
-            alt={`${brandName} logo`}
-            className="max-h-full max-w-full object-contain filter dark:brightness-110 transition-transform duration-300 group-hover:scale-105"
-            onError={() => setImgError(true)}
-            loading="lazy"
-          />
+          <>
+            {!imgLoaded && (
+              <div className="absolute inset-0 animate-pulse bg-slate-200 dark:bg-slate-700/80 rounded-xl" />
+            )}
+            <img
+              src={logoUrl}
+              alt={`${brandName} logo`}
+              onLoad={() => setImgLoaded(true)}
+              onError={() => setImgError(true)}
+              className={cn(
+                'max-h-full max-w-full object-contain filter dark:brightness-110 transition-all duration-300 group-hover:scale-105',
+                !imgLoaded ? 'opacity-0' : 'opacity-100'
+              )}
+              loading="lazy"
+            />
+          </>
         ) : (
           <div className="flex items-center gap-2.5 text-[#FF4F00] font-syne font-bold text-sm">
             <div className="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center text-[#FF4F00]">

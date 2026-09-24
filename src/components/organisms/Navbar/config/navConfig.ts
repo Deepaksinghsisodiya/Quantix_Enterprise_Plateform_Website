@@ -42,6 +42,7 @@ import {
   Boxes,
   PlayCircle,
   Building2,
+  Handshake,
 } from 'lucide-react';
 import type { NavLink, MegaMenuSectionData, MobileMenuSection, QuickMobileTool } from './navTypes';
 
@@ -211,6 +212,7 @@ export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
     {
       categoryTitle: 'LEARN & READ',
       items: [
+        { title: 'Brand Partners & Clientele', desc: 'Enterprise chains & multi-unit brands powered by Quantix', href: '/resources/clientele', icon: Handshake, iconColor: 'text-amber-500' },
         { title: 'Blog & Insights', desc: 'Latest retail trends, POS guides & tips', href: '/blog', icon: Newspaper, iconColor: 'text-indigo-500' },
         { title: 'Help Center', desc: 'Setup guides, troubleshooting & FAQs', href: '/help', icon: HelpCircle, iconColor: 'text-blue-500' },
         { title: 'Getting Started Guide', desc: '5-step terminal onboarding & configuration', href: '/help/getting-started', icon: BookOpen, iconColor: 'text-emerald-500' },

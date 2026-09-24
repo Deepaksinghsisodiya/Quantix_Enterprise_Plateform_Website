@@ -4,8 +4,8 @@ import { ClientBrandDto, ApiClienteleResponse } from '../Types/ClienteleTypes';
 
 export const clienteleApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getClientele: builder.query<ClientBrandDto[], void>({
-      query: () => '/clientele',
+    getClientele: builder.query<ClientBrandDto[], string | void>({
+      query: (variant = 'Enterprise') => `/clientele?siteVariant=${variant || 'Enterprise'}`,
       transformResponse: (response: ApiClienteleResponse) => {
         return response?.success && response?.data ? response.data : [];
       },

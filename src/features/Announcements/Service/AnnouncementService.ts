@@ -5,7 +5,7 @@ import { AnnouncementDto } from '../Types/AnnouncementTypes';
 export const announcementsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAnnouncements: builder.query<AnnouncementDto[], void>({
-      query: () => '/announcements',
+      query: () => '/announcements?siteVariant=Enterprise',
       transformResponse: (response: any) => {
         if (!response) return [];
         if (Array.isArray(response)) return response;

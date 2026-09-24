@@ -6,7 +6,7 @@ import { useGetClienteleQuery } from '../Service/ClienteleService';
 import ClienteleMarquee from './ClienteleMarquee';
 
 export const ClienteleWrapper: React.FC = () => {
-  const { data: clientele = [], isLoading } = useGetClienteleQuery();
+  const { data: clientele = [], isLoading } = useGetClienteleQuery('Enterprise');
 
   return <ClienteleMarquee clientele={clientele} isLoading={isLoading} />;
 };
