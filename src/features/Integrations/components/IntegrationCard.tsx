@@ -12,16 +12,17 @@ type IntegrationCardProps = {
 };
 
 export default function IntegrationCard({ integration }: IntegrationCardProps) {
-  const isDetailAvailable = INTEGRATION_DETAIL_SLUGS.has(integration.slug);
-  const href = isDetailAvailable ? `/integrations/${integration.slug}` : (integration.websiteUrl || '/integrations');
+  const href = `/integrations/${integration.slug}`;
+  const isDetailAvailable = Boolean(integration.slug);
 
   const bundleImage =
-    integration.slug === 'stripe' ? '/images/ent_stripe_pos_bundle.png' :
+    integration.imageUrl ||
+    (integration.slug === 'stripe' ? '/images/ent_stripe_pos_bundle.png' :
     integration.category?.toLowerCase().includes('payment') ? '/images/ent_stripe_pos_bundle.png' :
     integration.category?.toLowerCase().includes('delivery') ? '/images/ent_delivery_dispatch_bundle.png' :
     integration.category?.toLowerCase().includes('erp') || integration.category?.toLowerCase().includes('accounting') ? '/images/ent_accounting_sync_bundle.png' :
     integration.category?.toLowerCase().includes('omnichannel') || integration.category?.toLowerCase().includes('commerce') ? '/images/ent_omnichannel_bundle.png' :
-    '/images/ent_venues_pos.png';
+    '/images/ent_venues_pos.png');
 
   const glowColor =
     integration.slug === 'stripe' ? 'from-[#635BFF]/15 to-transparent' :
@@ -46,9 +47,9 @@ export default function IntegrationCard({ integration }: IntegrationCardProps) {
         <div className="flex items-center justify-between gap-2">
           <div className="h-9 w-9 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 flex items-center justify-center shadow-xs group-hover:scale-108 transition-transform duration-300 p-1.5">
             {integration.logoUrl ? (
-              <img src={integration.logoUrl} alt={`${integration.name} logo`} className="h-full w-full object-contain" />
+              <img src={integration.logoUrl} alt={`${integration.name || 'Integration'} logo`} className="h-full w-full object-contain" />
             ) : (
-              <span className="font-syne text-xs font-black text-primary">{integration.name.charAt(0)}</span>
+              <span className="font-syne text-xs font-black text-primary">{(integration.name || 'I').charAt(0)}</span>
             )}
           </div>
           <div className="flex items-center gap-1.5">

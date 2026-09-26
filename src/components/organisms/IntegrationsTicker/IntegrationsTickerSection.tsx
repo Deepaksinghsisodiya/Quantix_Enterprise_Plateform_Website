@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -16,6 +16,7 @@ import {
   Activity,
   type LucideIcon,
 } from 'lucide-react';
+import { useGetIntegrationsQuery } from '@/features/Integrations/Service/IntegrationsService';
 
 type Integration = {
   id: string;
@@ -26,7 +27,7 @@ type Integration = {
   href?: string;
 };
 
-const integrations: Integration[] = [
+const DEFAULT_TICKER_INTEGRATIONS: Integration[] = [
   {
     id: 'stripe',
     name: 'Stripe',
@@ -74,20 +75,75 @@ export const IntegrationsTickerSection: React.FC = () => {
   const [autoIndex, setAutoIndex] = useState<number>(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
+  const { data: apiIntegrations, isLoading } = useGetIntegrationsQuery({
+    siteVariant: 'Enterprise',
+  });
+
+  const tickerIntegrations = useMemo<Integration[]>(() => {
+    if (!apiIntegrations || apiIntegrations.length === 0) {
+      return DEFAULT_TICKER_INTEGRATIONS;
+    }
+    return apiIntegrations.map((item) => {
+      const s = (item.slug || '').toLowerCase();
+      const rawCat = (item.category || '').toUpperCase();
+      const category = rawCat.includes('PAY') ? 'PAYMENTS' : rawCat.includes('DELIV') ? 'DELIVERY' : rawCat;
+      const color =
+        s.includes('stripe')
+          ? '#635BFF'
+          : s.includes('authorize')
+          ? '#1E3A5F'
+          : s.includes('square')
+          ? '#000000'
+          : s.includes('doordash')
+          ? '#FF3008'
+          : s.includes('uber')
+          ? '#06C167'
+          : '#FF4F00';
+      const logo =
+        item.logoUrl ||
+        (s.includes('stripe')
+          ? '/brands/integrations/stripe.svg'
+          : s.includes('authorize')
+          ? '/brands/integrations/authorize.svg'
+          : s.includes('square')
+          ? '/brands/integrations/square.svg'
+          : s.includes('doordash')
+          ? '/brands/integrations/doordash.svg'
+          : s.includes('uber')
+          ? '/brands/integrations/ubereats.svg'
+          : '/brands/integrations/stripe.svg');
+
+      return {
+        id: item.slug || String(item.id || ''),
+        name: item.name || '',
+        category,
+        color,
+        logo,
+        href: `/integrations/${item.slug || ''}`,
+      };
+    });
+  }, [apiIntegrations]);
+
   // Auto-cycle through partners when not hovered to keep the matrix alive
   useEffect(() => {
-    if (isHovered) return;
+    if (isHovered || tickerIntegrations.length === 0) return;
     const interval = setInterval(() => {
-      setAutoIndex((prev) => (prev + 1) % integrations.length);
+      setAutoIndex((prev) => (prev + 1) % tickerIntegrations.length);
     }, 2800);
     return () => clearInterval(interval);
-  }, [isHovered]);
+  }, [isHovered, tickerIntegrations.length]);
 
-  const currentHighlightedId = activeId || integrations[autoIndex]?.id;
-  const activePartner = integrations.find((i) => i.id === currentHighlightedId);
+  const currentHighlightedId = activeId || tickerIntegrations[autoIndex]?.id;
+  const activePartner = tickerIntegrations.find((i) => i.id === currentHighlightedId);
 
-  const paymentsList = integrations.filter((i) => i.category === 'PAYMENTS');
-  const deliveryList = integrations.filter((i) => i.category === 'DELIVERY');
+  const paymentsList = useMemo(
+    () => tickerIntegrations.filter((i) => i.category === 'PAYMENTS'),
+    [tickerIntegrations]
+  );
+  const deliveryList = useMemo(
+    () => tickerIntegrations.filter((i) => i.category === 'DELIVERY' || i.category !== 'PAYMENTS'),
+    [tickerIntegrations]
+  );
 
   return (
     <section className="py-12 lg:py-14 bg-white dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden relative select-none transition-colors">
@@ -99,7 +155,7 @@ export const IntegrationsTickerSection: React.FC = () => {
             : 'radial-gradient(circle at 50% 50%, #FF4F0010, transparent 65%)',
         }}
         transition={{ duration: 0.8 }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[550px] blur-3xl pointer-events-none -z-10"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-250 h-137.5 blur-3xl pointer-events-none -z-10"
       />
 
       {/* Section Header (Original Content Intact) */}
@@ -115,9 +171,9 @@ export const IntegrationsTickerSection: React.FC = () => {
           <span>ENTERPRISE INTEGRATIONS</span>
         </motion.div>
 
-        <h2 className="text-2xl sm:text-4xl md:text-5xl font-syne font-extrabold text-slate-950 dark:text-white tracking-tight leading-tight max-w-3xl mx-auto [text-wrap:balance]">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl font-syne font-extrabold text-slate-950 dark:text-white tracking-tight leading-tight max-w-3xl mx-auto text-balance">
           Connect Quantix With Your{' '}
-          <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500 block sm:inline">
+          <span className="font-extrabold text-transparent bg-clip-text bg-linear-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500 block sm:inline">
             Food & Retail Ecosystem
           </span>
         </h2>
@@ -143,7 +199,7 @@ export const IntegrationsTickerSection: React.FC = () => {
             {/* ----------------------------------------- */}
             {/* LEFT SPOKE: Payments Cluster (3 Nodes)    */}
             {/* ----------------------------------------- */}
-            <div className="w-[280px] xl:w-[310px] flex flex-col gap-4 shrink-0 z-20">
+            <div className="w-70 xl:w-77.5 flex flex-col gap-4 shrink-0 z-20">
               <div className="flex items-center justify-between px-1 pb-1 border-b border-slate-200/80 dark:border-slate-800/80">
                 <div className="flex items-center gap-2">
                   <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-orange-500/10 text-[#FF4F00]">
@@ -158,24 +214,38 @@ export const IntegrationsTickerSection: React.FC = () => {
                 </span>
               </div>
 
-              {paymentsList.map((partner) => {
-                const isSelected = currentHighlightedId === partner.id;
-                return (
-                  <Link
-                    key={partner.id}
-                    href={partner.href || `/integrations/${partner.id}`}
-                    onMouseEnter={() => setActiveId(partner.id)}
-                    className={`group relative flex items-center justify-between p-3.5 xl:p-4 rounded-2xl border transition-all duration-300 ${
-                      isSelected
-                        ? 'border-orange-500 bg-white dark:bg-slate-900 shadow-xl shadow-orange-500/15 -translate-x-1.5'
-                        : 'border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-900/95 hover:border-slate-300 dark:hover:border-slate-700 shadow-xs'
-                    }`}
+              {isLoading ? (
+                Array.from({ length: 3 }).map((_, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-3 p-3.5 xl:p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-900/95 animate-pulse"
                   >
+                    <div className="h-8 w-24 bg-slate-200 dark:bg-slate-800 rounded-lg shrink-0" />
+                    <div className="space-y-1.5 flex-1">
+                      <div className="h-3.5 w-20 bg-slate-200 dark:bg-slate-800 rounded" />
+                      <div className="h-2.5 w-14 bg-slate-100 dark:bg-slate-800/70 rounded" />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                paymentsList.map((partner) => {
+                  const isSelected = currentHighlightedId === partner.id;
+                  return (
+                    <Link
+                      key={partner.id}
+                      href={partner.href || `/integrations/${partner.id}`}
+                      onMouseEnter={() => setActiveId(partner.id)}
+                      className={`group relative flex items-center justify-between p-3.5 xl:p-4 rounded-2xl border transition-all duration-300 ${
+                        isSelected
+                          ? 'border-orange-500 bg-white dark:bg-slate-900 shadow-xl shadow-orange-500/15 -translate-x-1.5'
+                          : 'border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-900/95 hover:border-slate-300 dark:hover:border-slate-700 shadow-xs'
+                      }`}
+                    >
                     {/* Animated Light Sweep on Active */}
                     {isSelected && (
                       <motion.div
                         layoutId="activePaymentSweep"
-                        className="pointer-events-none absolute inset-0 rounded-2xl border border-orange-500/60 bg-gradient-to-r from-orange-500/10 to-transparent"
+                        className="pointer-events-none absolute inset-0 rounded-2xl border border-orange-500/60 bg-linear-to-r from-orange-500/10 to-transparent"
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                       />
                     )}
@@ -209,12 +279,12 @@ export const IntegrationsTickerSection: React.FC = () => {
                             : 'bg-emerald-500/70'
                         }`}
                       />
-                      <ArrowRight className="h-3.5 w-3.5 stroke-[2] text-slate-400 group-hover:text-[#FF4F00] group-hover:translate-x-0.5 transition-all" />
+                      <ArrowRight className="h-3.5 w-3.5 stroke-2 text-slate-400 group-hover:text-[#FF4F00] group-hover:translate-x-0.5 transition-all" />
                     </div>
 
                     {/* Laser Connector Anchor Node */}
                     <div
-                      className={`absolute right-[-6px] top-1/2 -translate-y-1/2 h-3 w-3 rounded-full border-2 transition-all duration-300 ${
+                      className={`absolute -right-1.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full border-2 transition-all duration-300 ${
                         isSelected
                           ? 'border-[#FF4F00] bg-[#FF4F00] shadow-[0_0_10px_#FF4F00] scale-125'
                           : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900'
@@ -222,13 +292,14 @@ export const IntegrationsTickerSection: React.FC = () => {
                     />
                   </Link>
                 );
-              })}
+              })
+              )}
             </div>
 
             {/* ----------------------------------------- */}
             {/* LEFT SVG CONDUITS: Curved Laser Beams     */}
             {/* ----------------------------------------- */}
-            <div className="w-[100px] xl:w-[130px] h-[340px] relative pointer-events-none">
+            <div className="w-25 xl:w-32.5 h-85 relative pointer-events-none">
               <svg
                 viewBox="0 0 100 340"
                 fill="none"
@@ -327,7 +398,7 @@ export const IntegrationsTickerSection: React.FC = () => {
             {/* ----------------------------------------- */}
             {/* CENTER HUB: Quantix Reactor Core Engine   */}
             {/* ----------------------------------------- */}
-            <div className="w-[300px] xl:w-[340px] flex flex-col items-center justify-center text-center p-6 xl:p-8 rounded-3xl border-2 border-orange-500/40 bg-white/95 dark:bg-slate-950/95 shadow-2xl relative overflow-hidden shrink-0 min-h-[410px] z-20">
+            <div className="w-75 xl:w-85 flex flex-col items-center justify-center text-center p-6 xl:p-8 rounded-3xl border-2 border-orange-500/40 bg-white/95 dark:bg-slate-950/95 shadow-2xl relative overflow-hidden shrink-0 min-h-102.5 z-20">
               {/* Dynamic Center Radial Backlight Glow */}
               <motion.div
                 animate={{
@@ -359,14 +430,14 @@ export const IntegrationsTickerSection: React.FC = () => {
                 {/* Core Icon Box */}
                 <motion.div
                   whileHover={{ scale: 1.08, rotate: 5 }}
-                  className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FF4F00] via-[#FF6B2B] to-amber-500 text-white shadow-xl shadow-orange-500/45"
+                  className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-[#FF4F00] via-[#FF6B2B] to-amber-500 text-white shadow-xl shadow-orange-500/45"
                 >
                   <Cpu className="h-8 w-8 stroke-[2.2]" />
                 </motion.div>
               </div>
 
               {/* Hub Title & Live Telemetry Readout */}
-              <div className="relative z-10 space-y-2 max-w-[250px]">
+              <div className="relative z-10 space-y-2 max-w-62.5">
                 <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-0.5 text-[9.5px] font-mono font-bold text-emerald-600 dark:text-emerald-400 shadow-2xs">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   <span>ACTIVE HUB CORE</span>
@@ -383,7 +454,7 @@ export const IntegrationsTickerSection: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.25 }}
-                    className="text-xs font-medium min-h-[38px] flex items-center justify-center"
+                    className="text-xs font-medium min-h-9.5 flex items-center justify-center"
                   >
                     {activePartner ? (
                       <span className="text-[#FF4F00] font-bold inline-flex items-center gap-1.5">
@@ -409,7 +480,7 @@ export const IntegrationsTickerSection: React.FC = () => {
             {/* ----------------------------------------- */}
             {/* RIGHT SVG CONDUITS: Curved Laser Beams    */}
             {/* ----------------------------------------- */}
-            <div className="w-[100px] xl:w-[130px] h-[340px] relative pointer-events-none">
+            <div className="w-25 xl:w-32.5 h-85 relative pointer-events-none">
               <svg
                 viewBox="0 0 100 340"
                 fill="none"
@@ -481,7 +552,7 @@ export const IntegrationsTickerSection: React.FC = () => {
             {/* ----------------------------------------- */}
             {/* RIGHT SPOKE: Delivery Cluster (2 Nodes)   */}
             {/* ----------------------------------------- */}
-            <div className="w-[280px] xl:w-[310px] flex flex-col gap-6 shrink-0 my-auto z-20">
+            <div className="w-70 xl:w-77.5 flex flex-col gap-6 shrink-0 my-auto z-20">
               <div className="flex items-center justify-between px-1 pb-1 border-b border-slate-200/80 dark:border-slate-800/80">
                 <div className="flex items-center gap-2">
                   <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-orange-500/10 text-[#FF4F00]">
@@ -496,22 +567,36 @@ export const IntegrationsTickerSection: React.FC = () => {
                 </span>
               </div>
 
-              {deliveryList.map((partner) => {
-                const isSelected = currentHighlightedId === partner.id;
-                return (
-                  <Link
-                    key={partner.id}
-                    href={partner.href || `/integrations/${partner.id}`}
-                    onMouseEnter={() => setActiveId(partner.id)}
-                    className={`group relative flex items-center justify-between p-3.5 xl:p-4 rounded-2xl border transition-all duration-300 ${
-                      isSelected
-                        ? 'border-orange-500 bg-white dark:bg-slate-900 shadow-xl shadow-orange-500/15 translate-x-1.5'
-                        : 'border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-900/95 hover:border-slate-300 dark:hover:border-slate-700 shadow-xs'
-                    }`}
+              {isLoading ? (
+                Array.from({ length: 2 }).map((_, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-3 p-3.5 xl:p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-900/95 animate-pulse"
                   >
+                    <div className="h-8 w-24 bg-slate-200 dark:bg-slate-800 rounded-lg shrink-0" />
+                    <div className="space-y-1.5 flex-1">
+                      <div className="h-3.5 w-20 bg-slate-200 dark:bg-slate-800 rounded" />
+                      <div className="h-2.5 w-14 bg-slate-100 dark:bg-slate-800/70 rounded" />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                deliveryList.map((partner) => {
+                  const isSelected = currentHighlightedId === partner.id;
+                  return (
+                    <Link
+                      key={partner.id}
+                      href={partner.href || `/integrations/${partner.id}`}
+                      onMouseEnter={() => setActiveId(partner.id)}
+                      className={`group relative flex items-center justify-between p-3.5 xl:p-4 rounded-2xl border transition-all duration-300 ${
+                        isSelected
+                          ? 'border-orange-500 bg-white dark:bg-slate-900 shadow-xl shadow-orange-500/15 translate-x-1.5'
+                          : 'border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-900/95 hover:border-slate-300 dark:hover:border-slate-700 shadow-xs'
+                      }`}
+                    >
                     {/* Laser Connector Anchor Node */}
                     <div
-                      className={`absolute left-[-6px] top-1/2 -translate-y-1/2 h-3 w-3 rounded-full border-2 transition-all duration-300 ${
+                      className={`absolute -left-1.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full border-2 transition-all duration-300 ${
                         isSelected
                           ? 'border-[#FF4F00] bg-[#FF4F00] shadow-[0_0_10px_#FF4F00] scale-125'
                           : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900'
@@ -522,7 +607,7 @@ export const IntegrationsTickerSection: React.FC = () => {
                     {isSelected && (
                       <motion.div
                         layoutId="activeDeliverySweep"
-                        className="pointer-events-none absolute inset-0 rounded-2xl border border-orange-500/60 bg-gradient-to-l from-orange-500/10 to-transparent"
+                        className="pointer-events-none absolute inset-0 rounded-2xl border border-orange-500/60 bg-linear-to-l from-orange-500/10 to-transparent"
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                       />
                     )}
@@ -556,11 +641,12 @@ export const IntegrationsTickerSection: React.FC = () => {
                             : 'bg-emerald-500/70'
                         }`}
                       />
-                      <ArrowRight className="h-3.5 w-3.5 stroke-[2] text-slate-400 group-hover:text-[#FF4F00] group-hover:translate-x-0.5 transition-all" />
+                      <ArrowRight className="h-3.5 w-3.5 stroke-2 text-slate-400 group-hover:text-[#FF4F00] group-hover:translate-x-0.5 transition-all" />
                     </div>
                   </Link>
                 );
-              })}
+              })
+              )}
             </div>
           </div>
         </div>
@@ -624,9 +710,9 @@ export const IntegrationsTickerSection: React.FC = () => {
         </div>
 
         {/* Stage 2: Central Operating Hub */}
-        <div className="p-4 rounded-2xl border-2 border-orange-500/40 bg-gradient-to-r from-orange-500/[0.04] via-white to-orange-500/[0.04] dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 shadow-lg relative overflow-hidden flex items-center justify-between">
+        <div className="p-4 rounded-2xl border-2 border-orange-500/40 bg-linear-to-r from-orange-500/4 via-white to-orange-500/4 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 shadow-lg relative overflow-hidden flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4F00] to-[#FF6B2B] text-white shadow-md shadow-orange-500/30">
+            <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-[#FF4F00] to-[#FF6B2B] text-white shadow-md shadow-orange-500/30">
               <Cpu className="h-5 w-5 stroke-[2.2]" />
             </div>
             <div>
@@ -704,6 +790,6 @@ export const IntegrationsTickerSection: React.FC = () => {
   );
 };
 
-export { integrations };
+export { DEFAULT_TICKER_INTEGRATIONS as integrations, DEFAULT_TICKER_INTEGRATIONS };
 export type { Integration };
 export default IntegrationsTickerSection;

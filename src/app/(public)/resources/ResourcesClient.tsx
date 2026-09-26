@@ -26,6 +26,7 @@ import {
   Zap,
   Code2,
   Lock,
+  Handshake,
 } from 'lucide-react';
 import CTABanner from '@/components/organisms/CTABanner/CTABanner';
 import ClienteleWrapper from '@/features/Clientele';
@@ -295,6 +296,47 @@ const RESOURCE_PILLARS: ResourcePillar[] = [
           <div className="p-2.5 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-between">
             <span className="text-slate-400 font-mono">SLA:</span>
             <span className="font-bold text-emerald-400">Guaranteed &lt; 15 Mins</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'clientele',
+    num: '07',
+    title: 'Brand Partners & Clientele Directory',
+    badge: 'CLIENTELE DIRECTORY',
+    category: 'docs',
+    desc: 'Explore high-volume enterprise chains, dining groups, and supermarket franchises running mission-critical multi-unit operations on Quantix Platform.',
+    icon: Handshake,
+    href: '/resources/clientele',
+    linkText: 'Explore Clientele Directory',
+    color: {
+      icon: '#D97706',
+      iconBg: '#FEF3C7',
+      iconBorder: '#FDE68A',
+      badge: '#B45309',
+      badgeBg: '#FEF3C7',
+      indicator: '#F59E0B',
+    },
+    points: ['100+ Enterprise brand case studies', 'Verified unit counts & deployments', 'Multi-concept operational blueprints'],
+    stats: [{ v: '100+', l: 'Brands' }, { v: '10,000+', l: 'Locations' }, { v: '99.99%', l: 'Uptime' }],
+    preview: (
+      <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 space-y-3 font-sans">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Enterprise Network</span>
+          <span className="text-[10px] font-bold text-amber-400 bg-amber-950/60 border border-amber-800/60 px-2 py-0.5 rounded">
+            Live Directory
+          </span>
+        </div>
+        <div className="space-y-2">
+          <div className="p-2.5 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-between">
+            <span className="text-slate-300 font-bold text-xs">Major Dining & Retail Chains</span>
+            <span className="text-amber-400 text-[10px] font-mono font-bold">120+ Units</span>
+          </div>
+          <div className="p-2.5 rounded-lg bg-amber-950/30 border border-amber-800/40 flex items-center justify-between">
+            <span className="text-amber-300 text-xs font-semibold">Active Production Fleet</span>
+            <span className="text-emerald-400 text-[10px] font-mono">100% Operational</span>
           </div>
         </div>
       </div>

@@ -213,7 +213,7 @@ export const ClienteleMarquee: React.FC<ClienteleMarqueeProps> = ({
 
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-syne font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight max-w-3xl mx-auto">
           Trusted by High-Volume{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500">
             Brands & Franchises
           </span>
         </h2>
@@ -234,8 +234,8 @@ export const ClienteleMarquee: React.FC<ClienteleMarqueeProps> = ({
         }}
       >
         {/* Left and Right Edge Fade Gradients */}
-        <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-28 md:w-44 lg:w-60 bg-gradient-to-r from-slate-50 via-slate-50/80 to-transparent dark:from-slate-900 dark:via-slate-900/80 z-20 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-28 md:w-44 lg:w-60 bg-gradient-to-l from-slate-50 via-slate-50/80 to-transparent dark:from-slate-900 dark:via-slate-900/80 z-20 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-28 md:w-44 lg:w-60 bg-linear-to-r from-slate-50 via-slate-50/80 to-transparent dark:from-slate-900 dark:via-slate-900/80 z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-28 md:w-44 lg:w-60 bg-linear-to-l from-slate-50 via-slate-50/80 to-transparent dark:from-slate-900 dark:via-slate-900/80 z-20 pointer-events-none" />
 
         {/* Framer Motion Seamless Infinite Slider */}
         <motion.div

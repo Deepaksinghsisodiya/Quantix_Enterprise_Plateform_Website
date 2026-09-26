@@ -65,6 +65,7 @@ export default function HomePageClient() {
         <SocialProofStatsWrapper />
       </section>
 
+
       {/* 1.8 Business Problems: Disconnected Systems (Blueprint Section 10) */}
       <section id="business-problems" className="scroll-mt-28">
         <BusinessProblemSection />

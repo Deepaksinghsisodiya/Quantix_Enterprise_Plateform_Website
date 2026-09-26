@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import type { IntegrationDto } from './Types/IntegrationTypes';
 import { DEFAULT_INTEGRATIONS } from './dummyData/integrationCatalog';
 import IntegrationCard from './components/IntegrationCard';
+import IntegrationCardSkeleton from './components/IntegrationCardSkeleton';
 import { toast } from 'sonner';
 
 interface IntegrationGridProps {
@@ -38,9 +39,9 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
       const q = search.toLowerCase();
       result = result.filter(
         (i) =>
-          i.name.toLowerCase().includes(q) ||
-          i.description.toLowerCase().includes(q) ||
-          i.category.toLowerCase().includes(q)
+          (i.name || '').toLowerCase().includes(q) ||
+          (i.description || '').toLowerCase().includes(q) ||
+          (i.category || '').toLowerCase().includes(q)
       );
     }
     return result;
@@ -106,7 +107,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, idx) => (
-            <div key={idx} className="h-44 rounded-2xl border border-gray-200 dark:border-slate-800/80 bg-gray-50 dark:bg-slate-900/20 p-6 animate-pulse" />
+            <IntegrationCardSkeleton key={idx} />
           ))}
         </div>
       ) : filtered.length > 0 ? (
@@ -127,7 +128,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
 
       {/* Integration Request Card */}
       <div className="rounded-2xl border border-gray-200 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-900/20 p-8 sm:p-10 backdrop-blur-md relative overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-linear-to-r from-transparent via-blue-500/40 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-blue-500/40 to-transparent" />
 
         <div className="max-w-xl mx-auto text-center space-y-4">
           <h3 className="text-xl sm:text-2xl font-syne font-black text-slate-900 dark:text-white uppercase tracking-tight">
@@ -173,7 +174,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
                 className="mt-6 p-6 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-500/20 text-center space-y-2 max-w-sm mx-auto"
               >
                 <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center mx-auto mb-2 text-white">
-                  <Check size={16} className="stroke-[3]" />
+                  <Check size={16} className="stroke-3" />
                 </div>
                 <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Request Logged</h4>
                 <p className="text-[11px] text-slate-600 dark:text-slate-400 font-medium">We will update you at {requestEmail} as soon as this connector is ready!</p>

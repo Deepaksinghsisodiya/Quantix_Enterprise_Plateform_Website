@@ -308,6 +308,7 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
       {
         title: 'LEARNING & SUPPORT',
         items: [
+          { title: 'Brand Partners & Clientele', desc: 'Enterprise chains & partners', href: '/resources/clientele', icon: Handshake },
           { title: 'Help & Knowledge Center', desc: 'Setup tutorials & guides', href: '/help', icon: HelpCircle },
           { title: 'Software Downloads', desc: 'Windows & Android binaries', href: '/downloads', icon: Download },
           { title: '24/7 Priority Support', desc: 'Speak to a POS engineer', href: '/#support', icon: Headset },

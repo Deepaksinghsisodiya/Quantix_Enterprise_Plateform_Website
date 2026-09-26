@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
@@ -512,7 +512,7 @@ export default function FeaturesClient() {
       {/* ========================================================================= */}
       {/* 2. STICKY FILTER, INSTANT SEARCH & VIEW TOGGLE DOCK                       */}
       {/* ========================================================================= */}
-      <div className="sticky top-[80px] sm:top-[88px] z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800 py-3 shadow-xs">
+      <div className="sticky top-20 sm:top-22 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800 py-3 shadow-xs">
         <div className="site-container px-3 sm:px-6">
           <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
             
@@ -835,7 +835,7 @@ function WideFeatureCard({ item }: { item: FeatureCardItem }) {
                 {item.keyPoints.map((point) => (
                   <div key={point} className="flex items-start gap-2 text-xs font-medium text-slate-700 dark:text-slate-300">
                     <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary mt-0.5">
-                      <Check className="h-2.5 w-2.5 stroke-[3]" />
+                      <Check className="h-2.5 w-2.5 stroke-3" />
                     </span>
                     <span className="leading-tight">{point}</span>
                   </div>

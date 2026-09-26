@@ -34,6 +34,9 @@ export interface IntegrationDto {
   category: string;
   categoryLabel?: string;
   color?: string;
+  accent?: string;
+  badge?: string;
+  heroHeadline?: string;
   tagline?: string;
   logoUrl?: string;
   imageUrl?: string;

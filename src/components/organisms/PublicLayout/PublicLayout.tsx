@@ -26,7 +26,7 @@ export const PublicLayout = ({ children }: { children: React.ReactNode }) => {
       <ContactModalProvider>
         {/* Top Scroll Progress Bar Indicator */}
         <motion.div
-          className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary via-primary-light to-primary-dark z-[100] origin-left pointer-events-none"
+          className="fixed top-0 left-0 right-0 h-0.5 bg-linear-to-r from-primary via-primary-light to-primary-dark z-100 origin-left pointer-events-none"
           style={{ scaleX }}
         />
         <div className={cn(

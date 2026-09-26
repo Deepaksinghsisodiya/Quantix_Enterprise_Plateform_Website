@@ -1,14 +1,26 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { ChevronRight, Sparkles, ArrowRight, Check } from 'lucide-react';
+import {
+  ChevronRight,
+  Sparkles,
+  ArrowRight,
+  Check,
+  CreditCard,
+  ShieldCheck,
+  Smartphone,
+  Truck,
+  Layers,
+  Zap,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MegaMenuWrapper } from './MegaMenuWrapper';
 import { INTEGRATIONS_MEGA_CONFIG } from '../../../config/navConfig';
 import type { MegaMenuPromoCard, MegaMenuCategory, MegaMenuItem } from '../../../config/navTypes';
+import { useGetIntegrationsQuery } from '@/features/Integrations/Service/IntegrationsService';
 
 interface IntegrationsMegaMenuProps {
   onClose: () => void;
@@ -22,7 +34,61 @@ export const IntegrationsMegaMenu: React.FC<IntegrationsMegaMenuProps> = ({
   onMouseLeave,
 }) => {
   const pathname = usePathname();
-  const { promoCards, categories } = INTEGRATIONS_MEGA_CONFIG;
+  const { promoCards, categories: staticCategories } = INTEGRATIONS_MEGA_CONFIG;
+
+  const { data: apiIntegrations, isLoading } = useGetIntegrationsQuery({
+    siteVariant: 'Enterprise',
+    showInNavbar: true,
+  });
+
+  const displayCategories: MegaMenuCategory[] = useMemo(() => {
+    if (!apiIntegrations || apiIntegrations.length === 0) {
+      return staticCategories;
+    }
+
+    const getIconForItem = (slug: string = '', cat: string = '') => {
+      const s = (slug || '').toLowerCase();
+      const c = (cat || '').toLowerCase();
+      if (s.includes('stripe') || c.includes('payment')) return { icon: CreditCard, color: 'text-indigo-500' };
+      if (s.includes('authorize') || s.includes('vault')) return { icon: ShieldCheck, color: 'text-blue-600' };
+      if (s.includes('square') || s.includes('terminal')) return { icon: Smartphone, color: 'text-slate-700 dark:text-slate-300' };
+      if (s.includes('doordash')) return { icon: Truck, color: 'text-rose-500' };
+      if (s.includes('uber')) return { icon: Truck, color: 'text-emerald-500' };
+      if (c.includes('delivery')) return { icon: Truck, color: 'text-emerald-500' };
+      if (c.includes('accounting') || c.includes('erp')) return { icon: Layers, color: 'text-cyan-500' };
+      return { icon: Zap, color: 'text-primary' };
+    };
+
+    const groups: Record<string, MegaMenuItem[]> = {};
+
+    apiIntegrations.forEach((item) => {
+      const rawCat = (item.category || 'Other').toUpperCase();
+      const catTitle =
+        rawCat.includes('PAY') ? 'PAYMENT PROCESSORS' :
+        rawCat.includes('DELIV') ? 'DELIVERY MARKETPLACES' :
+        rawCat.includes('ERP') || rawCat.includes('ACCOUNT') ? 'ACCOUNTING & ERP' :
+        `${rawCat} CONNECTORS`;
+
+      if (!groups[catTitle]) {
+        groups[catTitle] = [];
+      }
+
+      const { icon, color } = getIconForItem(item.slug || '', item.category || '');
+
+      groups[catTitle].push({
+        title: item.name,
+        desc: item.tagline || item.description || '',
+        href: `/integrations/${item.slug}`,
+        icon,
+        iconColor: color,
+      });
+    });
+
+    return Object.entries(groups).map(([categoryTitle, items]) => ({
+      categoryTitle,
+      items,
+    }));
+  }, [apiIntegrations, staticCategories]);
 
   const renderMenuItem = (item: MegaMenuItem) => {
     const ItemIcon = item.icon;
@@ -88,6 +154,58 @@ export const IntegrationsMegaMenu: React.FC<IntegrationsMegaMenuProps> = ({
     );
   };
 
+  if (isLoading) {
+    return (
+      <MegaMenuWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8 w-full animate-pulse">
+          {/* Left Promo Card Skeleton (4 cols) */}
+          <div className="flex flex-col border-slate-200/80 pr-0 dark:border-slate-800/80 lg:col-span-4 lg:border-r lg:pr-7 h-full">
+            <div className="p-4.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between h-full gap-3.5">
+              <div className="w-full h-44 sm:h-48 lg:h-46.25 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center p-3 relative">
+                <div className="absolute top-2 left-2 h-4 w-24 rounded-full bg-slate-200 dark:bg-slate-700" />
+                <div className="h-20 w-24 rounded-lg bg-slate-200 dark:bg-slate-700" />
+              </div>
+              <div className="space-y-2 pb-1">
+                <div className="h-4 w-3/4 rounded bg-slate-200 dark:bg-slate-700" />
+                <div className="h-3 w-full rounded bg-slate-100 dark:bg-slate-800" />
+                <div className="h-3 w-4/5 rounded bg-slate-100 dark:bg-slate-800" />
+              </div>
+            </div>
+          </div>
+
+          {/* 2 Category Columns Skeleton (8 cols) */}
+          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
+            {[1, 2].map((col) => (
+              <div key={col} className="space-y-2.5">
+                <div className="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+                  <div className="h-2 w-2 rounded-full bg-slate-200 dark:bg-slate-700" />
+                  <div className="h-3 w-32 rounded bg-slate-200 dark:bg-slate-700" />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                  {[1, 2, 3].map((row) => (
+                    <div key={row} className="flex items-center gap-3 p-3 rounded-2xl border border-transparent bg-slate-50/50 dark:bg-slate-900/40">
+                      <div className="h-8.5 w-8.5 rounded-xl bg-slate-200 dark:bg-slate-800 shrink-0" />
+                      <div className="flex-1 space-y-1.5">
+                        <div className="h-3.5 w-28 rounded bg-slate-200 dark:bg-slate-800" />
+                        <div className="h-2.5 w-44 rounded bg-slate-100 dark:bg-slate-800/80" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Skeleton Bar */}
+        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
+          <div className="h-3 w-72 rounded bg-slate-200 dark:bg-slate-800" />
+          <div className="h-3 w-40 rounded bg-slate-200 dark:bg-slate-800" />
+        </div>
+      </MegaMenuWrapper>
+    );
+  }
+
   return (
     <MegaMenuWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8 w-full">
@@ -132,7 +250,7 @@ export const IntegrationsMegaMenu: React.FC<IntegrationsMegaMenuProps> = ({
 
         {/* 2 Categories: Generous 2-Column Grid (8 cols, wide and untruncated) */}
         <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
-          {categories.map((cat: MegaMenuCategory) => (
+          {displayCategories.map((cat: MegaMenuCategory) => (
             <div key={cat.categoryTitle} className="space-y-2.5">
               <div className="flex items-center gap-2 text-[10px] font-syne font-black uppercase tracking-widest text-primary select-none px-1 border-b border-slate-100 dark:border-slate-800 pb-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />

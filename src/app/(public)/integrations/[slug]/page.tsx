@@ -1,8 +1,9 @@
-import React from "react";
+"use client";
+
+import React, { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { useParams } from "next/navigation";
 import {
   ArrowRight,
   Check,
@@ -22,6 +23,8 @@ import { RequestDemoButton } from "@/components/atoms/RequestDemoButton";
 import { ConnectIntegrationButton } from "@/components/atoms/ConnectIntegrationButton";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import TestimonialsWrapper from "@/features/Testimonials";
+import { useGetIntegrationBySlugQuery } from "@/features/Integrations/Service/IntegrationsService";
+import { IntegrationDetailSkeleton } from "@/features/Integrations/components/IntegrationDetailSkeleton";
 
 type IntegrationStep = {
   step: string;
@@ -310,37 +313,20 @@ const INTEGRATIONS_DATA: Record<string, IntegrationDetail> = {
   },
 };
 
-export function generateStaticParams() {
-  return Object.keys(INTEGRATIONS_DATA).map((slug) => ({ slug }));
-}
+export default function IntegrationDetailPage() {
+  const params = useParams();
+  const slug = typeof params?.slug === "string" ? params.slug : "";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const integration = INTEGRATIONS_DATA[slug] || (slug === "ubereats" ? INTEGRATIONS_DATA["uber-eats"] : undefined);
-  if (!integration) {
-    return { title: "Integrations | Quantix Enterprise" };
-  }
-  return {
-    title: `${integration.name} Integration | Quantix Enterprise`,
-    description: integration.description,
-  };
-}
+  const { data: apiData, isLoading } = useGetIntegrationBySlugQuery(
+    { slug, siteVariant: "Enterprise" },
+    { skip: !slug }
+  );
 
-async function getApiIntegration(slug: string): Promise<IntegrationDetail | null> {
-  try {
-    const backendUrl = process.env.BACKEND_API_URL || "http://localhost:5104";
-    const res = await fetch(`${backendUrl}/api/v1/integrations/slug/${encodeURIComponent(slug)}?siteVariant=Enterprise`, {
-      next: { revalidate: 60 },
-      headers: { Accept: "application/json" },
-    });
-    if (!res.ok) return null;
-    const json = await res.json();
-    if (!json?.success || !json?.data) return null;
-    const d = json.data;
+  const staticIntegration = INTEGRATIONS_DATA[slug] || (slug === "ubereats" ? INTEGRATIONS_DATA["uber-eats"] : undefined);
+
+  const apiIntegration: IntegrationDetail | null = useMemo(() => {
+    if (!apiData) return null;
+    const d = apiData;
 
     const parseJson = (str: string | undefined, fallback: any) => {
       if (!str) return fallback;
@@ -354,31 +340,23 @@ async function getApiIntegration(slug: string): Promise<IntegrationDetail | null
 
     return {
       id: d.slug || slug,
-      name: d.name,
-      category: d.categoryLabel || d.category || "ECOSYSTEM",
-      color: d.accent || "#f97316",
-      tagline: d.tagline || d.description,
-      description: d.description,
-      features: parseJson(d.featuresJson, []),
-      howItWorks: parseJson(d.setupStepsJson, []),
-      benefits: parseJson(d.benefitsJson, []),
-      faqs: parseJson(d.faqsJson, []),
+      name: d.name || staticIntegration?.name || slug,
+      category: (d.categoryLabel || d.category || staticIntegration?.category || "ECOSYSTEM").toUpperCase(),
+      color: d.accent || staticIntegration?.color || "#f97316",
+      tagline: d.tagline || d.description || staticIntegration?.tagline || "",
+      description: d.description || staticIntegration?.description || "",
+      features: parseJson(d.featuresJson, staticIntegration?.features || []),
+      howItWorks: parseJson(d.setupStepsJson, staticIntegration?.howItWorks || []),
+      benefits: parseJson(d.benefitsJson, staticIntegration?.benefits || []),
+      faqs: parseJson(d.faqsJson, staticIntegration?.faqs || []),
     };
-  } catch {
-    return null;
-  }
-}
+  }, [apiData, slug, staticIntegration]);
 
-export default async function IntegrationDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-
-  const apiIntegration = await getApiIntegration(slug);
-  const staticIntegration = INTEGRATIONS_DATA[slug] || (slug === "ubereats" ? INTEGRATIONS_DATA["uber-eats"] : undefined);
   let integration = apiIntegration || staticIntegration;
+
+  if (isLoading) {
+    return <IntegrationDetailSkeleton />;
+  }
   if (!integration) {
     integration = {
       id: slug,
@@ -459,10 +437,10 @@ export default async function IntegrationDetailPage({
       {/* 1. Hero Section (Aligned with globals.css .page-hero-header) */}
       <section className="bg-white page-hero-header border-b border-slate-200/80 relative overflow-hidden">
         {/* Subtle Architectural Dot Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px] sm:[background-size:24px_24px] pointer-events-none opacity-60" />
+        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] bg-size-[20px_20px] sm:bg-size-[24px_24px] pointer-events-none opacity-60" />
 
         {/* Soft Ambient Radial Warmth */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 bg-gradient-to-b from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 bg-linear-to-b from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
 
         <div className="site-container relative z-10 px-4 sm:px-6">
           {/* Breadcrumb Navigation */}
@@ -471,7 +449,7 @@ export default async function IntegrationDetailPage({
             <ChevronRight size={12} className="text-slate-400 shrink-0" />
             <Link href="/integrations" className="hover:text-[#FF4F00] transition-colors">Integrations</Link>
             <ChevronRight size={12} className="text-slate-400 shrink-0" />
-            <span className="text-[#FF4F00] font-bold truncate max-w-[170px] sm:max-w-none">{integration.name}</span>
+            <span className="text-[#FF4F00] font-bold truncate max-w-42.5 sm:max-w-none">{integration.name}</span>
           </nav>
 
           <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-12 lg:gap-12">
