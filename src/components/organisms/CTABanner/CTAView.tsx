@@ -120,13 +120,27 @@ export const CTAView: React.FC<CTAViewProps> = ({
                     <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2 shrink-0">
                       <span
                         className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
-                          chip.pingColor || "bg-emerald-400"
+                          chip.pingColor && !chip.pingColor.startsWith('#')
+                            ? chip.pingColor
+                            : (!chip.pingColor ? 'bg-emerald-400' : '')
                         }`}
+                        style={
+                          chip.pingColor && chip.pingColor.startsWith('#')
+                            ? { backgroundColor: chip.pingColor }
+                            : undefined
+                        }
                       />
                       <span
                         className={`relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 ${
-                          chip.dotColor || "bg-emerald-500"
+                          chip.dotColor && !chip.dotColor.startsWith('#')
+                            ? chip.dotColor
+                            : (!chip.dotColor ? 'bg-emerald-500' : '')
                         }`}
+                        style={
+                          chip.dotColor && chip.dotColor.startsWith('#')
+                            ? { backgroundColor: chip.dotColor }
+                            : undefined
+                        }
                       />
                     </span>
                     <span className="whitespace-nowrap">{chip.label}</span>

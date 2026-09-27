@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import {
   Headphones,
   Clock,
@@ -15,8 +14,10 @@ import {
   Star,
   Crown,
   Phone,
+  ShieldCheck,
 } from 'lucide-react';
 import { useContactModal } from '@/context/ContactModalContext';
+import { useGetPublicSupportSectionQuery } from './SupportSectionService';
 
 export interface SupportSectionProps {
   platformName?: string;
@@ -29,15 +30,43 @@ export const SupportSection: React.FC<SupportSectionProps> = ({
 }) => {
   const { openModal } = useContactModal();
 
+  // Fetch dynamic CMS data for Enterprise
+  const { data: cmsData } = useGetPublicSupportSectionQuery('Enterprise');
+
+  const pillBadge = cmsData?.pillBadge || "24/7/365 HUMAN CUSTOMER SUPPORT";
+  const mainTitle = cmsData?.mainTitle || "24/7 Dedicated Enterprise";
+  const highlightWord = cmsData?.highlightWord || "Technical Support";
+  const description =
+    cmsData?.description ||
+    "Multi-location operations need immediate resolution. Get round-the-clock technical assistance, dedicated account onboarding, and direct priority support across every store.";
+
+  const dynamicPillars = cmsData?.pillars && cmsData.pillars.length > 0 ? cmsData.pillars : null;
+
+  const renderPillarIcon = (iconKey?: string) => {
+    switch (iconKey?.toLowerCase()) {
+      case 'clock':
+        return Clock;
+      case 'shieldcheck':
+      case 'shield':
+        return ShieldCheck;
+      case 'phone':
+        return Phone;
+      case 'zap':
+        return Zap;
+      default:
+        return Headphones;
+    }
+  };
+
   return (
     <section
       id="support"
       className={`relative overflow-hidden py-12 lg:py-14 bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors select-none ${className}`}
     >
       {/* Background Subtle Ambient Glows & Dot Grid */}
-      <div className="pointer-events-none absolute -top-24 -left-20 h-[350px] sm:h-[500px] w-[350px] sm:w-[500px] rounded-full bg-orange-500/[0.04] dark:bg-orange-500/[0.07] blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-20 -right-20 h-[300px] sm:h-[400px] w-[300px] sm:w-[400px] rounded-full bg-amber-500/[0.04] dark:bg-amber-500/[0.07] blur-3xl" />
-      <div className="pointer-events-none absolute bottom-4 right-4 hidden xl:block h-28 w-28 bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] dark:bg-[radial-gradient(#334155_1.5px,transparent_1.5px)] [background-size:12px_12px]" />
+      <div className="pointer-events-none absolute -top-24 -left-20 h-87.5 sm:h-125 w-87.5 sm:w-125 rounded-full bg-orange-500/4 dark:bg-orange-500/[0.07] blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-20 -right-20 h-75 sm:h-100 w-75 sm:w-100 rounded-full bg-amber-500/4 dark:bg-amber-500/[0.07] blur-3xl" />
+      <div className="pointer-events-none absolute bottom-4 right-4 hidden xl:block h-28 w-28 bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] dark:bg-[radial-gradient(#334155_1.5px,transparent_1.5px)] bg-size-[12px_12px]" />
 
       <div className="site-container relative z-10 px-3.5 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-10 xl:gap-14 items-center">
@@ -51,69 +80,94 @@ export const SupportSection: React.FC<SupportSectionProps> = ({
             <div>
               <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-wider bg-orange-500/10 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border border-orange-500/25 shadow-2xs">
                 <Headphones className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.5] text-[#FF4F00]" />
-                <span>24/7/365 HUMAN CUSTOMER SUPPORT</span>
+                <span>{pillBadge}</span>
               </span>
             </div>
 
             {/* Main Title & Subtitle */}
             <div className="space-y-2.5 sm:space-y-3">
-              <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-[38px] xl:text-[42px] font-black text-slate-950 dark:text-white leading-[1.18] tracking-tight [text-wrap:balance]">
-                24/7 Dedicated Enterprise{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500 block sm:inline">
-                  Technical Support
-                </span>
+              <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-[38px] xl:text-[42px] font-black text-slate-950 dark:text-white leading-[1.18] tracking-tight text-balance">
+                {mainTitle}{' '}
+                {highlightWord && (
+                  <span className="text-transparent bg-clip-text bg-linear-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500 block sm:inline">
+                    {highlightWord}
+                  </span>
+                )}
               </h2>
               <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm font-normal leading-relaxed max-w-xl">
-                Multi-location operations need immediate resolution. Get round-the-clock technical assistance, dedicated account onboarding, and direct priority support across every store.
+                {description}
               </p>
             </div>
 
             {/* 3 Pillars Row (1 col on mobile, 3 cols on sm+) */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2.5 pt-0.5">
-              {/* Pillar 1 */}
-              <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
-                <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20 shadow-2xs mt-0.5">
-                  <Headphones className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2.2]" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-snug truncate sm:whitespace-normal">
-                    Dedicated Account Manager
-                  </h4>
-                  <p className="text-[10px] sm:text-[10.5px] text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1 leading-relaxed">
-                    1-on-1 technical onboarding and custom multi-store rollouts.
-                  </p>
-                </div>
-              </div>
+              {dynamicPillars ? (
+                dynamicPillars.slice(0, 3).map((pillar, pIdx) => {
+                  const Icon = renderPillarIcon(pillar.iconKey);
+                  return (
+                    <div key={pIdx} className="flex items-start gap-2.5 sm:gap-3 min-w-0">
+                      <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20 shadow-2xs mt-0.5">
+                        <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2.2]" />
+                      </div>
+                      <div className="min-w-0">
+                        <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-snug truncate sm:whitespace-normal">
+                          {pillar.title}
+                        </h4>
+                        <p className="text-[10px] sm:text-[10.5px] text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1 leading-relaxed">
+                          {pillar.desc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <>
+                  {/* Pillar 1 Fallback */}
+                  <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
+                    <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20 shadow-2xs mt-0.5">
+                      <Headphones className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2.2]" />
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-snug truncate sm:whitespace-normal">
+                        Dedicated Account Manager
+                      </h4>
+                      <p className="text-[10px] sm:text-[10.5px] text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1 leading-relaxed">
+                        1-on-1 technical onboarding and custom multi-store rollouts.
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Pillar 2 */}
-              <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
-                <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20 shadow-2xs mt-0.5">
-                  <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2.2]" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-snug truncate sm:whitespace-normal">
-                    Priority Direct Channel
-                  </h4>
-                  <p className="text-[10px] sm:text-[10.5px] text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1 leading-relaxed">
-                    Instant voice hotline and live remote screen-share with zero IVR.
-                  </p>
-                </div>
-              </div>
+                  {/* Pillar 2 Fallback */}
+                  <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
+                    <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20 shadow-2xs mt-0.5">
+                      <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2.2]" />
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-snug truncate sm:whitespace-normal">
+                        Priority Direct Channel
+                      </h4>
+                      <p className="text-[10px] sm:text-[10.5px] text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1 leading-relaxed">
+                        Instant voice hotline and live remote screen-share with zero IVR.
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Pillar 3 */}
-              <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
-                <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20 shadow-2xs mt-0.5">
-                  <Users className="h-3.5 w-3.5 stroke-[2.2]" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-snug truncate sm:whitespace-normal">
-                    Staff &amp; Manager Training
-                  </h4>
-                  <p className="text-[10px] sm:text-[10.5px] text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1 leading-relaxed">
-                    Ongoing programs for smooth cashier adoption &amp; Z-reports.
-                  </p>
-                </div>
-              </div>
+                  {/* Pillar 3 Fallback */}
+                  <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
+                    <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20 shadow-2xs mt-0.5">
+                      <Users className="h-3.5 w-3.5 stroke-[2.2]" />
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-snug truncate sm:whitespace-normal">
+                        Staff &amp; Manager Training
+                      </h4>
+                      <p className="text-[10px] sm:text-[10.5px] text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1 leading-relaxed">
+                        Ongoing programs for smooth cashier adoption &amp; Z-reports.
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Metrics Strip (Row of 3 items with vertical dividers) */}
@@ -169,9 +223,9 @@ export const SupportSection: React.FC<SupportSectionProps> = ({
               <button
                 type="button"
                 onClick={() => openModal('24/7 Enterprise Dedicated Technical Support', 'SUPPORT_SECTION_ENTERPRISE')}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500 px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-white shadow-lg shadow-orange-500/25 transition-all duration-300 hover:opacity-95 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500 px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-white shadow-lg shadow-orange-500/25 transition-all duration-300 hover:opacity-95 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
-                <span>Learn more</span>
+                <span>{cmsData?.chatButtonText || "Learn more"}</span>
                 <ArrowRight className="h-4 w-4 stroke-[2.5]" />
               </button>
 
@@ -200,7 +254,7 @@ export const SupportSection: React.FC<SupportSectionProps> = ({
           {/* RIGHT SIDE: Photo Card with Overlaid Floating Badges       */}
           {/* ========================================================= */}
           <div className="lg:col-span-6 relative w-full flex justify-center mt-6 lg:mt-0 px-2 sm:px-4">
-            <div className="relative w-full max-w-[500px] xl:max-w-[530px]">
+            <div className="relative w-full max-w-125 xl:max-w-132.5">
               
               {/* --------------------------------------------------- */}
               {/* Floating Badge 1: Top-Left "Active Support Specialist" */}
@@ -212,10 +266,10 @@ export const SupportSection: React.FC<SupportSectionProps> = ({
                 </span>
                 <div className="text-left">
                   <div className="text-[10px] sm:text-[11px] font-bold text-slate-950 dark:text-white leading-tight">
-                    Active Support Specialist
+                    {cmsData?.repName || "Active Support Specialist"}
                   </div>
                   <span className="text-[8.5px] sm:text-[9.5px] text-slate-500 dark:text-slate-400 block font-medium">
-                    Here to help, always
+                    {cmsData?.repRole || "Here to help, always"}
                   </span>
                 </div>
               </div>
@@ -243,10 +297,10 @@ export const SupportSection: React.FC<SupportSectionProps> = ({
               <div className="relative rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl p-2 sm:p-2.5">
                 
                 {/* Real Image Container */}
-                <div className="relative aspect-[16/10] sm:aspect-[16/10.5] w-full overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
+                <div className="relative aspect-16/10 sm:aspect-16/10.5 w-full overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
                   <Image
-                    src="/images/customer_support_executive.jpg"
-                    alt="24/7 Dedicated Technical Support Specialist"
+                    src={cmsData?.repAvatarUrl || "/images/customer_support_executive.jpg"}
+                    alt={cmsData?.repName || "24/7 Dedicated Technical Support Specialist"}
                     fill
                     sizes="(max-width: 640px) 95vw, (max-width: 1024px) 50vw, 530px"
                     className="object-cover object-center transition-transform duration-700 hover:scale-105"
