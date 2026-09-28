@@ -1,13 +1,69 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  AlertTriangle,
+  ChevronLeft,
+  ChevronRight,
+  TrendingDown,
+  Layers,
+  PackageX,
+  Clock,
+  ArrowRightLeft,
+  RefreshCw,
+  LineChart,
+  Barcode,
+  WifiOff,
+  UtensilsCrossed,
+  ChefHat,
+  LucideIcon,
+} from "lucide-react";
 import { BUSINESS_PROBLEMS } from "../constants/businessProblemsData";
-import { CardTabMode } from "../Types/businessProblems.types";
+import { CardTabMode, BusinessProblemItem } from "../Types/businessProblems.types";
 import { BusinessProblemCard } from "./BusinessProblemCard";
+import { useGetPublicBusinessProblemsQuery } from "../BusinessProblemService";
+
+const ICON_LOOKUP: Record<string, LucideIcon> = {
+  TrendingDown,
+  AlertTriangle,
+  Layers,
+  PackageX,
+  Clock,
+  ArrowRightLeft,
+  RefreshCw,
+  LineChart,
+  Barcode,
+  WifiOff,
+  UtensilsCrossed,
+  ChefHat,
+};
 
 export const BusinessProblemSection: React.FC = () => {
+  const { data: apiProblems } = useGetPublicBusinessProblemsQuery("Enterprise");
+
+  const problems: BusinessProblemItem[] = useMemo(() => {
+    if (apiProblems && apiProblems.length > 0) {
+      return apiProblems.map((p) => ({
+        id: p.cardKey || p.businessProblemId,
+        shortTabLabel: p.shortTabLabel,
+        icon: ICON_LOOKUP[p.iconKey] || AlertTriangle,
+        tag: p.tag,
+        severity: p.severity,
+        title: p.title,
+        description: p.description,
+        impact: p.impact,
+        visualMeter: {
+          icon: ICON_LOOKUP[p.visualMeter?.iconKey || ""] || ArrowRightLeft,
+          legacyText: p.visualMeter?.legacyText || "",
+          quantixText: p.visualMeter?.quantixText || "",
+        },
+        fix: p.fixes || [],
+      }));
+    }
+    return BUSINESS_PROBLEMS;
+  }, [apiProblems]);
+
   // Mobile active tab index (1 card shown at a time on mobile)
   const [activeMobileIndex, setActiveMobileIndex] = useState<number>(0);
 
@@ -23,11 +79,11 @@ export const BusinessProblemSection: React.FC = () => {
   };
 
   const handlePrev = () => {
-    setActiveMobileIndex((prev) => (prev > 0 ? prev - 1 : BUSINESS_PROBLEMS.length - 1));
+    setActiveMobileIndex((prev) => (prev > 0 ? prev - 1 : problems.length - 1));
   };
 
   const handleNext = () => {
-    setActiveMobileIndex((prev) => (prev < BUSINESS_PROBLEMS.length - 1 ? prev + 1 : 0));
+    setActiveMobileIndex((prev) => (prev < problems.length - 1 ? prev + 1 : 0));
   };
 
   return (
@@ -63,7 +119,7 @@ export const BusinessProblemSection: React.FC = () => {
         {/* MOBILE VIEW: Equal 3-Column Grid Tab Bar (100% Equal Width, Never Overflowing) */}
         <div className="md:hidden mt-5">
           <div className="grid grid-cols-3 w-full p-1 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 shadow-xs">
-            {BUSINESS_PROBLEMS.map((prob, idx) => {
+            {problems.map((prob, idx) => {
               const Icon = prob.icon;
               const isActive = activeMobileIndex === idx;
 
@@ -86,23 +142,25 @@ export const BusinessProblemSection: React.FC = () => {
           </div>
 
           {/* Active Card with Smooth Transition */}
-          <div className="mt-3">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={BUSINESS_PROBLEMS[activeMobileIndex].id}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                transition={{ duration: 0.16 }}
-              >
-                <BusinessProblemCard
-                  problem={BUSINESS_PROBLEMS[activeMobileIndex]}
-                  activeTab={cardTabs[BUSINESS_PROBLEMS[activeMobileIndex].id] || "problem"}
-                  onToggleTab={(tab) => handleToggleTab(BUSINESS_PROBLEMS[activeMobileIndex].id, tab)}
-                />
-              </motion.div>
-            </AnimatePresence>
-          </div>
+          {problems[activeMobileIndex] && (
+            <div className="mt-3">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={problems[activeMobileIndex].id}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{ duration: 0.16 }}
+                >
+                  <BusinessProblemCard
+                    problem={problems[activeMobileIndex]}
+                    activeTab={cardTabs[problems[activeMobileIndex].id] || "problem"}
+                    onToggleTab={(tab) => handleToggleTab(problems[activeMobileIndex].id, tab)}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          )}
 
           {/* Mobile Carousel Stepper Controls: Prev / Dots / Next */}
           <div className="flex items-center justify-between mt-3 px-1">
@@ -116,7 +174,7 @@ export const BusinessProblemSection: React.FC = () => {
             </button>
 
             <div className="flex items-center gap-1.5">
-              {BUSINESS_PROBLEMS.map((_, dotIdx) => (
+              {problems.map((_, dotIdx) => (
                 <button
                   key={dotIdx}
                   type="button"
@@ -142,7 +200,7 @@ export const BusinessProblemSection: React.FC = () => {
 
         {/* DESKTOP VIEW: 3-Column Side-by-Side Enterprise Cards */}
         <div className="hidden md:grid md:grid-cols-3 gap-6 mt-12 lg:mt-14">
-          {BUSINESS_PROBLEMS.map((prob) => (
+          {problems.map((prob) => (
             <BusinessProblemCard
               key={prob.id}
               problem={prob}
