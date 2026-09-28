@@ -3,18 +3,21 @@
 import React from 'react';
 import { useGetAnnouncementsQuery } from '../Service/AnnouncementService';
 import AnnouncementTicker from './AnnouncementTicker';
-import { FALLBACK_ANNOUNCEMENTS } from '../constants/fallbackAnnouncements';
 
 export const AnnouncementTickerWrapper: React.FC = () => {
   const { data: announcements, isLoading, isError } = useGetAnnouncementsQuery();
 
-  // Use API data if available, otherwise fall back to static data
-  const displayData =
-    !isLoading && (isError || !announcements || announcements.length === 0)
-      ? FALLBACK_ANNOUNCEMENTS
-      : announcements ?? [];
+  // If loading, show ticker skeleton
+  if (isLoading) {
+    return <AnnouncementTicker announcements={[]} isLoading={true} />;
+  }
 
-  return <AnnouncementTicker announcements={displayData} isLoading={isLoading} />;
+  // If Admin has no active announcements or error, collapse section completely
+  if (isError || !announcements || announcements.length === 0) {
+    return null;
+  }
+
+  return <AnnouncementTicker announcements={announcements} isLoading={false} />;
 };
 
 export default AnnouncementTickerWrapper;

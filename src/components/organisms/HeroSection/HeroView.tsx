@@ -70,7 +70,8 @@ export const HeroView: React.FC<HeroViewProps> = ({
     );
   };
 
-  const formatHeading = (heading: string) => {
+  const formatHeading = (heading?: string) => {
+    if (!heading) return null;
     const words = heading.split(" ");
     if (words.length <= 1) return heading;
 
@@ -264,7 +265,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
                         <button
                           type="button"
                           aria-label="Previous Slide"
-                          className="absolute left-3 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-800 shadow-xl backdrop-blur-sm transition-all duration-300 hover:bg-[#FF4F00] hover:text-white hover:border-[#FF4F00] hover:scale-110 active:scale-95 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto"
+                          className="absolute left-2.5 sm:left-3 top-1/2 z-30 flex h-9 w-9 sm:h-10 sm:w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-800 shadow-xl backdrop-blur-md transition-all duration-300 hover:bg-[#FF4F00] hover:text-white hover:border-[#FF4F00] hover:scale-110 active:scale-95 opacity-85 hover:opacity-100 pointer-events-auto dark:border-slate-700/80 dark:bg-slate-900/90 dark:text-slate-100 dark:hover:bg-[#FF4F00] dark:hover:text-white"
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
@@ -276,7 +277,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
                         <button
                           type="button"
                           aria-label="Next Slide"
-                          className="absolute right-3 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-800 shadow-xl backdrop-blur-sm transition-all duration-300 hover:bg-[#FF4F00] hover:text-white hover:border-[#FF4F00] hover:scale-110 active:scale-95 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto"
+                          className="absolute right-2.5 sm:right-3 top-1/2 z-30 flex h-9 w-9 sm:h-10 sm:w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-800 shadow-xl backdrop-blur-md transition-all duration-300 hover:bg-[#FF4F00] hover:text-white hover:border-[#FF4F00] hover:scale-110 active:scale-95 opacity-85 hover:opacity-100 pointer-events-auto dark:border-slate-700/80 dark:bg-slate-900/90 dark:text-slate-100 dark:hover:bg-[#FF4F00] dark:hover:text-white"
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();

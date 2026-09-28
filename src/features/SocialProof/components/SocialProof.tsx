@@ -246,7 +246,7 @@ export const SocialProof: React.FC<SocialProofProps> = ({ metrics, isLoading, cl
             >
               {/* Top Laser Beam on Hover */}
               <div
-                className={`pointer-events-none absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent ${theme.laserBeam} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                className={`pointer-events-none absolute top-0 left-0 right-0 h-[2.5px] bg-linear-to-r from-transparent ${theme.laserBeam} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
               />
 
               {/* Soft Spotlight Aura */}
@@ -272,7 +272,7 @@ export const SocialProof: React.FC<SocialProofProps> = ({ metrics, isLoading, cl
 
               {/* Metric Value */}
               <div className="relative z-10 group-hover:scale-[1.04] transition-transform duration-300 ease-out origin-center">
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-syne font-black tracking-tight leading-tight text-transparent bg-clip-text bg-gradient-to-br from-slate-950 via-slate-900 to-slate-700 dark:from-white dark:via-slate-100 dark:to-slate-300">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-syne font-black tracking-tight leading-tight text-transparent bg-clip-text bg-linear-to-br from-slate-950 via-slate-900 to-slate-700 dark:from-white dark:via-slate-100 dark:to-slate-300">
                   {isLoading ? (
                     <span className="inline-block w-14 sm:w-20 h-6 sm:h-8 bg-slate-200 dark:bg-slate-800 rounded animate-pulse" />
                   ) : metric.numericValue ? (

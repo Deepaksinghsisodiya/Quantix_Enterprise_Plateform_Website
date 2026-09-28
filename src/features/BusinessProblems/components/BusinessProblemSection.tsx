@@ -40,10 +40,10 @@ const ICON_LOOKUP: Record<string, LucideIcon> = {
 };
 
 export const BusinessProblemSection: React.FC = () => {
-  const { data: apiProblems } = useGetPublicBusinessProblemsQuery("Enterprise");
+  const { data: apiProblems, isLoading } = useGetPublicBusinessProblemsQuery("Enterprise");
 
   const problems: BusinessProblemItem[] = useMemo(() => {
-    if (apiProblems && apiProblems.length > 0) {
+    if (Array.isArray(apiProblems)) {
       return apiProblems.map((p) => ({
         id: p.cardKey || p.businessProblemId,
         shortTabLabel: p.shortTabLabel,
@@ -79,12 +79,21 @@ export const BusinessProblemSection: React.FC = () => {
   };
 
   const handlePrev = () => {
-    setActiveMobileIndex((prev) => (prev > 0 ? prev - 1 : problems.length - 1));
+    setActiveMobileIndex((prev) => (prev > 0 ? prev - 1 : Math.max(0, problems.length - 1)));
   };
 
   const handleNext = () => {
     setActiveMobileIndex((prev) => (prev < problems.length - 1 ? prev + 1 : 0));
   };
+
+  // When disabled/hidden in Admin (API returned 0 active problems), collapse section cleanly
+  if (!isLoading && Array.isArray(apiProblems) && apiProblems.length === 0) {
+    return null;
+  }
+
+  if (problems.length === 0) {
+    return null;
+  }
 
   return (
     <section className="relative overflow-hidden py-12 lg:py-14 bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-y border-slate-200/80 dark:border-slate-800/80 transition-colors">
@@ -106,7 +115,7 @@ export const BusinessProblemSection: React.FC = () => {
 
           <h2 className="mt-3 sm:mt-4 font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.2]">
             The High Cost of{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500">
               Disconnected Systems
             </span>
           </h2>

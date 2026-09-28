@@ -1,7 +1,6 @@
-import { NextResponse } from "next/server";
-import { FALLBACK_ANNOUNCEMENTS } from "@/features/Announcements/constants/fallbackAnnouncements";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const backendUrl = (
       process.env.BACKEND_API_URL ||
@@ -9,35 +8,34 @@ export async function GET() {
       "http://localhost:5104"
     ).replace(/\/$/, "");
 
+    // Preserve query string (e.g. ?siteVariant=Enterprise)
+    const search = request.nextUrl.search || "?siteVariant=Enterprise";
+
     try {
-      const backendRes = await fetch(`${backendUrl}/api/v1/announcements`, {
+      const backendRes = await fetch(`${backendUrl}/api/v1/announcements${search}`, {
         cache: "no-store",
         headers: { Accept: "application/json" },
-        signal: AbortSignal.timeout(3000),
+        signal: AbortSignal.timeout(4000),
       });
 
       if (backendRes.ok) {
         const data = await backendRes.json();
-        const items = Array.isArray(data) ? data : data?.data;
-        if (Array.isArray(items) && items.length > 0) {
-          return NextResponse.json(data);
-        }
+        return NextResponse.json(data);
       }
     } catch (networkError) {
-      console.warn("Backend announcements endpoint unreachable, using fallback announcements:", networkError);
+      console.warn("Backend announcements endpoint unreachable:", networkError);
     }
 
-    // Return high-quality fallback announcements if backend is offline/empty
+    // When backend is offline or empty, return clean empty data so sections collapse cleanly when hidden by Admin
     return NextResponse.json({
       success: true,
-      message: "Fallback announcements loaded successfully",
-      data: FALLBACK_ANNOUNCEMENTS,
+      data: [],
     });
   } catch (error) {
     console.error("Failed to load announcements:", error);
     return NextResponse.json({
       success: true,
-      data: FALLBACK_ANNOUNCEMENTS,
+      data: [],
     });
   }
 }

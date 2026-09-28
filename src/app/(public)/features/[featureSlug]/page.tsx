@@ -1409,7 +1409,7 @@ const SoftwareStageFrame: React.FC<{
   bottomBadge?: string;
   priority?: boolean;
 }> = ({ imageSrc, imageAlt, slug, topBadge, bottomBadge, priority = false }) => (
-  <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-gradient-to-b from-slate-50/90 via-white to-slate-100/60 dark:from-slate-900/90 dark:via-slate-900/50 dark:to-slate-950 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300">
+  <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-linear-to-b from-slate-50/90 via-white to-slate-100/60 dark:from-slate-900/90 dark:via-slate-900/50 dark:to-slate-950 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300">
     {/* macOS Window Chrome Header */}
     <div className="flex items-center justify-between border-b border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-slate-900/80 px-3.5 sm:px-4 py-2 sm:py-2.5 backdrop-blur-md">
       <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
@@ -1418,7 +1418,7 @@ const SoftwareStageFrame: React.FC<{
         <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-emerald-500/90" />
       </div>
 
-      <div className="flex items-center gap-1.5 rounded-md border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 px-2.5 sm:px-3 py-1 font-mono text-[9px] sm:text-[10px] font-semibold text-slate-600 dark:text-slate-400 max-w-[140px] min-[400px]:max-w-[200px] sm:max-w-xs truncate shadow-2xs">
+      <div className="flex items-center gap-1.5 rounded-md border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 px-2.5 sm:px-3 py-1 font-mono text-[9px] sm:text-[10px] font-semibold text-slate-600 dark:text-slate-400 max-w-35 min-[400px]:max-w-50 sm:max-w-xs truncate shadow-2xs">
         <Lock className="h-2.5 w-2.5 text-emerald-500 shrink-0" />
         <span className="truncate">quantix.network/cloud-hq/{slug}</span>
       </div>
@@ -1436,7 +1436,7 @@ const SoftwareStageFrame: React.FC<{
     <div className="relative h-64 min-[420px]:h-72 sm:h-84 md:h-96 w-full flex items-center justify-center p-4 sm:p-6 overflow-hidden">
       {/* Ambient radial glow behind the transparent cutout hardware */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="h-4/5 w-4/5 rounded-full bg-gradient-to-tr from-primary/15 via-primary/5 to-transparent blur-3xl" />
+        <div className="h-4/5 w-4/5 rounded-full bg-linear-to-tr from-primary/15 via-primary/5 to-transparent blur-3xl" />
       </div>
 
       <Image
@@ -1487,7 +1487,7 @@ const CapabilitiesBentoSection: React.FC<{
       </div>
 
       <div className="grid auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5">
-        {items.map((item, index) => {
+        {(items || []).map((item, index) => {
           const Icon = item.icon;
           const stepNum = String(index + 1).padStart(2, "0");
 
@@ -1502,11 +1502,11 @@ const CapabilitiesBentoSection: React.FC<{
               className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 dark:border-slate-800/90 dark:bg-slate-900/80 dark:shadow-none"
             >
               {/* Subtle top glow bar on hover */}
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-transparent via-primary/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
               <div>
                 <div className="mb-4 flex items-center justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-primary/20 bg-gradient-to-br from-primary/15 to-primary/5 text-primary shadow-xs transition-colors duration-300 group-hover:border-primary/40 group-hover:bg-primary group-hover:text-white dark:text-primary-light">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-primary/20 bg-linear-to-br from-primary/15 to-primary/5 text-primary shadow-xs transition-colors duration-300 group-hover:border-primary/40 group-hover:bg-primary group-hover:text-white dark:text-primary-light">
                     <Icon className="h-5 w-5 stroke-[2.2]" />
                   </div>
                   <span className="font-mono text-xs font-black text-slate-300 transition-colors group-hover:text-primary/70 dark:text-slate-700">
@@ -1569,8 +1569,8 @@ const WorkflowPipelineSection: React.FC<{ feature: FeatureData; slug: string }> 
               </p>
             </div>
 
-            <div className="relative space-y-3 pl-2 before:absolute before:left-5 before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-primary/50 before:via-primary/20 before:to-transparent">
-              {feature.workflowItems.map((item, index) => {
+            <div className="relative space-y-3 pl-2 before:absolute before:left-5 before:top-4 before:bottom-4 before:w-0.5 before:bg-linear-to-b before:from-primary/50 before:via-primary/20 before:to-transparent">
+              {(feature.workflowItems || []).map((item, index) => {
                 const Icon = item.icon;
                 const stepNum = String(index + 1).padStart(2, "0");
 
@@ -1667,7 +1667,7 @@ const UseCasesSection: React.FC<{
       </div>
 
       <div className="grid auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 sm:gap-5">
-        {items.map((item, index) => {
+        {(items || []).map((item, index) => {
           const Icon = item.icon;
           const stepNum = String(index + 1).padStart(2, "0");
 
@@ -1761,13 +1761,13 @@ export default function FeatureDetailPage() {
               </p>
 
               <div className="grid gap-2 pt-1 sm:grid-cols-2">
-                {feature.benefits.map((benefit) => (
+                {(feature.benefits || []).map((benefit) => (
                   <div
                     key={benefit}
                     className="flex items-start gap-2.5 rounded-xl border border-slate-200/80 bg-white px-3 py-2.5 shadow-xs dark:border-slate-800 dark:bg-slate-900/70"
                   >
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-light">
-                      <Check className="h-3.5 w-3.5 stroke-[3]" />
+                      <Check className="h-3.5 w-3.5 stroke-3" />
                     </span>
                     <span className="text-xs font-bold leading-relaxed text-slate-700 dark:text-slate-300">
                       {benefit}
@@ -1903,7 +1903,7 @@ export default function FeatureDetailPage() {
               </div>
 
               <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {feature.relatedFeatures.map((relatedFeature) => (
+                {(feature.relatedFeatures || []).map((relatedFeature) => (
                   <Link key={relatedFeature.slug} href={`/features/${relatedFeature.slug}`}>
                     <div className="group flex items-center justify-between rounded-xl border border-slate-200/90 bg-slate-50/70 p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-white hover:shadow-md dark:border-slate-800 dark:bg-slate-900/60 dark:hover:bg-slate-900">
                       <span className="text-xs font-bold text-slate-900 transition-colors group-hover:text-primary dark:text-white">
@@ -1916,7 +1916,7 @@ export default function FeatureDetailPage() {
               </div>
 
               {/* Bottom Mini CTA */}
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-primary/20 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-4">
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-primary/20 bg-linear-to-r from-primary/10 via-primary/5 to-transparent p-4">
                 <div className="text-xs font-bold text-slate-800 dark:text-slate-200">
                   Ready to deploy across 10 to 500+ outlets?
                 </div>

@@ -13,16 +13,18 @@ import {
 import type { AnnouncementDto, AnnouncementKind } from "../Types/AnnouncementTypes";
 
 /* ─── Icon map by announcement kind ─── */
-const KIND_ICON: Record<AnnouncementKind, LucideIcon> = {
+const KIND_ICON: Record<string, LucideIcon> = {
   News: Newspaper,
   Event: CalendarDays,
   Notice: AlertTriangle,
+  Promo: Sparkles,
 };
 
-const KIND_ACCENT: Record<AnnouncementKind, string> = {
+const KIND_ACCENT: Record<string, string> = {
   News: "text-emerald-400",
   Event: "text-amber-400",
   Notice: "text-rose-400",
+  Promo: "text-[#FF7332]",
 };
 
 /* ─── Marquee Animation ─── */
@@ -39,7 +41,7 @@ const AnnouncementTickerItem = ({
   item: AnnouncementDto;
   tabIndex?: number;
 }) => {
-  const kind = (item.kind || "News") as AnnouncementKind;
+  const kind = (item.kind || "News") as string;
   const Icon = KIND_ICON[kind] || Newspaper;
   const accent = KIND_ACCENT[kind] || "text-primary";
   const href = item.linkUrl || "#";
@@ -54,8 +56,13 @@ const AnnouncementTickerItem = ({
         <Icon
           className={`h-3.5 w-3.5 shrink-0 transition-colors group-hover:text-primary-light ${accent}`}
         />
-        <span className="inline-flex w-max shrink-0 whitespace-nowrap">
-          {item.isPinned && (
+        <span className="inline-flex w-max shrink-0 items-center whitespace-nowrap">
+          {item.badge && (
+            <span className="mr-1.5 inline-flex items-center rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary-light border border-primary/30">
+              {item.badge}
+            </span>
+          )}
+          {item.isPinned && !item.badge && (
             <span className="mr-1.5 inline-flex items-center gap-0.5 rounded-full bg-primary/20 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary-light">
               <Sparkles className="h-2.5 w-2.5" />
               Pinned

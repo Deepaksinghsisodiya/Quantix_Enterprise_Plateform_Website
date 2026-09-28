@@ -1,14 +1,17 @@
 // src/features/Announcements/Types/AnnouncementTypes.ts
 
-export type AnnouncementKind = 'News' | 'Event' | 'Notice';
+export type AnnouncementKind = 'News' | 'Event' | 'Notice' | 'Promo' | string;
 
 export interface AnnouncementDto {
   announcementId?: string;
   id?: string;
+  siteVariant?: string;
+  badge?: string;
   title: string;
   body?: string;
   kind?: AnnouncementKind;
   linkUrl?: string;
+  ctaLabel?: string;
   pageSlug?: string;
   sortOrder?: number;
   isActive?: boolean;
@@ -20,6 +23,7 @@ export interface AnnouncementDto {
   location?: string;
   mediaAssetId?: string;
   createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ApiAnnouncementsResponse {
