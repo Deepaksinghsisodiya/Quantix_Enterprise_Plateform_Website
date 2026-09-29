@@ -2,22 +2,33 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShieldAlert, Zap, CheckCircle2 } from "lucide-react";
+import { ShieldAlert, Zap, CheckCircle2, AlertTriangle, ArrowRightLeft } from "lucide-react";
 import { BusinessProblemItem, CardTabMode } from "../Types/businessProblems.types";
 
 interface BusinessProblemCardProps {
   problem: BusinessProblemItem;
   activeTab: CardTabMode;
   onToggleTab: (tab: CardTabMode) => void;
+  className?: string;
 }
 
 export const BusinessProblemCard: React.FC<BusinessProblemCardProps> = ({
   problem,
-  activeTab,
+  activeTab = "problem",
   onToggleTab,
+  className = "",
 }) => {
-  const Icon = problem.icon;
+  const MainIcon = problem?.icon || AlertTriangle;
+  const MeterIcon = problem?.visualMeter?.icon || ArrowRightLeft;
   const isSolution = activeTab === "solution";
+
+  const legacyText = problem?.visualMeter?.legacyText || "Legacy friction detected";
+  const quantixText = problem?.visualMeter?.quantixText || "Quantix real-time automated resolution active";
+  const fixes = Array.isArray(problem?.fix) ? problem.fix : [];
+  const impact = problem?.impact || "Operational latency and margin erosion across units.";
+  const severity = problem?.severity || "CRITICAL";
+  const title = problem?.title || "Operational Friction Point";
+  const description = problem?.description || "";
 
   return (
     <div
@@ -25,7 +36,7 @@ export const BusinessProblemCard: React.FC<BusinessProblemCardProps> = ({
         isSolution
           ? "border-[#FF4F00]/50 dark:border-[#FF4F00]/60 ring-2 sm:ring-4 ring-[#FF4F00]/10 shadow-[0_10px_35px_rgba(255,79,0,0.12)]"
           : "border-slate-200/90 dark:border-slate-800/90 hover:border-orange-500/30 dark:hover:border-orange-500/30 hover:shadow-lg"
-      }`}
+      } ${className}`}
     >
       {/* Top Brand Accent Hairline */}
       <div
@@ -46,7 +57,7 @@ export const BusinessProblemCard: React.FC<BusinessProblemCardProps> = ({
                 : "bg-orange-500/10 dark:bg-orange-500/15 text-[#FF4F00] border-orange-500/20 ring-2 sm:ring-4 ring-orange-500/5"
             }`}
           >
-            {isSolution ? <Zap size={17} className="sm:w-[19px] sm:h-[19px]" /> : <Icon size={17} className="sm:w-[19px] sm:h-[19px]" />}
+            {isSolution ? <Zap size={17} className="sm:w-[19px] sm:h-[19px]" /> : <MainIcon size={17} className="sm:w-[19px] sm:h-[19px]" />}
           </div>
 
           <span
@@ -56,18 +67,20 @@ export const BusinessProblemCard: React.FC<BusinessProblemCardProps> = ({
                 : "text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700"
             }`}
           >
-            {isSolution ? "QUANTIX SOLVED" : problem.severity}
+            {isSolution ? "QUANTIX SOLVED" : severity}
           </span>
         </div>
 
         {/* Title & Description */}
         <h3 className="mt-2.5 sm:mt-4 font-syne text-sm sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
-          {problem.title}
+          {title}
         </h3>
 
-        <p className="mt-1 sm:mt-2 text-[11.5px] sm:text-sm font-normal leading-relaxed text-slate-600 dark:text-slate-400">
-          {problem.description}
-        </p>
+        {description && (
+          <p className="mt-1 sm:mt-2 text-[11.5px] sm:text-sm font-normal leading-relaxed text-slate-600 dark:text-slate-400">
+            {description}
+          </p>
+        )}
 
         {/* Visual Comparison Micro-Meter (Mobile-tuned Data Proof) */}
         <div
@@ -79,7 +92,7 @@ export const BusinessProblemCard: React.FC<BusinessProblemCardProps> = ({
         >
           <div className="flex items-center justify-between gap-1 mb-1 pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
             <span className="flex items-center gap-1 text-[8.5px] sm:text-[9.5px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              <problem.visualMeter.icon size={10} className={isSolution ? "text-[#FF4F00]" : "text-slate-400"} />
+              <MeterIcon size={10} className={isSolution ? "text-[#FF4F00]" : "text-slate-400"} />
               <span>Live Operational Reality:</span>
             </span>
             <span
@@ -97,7 +110,7 @@ export const BusinessProblemCard: React.FC<BusinessProblemCardProps> = ({
               isSolution ? "text-[#FF4F00] dark:text-orange-400" : "text-slate-700 dark:text-slate-300"
             }`}
           >
-            {isSolution ? problem.visualMeter.quantixText : problem.visualMeter.legacyText}
+            {isSolution ? quantixText : legacyText}
           </p>
         </div>
 
@@ -147,7 +160,7 @@ export const BusinessProblemCard: React.FC<BusinessProblemCardProps> = ({
                     <span>System Impact</span>
                   </div>
                   <p className="mt-1 text-[11px] sm:text-xs font-medium leading-relaxed text-slate-800 dark:text-slate-200">
-                    {problem.impact}
+                    {impact}
                   </p>
                 </motion.div>
               ) : (
@@ -164,12 +177,19 @@ export const BusinessProblemCard: React.FC<BusinessProblemCardProps> = ({
                     <span>Quantix Resolution</span>
                   </div>
                   <div className="mt-1 space-y-0.5 sm:space-y-1">
-                    {problem.fix.map((f, fIdx) => (
-                      <div key={fIdx} className="flex items-start gap-1.5 text-[11px] sm:text-xs font-medium text-slate-900 dark:text-slate-100">
+                    {fixes.length > 0 ? (
+                      fixes.map((f, fIdx) => (
+                        <div key={fIdx} className="flex items-start gap-1.5 text-[11px] sm:text-xs font-medium text-slate-900 dark:text-slate-100">
+                          <CheckCircle2 size={11} className="text-[#FF4F00] shrink-0 mt-0.5" />
+                          <span className="leading-snug">{f}</span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="flex items-start gap-1.5 text-[11px] sm:text-xs font-medium text-slate-900 dark:text-slate-100">
                         <CheckCircle2 size={11} className="text-[#FF4F00] shrink-0 mt-0.5" />
-                        <span className="leading-snug">{f}</span>
+                        <span className="leading-snug">Continuous automated reconciliation & real-time telemetry</span>
                       </div>
-                    ))}
+                    )}
                   </div>
                 </motion.div>
               )}
@@ -180,3 +200,5 @@ export const BusinessProblemCard: React.FC<BusinessProblemCardProps> = ({
     </div>
   );
 };
+
+export default BusinessProblemCard;

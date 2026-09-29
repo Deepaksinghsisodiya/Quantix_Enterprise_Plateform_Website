@@ -35,8 +35,8 @@ export const businessProblemsApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
       transformResponse: (response: ApiResponse<ApiBusinessProblem[] | null>) => {
-        if (!response?.success || !response?.data) {
-          return null;
+        if (!response?.success || !Array.isArray(response?.data)) {
+          return [];
         }
         return response.data;
       },
