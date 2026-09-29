@@ -55,13 +55,13 @@ export const TopPromoBanner: React.FC<TopPromoBannerProps> = ({ scrolled = false
 
   const activePromo = items[currentIndex % items.length] || items[0];
   const bannerText = activePromo?.body || activePromo?.title || '';
-  const ctaText = activePromo?.ctaLabel || (activePromo?.linkUrl ? 'Learn More' : 'Claim Offer');
+  const ctaText = activePromo?.ctaLabel || '';
 
   const handleAction = () => {
     if (activePromo?.linkUrl && !activePromo.linkUrl.startsWith('#') && !activePromo.linkUrl.includes('modal')) {
       window.location.href = activePromo.linkUrl;
     } else {
-      openModal?.(activePromo?.title || 'Claim Your 3 Months Free Trial', 'TOP_PROMO_BANNER');
+      openModal?.(activePromo?.title || activePromo?.body || '', 'TOP_PROMO_BANNER');
     }
   };
 
@@ -97,7 +97,6 @@ export const TopPromoBanner: React.FC<TopPromoBannerProps> = ({ scrolled = false
               <React.Fragment key={copyIndex}>
                 {items.map((item, itemIdx) => {
                   const itemBanner = item.body || item.title || '';
-                  const itemCta = item.ctaLabel || (item.linkUrl ? 'Learn More' : 'Claim Offer');
                   return (
                     <div
                       key={`${item.id || item.announcementId || itemIdx}-${copyIndex}`}
@@ -112,10 +111,12 @@ export const TopPromoBanner: React.FC<TopPromoBannerProps> = ({ scrolled = false
                         {itemBanner}
                       </span>
                       <span className="text-slate-600 font-bold">|</span>
-                      <span className="text-[#FF7332] font-bold text-[11px] whitespace-nowrap inline-flex items-center gap-0.5 underline decoration-orange-500/40">
-                        <span>{itemCta}</span>
-                        <ChevronRight size={12} className="stroke-[2.5]" />
-                      </span>
+                      {item.ctaLabel && (
+                        <span className="text-[#FF7332] font-bold text-[11px] whitespace-nowrap inline-flex items-center gap-0.5 underline decoration-orange-500/40">
+                          <span>{item.ctaLabel}</span>
+                          <ChevronRight size={12} className="stroke-[2.5]" />
+                        </span>
+                      )}
                     </div>
                   );
                 })}
@@ -145,27 +146,31 @@ export const TopPromoBanner: React.FC<TopPromoBannerProps> = ({ scrolled = false
                 {bannerText}
               </span>
 
-              <span className="text-slate-600">|</span>
+              {ctaText && (
+                <>
+                  <span className="text-slate-600">|</span>
 
-              {activePromo?.linkUrl && !activePromo.linkUrl.startsWith('#') && !activePromo.linkUrl.includes('modal') ? (
-                <a
-                  href={activePromo.linkUrl}
-                  tabIndex={scrolled ? -1 : 0}
-                  className="inline-flex items-center gap-0.5 font-bold text-[#FF7332] hover:text-orange-400 transition-colors underline decoration-orange-500/40 hover:decoration-orange-400 underline-offset-2 shrink-0 cursor-pointer"
-                >
-                  <span>{ctaText}</span>
-                  <ChevronRight size={13} className="stroke-[2.5]" />
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleAction}
-                  tabIndex={scrolled ? -1 : 0}
-                  className="inline-flex items-center gap-0.5 font-bold text-[#FF7332] hover:text-orange-400 transition-colors underline decoration-orange-500/40 hover:decoration-orange-400 underline-offset-2 shrink-0 cursor-pointer"
-                >
-                  <span>{ctaText}</span>
-                  <ChevronRight size={13} className="stroke-[2.5]" />
-                </button>
+                  {activePromo?.linkUrl && !activePromo.linkUrl.startsWith('#') && !activePromo.linkUrl.includes('modal') ? (
+                    <a
+                      href={activePromo.linkUrl}
+                      tabIndex={scrolled ? -1 : 0}
+                      className="inline-flex items-center gap-0.5 font-bold text-[#FF7332] hover:text-orange-400 transition-colors underline decoration-orange-500/40 hover:decoration-orange-400 underline-offset-2 shrink-0 cursor-pointer"
+                    >
+                      <span>{ctaText}</span>
+                      <ChevronRight size={13} className="stroke-[2.5]" />
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleAction}
+                      tabIndex={scrolled ? -1 : 0}
+                      className="inline-flex items-center gap-0.5 font-bold text-[#FF7332] hover:text-orange-400 transition-colors underline decoration-orange-500/40 hover:decoration-orange-400 underline-offset-2 shrink-0 cursor-pointer"
+                    >
+                      <span>{ctaText}</span>
+                      <ChevronRight size={13} className="stroke-[2.5]" />
+                    </button>
+                  )}
+                </>
               )}
             </motion.div>
           </AnimatePresence>

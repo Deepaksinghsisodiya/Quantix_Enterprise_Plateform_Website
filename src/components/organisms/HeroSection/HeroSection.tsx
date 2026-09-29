@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { HERO_SLIDES, HERO_AUTO_PLAY_INTERVAL_MS, HeroSlide } from './HeroData';
+import { HERO_AUTO_PLAY_INTERVAL_MS, HeroSlide } from './HeroData';
 import { HeroView } from './HeroView';
 import { useGetHeroBannersQuery } from '@/features/Hero/Service/HeroBannerService';
 import { HeroSlideSkeleton } from '@/components/atoms';
@@ -14,62 +14,40 @@ const HeroSection: React.FC = () => {
   const { data: apiResult, isLoading } = useGetHeroBannersQuery();
 
   /**
-   * Slide selection logic (3-way):
-   *  1. Backend reachable + active slides       → API slides (supplemented with HERO_SLIDES if < HERO_SLIDES.length)
-   *  2. Backend reachable + all slides disabled → [] → section collapses (return null below)
-   *  3. Backend offline / result undefined      → HERO_SLIDES (full static fallback, always beautiful)
-   *
-   * Supplementing with HERO_SLIDES ensures the section ALWAYS has multiple slides when visible,
-   * so auto-play and navigation icons are always active.
+   * Slides come exclusively from the CMS.
+   *  - Backend reachable with active slides → API slides
+   *  - Backend reachable with all slides disabled → [] → section collapses
+   *  - Backend offline / result undefined → [] → section collapses
    */
   const slides = useMemo<HeroSlide[]>(() => {
-    // Still loading or backend offline → full static fallback
-    if (!apiResult || !apiResult.backendReachable) return HERO_SLIDES;
-
-    // All slides disabled in Admin → collapse section
+    if (!apiResult || !apiResult.backendReachable) return [];
     if (apiResult.items.length === 0) return [];
 
-    // Map API slides into HeroSlide shape
-    const mapped: HeroSlide[] = apiResult.items.map((banner, index) => {
-      const fallback = HERO_SLIDES[index % HERO_SLIDES.length] || HERO_SLIDES[0];
+    return apiResult.items.map((banner, index) => {
       const assetId = banner.mediaAssetId || banner.imageAssetId;
       const bgImage = assetId
         ? `/api/v1/media/${assetId}/file`
-        : banner.imageUrl || fallback?.backgroundImage || '/images/foodhub_pos_terminal.jpg';
+        : banner.imageUrl || '';
 
-      const heading = banner.heading || banner.title || fallback?.heading || 'Enterprise Cloud POS';
+      const heading = banner.heading || banner.title || '';
 
       return {
         id: banner.heroSlideId || banner.contentId || `banner-${index}`,
-        badge: banner.badge || fallback?.badge || 'ENTERPRISE PLATFORM',
+        badge: banner.badge || '',
         heading,
-        mobileHeadingLines: fallback?.mobileHeadingLines || [heading, '', ''],
-        subheading: banner.subheading ?? banner.body ?? fallback?.subheading ?? '',
+        subheading: banner.subheading ?? banner.body ?? '',
         primaryCta: {
-          label: banner.primaryCtaLabel || fallback?.primaryCta?.label || 'Start Free Trial',
-          href: banner.primaryCtaUrl || banner.linkUrl || fallback?.primaryCta?.href || '/contact',
+          label: banner.primaryCtaLabel || '',
+          href: banner.primaryCtaUrl || banner.linkUrl || '',
         },
         secondaryCta: {
-          label: banner.secondaryCtaLabel || fallback?.secondaryCta?.label || 'Book an Enterprise Demo',
-          href: banner.secondaryCtaUrl || fallback?.secondaryCta?.href || '/contact/demo',
+          label: banner.secondaryCtaLabel || '',
+          href: banner.secondaryCtaUrl || '',
         },
         backgroundImage: bgImage,
-        featureHighlights:
-          banner.featureHighlights && banner.featureHighlights.length > 0
-            ? banner.featureHighlights
-            : fallback?.featureHighlights || [],
+        featureHighlights: banner.featureHighlights ?? [],
       };
     });
-
-    // Supplement with remaining HERO_SLIDES so there are always multiple slides
-    // (ensures icons + auto-play are always active when section is visible).
-    // Admin's real slides always come first.
-    if (mapped.length < HERO_SLIDES.length) {
-      const extras = HERO_SLIDES.slice(mapped.length);
-      return [...mapped, ...extras];
-    }
-
-    return mapped;
   }, [apiResult]);
 
   const slideCount = slides.length;

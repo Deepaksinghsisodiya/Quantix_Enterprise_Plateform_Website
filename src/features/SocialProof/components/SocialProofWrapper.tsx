@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { SocialProof } from './SocialProof';
+import { SocialProofSkeleton } from './SocialProofSkeleton';
 import { useGetSocialProofMetricsQuery } from '../Service/SocialProofService';
 
 export interface SocialProofWrapperProps {
@@ -10,15 +11,18 @@ export interface SocialProofWrapperProps {
 }
 
 export const SocialProofWrapper: React.FC<SocialProofWrapperProps> = ({ className = "" }) => {
-  const { data: metrics = null, isLoading } = useGetSocialProofMetricsQuery();
+  const { data: metrics, isLoading, isError } = useGetSocialProofMetricsQuery();
 
-  return (
-    <SocialProof
-      metrics={metrics}
-      isLoading={isLoading}
-      className={className}
-    />
-  );
+  if (isLoading) {
+    return <SocialProofSkeleton className={className} />;
+  }
+
+  // Backend error or Admin has not published any metrics → collapse the section
+  if (isError || !metrics || metrics.length === 0) {
+    return null;
+  }
+
+  return <SocialProof metrics={metrics} className={className} />;
 };
 
 export default SocialProofWrapper;

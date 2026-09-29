@@ -1,7 +1,7 @@
 // src/features/SocialProof/components/SocialProof.tsx
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ShieldCheck,
   TrendingUp,
@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useInView, animate } from 'framer-motion';
 import type { SocialProofProps, SocialProofMetricItem } from '../Types/SocialProofTypes';
+import { getRibbonLayout, getRibbonSeparator } from '../utils/ribbonLayout';
 
 const ICON_MAP: Record<string, React.ElementType> = {
   Store,
@@ -104,69 +105,6 @@ const COLOR_THEMES: Record<string, MetricColorTheme> = {
   },
 };
 
-const DEFAULT_METRICS: SocialProofMetricItem[] = [
-  {
-    metricId: 'default-1',
-    siteVariant: 'Enterprise',
-    value: '50K+',
-    numericValue: 50,
-    prefix: null,
-    suffix: 'K+',
-    decimals: 0,
-    label: 'Active Outlets',
-    description: 'Multi-unit store networks',
-    iconKey: 'Store',
-    accentColor: 'orange',
-    sortOrder: 1,
-    isActive: true,
-  },
-  {
-    metricId: 'default-2',
-    siteVariant: 'Enterprise',
-    value: '$250M+',
-    numericValue: 250,
-    prefix: '$',
-    suffix: 'M+',
-    decimals: 0,
-    label: 'Annual GMV',
-    description: 'Processed without latency',
-    iconKey: 'TrendingUp',
-    accentColor: 'emerald',
-    sortOrder: 2,
-    isActive: true,
-  },
-  {
-    metricId: 'default-3',
-    siteVariant: 'Enterprise',
-    value: '99.99%',
-    numericValue: 99.99,
-    prefix: null,
-    suffix: '%',
-    decimals: 2,
-    label: 'Uptime SLA',
-    description: 'Offline dual-mesh fallback',
-    iconKey: 'ShieldCheck',
-    accentColor: 'blue',
-    sortOrder: 3,
-    isActive: true,
-  },
-  {
-    metricId: 'default-4',
-    siteVariant: 'Enterprise',
-    value: '47+',
-    numericValue: 47,
-    prefix: null,
-    suffix: '+',
-    decimals: 0,
-    label: 'Global Markets',
-    description: 'Multi-tax & fiscal compliance',
-    iconKey: 'Globe2',
-    accentColor: 'purple',
-    sortOrder: 4,
-    isActive: true,
-  },
-];
-
 // Smooth count-up helper component triggered when scrolled into view
 const AnimatedNumber: React.FC<{
   target: number;
@@ -188,7 +126,7 @@ const AnimatedNumber: React.FC<{
   }, []);
 
   useEffect(() => {
-    if (!isInView || target <= 0) return;
+    if (!isInView || !Number.isFinite(target) || target < 0) return;
     const controls = animate(0, target, {
       duration: 1.6,
       ease: [0.16, 1, 0.3, 1],
@@ -203,21 +141,30 @@ const AnimatedNumber: React.FC<{
     };
   }, [isInView, target, decimals]);
 
-  if (!target && fallbackText) {
-    return <span>{fallbackText}</span>;
+  const formatted = decimals > 0 ? current.toFixed(decimals) : current.toLocaleString();
+
+  if (!isInView) {
+    return <span ref={ref}>{fallbackText}</span>;
   }
 
   return (
     <span ref={ref}>
       {prefix}
-      {isInView ? (decimals > 0 ? current.toFixed(decimals) : current.toLocaleString()) : 0}
+      {formatted}
       {suffix}
     </span>
   );
 };
 
-export const SocialProof: React.FC<SocialProofProps> = ({ metrics, isLoading, className = '' }) => {
-  const displayMetrics = metrics && metrics.length > 0 ? metrics : DEFAULT_METRICS;
+export const SocialProof: React.FC<SocialProofProps> = ({ metrics, className = '' }) => {
+  const displayMetrics = useMemo(() => {
+    if (!Array.isArray(metrics)) return [];
+    return metrics.filter((metric) => metric && (metric.label || metric.value));
+  }, [metrics]);
+
+  if (displayMetrics.length === 0) return null;
+
+  const layout = getRibbonLayout(displayMetrics.length);
 
   return (
     <div
@@ -226,23 +173,15 @@ export const SocialProof: React.FC<SocialProofProps> = ({ metrics, isLoading, cl
       {/* Ambient background illumination */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_50%_-20%,rgba(255,79,0,0.06),transparent_75%)]" />
 
-      <div className="relative z-10 grid grid-cols-2 md:grid-cols-4">
+      <div className={`relative z-10 grid ${layout.gridClass}`}>
         {displayMetrics.map((metric, idx) => {
-          const Icon = ICON_MAP[metric.iconKey] || Sparkles;
-          const theme = COLOR_THEMES[metric.accentColor?.toLowerCase()] || COLOR_THEMES.orange;
-          const isLastInRow = (idx + 1) % 2 === 0;
-          const isLastTotal = idx === displayMetrics.length - 1;
+          const Icon = (metric.iconKey && ICON_MAP[metric.iconKey]) || Sparkles;
+          const theme = COLOR_THEMES[metric.accentColor?.toLowerCase() ?? ''] || COLOR_THEMES.orange;
 
           return (
             <div
               key={metric.metricId || idx}
-              className={`relative overflow-hidden cursor-default flex flex-col items-center justify-center text-center p-3.5 sm:p-5 md:p-6 group transition-all duration-300 ${
-                idx < displayMetrics.length - 1 ? 'md:border-r border-slate-200/70 dark:border-slate-800/70' : ''
-              } ${
-                idx < 2 ? 'border-b md:border-b-0 border-slate-200/70 dark:border-slate-800/70' : ''
-              } ${
-                !isLastInRow ? 'border-r md:border-r-0 border-slate-200/70 dark:border-slate-800/70' : ''
-              }`}
+              className={`relative overflow-hidden cursor-default flex flex-col items-center justify-center text-center p-3.5 sm:p-5 md:p-6 group transition-all duration-300 ${getRibbonSeparator(idx, displayMetrics.length, layout.baseCols, '')} ${getRibbonSeparator(idx, displayMetrics.length, layout.wideCols, layout.wideBp)}`}
             >
               {/* Top Laser Beam on Hover */}
               <div
@@ -273,9 +212,7 @@ export const SocialProof: React.FC<SocialProofProps> = ({ metrics, isLoading, cl
               {/* Metric Value */}
               <div className="relative z-10 group-hover:scale-[1.04] transition-transform duration-300 ease-out origin-center">
                 <h3 className="text-2xl sm:text-3xl md:text-4xl font-syne font-black tracking-tight leading-tight text-transparent bg-clip-text bg-linear-to-br from-slate-950 via-slate-900 to-slate-700 dark:from-white dark:via-slate-100 dark:to-slate-300">
-                  {isLoading ? (
-                    <span className="inline-block w-14 sm:w-20 h-6 sm:h-8 bg-slate-200 dark:bg-slate-800 rounded animate-pulse" />
-                  ) : metric.numericValue ? (
+                  {metric.numericValue !== null && metric.numericValue !== undefined ? (
                     <AnimatedNumber
                       target={Number(metric.numericValue)}
                       prefix={metric.prefix || ''}

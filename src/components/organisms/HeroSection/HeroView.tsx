@@ -112,12 +112,14 @@ export const HeroView: React.FC<HeroViewProps> = ({
       <div className="site-container relative z-10 grid grid-cols-1 content-center items-center gap-6 lg:grid-cols-12 lg:items-center lg:gap-14 xl:gap-20">
         {/* LEFT COLUMN: Content */}
         <div className="flex min-w-0 flex-col items-start space-y-3.5 text-left sm:items-center sm:text-center lg:col-span-6 lg:items-start lg:text-left lg:min-h-[420px] lg:justify-center">
-          <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border-2 border-primary/20 bg-primary/5 px-3 py-1.5 sm:px-4 sm:py-2 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-primary shadow-xs">
-            <Star size={12} className="fill-primary text-primary shrink-0" />
-            <span className="whitespace-normal sm:whitespace-nowrap">
-              #1 ENTERPRISE POS & MULTI-LOCATION OS PLATFORM
-            </span>
-          </div>
+          {slide.badge && (
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border-2 border-primary/20 bg-primary/5 px-3 py-1.5 sm:px-4 sm:py-2 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-primary shadow-xs">
+              <Star size={12} className="fill-primary text-primary shrink-0" />
+              <span className="whitespace-normal sm:whitespace-nowrap">
+                {slide.badge}
+              </span>
+            </div>
+          )}
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -128,14 +130,9 @@ export const HeroView: React.FC<HeroViewProps> = ({
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
               className="flex w-full flex-col items-start gap-3.5 sm:items-center lg:items-start"
             >
-              {slide.badge && (
-                <div className="flex flex-col gap-1.5 pt-0.5 sm:items-center lg:items-start">
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-primary">
-                    {slide.badge}
-                  </span>
-                  <div className="h-1 w-12 bg-primary rounded-full"></div>
-                </div>
-              )}
+              <div className="flex flex-col gap-1.5 pt-0.5 sm:items-center lg:items-start">
+                <div className="h-1 w-12 bg-primary rounded-full"></div>
+              </div>
 
               <h1 className="font-syne text-2xl font-semibold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-3xl lg:text-[2.2rem] xl:text-[2.6rem] max-w-152">
                 {formatHeading(slide.heading)}
@@ -186,36 +183,33 @@ export const HeroView: React.FC<HeroViewProps> = ({
                       className="text-white/80 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:w-3.5 sm:h-3.5 shrink-0"
                     />
                   </a>
-                ) : (
+                ) : slide.primaryCta?.href ? (
                   <Link
-                    href={slide.primaryCta?.href || "/contact"}
+                    href={slide.primaryCta.href}
                     className="group flex flex-1 sm:flex-initial sm:w-auto min-w-0 h-10.5 sm:min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FF4F00] px-2.5 sm:px-8 py-2.5 sm:py-3 font-syne text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-[#e64700] hover:shadow-primary/40 active:scale-95 whitespace-nowrap"
                   >
                     <Rocket
                       size={14}
                       className="fill-white transition-transform group-hover:-translate-y-1 group-hover:translate-x-0.5 sm:w-4 sm:h-4 shrink-0"
                     />
-                    <span className="sm:hidden">Free Trial</span>
-                    <span className="hidden sm:inline">{slide.primaryCta?.label || "Start Free Trial"}</span>
+                    <span>{slide.primaryCta.label}</span>
                   </Link>
+                ) : null}
+                {slide.secondaryCta?.label && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openModal(slide.heading || '', "HERO_REQUEST_DEMO")
+                    }
+                    className="group flex flex-1 sm:flex-initial sm:w-auto min-w-0 h-10.5 sm:min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl border-2 border-slate-900 bg-transparent px-2.5 sm:px-8 py-2.5 sm:py-3 font-syne text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white active:scale-95 dark:border-slate-100 dark:text-slate-100 dark:hover:bg-slate-100 dark:hover:text-slate-900 whitespace-nowrap"
+                  >
+                    <span>{slide.secondaryCta.label}</span>
+                    <ArrowRight
+                      size={14}
+                      className="transition-transform group-hover:translate-x-1 sm:w-4 sm:h-4 shrink-0"
+                    />
+                  </button>
                 )}
-                <button
-                  type="button"
-                  onClick={() =>
-                    openModal(
-                      slide.heading || "Request Live Enterprise POS Demo",
-                      "HERO_REQUEST_DEMO"
-                    )
-                  }
-                  className="group flex flex-1 sm:flex-initial sm:w-auto min-w-0 h-10.5 sm:min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl border-2 border-slate-900 bg-transparent px-2.5 sm:px-8 py-2.5 sm:py-3 font-syne text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white active:scale-95 dark:border-slate-100 dark:text-slate-100 dark:hover:bg-slate-100 dark:hover:text-slate-900 whitespace-nowrap"
-                >
-                  <span className="sm:hidden">Book Demo</span>
-                  <span className="hidden sm:inline">{slide.secondaryCta?.label || "Request Demo"}</span>
-                  <ArrowRight
-                    size={14}
-                    className="transition-transform group-hover:translate-x-1 sm:w-4 sm:h-4 shrink-0"
-                  />
-                </button>
               </div>
             </motion.div>
           </AnimatePresence>
@@ -242,21 +236,20 @@ export const HeroView: React.FC<HeroViewProps> = ({
                 <div className="group relative w-full aspect-4/3 transition-transform duration-500 hover:scale-[1.02]">
                   <div className="absolute inset-0 rounded-xl lg:rounded-3xl bg-[#111] p-[0.3rem] lg:p-[0.55rem] shadow-xl lg:shadow-2xl border border-slate-800">
                     <div className="relative h-full w-full overflow-hidden rounded-[1.2rem] bg-slate-900">
-                      <Image
-                        src={
-                          slide.backgroundImage ||
-                          "/images/foodhub_pos_terminal.jpg"
-                        }
-                        alt={slide.heading}
-                        fill
-                        priority
-                        unoptimized={
-                          (slide.backgroundImage || "").startsWith("http") ||
-                          (slide.backgroundImage || "").startsWith("/api")
-                        }
-                        sizes="(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 40vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
+                      {slide.backgroundImage ? (
+                        <Image
+                          src={slide.backgroundImage}
+                          alt={slide.heading}
+                          fill
+                          priority
+                          unoptimized={
+                            slide.backgroundImage.startsWith("http") ||
+                            slide.backgroundImage.startsWith("/api")
+                          }
+                          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 40vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      ) : null}
                       <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/20 pointer-events-none" />
                     </div>
 

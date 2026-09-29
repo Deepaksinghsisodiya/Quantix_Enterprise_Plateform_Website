@@ -4,37 +4,19 @@ export interface SocialProofMetricItem {
   metricId: string;
   siteVariant: string;
   value: string;
-  numericValue: number | null;
-  prefix: string | null;
-  suffix: string | null;
-  decimals: number;
+  numericValue?: number | null;
+  prefix?: string | null;
+  suffix?: string | null;
+  decimals?: number | null;
   label: string;
-  description: string | null;
-  iconKey: string;
-  accentColor: string;
-  sortOrder: number;
-  isActive: boolean;
-}
-
-export interface SocialProofData {
-  merchants?: number;
-  transactions?: number;
-  uptime?: number;
-  rating?: number;
-  countries?: number;
-  gmvProcessed?: string | number;
-  activeTerminals?: number;
-}
-
-export interface ApiSocialProofResponse {
-  success: boolean;
-  message?: string;
-  data: SocialProofMetricItem[];
+  description?: string | null;
+  iconKey?: string | null;
+  accentColor?: string | null;
+  sortOrder?: number | null;
+  isActive?: boolean | null;
 }
 
 export interface SocialProofProps {
   metrics?: SocialProofMetricItem[] | null;
-  stats?: SocialProofData | null;
-  isLoading: boolean;
   className?: string;
 }

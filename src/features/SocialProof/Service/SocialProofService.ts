@@ -17,17 +17,8 @@ export const socialProofApi = baseApi.injectEndpoints({
           items = response.data.items;
         }
         return items
-          .filter((item) => item && item.isActive !== false)
+          .filter((item) => item && item.isActive !== false && (item.label || item.value))
           .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-      },
-      providesTags: ['SocialProof'],
-    }),
-
-    // Legacy fallback query for compatibility
-    getSocialProof: builder.query<any, void>({
-      query: () => '/social-proof-metrics?siteVariant=Enterprise',
-      transformResponse: (response: any) => {
-        return response?.data || response || null;
       },
       providesTags: ['SocialProof'],
     }),
@@ -35,5 +26,4 @@ export const socialProofApi = baseApi.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useGetSocialProofMetricsQuery, useGetSocialProofQuery } = socialProofApi;
-export { useGetSocialProofMetricsQuery as useSocialProofQuery };
+export const { useGetSocialProofMetricsQuery } = socialProofApi;
