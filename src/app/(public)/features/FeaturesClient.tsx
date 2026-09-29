@@ -37,6 +37,10 @@ import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import TestimonialsWrapper from "@/features/Testimonials";
 import { FAQWrapper } from "@/features/FAQ";
 import { FAQItem } from "@/features/FAQ/Types/FAQTypes";
+import { useGetPublicFeaturesQuery } from "@/features/Features/Service/FeaturesService";
+import { getFeatureIcon } from "@/features/Features/lib/getFeatureIcon";
+import { FeaturesBentoSkeleton } from "./FeaturesBentoSkeleton";
+
 
 interface FeatureCardItem {
   slug: string;
@@ -55,13 +59,7 @@ interface FeatureCardItem {
   keyPoints?: string[]; // Bullet highlights for wide featured cards
 }
 
-const FILTER_TABS = [
-  { id: "all", label: "All Features", count: 15, icon: Sparkles },
-  { id: "restaurant", label: "Restaurant & Dining", count: 5, icon: Utensils },
-  { id: "retail", label: "Retail & Checkout", count: 4, icon: Store },
-  { id: "multistore", label: "Multi-Store Cloud HQ", count: 4, icon: Cloud },
-  { id: "digital", label: "Online & Delivery", count: 2, icon: Globe2 },
-];
+
 
 const SOLUTION_GROUPS = [
   {
@@ -95,266 +93,6 @@ const SOLUTION_GROUPS = [
     href: "/solutions",
     icon: Globe2,
     accent: "from-cyan-500 to-blue-500",
-  },
-];
-
-const FEATURES: FeatureCardItem[] = [
-  // 1. FLAGSHIP BENTO HERO (Wide 2-col): Multi-Location Cloud HQ
-  {
-    slug: "multi-store",
-    title: "Multi-Location Cloud HQ & Franchise Command",
-    category: "multistore",
-    badge: "ENTERPRISE FLAGSHIP",
-    specBadge: "< 2.4s Global Sync",
-    desc: "Centralized cloud governance for 50+ unit franchise networks. Deploy master menus, localized pricing tiers, corporate royalties, and granular RBAC security.",
-    image: "/images/nav_cloud_bundle_v2.png",
-    icon: Building2,
-    accentColor: "text-primary dark:text-primary-light bg-primary/10 border-primary/20",
-    glowColor: "rgba(255, 77, 0, 0.18)",
-    tags: ["1-Click Master Push", "Royalty Ledger", "Enterprise RBAC"],
-    includedIn: { name: "Multi-Store Cloud HQ", href: "/solutions/franchise" },
-    isFeatured: true,
-    keyPoints: [
-      "1-Click master catalog rollout to 500+ locations in < 2.4s",
-      "Automated franchise royalty calculations & remittance ledgers",
-      "Granular role-based staff access & cashier override audit trails",
-    ],
-  },
-
-  // 2. STANDARD BENTO: Smart Inventory
-  {
-    slug: "smart-inventory",
-    title: "Smart Inventory & Recipe Costing",
-    category: "retail",
-    badge: "MARGIN SYNC",
-    specBadge: "Gram Precision",
-    desc: "Deduct raw ingredients down to the gram as items clear POS. Audit dish margins and prevent kitchen waste.",
-    image: "/images/nav_retail_bundle.png",
-    icon: Boxes,
-    accentColor: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
-    glowColor: "rgba(16, 185, 129, 0.18)",
-    tags: ["Live COGS", "Auto Par-PO", "Waste Log"],
-    includedIn: { name: "Retail Commerce POS", href: "/solutions/grocery" },
-  },
-
-  // 3. STANDARD BENTO: Offline Standalone Till
-  {
-    slug: "offline-registers",
-    title: "Offline Standalone Register POS",
-    category: "retail",
-    badge: "100% OFFLINE",
-    specBadge: "Sub-4ms Till",
-    desc: "Local IndexedDB registers continue scanning barcodes and ringing sales with zero internet. Syncs upon reconnection.",
-    image: "/images/ent_global_pos_bundle.png",
-    icon: Zap,
-    accentColor: "text-teal-600 dark:text-teal-400 bg-teal-500/10 border-teal-500/20",
-    glowColor: "rgba(20, 184, 166, 0.18)",
-    tags: ["IndexedDB Cache", "Peer Mesh", "Auto Sync"],
-    includedIn: { name: "Retail & Restaurant POS", href: "/solutions" },
-  },
-
-  // 4. FLAGSHIP BENTO HERO (Wide 2-col): Kitchen Display System
-  {
-    slug: "kitchen-display",
-    title: "Kitchen Display System (KDS)",
-    category: "restaurant",
-    badge: "KITCHEN TECH",
-    specBadge: "-42% Ticket Time",
-    desc: "Station-based routing screens for grill, fry, salad, and expo prep. Eliminate paper tickets with color-coded timers and bump alerts.",
-    image: "/images/rest_ghost_kitchen_bundle.png",
-    icon: Tv,
-    accentColor: "text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/20",
-    glowColor: "rgba(245, 158, 11, 0.18)",
-    tags: ["Station Bump", "Course Pacing", "Prep Timers"],
-    includedIn: { name: "Restaurant Cloud POS", href: "/solutions/restaurants" },
-    isFeatured: true,
-    keyPoints: [
-      "Dynamic routing to grill, cold, bar, and expo prep stations",
-      "Color-coded countdown timers with late-order visual alerts",
-      "Multi-course synchronized pacing from starters to desserts",
-    ],
-  },
-
-  // 5. STANDARD BENTO: Tableside QR Code Ordering
-  {
-    slug: "qr-code-ordering",
-    title: "Tableside QR Code Ordering & Pay",
-    category: "restaurant",
-    badge: "CONTACTLESS",
-    specBadge: "Zero App Install",
-    desc: "Let guests scan table QR codes, customize modifiers, send tickets straight to KDS, and tap to pay from mobile browsers.",
-    image: "/images/rest_qr_table_bundle.png",
-    icon: QrCode,
-    accentColor: "text-rose-600 dark:text-rose-400 bg-rose-500/10 border-rose-500/20",
-    glowColor: "rgba(244, 63, 94, 0.18)",
-    tags: ["Scan-to-Pay", "Table Mapping", "Mobile Web"],
-    includedIn: { name: "Restaurant Cloud POS", href: "/solutions/restaurants" },
-  },
-
-  // 6. STANDARD BENTO: Table Management & Floor Layouts
-  {
-    slug: "table-management",
-    title: "Table Management & Floor Layouts",
-    category: "restaurant",
-    badge: "FLOOR OPS",
-    specBadge: "Turnover Timers",
-    desc: "Interactive visual dining room maps, live seat occupancy status, server section balancing, and flexible check splitting.",
-    image: "/images/nav_restaurant_bundle.png",
-    icon: Utensils,
-    accentColor: "text-orange-600 dark:text-orange-400 bg-orange-500/10 border-orange-500/20",
-    glowColor: "rgba(249, 115, 22, 0.18)",
-    tags: ["Visual Floor Maps", "Section Balance", "Split Checks"],
-    includedIn: { name: "Restaurant Cloud POS", href: "/solutions/restaurants" },
-  },
-
-  // 7. STANDARD BENTO: Self-Service Kiosks
-  {
-    slug: "self-service-kiosk",
-    title: "Self-Service Kiosk Ordering",
-    category: "restaurant",
-    badge: "LINE-BUSTING",
-    specBadge: "+28% Avg Ticket",
-    desc: "Guided guest touchscreen ordering with automated visual combo upsell prompts and integrated EMV payment processing.",
-    image: "/images/ent_qsr_kiosk_bundle.png",
-    icon: Tablet,
-    accentColor: "text-primary dark:text-primary-light bg-primary/10 border-primary/20",
-    glowColor: "rgba(255, 77, 0, 0.18)",
-    tags: ["Touchscreen Kiosks", "AI Upsell", "Fast Pay"],
-    includedIn: { name: "Restaurant & QSR POS", href: "/solutions/quick-service" },
-  },
-
-  // 8. FLAGSHIP BENTO HERO (Wide 2-col): Real-Time BI Analytics
-  {
-    slug: "bi-analytics",
-    title: "Real-Time BI Analytics & Telemetry",
-    category: "multistore",
-    badge: "DATA LAKES",
-    specBadge: "Sub-Second BI",
-    desc: "Transform millions of store transactions into live executive telemetry. Track sales velocity, labor margins, cashier shrinkage, and export to SQL lakes.",
-    image: "/images/ent_bi_analytics_bundle_v2.png",
-    icon: LineChart,
-    accentColor: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
-    glowColor: "rgba(16, 185, 129, 0.18)",
-    tags: ["Hourly Velocity", "Data Lake Pipe", "Labor Margins"],
-    includedIn: { name: "Multi-Store Cloud HQ", href: "/solutions/franchise" },
-    isFeatured: true,
-    keyPoints: [
-      "Sub-second sales velocity & hourly cashier throughput metrics",
-      "Automated shrinkage heatmaps & cashier discount audit alerts",
-      "Direct live export connectors to Snowflake, BigQuery & PostgreSQL",
-    ],
-  },
-
-  // 9. STANDARD BENTO: Enterprise Supply Chain
-  {
-    slug: "supply-chain",
-    title: "Enterprise Supply Chain & Replenishment",
-    category: "multistore",
-    badge: "LOGISTICS",
-    specBadge: "Auto Par-PO",
-    desc: "Automated vendor purchase orders on safety par levels, loading dock GRN barcode receiving, and inter-branch warehouse transfers.",
-    image: "/images/ent_supply_chain_bundle.png",
-    icon: Layers,
-    accentColor: "text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 border-indigo-500/20",
-    glowColor: "rgba(99, 102, 241, 0.18)",
-    tags: ["Auto-PO Reorders", "Dock GRN", "Stock Transfers"],
-    includedIn: { name: "Multi-Store Cloud HQ", href: "/solutions/supply-chain" },
-  },
-
-  // 10. STANDARD BENTO: Secure Payments & PCI Checkout
-  {
-    slug: "secure-payments",
-    title: "Secure Payments & PCI Checkout",
-    category: "retail",
-    badge: "PCI TIER 1",
-    specBadge: "P2PE Tokens",
-    desc: "Tokenized card-present payments, contactless NFC tap-to-pay, tip capture, and end-of-day register drawer reconciliation.",
-    image: "/images/nav_payment_bundle.png",
-    icon: CreditCard,
-    accentColor: "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20",
-    glowColor: "rgba(59, 130, 246, 0.18)",
-    tags: ["Tap-to-Pay", "Zero Lock-In", "Shift Balancing"],
-    includedIn: { name: "Retail Commerce POS", href: "/solutions/grocery" },
-  },
-
-  // 11. STANDARD BENTO: Customer Loyalty CRM
-  {
-    slug: "marketing-loyalty",
-    title: "Customer Loyalty & Marketing Engine",
-    category: "retail",
-    badge: "RETENTION",
-    specBadge: "Automated VIP",
-    desc: "Turn casual buyers into regulars with omni-channel reward points, digital gift cards, SMS promos, and checkout redemption.",
-    image: "/images/rest_loyalty_crm_bundle.png",
-    icon: Gift,
-    accentColor: "text-purple-600 dark:text-purple-400 bg-purple-500/10 border-purple-500/20",
-    glowColor: "rgba(168, 85, 247, 0.18)",
-    tags: ["Rewards Points", "Gift Cards", "SMS Campaigns"],
-    includedIn: { name: "Retail & Restaurant POS", href: "/solutions" },
-  },
-
-  // 12. STANDARD BENTO: Digital Menu Boards
-  {
-    slug: "menu-boards",
-    title: "Digital Menu Boards",
-    category: "restaurant",
-    badge: "LIVE DISPLAYS",
-    specBadge: "Daypart Sync",
-    desc: "Counter screen menus synced with POS pricing. Automate daypart switching (breakfast/lunch) and promote high-margin combos.",
-    image: "/images/rest_digital_menu_board.png",
-    icon: Monitor,
-    accentColor: "text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/20",
-    glowColor: "rgba(245, 158, 11, 0.18)",
-    tags: ["Daypart Scheduling", "POS Menu Sync", "Combos"],
-    includedIn: { name: "Restaurant Cloud POS", href: "/solutions/restaurants" },
-  },
-
-  // 13. STANDARD BENTO: Owner App & Mobile Dashboard
-  {
-    slug: "owner-app",
-    title: "Owner App & Live Business Dashboard",
-    category: "multistore",
-    badge: "EXECUTIVE MOBILE",
-    specBadge: "Live Pulse",
-    desc: "Track real-time sales pulse, branch comparisons, kitchen delays, and cashier discount overrides directly from your phone.",
-    image: "/images/ent_roi_analytics.png",
-    icon: Smartphone,
-    accentColor: "text-sky-600 dark:text-sky-400 bg-sky-500/10 border-sky-500/20",
-    glowColor: "rgba(14, 165, 233, 0.18)",
-    tags: ["Mobile Pulse", "Exception Alerts", "Multi-Branch BI"],
-    includedIn: { name: "Multi-Store Cloud HQ", href: "/solutions/franchise" },
-  },
-
-  // 14. STANDARD BENTO: Direct Online Ordering
-  {
-    slug: "online-ordering",
-    title: "Direct Online Ordering Portal",
-    category: "digital",
-    badge: "COMMISSION FREE",
-    specBadge: "Direct Web",
-    desc: "Branded mobile web storefront for customer pickup and delivery with real-time menu availability and instant POS routing.",
-    image: "/images/ent_omnichannel_bundle.png",
-    icon: Globe2,
-    accentColor: "text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
-    glowColor: "rgba(6, 182, 212, 0.18)",
-    tags: ["Direct Web Store", "Live Availability", "Pickup & Delivery"],
-    includedIn: { name: "Restaurant & Retail POS", href: "/solutions" },
-  },
-
-  // 15. STANDARD BENTO: Delivery Management & Dispatch
-  {
-    slug: "delivery-management",
-    title: "Delivery Management & Dispatch Hub",
-    category: "digital",
-    badge: "DISPATCH CONTROL",
-    specBadge: "KDS Synced",
-    desc: "Central dispatch board syncing kitchen KDS readiness, in-house driver tracking, pickup shelves, and customer SMS alerts.",
-    image: "/images/ent_delivery_dispatch_bundle.png",
-    icon: ShoppingBag,
-    accentColor: "text-rose-600 dark:text-rose-400 bg-rose-500/10 border-rose-500/20",
-    glowColor: "rgba(244, 63, 94, 0.18)",
-    tags: ["Driver Dispatch", "KDS Readiness", "Curbside SMS"],
-    includedIn: { name: "Restaurant Cloud POS", href: "/solutions/restaurants" },
   },
 ];
 
@@ -402,6 +140,58 @@ const itemVariants: Variants = {
 };
 
 export default function FeaturesClient() {
+  const { data: apiFeatures = [], isLoading, isError, refetch } = useGetPublicFeaturesQuery({
+    siteVariant: "Enterprise",
+  });
+
+  const FEATURES: FeatureCardItem[] = useMemo(() => {
+    return (apiFeatures || []).map((f) => {
+      const rawCat = (f.category || "multistore").toLowerCase();
+      let cat: "restaurant" | "retail" | "multistore" | "digital" = "multistore";
+      if (rawCat.includes("restaurant") || rawCat.includes("kitchen") || rawCat.includes("dining")) {
+        cat = "restaurant";
+      } else if (rawCat.includes("retail") || rawCat.includes("checkout") || rawCat.includes("storefront")) {
+        cat = "retail";
+      } else if (rawCat.includes("digital") || rawCat.includes("omnichannel") || rawCat.includes("online")) {
+        cat = "digital";
+      }
+
+      const accentColor = f.iconColor || "text-primary bg-primary/10 border-primary/20";
+      const tags = f.bullets && f.bullets.length > 0 ? f.bullets.slice(0, 3) : [f.category || "Enterprise"];
+
+      return {
+        slug: f.slug,
+        title: f.title,
+        category: cat,
+        badge: f.navbarBadge || f.topBadge || "CAPABILITY",
+        specBadge: f.statValue || f.bottomBadge || undefined,
+        desc: f.shortDescription || f.fullDescription || "",
+        image: f.imageUrl || f.imageSrc || "/images/ent_global_pos_bundle.png",
+        icon: getFeatureIcon(f.iconKey),
+        accentColor,
+        glowColor: "rgba(255, 77, 0, 0.18)",
+        tags,
+        includedIn: { name: "Quantix Enterprise", href: `/features/${f.slug}` },
+        isFeatured: !!f.isFeatured,
+        keyPoints: f.bullets && f.bullets.length > 0 ? f.bullets : undefined,
+      };
+    });
+  }, [apiFeatures]);
+
+  const FILTER_TABS = useMemo(() => {
+    return [
+      { id: "all", label: "All Features", count: FEATURES.length, icon: Sparkles },
+      { id: "restaurant", label: "Restaurant & Dining", count: FEATURES.filter((f) => f.category === "restaurant").length, icon: Utensils },
+      { id: "retail", label: "Retail & Checkout", count: FEATURES.filter((f) => f.category === "retail").length, icon: Store },
+      { id: "multistore", label: "Multi-Store Cloud HQ", count: FEATURES.filter((f) => f.category === "multistore").length, icon: Cloud },
+      { id: "digital", label: "Online & Delivery", count: FEATURES.filter((f) => f.category === "digital").length, icon: Globe2 },
+    ];
+  }, [FEATURES]);
+
+  if (isLoading) {
+    return <FeaturesBentoSkeleton />;
+  }
+
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("" );
   const [viewMode, setViewMode] = useState<"bento" | "grouped">("bento");

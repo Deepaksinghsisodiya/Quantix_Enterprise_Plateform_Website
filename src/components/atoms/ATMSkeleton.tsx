@@ -6,6 +6,7 @@ export interface ATMSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string | number;
   height?: string | number;
   animate?: boolean;
+  count?: number;
 }
 
 /**
@@ -16,6 +17,7 @@ export const ATMSkeleton: React.FC<ATMSkeletonProps> = ({
   width,
   height,
   animate = true,
+  count,
   className,
   style,
   ...props
@@ -27,6 +29,29 @@ export const ATMSkeleton: React.FC<ATMSkeletonProps> = ({
     text: 'rounded h-3 w-full',
     badge: 'rounded-md px-1.5 py-0.5 text-[9.5px]',
   }[variant];
+
+  if (count && count > 1) {
+    return (
+      <div className={cn("space-y-2 w-full", className)}>
+        {Array.from({ length: count }).map((_, i) => (
+          <div
+            key={i}
+            role="status"
+            aria-label="Loading..."
+            className={cn(
+              'bg-slate-200/90 dark:bg-slate-700/80',
+              animate && 'animate-pulse',
+              variantStyles,
+              i === count - 1 ? 'w-3/4' : 'w-full'
+            )}
+            style={{
+              height: typeof height === 'number' ? `${height}px` : height,
+            }}
+          />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div

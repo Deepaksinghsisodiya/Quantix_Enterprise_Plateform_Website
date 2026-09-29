@@ -1,17 +1,21 @@
 // src/features/Features/FeaturesWrapper.tsx
+'use client';
+
 import React from 'react';
-import { useGetFeaturesQuery } from './Service/FeaturesService';
+import { useGetHomepageFeaturesQuery } from './Service/FeaturesService';
 import FeaturesSection from './FeaturesSection';
 
 export const FeaturesWrapper: React.FC = () => {
-  const { data: features = [], isLoading, isError, refetch } = useGetFeaturesQuery();
+  const { data: features = [], isLoading, isError, refetch } = useGetHomepageFeaturesQuery({
+    siteVariant: 'Enterprise',
+  });
 
   return (
-    <FeaturesSection 
-      features={features} 
-      isLoading={isLoading} 
-      isError={isError} 
-      onRetry={refetch} 
+    <FeaturesSection
+      features={features}
+      isLoading={isLoading}
+      isError={isError}
+      onRetry={refetch}
     />
   );
 };

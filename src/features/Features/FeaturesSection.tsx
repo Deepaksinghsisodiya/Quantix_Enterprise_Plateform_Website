@@ -1,26 +1,71 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
-import { Sparkles, ArrowRight } from "lucide-react";
-import { FEATURE_MODULES, PLATFORM_ECOSYSTEM_CHIPS } from "./constants/featuresData";
-import { FeaturesVaultView } from "./components/FeaturesVaultView";
+import React from 'react';
+import Link from 'next/link';
+import { Sparkles, ArrowRight, Smartphone, CreditCard, Cloud, Code2, Globe2 } from 'lucide-react';
+import { PlatformFeature, FeatureModule, PlatformExtension } from './Types/FeaturesTypes';
+import { FeaturesVaultView } from './components/FeaturesVaultView';
+import { FeaturesVaultSkeleton } from './components/FeaturesVaultSkeleton';
+import { getFeatureIcon } from './lib/getFeatureIcon';
 
 export interface FeaturesSectionProps {
-  features?: any[];
+  features?: PlatformFeature[];
   isLoading?: boolean;
   isError?: boolean;
   onRetry?: () => void;
 }
 
-export const FeaturesSection: React.FC<FeaturesSectionProps> = () => {
+const PLATFORM_ECOSYSTEM_CHIPS: PlatformExtension[] = [
+  { id: 'kiosks', title: 'Self-Ordering Kiosks', badge: '+28% Avg Ticket', icon: Smartphone, href: '/features/self-service-kiosk' },
+  { id: 'payments', title: 'Unified EMV Terminals', badge: 'Zero Lock-in', icon: CreditCard, href: '/integrations' },
+  { id: 'cloud-hq', title: 'Multi-Store Cloud HQ', badge: '< 2.4s Sync', icon: Cloud, href: '/features/multi-store' },
+  { id: 'webhooks', title: 'ERP & Open Webhooks', badge: '393+ Endpoints', icon: Code2, href: '/integrations' },
+  { id: 'mesh-till', title: 'Peer-to-Peer Mesh Till', badge: 'Offline Resilient', icon: Globe2, href: '/features/cloud-pos' },
+];
+
+export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
+  features = [],
+  isLoading = false,
+  isError = false,
+  onRetry,
+}) => {
+  if (isLoading) {
+    return <FeaturesVaultSkeleton />;
+  }
+
+  if (isError || !features || features.length === 0) {
+    return null;
+  }
+
+  const modules: FeatureModule[] = features.map((f, idx) => ({
+    id: f.slug,
+    number: f.numberLabel || String(idx + 1).padStart(2, '0'),
+    tabLabel: f.title,
+    shortMobileName: f.subtitle || f.category,
+    category: f.category,
+    statusBadge: f.topBadge || f.navbarBadge || 'Active',
+    title: f.heroHeadline || f.title,
+    description: f.fullDescription || f.shortDescription || '',
+    bullets: f.bullets || [],
+    stat: {
+      label: f.statLabel || 'Performance',
+      value: f.statValue || 'Sub-second',
+    },
+    imageSrc: f.imageUrl || f.imageSrc || '/images/ent_global_pos_bundle.png',
+    imageAlt: f.imageAlt || f.title,
+    topBadge: f.topBadge || 'Quantix Enterprise',
+    bottomBadge: f.bottomBadge || 'Cloud Synced',
+    href: f.ctaHref || `/features/${f.slug}`,
+    ctaText: f.ctaText || 'Explore Capability',
+    icon: getFeatureIcon(f.iconKey),
+  }));
+
   return (
     <section id="features" className="relative overflow-hidden py-12 lg:py-14 text-slate-900 transition-colors dark:text-white">
       {/* Background Depth Ambience */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-15%,rgba(255,79,0,0.06),transparent_70%)]" />
 
       <div className="site-container relative z-10 px-3.5 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-6 sm:space-y-10">
-        
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center space-y-2.5 sm:space-y-3">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/25 bg-orange-500/10 px-3 py-1 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-[#FF4F00] shadow-xs backdrop-blur-sm">
@@ -29,7 +74,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = () => {
           </div>
 
           <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-[1.18] tracking-tight text-slate-950 dark:text-white">
-            One Connected Platform.{" "}
+            One Connected Platform.{' '}
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500 sm:inline">
               Every Part of Your Operation.
             </span>
@@ -40,9 +85,9 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = () => {
           </p>
         </div>
 
-        {/* Kinetic Horizontal Expanding Feature Vault (How It Works Elastic Architecture) */}
+        {/* Kinetic Horizontal Expanding Feature Vault */}
         <div className="relative">
-          <FeaturesVaultView modules={FEATURE_MODULES} />
+          <FeaturesVaultView modules={modules} />
         </div>
 
         {/* Bottom Connected Ecosystem Extensions Bar */}
@@ -81,7 +126,6 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = () => {
             </Link>
           </div>
         </div>
-
       </div>
     </section>
   );
