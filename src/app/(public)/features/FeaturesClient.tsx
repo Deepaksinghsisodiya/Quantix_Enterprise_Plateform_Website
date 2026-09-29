@@ -188,9 +188,6 @@ export default function FeaturesClient() {
     ];
   }, [FEATURES]);
 
-  if (isLoading) {
-    return <FeaturesBentoSkeleton />;
-  }
 
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("" );
@@ -231,7 +228,11 @@ export default function FeaturesClient() {
         f.includedIn.name.toLowerCase().includes(q)
       );
     });
-  }, [selectedFilter, searchQuery]);
+  }, [FEATURES, selectedFilter, searchQuery]);
+
+  if (isLoading) {
+    return <FeaturesBentoSkeleton />;
+  }
 
   return (
     <div className="w-full overflow-x-hidden">

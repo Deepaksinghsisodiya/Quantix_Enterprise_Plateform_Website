@@ -5,7 +5,7 @@ export const FeaturesBentoSkeleton: React.FC = () => {
   return (
     <div className="w-full space-y-8 animate-fade-in pb-16">
       {/* 1. HERO SKELETON */}
-      <section className="relative overflow-hidden py-12 lg:py-16 border-b border-slate-200/80 dark:border-slate-800">
+      <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-200/80 dark:border-slate-800 relative overflow-hidden">
         <div className="site-container text-center max-w-3xl mx-auto px-4 space-y-4">
           <div className="flex justify-center">
             <ATMSkeleton variant="badge" width="200px" height="26px" className="rounded-full" />

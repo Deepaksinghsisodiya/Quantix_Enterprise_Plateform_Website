@@ -6,6 +6,7 @@ import { DesktopNavItem } from './DesktopNavItem';
 import { PRIMARY_LINKS } from '../../config/navConfig';
 import { ProductsMegaMenu } from './MegaMenu/ProductsMegaMenu';
 import { SolutionsMegaMenu } from './MegaMenu/SolutionsMegaMenu';
+import { FeaturesMegaMenu } from './MegaMenu/FeaturesMegaMenu';
 import { IntegrationsMegaMenu } from './MegaMenu/IntegrationsMegaMenu';
 import { WhyQuantixMegaMenu } from './MegaMenu/WhyQuantixMegaMenu';
 import { ResourcesMegaMenu } from './MegaMenu/ResourcesMegaMenu';
@@ -43,14 +44,14 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
       {/* Render Desktop Mega Menu Dropdowns */}
       <AnimatePresence mode="wait">
         {openMegaMenu === 'Solutions' && (
-          <ProductsMegaMenu
+          <SolutionsMegaMenu
             onClose={() => onSetOpenMegaMenu(null)}
             onMouseEnter={() => onSetOpenMegaMenu('Solutions')}
             onMouseLeave={() => onSetOpenMegaMenu(null)}
           />
         )}
         {openMegaMenu === 'Features' && (
-          <SolutionsMegaMenu
+          <FeaturesMegaMenu
             onClose={() => onSetOpenMegaMenu(null)}
             onMouseEnter={() => onSetOpenMegaMenu('Features')}
             onMouseLeave={() => onSetOpenMegaMenu(null)}

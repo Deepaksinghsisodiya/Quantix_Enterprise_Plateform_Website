@@ -101,7 +101,45 @@ export const PRODUCTS_MEGA_CONFIG: MegaMenuSectionData = {
   ],
 };
 
-export const FEATURES_MEGA_CONFIG: MegaMenuSectionData = PRODUCTS_MEGA_CONFIG;
+export const FEATURES_MEGA_CONFIG: MegaMenuSectionData = {
+  promoCards: [
+    {
+      badge: 'ENTERPRISE FLAGSHIP',
+      title: 'Multi-Store Cloud HQ & Franchise Command',
+      desc: 'Centralized cloud governance, instant catalog rollouts & automated franchise royalties.',
+      ctaText: 'Explore Capability',
+      href: '/features/multi-store',
+      imageSrc: '/images/nav_cloud_bundle_v2.png',
+      badgeColor: 'text-primary dark:text-primary-light bg-primary/10 dark:bg-primary/20 border border-primary/30',
+    },
+  ],
+  categories: [
+    {
+      categoryTitle: 'MULTI-STORE CLOUD HQ',
+      items: [
+        { title: 'Multi-Store Command', desc: 'Central menus, price tiers & royalty ledgers', href: '/features/multi-store', icon: Building2, iconColor: 'text-primary' },
+        { title: 'Executive BI Telemetry', desc: 'Real-time sales velocity, labor ratios & ERP pipelines', href: '/features/executive-bi', icon: BarChart3, iconColor: 'text-amber-500' },
+        { title: 'Central Supply Chain', desc: 'Manage inventory across every central warehouse', href: '/features/central-inventory', icon: Boxes, iconColor: 'text-sky-500' },
+      ],
+    },
+    {
+      categoryTitle: 'STOREFRONT & CHECKOUT',
+      items: [
+        { title: 'Branch Cloud POS', desc: 'One POS system for every branch location with offline mesh', href: '/features/cloud-pos', icon: Store, iconColor: 'text-orange-500' },
+        { title: 'Smart Inventory', desc: 'Recipe costing down to the gram & automated par orders', href: '/features/smart-inventory', icon: Boxes, iconColor: 'text-emerald-500' },
+        { title: 'Offline Registers', desc: 'Continuous standalone billing & local thermal receipt printing', href: '/features/offline-registers', icon: Zap, iconColor: 'text-teal-500' },
+      ],
+    },
+    {
+      categoryTitle: 'HOSPITALITY & DINING',
+      items: [
+        { title: 'Kitchen Display (KDS)', desc: 'Multi-station routing, cook timers & course pacing', href: '/features/kitchen-display', icon: Tv, iconColor: 'text-amber-500' },
+        { title: 'Table Management', desc: 'Interactive floor layouts, table timers & split checks', href: '/features/table-management', icon: Utensils, iconColor: 'text-orange-500' },
+        { title: 'Tableside QR Ordering', desc: 'Contactless digital menus & browser self-pay at table', href: '/features/qr-code-ordering', icon: Smartphone, iconColor: 'text-rose-500' },
+      ],
+    },
+  ],
+};
 
 export const SOLUTIONS_MEGA_CONFIG: MegaMenuSectionData = {
   promoCards: [
@@ -233,14 +271,17 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
     ...PRIMARY_LINKS[0],
     icon: Sparkles,
     imageSrc: '/images/nav_restaurant_bundle.png',
-    badge: 'PLATFORM SOLUTIONS',
+    badge: 'ENTERPRISE SOLUTIONS',
     groups: [
       {
-        title: 'PLATFORM SYSTEMS',
+        title: 'BY SECTOR & INDUSTRY',
         items: [
-          { title: 'Restaurant POS System', desc: 'Table floor plans & kitchen billing', href: '/solutions/restaurants', icon: Utensils },
-          { title: 'Retail Register', desc: 'Barcode scanner & cash drawer', href: '/solutions/grocery', icon: Store },
-          { title: 'Cloud Multi-Store HQ', desc: 'Manage menus & multi-store sales', href: '/features/multi-store', icon: Cloud },
+          { title: 'Dine-In Restaurants', desc: 'Table floor plan & billing', href: '/solutions/restaurants', icon: Utensils },
+          { title: 'Cafes & Bakeries', desc: 'Modifiers, drinks & combos', href: '/solutions/cafes', icon: Coffee },
+          { title: 'Bars & Nightclubs', desc: 'Bar tabs & quick reorders', href: '/solutions/bars', icon: Flame },
+          { title: 'Boutiques & Apparel', desc: 'Variants & barcode tags', href: '/solutions/apparel', icon: ShoppingBag },
+          { title: 'Convenience & Grocery', desc: 'Weight scales & fast till', href: '/solutions/grocery', icon: Store },
+          { title: 'Vape & Smoke Shops', desc: 'Age checks & SKU catalogs', href: '/solutions/smoke-shops', icon: Layers },
         ],
       },
     ],
@@ -248,18 +289,24 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
   {
     ...PRIMARY_LINKS[1],
     icon: Layers,
-    imageSrc: '/images/ent_global_pos_bundle.png',
+    imageSrc: '/images/nav_cloud_bundle_v2.png',
     badge: 'ENTERPRISE FEATURES',
     groups: [
       {
-        title: 'BY BUSINESS TYPE',
+        title: 'MULTI-STORE CLOUD HQ',
         items: [
-          { title: 'Dine-In Restaurants', desc: 'Table floor plan & billing', href: '/solutions/restaurants', icon: Utensils },
-          { title: 'Boutiques & Apparel', desc: 'Variants & barcode tags', href: '/solutions/apparel', icon: ShoppingBag },
-          { title: 'Cafes & Bakeries', desc: 'Modifiers, drinks & combos', href: '/solutions/cafes', icon: Coffee },
-          { title: 'Convenience & Grocery', desc: 'Weight scales & fast till', href: '/solutions/grocery', icon: Store },
-          { title: 'Bars & Nightclubs', desc: 'Bar tabs & quick reorders', href: '/solutions/bars', icon: Flame },
-          { title: 'Vape & Smoke Shops', desc: 'Age checks & SKU catalogs', href: '/solutions/smoke-shops', icon: Layers },
+          { title: 'Multi-Store Command', desc: 'Central menus & royalties', href: '/features/multi-store', icon: Building2 },
+          { title: 'Executive BI Telemetry', desc: 'Live margin telemetry', href: '/features/executive-bi', icon: BarChart3 },
+          { title: 'Central Supply Chain', desc: 'Multi-warehouse stock', href: '/features/central-inventory', icon: Boxes },
+        ],
+      },
+      {
+        title: 'STOREFRONT & HOSPITALITY',
+        items: [
+          { title: 'Branch Cloud POS', desc: 'Offline register mesh', href: '/features/cloud-pos', icon: Store },
+          { title: 'Smart Inventory', desc: 'Recipe costing to the gram', href: '/features/smart-inventory', icon: Boxes },
+          { title: 'Kitchen Display (KDS)', desc: 'Station routing & timers', href: '/features/kitchen-display', icon: Tv },
+          { title: 'Table Management', desc: 'Floor layouts & split checks', href: '/features/table-management', icon: Utensils },
         ],
       },
     ],
