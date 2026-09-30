@@ -7,6 +7,7 @@ import { Sparkles, ArrowRight } from 'lucide-react';
 import { FAQSectionProps } from './Types/FAQTypes';
 import FAQAccordionItem from './components/FAQAccordionItem';
 import FAQSkeleton from './components/FAQSkeleton';
+import FAQSectionSkeleton from './components/FAQSectionSkeleton';
 
 export const FAQSection: React.FC<FAQSectionProps> = ({
   faqs = [],
@@ -19,8 +20,13 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
 
   const toggle = (id: string) => setOpenId((prev) => (prev === id ? null : id));
 
-  // Hide section only if not loading and zero FAQs available
-  if (!isLoading && faqs.length === 0) return null;
+  if (isLoading) {
+    return <FAQSectionSkeleton />;
+  }
+
+
+  // Hide section only if zero FAQs available
+  if (faqs.length === 0) return null;
 
   return (
     <section

@@ -4,8 +4,8 @@
 import React from 'react';
 import { useGetFAQsQuery } from './Service/FAQService';
 import FAQSection from './FAQSection';
-import { DEFAULT_ENTERPRISE_FAQS } from './Constants/FAQConstants';
 import { FAQItem } from './Types/FAQTypes';
+import FAQSectionSkeleton from './components/FAQSectionSkeleton';
 
 export interface FAQWrapperProps {
   category?: string;
@@ -16,8 +16,9 @@ export interface FAQWrapperProps {
 }
 
 /**
- * FAQWrapper — fetches FAQ data from the API (/help-centre/faqs) and passes it to FAQSection.
- * Prioritizes live API data. Falls back to fallbackFaqs or DEFAULT_ENTERPRISE_FAQS when API returns empty.
+ * FAQWrapper — fetches real FAQ data from the API (/help-centre/faqs?siteVariant=Enterprise).
+ * Shows matching skeletons immediately while loading.
+ * Hides completely (returns null) if no FAQs exist or API is empty.
  */
 export const FAQWrapper: React.FC<FAQWrapperProps> = ({
   category,
@@ -26,26 +27,32 @@ export const FAQWrapper: React.FC<FAQWrapperProps> = ({
   subtitle,
   badgeText,
 }) => {
-  const { data: apiFaqs = [], isLoading } = useGetFAQsQuery();
+  const { data: apiFaqs, isLoading } = useGetFAQsQuery();
 
-  // Filter by category if requested and available
-  const filteredApiFaqs = category
-    ? apiFaqs.filter((f) => f.category?.toLowerCase() === category.toLowerCase())
-    : apiFaqs;
+  // Synchronize loading state: immediately render skeleton on initial load or while fetching
+  const isInitialLoading = isLoading || (apiFaqs === undefined);
 
-  const resolvedFaqs =
-    Array.isArray(filteredApiFaqs) && filteredApiFaqs.length > 0
-      ? filteredApiFaqs
-      : Array.isArray(apiFaqs) && apiFaqs.length > 0
-      ? apiFaqs
-      : fallbackFaqs && fallbackFaqs.length > 0
-      ? fallbackFaqs
-      : DEFAULT_ENTERPRISE_FAQS;
+  if (isInitialLoading) {
+    return <FAQSectionSkeleton />;
+  }
+
+
+  const faqsToUse = apiFaqs || [];
+
+  // Filter by category if requested
+  const filteredFaqs = category
+    ? faqsToUse.filter((f) => f.category?.toLowerCase() === category.toLowerCase())
+    : faqsToUse;
+
+  // Complete safety: hide completely if empty and not loading
+  if (filteredFaqs.length === 0) {
+    return null;
+  }
 
   return (
     <FAQSection
-      faqs={resolvedFaqs}
-      isLoading={isLoading}
+      faqs={filteredFaqs}
+      isLoading={false}
       title={title}
       subtitle={subtitle}
       badgeText={badgeText}

@@ -70,6 +70,52 @@ const DEFAULT_TICKER_INTEGRATIONS: Integration[] = [
   },
 ];
 
+export function IntegrationsTickerSkeleton() {
+  return (
+    <section className="py-12 lg:py-14 bg-white dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden relative select-none animate-pulse">
+      <div className="site-container mb-10 sm:mb-14 text-center relative z-10">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-3">
+          <div className="h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-700" />
+          <div className="h-2.5 w-32 rounded bg-slate-200 dark:bg-slate-800" />
+        </div>
+        <div className="h-8 sm:h-12 w-3/4 max-w-2xl mx-auto rounded-xl bg-slate-200 dark:bg-slate-800 mb-3" />
+        <div className="h-4 w-1/2 max-w-md mx-auto rounded bg-slate-100 dark:bg-slate-800" />
+      </div>
+
+      <div className="space-y-4 max-w-6xl mx-auto px-4">
+        <div className="flex gap-4 overflow-hidden">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <div
+              key={idx}
+              className="shrink-0 h-16 w-52 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 p-3 flex items-center gap-3"
+            >
+              <div className="h-10 w-10 rounded-xl bg-slate-200 dark:bg-slate-800 shrink-0" />
+              <div className="space-y-1.5 flex-1">
+                <div className="h-3.5 w-20 rounded bg-slate-200 dark:bg-slate-800" />
+                <div className="h-2.5 w-12 rounded bg-slate-100 dark:bg-slate-800/60" />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="flex gap-4 overflow-hidden">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <div
+              key={idx}
+              className="shrink-0 h-16 w-52 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 p-3 flex items-center gap-3"
+            >
+              <div className="h-10 w-10 rounded-xl bg-slate-200 dark:bg-slate-800 shrink-0" />
+              <div className="space-y-1.5 flex-1">
+                <div className="h-3.5 w-20 rounded bg-slate-200 dark:bg-slate-800" />
+                <div className="h-2.5 w-12 rounded bg-slate-100 dark:bg-slate-800/60" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export const IntegrationsTickerSection: React.FC = () => {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [autoIndex, setAutoIndex] = useState<number>(0);
@@ -81,14 +127,15 @@ export const IntegrationsTickerSection: React.FC = () => {
 
   const tickerIntegrations = useMemo<Integration[]>(() => {
     if (!apiIntegrations || apiIntegrations.length === 0) {
-      return DEFAULT_TICKER_INTEGRATIONS;
+      return [];
     }
     return apiIntegrations.map((item) => {
       const s = (item.slug || '').toLowerCase();
       const rawCat = (item.category || '').toUpperCase();
       const category = rawCat.includes('PAY') ? 'PAYMENTS' : rawCat.includes('DELIV') ? 'DELIVERY' : rawCat;
       const color =
-        s.includes('stripe')
+        item.accent ||
+        (s.includes('stripe')
           ? '#635BFF'
           : s.includes('authorize')
           ? '#1E3A5F'
@@ -98,7 +145,7 @@ export const IntegrationsTickerSection: React.FC = () => {
           ? '#FF3008'
           : s.includes('uber')
           ? '#06C167'
-          : '#FF4F00';
+          : '#FF4F00');
       const logo =
         item.logoUrl ||
         (s.includes('stripe')
@@ -141,9 +188,17 @@ export const IntegrationsTickerSection: React.FC = () => {
     [tickerIntegrations]
   );
   const deliveryList = useMemo(
-    () => tickerIntegrations.filter((i) => i.category === 'DELIVERY' || i.category !== 'PAYMENTS'),
+    () => tickerIntegrations.filter((i) => i.category !== 'PAYMENTS'),
     [tickerIntegrations]
   );
+
+  if (isLoading) {
+    return <IntegrationsTickerSkeleton />;
+  }
+
+  if (tickerIntegrations.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-12 lg:py-14 bg-white dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden relative select-none transition-colors">
@@ -728,7 +783,7 @@ export const IntegrationsTickerSection: React.FC = () => {
 
           <div className="text-right shrink-0">
             <span className="font-mono text-[10px] font-bold text-[#FF4F00] bg-orange-500/10 border border-orange-500/25 px-2.5 py-1 rounded-full block">
-              05 Connectors
+              {tickerIntegrations.length.toString().padStart(2, '0')} Connectors
             </span>
           </div>
         </div>

@@ -1,6 +1,7 @@
 // src/features/Testimonials/constants/defaultTestimonials.ts
 import { TestimonialDto } from '../Types/TestimonialsTypes';
 
+/** @deprecated Legacy static testimonials preserved for reference only; live site renders dynamic API data */
 export const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
   {
     id: "t1",

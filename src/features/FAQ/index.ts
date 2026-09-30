@@ -6,6 +6,8 @@ export { FAQSection } from './FAQSection';
 export { FAQWrapper, type FAQWrapperProps } from './FAQWrapper';
 export { FAQAccordionItem } from './components/FAQAccordionItem';
 export { FAQSkeleton } from './components/FAQSkeleton';
+export { FAQSectionSkeleton } from './components/FAQSectionSkeleton';
+
 
 // Service (RTK Query hooks)
 export { useGetFAQsQuery, useGetFAQsByCategoryQuery } from './Service/FAQService';

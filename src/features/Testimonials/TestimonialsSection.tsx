@@ -18,6 +18,8 @@ import { TestimonialDto } from "./Types/TestimonialsTypes";
 import { motion, AnimatePresence } from "framer-motion";
 import { DEFAULT_TESTIMONIALS } from "./constants/defaultTestimonials";
 
+import TestimonialsSectionSkeleton from "./components/TestimonialsSectionSkeleton";
+
 export interface TestimonialsSectionProps {
   testimonials?: TestimonialDto[];
   isLoading?: boolean;
@@ -35,28 +37,16 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
-  const displayTestimonials = testimonials && testimonials.length > 0 ? testimonials : DEFAULT_TESTIMONIALS;
-
   if (isLoading) {
-    return (
-      <div className="w-full py-8 sm:py-14 lg:py-20">
-        <div className="site-container">
-          <div className="text-center mb-8 flex flex-col items-center">
-            <div className="h-5 w-32 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse mb-3" />
-            <div className="h-8 sm:h-10 w-2/3 max-w-md rounded-xl bg-slate-200 dark:bg-slate-800 animate-pulse" />
-          </div>
-          <div className="max-w-4xl mx-auto">
-            <div className="w-full bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 p-5 sm:p-8 rounded-2xl sm:rounded-3xl animate-pulse space-y-4">
-              <div className="h-12 w-12 rounded-xl bg-slate-200 dark:bg-slate-800" />
-              <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-full" />
-              <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-5/6" />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    return <TestimonialsSectionSkeleton />;
   }
 
+  // Complete safety: if not loading and zero testimonials available from API, hide the entire section
+  if (!testimonials || testimonials.length === 0) {
+    return null;
+  }
+
+  const displayTestimonials = testimonials || [];
   if (displayTestimonials.length === 0) {
     return null;
   }
@@ -131,7 +121,10 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
     .toUpperCase() || 'Q';
 
   return (
-    <div className="w-full py-12 lg:py-14 overflow-hidden">
+    <section 
+      id="testimonials" 
+      className="scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300 w-full py-12 lg:py-14 overflow-hidden"
+    >
       <div className="site-container">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 lg:mb-12">
@@ -364,7 +357,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

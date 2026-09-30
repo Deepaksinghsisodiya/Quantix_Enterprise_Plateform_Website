@@ -12,11 +12,9 @@ import SocialProofStatsWrapper from "@/features/SocialProof/components/SocialPro
 import { BusinessProblemSection } from "@/features/BusinessProblems";
 import SupportSection from "@/components/organisms/SupportSection/SupportSection";
 
-import dynamic from "next/dynamic";
 import { DEFAULT_ENTERPRISE_FAQS } from "@/features/FAQ/Constants/FAQConstants";
-
-const LazyTestimonialsSection = dynamic(() => import("@/features/Testimonials"), { ssr: false });
-const LazyFAQWrapper = dynamic(() => import("@/features/FAQ/components/FAQWrapper"), { ssr: false });
+import TestimonialsSectionWrapper, { TestimonialsSectionSkeleton } from "@/features/Testimonials";
+import { FAQWrapper, FAQSectionSkeleton } from "@/features/FAQ";
 
 export default function HomePageClient() {
   return (
@@ -86,23 +84,17 @@ export default function HomePageClient() {
       </section>
 
       {/* 5. 24/7 Dedicated Enterprise Technical Support */}
-      <section id="support" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
-        <SupportSection platformName="Quantix Enterprise" />
-      </section>
+      <SupportSection platformName="Quantix Enterprise" />
 
-      {/* 7. Social Proof & Customer Reviews (Soft Slate 50 BG + Bottom Border) */}
-      <section id="testimonials" className={cn("scroll-mt-28 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
-        <Suspense fallback={<div className="py-20 flex justify-center items-center"><ATMLoader variant="spinner" size="lg" /></div>}>
-          <LazyTestimonialsSection />
-        </Suspense>
-      </section>
+      {/* 7. Social Proof & Customer Reviews */}
+      <Suspense fallback={<TestimonialsSectionSkeleton />}>
+        <TestimonialsSectionWrapper />
+      </Suspense>
 
-      {/* 8. Frequently Asked Questions (White BG) */}
-      <section id="faq" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 transition-colors duration-300")}>
-        <Suspense fallback={<div className="py-20 flex justify-center items-center"><ATMLoader variant="spinner" size="lg" /></div>}>
-          <LazyFAQWrapper />
-        </Suspense>
-      </section>
+      {/* 8. Frequently Asked Questions */}
+      <Suspense fallback={<FAQSectionSkeleton />}>
+        <FAQWrapper />
+      </Suspense>
 
       {/* 8. Final CTA: Run Every Location From One Platform (Blueprint Step 12) */}
       <section id="cta" className="scroll-mt-28">

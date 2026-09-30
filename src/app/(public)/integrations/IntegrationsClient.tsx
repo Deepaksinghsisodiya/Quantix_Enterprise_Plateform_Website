@@ -14,6 +14,8 @@ import {
   SiSquare,
   SiDoordash,
   SiUbereats,
+  SiShopify,
+  SiWoocommerce,
 } from "react-icons/si";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import TestimonialsWrapper from "@/features/Testimonials";
@@ -44,79 +46,6 @@ interface IntegrationItem {
   syncSpeed: string;
   syncSpeedIcon: "live" | "instant" | "batch";
 }
-
-const DEFAULT_INTEGRATIONS_ITEMS: IntegrationItem[] = [
-  {
-    id: "stripe",
-    name: "Stripe",
-    category: "payments",
-    categoryLabel: "PAYMENTS",
-    desc: "Connect Stripe to Quantix POS for seamless card reader integration, online checkout processing, and automatic daily payouts.",
-    renderLogo: () => <SiStripe size={22} className="text-[#635BFF]" />,
-    image: "/images/ent_stripe_pos_bundle.png",
-    accentColor: "text-[#635BFF] bg-[#635BFF]/10 border-[#635BFF]/30",
-    glowColor: "rgba(99, 91, 255, 0.15)",
-    tags: ["Tap to Pay", "Apple Pay", "Daily Payouts"],
-    syncSpeed: "Real-Time Sync",
-    syncSpeedIcon: "live",
-  },
-  {
-    id: "authorize-net",
-    name: "Authorize.Net",
-    category: "payments",
-    categoryLabel: "PAYMENTS",
-    desc: "Integrate Authorize.Net for merchant account credit card processing, fraud detection, and secure web checkout.",
-    renderLogo: () => <AuthorizeNetIcon size={22} />,
-    image: "/images/ent_venues_pos.png",
-    accentColor: "text-[#1E3A5F] bg-sky-50 border-sky-200",
-    glowColor: "rgba(14, 165, 233, 0.15)",
-    tags: ["Merchant Account", "Fraud Filters", "Batch Settle"],
-    syncSpeed: "Midnight Batch",
-    syncSpeedIcon: "batch",
-  },
-  {
-    id: "square",
-    name: "Square",
-    category: "payments",
-    categoryLabel: "PAYMENTS",
-    desc: "Use Square's card readers and payment terminals with Quantix for seamless payment processing and gift card support.",
-    renderLogo: () => <SiSquare size={20} className="text-slate-900" />,
-    image: "/images/nav_payment_bundle.png",
-    accentColor: "text-slate-900 bg-slate-100 border-slate-300",
-    glowColor: "rgba(15, 23, 42, 0.12)",
-    tags: ["Square Reader", "Terminal Display", "Offline Mode"],
-    syncSpeed: "< 1.5s Speed",
-    syncSpeedIcon: "instant",
-  },
-  {
-    id: "doordash",
-    name: "DoorDash",
-    category: "delivery",
-    categoryLabel: "DELIVERY",
-    desc: "Automatically receive DoorDash delivery orders on your Quantix POS and kitchen display screens without tablet clutter.",
-    renderLogo: () => <SiDoordash size={22} className="text-[#FF3008]" />,
-    image: "/images/ent_delivery_dispatch_bundle.png",
-    accentColor: "text-[#FF3008] bg-[#FF3008]/10 border-[#FF3008]/30",
-    glowColor: "rgba(255, 48, 8, 0.15)",
-    tags: ["Auto-Accept", "Menu Sync", "Driver ETA"],
-    syncSpeed: "Instant Injection",
-    syncSpeedIcon: "instant",
-  },
-  {
-    id: "uber-eats",
-    name: "Uber Eats",
-    category: "delivery",
-    categoryLabel: "DELIVERY",
-    desc: "Automatically receive Uber Eats orders on your Quantix POS with instant KDS routing, menu sync, and driver tracking.",
-    renderLogo: () => <SiUbereats size={22} className="text-[#06C167]" />,
-    image: "/images/rest_ghost_kitchen_bundle.png",
-    accentColor: "text-[#06C167] bg-[#06C167]/10 border-[#06C167]/30",
-    glowColor: "rgba(6, 193, 103, 0.15)",
-    tags: ["Auto-Routing", "Live Menu Sync", "Unified P&L"],
-    syncSpeed: "Live Dispatch",
-    syncSpeedIcon: "live",
-  },
-];
 
 function IntegrationsGridSkeleton() {
   return (
@@ -239,7 +168,7 @@ export default function IntegrationsClient() {
 
   const displayIntegrations = useMemo<IntegrationItem[]>(() => {
     if (!apiIntegrations || apiIntegrations.length === 0) {
-      return DEFAULT_INTEGRATIONS_ITEMS;
+      return [];
     }
 
     return apiIntegrations.map((item) => {
@@ -251,6 +180,8 @@ export default function IntegrationsClient() {
         ? "delivery"
         : rawCat.includes("erp") || rawCat.includes("account")
         ? "accounting"
+        : rawCat.includes("commerce") || rawCat.includes("ecom")
+        ? "ecommerce"
         : rawCat || "other";
 
       const renderLogo = () => {
@@ -259,6 +190,8 @@ export default function IntegrationsClient() {
         if (s.includes("square")) return <SiSquare size={20} className="text-slate-900" />;
         if (s.includes("doordash")) return <SiDoordash size={22} className="text-[#FF3008]" />;
         if (s.includes("uber")) return <SiUbereats size={22} className="text-[#06C167]" />;
+        if (s.includes("shopify")) return <SiShopify size={22} className="text-[#95BF47]" />;
+        if (s.includes("woocommerce")) return <SiWoocommerce size={22} className="text-[#96588A]" />;
         if (item.logoUrl) return <img src={item.logoUrl} alt={item.name} className="h-5.5 w-5.5 object-contain" />;
         return <span className="font-syne font-black text-sm text-[#FF4F00]">{item.name.charAt(0)}</span>;
       };
@@ -275,6 +208,8 @@ export default function IntegrationsClient() {
           ? "/images/ent_delivery_dispatch_bundle.png"
           : s.includes("uber")
           ? "/images/rest_ghost_kitchen_bundle.png"
+          : s.includes("shopify")
+          ? "/images/ent_omnichannel_bundle.png"
           : category === "payments"
           ? "/images/ent_stripe_pos_bundle.png"
           : category === "delivery"
@@ -371,8 +306,14 @@ export default function IntegrationsClient() {
     if (counts.delivery) {
       tabs.push({ id: "delivery", label: "Delivery Marketplaces", count: counts.delivery });
     }
+    if (counts.accounting) {
+      tabs.push({ id: "accounting", label: "Accounting & ERP", count: counts.accounting });
+    }
+    if (counts.ecommerce) {
+      tabs.push({ id: "ecommerce", label: "E-Commerce", count: counts.ecommerce });
+    }
     Object.keys(counts).forEach((cat) => {
-      if (cat !== "all" && cat !== "payments" && cat !== "delivery") {
+      if (cat !== "all" && cat !== "payments" && cat !== "delivery" && cat !== "accounting" && cat !== "ecommerce") {
         const label = cat.charAt(0).toUpperCase() + cat.slice(1) + " Integrations";
         tabs.push({ id: cat, label, count: counts[cat] });
       }
@@ -421,6 +362,27 @@ export default function IntegrationsClient() {
     });
   }, [displayIntegrations, selectedFilter]);
 
+  // Loading state: immediate content-matching skeleton
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white text-slate-900 selection:bg-orange-100 selection:text-orange-900">
+        <section className="bg-white page-hero-header border-b border-slate-200/80 relative overflow-hidden pt-24 pb-10 sm:pt-32 sm:pb-14 md:pt-36 md:pb-16 lg:pt-40 lg:pb-20">
+          <IntegrationsHeroSkeleton />
+        </section>
+        <section className="py-8 sm:py-12 md:py-16 lg:py-20 bg-slate-50/40 border-b border-slate-200/60">
+          <div className="site-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <IntegrationsGridSkeleton />
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  // Null/Empty Safety: If no data returned from API, hide the entire section gracefully
+  if (!apiIntegrations || apiIntegrations.length === 0) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-orange-100 selection:text-orange-900">
       {/* ========================================== */}
@@ -433,115 +395,111 @@ export default function IntegrationsClient() {
         {/* Soft Ambient Radial Warmth */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 bg-linear-to-b from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
 
-        {isLoading ? (
-          <IntegrationsHeroSkeleton />
-        ) : (
-          <div className="site-container text-center max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
-            {/* Top Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#FF4F00] mb-3 sm:mb-3.5 shadow-2xs"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF4F00] animate-pulse" />
-              <Sparkles size={12} className="text-[#FF4F00]" />
-              <span>{displayIntegrations.length}+ ENTERPRISE INTEGRATIONS DIRECTORY</span>
-            </motion.div>
+        <div className="site-container text-center max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+          {/* Top Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4 }}
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#FF4F00] mb-3 sm:mb-3.5 shadow-2xs"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF4F00] animate-pulse" />
+            <Sparkles size={12} className="text-[#FF4F00]" />
+            <span>{displayIntegrations.length}+ ENTERPRISE INTEGRATIONS DIRECTORY</span>
+          </motion.div>
 
-            {/* Main Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.1 }}
-              className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-950 leading-[1.2] sm:leading-[1.16] tracking-tight"
-            >
-              Connect Quantix With Your{" "}
-              <span className="text-[#FF4F00]">Enterprise Ecosystem</span>
-            </motion.h1>
+          {/* Main Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.1 }}
+            className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-950 leading-[1.2] sm:leading-[1.16] tracking-tight"
+          >
+            Connect Quantix With Your{" "}
+            <span className="text-[#FF4F00]">Enterprise Ecosystem</span>
+          </motion.h1>
 
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.2 }}
-              className="mt-2.5 sm:mt-3.5 text-xs sm:text-sm md:text-base text-slate-600 font-normal max-w-2xl mx-auto leading-relaxed px-1 sm:px-0"
-            >
-              Automate kitchen ticket routing, payment gateway settlements, online delivery dispatching,
-              and ERP accounting sync with sub-second synchronization.
-            </motion.p>
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.2 }}
+            className="mt-2.5 sm:mt-3.5 text-xs sm:text-sm md:text-base text-slate-600 font-normal max-w-2xl mx-auto leading-relaxed px-1 sm:px-0"
+          >
+            Automate kitchen ticket routing, payment gateway settlements, online delivery dispatching,
+            and ERP accounting sync with sub-second synchronization.
+          </motion.p>
 
-            {/* 4 Compact Enterprise Trust Metrics (Mobile 2x2, Desktop 4-col) */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.25 }}
-              className="mt-5 sm:mt-7 md:mt-8 grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 max-w-3xl mx-auto"
-            >
-              {trustMetrics.map((metric, idx) => (
-                <div
-                  key={idx}
-                  className="px-2.5 py-2 sm:px-3 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-50/90 border border-slate-200/80 backdrop-blur-xs text-center shadow-2xs"
-                >
-                  <div className="font-syne font-extrabold text-sm sm:text-base md:text-lg text-slate-950">
-                    {metric.value}
-                  </div>
-                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-700 leading-tight">
-                    {metric.label}
-                  </div>
-                  <div className="text-[9px] text-slate-400 mt-0.5 hidden sm:block">
-                    {metric.desc}
-                  </div>
+          {/* 4 Compact Enterprise Trust Metrics (Mobile 2x2, Desktop 4-col) */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.25 }}
+            className="mt-5 sm:mt-7 md:mt-8 grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 max-w-3xl mx-auto"
+          >
+            {trustMetrics.map((metric, idx) => (
+              <div
+                key={idx}
+                className="px-2.5 py-2 sm:px-3 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-50/90 border border-slate-200/80 backdrop-blur-xs text-center shadow-2xs"
+              >
+                <div className="font-syne font-extrabold text-sm sm:text-base md:text-lg text-slate-950">
+                  {metric.value}
                 </div>
-              ))}
-            </motion.div>
-
-            {/* Apple/macOS Segmented Filter Control (Touch-scrollable on Mobile) */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.35 }}
-              className="mt-6 sm:mt-8 flex justify-center w-full"
-            >
-              <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-slate-100/90 border border-slate-200/80 shadow-inner max-w-full overflow-x-auto scrollbar-none snap-x touch-pan-x px-1">
-                <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-                  {filterTabs.map((tab) => {
-                    const isActive = selectedFilter === tab.id;
-                    return (
-                      <button
-                        key={tab.id}
-                        onClick={() => setSelectedFilter(tab.id)}
-                        className={`relative px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-colors duration-200 shrink-0 cursor-pointer snap-center ${
-                          isActive
-                            ? "text-white"
-                            : "text-slate-600 hover:text-slate-900"
-                        }`}
-                      >
-                        {isActive && (
-                          <motion.div
-                            layoutId="activeIntegrationFilterPill"
-                            transition={{ type: "spring", stiffness: 450, damping: 32 }}
-                            className="absolute inset-0 bg-[#FF4F00] rounded-xl shadow-xs shadow-orange-500/30 z-0"
-                          />
-                        )}
-                        <span className="relative z-10 flex items-center gap-1 sm:gap-1.5">
-                          <span>{tab.label}</span>
-                          <span
-                            className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                              isActive ? "bg-white/20 text-white" : "bg-slate-200 text-slate-600"
-                            }`}
-                          >
-                            {tab.count}
-                          </span>
-                        </span>
-                      </button>
-                    );
-                  })}
+                <div className="text-[10px] sm:text-[11px] font-semibold text-slate-700 leading-tight">
+                  {metric.label}
+                </div>
+                <div className="text-[9px] text-slate-400 mt-0.5 hidden sm:block">
+                  {metric.desc}
                 </div>
               </div>
-            </motion.div>
-          </div>
-        )}
+            ))}
+          </motion.div>
+
+          {/* Segmented Filter Control (Touch-scrollable on Mobile) */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.35 }}
+            className="mt-6 sm:mt-8 flex justify-center w-full"
+          >
+            <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-slate-100/90 border border-slate-200/80 shadow-inner max-w-full overflow-x-auto scrollbar-none snap-x touch-pan-x px-1">
+              <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+                {filterTabs.map((tab) => {
+                  const isActive = selectedFilter === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setSelectedFilter(tab.id)}
+                      className={`relative px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-colors duration-200 shrink-0 cursor-pointer snap-center ${
+                        isActive
+                          ? "text-white"
+                          : "text-slate-600 hover:text-slate-900"
+                      }`}
+                    >
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeIntegrationFilterPill"
+                          transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                          className="absolute inset-0 bg-[#FF4F00] rounded-xl shadow-xs shadow-orange-500/30 z-0"
+                        />
+                      )}
+                      <span className="relative z-10 flex items-center gap-1 sm:gap-1.5">
+                        <span>{tab.label}</span>
+                        <span
+                          className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                            isActive ? "bg-white/20 text-white" : "bg-slate-200 text-slate-600"
+                          }`}
+                        >
+                          {tab.count}
+                        </span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* ========================================== */}
@@ -549,17 +507,14 @@ export default function IntegrationsClient() {
       {/* ========================================== */}
       <section className="py-8 sm:py-12 md:py-16 lg:py-20 bg-slate-50/40 border-b border-slate-200/60">
         <div className="site-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {isLoading ? (
-            <IntegrationsGridSkeleton />
-          ) : (
-            <motion.div
-              layout
-              variants={containerVariants}
-              initial="hidden"
-              animate="show"
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6"
-            >
-              <AnimatePresence mode="popLayout">
+          <motion.div
+            layout
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6"
+          >
+            <AnimatePresence mode="popLayout">
               {filteredIntegrations.map((item) => (
                 <motion.div
                   key={item.id}
@@ -653,7 +608,6 @@ export default function IntegrationsClient() {
               ))}
             </AnimatePresence>
           </motion.div>
-          )}
         </div>
       </section>
 

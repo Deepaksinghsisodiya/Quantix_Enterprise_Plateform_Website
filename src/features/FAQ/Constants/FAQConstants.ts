@@ -1,7 +1,7 @@
 // src/features/FAQ/Constants/FAQConstants.ts
 import { FAQItem } from '../Types/FAQTypes';
 
-/** Default FAQs shown when the API returns no data */
+/** @deprecated Legacy static FAQs preserved for reference only; runtime uses live API data */
 export const DEFAULT_ENTERPRISE_FAQS: FAQItem[] = [
   {
     id: 'ent-trial',
@@ -49,6 +49,6 @@ export const DEFAULT_ENTERPRISE_FAQS: FAQItem[] = [
   },
 ];
 
-export const FAQ_ENDPOINT = '/help-centre/faqs' as const;
+export const FAQ_ENDPOINT = '/help-centre/faqs?siteVariant=Enterprise' as const;
 export const FAQ_CATEGORY_ENDPOINT = (category: string) =>
-  `/help-centre/faqs?category=${encodeURIComponent(category)}` as const;
+  `/help-centre/faqs?siteVariant=Enterprise&category=${encodeURIComponent(category)}` as const;

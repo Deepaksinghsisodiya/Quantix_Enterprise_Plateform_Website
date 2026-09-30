@@ -1,10 +1,3 @@
-// src/features/Support/index.ts
-export * from './components/SupportSection';
-export * from './components/SupportHeader';
-export * from './components/SupportTrustBar';
-export * from './components/SupportPhotoCard';
-export * from './components/SupportOfferingsList';
-export * from './Constants/support.constants';
-export * from './Types/support.types';
-
-export { default } from './components/SupportSection';
+export { SupportSection, default } from '@/components/organisms/SupportSection/SupportSection';
+export type { SupportSectionProps } from '@/components/organisms/SupportSection/SupportSection';
+export * from '@/components/organisms/SupportSection/SupportSectionService';

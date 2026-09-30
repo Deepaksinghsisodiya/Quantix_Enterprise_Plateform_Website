@@ -37,7 +37,11 @@ export const TestimonialBanner: React.FC<TestimonialBannerProps> = ({
   testimonials,
   isLoading,
 }) => {
-  const displayTestimonials = testimonials.length > 0 ? testimonials : DEFAULT_TESTIMONIALS;
+  if (!isLoading && (!testimonials || testimonials.length === 0)) {
+    return null;
+  }
+
+  const displayTestimonials = testimonials || [];
   const [active, setActive] = useState(0);
 
   // Auto-rotate loop
