@@ -1,13 +1,42 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Sparkles, Check, ChevronRight } from 'lucide-react';
+import {
+  Sparkles,
+  Check,
+  ChevronRight,
+  Utensils,
+  Coffee,
+  Flame,
+  ShoppingBag,
+  Store,
+  Layers,
+  Cloud,
+  type LucideIcon,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MegaMenuWrapper } from './MegaMenuWrapper';
 import { SOLUTIONS_MEGA_CONFIG } from '../../../config/navConfig';
+import { useGetSolutionsMegaMenuQuery } from '@/features/Solutions/Service/SolutionsService';
+
+const ICON_RESOLVER: Record<string, LucideIcon> = {
+  Utensils,
+  Coffee,
+  Flame,
+  ShoppingBag,
+  Store,
+  Layers,
+  Cloud,
+  Sparkles,
+};
+
+function resolveIcon(iconKey?: string, fallback: LucideIcon = Sparkles): LucideIcon {
+  if (!iconKey) return fallback;
+  return ICON_RESOLVER[iconKey] || fallback;
+}
 
 interface SolutionsMegaMenuProps {
   onClose: () => void;
@@ -21,12 +50,47 @@ export const SolutionsMegaMenu: React.FC<SolutionsMegaMenuProps> = ({
   onMouseLeave,
 }) => {
   const pathname = usePathname();
-  const { promoCards, categories } = SOLUTIONS_MEGA_CONFIG;
+
+  const { data: apiData } = useGetSolutionsMegaMenuQuery('Enterprise');
+
+  // Dynamic promo cards from API or fallback
+  const promoCards = useMemo(() => {
+    if (apiData?.promoCards && apiData.promoCards.length > 0) {
+      return apiData.promoCards.map((c) => ({
+        badge: c.badge || 'FEATURED',
+        title: c.title,
+        desc: c.description,
+        ctaText: c.ctaText || 'Explore',
+        href: c.href || c.externalUrl || '/solutions',
+        imageSrc: c.imageUrl || c.imageSrc || c.detailImageUrl || '/images/nav_restaurant_bundle.png',
+        badgeColor: c.badgeColor || 'text-amber-700 dark:text-amber-400 bg-amber-100/90 dark:bg-amber-900/30 border border-amber-300/40',
+      }));
+    }
+    return SOLUTIONS_MEGA_CONFIG.promoCards || [];
+  }, [apiData]);
+
+  // Dynamic categories from API or fallback
+  const categories = useMemo(() => {
+    if (apiData?.categories && apiData.categories.length > 0) {
+      return apiData.categories.map((group) => ({
+        categoryTitle: group.categoryTitle,
+        items: group.items.map((it) => ({
+          title: it.title,
+          desc: it.description,
+          href: it.href || `/solutions/${it.slug}`,
+          icon: resolveIcon(it.iconKey, Sparkles),
+          iconColor: it.iconColor || 'text-primary',
+          badge: it.badge,
+        })),
+      }));
+    }
+    return SOLUTIONS_MEGA_CONFIG.categories || [];
+  }, [apiData]);
 
   return (
     <MegaMenuWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8 w-full">
-        {/* Left Column: 1 Featured Industry Solution Card (4 cols, full height with large image) */}
+        {/* Left Column: Promo Cards */}
         {promoCards && promoCards.length > 0 && (
           <div className="flex flex-col border-slate-200/80 pr-0 dark:border-slate-800/80 lg:col-span-4 lg:border-r lg:pr-7 h-full">
             {promoCards.map((card, idx) => {
@@ -74,7 +138,7 @@ export const SolutionsMegaMenu: React.FC<SolutionsMegaMenuProps> = ({
           </div>
         )}
 
-        {/* Right Columns: 2 Categories Side-by-Side (8 cols, Foodservice on Left, Retail on Right) */}
+        {/* Right Columns: Categories Side-by-Side */}
         <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
           {categories.map((cat: any) => (
             <div key={cat.categoryTitle} className="space-y-2.5">
@@ -85,7 +149,7 @@ export const SolutionsMegaMenu: React.FC<SolutionsMegaMenuProps> = ({
 
               <div className="flex flex-col space-y-1.5">
                 {cat.items.map((item: any, idx: number) => {
-                  const ItemIcon = item.icon;
+                  const ItemIcon = item.icon || Sparkles;
                   const isItemActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(`${item.href}/`));
 
                   return (
@@ -143,7 +207,6 @@ export const SolutionsMegaMenu: React.FC<SolutionsMegaMenuProps> = ({
                         </div>
                       </div>
 
-                      {/* Hover Chevron Arrow on Right Side */}
                       <ChevronRight
                         size={14}
                         className={cn(

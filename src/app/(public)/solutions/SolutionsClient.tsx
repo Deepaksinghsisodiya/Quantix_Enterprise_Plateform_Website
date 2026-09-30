@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -28,38 +28,35 @@ import {
 } from "lucide-react";
 import CTABanner from "@/components/organisms/CTABanner/CTABanner";
 import TestimonialsWrapper from "@/features/Testimonials";
+import { useGetSolutionsQuery } from "@/features/Solutions/Service/SolutionsService";
+import { SolutionsOverviewSkeleton } from "@/features/Solutions/components/SolutionsOverviewSkeleton";
+import type { SolutionItemDto } from "@/features/Solutions/Types/SolutionTypes";
 
 export const RESTAURANT_SITE_URL = process.env.NEXT_PUBLIC_RESTAURANT_URL || "http://localhost:3002";
 export const RETAIL_SITE_URL = process.env.NEXT_PUBLIC_RETAIL_URL || "http://localhost:3001";
 
-interface SolutionFeature {
-  title: string;
-  desc: string;
-  icon: LucideIcon;
-  badge: string;
-}
+const ICON_MAP: Record<string, LucideIcon> = {
+  Utensils,
+  ShoppingBag,
+  Cloud,
+  Tv,
+  Clock,
+  Sparkles,
+  ChefHat,
+  Scan,
+  Scale,
+  Layers,
+  Boxes,
+  Store,
+  LineChart,
+  Building2,
+  ShieldCheck,
+  Zap,
+};
 
-interface SolutionItem {
-  id: string;
-  number: string;
-  title: string;
-  eyebrow: string;
-  tagline: string;
-  description: string;
-  imageSrc: string;
-  imageAlt: string;
-  topBadge: string;
-  bottomBadge: string;
-  externalSiteUrl?: string;
-  externalSiteLabel?: string;
-  internalHref: string;
-  internalCtaLabel: string;
-  accentGradient: string;
-  glowColor: string;
-  icon: LucideIcon;
-  subSectors: { label: string; href: string }[];
-  features: SolutionFeature[];
-  imagePosition: "left" | "right";
+function resolveIcon(iconKey?: string, fallback: LucideIcon = Sparkles): LucideIcon {
+  if (!iconKey) return fallback;
+  return ICON_MAP[iconKey] || fallback;
 }
 
 const FILTER_TABS = [
@@ -69,200 +66,65 @@ const FILTER_TABS = [
   { id: "multistore", label: "Multi-Store Cloud HQ", icon: Cloud },
 ];
 
-const SOLUTIONS_DATA: SolutionItem[] = [
-  {
-    id: "restaurant",
-    number: "01",
-    title: "Restaurant POS Solution",
-    eyebrow: "HOSPITALITY & DINING ARCHITECTURE",
-    tagline: "Purpose-Built for Dine-In, Kitchen Operations & Tableside Speed",
-    description:
-      "A complete dining room, kitchen management, and mobile ordering platform engineered for high-volume hospitality. Sync kitchen displays, table seating, and course pacing seamlessly across front-of-house and back-of-house.",
-    imageSrc: "/images/nav_restaurant_bundle.png",
-    imageAlt: "Restaurant POS Terminal, Kitchen KDS and Handheld Till",
-    topBadge: "Dual-Screen POS + Kitchen KDS",
-    bottomBadge: "Zero-Latency Station Mesh",
-    externalSiteUrl: RESTAURANT_SITE_URL,
-    externalSiteLabel: "Visit Restaurant Site",
-    internalHref: "/solutions/restaurants",
-    internalCtaLabel: "Explore Restaurant Architecture",
-    accentGradient: "from-amber-500 via-orange-500 to-[#FF4F00]",
-    glowColor: "rgba(245, 158, 11, 0.15)",
-    icon: Utensils,
-    imagePosition: "right",
-    subSectors: [
-      { label: "Dine-In Restaurants", href: "/solutions/restaurants" },
-      { label: "Fine Dining Groups", href: "/solutions/fine-dining" },
-      { label: "Cafes & Bakeries", href: "/solutions/cafes" },
-      { label: "Bars & Nightclubs", href: "/solutions/bars" },
-      { label: "Quick-Service (QSR)", href: "/solutions/quick-service" },
-    ],
-    features: [
-      {
-        title: "Kitchen Display System (KDS)",
-        desc: "Color-coded order routing to grill, fry, cold, and expo prep stations with live countdown bump timers.",
-        icon: Tv,
-        badge: "KDS Stations",
-      },
-      {
-        title: "Interactive Table Floor Plans",
-        desc: "Visual multi-room dining room layouts, guest turnover timers, server section balancing, and live table status.",
-        icon: Utensils,
-        badge: "Table Ops",
-      },
-      {
-        title: "Synchronized Course Pacing",
-        desc: "Fire starters, mains, and desserts in automated sequences to eliminate kitchen ticket bottlenecks.",
-        icon: Clock,
-        badge: "Course Pacing",
-      },
-      {
-        title: "Tableside Handhelds & Split Checks",
-        desc: "Equip waitstaff with mobile handhelds for tableside tap-to-pay and flexible seat-by-seat bill splitting.",
-        icon: Sparkles,
-        badge: "Mobile EMV",
-      },
-      {
-        title: "Live Recipe & Food Costing",
-        desc: "Deduct raw ingredients automatically as dishes clear the POS to audit recipe margins and eliminate kitchen waste.",
-        icon: ChefHat,
-        badge: "Margin Sync",
-      },
-    ],
-  },
-  {
-    id: "retail",
-    number: "02",
-    title: "Retail POS Solution",
-    eyebrow: "RETAIL & STORE COMMERCE ARCHITECTURE",
-    tagline: "High-Throughput Cashier Checkout, Weighing Scales & Stock Transfers",
-    description:
-      "Engineered for modern retail stores handling thousands of daily transactions. Accelerate checkout speeds with instant laser barcode scanning, certified weighing scales, and multi-location inventory replenishment.",
-    imageSrc: "/images/ent_global_pos_bundle.png",
-    imageAlt: "Retail Cashier POS Terminal with Weighing Scale and Barcode Scanner",
-    topBadge: "Sub-Second Barcode + Scale Sync",
-    bottomBadge: "Offline-First Checkout Engine",
-    externalSiteUrl: RETAIL_SITE_URL,
-    externalSiteLabel: "Visit Retail Site",
-    internalHref: "/solutions/grocery",
-    internalCtaLabel: "Explore Retail Architecture",
-    accentGradient: "from-emerald-500 via-teal-500 to-cyan-500",
-    glowColor: "rgba(16, 185, 129, 0.15)",
-    icon: ShoppingBag,
-    imagePosition: "left",
-    subSectors: [
-      { label: "Supermarkets & Grocery", href: "/solutions/grocery" },
-      { label: "Boutiques & Apparel", href: "/solutions/apparel" },
-      { label: "Convenience Stores", href: "/solutions/grocery" },
-      { label: "Specialty Retail Stores", href: "/solutions/apparel" },
-    ],
-    features: [
-      {
-        title: "High-Speed Barcode Laser Checkout",
-        desc: "Sub-second barcode scanning for high-density checkouts with multi-SKU lookups and offline till redundancy.",
-        icon: Scan,
-        badge: "Sub-Second",
-      },
-      {
-        title: "Certified Weighing Scale Integration",
-        desc: "NTEP-certified scale pairing with automatic tare weight deduction for produce, delis, and bulk goods.",
-        icon: Scale,
-        badge: "NTEP Certified",
-      },
-      {
-        title: "Size & Color Variant SKU Matrix",
-        desc: "Manage multidimensional product matrices (style, size, color, brand) with integrated barcode tag printing.",
-        icon: Layers,
-        badge: "SKU Matrix",
-      },
-      {
-        title: "Automated Par-Level Purchase Orders",
-        desc: "Trigger supplier PO reorders automatically when warehouse or store shelf inventory falls below safety par levels.",
-        icon: Boxes,
-        badge: "Auto-PO Engine",
-      },
-      {
-        title: "Inter-Store Stock Routing & Transfers",
-        desc: "Transfer stock between regional store branches and central warehouses with automated dock GRN audits.",
-        icon: Store,
-        badge: "Stock Transfers",
-      },
-    ],
-  },
-  {
-    id: "multistore",
-    number: "03",
-    title: "Multi Store Cloud POS System",
-    eyebrow: "ENTERPRISE CLOUD COMMAND ARCHITECTURE",
-    tagline: "Central Command Matrix for 50+ Unit Franchises & Enterprise Chains",
-    description:
-      "Take total command over your multi-location enterprise. Deploy catalog updates across 500+ locations in seconds, monitor consolidated store P&L telemetry, and maintain zero-latency offline continuity.",
-    imageSrc: "/images/ent_franchise_portal.png",
-    imageAlt: "Multi Store Enterprise Cloud Management Portal",
-    topBadge: "500+ Franchise Locations Synced",
-    bottomBadge: "100% Offline Mesh Till Network",
-    internalHref: "/solutions/franchise",
-    internalCtaLabel: "Explore Enterprise HQ",
-    accentGradient: "from-[#FF4F00] via-purple-600 to-indigo-600",
-    glowColor: "rgba(255, 79, 0, 0.15)",
-    icon: Cloud,
-    imagePosition: "right",
-    subSectors: [
-      { label: "Multi-Unit Franchises", href: "/solutions/franchise" },
-      { label: "Supply Chain & Warehouses", href: "/solutions/supply-chain" },
-      { label: "Arenas & Mega-Venues", href: "/solutions/venues" },
-      { label: "Enterprise Retail Chains", href: "/features/multi-store" },
-    ],
-    features: [
-      {
-        title: "One-Click Master Catalog Broadcast",
-        desc: "Deploy menu updates, holiday promotions, combo meals, and localized pricing tiers to 500+ locations in < 2.4s.",
-        icon: Cloud,
-        badge: "< 2.4s Global Sync",
-      },
-      {
-        title: "Consolidated Multi-Unit P&L Telemetry",
-        desc: "Monitor hourly sales velocity, store throughput, labor margins, and cashier performance from an executive dashboard.",
-        icon: LineChart,
-        badge: "Executive BI",
-      },
-      {
-        title: "Automated Franchise Royalty Ledger",
-        desc: "Automatically calculate corporate franchise royalties, marketing fund fees, and store remittances with zero accounting lag.",
-        icon: Building2,
-        badge: "Royalty Ledger",
-      },
-      {
-        title: "Granular Role-Based Access Control (RBAC)",
-        desc: "Centralized employee permissions, cashier override audit trails, and multi-tier manager refund authorizations.",
-        icon: ShieldCheck,
-        badge: "Enterprise RBAC",
-      },
-      {
-        title: "Zero-Latency Offline Till Mesh",
-        desc: "Peer mesh tills continue processing sales seamlessly even when local internet or WAN broadband goes completely dark.",
-        icon: Zap,
-        badge: "100% Offline Mesh",
-      },
-    ],
-  },
-];
-
 export default function SolutionsClient() {
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
-  const visibleSolutions = SOLUTIONS_DATA.filter((sol) => {
-    if (selectedFilter === "all") return true;
-    return sol.id === selectedFilter;
+  const { data: apiSolutions = [], isLoading, isError } = useGetSolutionsQuery({
+    siteVariant: "Enterprise",
   });
+
+  // Extract the 3 showcase overview solutions from the API
+  const showcaseSolutions = useMemo(() => {
+    if (!apiSolutions || apiSolutions.length === 0) return [];
+
+    // Filter items belonging to the 3 overview categories
+    const overviews = apiSolutions.filter(
+      (s) =>
+        s.categoryTitle === "OVERVIEW SHOWCASE" ||
+        s.slug === "restaurant-overview" ||
+        s.slug === "retail-overview" ||
+        s.slug === "multistore-overview" ||
+        (s.overviewFeatures && s.overviewFeatures.length > 0)
+    );
+
+    if (overviews.length > 0) return overviews;
+
+    // Fallback: take top 3 active Enterprise solutions
+    return apiSolutions.slice(0, 3);
+  }, [apiSolutions]);
+
+  const visibleSolutions = useMemo(() => {
+    return showcaseSolutions.filter((sol) => {
+      if (selectedFilter === "all") return true;
+      const cat = (sol.category || sol.slug || "").toLowerCase();
+      return cat.includes(selectedFilter);
+    });
+  }, [showcaseSolutions, selectedFilter]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full overflow-x-hidden">
+        <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-200/80 dark:border-slate-800 relative overflow-hidden py-16">
+          <div className="site-container text-center max-w-4xl mx-auto px-4 space-y-4">
+            <div className="h-6 w-48 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto animate-pulse" />
+            <div className="h-12 w-3/4 bg-slate-200 dark:bg-slate-800 rounded-xl mx-auto animate-pulse" />
+            <div className="h-5 w-2/3 bg-slate-200 dark:bg-slate-800 rounded mx-auto animate-pulse" />
+          </div>
+        </section>
+        <SolutionsOverviewSkeleton />
+      </div>
+    );
+  }
+
+  // If no solutions data from API, hide section gracefully
+  if (!isLoading && (!showcaseSolutions || showcaseSolutions.length === 0)) {
+    return null;
+  }
 
   return (
     <div className="w-full overflow-x-hidden">
-      {/* ========================================================================= */}
-      {/* 1. HERO HEADER SECTION (using global .page-hero-header)                   */}
-      {/* ========================================================================= */}
+      {/* 1. HERO HEADER SECTION */}
       <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-200/80 dark:border-slate-800 relative overflow-hidden">
-        {/* Soft Ambient Radial Light */}
         <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-64 bg-linear-to-b from-primary/15 via-primary/5 to-transparent blur-3xl -z-10" />
 
         <div className="site-container text-center max-w-4xl mx-auto px-4">
@@ -297,9 +159,7 @@ export default function SolutionsClient() {
             Purpose-built operating platforms for dining hospitality, high-volume retail stores, and multi-location enterprise chains.
           </motion.p>
 
-          {/* ========================================================================= */}
-          {/* SLIDING PILL FILTER BAR (Consistent with Products & Features pages)       */}
-          {/* ========================================================================= */}
+          {/* SLIDING PILL FILTER BAR */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -337,210 +197,194 @@ export default function SolutionsClient() {
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* 2. THE SOLUTIONS SHOWCASE (using global .section-py)                       */}
-      {/* ========================================================================= */}
+      {/* 2. THE SOLUTIONS SHOWCASE */}
       <div className="divide-y divide-slate-200/80 dark:divide-slate-800/80">
         <AnimatePresence mode="wait">
-          {visibleSolutions.map((sol) => {
-            const isRight = sol.imagePosition === "right";
-            const SolIcon = sol.icon;
+          {visibleSolutions.map((sol, index) => {
+            const isRight = index % 2 === 0;
+            const SolIcon = resolveIcon(sol.iconKey, Sparkles);
+            const features = sol.overviewFeatures || [];
+            const subSectors = sol.subSectors || [];
+            const imageSrc = sol.imageUrl || sol.imageSrc || sol.detailImageUrl || "/images/nav_restaurant_bundle.png";
 
             return (
               <motion.section
-                key={sol.id}
-                id={sol.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.35 }}
+                key={sol.solutionId || sol.id || sol.slug || index}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 className="section-py relative overflow-hidden bg-white dark:bg-slate-950"
               >
-                {/* Soft Ambient Radial Background Aura */}
                 <div
-                  className="pointer-events-none absolute top-1/3 -translate-y-1/2 w-80 sm:w-96 h-80 sm:h-96 rounded-full blur-3xl opacity-25 -z-10"
-                  style={{
-                    background: sol.glowColor,
-                    left: isRight ? "auto" : "5%",
-                    right: isRight ? "5%" : "auto",
-                  }}
+                  className="pointer-events-none absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl opacity-60"
+                  style={{ background: sol.glowColor || "rgba(255, 79, 0, 0.15)" }}
                 />
 
-                <div className="site-container px-3 sm:px-6">
-                  
-                  {/* ------------------------------------------------------------- */}
-                  {/* TOP HALF: 2-COLUMN HERO (Text Story + Large Hardware Visual)  */}
-                  {/* ------------------------------------------------------------- */}
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
-                    
-                    {/* TEXT CONTENT COLUMN */}
+                <div className="site-container px-4 sm:px-6 lg:px-8">
+                  <div
+                    className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center ${
+                      !isRight ? "lg:grid-flow-dense" : ""
+                    }`}
+                  >
+                    {/* LEFT / RIGHT CONTENT COLUMN */}
                     <div
-                      className={`space-y-4 sm:space-y-5 lg:col-span-6 ${!isRight ? "lg:order-2" : "lg:order-1"}`}
+                      className={`space-y-6 lg:col-span-7 ${
+                        !isRight ? "lg:col-start-6" : ""
+                      }`}
                     >
-                      {/* Eyebrow & Number Badge */}
-                      <div className="flex items-center gap-2.5">
-                        <span className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4F00] to-orange-600 text-xs font-mono font-black text-white shadow-xs">
-                          {sol.number}
+                      {/* Eyebrow + Number */}
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                          {String(index + 1).padStart(2, "0")}
                         </span>
-                        <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/25 bg-orange-500/10 px-3 py-0.5 text-[10.5px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-[#FF4F00]">
-                          <SolIcon className="h-3 w-3 stroke-[2.2]" />
-                          <span>{sol.eyebrow}</span>
+                        <div className="inline-flex items-center gap-1.5 text-xs font-syne font-bold uppercase tracking-wider text-primary">
+                          <SolIcon size={14} className="text-primary" />
+                          <span>{sol.eyebrow || "ENTERPRISE ARCHITECTURE"}</span>
                         </div>
                       </div>
 
-                      {/* Headline & Tagline */}
-                      <div className="space-y-1 sm:space-y-1.5">
-                        <h2 className="font-syne text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-slate-950 dark:text-white leading-[1.18] sm:leading-[1.15] tracking-tight">
-                          {sol.title}
-                        </h2>
-                        <p className="text-xs sm:text-sm md:text-base font-syne font-bold text-[#FF4F00]">
+                      {/* Main Title */}
+                      <h2 className="font-syne text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 dark:text-white tracking-tight leading-tight">
+                        {sol.title}
+                      </h2>
+
+                      {/* Tagline */}
+                      {sol.tagline && (
+                        <p className="text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-200 leading-snug">
                           {sol.tagline}
                         </p>
-                      </div>
+                      )}
 
                       {/* Description */}
-                      <p className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-normal leading-relaxed">
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
                         {sol.description}
                       </p>
 
-                      {/* Specialized Verticals Served */}
-                      <div className="space-y-1.5 pt-0.5">
-                        <span className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">
-                          SPECIALIZED VERTICALS SERVED:
-                        </span>
-                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                          {sol.subSectors.map((sec) => (
-                            <Link
-                              key={sec.label}
-                              href={sec.href}
-                              className="text-[11px] sm:text-xs font-syne font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-orange-500 hover:text-[#FF4F00] transition-colors"
-                            >
-                              {sec.label}
-                            </Link>
-                          ))}
+                      {/* Sub-Sectors Pill Cloud */}
+                      {subSectors.length > 0 && (
+                        <div className="space-y-2 pt-2">
+                          <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">
+                            Supported Sub-Sectors & Venues
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {subSectors.map((sub, sIdx) => (
+                              <Link
+                                key={sIdx}
+                                href={sub.href || "/solutions"}
+                                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary hover:text-primary transition-colors"
+                              >
+                                <span>{sub.label}</span>
+                                <ArrowRight size={11} className="opacity-60" />
+                              </Link>
+                            ))}
+                          </div>
                         </div>
-                      </div>
+                      )}
 
-                      {/* CTAs: Full width on mobile, inline on desktop */}
-                      <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                      {/* Feature Bento Tiles */}
+                      {features.length > 0 && (
+                        <div className="space-y-2.5 pt-3">
+                          <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">
+                            Architectural Capabilities
+                          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            {features.map((feat, fIdx) => {
+                              const FeatIcon = resolveIcon(feat.icon, Sparkles);
+
+                              return (
+                                <div
+                                  key={fIdx}
+                                  className="group/feat p-3 rounded-xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:border-primary/40 hover:bg-white dark:hover:bg-slate-900 transition-all duration-200"
+                                >
+                                  <div className="flex items-center justify-between gap-2 mb-1">
+                                    <div className="flex items-center gap-2">
+                                      <FeatIcon size={14} className="text-primary shrink-0" />
+                                      <span className="text-xs font-bold text-slate-900 dark:text-white font-syne">
+                                        {feat.title}
+                                      </span>
+                                    </div>
+                                    {feat.badge && (
+                                      <span className="text-[9.5px] font-mono font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 shrink-0">
+                                        {feat.badge}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                                    {feat.desc}
+                                  </p>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* CTA Action Row */}
+                      <div className="flex flex-wrap items-center gap-3 pt-4">
                         <Link
-                          href={sol.internalHref}
-                          className="group inline-flex min-h-[44px] sm:min-h-[46px] items-center justify-center gap-2 rounded-xl bg-linear-to-r from-primary via-primary-light to-primary-dark px-5 sm:px-6 py-2.5 font-syne text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md shadow-orange-500/25 hover:shadow-lg hover:brightness-105 active:scale-95 transition-all text-center"
+                          href={sol.href || "/solutions"}
+                          className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-primary hover:bg-primary-dark text-white font-syne text-xs sm:text-sm font-bold shadow-md hover:shadow-lg shadow-primary/20 transition-all duration-200 cursor-pointer"
                         >
-                          <span>{sol.internalCtaLabel}</span>
-                          <ArrowRight className="h-3.5 w-3.5 stroke-[2.5] transition-transform group-hover:translate-x-1" />
+                          <span>{sol.ctaLabel || "Explore Architecture"}</span>
+                          <ArrowRight size={14} />
                         </Link>
 
-                        {sol.externalSiteUrl && (
+                        {(sol.externalUrl || sol.ctaText) && (
                           <a
-                            href={sol.externalSiteUrl}
+                            href={sol.externalUrl || RESTAURANT_SITE_URL}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex min-h-[44px] sm:min-h-[46px] items-center justify-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 sm:px-5 py-2.5 font-syne text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 hover:border-orange-500 hover:text-[#FF4F00] transition-colors active:scale-95 text-center"
+                            className="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-syne text-xs sm:text-sm font-bold border border-slate-200 dark:border-slate-700 transition-all duration-200"
                           >
-                            <span>{sol.externalSiteLabel}</span>
-                            <ExternalLink className="h-3.5 w-3.5" />
+                            <span>{sol.ctaText || "Visit Site"}</span>
+                            <ExternalLink size={13} />
                           </a>
                         )}
                       </div>
                     </div>
 
-                    {/* HARDWARE IMAGE STAGE */}
+                    {/* HARDWARE BUNDLE IMAGE SHOWCASE */}
                     <div
-                      className={`relative lg:col-span-6 flex items-center justify-center ${!isRight ? "lg:order-1" : "lg:order-2"}`}
+                      className={`lg:col-span-5 ${
+                        !isRight ? "lg:col-start-1 lg:row-start-1" : ""
+                      }`}
                     >
-                      {/* Floating Terminal Stage Container */}
-                      <div className="group relative w-full h-56 sm:h-72 md:h-80 lg:h-96 max-w-xl mx-auto rounded-2xl sm:rounded-3xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/90 dark:border-slate-800/90 p-3 sm:p-6 flex items-center justify-center shadow-xl overflow-hidden">
-                        {/* Subtle Ambient Radial Glow */}
-                        <div className="pointer-events-none absolute inset-0 bg-radial from-orange-500/10 to-transparent blur-2xl" />
-
-                        {/* Hardware Image */}
-                        <Image
-                          src={sol.imageSrc}
-                          alt={sol.imageAlt}
-                          fill
-                          sizes="(max-width: 1024px) 92vw, 45vw"
-                          className="object-contain p-2 sm:p-4 transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_35px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_20px_40px_rgba(0,0,0,0.7)]"
-                        />
-
-                        {/* Top Floating Badge (mobile safe) */}
-                        <div className="pointer-events-none absolute top-2.5 sm:top-4 right-2.5 sm:right-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-white/95 px-2.5 sm:px-3 py-1 text-[9px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-800 shadow-md backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100">
-                          <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
-                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-[#FF4F00]" />
-                          </span>
-                          <span className="truncate max-w-[150px] sm:max-w-none">{sol.topBadge}</span>
-                        </div>
-
-                        {/* Bottom Floating Badge (mobile safe) */}
-                        <div className="pointer-events-none absolute bottom-2.5 sm:bottom-4 left-2.5 sm:left-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-white/95 px-2.5 sm:px-3 py-1 text-[9px] sm:text-xs font-extrabold text-slate-700 shadow-md backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200">
-                          <ShieldCheck className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-[#FF4F00] shrink-0" />
-                          <span className="truncate max-w-[150px] sm:max-w-none">{sol.bottomBadge}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  {/* ------------------------------------------------------------- */}
-                  {/* BOTTOM HALF: "FEATURES INSIDE" GRID (5 Real Features)         */}
-                  {/* ------------------------------------------------------------- */}
-                  <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-slate-100 dark:border-slate-800/80">
-                    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-1.5 sm:gap-2 mb-4 sm:mb-6">
-                      <div className="space-y-0.5">
-                        <div className="inline-flex items-center gap-1.5 text-[10.5px] sm:text-xs font-mono font-bold uppercase tracking-widest text-[#FF4F00]">
-                          <span className="h-1.5 w-1.5 rounded-full bg-[#FF4F00]" />
-                          <span>CORE CAPABILITIES MATRIX</span>
-                        </div>
-                        <h3 className="font-syne text-lg sm:text-xl md:text-2xl font-black text-slate-950 dark:text-white">
-                          Features Inside {sol.title}
-                        </h3>
-                      </div>
-                      <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-400 dark:text-slate-500">
-                        5 NATIVE MODULES BUILT-IN
-                      </span>
-                    </div>
-
-                    {/* 5-Card Grid: 1 col on mobile, 2 cols on tablet, 3 cols on desktop */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                      {sol.features.map((feat) => {
-                        const FeatIcon = feat.icon;
-
-                        return (
-                          <div
-                            key={feat.title}
-                            className="group p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-50/60 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-800 hover:border-orange-500/60 hover:bg-white dark:hover:bg-slate-900 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 flex flex-col justify-between"
-                          >
-                            <div className="space-y-2.5">
-                              <div className="flex items-center justify-between gap-2">
-                                <span className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-orange-500/10 text-[#FF4F00] group-hover:bg-[#FF4F00] group-hover:text-white transition-colors shadow-xs">
-                                  <FeatIcon className="h-4 w-4 sm:h-4.5 sm:w-4.5 stroke-[2.2]" />
-                                </span>
-
-                                <span className="text-[9px] sm:text-[9.5px] font-mono font-bold uppercase tracking-wider text-orange-700 dark:text-orange-300 bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 rounded-full">
-                                  {feat.badge}
-                                </span>
-                              </div>
-
-                              <h4 className="font-syne text-sm sm:text-base font-bold text-slate-950 dark:text-white group-hover:text-[#FF4F00] transition-colors">
-                                {feat.title}
-                              </h4>
-
-                              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-normal leading-relaxed">
-                                {feat.desc}
-                              </p>
-                            </div>
-
-                            <div className="pt-3 mt-2 border-t border-slate-200/50 dark:border-slate-800/50 flex items-center gap-1.5 text-[11px] sm:text-xs font-syne font-bold text-slate-500 group-hover:text-[#FF4F00] transition-colors">
-                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                              <span className="truncate">Included in {sol.title.replace(" POS Solution", "").replace(" POS System", "")}</span>
-                            </div>
+                      <div className="relative rounded-3xl p-6 sm:p-8 bg-gradient-to-br from-slate-100 via-white to-slate-100/70 dark:from-slate-900 dark:via-slate-900/90 dark:to-slate-950 border border-slate-200/90 dark:border-slate-800 shadow-xl overflow-hidden group">
+                        {/* Top Hardware Badge */}
+                        {sol.topBadge && (
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200 dark:border-slate-700 text-[10px] sm:text-[11px] font-syne font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 shadow-xs mb-4">
+                            <Sparkles size={11} className="text-primary" />
+                            <span>{sol.topBadge}</span>
                           </div>
-                        );
-                      })}
+                        )}
+
+                        {/* Image Canvas */}
+                        <div className="relative w-full h-64 sm:h-80 my-2 flex items-center justify-center">
+                          <Image
+                            src={imageSrc}
+                            alt={sol.imageAlt || sol.title}
+                            fill
+                            sizes="(max-width: 1024px) 100vw, 420px"
+                            className="object-contain p-2 filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-700"
+                          />
+                        </div>
+
+                        {/* Bottom Hardware Pill */}
+                        {sol.bottomBadge && (
+                          <div className="mt-4 pt-3 border-t border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between text-xs">
+                            <span className="font-mono text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                              Hardware Architecture
+                            </span>
+                            <span className="inline-flex items-center gap-1 font-bold text-slate-800 dark:text-slate-200">
+                              <CheckCircle2 size={12} className="text-emerald-500" />
+                              {sol.bottomBadge}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-
                 </div>
               </motion.section>
             );
@@ -548,10 +392,10 @@ export default function SolutionsClient() {
         </AnimatePresence>
       </div>
 
-      {/* ========================================================================= */}
-      {/* 3. TESTIMONIALS & CTA BANNER                                              */}
-      {/* ========================================================================= */}
+      {/* 3. TESTIMONIALS & SOCIAL PROOF */}
       <TestimonialsWrapper />
+
+      {/* 4. CONVERSION CTA BANNER */}
       <CTABanner />
     </div>
   );

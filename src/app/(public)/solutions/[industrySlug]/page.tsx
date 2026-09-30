@@ -8,6 +8,7 @@ import {
   BarChart3,
   Book,
   BookOpen,
+  Boxes,
   Building2,
   Check,
   ChefHat,
@@ -22,6 +23,7 @@ import {
   Heart,
   Layers,
   Layout,
+  LineChart,
   Monitor,
   Package,
   QrCode,
@@ -42,6 +44,7 @@ import {
   Tv,
   Users,
   Utensils,
+  Wine,
   Zap,
   type LucideIcon,
 } from "lucide-react";
@@ -556,7 +559,50 @@ const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "supermarket": "grocery",
 };
 
-export function generateStaticParams() {
+const backendUrl = (process.env.BACKEND_API_URL || process.env.LIVE_BACKEND_API_URL || "http://localhost:5104").replace(/\/$/, "");
+
+async function fetchSolutionFromApi(slug: string, siteVariant: string = "Enterprise") {
+  try {
+    const res = await fetch(`${backendUrl}/api/v1/solutions/detail/${encodeURIComponent(slug)}?siteVariant=${encodeURIComponent(siteVariant)}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    return json?.success && json?.data ? json.data : null;
+  } catch {
+    return null;
+  }
+}
+
+const ICON_RESOLVER: Record<string, LucideIcon> = {
+  Utensils,
+  ShoppingBag,
+  Cloud,
+  Tv,
+  Clock,
+  Sparkles,
+  ChefHat,
+  Scan,
+  Scale,
+  Layers,
+  Boxes,
+  Store,
+  LineChart,
+  Building2,
+  ShieldCheck,
+  Zap,
+  Coffee,
+  Flame,
+  Truck,
+  Wine,
+};
+
+function resolveIcon(iconKey?: string, fallback: LucideIcon = Store): LucideIcon {
+  if (!iconKey) return fallback;
+  return ICON_RESOLVER[iconKey] || fallback;
+}
+
+export async function generateStaticParams() {
   return Object.keys(INDUSTRIES_DATA).map((industrySlug) => ({ industrySlug }));
 }
 
@@ -567,6 +613,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { industrySlug } = await params;
   const canonicalSlug = INDUSTRY_SLUG_ALIASES[industrySlug] || industrySlug;
+
+  const apiItem = await fetchSolutionFromApi(canonicalSlug, "Enterprise");
+  if (apiItem) {
+    return {
+      title: `${apiItem.heroTitle || apiItem.title} | Quantix Enterprise`,
+      description: apiItem.heroDescription || apiItem.description,
+    };
+  }
+
   const industry = INDUSTRIES_DATA[canonicalSlug];
   if (!industry) {
     return { title: "Solutions | Quantix Enterprise" };
@@ -589,35 +644,41 @@ export default async function IndustrySolutionPage({
   }
 
   const canonicalSlug = INDUSTRY_SLUG_ALIASES[industrySlug] || industrySlug;
-  let industry = INDUSTRIES_DATA[canonicalSlug];
-  if (!industry) {
+
+  // 1. Fetch live solution from API first
+  const apiItem = await fetchSolutionFromApi(canonicalSlug, "Enterprise");
+
+  let industry: IndustrySolution;
+
+  if (apiItem) {
+    if (apiItem.isActive === false) {
+      notFound();
+    }
+
+    const fallbackData = INDUSTRIES_DATA[canonicalSlug];
+
     industry = {
-      slug: industrySlug,
-      eyebrow: industrySlug.split("-").map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join(" "),
-      name: industrySlug.split("-").map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join(" "),
-      title: `${industrySlug.split("-").map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join(" ")} POS System`,
-      description: `Tailored enterprise workflows for ${industrySlug.replace("-", " ")} businesses with central telemetry, offline mesh reliability, and multi-unit controls.`,
-      points: [
-        { title: "Core Workflows Ready", desc: "Engineered specifically for high-throughput enterprise scale." },
-        { title: "Sub-4ms Offline Till Mesh", desc: "Maintain continuous operations during broadband interruptions." },
-        { title: "Central HQ Telemetry", desc: "Real-time visibility into branch revenue, inventory, and staff." },
-      ],
-      workflows: [
-        { title: "Connected Till Systems", desc: "Keep menu and inventory in sync across all store registers." },
-        { title: "Live Real-Time Sync", desc: "Stream real-time transactions into cloud telemetry consoles." },
-        { title: "24/7 SLA Operations", desc: "Backed by enterprise support and uptime guarantees." },
-      ],
-      imageSrc: "/images/nav_restaurant_bundle.png",
-      imageAlt: industrySlug,
-      topBadge: "Quantix Solution",
-      bottomBadge: "All-in-One POS",
-      ctaLabel: "Contact Sales",
-      icon: Store,
-      faqs: [
-        { id: "coming-soon", question: "When will this solution be released?", answer: "This sector solution is fully supported. Contact our sales team for an immediate walkthrough." },
-      ],
+      slug: apiItem.slug || canonicalSlug,
+      eyebrow: apiItem.eyebrow || apiItem.categoryTitle || fallbackData?.eyebrow || "ENTERPRISE SOLUTION",
+      name: apiItem.title,
+      title: apiItem.heroTitle || apiItem.title,
+      description: apiItem.heroDescription || apiItem.description,
+      points: apiItem.points && apiItem.points.length > 0 ? apiItem.points : (fallbackData?.points || []),
+      workflows: apiItem.workflows && apiItem.workflows.length > 0 ? apiItem.workflows : (fallbackData?.workflows || []),
+      imageSrc: apiItem.detailImageUrl || apiItem.imageUrl || fallbackData?.imageSrc || "/images/nav_restaurant_bundle.png",
+      imageAlt: apiItem.detailImageAlt || apiItem.imageAlt || apiItem.title,
+      topBadge: apiItem.topBadge || fallbackData?.topBadge || "Quantix Solution",
+      bottomBadge: apiItem.bottomBadge || fallbackData?.bottomBadge || "All-in-One POS",
+      ctaLabel: apiItem.ctaLabel || fallbackData?.ctaLabel || "Contact Sales",
+      icon: resolveIcon(apiItem.iconKey, fallbackData?.icon || Store),
+      faqs: apiItem.faqs && apiItem.faqs.length > 0 ? apiItem.faqs : (fallbackData?.faqs || []),
     };
+  } else if (INDUSTRIES_DATA[canonicalSlug]) {
+    industry = INDUSTRIES_DATA[canonicalSlug];
+  } else {
+    notFound();
   }
+
   const Icon = industry.icon;
 
   return (
