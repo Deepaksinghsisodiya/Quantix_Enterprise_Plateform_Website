@@ -58,18 +58,33 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
         {/* ============================================================ */}
         <div className="hidden lg:block relative">
           {/* Horizontal Glowing Conduit Line Connecting Stations */}
-          <div className="absolute top-9 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-[#FF4F00] via-amber-400 to-emerald-500 z-0 opacity-40">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-75 animate-pulse" />
-          </div>
+          {steps.length > 1 && (
+            <div className="absolute top-9 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-[#FF4F00] via-amber-400 to-emerald-500 z-0 opacity-40">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-75 animate-pulse" />
+            </div>
+          )}
 
-          {/* 3 Connected Milestone Roadmap Cards */}
-          <div className="grid grid-cols-3 gap-6 xl:gap-8 relative z-10">
+          {/* Connected Milestone Roadmap Cards */}
+          <div
+            className={
+              steps.length === 1
+                ? "grid grid-cols-1 max-w-md mx-auto gap-6 relative z-10"
+                : steps.length === 2
+                ? "grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-6 xl:gap-8 relative z-10"
+                : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 relative z-10"
+            }
+          >
             {steps.map((item, idx) => {
               const isHovered = hoveredIdx === idx;
+              const stepNum = item.number || String(idx + 1).padStart(2, "0");
+              const badge = item.badgeLabel || `Step ${stepNum}`;
+              const bullets = Array.isArray(item.bullets) ? item.bullets : [];
+              const chips = Array.isArray(item.telemetryChips) ? item.telemetryChips : [];
+              const imgSrc = item.imageSrc || "/images/ent_bi_analytics_bundle_v2.png";
 
               return (
                 <div
-                  key={item.number}
+                  key={stepNum}
                   onMouseEnter={() => setHoveredIdx(idx)}
                   onMouseLeave={() => setHoveredIdx(null)}
                   className={`group relative rounded-3xl border bg-white dark:bg-slate-900/90 p-6 xl:p-7 flex flex-col justify-between transition-all duration-300 ${
@@ -98,27 +113,31 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
                               : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
                           }`}
                         >
-                          {item.number}
+                          {stepNum}
                         </div>
                         <div>
                           <span className="font-mono text-[10px] font-black uppercase tracking-wider text-[#FF4F00] block">
-                            {item.badgeLabel}
+                            {badge}
                           </span>
                           <span className="font-syne text-xs font-bold text-slate-800 dark:text-slate-200">
-                            Station {item.number}
+                            Station {stepNum}
                           </span>
                         </div>
                       </div>
 
-                      <div className="flex flex-col items-end">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-mono font-extrabold border text-orange-700 dark:text-orange-300 bg-orange-50 dark:bg-orange-950/60 border-orange-200 dark:border-orange-800">
-                          <Zap size={10} className="text-[#FF4F00]" />
-                          <span>{item.stat.value}</span>
-                        </span>
-                        <span className="text-[9px] font-mono text-slate-400 mt-0.5">
-                          {item.stat.label}
-                        </span>
-                      </div>
+                      {item.stat?.value && (
+                        <div className="flex flex-col items-end">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-mono font-extrabold border text-orange-700 dark:text-orange-300 bg-orange-50 dark:bg-orange-950/60 border-orange-200 dark:border-orange-800">
+                            <Zap size={10} className="text-[#FF4F00]" />
+                            <span>{item.stat.value}</span>
+                          </span>
+                          {item.stat.label && (
+                            <span className="text-[9px] font-mono text-slate-400 mt-0.5">
+                              {item.stat.label}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     {/* Title & Description */}
@@ -126,17 +145,19 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
                       <h3 className="font-syne text-lg xl:text-xl font-bold text-slate-950 dark:text-white leading-snug group-hover:text-[#FF4F00] transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-xs xl:text-[13px] font-normal leading-relaxed text-slate-600 dark:text-slate-400 min-h-[58px]">
-                        {item.description}
-                      </p>
+                      {item.description && (
+                        <p className="text-xs xl:text-[13px] font-normal leading-relaxed text-slate-600 dark:text-slate-400 min-h-[58px]">
+                          {item.description}
+                        </p>
+                      )}
                     </div>
 
                     {/* Transparent Floating Hardware Preview */}
                     <div className="relative h-36 xl:h-40 w-full flex items-center justify-center my-3 py-1">
                       <div className="relative w-full h-full">
                         <Image
-                          src={item.imageSrc}
-                          alt={item.imageAlt}
+                          src={imgSrc}
+                          alt={item.imageAlt || item.title || "Step Image"}
                           fill
                           sizes="(max-width: 1280px) 30vw, 25vw"
                           className="object-contain transition-transform duration-500 group-hover:scale-105"
@@ -145,40 +166,44 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
                     </div>
 
                     {/* Bullets */}
-                    <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                      {item.bullets.map((bullet, bIdx) => (
-                        <div key={bIdx} className="flex items-start gap-2">
-                          <span className="mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#FF4F00] to-[#FF6B2B] text-white shadow-xs">
-                            <Check className="h-2 w-2 stroke-[3]" />
+                    {bullets.length > 0 && (
+                      <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                        {bullets.map((bullet, bIdx) => (
+                          <div key={bIdx} className="flex items-start gap-2">
+                            <span className="mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#FF4F00] to-[#FF6B2B] text-white shadow-xs">
+                              <Check className="h-2 w-2 stroke-[3]" />
+                            </span>
+                            <span className="text-[11.5px] xl:text-xs font-medium leading-relaxed text-slate-700 dark:text-slate-300">
+                              {bullet}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Telemetry Status Chips */}
+                  {chips.length > 0 && (
+                    <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-1.5">
+                      {chips.map((chip, cIdx) => (
+                        <div
+                          key={cIdx}
+                          className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800/80 px-2 py-1 rounded-lg border border-slate-200/80 dark:border-slate-700/80 text-[10px] min-w-0"
+                        >
+                          <span className="relative flex h-1.5 w-1.5 shrink-0">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
                           </span>
-                          <span className="text-[11.5px] xl:text-xs font-medium leading-relaxed text-slate-700 dark:text-slate-300">
-                            {bullet}
+                          <span className="font-mono text-slate-500 dark:text-slate-400 truncate">
+                            {chip.label}:
+                          </span>
+                          <span className="font-mono font-bold text-slate-800 dark:text-slate-200 truncate">
+                            {chip.sublabel}
                           </span>
                         </div>
                       ))}
                     </div>
-                  </div>
-
-                  {/* Telemetry Status Chips */}
-                  <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-1.5">
-                    {item.telemetryChips.map((chip, cIdx) => (
-                      <div
-                        key={cIdx}
-                        className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800/80 px-2 py-1 rounded-lg border border-slate-200/80 dark:border-slate-700/80 text-[10px] min-w-0"
-                      >
-                        <span className="relative flex h-1.5 w-1.5 shrink-0">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-                        </span>
-                        <span className="font-mono text-slate-500 dark:text-slate-400 truncate">
-                          {chip.label}:
-                        </span>
-                        <span className="font-mono font-bold text-slate-800 dark:text-slate-200 truncate">
-                          {chip.sublabel}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  )}
                 </div>
               );
             })}
@@ -190,8 +215,14 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
         {/* ============================================================ */}
         <div className="lg:hidden flex flex-col space-y-4">
           {steps.map((item, idx) => {
+            const stepNum = item.number || String(idx + 1).padStart(2, "0");
+            const badge = item.badgeLabel || `Step ${stepNum}`;
+            const bullets = Array.isArray(item.bullets) ? item.bullets : [];
+            const chips = Array.isArray(item.telemetryChips) ? item.telemetryChips : [];
+            const imgSrc = item.imageSrc || "/images/ent_bi_analytics_bundle_v2.png";
+
             return (
-              <React.Fragment key={item.number}>
+              <React.Fragment key={stepNum}>
                 <div className="w-full rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-950 p-4 sm:p-6 shadow-xl relative overflow-hidden">
                   {/* Top Laser Accent Line */}
                   <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-400" />
@@ -200,22 +231,24 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
                   <div className="flex items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-800/80">
                     <div className="flex items-center gap-2.5">
                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4F00] to-[#FF6B2B] text-white text-xs font-mono font-black shadow-md shadow-orange-500/25">
-                        {item.number}
+                        {stepNum}
                       </div>
                       <div>
                         <span className="text-[11px] font-mono font-black uppercase tracking-wider text-[#FF4F00] block">
-                          {item.badgeLabel}
+                          {badge}
                         </span>
                         <span className="text-xs font-syne font-bold text-slate-900 dark:text-white">
-                          Station {item.number}
+                          Station {stepNum}
                         </span>
                       </div>
                     </div>
 
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold border text-orange-700 dark:text-orange-300 bg-orange-50 dark:bg-orange-950/60 border-orange-200 dark:border-orange-800 shrink-0">
-                      <Zap size={10} className="text-[#FF4F00]" />
-                      <span>{item.stat.value}</span>
-                    </span>
+                    {item.stat?.value && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold border text-orange-700 dark:text-orange-300 bg-orange-50 dark:bg-orange-950/60 border-orange-200 dark:border-orange-800 shrink-0">
+                        <Zap size={10} className="text-[#FF4F00]" />
+                        <span>{item.stat.value}</span>
+                      </span>
+                    )}
                   </div>
 
                   {/* Title & Description */}
@@ -223,17 +256,19 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
                     <h3 className="font-syne text-base sm:text-lg font-bold text-slate-950 dark:text-white leading-snug">
                       {item.title}
                     </h3>
-                    <p className="text-xs sm:text-[13px] font-normal leading-relaxed text-slate-600 dark:text-slate-400">
-                      {item.description}
-                    </p>
+                    {item.description && (
+                      <p className="text-xs sm:text-[13px] font-normal leading-relaxed text-slate-600 dark:text-slate-400">
+                        {item.description}
+                      </p>
+                    )}
                   </div>
 
                   {/* Transparent Floating Visual Preview */}
                   <div className="relative h-36 sm:h-44 w-full flex items-center justify-center my-2.5 py-1">
                     <div className="relative w-full h-full">
                       <Image
-                        src={item.imageSrc}
-                        alt={item.imageAlt}
+                        src={imgSrc}
+                        alt={item.imageAlt || item.title || "Step Image"}
                         fill
                         sizes="(max-width: 768px) 92vw, 50vw"
                         className="object-contain"
@@ -242,41 +277,45 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
                   </div>
 
                   {/* Bullets */}
-                  <div className="space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                    {item.bullets.map((bullet, bIdx) => (
-                      <div key={bIdx} className="flex items-start gap-2">
-                        <span className="mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#FF4F00] to-[#FF6B2B] text-white shadow-xs">
-                          <Check className="h-2 w-2 stroke-[3]" />
-                        </span>
-                        <span className="text-[11.5px] sm:text-xs font-medium leading-relaxed text-slate-700 dark:text-slate-300">
-                          {bullet}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Telemetry Chips Grid on Mobile */}
-                  <div className="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                    {item.telemetryChips.map((chip, cIdx) => (
-                      <div
-                        key={cIdx}
-                        className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800 text-[10.5px]"
-                      >
-                        <div className="flex items-center gap-1.5 min-w-0">
-                          <span className="relative flex h-1.5 w-1.5 shrink-0">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                  {bullets.length > 0 && (
+                    <div className="space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                      {bullets.map((bullet, bIdx) => (
+                        <div key={bIdx} className="flex items-start gap-2">
+                          <span className="mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#FF4F00] to-[#FF6B2B] text-white shadow-xs">
+                            <Check className="h-2 w-2 stroke-[3]" />
                           </span>
-                          <span className="font-mono text-slate-500 dark:text-slate-400 truncate">
-                            {chip.label}
+                          <span className="text-[11.5px] sm:text-xs font-medium leading-relaxed text-slate-700 dark:text-slate-300">
+                            {bullet}
                           </span>
                         </div>
-                        <span className="font-mono font-bold text-slate-800 dark:text-slate-200 shrink-0 ml-2">
-                          {chip.sublabel}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Telemetry Chips Grid on Mobile */}
+                  {chips.length > 0 && (
+                    <div className="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                      {chips.map((chip, cIdx) => (
+                        <div
+                          key={cIdx}
+                          className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800 text-[10.5px]"
+                        >
+                          <div className="flex items-center gap-1.5 min-w-0">
+                            <span className="relative flex h-1.5 w-1.5 shrink-0">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                            </span>
+                            <span className="font-mono text-slate-500 dark:text-slate-400 truncate">
+                              {chip.label}
+                            </span>
+                          </div>
+                          <span className="font-mono font-bold text-slate-800 dark:text-slate-200 shrink-0 ml-2">
+                            {chip.sublabel}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Vertical Glowing Connector between milestones on Mobile */}

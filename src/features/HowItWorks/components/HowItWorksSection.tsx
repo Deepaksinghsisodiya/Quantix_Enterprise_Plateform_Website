@@ -1,23 +1,19 @@
 "use client";
 
-import React, { useMemo } from "react";
-import { HOW_IT_WORKS_STEPS } from "../Constants/HowItWorksConstants";
+import React from "react";
 import { HowItWorksView } from "./HowItWorksView";
 import { HowItWorksSkeleton } from "./HowItWorksSkeleton";
 import { useGetHowItWorksStepsQuery } from "../Service/HowItWorksService";
 
 export const HowItWorksSection: React.FC = () => {
-  const { data: apiSteps, isLoading } = useGetHowItWorksStepsQuery({ siteVariant: "Enterprise" });
-
-  const steps = useMemo(() => {
-    if (apiSteps && apiSteps.length > 0) {
-      return apiSteps;
-    }
-    return HOW_IT_WORKS_STEPS;
-  }, [apiSteps]);
+  const { data: steps, isLoading, isError } = useGetHowItWorksStepsQuery({ siteVariant: "Enterprise" });
 
   if (isLoading) {
     return <HowItWorksSkeleton />;
+  }
+
+  if (isError || !steps || steps.length === 0) {
+    return null;
   }
 
   return <HowItWorksView steps={steps} />;
