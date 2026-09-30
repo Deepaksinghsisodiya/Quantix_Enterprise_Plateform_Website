@@ -95,13 +95,13 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
             )}
           </div>
 
-          {/* Title & Description */}
+          {/* Title & Description without any truncation */}
           <div className="pt-4 space-y-2">
             <h3 className="font-syne text-lg xl:text-xl font-bold text-slate-950 dark:text-white leading-snug group-hover:text-[#FF4F00] transition-colors">
               {item.title}
             </h3>
             {item.description && (
-              <p className="text-xs xl:text-[13px] font-normal leading-relaxed text-slate-600 dark:text-slate-400 min-h-[58px]">
+              <p className="text-xs xl:text-[13px] font-normal leading-relaxed text-slate-600 dark:text-slate-400">
                 {item.description}
               </p>
             )}
@@ -120,7 +120,7 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
             </div>
           </div>
 
-          {/* Bullets */}
+          {/* Bullets without truncation */}
           {bullets.length > 0 && (
             <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800/80">
               {bullets.map((bullet, bIdx) => (
@@ -137,22 +137,24 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
           )}
         </div>
 
-        {/* Telemetry Status Chips */}
+        {/* Telemetry Status Chips - Full Width Clean Rows (No Truncation / No "...") */}
         {chips.length > 0 && (
-          <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-1.5">
+          <div className="pt-3.5 mt-3.5 border-t border-slate-100 dark:border-slate-800/80 space-y-1.5">
             {chips.map((chip, cIdx) => (
               <div
                 key={cIdx}
-                className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800/80 px-2 py-1 rounded-lg border border-slate-200/80 dark:border-slate-700/80 text-[10px] min-w-0"
+                className="flex items-center justify-between gap-2 bg-slate-50/90 dark:bg-slate-800/60 px-3 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-700/70 text-[11px]"
               >
-                <span className="relative flex h-1.5 w-1.5 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-                </span>
-                <span className="font-mono text-slate-500 dark:text-slate-400 truncate">
-                  {chip.label}:
-                </span>
-                <span className="font-mono font-bold text-slate-800 dark:text-slate-200 truncate">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  </span>
+                  <span className="font-mono text-slate-600 dark:text-slate-400 font-medium">
+                    {chip.label}
+                  </span>
+                </div>
+                <span className="font-mono font-bold text-slate-900 dark:text-slate-100 shrink-0 text-right">
                   {chip.sublabel}
                 </span>
               </div>
@@ -294,22 +296,22 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
                         </div>
 
                         {chips.length > 0 && (
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <div className="w-full space-y-2">
                             {chips.map((chip, cIdx) => (
                               <div
                                 key={cIdx}
-                                className="flex items-center justify-between bg-slate-50 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-700/80 text-[10.5px]"
+                                className="flex items-center justify-between gap-3 bg-slate-50 dark:bg-slate-800/80 px-3.5 py-2 rounded-xl border border-slate-200/80 dark:border-slate-700/80 text-xs"
                               >
-                                <div className="flex items-center gap-1.5 min-w-0">
-                                  <span className="relative flex h-1.5 w-1.5 shrink-0">
+                                <div className="flex items-center gap-2 min-w-0">
+                                  <span className="relative flex h-2 w-2 shrink-0">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                                   </span>
-                                  <span className="font-mono text-slate-500 dark:text-slate-400 truncate">
+                                  <span className="font-mono text-slate-600 dark:text-slate-400 font-medium">
                                     {chip.label}
                                   </span>
                                 </div>
-                                <span className="font-mono font-bold text-slate-800 dark:text-slate-200 shrink-0 ml-2">
+                                <span className="font-mono font-bold text-slate-900 dark:text-slate-100 shrink-0 text-right">
                                   {chip.sublabel}
                                 </span>
                               </div>
@@ -444,7 +446,7 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
                     </div>
                   </div>
 
-                  {/* Bullets */}
+                  {/* Bullets without truncation */}
                   {bullets.length > 0 && (
                     <div className="space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800/80">
                       {bullets.map((bullet, bIdx) => (
@@ -460,24 +462,24 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ steps }) => {
                     </div>
                   )}
 
-                  {/* Telemetry Chips Grid on Mobile */}
+                  {/* Telemetry Chips on Mobile without truncation */}
                   {chips.length > 0 && (
-                    <div className="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                    <div className="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80 space-y-1.5">
                       {chips.map((chip, cIdx) => (
                         <div
                           key={cIdx}
-                          className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800 text-[10.5px]"
+                          className="flex items-center justify-between gap-2 bg-slate-50 dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-200/80 dark:border-slate-800 text-[11px]"
                         >
                           <div className="flex items-center gap-1.5 min-w-0">
                             <span className="relative flex h-1.5 w-1.5 shrink-0">
                               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
                             </span>
-                            <span className="font-mono text-slate-500 dark:text-slate-400 truncate">
+                            <span className="font-mono text-slate-600 dark:text-slate-400 font-medium">
                               {chip.label}
                             </span>
                           </div>
-                          <span className="font-mono font-bold text-slate-800 dark:text-slate-200 shrink-0 ml-2">
+                          <span className="font-mono font-bold text-slate-900 dark:text-slate-100 shrink-0 text-right">
                             {chip.sublabel}
                           </span>
                         </div>
