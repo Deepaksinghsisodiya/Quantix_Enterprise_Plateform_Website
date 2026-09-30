@@ -223,6 +223,58 @@ export const FeaturesMegaMenu: React.FC<FeaturesMegaMenuProps> = ({
     );
   };
 
+  if (isLoading) {
+    return (
+      <MegaMenuWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-7 w-full animate-pulse">
+          {/* Left Promo Card Skeleton */}
+          <div className="flex flex-col border-slate-200/80 pr-0 dark:border-slate-800/80 lg:col-span-3 lg:border-r lg:pr-6 h-full">
+            <div className="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between h-full gap-3.5">
+              <div className="w-full h-44 sm:h-48 lg:h-46.25 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center p-3 relative">
+                <div className="absolute top-2 left-2 h-4 w-24 rounded-full bg-slate-200 dark:bg-slate-700" />
+                <div className="h-20 w-24 rounded-lg bg-slate-200 dark:bg-slate-700" />
+              </div>
+              <div className="space-y-2 pb-1">
+                <div className="h-4 w-3/4 rounded bg-slate-200 dark:bg-slate-700" />
+                <div className="h-3 w-full rounded bg-slate-100 dark:bg-slate-800" />
+                <div className="h-3 w-4/5 rounded bg-slate-100 dark:bg-slate-800" />
+              </div>
+            </div>
+          </div>
+
+          {/* 3 Categories Skeleton */}
+          <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-3 gap-5 w-full">
+            {[1, 2, 3].map((col) => (
+              <div key={col} className="space-y-2.5">
+                <div className="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+                  <div className="h-2 w-2 rounded-full bg-slate-200 dark:bg-slate-700" />
+                  <div className="h-3 w-28 rounded bg-slate-200 dark:bg-slate-700" />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                  {[1, 2, 3].map((row) => (
+                    <div key={row} className="flex items-center gap-3 p-2 rounded-xl border border-transparent bg-slate-50/50 dark:bg-slate-900/40">
+                      <div className="h-8 w-8 rounded-lg bg-slate-200 dark:bg-slate-800 shrink-0" />
+                      <div className="flex-1 space-y-1.5">
+                        <div className="h-3.5 w-24 rounded bg-slate-200 dark:bg-slate-800" />
+                        <div className="h-2.5 w-36 rounded bg-slate-100 dark:bg-slate-800/80" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Skeleton Bar */}
+        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
+          <div className="h-3 w-64 rounded bg-slate-200 dark:bg-slate-800" />
+          <div className="h-3 w-40 rounded bg-slate-200 dark:bg-slate-800" />
+        </div>
+      </MegaMenuWrapper>
+    );
+  }
+
   return (
     <MegaMenuWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-7">

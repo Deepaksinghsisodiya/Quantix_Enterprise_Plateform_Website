@@ -5,18 +5,25 @@ export const FeatureDetailSkeleton: React.FC = () => {
   return (
     <div className="w-full space-y-12 animate-fade-in pb-16">
       {/* 1. HERO SKELETON */}
-      <section className="relative overflow-hidden py-10 lg:py-16 border-b border-slate-200/80 dark:border-slate-800">
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header pb-12 sm:pb-16 md:pb-20">
         <div className="site-container px-3 sm:px-6 max-w-7xl mx-auto space-y-8">
-          {/* Breadcrumb Skeleton */}
-          <div className="flex items-center gap-2">
-            <ATMSkeleton variant="badge" width="80px" height="18px" />
-            <span className="text-slate-300">/</span>
-            <ATMSkeleton variant="badge" width="100px" height="18px" />
+          {/* Top Navigation Bar Skeleton (Dynamic Breadcrumbs on Left) */}
+          <div className="flex items-center gap-2 mb-6 sm:mb-8">
+            <ATMSkeleton variant="text" width="40px" height="14px" />
+            <span className="text-slate-300 dark:text-slate-700">/</span>
+            <ATMSkeleton variant="text" width="55px" height="14px" />
+            <span className="text-slate-300 dark:text-slate-700">/</span>
+            <ATMSkeleton variant="text" width="90px" height="14px" />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Hero Details */}
-            <div className="lg:col-span-7 space-y-4">
+            {/* Left: Software Stage Image */}
+            <div className="lg:col-span-5 order-2 lg:order-1">
+              <ATMSkeleton variant="rounded" height="340px" className="rounded-3xl w-full" />
+            </div>
+
+            {/* Right: Hero Details */}
+            <div className="lg:col-span-7 space-y-4 order-1 lg:order-2">
               <div className="flex items-center gap-2">
                 <ATMSkeleton variant="badge" width="120px" height="26px" className="rounded-full" />
                 <ATMSkeleton variant="badge" width="140px" height="26px" className="rounded-full" />
@@ -28,11 +35,6 @@ export const FeatureDetailSkeleton: React.FC = () => {
                 <ATMSkeleton variant="badge" width="160px" height="44px" className="rounded-xl" />
                 <ATMSkeleton variant="badge" width="140px" height="44px" className="rounded-xl" />
               </div>
-            </div>
-
-            {/* Right Software Stage Image */}
-            <div className="lg:col-span-5">
-              <ATMSkeleton variant="rounded" height="340px" className="rounded-3xl w-full" />
             </div>
           </div>
         </div>
@@ -70,6 +72,22 @@ export const FeatureDetailSkeleton: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* 4. TECHNICAL FAQS SKELETON */}
+      <section className="site-container max-w-4xl mx-auto px-4 space-y-4">
+        <div className="text-center space-y-2 mb-6">
+          <ATMSkeleton variant="badge" width="120px" height="20px" className="rounded-full mx-auto" />
+          <ATMSkeleton variant="text" width="220px" height="32px" className="mx-auto" />
+        </div>
+        <div className="space-y-3">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/60 space-y-2">
+              <ATMSkeleton variant="text" width="60%" height="20px" />
+              <ATMSkeleton variant="text" width="85%" height="16px" />
+            </div>
+          ))}
         </div>
       </section>
     </div>

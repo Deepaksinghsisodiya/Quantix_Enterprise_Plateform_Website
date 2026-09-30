@@ -271,17 +271,14 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
     ...PRIMARY_LINKS[0],
     icon: Sparkles,
     imageSrc: '/images/nav_restaurant_bundle.png',
-    badge: 'ENTERPRISE SOLUTIONS',
+    badge: 'PLATFORM SOLUTIONS',
     groups: [
       {
-        title: 'BY SECTOR & INDUSTRY',
+        title: 'PLATFORM SYSTEMS',
         items: [
-          { title: 'Dine-In Restaurants', desc: 'Table floor plan & billing', href: '/solutions/restaurants', icon: Utensils },
-          { title: 'Cafes & Bakeries', desc: 'Modifiers, drinks & combos', href: '/solutions/cafes', icon: Coffee },
-          { title: 'Bars & Nightclubs', desc: 'Bar tabs & quick reorders', href: '/solutions/bars', icon: Flame },
-          { title: 'Boutiques & Apparel', desc: 'Variants & barcode tags', href: '/solutions/apparel', icon: ShoppingBag },
-          { title: 'Convenience & Grocery', desc: 'Weight scales & fast till', href: '/solutions/grocery', icon: Store },
-          { title: 'Vape & Smoke Shops', desc: 'Age checks & SKU catalogs', href: '/solutions/smoke-shops', icon: Layers },
+          { title: 'Restaurant POS System', desc: 'Table floor plans & kitchen billing', href: '/solutions/restaurants', icon: Utensils },
+          { title: 'Retail Register', desc: 'Barcode scanner & cash drawer', href: '/solutions/grocery', icon: Store },
+          { title: 'Cloud Multi-Store HQ', desc: 'Manage menus & multi-store sales', href: '/features/multi-store', icon: Cloud },
         ],
       },
     ],

@@ -8,6 +8,7 @@ import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   Activity,
+  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   Check,
@@ -46,6 +47,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import FAQWrapper from "@/features/FAQ/FAQWrapper";
+import { FAQAccordionItem } from "@/features/FAQ/components/FAQAccordionItem";
 import CTABanner from "@/components/organisms/CTABanner";
 import { useGetFeatureBySlugQuery } from "@/features/Features/Service/FeaturesService";
 import { getFeatureIcon } from "@/features/Features/lib/getFeatureIcon";
@@ -421,6 +423,8 @@ export default function FeatureDetailPage() {
     siteVariant: "Enterprise",
   });
 
+  const [openFaqId, setOpenFaqId] = React.useState<string | null>(null);
+
   if (isLoading) {
     return <FeatureDetailSkeleton />;
   }
@@ -497,20 +501,22 @@ export default function FeatureDetailPage() {
   return (
     <div className="w-full overflow-x-hidden">
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white py-12 dark:border-slate-800/80 dark:bg-slate-950 sm:py-16 md:py-20">
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header pb-12 sm:pb-16 md:pb-20">
         <div className="site-container relative z-10">
-          {/* Breadcrumb Navigation */}
-          <nav className="mb-6 flex items-center gap-1.5 text-xs font-semibold text-slate-400 dark:text-slate-500 sm:mb-8">
-            <Link href="/" className="hover:text-primary transition-colors">Platform</Link>
-            <ChevronRight className="h-3 w-3 stroke-[2.5]" />
-            <Link href="/features" className="hover:text-primary transition-colors">Features</Link>
-            <ChevronRight className="h-3 w-3 stroke-[2.5]" />
-            <span className="text-slate-900 dark:text-white font-bold truncate max-w-40 sm:max-w-none">{feature.title}</span>
-          </nav>
+          {/* Top Navigation Bar: Dynamic Breadcrumb on Left */}
+          <div className="mb-6 flex items-center sm:mb-8">
+            <nav className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 dark:text-slate-500">
+              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+              <ChevronRight className="h-3 w-3 stroke-[2.5]" />
+              <Link href="/features" className="hover:text-primary transition-colors">Features</Link>
+              <ChevronRight className="h-3 w-3 stroke-[2.5]" />
+              <span className="text-primary font-bold truncate max-w-45 sm:max-w-none">{feature.slug}</span>
+            </nav>
+          </div>
 
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
             {/* Left Column: Headline, Specs, Benefits, CTAs */}
-            <div className="space-y-5 lg:col-span-7">
+            <div className="space-y-5 lg:col-span-7 order-1 lg:order-1">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-primary">
                   <Sparkles className="h-3 w-3" />
@@ -567,7 +573,7 @@ export default function FeatureDetailPage() {
             </div>
 
             {/* Right Column: Software Stage Visual Frame */}
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5 order-2 lg:order-2">
               <SoftwareStageFrame
                 imageSrc={heroVisual.imageSrc}
                 imageAlt={heroVisual.imageAlt}
@@ -600,18 +606,60 @@ export default function FeatureDetailPage() {
 
       {/* 4. FREQUENTLY ASKED QUESTIONS */}
       {faqs.length > 0 && (
-        <section className="site-container py-12 sm:py-16 max-w-4xl mx-auto px-4">
-          <div className="text-center mb-8 space-y-2">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-primary">KNOWLEDGE BASE</span>
-            <h2 className="font-syne text-2xl sm:text-3xl font-black text-slate-950 dark:text-white">Technical FAQs</h2>
-          </div>
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <div key={i} className="p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/60 shadow-xs">
-                <h4 className="font-syne font-bold text-sm sm:text-base text-slate-900 dark:text-white">{faq.question}</h4>
-                <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{faq.answer}</p>
+        <section
+          className="py-12 lg:py-14 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300 relative overflow-hidden"
+          id="faq"
+        >
+          <div className="site-container px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-5xl mx-auto">
+              {/* Section Header */}
+              <div className="text-center mb-6 sm:mb-8">
+                <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/25 text-[10px] font-black uppercase tracking-widest text-primary mb-2.5 shadow-2xs">
+                  <Sparkles className="w-3 h-3 stroke-[2.4] text-primary animate-pulse" />
+                  <span>KNOWLEDGE BASE</span>
+                </div>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-syne font-extrabold text-slate-950 dark:text-white tracking-tight leading-snug">
+                  Technical FAQs
+                </h2>
+                <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-normal leading-relaxed max-w-lg mx-auto">
+                  Have questions? We&apos;re here to help. Can&apos;t find what you&apos;re looking for?{" "}
+                  <Link href="/contact" className="font-semibold text-primary hover:underline inline-flex items-center gap-0.5">
+                    <span>Contact our team</span>
+                    <ArrowRight className="w-3 h-3 stroke-[2.5]" />
+                  </Link>
+                </p>
               </div>
-            ))}
+
+              {/* 2-column FAQ grid — matches homepage */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-3.5 items-start">
+                {faqs.map((faq, i) => {
+                  const faqId = faq.id || `faq-${i}`;
+                  const isOpen = openFaqId === faqId;
+                  return (
+                    <FAQAccordionItem
+                      key={faqId}
+                      faq={faq}
+                      isOpen={isOpen}
+                      onToggle={() => setOpenFaqId(isOpen ? null : faqId)}
+                    />
+                  );
+                })}
+              </div>
+
+              {/* Bottom Help Text */}
+              <div className="mt-6 sm:mt-8 text-center">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                  Still have questions?{" "}
+                  <Link
+                    href="/contact"
+                    className="font-syne font-bold text-primary hover:underline inline-flex items-center gap-1 ml-1"
+                  >
+                    <span>Speak with an Enterprise Specialist</span>
+                    <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                  </Link>
+                </p>
+              </div>
+            </div>
           </div>
         </section>
       )}
