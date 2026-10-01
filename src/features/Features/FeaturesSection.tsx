@@ -62,12 +62,12 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
       <div className="site-container relative z-10 px-3.5 sm:px-6 lg:px-8 max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1500px] mx-auto space-y-6 sm:space-y-10">
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center space-y-2.5 sm:space-y-3">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/25 bg-orange-500/10 px-3 py-1 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-[#FF4F00] shadow-xs backdrop-blur-sm">
-            <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5 stroke-[2.4] text-[#FF4F00]" />
-            <span>ENTERPRISE PRODUCT SUITE • UNIFIED OPERATIONS</span>
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/25 bg-orange-500/10 px-2.5 sm:px-3 py-1 text-[9px] min-[360px]:text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-[#FF4F00] shadow-xs backdrop-blur-sm max-w-full">
+            <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5 stroke-[2.4] text-[#FF4F00] shrink-0" />
+            <span className="truncate sm:whitespace-normal">ENTERPRISE PRODUCT SUITE • UNIFIED OPERATIONS</span>
           </div>
 
-          <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-[1.18] tracking-tight text-slate-950 dark:text-white">
+          <h2 className="font-syne text-xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-[1.18] tracking-tight text-slate-950 dark:text-white">
             One Connected Platform.{' '}
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-500 sm:inline">
               Every Part of Your Operation.
@@ -80,30 +80,30 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
         </div>
 
         {/* Kinetic Horizontal Expanding Feature Vault */}
-        <div className="relative w-full min-h-[520px]" style={{ minHeight: '520px' }}>
+        <div className="relative w-full min-h-[460px] lg:min-h-[520px]">
           <FeaturesVaultView modules={modules} />
         </div>
 
         {/* Bottom Connected Ecosystem Extensions Bar */}
         <div className="pt-2 sm:pt-4">
-          <div className="flex flex-col xl:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 backdrop-blur-md shadow-xs">
+          <div className="flex flex-col xl:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 backdrop-blur-md shadow-xs w-full">
             {/* Left: Brand Badge & Label */}
-            <div className="flex items-center gap-3 shrink-0">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-500/10 text-[#FF4F00] border border-orange-500/20 shadow-xs">
+            <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+              <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-orange-500/10 text-[#FF4F00] border border-orange-500/20 shadow-xs">
                 <Sparkles size={16} className="text-[#FF4F00]" />
               </div>
               <div>
-                <span className="font-syne font-bold uppercase tracking-wider text-xs text-slate-900 dark:text-slate-100 block">
+                <span className="font-syne font-bold uppercase tracking-wider text-[11px] sm:text-xs text-slate-900 dark:text-slate-100 block">
                   Connected Hardware &amp; Extensions:
                 </span>
-                <span className="font-mono text-[10.5px] text-slate-500 dark:text-slate-400">
+                <span className="font-mono text-[9.5px] sm:text-[10.5px] text-slate-500 dark:text-slate-400">
                   Universal Plug &amp; Play • Cloud Sync
                 </span>
               </div>
             </div>
 
             {/* Middle: Clean Single-Line Connected Chips */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 flex-1 min-w-0 px-2">
+            <div className="flex flex-wrap items-center justify-start sm:justify-center gap-1.5 sm:gap-2.5 flex-1 min-w-0 w-full xl:w-auto">
               {features.map((f) => {
                 const ExtIcon = getFeatureIcon(f.iconKey);
                 const displayLabel = f.topBadge || f.subtitle || f.category;
@@ -113,11 +113,11 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                   <Link
                     key={f.slug}
                     href={f.ctaHref || `/features/${f.slug}`}
-                    className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 text-xs font-syne font-semibold text-slate-800 dark:text-slate-200 hover:text-[#FF4F00] hover:border-orange-500/50 hover:bg-orange-500/[0.03] transition-all shadow-2xs"
+                    className="group inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 text-[11px] sm:text-xs font-syne font-semibold text-slate-800 dark:text-slate-200 hover:text-[#FF4F00] hover:border-orange-500/50 hover:bg-orange-500/[0.03] transition-all shadow-2xs"
                   >
-                    <ExtIcon size={14} className="text-[#FF4F00] group-hover:scale-110 transition-transform" />
+                    <ExtIcon size={13} className="text-[#FF4F00] group-hover:scale-110 transition-transform sm:w-3.5 sm:h-3.5 shrink-0" />
                     <span className="whitespace-nowrap">{displayLabel}</span>
-                    <span className="px-1.5 py-0.5 rounded-md text-[9.5px] font-mono font-bold bg-orange-500/10 text-[#FF4F00] border border-orange-500/20 shrink-0">
+                    <span className="px-1.5 py-0.5 rounded-md text-[9px] sm:text-[9.5px] font-mono font-bold bg-orange-500/10 text-[#FF4F00] border border-orange-500/20 shrink-0">
                       {statBadge}
                     </span>
                   </Link>

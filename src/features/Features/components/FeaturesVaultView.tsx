@@ -87,8 +87,8 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
       {/* MOBILE & TABLET VIEW (< lg): 100% Native Touch-Swipeable     */}
       {/* ============================================================ */}
       <div className="lg:hidden flex flex-col space-y-3 sm:space-y-4">
-        {/* Mobile Tab Dock: 4 Equal Columns, High-Contrast Active State */}
-        <div className="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs">
+        {/* Mobile Tab Dock: Responsive Touch-Friendly Scrollable Tab Bar */}
+        <div className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs overflow-x-auto no-scrollbar scroll-smooth">
           {modules.map((mod, idx) => {
             const isSelected = activeIndex === idx;
             return (
@@ -96,7 +96,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                 key={mod.id}
                 type="button"
                 onClick={() => goToModule(idx)}
-                className={`flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 py-2 px-1 rounded-xl text-xs font-bold transition-all duration-200 select-none cursor-pointer min-h-[44px] ${
+                className={`flex flex-1 min-w-[80px] sm:min-w-0 items-center justify-center gap-1 sm:gap-1.5 py-1.5 sm:py-2 px-2 sm:px-3 rounded-xl text-xs font-bold transition-all duration-200 select-none cursor-pointer shrink-0 min-h-[38px] sm:min-h-[44px] ${
                   isSelected
                     ? "bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] text-white shadow-md shadow-orange-500/25 font-black"
                     : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
@@ -111,7 +111,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                 >
                   {mod.number}
                 </span>
-                <span className="font-syne text-[11px] sm:text-xs font-bold whitespace-nowrap">
+                <span className="font-syne text-[10.5px] sm:text-xs font-bold whitespace-nowrap">
                   {mod.shortMobileName}
                 </span>
               </button>
@@ -124,8 +124,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          style={{ minHeight: "520px" }}
-          className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-950 p-4 sm:p-6 shadow-xl relative overflow-hidden select-none min-h-[520px] flex flex-col justify-between"
+          className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-950 p-3.5 sm:p-6 shadow-xl relative overflow-hidden select-none min-h-[460px] sm:min-h-[520px] flex flex-col justify-between"
         >
           {/* Top Laser Accent Line */}
           <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-400" />
@@ -143,11 +142,11 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
               {/* Header Row: Icon + Module Info + Live Badge */}
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 min-w-0">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-[#FF4F00] border border-orange-500/20">
-                    <CurrentIcon size={18} />
+                  <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-[#FF4F00] border border-orange-500/20">
+                    <CurrentIcon size={16} />
                   </div>
                   <div className="min-w-0">
-                    <span className="block text-[9.5px] font-mono font-bold uppercase tracking-wider text-[#FF4F00] truncate">
+                    <span className="block text-[9px] sm:text-[9.5px] font-mono font-bold uppercase tracking-wider text-[#FF4F00] truncate">
                       MODULE {currentModule.number} • {currentModule.category}
                     </span>
                     <span className="text-xs sm:text-sm font-syne font-bold text-slate-900 dark:text-white truncate block">
@@ -156,13 +155,13 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                   </div>
                 </div>
 
-                <span className="text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 shadow-2xs shrink-0">
+                <span className="text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 shadow-2xs shrink-0">
                   {currentModule.statusBadge}
                 </span>
               </div>
 
-              {/* Hardware Visual Stage: 100% Transparent Floating Image, NO Gray BG or Drop Shadow blob */}
-              <div className="relative h-44 sm:h-56 w-full flex items-center justify-center py-1">
+              {/* Hardware Visual Stage: 100% Transparent Floating Image */}
+              <div className="relative h-40 sm:h-56 w-full flex items-center justify-center py-1">
                 <div className="relative w-full h-full">
                   <Image
                     src={currentModule.imageSrc}
@@ -175,21 +174,21 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                 </div>
 
                 {/* Top Floating Micro-Badge */}
-                <div className="absolute top-1 right-1 inline-flex items-center gap-1 rounded-full bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 px-2.5 py-0.5 text-[9px] font-mono font-bold text-slate-800 dark:text-slate-100 shadow-xs backdrop-blur-md">
+                <div className="absolute top-1 right-1 inline-flex items-center gap-1 rounded-full bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 px-2 sm:px-2.5 py-0.5 text-[8.5px] sm:text-[9px] font-mono font-bold text-slate-800 dark:text-slate-100 shadow-xs backdrop-blur-md max-w-[130px] sm:max-w-none truncate">
                   <span className="relative flex h-1.5 w-1.5 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#FF4F00]" />
                   </span>
-                  <span>{currentModule.topBadge}</span>
+                  <span className="truncate">{currentModule.topBadge}</span>
                 </div>
               </div>
 
               {/* Module Title & Description */}
               <div className="space-y-1">
-                <h3 className="font-syne text-base sm:text-lg font-bold text-slate-950 dark:text-white leading-snug">
+                <h3 className="font-syne text-sm sm:text-base md:text-lg font-bold text-slate-950 dark:text-white leading-snug">
                   {currentModule.title}
                 </h3>
-                <p className="text-xs sm:text-[13px] font-normal leading-relaxed text-slate-600 dark:text-slate-400">
+                <p className="text-[11.5px] sm:text-[13px] font-normal leading-relaxed text-slate-600 dark:text-slate-400 line-clamp-3 sm:line-clamp-none">
                   {currentModule.description}
                 </p>
               </div>
@@ -201,7 +200,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                     <span className="mt-0.5 flex h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#FF4F00] to-[#FF6B2B] text-white shadow-xs">
                       <Check className="h-2 w-2 sm:h-2.5 sm:w-2.5 stroke-[3]" />
                     </span>
-                    <span className="text-[11.5px] sm:text-xs font-medium leading-relaxed text-slate-700 dark:text-slate-300">
+                    <span className="text-[11px] sm:text-xs font-medium leading-relaxed text-slate-700 dark:text-slate-300">
                       {bullet}
                     </span>
                   </div>
@@ -209,19 +208,19 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
               </div>
 
               {/* Bottom Stat Bar & Next Action Button */}
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800 min-w-0">
-                  <span className="font-mono text-[9.5px] uppercase tracking-wider text-slate-400">
+              <div className="pt-2.5 sm:pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900 px-2 sm:px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800 min-w-0">
+                  <span className="font-mono text-[9px] sm:text-[9.5px] uppercase tracking-wider text-slate-400 truncate">
                     {currentModule.stat.label}:
                   </span>
-                  <span className="font-syne text-xs sm:text-[13px] font-extrabold text-[#FF4F00] shrink-0">
+                  <span className="font-syne text-[11px] sm:text-xs md:text-[13px] font-extrabold text-[#FF4F00] shrink-0">
                     {currentModule.stat.value}
                   </span>
                 </div>
 
                 <Link
                   href={currentModule.href}
-                  className="inline-flex items-center gap-1.5 text-xs font-syne font-bold text-white bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] py-2 px-3.5 rounded-xl shadow-xs active:scale-95 transition-transform shrink-0"
+                  className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-syne font-bold text-white bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] py-1.5 sm:py-2 px-3 sm:px-3.5 rounded-xl shadow-xs active:scale-95 transition-transform shrink-0"
                 >
                   <span>Explore</span>
                   <ArrowRight size={13} />
