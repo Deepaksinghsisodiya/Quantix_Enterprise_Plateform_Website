@@ -25,24 +25,14 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const tabsRef = React.useRef<HTMLDivElement>(null);
 
-  // Auto-scroll active tab into view on mobile
-  useEffect(() => {
-    if (!tabsRef.current) return;
-    const activeBtn = tabsRef.current.children[activeIndex] as HTMLElement;
-    if (activeBtn) {
-      activeBtn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-    }
-  }, [activeIndex]);
-
-  // Auto-rotate every 4 seconds; pause when hovered
+  // Auto-rotate every 2 seconds; pause when hovered
   useEffect(() => {
     if (isHovered || modules.length <= 1) return;
     const interval = setInterval(() => {
       setDirection(1);
       setActiveIndex((prev) => (prev + 1) % modules.length);
-    }, 4000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [isHovered, modules.length]);
 
@@ -94,44 +84,9 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* ============================================================ */}
-      {/* MOBILE & TABLET VIEW (< lg): 100% Native Touch-Swipeable     */}
+      {/* MOBILE & TABLET VIEW (< lg): Clean Card Slider               */}
       {/* ============================================================ */}
       <div className="lg:hidden flex flex-col space-y-3 sm:space-y-4">
-        {/* Mobile Tab Dock: Smooth Horizontal Scrollable Pills (No Overlap) */}
-        <div
-          ref={tabsRef}
-          className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-1 scroll-smooth"
-        >
-          {modules.map((mod, idx) => {
-            const isSelected = activeIndex === idx;
-            return (
-              <button
-                key={mod.id}
-                type="button"
-                onClick={() => goToModule(idx)}
-                className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200 select-none cursor-pointer shrink-0 whitespace-nowrap min-h-[40px] ${
-                  isSelected
-                    ? "bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] text-white shadow-md shadow-orange-500/30 scale-[1.02] font-black"
-                    : "bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white border border-slate-200/80 dark:border-slate-800 font-semibold"
-                }`}
-              >
-                <span
-                  className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[9px] font-mono font-bold ${
-                    isSelected
-                      ? "bg-white text-[#FF4F00]"
-                      : "bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
-                  }`}
-                >
-                  {mod.number}
-                </span>
-                <span className="font-syne text-[11px] sm:text-xs">
-                  {mod.tabLabel || mod.shortMobileName}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
         {/* Dedicated Native Mobile Showcase Card with Touch Swipe Support */}
         <div
           onTouchStart={handleTouchStart}
@@ -153,30 +108,28 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
               className="flex flex-col space-y-3"
             >
               {/* Header Row: Icon + Module Info + Live Badge */}
-              <div className="flex items-start justify-between gap-2.5">
-                <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-[#FF4F00] border border-orange-500/20">
-                    <CurrentIcon size={18} />
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-[#FF4F00] border border-orange-500/20">
+                    <CurrentIcon size={16} />
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="block text-[9.5px] font-mono font-bold uppercase tracking-wider text-[#FF4F00]">
+                  <div className="min-w-0">
+                    <span className="block text-[9px] sm:text-[9.5px] font-mono font-bold uppercase tracking-wider text-[#FF4F00] truncate">
                       MODULE {currentModule.number} • {currentModule.category}
                     </span>
-                    <h4 className="text-xs sm:text-sm font-syne font-bold text-slate-900 dark:text-white leading-tight">
+                    <span className="text-xs sm:text-sm font-syne font-bold text-slate-900 dark:text-white truncate block">
                       {currentModule.tabLabel}
-                    </h4>
+                    </span>
                   </div>
                 </div>
 
-                {currentModule.statusBadge && (
-                  <span className="text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 shadow-2xs shrink-0">
-                    {currentModule.statusBadge}
-                  </span>
-                )}
+                <span className="text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 shadow-2xs shrink-0">
+                  {currentModule.statusBadge}
+                </span>
               </div>
 
               {/* Hardware Visual Stage: 100% Transparent Floating Image */}
-              <div className="relative h-44 sm:h-56 w-full flex items-center justify-center py-1">
+              <div className="relative h-40 sm:h-56 w-full flex items-center justify-center py-1">
                 <div className="relative w-full h-full">
                   <Image
                     src={currentModule.imageSrc}
@@ -189,7 +142,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                 </div>
 
                 {/* Top Floating Micro-Badge */}
-                <div className="absolute top-1 right-1 inline-flex items-center gap-1 rounded-full bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 px-2.5 py-0.5 text-[8.5px] sm:text-[9px] font-mono font-bold text-slate-800 dark:text-slate-100 shadow-xs backdrop-blur-md max-w-[140px] truncate">
+                <div className="absolute top-1 right-1 inline-flex items-center gap-1 rounded-full bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 px-2 sm:px-2.5 py-0.5 text-[8.5px] sm:text-[9px] font-mono font-bold text-slate-800 dark:text-slate-100 shadow-xs backdrop-blur-md max-w-[130px] sm:max-w-none truncate">
                   <span className="relative flex h-1.5 w-1.5 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#FF4F00]" />
@@ -203,19 +156,19 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                 <h3 className="font-syne text-sm sm:text-base md:text-lg font-bold text-slate-950 dark:text-white leading-snug">
                   {currentModule.title}
                 </h3>
-                <p className="text-xs sm:text-[13px] font-normal leading-relaxed text-slate-600 dark:text-slate-400">
+                <p className="text-[11.5px] sm:text-[13px] font-normal leading-relaxed text-slate-600 dark:text-slate-400 line-clamp-3 sm:line-clamp-none">
                   {currentModule.description}
                 </p>
               </div>
 
               {/* 3 Micro Checkmark Bullets */}
               <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-1.5">
-                {currentModule.bullets.slice(0, 3).map((bullet, idx) => (
+                {currentModule.bullets.map((bullet, idx) => (
                   <div key={idx} className="flex items-start gap-2">
                     <span className="mt-0.5 flex h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#FF4F00] to-[#FF6B2B] text-white shadow-xs">
                       <Check className="h-2 w-2 sm:h-2.5 sm:w-2.5 stroke-[3]" />
                     </span>
-                    <span className="text-[11.5px] sm:text-xs font-medium leading-relaxed text-slate-700 dark:text-slate-300">
+                    <span className="text-[11px] sm:text-xs font-medium leading-relaxed text-slate-700 dark:text-slate-300">
                       {bullet}
                     </span>
                   </div>
@@ -223,19 +176,19 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
               </div>
 
               {/* Bottom Stat Bar & Next Action Button */}
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800 min-w-0">
-                  <span className="font-mono text-[9.5px] uppercase tracking-wider text-slate-400">
+              <div className="pt-2.5 sm:pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900 px-2 sm:px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800 min-w-0">
+                  <span className="font-mono text-[9px] sm:text-[9.5px] uppercase tracking-wider text-slate-400 truncate">
                     {currentModule.stat.label}:
                   </span>
-                  <span className="font-syne text-xs sm:text-[13px] font-extrabold text-[#FF4F00] shrink-0">
+                  <span className="font-syne text-[11px] sm:text-xs md:text-[13px] font-extrabold text-[#FF4F00] shrink-0">
                     {currentModule.stat.value}
                   </span>
                 </div>
 
                 <Link
                   href={currentModule.href}
-                  className="inline-flex items-center gap-1.5 text-xs font-syne font-bold text-white bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] py-2 px-3.5 rounded-xl shadow-xs active:scale-95 transition-transform shrink-0"
+                  className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-syne font-bold text-white bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] py-1.5 sm:py-2 px-3 sm:px-3.5 rounded-xl shadow-xs active:scale-95 transition-transform shrink-0"
                 >
                   <span>Explore</span>
                   <ArrowRight size={13} />
@@ -245,28 +198,26 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
           </AnimatePresence>
         </div>
 
-        {/* Mobile Swipe Indicators & Prev/Next Controls */}
-        <div className="flex items-center justify-between px-1 text-xs pt-0.5">
+        {/* Mobile Stepper Controls: Matches Business Problems section */}
+        <div className="flex items-center justify-between mt-3 px-1">
           <button
             type="button"
             onClick={handlePrevModule}
-            className="inline-flex items-center gap-1 text-[11px] font-syne font-bold text-slate-600 dark:text-slate-400 hover:text-[#FF4F00] active:scale-95 cursor-pointer py-1.5 px-2.5 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800"
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-[11px] font-syne font-bold text-slate-700 dark:text-slate-300 shadow-2xs active:scale-95 cursor-pointer"
           >
-            <ChevronLeft size={13} />
+            <ChevronLeft size={13} className="text-slate-400" />
             <span>Prev</span>
           </button>
 
           <div className="flex items-center gap-1.5">
-            {modules.map((_, idx) => (
+            {modules.map((_, dotIdx) => (
               <button
-                key={idx}
+                key={dotIdx}
                 type="button"
-                onClick={() => goToModule(idx)}
-                aria-label={`Go to feature ${idx + 1}`}
-                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  activeIndex === idx
-                    ? "w-6 bg-[#FF4F00]"
-                    : "w-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400"
+                onClick={() => goToModule(dotIdx)}
+                aria-label={`Go to feature ${dotIdx + 1}`}
+                className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                  activeIndex === dotIdx ? "w-5 bg-[#FF4F00]" : "w-1.5 bg-slate-300 dark:bg-slate-700"
                 }`}
               />
             ))}
@@ -275,10 +226,10 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
           <button
             type="button"
             onClick={handleNextModule}
-            className="inline-flex items-center gap-1 text-[11px] font-syne font-bold text-slate-600 dark:text-slate-400 hover:text-[#FF4F00] active:scale-95 cursor-pointer py-1.5 px-2.5 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800"
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-[11px] font-syne font-bold text-slate-700 dark:text-slate-300 shadow-2xs active:scale-95 cursor-pointer"
           >
             <span>Next</span>
-            <ChevronRight size={13} />
+            <ChevronRight size={13} className="text-slate-400" />
           </button>
         </div>
       </div>
@@ -286,7 +237,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
       {/* ============================================================ */}
       {/* DESKTOP VIEW (>= lg): Smooth Elastic Horizontal Showcase     */}
       {/* ============================================================ */}
-      <div 
+      <div
         style={{ height: "520px", minHeight: "520px", maxHeight: "520px" }}
         className="hidden lg:flex rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 backdrop-blur-xl p-2.5 shadow-xl relative h-[520px] min-h-[520px] max-h-[520px] flex-row gap-2.5 items-stretch overflow-hidden"
       >
@@ -303,11 +254,10 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                 goToModule(idx);
               }}
               onClick={() => goToModule(idx)}
-              className={`relative rounded-2xl overflow-hidden select-none transition-[flex,border-color,background-color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] h-full min-h-0 max-h-full ${
-                isActive
+              className={`relative rounded-2xl overflow-hidden select-none transition-[flex,border-color,background-color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] h-full min-h-0 max-h-full ${isActive
                   ? "flex-[4.2] bg-white dark:bg-slate-900 border border-orange-500/40 dark:border-orange-500/50 shadow-lg cursor-default"
                   : "flex-1 bg-white/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 hover:border-orange-500/40 hover:bg-orange-500/[0.02] cursor-pointer group"
-              }`}
+                }`}
             >
               {/* TOP ACCENT LINE on active card */}
               {isActive && (
@@ -430,7 +380,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                 </motion.div>
               ) : (
                 /* INACTIVE COLLAPSED PILL (Instant hover switch, no gray) */
-                <div 
+                <div
                   style={{ height: "100%", maxHeight: "100%" }}
                   className="w-full h-full p-4 xl:p-5 flex flex-col justify-between items-center overflow-hidden"
                 >
