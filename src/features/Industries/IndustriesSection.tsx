@@ -57,54 +57,51 @@ const Checklist = ({ left, right }: { left: string[]; right: string[] }) => (
   </div>
 );
 
-const DEFAULT_INDUSTRIES: IndustryDto[] = [
-  {
-    id: "retail",
-    slug: "retail",
-    name: "Retail",
-    title: "Built for modern retail stores",
-    description: "From boutiques to multi-branch chains — Quantix handles your entire retail workflow. Track inventory across warehouses, manage staff shifts, and deliver a seamless checkout experience.",
-    features: [
-      "Barcode & QR scanner support",
-      "Customer loyalty & gift cards",
-      "Purchase order management",
-      "Supplier management",
-      "Multi-warehouse inventory sync",
-      "Discount & coupon engine",
-      "Staff performance reports",
-      "Returns & exchange handling"
-    ],
-    imageUrl: "/images/hero-retail.jpg",
-    statLabel: "Avg. Retail growth",
-    statValue: "+34% avg. revenue growth"
-  },
-  {
-    id: "restaurant",
-    slug: "restaurant",
-    name: "Restaurant",
-    title: "Made for fast-paced restaurants",
-    description: "Table management, kitchen display systems, online ordering integration — Quantix keeps your restaurant running smoothly during the busiest hours with zero bottlenecks.",
-    features: [
-      "Table & floor plan management",
-      "Online ordering integration",
-      "Recipe costing & food cost tracking",
-      "Modifier & combo builder",
-      "Kitchen Display System (KDS)",
-      "Split bill & bill-by-seat",
-      "Reservation & waitlist management",
-      "Delivery partner sync"
-    ],
-    imageUrl: "/images/hero-restaurant.jpg",
-    statLabel: "Avg. Output speed",
-    statValue: "+40% faster kitchen output"
-  }
-];
+const IndustriesSectionSkeleton = () => (
+  <section className="bg-slate-50/30 py-10 sm:py-14 lg:py-20 border-y border-slate-100" id="industries">
+    <div className="site-container animate-pulse">
+      <div className="text-center mb-12 flex flex-col items-center">
+        <div className="h-5 w-24 bg-slate-200 dark:bg-slate-800 rounded-full mb-4" />
+        <div className="h-10 w-72 bg-slate-200 dark:bg-slate-800 rounded-xl mb-3" />
+        <div className="h-4 w-96 max-w-full bg-slate-200 dark:bg-slate-800 rounded" />
+      </div>
+      <div className="flex justify-center mb-16 gap-3">
+        <div className="h-10 w-28 bg-slate-200 dark:bg-slate-800 rounded-full" />
+        <div className="h-10 w-28 bg-slate-200 dark:bg-slate-800 rounded-full" />
+        <div className="h-10 w-28 bg-slate-200 dark:bg-slate-800 rounded-full" />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="space-y-4">
+          <div className="h-4 w-20 bg-slate-200 dark:bg-slate-800 rounded-full" />
+          <div className="h-8 w-3/4 bg-slate-200 dark:bg-slate-800 rounded-lg" />
+          <div className="h-4 w-full bg-slate-200 dark:bg-slate-800 rounded" />
+          <div className="h-4 w-5/6 bg-slate-200 dark:bg-slate-800 rounded" />
+          <div className="grid grid-cols-2 gap-3 pt-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-5 bg-slate-200 dark:bg-slate-800 rounded" />
+            ))}
+          </div>
+        </div>
+        <div className="h-80 bg-slate-200 dark:bg-slate-800 rounded-3xl" />
+      </div>
+    </div>
+  </section>
+);
 
 export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
-  apiIndustries,
+  apiIndustries = [],
+  isLoading = false,
 }) => {
-  const industries = apiIndustries.length > 0 ? apiIndustries : DEFAULT_INDUSTRIES;
-  const [activeTab, setActiveTab] = useState<string>("retail");
+  if (isLoading) {
+    return <IndustriesSectionSkeleton />;
+  }
+
+  const industries = Array.isArray(apiIndustries) ? apiIndustries : [];
+  if (industries.length === 0) {
+    return null;
+  }
+
+  const [activeTab, setActiveTab] = useState<string>(industries[0]?.slug || "retail");
 
   useEffect(() => {
     if (industries.length > 0 && !industries.some(ind => ind.slug === activeTab)) {
@@ -114,8 +111,9 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
 
   const activeIndustry = industries.find(ind => ind.slug === activeTab) || industries[0];
 
-  const leftFeatures = activeIndustry ? activeIndustry.features.slice(0, Math.ceil(activeIndustry.features.length / 2)) : [];
-  const rightFeatures = activeIndustry ? activeIndustry.features.slice(Math.ceil(activeIndustry.features.length / 2)) : [];
+  const features = Array.isArray(activeIndustry?.features) ? activeIndustry.features : [];
+  const leftFeatures = features.slice(0, Math.ceil(features.length / 2));
+  const rightFeatures = features.slice(Math.ceil(features.length / 2));
 
   const tabVariants = {
     hidden: { opacity: 0, y: 15 },

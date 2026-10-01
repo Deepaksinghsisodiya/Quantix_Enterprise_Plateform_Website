@@ -12,27 +12,6 @@ export interface TestimonialBannerProps {
   isLoading: boolean;
 }
 
-const DEFAULT_TESTIMONIALS: TestimonialDto[] = [
-  {
-    id: "b1",
-    quote: "With over 100 outlets synced to a single Cloud Ledger, Quantix is the backbone of our restaurant empire.",
-    author: "Elena Rostova",
-    role: "VP Operations, FoodFlow Group",
-    industry: "Restaurant",
-    avatarColor: "bg-indigo-600",
-    initials: "ER"
-  },
-  {
-    id: "b2",
-    quote: "Offline checkout queues are non-existent now. Cashiers scan and bill customers continuously even during network outages.",
-    author: "Marcus Vance",
-    role: "Director of IT, Urban Outfitters EMEA",
-    industry: "Retail",
-    avatarColor: "bg-emerald-600",
-    initials: "MV"
-  }
-];
-
 export const TestimonialBanner: React.FC<TestimonialBannerProps> = ({
   testimonials,
   isLoading,

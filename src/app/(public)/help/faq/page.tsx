@@ -9,51 +9,12 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import CTABanner from '@/components/organisms/CTABanner/CTABanner';
 
-const FALLBACK_FAQS = [
-  {
-    id: '1',
-    question: 'How does standalone licensing work?',
-    answer:
-      'Standalone token licensing gives you perpetual software rights. You download the IndexedDB database to your registers, and they do not require an active internet connection to process sales, bills, or inventory.',
-  },
-  {
-    id: '2',
-    question: 'Can I switch from Standalone to Enterprise Cloud?',
-    answer:
-      'Yes! Our sync services can easily export your local registers database and upload them securely to our Cloud Telemetry dashboard, preserving all historical transaction logs.',
-  },
-  {
-    id: '3',
-    question: 'How is data encrypted in offline mode?',
-    answer:
-      'We encrypt all locally cached transactions using high-performance AES-256 databases inside IndexedDB, verifying employee login PIN codes locally prior to cash drawer triggers.',
-  },
-  {
-    id: '4',
-    question: 'Do you charge credit card transaction fees?',
-    answer:
-      'Quantix does not add extra transaction fees. You integrate your own payment terminals (Stripe, Adyen, Clover) and only pay the standard processor merchant rates.',
-  },
-  {
-    id: '5',
-    question: 'How many registers can run simultaneously in one branch?',
-    answer:
-      'Quantix supports unlimited parallel registers within a single store topology. With local peer-to-peer LAN mesh sync, table bills and bar tabs update in under 50 milliseconds across all terminals.',
-  },
-  {
-    id: '6',
-    question: 'Which receipt printers and barcode scanners are supported?',
-    answer:
-      'All standard ESC/POS thermal printers (Epson, Star Micronics, Citizen) via USB, Ethernet, and Bluetooth are supported out of the box, alongside 1D/2D HID barcode scanners.',
-  },
-];
-
 export default function HelpFAQPage() {
   const { data: apiFaqs = [], isLoading } = useGetFAQsQuery();
   const [openFaqId, setOpenFaqId] = useState<string | null>('1');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const faqs = apiFaqs.length > 0 ? apiFaqs : FALLBACK_FAQS;
+  const faqs = apiFaqs;
   const filteredFaqs = faqs.filter(
     (f) =>
       f.question.toLowerCase().includes(searchQuery.toLowerCase()) ||

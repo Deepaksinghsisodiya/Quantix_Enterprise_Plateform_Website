@@ -18,18 +18,6 @@ export interface IndustryDetailProps {
   isLoading: boolean;
 }
 
-interface IndustryData {
-  title: string;
-  tagline: string;
-  icon: React.ReactNode;
-  backgroundImage: string;
-  heroHeadline: string;
-  statNumber: string;
-  statLabel: string;
-  summary: string;
-  keyFeatures: { title: string; desc: string }[];
-  technicalHighlights: string[];
-}
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   retail: <Store className="h-10 w-10 text-primary" />,
@@ -39,96 +27,12 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   "food-trucks": <Truck className="h-10 w-10 text-primary" />,
 };
 
-const INDUSTRIES_DATA: Record<string, IndustryData> = {
-  retail: {
-    title: "Retail POS Solutions",
-    tagline: "SMART INVENTORY & SCALE FOR RETAIL",
-    icon: <Store className="h-10 w-10 text-primary" />,
-    backgroundImage: "/images/retail_fashion_boutique.jpg",
-    heroHeadline: "Omnichannel inventory sync for modern storefronts",
-    statNumber: "45%",
-    statLabel: "Average Inventory Efficiency Gain",
-    summary: "Managing retail chains requires flawless coordination across physical storefronts and digital warehouses. Quantix delivers real-time stock sync, multi-store supplier orders, and detailed profit margin analysis, all on one simple dashboard.",
-    keyFeatures: [
-      { title: "Real-time Matrix Stock", desc: "Easily track items with variations in sizes, colors, categories, and serial barcodes." },
-      { title: "Automated Reorder Alerts", desc: "Set minimal threshold warnings that generate supplier draft purchase orders instantly." },
-      { title: "Loyalty & Promos", desc: "Deploy customized customer loyalty points, gift cards, and percentage store discounts at checkout." }
-    ],
-    technicalHighlights: ["Barcode Scanning integration", "Offline database sync", "Supplier purchase engine", "Multi-store warehouse transfers"]
-  },
-  restaurant: {
-    title: "Restaurant POS Systems",
-    tagline: "SPEED, TABLES & TABLETS FOR HOSPITALITY",
-    icon: <Utensils className="h-10 w-10 text-primary" />,
-    backgroundImage: "/images/solution_fine_dining.jpg",
-    heroHeadline: "Kitchen flow and floor plan sync in real time",
-    statNumber: "3.2x",
-    statLabel: "Faster Table Turnaround Rate",
-    summary: "From order placements to kitchen ticket flows, restaurant operations need high speed. Quantix provides a beautiful graphical floor editor, tableside ordering app connectors, and seamless kitchen display terminal (KDS) coordination.",
-    keyFeatures: [
-      { title: "Graphical Table Builder", desc: "Recreate your restaurant's exact floor layout. Manage bills, split charges, and merge tables dynamically." },
-      { title: "Kitchen Display Integration", desc: "Send orders straight to the kitchen. Color-coded ticket timers eliminate order confusion." },
-      { title: "Menu Modifiers", desc: "Customize dishes with complex options (e.g., extra cheese, gluten-free) with instant pricing adjustments." }
-    ],
-    technicalHighlights: ["KDS communication", "Real-time order sync", "Tableside tablet layout", "Tip and payment splitting"]
-  },
-  grocery: {
-    title: "Grocery POS Systems",
-    tagline: "HIGH-VOLUME SPEED & WEIGHING SCALES",
-    icon: <ShoppingBag className="h-10 w-10 text-primary" />,
-    backgroundImage: "/images/retail_grocery_scale.jpg",
-    heroHeadline: "Process thousands of SKU items in seconds",
-    statNumber: "0.8s",
-    statLabel: "Average Checkout Processing Speed",
-    summary: "High volume checkouts, weighing scales, and extensive inventory lines demand a powerful processing core. Quantix POS handles large inventory catalogs with offline local billing speed.",
-    keyFeatures: [
-      { title: "Scale Calibration Ready", desc: "Connect standard weighing scales directly. Quantix instantly reads item weights and computes pricing." },
-      { title: "Massive SKU Management", desc: "Import, edit, and categorize up to 100,000 barcode listings without interface lag." },
-      { title: "Local Cache Billing", desc: "Keep lanes scanning even when the internet drops. Sales sync up instantly when connection resumes." }
-    ],
-    technicalHighlights: ["Scale & device integrations", "IndexedDB caching", "Fast barcode parsing", "Bulk invoice generator"]
-  },
-  cafes: {
-    title: "Cafes & Bars POS Setup",
-    tagline: "QUICK ORDERS & MODIFIERS FOR HIGH PACES",
-    icon: <Coffee className="h-10 w-10 text-primary" />,
-    backgroundImage: "/images/solution_cafe_bakery.jpg",
-    heroHeadline: "Rapid transactions, open tabs, and happy customers",
-    statNumber: "28%",
-    statLabel: "Increase in Beverage sales",
-    summary: "Rush hours at cafes and bars require rapid fire cashiers and robust tab capabilities. Quantix gives your baristas and bartenders a simplified quick-access button matrix and instant credit card pre-authorizations.",
-    keyFeatures: [
-      { title: "Open Tabs & Pre-Auths", desc: "Keep customer card tabs open safely. Swipe once, add items dynamically, and close bills with ease." },
-      { title: "Smart Barista Matrix", desc: "Customized grid keys with color tags for your best-selling coffees, drinks, and snacks." },
-      { title: "Split-Second Checkout", desc: "One-tap tap-to-pay checkouts and digital email/SMS receipt generation." }
-    ],
-    technicalHighlights: ["Tap-to-pay terminals", "Quick keys matrix", "Card pre-authorization", "Digital SMS Receipts"]
-  },
-  "food-trucks": {
-    title: "Food Truck Mobile POS",
-    tagline: "CELLULAR SYNC & MOBILE CARD READERS",
-    icon: <Truck className="h-10 w-10 text-primary" />,
-    backgroundImage: "/images/solution_qsr_kiosk.jpg",
-    heroHeadline: "Robust POS system designed to travel with you",
-    statNumber: "100%",
-    statLabel: "Offline-First Reliability",
-    summary: "When you are constantly moving, power grids and internet signals cannot be trusted. Quantix runs fully mobile card readers, handles mobile battery-saving layouts, and syncs over standard cellular hot-spots.",
-    keyFeatures: [
-      { title: "Cellular Optimized Data", desc: "Extremely low-bandwidth synchronization protocol designed to sync billing over weak 4G/5G signals." },
-      { title: "Compact Terminal App", desc: "Optimized mobile tablet interfaces that require minimal physical counter space." },
-      { title: "SMS Queuing Alerts", desc: "Send text alerts to customers automatically when their order is ready at the truck counter." }
-    ],
-    technicalHighlights: ["Low bandwidth protocols", "SMS dispatch engine", "Bluetooth reader connectivity", "Low energy sleep layouts"]
-  }
-};
-
 export const IndustryDetail: React.FC<IndustryDetailProps> = ({
   slug,
   apiIndustry,
   isLoading,
 }) => {
   const router = useRouter();
-  const localIndustry = INDUSTRIES_DATA[slug];
 
   const industry = useMemo(() => {
     if (apiIndustry) {
@@ -140,16 +44,16 @@ export const IndustryDetail: React.FC<IndustryDetailProps> = ({
         heroHeadline: apiIndustry.description || "",
         statNumber: apiIndustry.statValue || "30%",
         statLabel: apiIndustry.statLabel || "Process Efficiency Gain",
-        summary: apiIndustry.description,
-        keyFeatures: (apiIndustry.features || []).map((f) => ({ 
+        summary: apiIndustry.description || "",
+        keyFeatures: Array.isArray(apiIndustry.features) ? apiIndustry.features.map((f) => ({ 
           title: f, 
           desc: "Leverage standard high-performance industry tools." 
-        })),
-        technicalHighlights: apiIndustry.features || [],
+        })) : [],
+        technicalHighlights: Array.isArray(apiIndustry.features) ? apiIndustry.features : [],
       };
     }
-    return localIndustry;
-  }, [apiIndustry, localIndustry, slug]);
+    return null;
+  }, [apiIndustry, slug]);
 
   if (isLoading) {
     return (

@@ -15,13 +15,7 @@ export interface FeaturesSectionProps {
   onRetry?: () => void;
 }
 
-const PLATFORM_ECOSYSTEM_CHIPS: PlatformExtension[] = [
-  { id: 'kiosks', title: 'Self-Ordering Kiosks', badge: '+28% Avg Ticket', icon: Smartphone, href: '/features/self-service-kiosk' },
-  { id: 'payments', title: 'Unified EMV Terminals', badge: 'Zero Lock-in', icon: CreditCard, href: '/integrations' },
-  { id: 'cloud-hq', title: 'Multi-Store Cloud HQ', badge: '< 2.4s Sync', icon: Cloud, href: '/features/multi-store' },
-  { id: 'webhooks', title: 'ERP & Open Webhooks', badge: '393+ Endpoints', icon: Code2, href: '/integrations' },
-  { id: 'mesh-till', title: 'Peer-to-Peer Mesh Till', badge: 'Offline Resilient', icon: Globe2, href: '/features/cloud-pos' },
-];
+
 
 export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
   features = [],
@@ -65,7 +59,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
       {/* Background Depth Ambience */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-15%,rgba(255,79,0,0.06),transparent_70%)]" />
 
-      <div className="site-container relative z-10 px-3.5 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-6 sm:space-y-10">
+      <div className="site-container relative z-10 px-3.5 sm:px-6 lg:px-8 max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1500px] mx-auto space-y-6 sm:space-y-10">
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center space-y-2.5 sm:space-y-3">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/25 bg-orange-500/10 px-3 py-1 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-[#FF4F00] shadow-xs backdrop-blur-sm">
@@ -86,43 +80,58 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
         </div>
 
         {/* Kinetic Horizontal Expanding Feature Vault */}
-        <div className="relative">
+        <div className="relative w-full min-h-[520px]" style={{ minHeight: '520px' }}>
           <FeaturesVaultView modules={modules} />
         </div>
 
         {/* Bottom Connected Ecosystem Extensions Bar */}
         <div className="pt-2 sm:pt-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-slate-50/90 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800/80 text-xs text-slate-600 dark:text-slate-400 backdrop-blur-md">
-            <div className="flex items-center gap-2">
-              <Sparkles size={13} className="text-[#FF4F00]" />
-              <span className="font-syne font-bold uppercase tracking-wider text-[11px] text-slate-900 dark:text-slate-100">
-                Connected Hardware &amp; Extensions:
-              </span>
+          <div className="flex flex-col xl:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 backdrop-blur-md shadow-xs">
+            {/* Left: Brand Badge & Label */}
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-500/10 text-[#FF4F00] border border-orange-500/20 shadow-xs">
+                <Sparkles size={16} className="text-[#FF4F00]" />
+              </div>
+              <div>
+                <span className="font-syne font-bold uppercase tracking-wider text-xs text-slate-900 dark:text-slate-100 block">
+                  Connected Hardware &amp; Extensions:
+                </span>
+                <span className="font-mono text-[10.5px] text-slate-500 dark:text-slate-400">
+                  Universal Plug &amp; Play • Cloud Sync
+                </span>
+              </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
-              {PLATFORM_ECOSYSTEM_CHIPS.map((ext) => {
-                const ExtIcon = ext.icon;
+            {/* Middle: Clean Single-Line Connected Chips */}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 flex-1 min-w-0 px-2">
+              {features.map((f) => {
+                const ExtIcon = getFeatureIcon(f.iconKey);
+                const displayLabel = f.topBadge || f.subtitle || f.category;
+                const statBadge = f.statValue || 'Active';
+
                 return (
                   <Link
-                    key={ext.id}
-                    href={ext.href}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 text-[10.5px] sm:text-[11px] font-syne font-semibold text-slate-800 dark:text-slate-200 hover:text-[#FF4F00] dark:hover:text-orange-400 hover:border-orange-500/40 transition-colors shadow-2xs"
+                    key={f.slug}
+                    href={f.ctaHref || `/features/${f.slug}`}
+                    className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 text-xs font-syne font-semibold text-slate-800 dark:text-slate-200 hover:text-[#FF4F00] hover:border-orange-500/50 hover:bg-orange-500/[0.03] transition-all shadow-2xs"
                   >
-                    <ExtIcon size={12} className="text-[#FF4F00]" />
-                    <span>{ext.title}</span>
-                    <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500">({ext.badge})</span>
+                    <ExtIcon size={14} className="text-[#FF4F00] group-hover:scale-110 transition-transform" />
+                    <span className="whitespace-nowrap">{displayLabel}</span>
+                    <span className="px-1.5 py-0.5 rounded-md text-[9.5px] font-mono font-bold bg-orange-500/10 text-[#FF4F00] border border-orange-500/20 shrink-0">
+                      {statBadge}
+                    </span>
                   </Link>
                 );
               })}
             </div>
 
+            {/* Right: Sleek Explore CTA Link */}
             <Link
               href="/features"
-              className="inline-flex items-center gap-1 text-[11px] font-syne font-bold text-[#FF4F00] hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-syne font-bold text-[#FF4F00] hover:text-[#FF6B2B] px-3.5 py-2 rounded-xl bg-orange-500/5 hover:bg-orange-500/10 border border-orange-500/15 transition-all shrink-0 group"
             >
               <span>Explore All Modules</span>
-              <ArrowRight size={12} />
+              <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
         </div>

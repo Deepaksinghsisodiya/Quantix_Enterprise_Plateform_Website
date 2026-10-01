@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils';
 import { Sparkles, ShieldCheck, HelpCircle, Building2, UtensilsCrossed, ShoppingBag, Monitor, Cloud, ChevronRight } from 'lucide-react';
 import { useGetBillingPlansQuery } from '../services/PricingServices';
 import { BillingCycle, ApiBillingPlan } from '../Types/PricingTypes';
-import { FALLBACK_ENTERPRISE_PLANS } from '../Constants/PricingConstants';
 import { PricingCard } from './PricingCard';
 import { PricingComparisonTable } from './PricingComparisonTable';
 import { PricingSkeleton } from './PricingSkeleton';
@@ -25,9 +24,9 @@ export const PricingSection: React.FC = () => {
 
   const showSkeleton = !mounted || isLoading;
 
-  // Extract all plans from API payload or fallbacks
+  // Extract all plans purely from live API payload
   const { standalonePlans, cloudPlans, enterprisePlans } = useMemo(() => {
-    let raw: ApiBillingPlan[] = FALLBACK_ENTERPRISE_PLANS;
+    let raw: ApiBillingPlan[] = [];
     if (response?.data) {
       if (Array.isArray(response.data) && response.data.length > 0) {
         raw = response.data;
@@ -69,12 +68,9 @@ export const PricingSection: React.FC = () => {
       .sort(sortAsc);
 
     return {
-      standalonePlans:
-        finalStandalone.length > 0 ? finalStandalone : FALLBACK_ENTERPRISE_PLANS.filter((p) => p.planType === 'StandalonePos'),
-      cloudPlans:
-        finalCloud.length > 0 ? finalCloud : FALLBACK_ENTERPRISE_PLANS.filter((p) => p.planType === 'StandaloneCloud'),
-      enterprisePlans:
-        finalEnterprise.length > 0 ? finalEnterprise : FALLBACK_ENTERPRISE_PLANS.filter((p) => p.planType === 'EnterpriseCloud'),
+      standalonePlans: finalStandalone,
+      cloudPlans: finalCloud,
+      enterprisePlans: finalEnterprise,
     };
   }, [response]);
 
@@ -361,6 +357,10 @@ export const PricingSection: React.FC = () => {
           {/* Active Plans Cards Grid */}
           {showSkeleton ? (
             <PricingSkeleton count={3} />
+          ) : activePlans.length === 0 ? (
+            <div className="py-12 text-center text-slate-500 font-medium text-sm">
+              No active billing plans found for this category.
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 items-stretch w-full mx-auto">
               {activePlans.map((plan) => (

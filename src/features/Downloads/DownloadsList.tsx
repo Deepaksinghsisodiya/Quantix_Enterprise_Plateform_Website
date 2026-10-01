@@ -32,89 +32,11 @@ interface EnhancedPackage extends DownloadPackageDto {
   osFamily: 'windows' | 'linux' | 'android' | 'server';
 }
 
-const DEFAULT_PACKAGES: EnhancedPackage[] = [
-  {
-    packageId: '1',
-    name: 'Quantix POS Terminal (Windows)',
-    description:
-      'Full-featured desktop POS register application for Windows 10/11 and Windows Embedded POSReady. Supports dual displays, receipt printers, and cash drawers.',
-    version: '2.1.0-stable',
-    platform: 'Windows (x64)',
-    fileSize: '48.2 MB',
-    releaseDate: 'Sep 2026',
-    downloadUrl: 'https://releases.quantixpos.com/binaries/v2.1.0/Quantix-POS-Terminal-Setup-2.1.0-x64.exe',
-    isLatest: true,
-    osFamily: 'windows',
-    sha256: '9f83c1b6a72e811e5f8a02c918374d62b9a712f84c3619b023f819a62304918e',
-    installCommand: 'Quantix-POS-Terminal-Setup-2.1.0-x64.exe /S /ALLUSERS',
-  },
-  {
-    packageId: '2',
-    name: 'Quantix POS Terminal (Debian / Ubuntu)',
-    description:
-      'Native compiled binary package for Debian, Ubuntu, and Linux Mint retail touch registers. High performance zero-overhead execution.',
-    version: '2.1.0-stable',
-    platform: 'Linux (.deb)',
-    fileSize: '42.8 MB',
-    releaseDate: 'Sep 2026',
-    downloadUrl: 'https://releases.quantixpos.com/binaries/v2.1.0/quantix-pos-terminal_2.1.0_amd64.deb',
-    isLatest: true,
-    osFamily: 'linux',
-    sha256: '3d819a62174c82b9e018274f83c1b6a72e811e5f8a02c918374d62b9a712f84c',
-    installCommand: 'sudo dpkg -i quantix-pos-terminal_2.1.0_amd64.deb',
-  },
-  {
-    packageId: '3',
-    name: 'Quantix POS Terminal (RHEL / CentOS / Fedora)',
-    description:
-      'Native RPM distribution optimized for Red Hat Enterprise Linux and Rocky Linux store server terminals.',
-    version: '2.1.0-stable',
-    platform: 'Linux (.rpm)',
-    fileSize: '44.1 MB',
-    releaseDate: 'Sep 2026',
-    downloadUrl: 'https://releases.quantixpos.com/binaries/v2.1.0/quantix-pos-terminal-2.1.0.x86_64.rpm',
-    isLatest: true,
-    osFamily: 'linux',
-    sha256: 'a62304918e9f83c1b6a72e811e5f8a02c918374d62b9a712f84c3619b023f819',
-    installCommand: 'sudo rpm -ivh quantix-pos-terminal-2.1.0.x86_64.rpm',
-  },
-  {
-    packageId: '4',
-    name: 'Quantix Local Sync & Database Daemon',
-    description:
-      'Lightweight background service for offline database orchestration. Synchronizes local IndexedDB transactions to central cloud telemetry upon reconnection.',
-    version: '1.4.2-stable',
-    platform: 'Cross-Platform Service',
-    fileSize: '14.5 MB',
-    releaseDate: 'Aug 2026',
-    downloadUrl: 'https://releases.quantixpos.com/binaries/v1.4.2/Quantix-Sync-Service-v1.4.2.zip',
-    isLatest: true,
-    osFamily: 'server',
-    sha256: '4c3619b023f819a62304918e9f83c1b6a72e811e5f8a02c918374d62b9a712f8',
-    installCommand: 'quantix-sync-daemon.exe --install-service',
-  },
-  {
-    packageId: '5',
-    name: 'Quantix Mobile Handheld Companion (Android)',
-    description:
-      'Optimized Android APK for mobile table-side ordering, line busting, and inventory barcode scanning on Sunmi, Pax, and Clover mobile devices.',
-    version: '2.0.8-stable',
-    platform: 'Android APK',
-    fileSize: '28.6 MB',
-    releaseDate: 'Sep 2026',
-    downloadUrl: 'https://releases.quantixpos.com/binaries/v2.0.8/quantix-handheld-v2.0.8.apk',
-    isLatest: true,
-    osFamily: 'android',
-    sha256: 'e811e5f8a02c918374d62b9a712f84c3619b023f819a62304918e9f83c1b6a72',
-    installCommand: 'adb install -r quantix-handheld-v2.0.8.apk',
-  },
-];
-
-export const DownloadsList: React.FC<DownloadsListProps> = ({ packages, isLoading }) => {
+export const DownloadsList: React.FC<DownloadsListProps> = ({ packages = [], isLoading }) => {
   const [copiedShaId, setCopiedShaId] = useState<string | null>(null);
   const [expandedDetailsId, setExpandedDetailsId] = useState<string | null>(null);
 
-  const downloadPackages = (packages.length > 0 ? packages : DEFAULT_PACKAGES) as EnhancedPackage[];
+  const downloadPackages = (packages || []) as EnhancedPackage[];
 
   const handleCopySha = (sha: string, id: string) => {
     navigator.clipboard.writeText(sha);
@@ -146,6 +68,10 @@ export const DownloadsList: React.FC<DownloadsListProps> = ({ packages, isLoadin
               className="h-36 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 animate-pulse p-6"
             />
           ))}
+        </div>
+      ) : downloadPackages.length === 0 ? (
+        <div className="py-12 text-center text-sm text-slate-500 dark:text-slate-400">
+          No download packages currently available.
         </div>
       ) : (
         <div className="grid gap-4 sm:gap-5 grid-cols-1">

@@ -94,7 +94,9 @@ export default function SolutionsClient() {
   }, [apiSolutions]);
 
   const visibleSolutions = useMemo(() => {
+    if (!Array.isArray(showcaseSolutions)) return [];
     return showcaseSolutions.filter((sol) => {
+      if (!sol) return false;
       if (selectedFilter === "all") return true;
       const cat = (sol.category || sol.slug || "").toLowerCase();
       return cat.includes(selectedFilter);
@@ -114,11 +116,6 @@ export default function SolutionsClient() {
         <SolutionsOverviewSkeleton />
       </div>
     );
-  }
-
-  // If no solutions data from API, hide section gracefully
-  if (!isLoading && (!showcaseSolutions || showcaseSolutions.length === 0)) {
-    return null;
   }
 
   return (
@@ -199,13 +196,29 @@ export default function SolutionsClient() {
 
       {/* 2. THE SOLUTIONS SHOWCASE */}
       <div className="divide-y divide-slate-200/80 dark:divide-slate-800/80">
-        <AnimatePresence mode="wait">
-          {visibleSolutions.map((sol, index) => {
-            const isRight = index % 2 === 0;
-            const SolIcon = resolveIcon(sol.iconKey, Sparkles);
-            const features = sol.overviewFeatures || [];
-            const subSectors = sol.subSectors || [];
-            const imageSrc = sol.imageUrl || sol.imageSrc || sol.detailImageUrl || "/images/nav_restaurant_bundle.png";
+        {visibleSolutions.length === 0 ? (
+          <div className="section-py text-center space-y-3">
+            <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+              {isError ? "Unable to load enterprise solutions right now. Please try again." : "No enterprise solutions found for this category."}
+            </p>
+            {selectedFilter !== "all" && (
+              <button
+                type="button"
+                onClick={() => setSelectedFilter("all")}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold uppercase tracking-wider hover:bg-primary-dark transition-all cursor-pointer shadow-xs"
+              >
+                View All Solutions
+              </button>
+            )}
+          </div>
+        ) : (
+          <AnimatePresence mode="wait">
+            {visibleSolutions.map((sol, index) => {
+              const isRight = index % 2 === 0;
+              const SolIcon = resolveIcon(sol?.iconKey, Sparkles);
+              const features = Array.isArray(sol?.overviewFeatures) ? sol.overviewFeatures : [];
+              const subSectors = Array.isArray(sol?.subSectors) ? sol.subSectors : [];
+              const imageSrc = sol?.imageUrl || sol?.imageSrc || sol?.detailImageUrl || "/images/nav_restaurant_bundle.png";
 
             return (
               <motion.section
@@ -290,29 +303,34 @@ export default function SolutionsClient() {
                           </div>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             {features.map((feat, fIdx) => {
-                              const FeatIcon = resolveIcon(feat.icon, Sparkles);
+                              const FeatIcon = resolveIcon(feat?.icon, Sparkles);
+                              const featTitle = typeof feat === 'object' ? (feat?.title || '') : String(feat || '');
+                              const featDesc = typeof feat === 'object' ? (feat?.desc || '') : '';
+                              const featBadge = typeof feat === 'object' ? feat?.badge : null;
 
                               return (
                                 <div
-                                  key={fIdx}
+                                  key={`${sol.slug || index}-feat-${fIdx}-${featTitle}`}
                                   className="group/feat p-3 rounded-xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:border-primary/40 hover:bg-white dark:hover:bg-slate-900 transition-all duration-200"
                                 >
                                   <div className="flex items-center justify-between gap-2 mb-1">
                                     <div className="flex items-center gap-2">
                                       <FeatIcon size={14} className="text-primary shrink-0" />
                                       <span className="text-xs font-bold text-slate-900 dark:text-white font-syne">
-                                        {feat.title}
+                                        {featTitle}
                                       </span>
                                     </div>
-                                    {feat.badge && (
+                                    {featBadge && (
                                       <span className="text-[9.5px] font-mono font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 shrink-0">
-                                        {feat.badge}
+                                        {featBadge}
                                       </span>
                                     )}
                                   </div>
-                                  <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
-                                    {feat.desc}
-                                  </p>
+                                  {featDesc && (
+                                    <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                                      {featDesc}
+                                    </p>
+                                  )}
                                 </div>
                               );
                             })}
@@ -390,7 +408,8 @@ export default function SolutionsClient() {
             );
           })}
         </AnimatePresence>
-      </div>
+      )}
+    </div>
 
       {/* 3. TESTIMONIALS & SOCIAL PROOF */}
       <TestimonialsWrapper />

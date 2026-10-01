@@ -27,49 +27,6 @@ type Integration = {
   href?: string;
 };
 
-const DEFAULT_TICKER_INTEGRATIONS: Integration[] = [
-  {
-    id: 'stripe',
-    name: 'Stripe',
-    category: 'PAYMENTS',
-    color: '#635BFF',
-    logo: '/brands/integrations/stripe.svg',
-    href: '/integrations/stripe',
-  },
-  {
-    id: 'authorize-net',
-    name: 'Authorize.Net',
-    category: 'PAYMENTS',
-    color: '#1E3A5F',
-    logo: '/brands/integrations/authorize.svg',
-    href: '/integrations/authorize-net',
-  },
-  {
-    id: 'square',
-    name: 'Square',
-    category: 'PAYMENTS',
-    color: '#000000',
-    logo: '/brands/integrations/square.svg',
-    href: '/integrations/square',
-  },
-  {
-    id: 'doordash',
-    name: 'DoorDash',
-    category: 'DELIVERY',
-    color: '#FF3008',
-    logo: '/brands/integrations/doordash.svg',
-    href: '/integrations/doordash',
-  },
-  {
-    id: 'ubereats',
-    name: 'Uber Eats',
-    category: 'DELIVERY',
-    color: '#06C167',
-    logo: '/brands/integrations/ubereats.svg',
-    href: '/integrations/uber-eats',
-  },
-];
-
 export function IntegrationsTickerSkeleton() {
   return (
     <section className="py-12 lg:py-14 bg-white dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden relative select-none animate-pulse">
@@ -845,6 +802,5 @@ export const IntegrationsTickerSection: React.FC = () => {
   );
 };
 
-export { DEFAULT_TICKER_INTEGRATIONS as integrations, DEFAULT_TICKER_INTEGRATIONS };
 export type { Integration };
 export default IntegrationsTickerSection;

@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import { TestimonialDto } from "./Types/TestimonialsTypes";
 import { motion, AnimatePresence } from "framer-motion";
-import { DEFAULT_TESTIMONIALS } from "./constants/defaultTestimonials";
 
 import TestimonialsSectionSkeleton from "./components/TestimonialsSectionSkeleton";
 

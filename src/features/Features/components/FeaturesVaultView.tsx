@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,6 +24,17 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
   const [direction, setDirection] = useState<number>(1);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+
+  // Auto-rotate every 2 seconds; pause when hovered
+  useEffect(() => {
+    if (isHovered || modules.length <= 1) return;
+    const interval = setInterval(() => {
+      setDirection(1);
+      setActiveIndex((prev) => (prev + 1) % modules.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isHovered, modules.length]);
 
   const currentModule = modules[activeIndex] || modules[0];
   const CurrentIcon = currentModule.icon;
@@ -67,7 +78,11 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
   };
 
   return (
-    <div className="w-full">
+    <div
+      className="w-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* ============================================================ */}
       {/* MOBILE & TABLET VIEW (< lg): 100% Native Touch-Swipeable     */}
       {/* ============================================================ */}
@@ -96,7 +111,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                 >
                   {mod.number}
                 </span>
-                <span className="font-syne text-[11px] sm:text-xs font-bold truncate">
+                <span className="font-syne text-[11px] sm:text-xs font-bold whitespace-nowrap">
                   {mod.shortMobileName}
                 </span>
               </button>
@@ -109,7 +124,8 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-950 p-4 sm:p-6 shadow-xl relative overflow-hidden select-none"
+          style={{ minHeight: "520px" }}
+          className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-950 p-4 sm:p-6 shadow-xl relative overflow-hidden select-none min-h-[520px] flex flex-col justify-between"
         >
           {/* Top Laser Accent Line */}
           <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-400" />
@@ -118,10 +134,10 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
             <motion.div
               key={currentModule.id}
               custom={direction}
-              initial={{ opacity: 0, x: direction * 20 }}
+              initial={{ opacity: 0, x: direction * 16 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: direction * -20 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
+              exit={{ opacity: 0, x: direction * -16 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-col space-y-3"
             >
               {/* Header Row: Icon + Module Info + Live Badge */}
@@ -140,7 +156,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                   </div>
                 </div>
 
-                <span className="text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 shrink-0">
+                <span className="text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 shadow-2xs shrink-0">
                   {currentModule.statusBadge}
                 </span>
               </div>
@@ -195,7 +211,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
               {/* Bottom Stat Bar & Next Action Button */}
               <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2">
                 <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800 min-w-0">
-                  <span className="font-mono text-[9.5px] uppercase tracking-wider text-slate-400 truncate">
+                  <span className="font-mono text-[9.5px] uppercase tracking-wider text-slate-400">
                     {currentModule.stat.label}:
                   </span>
                   <span className="font-syne text-xs sm:text-[13px] font-extrabold text-[#FF4F00] shrink-0">
@@ -256,7 +272,10 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
       {/* ============================================================ */}
       {/* DESKTOP VIEW (>= lg): Smooth Elastic Horizontal Showcase     */}
       {/* ============================================================ */}
-      <div className="hidden lg:flex rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 backdrop-blur-xl p-2.5 shadow-xl relative min-h-[540px] flex-row gap-2.5 items-stretch overflow-hidden">
+      <div 
+        style={{ height: "520px", minHeight: "520px", maxHeight: "520px" }}
+        className="hidden lg:flex rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 backdrop-blur-xl p-2.5 shadow-xl relative h-[520px] min-h-[520px] max-h-[520px] flex-row gap-2.5 items-stretch overflow-hidden"
+      >
         {modules.map((mod, idx) => {
           const isActive = activeIndex === idx;
           const ModIcon = mod.icon;
@@ -264,11 +283,15 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
           return (
             <div
               key={mod.id}
-              onMouseEnter={() => goToModule(idx)}
+              style={{ height: "100%", maxHeight: "100%" }}
+              onMouseEnter={() => {
+                setIsHovered(true);
+                goToModule(idx);
+              }}
               onClick={() => goToModule(idx)}
-              className={`relative rounded-2xl overflow-hidden select-none transition-[flex] duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              className={`relative rounded-2xl overflow-hidden select-none transition-[flex,border-color,background-color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] h-full min-h-0 max-h-full ${
                 isActive
-                  ? "flex-[3.8] bg-white dark:bg-slate-900 border border-orange-500/40 dark:border-orange-500/50 shadow-lg cursor-default"
+                  ? "flex-[4.2] bg-white dark:bg-slate-900 border border-orange-500/40 dark:border-orange-500/50 shadow-lg cursor-default"
                   : "flex-1 bg-white/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 hover:border-orange-500/40 hover:bg-orange-500/[0.02] cursor-pointer group"
               }`}
             >
@@ -282,13 +305,14 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.22, ease: "easeOut" }}
-                  className="w-full h-full p-6 xl:p-8 flex flex-col justify-between"
+                  transition={{ duration: 0.35, delay: 0.1, ease: "easeOut" }}
+                  style={{ height: "100%", maxHeight: "100%" }}
+                  className="w-full h-full min-w-[560px] xl:min-w-[660px] p-6 xl:p-8 flex flex-col justify-between overflow-hidden"
                 >
                   {/* Top Row: Category, Tag, Status Badge, and Icon */}
-                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-3.5">
+                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-3 shrink-0">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FF4F00] to-[#FF6B2B] text-white shadow-md shadow-orange-500/25">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FF4F00] to-[#FF6B2B] text-white shadow-md shadow-orange-500/25">
                         <ModIcon size={20} />
                       </div>
                       <div>
@@ -307,25 +331,25 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                       </div>
                     </div>
 
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 shadow-2xs">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 shadow-2xs shrink-0">
                       {mod.statusBadge}
                     </span>
                   </div>
 
                   {/* Main Content Area: Left Details + Right Hardware Showcase */}
-                  <div className="grid grid-cols-12 gap-6 xl:gap-8 items-center py-4 flex-1">
-                    {/* Left Column: Title, Description, 3 Bullets */}
-                    <div className="col-span-7 flex flex-col justify-between space-y-4">
+                  <div className="grid grid-cols-12 gap-6 xl:gap-8 items-center py-2 flex-1 min-h-0 overflow-hidden">
+                    {/* Left Column: Title, Description, All Bullets Naturally Grouped */}
+                    <div className="col-span-7 flex flex-col justify-center gap-3.5 h-full min-h-0 py-1 overflow-y-auto pr-1">
                       <div>
                         <h3 className="font-syne text-xl xl:text-2xl font-extrabold text-slate-950 dark:text-white leading-tight">
                           {mod.title}
                         </h3>
-                        <p className="mt-2 text-xs xl:text-sm font-normal leading-relaxed text-slate-600 dark:text-slate-400">
+                        <p className="mt-1.5 text-xs xl:text-sm font-normal leading-relaxed text-slate-600 dark:text-slate-400">
                           {mod.description}
                         </p>
                       </div>
 
-                      {/* 3 Checkmark Bullets */}
+                      {/* All Checkmark Bullets (Full API Content) */}
                       <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800/80">
                         {mod.bullets.map((bullet, bIdx) => (
                           <div key={bIdx} className="flex items-start gap-2.5">
@@ -341,8 +365,8 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                     </div>
 
                     {/* Right Column: Clean Hardware Stage (100% Transparent Float, fills space cleanly) */}
-                    <div className="col-span-5 relative h-full min-h-[230px] flex items-center justify-center p-0 overflow-hidden">
-                      <div className="relative w-full h-[230px] xl:h-[250px]">
+                    <div className="col-span-5 relative h-full min-h-[200px] max-h-[250px] flex items-center justify-center p-0 overflow-hidden">
+                      <div className="relative w-full h-[200px] xl:h-[240px]">
                         <Image
                           src={mod.imageSrc}
                           alt={mod.imageAlt}
@@ -371,7 +395,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                   </div>
 
                   {/* Bottom Action Row: Stat Badge + CTA Button */}
-                  <div className="flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 pt-4">
+                  <div className="flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 pt-3 xl:pt-4 shrink-0">
                     <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-900 px-3.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
                       <span className="font-mono text-xs uppercase tracking-wider text-slate-400">
                         {mod.stat.label}:
@@ -392,21 +416,24 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                 </motion.div>
               ) : (
                 /* INACTIVE COLLAPSED PILL (Instant hover switch, no gray) */
-                <div className="w-full h-full p-4 xl:p-5 flex flex-col justify-between items-center">
+                <div 
+                  style={{ height: "100%", maxHeight: "100%" }}
+                  className="w-full h-full p-4 xl:p-5 flex flex-col justify-between items-center overflow-hidden"
+                >
                   {/* Top Station Number */}
                   <span className="font-mono text-xs font-black text-slate-400 group-hover:text-[#FF4F00] transition-colors">
                     {mod.number}
                   </span>
 
                   {/* Vertical Module Title */}
-                  <div className="flex-1 flex items-center justify-center my-4">
+                  <div className="flex-1 flex items-center justify-center my-4 overflow-hidden">
                     <span className="font-syne font-bold text-xs xl:text-sm tracking-wider uppercase text-slate-700 dark:text-slate-300 group-hover:text-[#FF4F00] transition-colors [writing-mode:vertical-rl] rotate-180 whitespace-nowrap">
                       {mod.tabLabel}
                     </span>
                   </div>
 
                   {/* Bottom Module Icon */}
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200/90 dark:border-slate-700 group-hover:bg-[#FF4F00] group-hover:text-white group-hover:border-[#FF4F00] transition-colors shadow-2xs">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200/90 dark:border-slate-700 group-hover:bg-[#FF4F00] group-hover:text-white group-hover:border-[#FF4F00] transition-colors shadow-2xs shrink-0">
                     <ModIcon size={16} />
                   </div>
                 </div>
@@ -418,3 +445,5 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
     </div>
   );
 };
+
+export default FeaturesVaultView;

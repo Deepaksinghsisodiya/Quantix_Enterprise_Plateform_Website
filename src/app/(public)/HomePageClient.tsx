@@ -12,9 +12,9 @@ import SocialProofStatsWrapper from "@/features/SocialProof/components/SocialPro
 import { BusinessProblemSection } from "@/features/BusinessProblems";
 import SupportSection from "@/components/organisms/SupportSection/SupportSection";
 
-import { DEFAULT_ENTERPRISE_FAQS } from "@/features/FAQ/Constants/FAQConstants";
 import TestimonialsSectionWrapper, { TestimonialsSectionSkeleton } from "@/features/Testimonials";
 import { FAQWrapper, FAQSectionSkeleton } from "@/features/FAQ";
+import HomeSolutionsSection from "@/features/Solutions/components/HomeSolutionsSection";
 
 export default function HomePageClient() {
   return (
@@ -31,23 +31,6 @@ export default function HomePageClient() {
             description: "Enterprise-grade POS and Cloud management platform for large multi-store chains and complex operations.",
             url: process.env.NEXT_PUBLIC_APP_URL,
             image: "/og-image.png",
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: DEFAULT_ENTERPRISE_FAQS.map((faq) => ({
-              "@type": "Question",
-              name: faq.question,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: faq.answer,
-              },
-            })),
           }),
         }}
       />
@@ -72,6 +55,9 @@ export default function HomePageClient() {
       <section id="features" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>
         <FeaturesWrapper />
       </section>
+
+      {/* 2.5 Live Solutions Showcase (API-driven + Skeleton) */}
+      <HomeSolutionsSection />
 
       {/* 3. Workflow Step-by-Step (White BG + Bottom Border) */}
       <section id="how-it-works" className={cn("scroll-mt-28 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300")}>

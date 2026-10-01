@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo } from 'react';
 import { CaseStudyDto } from '../Types/CaseStudiesTypes';
-import { DEFAULT_CASE_STUDIES } from '../constants/defaultCaseStudies';
 import { CaseStudyCard } from './CaseStudyCard';
 import { TrendingUp, ArrowRight, Sparkles, ChevronLeft, ChevronRight, Utensils, Store, Building2, Layers } from 'lucide-react';
 import Link from 'next/link';
@@ -27,8 +26,8 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
   isLoading = false,
   hideHeader = false,
 }) => {
-  // Use real API studies when available, fallback to rich verified default data
-  const rawStudies = studies && studies.length > 0 ? studies : DEFAULT_CASE_STUDIES;
+  // Pure dynamic API data — zero mock fallback
+  const rawStudies = studies || [];
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   const displayStudies = useMemo(() => {

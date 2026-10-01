@@ -6,7 +6,6 @@ import { Search, Send, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import type { IntegrationDto } from './Types/IntegrationTypes';
-import { DEFAULT_INTEGRATIONS } from './dummyData/integrationCatalog';
 import IntegrationCard from './components/IntegrationCard';
 import IntegrationCardSkeleton from './components/IntegrationCardSkeleton';
 import { toast } from 'sonner';
@@ -23,7 +22,7 @@ export const IntegrationGrid: React.FC<IntegrationGridProps> = ({ integrations, 
   const [requestEmail, setRequestEmail] = useState('');
   const [requestSubmitted, setRequestSubmitted] = useState(false);
 
-  const integrationList = integrations.length > 0 ? integrations : DEFAULT_INTEGRATIONS;
+  const integrationList = integrations;
 
   const categories = useMemo(
     () => [...new Set(integrationList.map((i) => i.category))].sort(),
