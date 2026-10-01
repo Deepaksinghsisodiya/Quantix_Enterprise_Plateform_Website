@@ -26,7 +26,7 @@ export const TopPromoBanner: React.FC<TopPromoBannerProps> = ({ scrolled = false
     return announcements.filter((a) => Boolean(a && a.isActive !== false && (a.title || a.body)));
   }, [announcements, isError]);
 
-  // Auto-rotate every 5 seconds if multiple items exist and user is not hovering
+  // Auto-rotate every 4 seconds on desktop/window view if multiple items exist and not paused
   useEffect(() => {
     let isMounted = true;
     if (items.length <= 1 || isPaused) return;
@@ -35,7 +35,7 @@ export const TopPromoBanner: React.FC<TopPromoBannerProps> = ({ scrolled = false
       if (isMounted) {
         setCurrentIndex((prev) => (prev + 1) % items.length);
       }
-    }, 5000);
+    }, 4000);
 
     return () => {
       isMounted = false;
@@ -57,11 +57,12 @@ export const TopPromoBanner: React.FC<TopPromoBannerProps> = ({ scrolled = false
   const bannerText = activePromo?.body || activePromo?.title || '';
   const ctaText = activePromo?.ctaLabel || '';
 
-  const handleAction = () => {
-    if (activePromo?.linkUrl && !activePromo.linkUrl.startsWith('#') && !activePromo.linkUrl.includes('modal')) {
-      window.location.href = activePromo.linkUrl;
+  const handleItemAction = (item: (typeof items)[number], e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (item?.linkUrl && !item.linkUrl.startsWith('#') && !item.linkUrl.includes('modal')) {
+      window.location.href = item.linkUrl;
     } else {
-      openModal?.(activePromo?.title || activePromo?.body || '', 'TOP_PROMO_BANNER');
+      openModal?.(item?.title || item?.body || '', 'TOP_PROMO_BANNER');
     }
   };
 
@@ -81,55 +82,101 @@ export const TopPromoBanner: React.FC<TopPromoBannerProps> = ({ scrolled = false
       {/* Subtle warm ambient glow behind banner */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_100%_at_50%_0%,rgba(255,79,0,0.1),transparent_70%)]" />
 
-      {/* Main Container - Unified Desktop & Mobile Responsive View */}
-      <div className="relative z-10 w-full h-full flex items-center justify-center px-2.5 sm:px-4">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activePromo.id || activePromo.announcementId || activePromo.title || currentIndex}
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            transition={{ duration: 0.25 }}
-            className="w-full max-w-[1720px] mx-auto flex items-center justify-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs lg:text-[13px] font-medium"
-          >
-            {activePromo.badge && (
-              <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-orange-500/20 text-[#FF7332] border border-orange-500/30 shrink-0">
-                {activePromo.badge}
+      {/* Main Container */}
+      <div className="relative z-10 w-full h-full flex items-center justify-center">
+        {/* MOBILE VIEW (< sm): Smooth Continuous Horizontal Slider at Medium Speed */}
+        <div className="flex sm:hidden relative w-full h-full items-center overflow-hidden">
+          {/* Soft Left and Right Edge Masks */}
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-slate-950 to-transparent z-10" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-slate-950 to-transparent z-10" />
+
+          <div className="flex w-max shrink-0 animate-[heroTickerScroll_50s_linear_infinite] hover:[animation-play-state:paused] active:[animation-play-state:paused] items-center gap-6 pl-3">
+            {[1, 2].map((copyIndex) => (
+              <React.Fragment key={copyIndex}>
+                {items.map((item, itemIdx) => {
+                  const itemBanner = item.body || item.title || '';
+                  const itemCta = item.ctaLabel || '';
+                  return (
+                    <div
+                      key={`${item.id || item.announcementId || itemIdx}-${copyIndex}`}
+                      onClick={(e) => handleItemAction(item, e)}
+                      className="flex items-center gap-1.5 shrink-0 cursor-pointer active:opacity-80"
+                    >
+                      {item.badge && (
+                        <span className="px-1.5 py-0.5 rounded-full text-[8.5px] font-bold uppercase tracking-wider bg-orange-500/20 text-[#FF7332] border border-orange-500/30 shrink-0">
+                          {item.badge}
+                        </span>
+                      )}
+                      <span className="text-slate-200 text-[11px] font-medium whitespace-nowrap">
+                        {itemBanner}
+                      </span>
+                      {itemCta && (
+                        <>
+                          <span className="text-slate-600 font-bold text-[10px]">|</span>
+                          <span className="text-[#FF7332] font-bold text-[11px] whitespace-nowrap inline-flex items-center gap-0.5 underline decoration-orange-500/40">
+                            <span>{itemCta}</span>
+                            <ChevronRight size={12} className="stroke-[2.5]" />
+                          </span>
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+
+        {/* DESKTOP, LAPTOP & TABLET VIEW (>= sm): Centered Single Line with Smooth Rotation */}
+        <div className="hidden sm:flex mx-auto max-w-[1720px] w-full items-center justify-center px-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activePromo.id || activePromo.announcementId || activePromo.title || currentIndex}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.25 }}
+              className="inline-flex items-center justify-center gap-2 text-xs lg:text-[13px] font-medium"
+            >
+              {activePromo.badge && (
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-orange-500/20 text-[#FF7332] border border-orange-500/30 shrink-0">
+                  {activePromo.badge}
+                </span>
+              )}
+
+              <span className="text-slate-200 whitespace-nowrap">
+                {bannerText}
               </span>
-            )}
 
-            <span className="text-slate-200 truncate max-w-[155px] min-[360px]:max-w-[195px] min-[420px]:max-w-[250px] sm:max-w-none">
-              {bannerText}
-            </span>
+              {ctaText && (
+                <>
+                  <span className="text-slate-600">|</span>
 
-            {ctaText && (
-              <>
-                <span className="text-slate-600 shrink-0">|</span>
-
-                {activePromo?.linkUrl && !activePromo.linkUrl.startsWith('#') && !activePromo.linkUrl.includes('modal') ? (
-                  <a
-                    href={activePromo.linkUrl}
-                    tabIndex={scrolled ? -1 : 0}
-                    className="inline-flex items-center gap-0.5 font-bold text-[#FF7332] hover:text-orange-400 transition-colors underline decoration-orange-500/40 hover:decoration-orange-400 underline-offset-2 shrink-0 cursor-pointer"
-                  >
-                    <span>{ctaText}</span>
-                    <ChevronRight size={13} className="stroke-[2.5]" />
-                  </a>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={handleAction}
-                    tabIndex={scrolled ? -1 : 0}
-                    className="inline-flex items-center gap-0.5 font-bold text-[#FF7332] hover:text-orange-400 transition-colors underline decoration-orange-500/40 hover:decoration-orange-400 underline-offset-2 shrink-0 cursor-pointer"
-                  >
-                    <span>{ctaText}</span>
-                    <ChevronRight size={13} className="stroke-[2.5]" />
-                  </button>
-                )}
-              </>
-            )}
-          </motion.div>
-        </AnimatePresence>
+                  {activePromo?.linkUrl && !activePromo.linkUrl.startsWith('#') && !activePromo.linkUrl.includes('modal') ? (
+                    <a
+                      href={activePromo.linkUrl}
+                      tabIndex={scrolled ? -1 : 0}
+                      className="inline-flex items-center gap-0.5 font-bold text-[#FF7332] hover:text-orange-400 transition-colors underline decoration-orange-500/40 hover:decoration-orange-400 underline-offset-2 shrink-0 cursor-pointer"
+                    >
+                      <span>{ctaText}</span>
+                      <ChevronRight size={13} className="stroke-[2.5]" />
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={(e) => handleItemAction(activePromo, e)}
+                      tabIndex={scrolled ? -1 : 0}
+                      className="inline-flex items-center gap-0.5 font-bold text-[#FF7332] hover:text-orange-400 transition-colors underline decoration-orange-500/40 hover:decoration-orange-400 underline-offset-2 shrink-0 cursor-pointer"
+                    >
+                      <span>{ctaText}</span>
+                      <ChevronRight size={13} className="stroke-[2.5]" />
+                    </button>
+                  )}
+                </>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
