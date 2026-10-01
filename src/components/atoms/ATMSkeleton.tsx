@@ -169,9 +169,9 @@ export const HeroSlideSkeleton: React.FC<{ className?: string }> = ({ className 
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex w-full flex-row items-center justify-start gap-2 sm:gap-3 pt-1 sm:w-auto sm:justify-center lg:justify-start">
-            <ATMSkeleton animate={false} className="h-10 sm:h-11 flex-1 sm:flex-none sm:w-40 lg:w-44 rounded-xl bg-primary/25" />
-            <ATMSkeleton animate={false} className="h-10 sm:h-11 flex-1 sm:flex-none sm:w-36 lg:w-40 rounded-xl border-2 border-slate-300/80 dark:border-slate-700/60 bg-transparent" />
+          <div className="flex w-full flex-col sm:flex-row items-stretch sm:items-center justify-start gap-2.5 sm:gap-3.5 pt-1.5 sm:w-auto sm:justify-center lg:justify-start">
+            <ATMSkeleton animate={false} className="h-11 sm:h-12 w-full sm:w-44 rounded-xl bg-primary/25" />
+            <ATMSkeleton animate={false} className="h-11 sm:h-12 w-full sm:w-40 rounded-xl border-2 border-slate-300/80 dark:border-slate-700/60 bg-transparent" />
           </div>
         </div>
 

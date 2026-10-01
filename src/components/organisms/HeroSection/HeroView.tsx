@@ -163,33 +163,32 @@ export const HeroView: React.FC<HeroViewProps> = ({
                 </div>
               )}
 
-              {/* Buttons: Clean side-by-side with shortened labels on mobile */}
-              <div className="flex w-full flex-row items-center justify-start gap-2 sm:gap-3 pt-1 sm:w-auto sm:justify-center lg:justify-start">
+              {/* Buttons: Responsive Stack on Mobile (< sm), Side-by-Side on Desktop (>= sm) */}
+              <div className="flex w-full flex-col sm:flex-row items-stretch sm:items-center justify-start gap-2.5 sm:gap-3.5 pt-1.5 sm:w-auto sm:justify-center lg:justify-start">
                 {isLoggedIn ? (
                   <a
                     href={getAdminPortalUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex flex-1 sm:flex-initial sm:w-auto min-w-0 h-10.5 sm:min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-2.5 sm:px-8 py-2.5 sm:py-3 font-syne text-[11px] sm:text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:brightness-110 hover:shadow-orange-500/40 active:scale-95 whitespace-nowrap"
+                    className="group flex w-full sm:w-auto min-w-0 h-11 sm:h-12 cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-5 sm:px-8 py-3 font-syne text-xs sm:text-[13px] font-black uppercase tracking-wider text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:brightness-110 hover:shadow-orange-500/40 active:scale-95 whitespace-nowrap"
                   >
                     <Sparkles
-                      size={14}
+                      size={15}
                       className="text-amber-200 fill-amber-200 transition-transform group-hover:scale-110 sm:w-4 sm:h-4 shrink-0"
                     />
-                    <span className="sm:hidden">Launch Admin</span>
-                    <span className="hidden sm:inline">Launch Admin Portal</span>
+                    <span>Launch Admin Portal</span>
                     <ExternalLink
-                      size={13}
+                      size={14}
                       className="text-white/80 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:w-3.5 sm:h-3.5 shrink-0"
                     />
                   </a>
                 ) : slide.primaryCta?.href ? (
                   <Link
                     href={slide.primaryCta.href}
-                    className="group flex flex-1 sm:flex-initial sm:w-auto min-w-0 h-10.5 sm:min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FF4F00] px-2.5 sm:px-8 py-2.5 sm:py-3 font-syne text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-[#e64700] hover:shadow-primary/40 active:scale-95 whitespace-nowrap"
+                    className="group flex w-full sm:w-auto min-w-0 h-11 sm:h-12 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#FF4F00] px-5 sm:px-8 py-3 font-syne text-xs sm:text-[13px] font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-[#e64700] hover:shadow-primary/40 active:scale-95 whitespace-nowrap"
                   >
                     <Rocket
-                      size={14}
+                      size={15}
                       className="fill-white transition-transform group-hover:-translate-y-1 group-hover:translate-x-0.5 sm:w-4 sm:h-4 shrink-0"
                     />
                     <span>{slide.primaryCta.label}</span>
@@ -201,11 +200,11 @@ export const HeroView: React.FC<HeroViewProps> = ({
                     onClick={() =>
                       openModal(slide.heading || '', "HERO_REQUEST_DEMO")
                     }
-                    className="group flex flex-1 sm:flex-initial sm:w-auto min-w-0 h-10.5 sm:min-h-11 cursor-pointer items-center justify-center gap-1.5 sm:gap-2 rounded-xl border-2 border-slate-900 bg-transparent px-2.5 sm:px-8 py-2.5 sm:py-3 font-syne text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white active:scale-95 dark:border-slate-100 dark:text-slate-100 dark:hover:bg-slate-100 dark:hover:text-slate-900 whitespace-nowrap"
+                    className="group flex w-full sm:w-auto min-w-0 h-11 sm:h-12 cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-slate-900 bg-transparent px-5 sm:px-8 py-3 font-syne text-xs sm:text-[13px] font-extrabold uppercase tracking-wider text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white active:scale-95 dark:border-slate-100 dark:text-slate-100 dark:hover:bg-slate-100 dark:hover:text-slate-900 whitespace-nowrap"
                   >
                     <span>{slide.secondaryCta.label}</span>
                     <ArrowRight
-                      size={14}
+                      size={15}
                       className="transition-transform group-hover:translate-x-1 sm:w-4 sm:h-4 shrink-0"
                     />
                   </button>
