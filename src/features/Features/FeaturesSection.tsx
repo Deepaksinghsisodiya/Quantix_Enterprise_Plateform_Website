@@ -86,24 +86,24 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
 
         {/* Bottom Connected Ecosystem Extensions Bar */}
         <div className="pt-2 sm:pt-4">
-          <div className="flex flex-col xl:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 backdrop-blur-md shadow-xs w-full">
+          <div className="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 backdrop-blur-md shadow-xs w-full">
             {/* Left: Brand Badge & Label */}
             <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-              <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-orange-500/10 text-[#FF4F00] border border-orange-500/20 shadow-xs">
+              <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-orange-500/10 text-[#FF4F00] border border-orange-500/20 shadow-xs shrink-0">
                 <Sparkles size={16} className="text-[#FF4F00]" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <span className="font-syne font-bold uppercase tracking-wider text-[11px] sm:text-xs text-slate-900 dark:text-slate-100 block">
                   Connected Hardware &amp; Extensions:
                 </span>
-                <span className="font-mono text-[9.5px] sm:text-[10.5px] text-slate-500 dark:text-slate-400">
+                <span className="font-mono text-[9px] sm:text-[10px] text-slate-500 dark:text-slate-400">
                   Universal Plug &amp; Play • Cloud Sync
                 </span>
               </div>
             </div>
 
-            {/* Middle: Clean Single-Line Connected Chips */}
-            <div className="flex flex-wrap items-center justify-start sm:justify-center gap-1.5 sm:gap-2.5 flex-1 min-w-0 w-full xl:w-auto">
+            {/* Middle: Clean Single-Line Connected Chips with Mobile Horizontal Scroll */}
+            <div className="flex items-center gap-1.5 sm:gap-2.5 flex-1 min-w-0 w-full xl:w-auto overflow-x-auto no-scrollbar py-1 scroll-smooth xl:flex-wrap xl:justify-center">
               {features.map((f) => {
                 const ExtIcon = getFeatureIcon(f.iconKey);
                 const displayLabel = f.topBadge || f.subtitle || f.category;
@@ -113,10 +113,10 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                   <Link
                     key={f.slug}
                     href={f.ctaHref || `/features/${f.slug}`}
-                    className="group inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 text-[11px] sm:text-xs font-syne font-semibold text-slate-800 dark:text-slate-200 hover:text-[#FF4F00] hover:border-orange-500/50 hover:bg-orange-500/[0.03] transition-all shadow-2xs"
+                    className="group inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 text-[11px] sm:text-xs font-syne font-semibold text-slate-800 dark:text-slate-200 hover:text-[#FF4F00] hover:border-orange-500/50 hover:bg-orange-500/[0.03] transition-all shadow-2xs shrink-0 whitespace-nowrap active:scale-95"
                   >
                     <ExtIcon size={13} className="text-[#FF4F00] group-hover:scale-110 transition-transform sm:w-3.5 sm:h-3.5 shrink-0" />
-                    <span className="whitespace-nowrap">{displayLabel}</span>
+                    <span>{displayLabel}</span>
                     <span className="px-1.5 py-0.5 rounded-md text-[9px] sm:text-[9.5px] font-mono font-bold bg-orange-500/10 text-[#FF4F00] border border-orange-500/20 shrink-0">
                       {statBadge}
                     </span>
@@ -125,10 +125,10 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
               })}
             </div>
 
-            {/* Right: Sleek Explore CTA Link */}
+            {/* Right: Sleek Explore CTA Link (Full-width centered on mobile, right-aligned on desktop) */}
             <Link
               href="/features"
-              className="inline-flex items-center gap-1.5 text-xs font-syne font-bold text-[#FF4F00] hover:text-[#FF6B2B] px-3.5 py-2 rounded-xl bg-orange-500/5 hover:bg-orange-500/10 border border-orange-500/15 transition-all shrink-0 group"
+              className="w-full xl:w-auto justify-center inline-flex items-center gap-1.5 text-xs font-syne font-bold text-[#FF4F00] hover:text-[#FF6B2B] px-4 py-2.5 xl:py-2 rounded-xl bg-orange-500/10 xl:bg-orange-500/5 hover:bg-orange-500/15 border border-orange-500/20 xl:border-orange-500/15 transition-all shrink-0 group text-center shadow-2xs active:scale-95"
             >
               <span>Explore All Modules</span>
               <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
