@@ -26,16 +26,6 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
-  // Auto-rotate every 2 seconds; pause when hovered
-  useEffect(() => {
-    if (isHovered || modules.length <= 1) return;
-    const interval = setInterval(() => {
-      setDirection(1);
-      setActiveIndex((prev) => (prev + 1) % modules.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, [isHovered, modules.length]);
-
   const currentModule = modules[activeIndex] || modules[0];
   const CurrentIcon = currentModule.icon;
 
@@ -84,9 +74,35 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* ============================================================ */}
-      {/* MOBILE & TABLET VIEW (< lg): Clean Card Slider               */}
+      {/* MOBILE & TABLET VIEW (< lg): Tabbed Showcase (No auto-slider) */}
       {/* ============================================================ */}
       <div className="lg:hidden flex flex-col space-y-3 sm:space-y-4">
+        {/* Mobile Tab Bar: Matches Business Problems Section */}
+        {modules.length > 1 && (
+          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 overflow-x-auto no-scrollbar shadow-xs">
+            {modules.map((mod, idx) => {
+              const Icon = mod.icon;
+              const isActive = activeIndex === idx;
+
+              return (
+                <button
+                  key={mod.id}
+                  type="button"
+                  onClick={() => goToModule(idx)}
+                  className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-[11px] font-syne transition-all cursor-pointer select-none whitespace-nowrap shrink-0 ${
+                    isActive
+                      ? "bg-white dark:bg-slate-900 text-[#FF4F00] shadow-xs border border-slate-200/80 dark:border-slate-700/80 font-black"
+                      : "text-slate-500 hover:text-slate-800 dark:text-slate-400 font-bold"
+                  }`}
+                >
+                  <Icon size={13} className={isActive ? "text-[#FF4F00] shrink-0" : "text-slate-400 shrink-0"} />
+                  <span>{mod.shortMobileName || mod.tabLabel}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
         {/* Dedicated Native Mobile Showcase Card with Touch Swipe Support */}
         <div
           onTouchStart={handleTouchStart}

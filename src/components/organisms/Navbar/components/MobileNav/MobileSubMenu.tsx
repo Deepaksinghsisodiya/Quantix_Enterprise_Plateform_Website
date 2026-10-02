@@ -1,13 +1,40 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ChevronRight, Sparkles } from 'lucide-react';
+import {
+  ArrowLeft,
+  ChevronRight,
+  Sparkles,
+  Building2,
+  LineChart,
+  Boxes,
+  Store,
+  Zap,
+  Tv,
+  Utensils,
+  QrCode,
+  Cloud,
+  ChefHat,
+  ShieldCheck,
+  CreditCard,
+  Truck,
+  Layers,
+  Coffee,
+  Flame,
+  ShoppingBag,
+  Smartphone,
+  BarChart3,
+  type LucideIcon,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { MobileMenuSection } from '../../config/navTypes';
+import type { MobileMenuSection, MobileMenuGroup, MobileMenuItem } from '../../config/navTypes';
 import { getActiveMenuHref } from '../../config/navConfig';
+import { useGetPublicFeaturesQuery } from '@/features/Features/Service/FeaturesService';
+import { useGetSolutionsMegaMenuQuery } from '@/features/Solutions/Service/SolutionsService';
+import { useGetIntegrationsQuery } from '@/features/Integrations/Service/IntegrationsService';
 
 interface MobileSubMenuProps {
   activeSection: MobileMenuSection;
@@ -16,19 +43,222 @@ interface MobileSubMenuProps {
   onClose: () => void;
 }
 
+// ─── ICON RESOLVERS FOR DYNAMIC API DATA ─────────────────────────────────────
+const getFeatureIcon = (iconKey?: string, slug?: string): LucideIcon => {
+  const k = (iconKey || '').toLowerCase();
+  const s = (slug || '').toLowerCase();
+  if (k.includes('building') || s.includes('multi-store')) return Building2;
+  if (k.includes('chart') || s.includes('bi') || s.includes('analytics')) return LineChart;
+  if (k.includes('box') || s.includes('inventory') || s.includes('supply')) return Boxes;
+  if (k.includes('store') || s.includes('pos')) return Store;
+  if (k.includes('zap') || s.includes('offline')) return Zap;
+  if (k.includes('tv') || s.includes('kds') || s.includes('kitchen')) return Tv;
+  if (k.includes('utensil') || s.includes('table') || s.includes('dining')) return Utensils;
+  if (k.includes('qr') || s.includes('mobile') || s.includes('order')) return QrCode;
+  if (k.includes('cloud')) return Cloud;
+  if (k.includes('chef')) return ChefHat;
+  if (k.includes('shield')) return ShieldCheck;
+  return Sparkles;
+};
+
+const getSolutionIcon = (iconKey?: string, slug?: string): LucideIcon => {
+  const k = (iconKey || '').toLowerCase();
+  const s = (slug || '').toLowerCase();
+  if (k.includes('utensil') || s.includes('restaurant')) return Utensils;
+  if (k.includes('coffee') || s.includes('cafe') || s.includes('bakery')) return Coffee;
+  if (k.includes('flame') || s.includes('bar')) return Flame;
+  if (k.includes('bag') || s.includes('apparel') || s.includes('retail')) return ShoppingBag;
+  if (k.includes('store') || s.includes('grocery')) return Store;
+  if (k.includes('layer') || s.includes('smoke')) return Layers;
+  return Sparkles;
+};
+
+const getIntegrationIcon = (slug?: string, cat?: string): LucideIcon => {
+  const s = (slug || '').toLowerCase();
+  const c = (cat || '').toLowerCase();
+  if (s.includes('stripe') || c.includes('payment')) return CreditCard;
+  if (s.includes('authorize') || s.includes('vault')) return ShieldCheck;
+  if (s.includes('square') || s.includes('terminal')) return Smartphone;
+  if (s.includes('doordash') || s.includes('uber') || c.includes('delivery')) return Truck;
+  if (c.includes('accounting') || c.includes('erp')) return Layers;
+  return Zap;
+};
+
+// ─── DEDICATED SKELETON LOADER FOR MOBILE NAVIGATION ───────────────────────────
+const MobileSubMenuSkeleton: React.FC<{ onBack: () => void }> = ({ onBack }) => (
+  <div className="flex h-full w-full flex-col overflow-y-auto px-3.5 pt-3.5 pb-24 min-[380px]:px-4 sm:px-5 animate-pulse">
+    <div className="mx-auto flex w-full max-w-md flex-col gap-3">
+      {/* Back button */}
+      <button
+        type="button"
+        onClick={onBack}
+        className="inline-flex h-9 w-fit cursor-pointer items-center gap-1.5 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 px-3.5 text-[11px] font-extrabold uppercase text-slate-400"
+      >
+        <ArrowLeft size={14} /> Back
+      </button>
+
+      {/* Header visual card skeleton */}
+      <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-3.5 flex items-center gap-3.5">
+        <div className="h-20 w-20 rounded-2xl bg-slate-200 dark:bg-slate-800 shrink-0" />
+        <div className="flex-1 space-y-2">
+          <div className="h-3 w-20 rounded bg-slate-200 dark:bg-slate-800" />
+          <div className="h-4.5 w-32 rounded bg-slate-200 dark:bg-slate-800" />
+          <div className="h-3 w-44 rounded bg-slate-100 dark:bg-slate-800/70" />
+        </div>
+      </div>
+
+      {/* Category header skeleton */}
+      <div className="h-3 w-28 rounded bg-slate-200 dark:bg-slate-800 mt-2" />
+
+      {/* 4 Cards Skeleton */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        {[1, 2, 3, 4, 5, 6].map((idx) => (
+          <div
+            key={idx}
+            className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 min-h-[96px] flex flex-col justify-between"
+          >
+            <div className="flex items-center justify-between">
+              <div className="h-8 w-8 rounded-md bg-slate-200 dark:bg-slate-800" />
+              <div className="h-3.5 w-3.5 rounded bg-slate-200 dark:bg-slate-800" />
+            </div>
+            <div className="space-y-1.5 mt-2">
+              <div className="h-3 w-28 rounded bg-slate-200 dark:bg-slate-800" />
+              <div className="h-2.5 w-full rounded bg-slate-100 dark:bg-slate-800/60" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 export const MobileSubMenu: React.FC<MobileSubMenuProps> = ({
   activeSection,
   pathname,
   onBack,
   onClose,
 }) => {
-  const allSubItems = React.useMemo(() => {
-    return activeSection.groups.flatMap((group) => group.items);
-  }, [activeSection]);
+  const isFeaturesSection = activeSection.label === 'Features';
+  const isSolutionsSection = activeSection.label === 'Solutions';
+  const isIntegrationsSection = activeSection.label === 'Integrations';
 
-  const activeSubHref = React.useMemo(() => {
+  // 1. Live RTK Query API Hooks
+  const { data: apiFeatures, isLoading: isFeaturesLoading } = useGetPublicFeaturesQuery(
+    { siteVariant: 'Enterprise' },
+    { skip: !isFeaturesSection }
+  );
+
+  const { data: apiSolutionsData, isLoading: isSolutionsLoading } = useGetSolutionsMegaMenuQuery(
+    'Enterprise',
+    { skip: !isSolutionsSection }
+  );
+
+  const { data: apiIntegrations, isLoading: isIntegrationsLoading } = useGetIntegrationsQuery(
+    { siteVariant: 'Enterprise', showInNavbar: true },
+    { skip: !isIntegrationsSection }
+  );
+
+  const isCurrentSectionLoading =
+    (isFeaturesSection && isFeaturesLoading) ||
+    (isSolutionsSection && isSolutionsLoading) ||
+    (isIntegrationsSection && isIntegrationsLoading);
+
+  // 2. Compute dynamic groups from live API data
+  const dynamicGroups: MobileMenuGroup[] = useMemo(() => {
+    // ── FEATURES (Live DB) ──────────────────────────────────────────────────
+    if (isFeaturesSection) {
+      if (apiFeatures && apiFeatures.length > 0) {
+        const activeList = apiFeatures
+          .filter((f) => f.showInNavbar !== false && f.isActive !== false)
+          .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+
+        if (activeList.length > 0) {
+          // Group by category if present, or split into 2 logical groups
+          const categoryMap = new Map<string, typeof activeList>();
+          activeList.forEach((f) => {
+            const cat = (f.category || 'CORE PLATFORM').toUpperCase();
+            if (!categoryMap.has(cat)) categoryMap.set(cat, []);
+            categoryMap.get(cat)!.push(f);
+          });
+
+          return Array.from(categoryMap.entries()).map(([catTitle, items]) => ({
+            title: catTitle,
+            items: items.map((f): MobileMenuItem => ({
+              title: f.title,
+              desc: f.shortDescription || f.subtitle || '',
+              href: `/features/${f.slug}`,
+              icon: getFeatureIcon(f.iconKey, f.slug),
+            })),
+          }));
+        }
+      }
+      return activeSection.groups;
+    }
+
+    // ── SOLUTIONS (Live DB) ─────────────────────────────────────────────────
+    if (isSolutionsSection) {
+      if (apiSolutionsData?.categories && apiSolutionsData.categories.length > 0) {
+        return apiSolutionsData.categories.map((cat: any): MobileMenuGroup => ({
+          title: (cat.categoryTitle || cat.title || 'SOLUTIONS').toUpperCase(),
+          items: (cat.items || []).map((s: any): MobileMenuItem => ({
+            title: s.title,
+            desc: s.description || s.shortDescription || '',
+            href: s.href || `/solutions/${s.slug}`,
+            icon: getSolutionIcon(s.iconKey, s.slug),
+          })),
+        }));
+      }
+      return activeSection.groups;
+    }
+
+    // ── INTEGRATIONS (Live DB) ──────────────────────────────────────────────
+    if (isIntegrationsSection) {
+      if (apiIntegrations && apiIntegrations.length > 0) {
+        const activeList = apiIntegrations
+          .filter((i: any) => i.isActive !== false)
+          .sort((a: any, b: any) => (a.sortOrder || 0) - (b.sortOrder || 0));
+
+        if (activeList.length > 0) {
+          return [
+            {
+              title: 'CERTIFIED INTEGRATIONS & HARDWARE',
+              items: activeList.map((i: any): MobileMenuItem => ({
+                title: i.name || i.title || 'Integration',
+                desc: i.description || i.shortDescription || 'Verified API Integration',
+                href: `/integrations/${i.slug}`,
+                icon: getIntegrationIcon(i.slug, i.category),
+              })),
+            },
+          ];
+        }
+      }
+      return activeSection.groups;
+    }
+
+    // Fallback: static curated groups for Why Quantix / Resources
+    return activeSection.groups;
+  }, [
+    isFeaturesSection,
+    isSolutionsSection,
+    isIntegrationsSection,
+    apiFeatures,
+    apiSolutionsData,
+    apiIntegrations,
+    activeSection,
+  ]);
+
+  const allSubItems = useMemo(() => {
+    return dynamicGroups.flatMap((group) => group.items);
+  }, [dynamicGroups]);
+
+  const activeSubHref = useMemo(() => {
     return getActiveMenuHref(allSubItems, pathname);
   }, [allSubItems, pathname]);
+
+  // If live data is loading, display the layout-matched skeleton loader
+  if (isCurrentSectionLoading) {
+    return <MobileSubMenuSkeleton onBack={onBack} />;
+  }
 
   return (
     <motion.div
@@ -48,7 +278,7 @@ export const MobileSubMenu: React.FC<MobileSubMenuProps> = ({
           <ArrowLeft size={14} /> Back to Main Menu
         </button>
 
-        {/* Header Visual Card with Hardware Mockup */}
+        {/* Header Visual Card with Real Image Mockup */}
         <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-3.5 shadow-xs flex items-center gap-3.5 overflow-hidden">
           {activeSection.imageSrc ? (
             <div className="relative w-22 h-22 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shrink-0 bg-transparent flex items-center justify-center p-1">
@@ -83,9 +313,9 @@ export const MobileSubMenu: React.FC<MobileSubMenuProps> = ({
           </div>
         </div>
 
-        {/* Sub-items List */}
+        {/* Real Live Sub-items List (Direct API Slugs) */}
         <div className="space-y-4">
-          {activeSection.groups.map((group) => (
+          {dynamicGroups.map((group) => (
             <div key={group.title} className="space-y-2">
               <span className="block px-1 text-[10px] font-extrabold uppercase tracking-normal text-primary">
                 {group.title}
@@ -97,7 +327,7 @@ export const MobileSubMenu: React.FC<MobileSubMenuProps> = ({
 
                   return (
                     <Link
-                      key={`${group.title}-${item.title}`}
+                      key={`${group.title}-${item.title}-${item.href}`}
                       href={item.href}
                       onClick={onClose}
                       aria-current={isItemActive ? 'page' : undefined}
