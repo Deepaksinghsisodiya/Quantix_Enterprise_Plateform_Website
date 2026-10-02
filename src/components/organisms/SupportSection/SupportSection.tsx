@@ -319,47 +319,47 @@ export const SupportSection: React.FC<SupportSectionProps> = ({
             )}
 
             {/* Metrics Strip */}
-            <div className="grid grid-cols-3 gap-1.5 sm:gap-3 py-2.5 sm:py-3 border-y border-slate-100 dark:border-slate-800/80">
+            <div className="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2.5 min-[420px]:gap-1.5 sm:gap-3 py-2.5 sm:py-3 border-y border-slate-100 dark:border-slate-800/80">
               {/* Stat 1: Response Time */}
-              <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
+              <div className="flex items-center gap-2 min-[420px]:gap-1.5 sm:gap-2.5 min-w-0">
                 <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20">
                   <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2.2]" />
                 </div>
-                <div className="min-w-0">
-                  <div className="text-[11px] sm:text-xs md:text-sm font-black text-slate-950 dark:text-white leading-tight break-words">
+                <div className="min-w-0 flex-1">
+                  <div className="text-[11.5px] sm:text-xs md:text-sm font-black text-slate-950 dark:text-white leading-tight truncate">
                     {responseTimeBadge || '< 45s'}
                   </div>
-                  <span className="text-[8.5px] sm:text-[9.5px] text-slate-500 dark:text-slate-400 block font-medium break-words">
+                  <span className="text-[9px] sm:text-[9.5px] text-slate-500 dark:text-slate-400 block font-medium truncate">
                     Live Response
                   </span>
                 </div>
               </div>
 
               {/* Stat 2: Availability */}
-              <div className="flex items-center gap-1.5 sm:gap-2.5 border-l border-slate-100 dark:border-slate-800 pl-1.5 sm:pl-3 min-w-0">
+              <div className="flex items-center gap-2 min-[420px]:gap-1.5 sm:gap-2.5 min-[420px]:border-l border-slate-100 dark:border-slate-800 min-[420px]:pl-2 sm:pl-3 min-w-0">
                 <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20">
                   <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2.2]" />
                 </div>
-                <div className="min-w-0">
-                  <div className="text-[11px] sm:text-xs md:text-sm font-black text-slate-950 dark:text-white leading-tight break-words">
+                <div className="min-w-0 flex-1">
+                  <div className="text-[11.5px] sm:text-xs md:text-sm font-black text-slate-950 dark:text-white leading-tight truncate">
                     {liveChatStatus || '24/7/365'}
                   </div>
-                  <span className="text-[8.5px] sm:text-[9.5px] text-slate-500 dark:text-slate-400 block font-medium break-words">
+                  <span className="text-[9px] sm:text-[9.5px] text-slate-500 dark:text-slate-400 block font-medium truncate">
                     Always On
                   </span>
                 </div>
               </div>
 
               {/* Stat 3: Direct Priority Channel */}
-              <div className="flex items-center gap-1.5 sm:gap-2.5 border-l border-slate-100 dark:border-slate-800 pl-1.5 sm:pl-3 min-w-0">
+              <div className="flex items-center gap-2 min-[420px]:gap-1.5 sm:gap-2.5 min-[420px]:border-l border-slate-100 dark:border-slate-800 min-[420px]:pl-2 sm:pl-3 min-w-0">
                 <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-[#FF4F00] dark:bg-orange-500/15 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20">
                   <Globe className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2.2]" />
                 </div>
-                <div className="min-w-0">
-                  <div className="text-[11px] sm:text-xs md:text-sm font-black text-slate-950 dark:text-white leading-tight break-words">
+                <div className="min-w-0 flex-1">
+                  <div className="text-[11.5px] sm:text-xs md:text-sm font-black text-slate-950 dark:text-white leading-tight truncate">
                     {directPhone ? 'Direct Hotline' : 'Global Desk'}
                   </div>
-                  <span className="text-[8.5px] sm:text-[9.5px] text-slate-500 dark:text-slate-400 block font-medium break-words">
+                  <span className="text-[9px] sm:text-[9.5px] text-slate-500 dark:text-slate-400 block font-medium truncate">
                     {directPhone || 'Priority Routing'}
                   </span>
                 </div>
@@ -405,31 +405,31 @@ export const SupportSection: React.FC<SupportSectionProps> = ({
             <div className="relative w-full max-w-125 xl:max-w-132.5">
               
               {/* Floating Badge 1: Top-Left "Active Support Specialist" */}
-              <div className="absolute -top-3.5 left-1 sm:-left-3 z-20 inline-flex items-center gap-2 rounded-2xl border border-slate-200/90 bg-white/95 dark:border-slate-700/90 dark:bg-slate-900/95 px-2.5 sm:px-3 py-1.5 sm:py-2 shadow-xl backdrop-blur-md">
+              <div className="absolute -top-3.5 left-1 sm:-left-3 z-20 inline-flex items-center gap-1.5 sm:gap-2 rounded-2xl border border-slate-200/90 bg-white/95 dark:border-slate-700/90 dark:bg-slate-900/95 px-2 sm:px-3 py-1 sm:py-2 shadow-xl backdrop-blur-md max-w-[54%] sm:max-w-none">
                 <span className="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5 shrink-0">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex h-full w-full rounded-full bg-emerald-500" />
                 </span>
-                <div className="text-left">
-                  <div className="text-[10px] sm:text-[11px] font-bold text-slate-950 dark:text-white leading-tight break-words">
-                    {repName || "Active Support Specialist"}
+                <div className="text-left min-w-0">
+                  <div className="text-[9.5px] sm:text-[11px] font-bold text-slate-950 dark:text-white leading-tight truncate">
+                    {repName || "Active Specialist"}
                   </div>
-                  <span className="text-[8.5px] sm:text-[9.5px] text-slate-500 dark:text-slate-400 block font-medium break-words">
+                  <span className="text-[8px] sm:text-[9.5px] text-slate-500 dark:text-slate-400 block font-medium truncate">
                     {repRole || "Here to help, always"}
                   </span>
                 </div>
               </div>
 
               {/* Floating Badge 2: Top-Right "Tier-3 Support" */}
-              <div className="absolute -top-3 right-1 sm:right-3 z-20 inline-flex items-center gap-1.5 sm:gap-2 rounded-xl bg-slate-950/90 border border-slate-700/80 px-2.5 sm:px-3 py-1 sm:py-1.5 shadow-xl backdrop-blur-md text-white">
+              <div className="absolute -top-3 right-1 sm:right-3 z-20 inline-flex items-center gap-1.5 sm:gap-2 rounded-xl bg-slate-950/90 border border-slate-700/80 px-2 sm:px-3 py-1 sm:py-1.5 shadow-xl backdrop-blur-md text-white max-w-[44%] sm:max-w-none">
                 <div className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md sm:rounded-lg bg-amber-500/20 text-amber-400 shrink-0">
                   <Crown className="h-3 w-3 sm:h-3.5 sm:w-3.5 stroke-[2.2]" />
                 </div>
-                <div className="text-left">
-                  <div className="text-[9.5px] sm:text-[10.5px] font-bold leading-tight">
+                <div className="text-left min-w-0">
+                  <div className="text-[9px] sm:text-[10.5px] font-bold leading-tight truncate">
                     Dedicated Desk
                   </div>
-                  <span className="text-[8px] sm:text-[9px] text-slate-400 block font-mono">
+                  <span className="text-[7.5px] sm:text-[9px] text-slate-400 block font-mono truncate">
                     VIP Priority
                   </span>
                 </div>

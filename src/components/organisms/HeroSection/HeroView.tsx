@@ -170,7 +170,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
                     href={getAdminPortalUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex w-full sm:w-auto min-w-0 h-11 sm:h-12 cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-5 sm:px-8 py-3 font-syne text-xs sm:text-[13px] font-black uppercase tracking-wider text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:brightness-110 hover:shadow-orange-500/40 active:scale-95 whitespace-nowrap"
+                    className="group flex w-full sm:w-auto min-w-0 min-h-[44px] sm:min-h-[48px] h-auto cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] px-3.5 sm:px-6 md:px-8 py-2.5 sm:py-3 font-syne text-[11.5px] sm:text-xs md:text-[13px] font-black uppercase tracking-wider text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:brightness-110 hover:shadow-orange-500/40 active:scale-95 text-center sm:whitespace-nowrap leading-snug"
                   >
                     <Sparkles
                       size={15}
@@ -185,7 +185,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
                 ) : slide.primaryCta?.href ? (
                   <Link
                     href={slide.primaryCta.href}
-                    className="group flex w-full sm:w-auto min-w-0 h-11 sm:h-12 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#FF4F00] px-5 sm:px-8 py-3 font-syne text-xs sm:text-[13px] font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-[#e64700] hover:shadow-primary/40 active:scale-95 whitespace-nowrap"
+                    className="group flex w-full sm:w-auto min-w-0 min-h-[44px] sm:min-h-[48px] h-auto cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#FF4F00] px-3.5 sm:px-6 md:px-8 py-2.5 sm:py-3 font-syne text-[11.5px] sm:text-xs md:text-[13px] font-extrabold uppercase tracking-wider text-white shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-[#e64700] hover:shadow-primary/40 active:scale-95 text-center sm:whitespace-nowrap leading-snug"
                   >
                     <Rocket
                       size={15}
@@ -200,7 +200,7 @@ export const HeroView: React.FC<HeroViewProps> = ({
                     onClick={() =>
                       openModal(slide.heading || '', "HERO_REQUEST_DEMO")
                     }
-                    className="group flex w-full sm:w-auto min-w-0 h-11 sm:h-12 cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-slate-900 bg-transparent px-5 sm:px-8 py-3 font-syne text-xs sm:text-[13px] font-extrabold uppercase tracking-wider text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white active:scale-95 dark:border-slate-100 dark:text-slate-100 dark:hover:bg-slate-100 dark:hover:text-slate-900 whitespace-nowrap"
+                    className="group flex w-full sm:w-auto min-w-0 min-h-[44px] sm:min-h-[48px] h-auto cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-slate-900 bg-transparent px-3.5 sm:px-6 md:px-8 py-2.5 sm:py-3 font-syne text-[11.5px] sm:text-xs md:text-[13px] font-extrabold uppercase tracking-wider text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white active:scale-95 dark:border-slate-100 dark:text-slate-100 dark:hover:bg-slate-100 dark:hover:text-slate-900 text-center sm:whitespace-nowrap leading-snug"
                   >
                     <span>{slide.secondaryCta.label}</span>
                     <ArrowRight
