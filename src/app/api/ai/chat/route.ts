@@ -12,7 +12,8 @@ export async function POST(req: Request) {
     const targetVariant = siteVariant || platform || 'Enterprise';
     const response = await processDbAiChatQuery(message, targetVariant);
     return NextResponse.json(response);
-  } catch {
+  } catch (err) {
+    console.error('API CHAT ROUTE ERROR:', err);
     const fallback = await processDbAiChatQuery('help', 'Enterprise');
     return NextResponse.json(fallback);
   }

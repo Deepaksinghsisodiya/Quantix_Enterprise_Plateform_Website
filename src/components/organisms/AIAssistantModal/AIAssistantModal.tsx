@@ -15,6 +15,14 @@ import {
   Layers,
   Boxes,
   ArrowRight,
+  User,
+  Mail,
+  Phone,
+  Building2,
+  CheckCircle2,
+  Tag,
+  HelpCircle,
+  PhoneCall,
 } from 'lucide-react';
 import { useContactModal } from '@/context/ContactModalContext';
 
@@ -24,12 +32,10 @@ export interface ChatMessage {
   text: string;
   timestamp: string;
   isActionable?: boolean;
-  actionType?: 'BOOK_DEMO' | 'CONTACT_SALES';
-  actionData?: {
-    title: string;
-    subtitle: string;
-    badge: string;
-  };
+  actionType?: 'BOOK_DEMO' | 'CONTACT_SALES' | 'VIEW_PRICING' | 'VIEW_SOLUTIONS';
+  suggestedButtons?: Array<{ label: string; action: string }>;
+  leadCaptured?: boolean;
+  showInlineForm?: boolean;
 }
 
 export interface AIAssistantProps {
@@ -40,9 +46,10 @@ export interface AIAssistantProps {
 }
 
 const ENTERPRISE_QUICK_STARTERS = [
-  { label: '3 Months Free Trial', query: 'Tell me about the 3 Months Free Trial program and rollout', icon: Flame },
-  { label: 'Multi-Store Cloud Hub', query: 'How does multi-store supply chain and par-level replenishment work?', icon: Layers },
-  { label: 'ERP & SAP Integrations', query: 'Which ERP, accounting, and custom APIs does Quantix integrate with?', icon: Boxes },
+  { label: '🏷️ Pricing Plans', query: 'What are the pricing plans and subscription rates?', icon: Tag },
+  { label: '🚀 Key Features', query: 'What are the main features of Quantix POS?', icon: Layers },
+  { label: '🔌 Integrations', query: 'Which third party integrations are supported?', icon: Boxes },
+  { label: '📅 Book 1-on-1 Demo', query: 'I want to schedule a live 1-on-1 demo', icon: CalendarCheck },
 ];
 
 export const AIAssistantModal: React.FC<AIAssistantProps> = ({
@@ -58,11 +65,22 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
   const { openModal } = useContactModal();
   const chatEndRef = useRef<HTMLDivElement>(null);
 
+  // Inline Lead Form State inside Chat
+  const [showInlineForm, setShowInlineForm] = useState(false);
+  const [leadFormData, setLeadFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    companyName: '',
+    outletCount: 1,
+  });
+  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
+
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome-1',
       sender: 'ai',
-      text: '👋 **Welcome to Quantix Enterprise!** I am your 24/7 AI Operations & POS Solutions Advisor. Ask me anything about our **Multi-Store Cloud Hub**, **Supply Chain**, **SAP/NetSuite ERP Integrations**, or our **3 Months Free Trial**.',
+      text: '👋 **Welcome to Quantix Enterprise POS!** I am your 24/7 Sales & Technical Advisor.\n\nAsk me anything about our **Pricing Plans**, **Multi-Store Management**, **API Integrations**, or **Schedule a 1-on-1 Demo** directly in this chat!',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -74,7 +92,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       }, 60);
       return () => clearTimeout(timer);
     }
-  }, [messages, isOpen, isTyping, variant]);
+  }, [messages, isOpen, isTyping, showInlineForm, variant]);
 
   const handleOpenToggle = () => {
     if (variant === 'embedded') return;
@@ -89,7 +107,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       const res = await fetch('/api/ai/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userQuery, platform: 'Quantix Enterprise' }),
+        body: JSON.stringify({ message: userQuery, platform: 'Enterprise' }),
       });
 
       if (res.ok) {
@@ -100,66 +118,39 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             data.reply,
             data.isActionable,
             data.actionType,
-            data.actionData
+            data.suggestedButtons,
+            data.leadCaptured
           );
           setIsTyping(false);
           return;
         }
       }
-    } catch (e) {
-      console.warn('AI Chat Endpoint offline, using local intelligence engine fallback.');
+    } catch {
+      // Fallback
     }
 
-    // Local Fallback Intelligence
     setTimeout(() => {
-      const lower = userQuery.toLowerCase();
-      let reply = "";
-      let isActionable = false;
-      let actionType: 'BOOK_DEMO' | 'CONTACT_SALES' | undefined = undefined;
-      let actionData = undefined;
-
-      if (lower.includes('trial') || lower.includes('3 month') || lower.includes('free') || lower.includes('zero')) {
-        reply = "🎉 **3 Months 100% Free Trial Program:**\n\n- Zero setup fees & zero locked contracts\n- Complete cloud instance pre-loaded with your menu/SKU database in **under 1 hour**\n- Unlimited offline terminal sync, multi-store warehousing, and full ERP bridge\n- 24/7 dedicated enterprise engineer on standby.\n\nWould you like our engineering team to spin up your test instance today?";
-        isActionable = true;
-        actionType = 'BOOK_DEMO';
-        actionData = {
-          title: "Claim 3 Months Free Trial",
-          subtitle: "Live staging environment ready within 1 hour",
-          badge: "ZERO RISK PILOT"
-        };
-      } else if (lower.includes('sap') || lower.includes('erp') || lower.includes('api') || lower.includes('integrate') || lower.includes('netsuite')) {
-        reply = "🔗 **Enterprise Integration Capabilities:**\n\nQuantix provides bidirectional REST APIs and automated webhooks for:\n- **ERP Systems:** SAP S/4HANA, Oracle NetSuite, Microsoft Dynamics 365\n- **Accounting:** QuickBooks Online, Xero, Tally Prime\n- **Payment Processors:** Bring-Your-Own-Processor (BYOP) support for Stripe, Adyen, Worldpay, Razorpay, Ingenico, and Pax terminals.\n\nWould you like our Solutions Architect to review your ERP integration schema?";
-        isActionable = true;
-        actionType = 'BOOK_DEMO';
-        actionData = {
-          title: "Book Architecture Review",
-          subtitle: "1-on-1 session with our Enterprise Solutions Architect",
-          badge: "TECHNICAL AUDIT"
-        };
-      } else if (lower.includes('price') || lower.includes('cost') || lower.includes('plan') || lower.includes('quote')) {
-        reply = "💰 **Quantix Enterprise Pricing Architecture:**\n\n- **Single Master Licence:** Run unlimited POS registers, KDS screens, and inventory tablets.\n- **Zero Transaction Markup:** Unlike Square (2.6% + 10¢) or Toast, Quantix charges $0 variable swipe fees.\n- **Custom Franchise SLA:** Tiered volume discounts for 15+ locations.\n\nShall I connect you with our Commercial Accounts team for a customized multi-store quote?";
-        isActionable = true;
-        actionType = 'CONTACT_SALES';
-        actionData = {
-          title: "Request Custom Franchise Quote",
-          subtitle: "Volume pricing & localized SLA terms",
-          badge: "VOLUME DISCOUNT"
-        };
-      } else {
-        reply = "Quantix Enterprise delivers an **Offline-First Cloud POS & Multi-Store Supply Chain Hub** designed for high-concurrency stadium venues, national retail chains, and dining franchise groups.\n\nEverything operates on perpetual local IndexedDB caches with instantaneous cloud sync when online.\n\nHow many store locations or terminals are in your network?";
-      }
-
-      addMessage('ai', reply, isActionable, actionType, actionData);
+      addMessage(
+        'ai',
+        `Quantix Enterprise POS is a complete cloud billing and multi-store management platform with 24/7 dedicated support.`,
+        true,
+        'BOOK_DEMO',
+        [
+          { label: 'Book Personalised Demo', action: 'BOOK_DEMO' },
+          { label: 'View Pricing Plans', action: '/pricing' },
+        ]
+      );
       setIsTyping(false);
-    }, 550);
+    }, 400);
   };
 
   const addMessage = (
     sender: 'ai' | 'user',
     text: string,
     isActionable = false,
-    actionType?: 'BOOK_DEMO' | 'CONTACT_SALES',
-    actionData?: { title: string; subtitle: string; badge: string }
+    actionType?: 'BOOK_DEMO' | 'CONTACT_SALES' | 'VIEW_PRICING' | 'VIEW_SOLUTIONS',
+    suggestedButtons?: Array<{ label: string; action: string }>,
+    leadCaptured?: boolean
   ) => {
     const newMessage: ChatMessage = {
       id: Date.now().toString(),
@@ -168,7 +159,8 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       isActionable,
       actionType,
-      actionData,
+      suggestedButtons,
+      leadCaptured,
     };
     setMessages((prev) => [...prev, newMessage]);
   };
@@ -180,15 +172,69 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
 
     addMessage('user', query);
     setInput('');
+
+    // If query asks for demo, show inline form
+    const lower = query.toLowerCase();
+    if (lower.includes('demo') || lower.includes('book') || lower.includes('schedule') || lower.includes('trial')) {
+      setShowInlineForm(true);
+    }
+
     generateAIResponse(query);
   };
 
-  const handleActionClick = (actionType?: 'BOOK_DEMO' | 'CONTACT_SALES') => {
-    openModal(actionType === 'BOOK_DEMO' ? 'demo' : 'contact');
-    if (variant === 'floating') setIsOpen(false);
+  const handleButtonClick = (action: string) => {
+    if (action === 'BOOK_DEMO' || action === 'CONTACT_SALES') {
+      setShowInlineForm(true);
+    } else if (action === 'VIEW_PRICING' || action === '/pricing') {
+      handleSend(undefined, 'What are the pricing plans and rates?');
+    } else if (action === 'VIEW_SOLUTIONS' || action === '/solutions') {
+      handleSend(undefined, 'What industry solutions are available?');
+    } else if (action === '/integrations') {
+      handleSend(undefined, 'Which integrations are supported?');
+    } else if (action.startsWith('tel:') || action.startsWith('mailto:')) {
+      window.open(action, '_self');
+    } else if (action === 'CONTACT_SUPPORT') {
+      handleSend(undefined, 'What is the customer support phone number and email?');
+    } else {
+      handleSend(undefined, action);
+    }
   };
 
-  // Helper to format bold markdown
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!leadFormData.email || !leadFormData.fullName) return;
+
+    setIsSubmittingLead(true);
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5104';
+      await fetch(`${apiUrl}/api/v1/contact/demo-request`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: leadFormData.fullName,
+          email: leadFormData.email,
+          phone: leadFormData.phone || 'N/A',
+          companyName: leadFormData.companyName || 'Enterprise Website Inquiry',
+          outletCount: Number(leadFormData.outletCount) || 1,
+          comments: 'Lead submitted via AI Chatbot Inline Form',
+        }),
+      });
+    } catch {
+      // Ignore network errors
+    }
+
+    setIsSubmittingLead(false);
+    setShowInlineForm(false);
+
+    // Add confirmation message in chat
+    addMessage(
+      'ai',
+      `✅ **Demo Request Confirmed for ${leadFormData.fullName}!**\n\nThank you! We have registered your request for **${leadFormData.companyName || 'your business'}**. Our POS Solutions Architect will reach out to **${leadFormData.email}** ${leadFormData.phone ? `or call ${leadFormData.phone}` : ''} shortly.`
+    );
+
+    setLeadFormData({ fullName: '', email: '', phone: '', companyName: '', outletCount: 1 });
+  };
+
   const renderFormattedText = (text: string) => {
     const lines = text.split('\n');
     return lines.map((line, idx) => {
@@ -213,10 +259,10 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
   const renderChatUI = () => (
     <div className={`w-full h-full flex flex-col font-sans bg-white dark:bg-slate-900/95 backdrop-blur-xl text-slate-800 dark:text-slate-100 rounded-xl border border-slate-200/90 dark:border-slate-800/90 shadow-[0_20px_50px_rgba(0,0,0,0.25)] overflow-hidden relative ${className}`}>
       
-      {/* GLOWING TOP ACCENT STRIP */}
+      {/* TOP GLOWING ACCENT STRIP */}
       <div className="h-0.5 w-full bg-gradient-to-r from-[#FF4D00] via-[#FF7332] to-[#FF4D00] shrink-0" />
 
-      {/* LUXURY HEADER */}
+      {/* HEADER */}
       <div className="bg-slate-900 px-3.5 py-2.5 text-white flex items-center justify-between relative shrink-0 select-none border-b border-slate-800/80 shadow-xs">
         <div className="flex items-center gap-2 min-w-0">
           <div className="relative flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-gradient-to-br from-[#FF4D00] to-[#E03E00] text-white shadow-md shadow-[#FF4D00]/30 border border-white/20 shrink-0">
@@ -230,7 +276,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
               <h3 className="font-syne text-xs sm:text-[13px] font-black tracking-wide text-white truncate">{title}</h3>
-              <span className="inline-flex items-center gap-1 bg-[#FF4D00]/20 text-[#FF7332] text-[7.5px] sm:text-[8px] font-syne font-extrabold px-1.5 py-0.5 rounded-md border border-[#FF4D00]/30 uppercase tracking-wider shrink-0 shadow-inner">
+              <span className="inline-flex items-center gap-1 bg-[#FF4D00]/20 text-[#FF7332] text-[7.5px] sm:text-[8px] font-syne font-extrabold px-1.5 py-0.5 rounded-md border border-[#FF4D00]/30 uppercase tracking-wider shrink-0">
                 <Sparkles className="h-2 w-2" />
                 ONLINE
               </span>
@@ -241,12 +287,15 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
 
         <div className="flex items-center gap-0.5 shrink-0">
           <button
-            onClick={() => setMessages([{
-              id: Date.now().toString(),
-              sender: 'ai',
-              text: '👋 Chat reset! Ask me any question about Quantix Enterprise Multi-Store POS, Supply Chain, ERP Integrations, or the 3 Months Free Trial.',
-              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            }])}
+            onClick={() => {
+              setMessages([{
+                id: Date.now().toString(),
+                sender: 'ai',
+                text: '👋 Chat reset! Ask me any question about Quantix Enterprise POS or schedule a live 1-on-1 demo.',
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              }]);
+              setShowInlineForm(false);
+            }}
             title="Reset conversation"
             className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 transition-all cursor-pointer active:scale-95 border border-transparent hover:border-slate-700"
           >
@@ -291,34 +340,19 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
               >
                 <div>{renderFormattedText(msg.text)}</div>
 
-                {/* ACTIONABLE LEAD CARD */}
-                {msg.isActionable && (
-                  <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-slate-800">
-                    <div className="rounded-lg bg-gradient-to-br from-orange-50/90 via-white to-orange-50/40 dark:from-orange-950/40 dark:via-slate-900 dark:to-orange-950/20 border border-orange-200/90 dark:border-orange-900/50 p-2 sm:p-2.5 flex flex-col gap-1 shadow-xs">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-[8.5px] sm:text-[9px] font-syne font-black text-[#FF4D00] uppercase tracking-wider">
-                          <Flame className="h-2.5 w-2.5 fill-[#FF4D00]/20" />
-                          <span>{msg.actionData?.badge || 'Special Offer'}</span>
-                        </div>
-                        <span className="text-[8.5px] sm:text-[9px] font-sans text-slate-500 dark:text-slate-400 flex items-center gap-1 font-medium">
-                          <Clock className="h-2.5 w-2.5 text-[#FF4D00]" /> 1 hr setup
-                        </span>
-                      </div>
-
-                      <div>
-                        <p className="text-[11px] sm:text-[11.5px] font-syne font-extrabold text-slate-900 dark:text-white leading-tight">{msg.actionData?.title || 'Claim 3 Months Free Trial'}</p>
-                        <p className="text-[9.5px] sm:text-[10px] font-sans text-slate-600 dark:text-slate-300 mt-0.5">{msg.actionData?.subtitle || 'Custom setup built within 1 hour'}</p>
-                      </div>
-
+                {/* SUGGESTED ACTION BUTTONS */}
+                {msg.suggestedButtons && msg.suggestedButtons.length > 0 && (
+                  <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex flex-wrap gap-1.5">
+                    {msg.suggestedButtons.map((btn, bIdx) => (
                       <button
-                        onClick={() => handleActionClick(msg.actionType)}
-                        className="w-full flex items-center justify-center gap-1.5 rounded-md bg-gradient-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C23500] text-white py-1.5 px-2.5 text-[10.5px] font-syne font-bold shadow-xs shadow-[#FF4D00]/25 active:scale-95 transition-all cursor-pointer group mt-0.5"
+                        key={bIdx}
+                        onClick={() => handleButtonClick(btn.action)}
+                        className="inline-flex items-center gap-1.5 rounded-md bg-orange-50 dark:bg-orange-950/40 hover:bg-[#FF4D00] text-[#FF4D00] hover:text-white dark:text-[#FF7332] dark:hover:text-white border border-orange-200 dark:border-orange-900/50 hover:border-[#FF4D00] py-1 px-2.5 text-[10.5px] font-syne font-bold transition-all cursor-pointer active:scale-95 shadow-2xs"
                       >
-                        <CalendarCheck className="h-3.5 w-3.5" />
-                        <span>{msg.actionType === 'BOOK_DEMO' ? 'Schedule Strategy Demo' : 'Claim 3 Months Free Trial'}</span>
-                        <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        <CalendarCheck className="h-3 w-3" />
+                        <span>{btn.label}</span>
                       </button>
-                    </div>
+                    ))}
                   </div>
                 )}
 
@@ -331,6 +365,95 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             </div>
           </div>
         ))}
+
+        {/* INLINE LEAD CAPTURE FORM INSIDE CHAT WINDOW */}
+        {showInlineForm && (
+          <div className="my-2 p-3 rounded-xl bg-gradient-to-br from-orange-50/90 via-white to-orange-50/40 dark:from-orange-950/40 dark:via-slate-900 dark:to-orange-950/20 border border-orange-200/90 dark:border-orange-900/60 shadow-md">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5 text-[11px] font-syne font-black text-[#FF4D00] uppercase tracking-wider">
+                <CalendarCheck className="h-3.5 w-3.5" />
+                <span>Book 1-on-1 Personalised Demo</span>
+              </div>
+              <button
+                onClick={() => setShowInlineForm(false)}
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleLeadSubmit} className="space-y-2">
+              <div>
+                <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-300 mb-0.5">Full Name *</label>
+                <div className="relative">
+                  <User className="absolute left-2 top-2 h-3 w-3 text-slate-400" />
+                  <input
+                    type="text"
+                    required
+                    value={leadFormData.fullName}
+                    onChange={(e) => setLeadFormData({ ...leadFormData, fullName: e.target.value })}
+                    placeholder="e.g. Vikram Sharma"
+                    className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md pl-7 pr-2 py-1 text-[11px] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-[#FF4D00]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-300 mb-0.5">Email *</label>
+                  <div className="relative">
+                    <Mail className="absolute left-2 top-2 h-3 w-3 text-slate-400" />
+                    <input
+                      type="email"
+                      required
+                      value={leadFormData.email}
+                      onChange={(e) => setLeadFormData({ ...leadFormData, email: e.target.value })}
+                      placeholder="work@company.com"
+                      className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md pl-7 pr-2 py-1 text-[11px] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-[#FF4D00]"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-300 mb-0.5">Phone Number</label>
+                  <div className="relative">
+                    <Phone className="absolute left-2 top-2 h-3 w-3 text-slate-400" />
+                    <input
+                      type="tel"
+                      value={leadFormData.phone}
+                      onChange={(e) => setLeadFormData({ ...leadFormData, phone: e.target.value })}
+                      placeholder="+91 9876543210"
+                      className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md pl-7 pr-2 py-1 text-[11px] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-[#FF4D00]"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-300 mb-0.5">Company / Store Name</label>
+                <div className="relative">
+                  <Building2 className="absolute left-2 top-2 h-3 w-3 text-slate-400" />
+                  <input
+                    type="text"
+                    value={leadFormData.companyName}
+                    onChange={(e) => setLeadFormData({ ...leadFormData, companyName: e.target.value })}
+                    placeholder="e.g. Apex Retail Chains"
+                    className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md pl-7 pr-2 py-1 text-[11px] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-[#FF4D00]"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmittingLead}
+                className="w-full mt-1 flex items-center justify-center gap-1.5 rounded-md bg-gradient-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C23500] text-white py-1.5 px-3 text-[11px] font-syne font-bold shadow-sm shadow-[#FF4D00]/30 transition-all cursor-pointer active:scale-95 disabled:opacity-50"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>{isSubmittingLead ? 'Registering Lead...' : 'Submit & Alert Sales Team'}</span>
+              </button>
+            </form>
+          </div>
+        )}
 
         {isTyping && (
           <div className="flex items-center gap-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-2.5 py-1.5 rounded-lg shadow-xs w-fit font-sans">
@@ -365,7 +488,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
         </div>
       )}
 
-      {/* INPUT FORM FOOTER WITH SEND (PAPER PLANE) ICON */}
+      {/* INPUT FORM FOOTER */}
       <form
         onSubmit={handleSend}
         className="p-2 sm:p-2.5 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 shrink-0 z-10 font-sans"
@@ -375,7 +498,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask anything about Quantix Enterprise..."
+            placeholder="Ask anything or request a live demo..."
             className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg pl-3 pr-2 py-1.5 text-xs font-sans text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-[#FF4D00] focus:ring-1 focus:ring-[#FF4D00]/20 transition-all shadow-inner"
           />
         </div>
@@ -400,10 +523,8 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     );
   }
 
-  // FLOATING RESPONSIVE MODAL
   return (
     <>
-      {/* RIGHT-CENTER SLEEK TRIGGER */}
       <AnimatePresence>
         {!isOpen && (
           <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[60] font-sans pointer-events-auto select-none">
@@ -442,7 +563,6 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
         )}
       </AnimatePresence>
 
-      {/* COMPACT & GORGEOUS FLOATING MODAL */}
       <AnimatePresence>
         {isOpen && (
           <div className="fixed inset-x-3 bottom-3 sm:inset-x-auto sm:right-6 sm:bottom-6 z-[70] font-sans pointer-events-auto flex justify-center sm:block">
@@ -451,7 +571,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 15, scale: 0.95 }}
               transition={{ duration: 0.18, ease: "easeOut" }}
-              className="w-full max-w-sm sm:w-[390px] sm:max-w-none h-[480px] max-h-[80vh] sm:h-[530px]"
+              className="w-full max-w-sm sm:w-[390px] sm:max-w-none h-[480px] max-h-[80vh] sm:h-[540px]"
             >
               {renderChatUI()}
             </motion.div>
