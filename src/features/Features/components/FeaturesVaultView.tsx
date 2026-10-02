@@ -21,9 +21,6 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
   modules,
 }) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [direction, setDirection] = useState<number>(1);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchEndX, setTouchEndX] = useState<number | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const currentModule = modules[activeIndex] || modules[0];
@@ -31,40 +28,15 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
 
   const goToModule = (idx: number) => {
     if (idx === activeIndex) return;
-    setDirection(idx > activeIndex ? 1 : -1);
     setActiveIndex(idx);
   };
 
   const handleNextModule = () => {
-    setDirection(1);
     setActiveIndex((prev) => (prev + 1) % modules.length);
   };
 
   const handlePrevModule = () => {
-    setDirection(-1);
     setActiveIndex((prev) => (prev - 1 + modules.length) % modules.length);
-  };
-
-  // Touch Swipe Handlers for Mobile
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEndX(null);
-    setTouchStartX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEndX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStartX || !touchEndX) return;
-    const distance = touchStartX - touchEndX;
-    const minSwipeDistance = 35;
-
-    if (distance > minSwipeDistance) {
-      handleNextModule();
-    } else if (distance < -minSwipeDistance) {
-      handlePrevModule();
-    }
   };
 
   return (
@@ -74,7 +46,7 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* ============================================================ */}
-      {/* MOBILE & TABLET VIEW (< lg): Tabbed Showcase (No auto-slider) */}
+      {/* MOBILE & TABLET VIEW (< lg): Matches Business Problems Style */}
       {/* ============================================================ */}
       <div className="lg:hidden flex flex-col space-y-3 sm:space-y-4">
         {/* Mobile Tab Bar: Matches Business Problems Section */}
@@ -103,24 +75,18 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
           </div>
         )}
 
-        {/* Dedicated Native Mobile Showcase Card with Touch Swipe Support */}
-        <div
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-950 p-4 sm:p-6 shadow-xl relative overflow-hidden select-none min-h-[460px] sm:min-h-[520px] flex flex-col justify-between"
-        >
+        {/* Dedicated Native Mobile Card */}
+        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-950 p-4 sm:p-6 shadow-xl relative overflow-hidden select-none min-h-[460px] sm:min-h-[520px] flex flex-col justify-between">
           {/* Top Laser Accent Line */}
           <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FF4F00] via-[#FF6B2B] to-amber-400" />
 
-          <AnimatePresence mode="wait" custom={direction}>
+          <AnimatePresence mode="wait">
             <motion.div
               key={currentModule.id}
-              custom={direction}
-              initial={{ opacity: 0, x: direction * 16 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: direction * -16 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18 }}
               className="flex flex-col space-y-3"
             >
               {/* Header Row: Icon + Module Info + Live Badge */}
@@ -232,9 +198,8 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
                 type="button"
                 onClick={() => goToModule(dotIdx)}
                 aria-label={`Go to feature ${dotIdx + 1}`}
-                className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                  activeIndex === dotIdx ? "w-5 bg-[#FF4F00]" : "w-1.5 bg-slate-300 dark:bg-slate-700"
-                }`}
+                className={`h-1.5 rounded-full transition-all cursor-pointer ${activeIndex === dotIdx ? "w-5 bg-[#FF4F00]" : "w-1.5 bg-slate-300 dark:bg-slate-700"
+                  }`}
               />
             ))}
           </div>
@@ -271,8 +236,8 @@ export const FeaturesVaultView: React.FC<FeaturesVaultViewProps> = ({
               }}
               onClick={() => goToModule(idx)}
               className={`relative rounded-2xl overflow-hidden select-none transition-[flex,border-color,background-color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] h-full min-h-0 max-h-full ${isActive
-                  ? "flex-[4.2] bg-white dark:bg-slate-900 border border-orange-500/40 dark:border-orange-500/50 shadow-lg cursor-default"
-                  : "flex-1 bg-white/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 hover:border-orange-500/40 hover:bg-orange-500/[0.02] cursor-pointer group"
+                ? "flex-[4.2] bg-white dark:bg-slate-900 border border-orange-500/40 dark:border-orange-500/50 shadow-lg cursor-default"
+                : "flex-1 bg-white/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 hover:border-orange-500/40 hover:bg-orange-500/[0.02] cursor-pointer group"
                 }`}
             >
               {/* TOP ACCENT LINE on active card */}

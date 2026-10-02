@@ -272,93 +272,55 @@ export const MOBILE_MENU_SECTIONS: MobileMenuSection[] = [
     icon: Sparkles,
     imageSrc: '/images/nav_restaurant_bundle.png',
     badge: 'PLATFORM SOLUTIONS',
-    groups: [
-      {
-        title: 'PLATFORM SYSTEMS',
-        items: [
-          { title: 'Restaurant POS System', desc: 'Table floor plans & kitchen billing', href: '/solutions/restaurants', icon: Utensils },
-          { title: 'Retail Register', desc: 'Barcode scanner & cash drawer', href: '/solutions/grocery', icon: Store },
-          { title: 'Cloud Multi-Store HQ', desc: 'Manage menus & multi-store sales', href: '/features/multi-store', icon: Cloud },
-        ],
-      },
-    ],
+    promoCards: PRODUCTS_MEGA_CONFIG.promoCards,
+    groups: PRODUCTS_MEGA_CONFIG.categories.map((c) => ({
+      title: c.categoryTitle,
+      items: c.items,
+    })),
   },
   {
     ...PRIMARY_LINKS[1],
     icon: Layers,
     imageSrc: '/images/nav_cloud_bundle_v2.png',
     badge: 'ENTERPRISE FEATURES',
-    groups: [
-      {
-        title: 'MULTI-STORE CLOUD HQ',
-        items: [
-          { title: 'Multi-Store Command', desc: 'Central menus & royalties', href: '/features/multi-store', icon: Building2 },
-          { title: 'Executive BI Telemetry', desc: 'Live margin telemetry', href: '/features/executive-bi', icon: BarChart3 },
-          { title: 'Central Supply Chain', desc: 'Multi-warehouse stock', href: '/features/central-inventory', icon: Boxes },
-        ],
-      },
-      {
-        title: 'STOREFRONT & HOSPITALITY',
-        items: [
-          { title: 'Branch Cloud POS', desc: 'Offline register mesh', href: '/features/cloud-pos', icon: Store },
-          { title: 'Smart Inventory', desc: 'Recipe costing to the gram', href: '/features/smart-inventory', icon: Boxes },
-          { title: 'Kitchen Display (KDS)', desc: 'Station routing & timers', href: '/features/kitchen-display', icon: Tv },
-          { title: 'Table Management', desc: 'Floor layouts & split checks', href: '/features/table-management', icon: Utensils },
-        ],
-      },
-    ],
+    promoCards: FEATURES_MEGA_CONFIG.promoCards || (FEATURES_MEGA_CONFIG.promoCard ? [FEATURES_MEGA_CONFIG.promoCard] : undefined),
+    groups: FEATURES_MEGA_CONFIG.categories.map((c) => ({
+      title: c.categoryTitle,
+      items: c.items,
+    })),
   },
   {
     ...PRIMARY_LINKS[2],
     icon: RefreshCw,
     imageSrc: '/images/nav_payment_bundle.png',
     badge: 'PAYMENTS & APPS',
-    groups: [
-      {
-        title: 'INTEGRATIONS',
-        items: [
-          { title: 'Stripe Enterprise', desc: 'Fleet terminals & tokenization', href: '/integrations/stripe', icon: CreditCard },
-          { title: 'Authorize.Net Vault', desc: 'High-volume merchant gateway', href: '/integrations/authorize-net', icon: ShieldCheck },
-          { title: 'Square Register Fleet', desc: 'Terminal pairing & offline', href: '/integrations/square', icon: Smartphone },
-          { title: 'DoorDash Drive', desc: 'Online delivery app sync', href: '/integrations/doordash', icon: Truck },
-          { title: 'Uber Eats Enterprise', desc: 'Automated order injection', href: '/integrations/uber-eats', icon: Truck },
-        ],
-      },
-    ],
+    promoCards: INTEGRATIONS_MEGA_CONFIG.promoCards || (INTEGRATIONS_MEGA_CONFIG.promoCard ? [INTEGRATIONS_MEGA_CONFIG.promoCard] : undefined),
+    groups: INTEGRATIONS_MEGA_CONFIG.categories.map((c) => ({
+      title: c.categoryTitle,
+      items: c.items,
+    })),
   },
   {
     ...PRIMARY_LINKS[3],
     icon: Star,
     imageSrc: '/images/ent_bi_analytics_bundle_v2.png',
     badge: 'WHY QUANTIX',
-    groups: [
-      {
-        title: 'ROI & EVALUATION',
-        items: [
-          { title: 'Enterprise vs Standalone', desc: 'Multi-store vs single till', href: '/enterprise-vs-standalone', icon: Building2 },
-          { title: 'ROI Savings Calculator', desc: 'Calculate annual savings', href: '/roi-calculator', icon: Calculator },
-          { title: 'Case Studies & Stories', desc: 'Real customer ROI results', href: '/case-studies', icon: BarChart3 },
-          { title: 'Customer Testimonials', desc: 'Operator reviews & ratings', href: '/testimonials', icon: Star },
-        ],
-      },
-    ],
+    promoCards: WHY_QUANTIX_MEGA_CONFIG.promoCards || (WHY_QUANTIX_MEGA_CONFIG.promoCard ? [WHY_QUANTIX_MEGA_CONFIG.promoCard] : undefined),
+    groups: WHY_QUANTIX_MEGA_CONFIG.categories.map((c) => ({
+      title: c.categoryTitle,
+      items: c.items,
+    })),
   },
   {
     ...PRIMARY_LINKS[4],
     icon: BookOpen,
     imageSrc: '/images/nav_cloud_bundle_v2.png',
     badge: 'GUIDES & DOWNLOADS',
-    groups: [
-      {
-        title: 'LEARNING & SUPPORT',
-        items: [
-          { title: 'Brand Partners & Clientele', desc: 'Enterprise chains & partners', href: '/resources/clientele', icon: Handshake },
-          { title: 'Help & Knowledge Center', desc: 'Setup tutorials & guides', href: '/help', icon: HelpCircle },
-          { title: 'Software Downloads', desc: 'Windows & Android binaries', href: '/downloads', icon: Download },
-          { title: '24/7 Priority Support', desc: 'Speak to a POS engineer', href: '/#support', icon: Headset },
-        ],
-      },
-    ],
+    promoCards: RESOURCES_MEGA_CONFIG.promoCards || (RESOURCES_MEGA_CONFIG.promoCard ? [RESOURCES_MEGA_CONFIG.promoCard] : undefined),
+    groups: RESOURCES_MEGA_CONFIG.categories.map((c) => ({
+      title: c.categoryTitle,
+      items: c.items,
+    })),
   },
 ];
 

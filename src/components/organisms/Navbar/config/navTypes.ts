@@ -56,6 +56,7 @@ export interface MobileMenuGroup {
 export interface MobileMenuSection extends NavLink {
   icon: IconComponent;
   groups: MobileMenuGroup[];
+  promoCards?: MegaMenuPromoCard[];
   imageSrc?: string;
   badge?: string;
 }
