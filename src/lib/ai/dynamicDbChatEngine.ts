@@ -106,12 +106,14 @@ async function autoCaptureLeadIfPresent(message: string, siteVariantInput: strin
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fullName: 'AI Chatbot Visitor',
+          // Backend DemoRequestDto field is `contactName`, not `fullName`.
+          contactName: 'AI Chatbot Visitor',
           email: emailMatch ? emailMatch[0] : 'chat-lead@quantix.io',
           phone: phoneMatch ? phoneMatch[0] : 'N/A',
           companyName: `${variant} Inquiry`,
-          outletCount: 1,
-          comments: `Auto-captured user message: "${message}"`,
+          businessType: variant,
+          preferredMerchantType: variant === 'Enterprise' ? 'Enterprise' : 'Standalone',
+          message: `Auto-captured user message: "${message}"`,
         }),
       });
       return true;

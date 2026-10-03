@@ -4,6 +4,7 @@ const backendUrl = (process.env.BACKEND_API_URL || process.env.LIVE_BACKEND_API_
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.31.91", "localhost"],
+  output: "standalone",
   compress: true,
   poweredByHeader: false,
   images: {
@@ -27,6 +28,10 @@ const nextConfig: NextConfig = {
       {
         source: "/api/v1/:path*",
         destination: `${backendUrl}/api/v1/:path*`,
+      },
+      {
+        source: "/media/:path*",
+        destination: `${backendUrl}/media/:path*`,
       },
     ];
   },

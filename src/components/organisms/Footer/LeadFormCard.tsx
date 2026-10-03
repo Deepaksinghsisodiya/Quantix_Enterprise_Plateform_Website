@@ -26,6 +26,7 @@ export interface LeadFormData {
   countryCode: string;
   phone: string;
   businessName: string;
+  merchantType?: 'Standalone' | 'Enterprise';
   businessCategory?: string;
 }
 
@@ -48,6 +49,7 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
     countryCode: '+1',
     phone: '',
     businessName: '',
+    merchantType: 'Enterprise',
   });
 
   const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
@@ -121,8 +123,8 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
         phone: cleanPhone,
         companyName: formData.businessName.trim(),
         businessType: 'Enterprise',
-        preferredMerchantType: 'Enterprise',
-        message: `Inquiry submitted via LeadFormCard: ${heading}`,
+        preferredMerchantType: (formData.merchantType as 'Enterprise' | 'Standalone') || 'Enterprise',
+        message: `Inquiry submitted via LeadFormCard [Model: ${formData.merchantType || 'Enterprise'}]: ${heading}`,
       }).unwrap();
 
       setIsSubmitted(true);
@@ -306,6 +308,24 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
                 placeholder="Company / Multi-Location Brand"
                 className={`w-full border font-medium rounded-xl px-3 py-2 text-xs outline-none transition-all h-9 ${getInputStyle('businessName')}`}
               />
+            </div>
+
+            {/* 5. Business Type */}
+            <div>
+              <label htmlFor="lead-merchanttype-ent" className="sr-only">Business Type</label>
+              <div className="relative">
+                <select
+                  id="lead-merchanttype-ent"
+                  name="merchantType"
+                  value={formData.merchantType}
+                  onChange={handleChange}
+                  className="w-full border font-semibold rounded-xl px-3 py-2 text-xs outline-none transition-all h-9 appearance-none bg-slate-50/90 text-slate-900 border-slate-200/90 focus:border-[#FF4F00] focus:ring-1 focus:ring-[#FF4F00]/20 cursor-pointer"
+                >
+                  <option value="Enterprise">Enterprise (Multi-Location / Chain)</option>
+                  <option value="Standalone">Standalone (Single Location / POS)</option>
+                </select>
+                <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-400 pointer-events-none" />
+              </div>
             </div>
 
             {/* CTA Button */}

@@ -15,16 +15,12 @@ import {
   Layers,
   Boxes,
   ArrowRight,
-  User,
-  Mail,
-  Phone,
-  Building2,
-  CheckCircle2,
   Tag,
   HelpCircle,
   PhoneCall,
 } from 'lucide-react';
 import { useContactModal } from '@/context/ContactModalContext';
+import { ChatDemoLeadForm, ChatDemoLeadResult } from './ChatDemoLeadForm';
 
 export interface ChatMessage {
   id: string;
@@ -67,14 +63,6 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
 
   // Inline Lead Form State inside Chat
   const [showInlineForm, setShowInlineForm] = useState(false);
-  const [leadFormData, setLeadFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    companyName: '',
-    outletCount: 1,
-  });
-  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -200,41 +188,14 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     }
   };
 
-  const handleLeadSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!leadFormData.email || !leadFormData.fullName) return;
-
-    setIsSubmittingLead(true);
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5104';
-      await fetch(`${apiUrl}/api/v1/contact/demo-request`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fullName: leadFormData.fullName,
-          email: leadFormData.email,
-          phone: leadFormData.phone || 'N/A',
-          companyName: leadFormData.companyName || 'Enterprise Website Inquiry',
-          outletCount: Number(leadFormData.outletCount) || 1,
-          comments: 'Lead submitted via AI Chatbot Inline Form',
-        }),
-      });
-    } catch {
-      // Ignore network errors
-    }
-
-    setIsSubmittingLead(false);
+  // Lead is submitted inside ChatDemoLeadForm; here we only close it and confirm in chat.
+  const handleLeadSuccess = (lead: ChatDemoLeadResult) => {
     setShowInlineForm(false);
-
-    // Add confirmation message in chat
     addMessage(
       'ai',
-      `✅ **Demo Request Confirmed for ${leadFormData.fullName}!**\n\nThank you! We have registered your request for **${leadFormData.companyName || 'your business'}**. Our POS Solutions Architect will reach out to **${leadFormData.email}** ${leadFormData.phone ? `or call ${leadFormData.phone}` : ''} shortly.`
+      `✅ **Demo Request Confirmed for ${lead.fullName}!**\n\nThank you! Our ${lead.businessType || 'POS'} Solutions Architect will call you at **${lead.phone}** shortly for your **${lead.merchantType}** demo session.`
     );
-
-    setLeadFormData({ fullName: '', email: '', phone: '', companyName: '', outletCount: 1 });
   };
-
   const renderFormattedText = (text: string) => {
     const lines = text.split('\n');
     return lines.map((line, idx) => {
@@ -314,9 +275,9 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
         </div>
       </div>
 
-      {/* MESSAGES FEED AREA */}
+      {/* MESSAGES FEED AREA — flex-1 + min-h-0 so it shrinks when form appears */}
       <div 
-        className="flex-1 p-3 sm:p-3.5 pt-2.5 sm:pt-3 pb-3 sm:pb-4 overflow-y-auto space-y-2.5 bg-slate-50/70 dark:bg-slate-950/60"
+        className="flex-1 min-h-0 p-3 pt-2.5 pb-3 overflow-y-auto space-y-2.5 bg-slate-50/70 dark:bg-slate-950/60"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {messages.map((msg) => (
@@ -366,93 +327,15 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
           </div>
         ))}
 
-        {/* INLINE LEAD CAPTURE FORM INSIDE CHAT WINDOW */}
+        {/* INLINE LEAD CAPTURE FORM INSIDE CHAT WINDOW (Name, Email, +1 Phone) */}
         {showInlineForm && (
-          <div className="my-2 p-3 rounded-xl bg-gradient-to-br from-orange-50/90 via-white to-orange-50/40 dark:from-orange-950/40 dark:via-slate-900 dark:to-orange-950/20 border border-orange-200/90 dark:border-orange-900/60 shadow-md">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-1.5 text-[11px] font-syne font-black text-[#FF4D00] uppercase tracking-wider">
-                <CalendarCheck className="h-3.5 w-3.5" />
-                <span>Book 1-on-1 Personalised Demo</span>
-              </div>
-              <button
-                onClick={() => setShowInlineForm(false)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleLeadSubmit} className="space-y-2">
-              <div>
-                <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-300 mb-0.5">Full Name *</label>
-                <div className="relative">
-                  <User className="absolute left-2 top-2 h-3 w-3 text-slate-400" />
-                  <input
-                    type="text"
-                    required
-                    value={leadFormData.fullName}
-                    onChange={(e) => setLeadFormData({ ...leadFormData, fullName: e.target.value })}
-                    placeholder="e.g. Vikram Sharma"
-                    className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md pl-7 pr-2 py-1 text-[11px] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-[#FF4D00]"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-300 mb-0.5">Email *</label>
-                  <div className="relative">
-                    <Mail className="absolute left-2 top-2 h-3 w-3 text-slate-400" />
-                    <input
-                      type="email"
-                      required
-                      value={leadFormData.email}
-                      onChange={(e) => setLeadFormData({ ...leadFormData, email: e.target.value })}
-                      placeholder="work@company.com"
-                      className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md pl-7 pr-2 py-1 text-[11px] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-[#FF4D00]"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-300 mb-0.5">Phone Number</label>
-                  <div className="relative">
-                    <Phone className="absolute left-2 top-2 h-3 w-3 text-slate-400" />
-                    <input
-                      type="tel"
-                      value={leadFormData.phone}
-                      onChange={(e) => setLeadFormData({ ...leadFormData, phone: e.target.value })}
-                      placeholder="+91 9876543210"
-                      className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md pl-7 pr-2 py-1 text-[11px] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-[#FF4D00]"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-300 mb-0.5">Company / Store Name</label>
-                <div className="relative">
-                  <Building2 className="absolute left-2 top-2 h-3 w-3 text-slate-400" />
-                  <input
-                    type="text"
-                    value={leadFormData.companyName}
-                    onChange={(e) => setLeadFormData({ ...leadFormData, companyName: e.target.value })}
-                    placeholder="e.g. Apex Retail Chains"
-                    className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md pl-7 pr-2 py-1 text-[11px] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-[#FF4D00]"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmittingLead}
-                className="w-full mt-1 flex items-center justify-center gap-1.5 rounded-md bg-gradient-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C23500] text-white py-1.5 px-3 text-[11px] font-syne font-bold shadow-sm shadow-[#FF4D00]/30 transition-all cursor-pointer active:scale-95 disabled:opacity-50"
-              >
-                <CheckCircle2 className="h-3.5 w-3.5" />
-                <span>{isSubmittingLead ? 'Registering Lead...' : 'Submit & Alert Sales Team'}</span>
-              </button>
-            </form>
-          </div>
+          <ChatDemoLeadForm
+            businessType="Enterprise"
+            preferredMerchantType="Enterprise"
+            companyFallback="Enterprise Website Inquiry"
+            onClose={() => setShowInlineForm(false)}
+            onSuccess={handleLeadSuccess}
+          />
         )}
 
         {isTyping && (
@@ -565,13 +448,13 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
 
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-x-3 bottom-3 sm:inset-x-auto sm:right-6 sm:bottom-6 z-[70] font-sans pointer-events-auto flex justify-center sm:block">
+          <div className="fixed inset-x-2 bottom-2 xs:inset-x-3 xs:bottom-3 sm:inset-x-auto sm:right-5 sm:bottom-5 z-[70] font-sans pointer-events-auto flex justify-center sm:block">
             <motion.div
-              initial={{ opacity: 0, y: 15, scale: 0.95 }}
+              initial={{ opacity: 0, y: 12, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 15, scale: 0.95 }}
-              transition={{ duration: 0.18, ease: "easeOut" }}
-              className="w-full max-w-sm sm:w-[390px] sm:max-w-none h-[480px] max-h-[80vh] sm:h-[540px]"
+              exit={{ opacity: 0, y: 12, scale: 0.97 }}
+              transition={{ duration: 0.16, ease: "easeOut" }}
+              className="w-full max-w-[360px] sm:w-[385px] sm:max-w-none" style={{ height: 'min(540px, calc(100dvh - 16px))' }}
             >
               {renderChatUI()}
             </motion.div>
