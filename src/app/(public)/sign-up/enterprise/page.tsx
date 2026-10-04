@@ -6,7 +6,7 @@ import { PublicLayout } from '@/components/organisms/PublicLayout/PublicLayout';
 import Navbar from '@/components/organisms/Navbar/Navbar';
 import { Footer } from '@/components/organisms/Footer/Footer';
 import { useSignupMutation } from '@/features/Register/services/RegisterServices';
-import { ChevronRight, ArrowRight, ShieldCheck, CreditCard, Sparkles, Building2, User, Mail, Loader2 } from 'lucide-react';
+import { ChevronRight, ArrowRight, ArrowLeft, ShieldCheck, CreditCard, Sparkles, Building2, User, Mail, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -81,13 +81,22 @@ function EnterpriseSignupContent() {
 
       <main className="pt-24 bg-white min-h-screen text-slate-900 pb-16 transition-colors duration-300">
         <div className="site-container px-4 sm:px-0">
-          {/* Breadcrumbs */}
-          <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-6">
-            <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
-            <ChevronRight size={10} />
-            <Link href="/sign-up" className="hover:text-blue-500 transition-colors">Sign Up</Link>
-            <ChevronRight size={10} />
-            <span className="text-slate-600">Cloud Enterprise Onboarding</span>
+          {/* Breadcrumbs & Back */}
+          <div className="flex items-center justify-between gap-2 mb-6">
+            <Link
+              href="/sign-up"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-white hover:bg-[#FF4D00] px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 transition-colors shadow-2xs"
+            >
+              <ArrowLeft size={13} className="stroke-[2.5]" />
+              <span>Back</span>
+            </Link>
+            <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
+              <ChevronRight size={10} />
+              <Link href="/sign-up" className="hover:text-blue-500 transition-colors">Sign Up</Link>
+              <ChevronRight size={10} />
+              <span className="text-slate-600">Cloud Enterprise Onboarding</span>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-5xl mx-auto items-start">

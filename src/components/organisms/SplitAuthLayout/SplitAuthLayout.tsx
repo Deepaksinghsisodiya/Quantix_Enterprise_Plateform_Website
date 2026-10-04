@@ -4,9 +4,9 @@
 import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
-import { Zap, ShieldCheck } from 'lucide-react';
+import { Zap, ShieldCheck, ArrowLeft } from 'lucide-react';
 
 export interface SplitAuthLayoutProps {
   children: React.ReactNode;
@@ -195,8 +195,9 @@ function SplitAuthLeftBanner({
   );
 }
 
-function SplitAuthMobileHeader() {
+function SplitAuthBackButton() {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -204,9 +205,88 @@ function SplitAuthMobileHeader() {
   }, []);
 
   const source = useMemo(() => {
-    const s = searchParams?.get('source') || searchParams?.get('businessNature') || (mounted ? Cookies.get('authSource') : '') || '';
+    const s =
+      searchParams?.get('source') ||
+      searchParams?.get('businessNature') ||
+      (mounted ? Cookies.get('authSource') : '') ||
+      (pathname?.includes('/restaurant') ? 'restaurant' : pathname?.includes('/retail') ? 'retail' : '') ||
+      '';
     return s.toLowerCase();
+  }, [searchParams, mounted, pathname]);
+
+  const returnUrl = useMemo(() => {
+    return searchParams?.get('returnUrl') || (mounted ? Cookies.get('authReturnUrl') : '') || '';
   }, [searchParams, mounted]);
+
+  const homeHref = useMemo(() => {
+    if (returnUrl && returnUrl.startsWith('http')) {
+      return returnUrl;
+    }
+    if (source.includes('rest')) {
+      return process.env.NEXT_PUBLIC_RESTAURANT_URL || 'http://localhost:3002';
+    }
+    if (source.includes('retail')) {
+      return process.env.NEXT_PUBLIC_RETAIL_URL || 'http://localhost:3001';
+    }
+    return '/';
+  }, [returnUrl, source]);
+
+  const backLabel = useMemo(() => {
+    if (source.includes('rest')) return 'Back to Restaurant POS';
+    if (source.includes('retail')) return 'Back to Retail POS';
+    return 'Back to Home';
+  }, [source]);
+
+  const isExternalLink = homeHref.startsWith('http');
+
+  const content = (
+    <>
+      <ArrowLeft size={14} className="stroke-[2.5] transition-transform duration-200 group-hover:-translate-x-1 text-[#FF4D00] group-hover:text-white" />
+      <span className="font-syne font-bold tracking-tight text-[12px]">{backLabel}</span>
+    </>
+  );
+
+  return (
+    <div className="mb-3.5 flex items-center justify-between">
+      {isExternalLink ? (
+        <a
+          href={homeHref}
+          className="inline-flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 hover:text-white hover:bg-[#FF4D00] dark:hover:bg-[#FF4D00] px-3.5 py-1.5 rounded-lg border border-slate-200/90 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 transition-all duration-200 group shadow-2xs hover:border-[#FF4D00]"
+          title={`Return to ${backLabel}`}
+        >
+          {content}
+        </a>
+      ) : (
+        <Link
+          href={homeHref}
+          className="inline-flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 hover:text-white hover:bg-[#FF4D00] dark:hover:bg-[#FF4D00] px-3.5 py-1.5 rounded-lg border border-slate-200/90 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 transition-all duration-200 group shadow-2xs hover:border-[#FF4D00]"
+          title={`Return to ${backLabel}`}
+        >
+          {content}
+        </Link>
+      )}
+    </div>
+  );
+}
+
+function SplitAuthMobileHeader() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const source = useMemo(() => {
+    const s =
+      searchParams?.get('source') ||
+      searchParams?.get('businessNature') ||
+      (mounted ? Cookies.get('authSource') : '') ||
+      (pathname?.includes('/restaurant') ? 'restaurant' : pathname?.includes('/retail') ? 'retail' : '') ||
+      '';
+    return s.toLowerCase();
+  }, [searchParams, mounted, pathname]);
 
   const returnUrl = useMemo(() => {
     return searchParams?.get('returnUrl') || (mounted ? Cookies.get('authReturnUrl') : '') || '';
@@ -252,6 +332,24 @@ function SplitAuthMobileHeader() {
           <span className="font-syne text-[15px] sm:text-[17px] font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
             Quantix <span className="text-[#FF4D00]">{brandSubtext}</span>
           </span>
+        </Link>
+      )}
+
+      {isExternalLink ? (
+        <a
+          href={homeHref}
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-white hover:bg-[#FF4D00] px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-colors"
+        >
+          <ArrowLeft size={13} className="stroke-[2.5]" />
+          <span>Back</span>
+        </a>
+      ) : (
+        <Link
+          href={homeHref}
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-white hover:bg-[#FF4D00] px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-colors"
+        >
+          <ArrowLeft size={13} className="stroke-[2.5]" />
+          <span>Back</span>
         </Link>
       )}
     </div>
@@ -300,6 +398,13 @@ export const SplitAuthLayout: React.FC<SplitAuthLayoutProps> = ({
           <Suspense fallback={null}>
             <SplitAuthMobileHeader />
           </Suspense>
+
+          {/* Prominent Back Button (Directly visible in front above the form) */}
+          <div className="w-full max-w-[440px] mx-auto">
+            <Suspense fallback={null}>
+              <SplitAuthBackButton />
+            </Suspense>
+          </div>
 
           <div className="w-full max-w-[440px] mx-auto">{children}</div>
         </div>
