@@ -208,8 +208,8 @@ export const WHY_QUANTIX_MEGA_CONFIG: MegaMenuSectionData = {
   promoCards: [
     {
       badge: 'ENTERPRISE PROOF',
-      title: 'Why 50,000+ Chains Choose Quantix',
-      desc: 'Discover how multi-location operators eliminate hardware lock-in, achieve 99.99% uptime, and increase table turns by 38%.',
+      title: 'Why Modern Chains Choose Quantix',
+      desc: 'Discover how multi-location operators eliminate hardware lock-in, achieve high availability, and increase table turns by 38%.',
       ctaText: 'Calculate Your ROI',
       href: '/roi-calculator',
       imageSrc: '/images/ent_bi_analytics_bundle_v2.png',
@@ -225,10 +225,10 @@ export const WHY_QUANTIX_MEGA_CONFIG: MegaMenuSectionData = {
       ],
     },
     {
-      categoryTitle: 'PROVEN SUCCESS & REVIEWS',
+      categoryTitle: 'PROVEN ADVANTAGES',
       items: [
-        { title: 'Case Studies & ROI Stories', desc: 'Real quantifiable metrics from multi-unit operators', href: '/case-studies', icon: BarChart3, iconColor: 'text-emerald-500' },
-        { title: 'Customer Testimonials', desc: 'Read authentic reviews from enterprise founders & GMs', href: '/testimonials', icon: Star, iconColor: 'text-orange-500' },
+        { title: 'Enterprise POS Guide', desc: 'Detailed architectural roadmap for multi-store brands', href: '/resources/pos-guide', icon: BookOpen, iconColor: 'text-emerald-500' },
+        { title: 'Customer Testimonials', desc: 'Read authentic experiences from active POS operators', href: '/testimonials', icon: Star, iconColor: 'text-orange-500' },
       ],
     },
   ],
@@ -250,17 +250,17 @@ export const RESOURCES_MEGA_CONFIG: MegaMenuSectionData = {
     {
       categoryTitle: 'LEARN & READ',
       items: [
-        { title: 'Brand Partners & Clientele', desc: 'Enterprise chains & multi-unit brands powered by Quantix', href: '/resources/clientele', icon: Handshake, iconColor: 'text-amber-500' },
+        { title: 'Enterprise POS Guide', desc: 'Setup documentation and multi-store workflows', href: '/resources/pos-guide', icon: FileText, iconColor: 'text-amber-500' },
         { title: 'Blog & Insights', desc: 'Latest retail trends, POS guides & tips', href: '/blog', icon: Newspaper, iconColor: 'text-indigo-500' },
         { title: 'Help Center', desc: 'Setup guides, troubleshooting & FAQs', href: '/help', icon: HelpCircle, iconColor: 'text-blue-500' },
         { title: 'Getting Started Guide', desc: '5-step terminal onboarding & configuration', href: '/help/getting-started', icon: BookOpen, iconColor: 'text-emerald-500' },
       ],
     },
     {
-      categoryTitle: 'TOOLS & DOWNLOADS',
+      categoryTitle: 'TOOLS & SUPPORT',
       items: [
-        { title: 'Software Downloads', desc: 'Windows .exe, Linux .deb & Android APK binaries', href: '/downloads', icon: Download, iconColor: 'text-purple-500' },
-        { title: '24/7 Priority Support', desc: 'Talk to our dedicated POS engineering team', href: '/#support', icon: Headset, iconColor: 'text-cyan-500' },
+        { title: 'ROI Calculator', desc: 'Estimate business savings and hardware cost reductions', href: '/roi-calculator', icon: Calculator, iconColor: 'text-purple-500' },
+        { title: '24/7 Priority Support', desc: 'Talk to our dedicated POS engineering team', href: '/contact', icon: Headset, iconColor: 'text-cyan-500' },
       ],
     },
   ],

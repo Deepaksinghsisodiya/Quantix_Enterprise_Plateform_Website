@@ -66,13 +66,13 @@ export const CompanyMegaMenu: React.FC<CompanyMegaMenuProps> = ({
                       )}
                     </div>
                     <div className="flex items-center justify-between text-[14px] font-syne font-bold text-slate-900 dark:text-white group-hover/card:text-rose-600 dark:group-hover/card:text-rose-400 transition-colors leading-snug">
-                      <span className="truncate">{card.title}</span>
+                      <span>{card.title}</span>
                       <ArrowRight
                         size={14}
                         className="shrink-0 transition-transform group-hover/card:translate-x-1 text-rose-500"
                       />
                     </div>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-2">
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
                       {card.desc}
                     </p>
                   </div>

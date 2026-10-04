@@ -136,18 +136,15 @@ export default function IntegrationDetailPage() {
         { label: "Webhook SLA", value: "99.99%", desc: "Enterprise SLA" },
         { label: "Injection Speed", value: "< 200ms", desc: "Direct to Kitchen" },
         { label: "Accuracy Rate", value: "100%", desc: "Zero Ticket Errors" },
-        { label: "Security", value: "PCI-DSS", desc: "Level 1 Certified" },
+        { label: "Security", value: "256-bit", desc: "End-to-End Encrypted" },
       ];
 
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-orange-100 selection:text-orange-900">
       {/* 1. Hero Section (Aligned with globals.css .page-hero-header) */}
-      <section className="bg-white page-hero-header border-b border-slate-200/80 relative overflow-hidden">
-        {/* Subtle Architectural Dot Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] bg-size-[20px_20px] sm:bg-size-[24px_24px] pointer-events-none opacity-60" />
-
+      <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-200/80 dark:border-slate-800/80 relative overflow-hidden">
         {/* Soft Ambient Radial Warmth */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 bg-linear-to-b from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 bg-gradient-to-b from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
 
         <div className="site-container relative z-10 px-4 sm:px-6">
           {/* Breadcrumb Navigation + Back Button */}

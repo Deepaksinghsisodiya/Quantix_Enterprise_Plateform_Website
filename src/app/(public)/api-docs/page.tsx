@@ -302,9 +302,12 @@ export default function ApiDocsPage() {
     <>
       {/* 1. Hero Header Section */}
       <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
+        {/* Ambient top glow */}
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-175 h-72 bg-gradient-to-b from-blue-500/10 via-purple-500/5 to-transparent blur-3xl pointer-events-none" />
+
         <div className="site-container relative z-10 px-4 sm:px-6">
           {/* Breadcrumb */}
-          <div className="mb-4 inline-flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+          <div className="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
             <ChevronRight size={12} />
             <Link href="/resources" className="hover:text-primary transition-colors">Resources</Link>
@@ -312,22 +315,24 @@ export default function ApiDocsPage() {
             <span className="text-primary font-bold">API Documentation</span>
           </div>
 
-          <div className="max-w-4xl mx-auto text-center space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
-              <Flame size={13} className="text-primary" />
-              <span>Developer Reference v1.4 (OAS 3.1)</span>
+          <div className="max-w-4xl space-y-4 text-left">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
+                <Flame size={13} className="text-primary" />
+                <span>Developer Reference v1.4 (OAS 3.1)</span>
+              </div>
             </div>
 
             <h1 className="font-syne text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 dark:text-white leading-tight tracking-tight">
               REST & Webhook API Telemetry
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium max-w-2xl leading-relaxed">
               Integrate Quantix registers with ERP data lakes (SAP, NetSuite, QuickBooks), custom BI reporting pipelines, and automated supplier inventory feeds.
             </p>
 
             {/* Quick Metrics Bar */}
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-3 text-xs">
+            <div className="pt-2 flex flex-wrap items-center justify-start gap-3 text-xs">
               <span className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 font-mono font-bold text-slate-700 dark:text-slate-300">
                 ⚡ Base URL: <strong className="text-primary">https://api.quantixpos.com</strong>
               </span>
@@ -337,7 +342,7 @@ export default function ApiDocsPage() {
             </div>
 
             {/* 3D Blueprint Visual Showcase */}
-            <div className="relative w-full max-w-lg mx-auto aspect-16/10 flex items-center justify-center pt-2">
+            <div className="relative w-full max-w-lg aspect-16/10 flex items-center justify-start pt-2">
               <img
                 src="/images/ent_guide_blueprint.png"
                 alt="Enterprise POS API Architecture Blueprint"

@@ -112,7 +112,7 @@ export const FeaturesMegaMenu: React.FC<FeaturesMegaMenuProps> = ({
     navbarFeatures.forEach((f) => {
       const { icon, color } = getIconFromKey(f.iconKey, f.slug);
       const item: MegaMenuItem = {
-        title: f.title.length > 36 ? f.title.substring(0, 34) + '...' : f.title,
+        title: f.title,
         desc: f.subtitle || f.shortDescription || '',
         href: `/features/${f.slug}`,
         icon,
@@ -173,10 +173,10 @@ export const FeaturesMegaMenu: React.FC<FeaturesMegaMenuProps> = ({
             : 'hover:bg-slate-50 dark:hover:bg-slate-900/60 border-transparent hover:border-slate-200 dark:hover:border-slate-800'
         )}
       >
-        <div className="flex items-center gap-2.5 min-w-0 flex-1">
+        <div className="flex items-start gap-2.5 min-w-0 flex-1">
           <span
             className={cn(
-              'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border transition-all duration-200 shadow-2xs',
+              'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border transition-all duration-200 shadow-2xs mt-0.5',
               isItemActive
                 ? 'bg-primary text-white border-primary shadow-sm'
                 : 'bg-slate-100 dark:bg-slate-900 border-slate-200/50 dark:border-slate-800 group-hover/item:border-primary/30 group-hover/item:bg-primary/5 group-hover/item:scale-105'
@@ -188,10 +188,10 @@ export const FeaturesMegaMenu: React.FC<FeaturesMegaMenuProps> = ({
             />
           </span>
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-1.5">
+            <div className="flex flex-wrap items-center gap-1.5">
               <span
                 className={cn(
-                  'font-syne font-bold text-[12.5px] transition-colors block truncate leading-tight',
+                  'font-syne font-bold text-[12.5px] transition-colors block leading-snug',
                   isItemActive ? 'text-primary font-black' : 'text-slate-900 dark:text-white group-hover/item:text-primary'
                 )}
               >
@@ -204,7 +204,7 @@ export const FeaturesMegaMenu: React.FC<FeaturesMegaMenuProps> = ({
               )}
             </div>
             {item.desc && (
-              <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-tight group-hover/item:text-slate-700 dark:group-hover/item:text-slate-300 line-clamp-1 mt-0.5">
+              <p className="text-[10.5px] text-slate-500 dark:text-slate-400 font-medium leading-normal group-hover/item:text-slate-700 dark:group-hover/item:text-slate-300 mt-0.5">
                 {item.desc}
               </p>
             )}
@@ -306,7 +306,7 @@ export const FeaturesMegaMenu: React.FC<FeaturesMegaMenuProps> = ({
                 <div className="text-[14px] font-syne font-bold text-slate-900 dark:text-white group-hover/card:text-primary transition-colors leading-snug">
                   <span>{promoCard.title}</span>
                 </div>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-2">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
                   {promoCard.desc}
                 </p>
               </div>

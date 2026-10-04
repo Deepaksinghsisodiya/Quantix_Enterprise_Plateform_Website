@@ -106,14 +106,20 @@ export default function SolutionsClient() {
   if (isLoading) {
     return (
       <div className="w-full overflow-x-hidden">
-        <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-200/80 dark:border-slate-800 relative overflow-hidden py-16">
-          <div className="site-container text-center max-w-4xl mx-auto px-4 space-y-4">
-            <div className="h-6 w-48 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto animate-pulse" />
-            <div className="h-12 w-3/4 bg-slate-200 dark:bg-slate-800 rounded-xl mx-auto animate-pulse" />
-            <div className="h-5 w-2/3 bg-slate-200 dark:bg-slate-800 rounded mx-auto animate-pulse" />
+        <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-200/80 dark:border-slate-800 relative overflow-hidden py-10 sm:py-14">
+          <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-64 bg-linear-to-b from-primary/15 via-primary/5 to-transparent blur-3xl -z-10" />
+          <div className="site-container relative z-10 px-4 sm:px-6 text-left space-y-4">
+            <div className="h-6 w-48 bg-primary/10 border border-primary/20 rounded-full animate-pulse" />
+            <div className="h-10 sm:h-12 w-3/4 max-w-2xl bg-slate-200 dark:bg-slate-800 rounded-xl animate-pulse" />
+            <div className="h-4 w-2/3 max-w-xl bg-slate-200 dark:bg-slate-800 rounded animate-pulse" />
+            <div className="pt-2 flex items-center justify-start gap-2 overflow-x-hidden">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="h-9 w-32 rounded-full bg-slate-200 dark:bg-slate-800 shrink-0 animate-pulse" />
+              ))}
+            </div>
           </div>
         </section>
-        <SolutionsOverviewSkeleton />
+        <SolutionsOverviewSkeleton showFilterSkeleton={false} />
       </div>
     );
   }
@@ -124,22 +130,24 @@ export default function SolutionsClient() {
       <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-200/80 dark:border-slate-800 relative overflow-hidden">
         <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-64 bg-linear-to-b from-primary/15 via-primary/5 to-transparent blur-3xl -z-10" />
 
-        <div className="site-container text-center max-w-4xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.35 }}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10.5px] sm:text-xs font-black uppercase tracking-widest text-primary mb-3 sm:mb-4 shadow-xs"
-          >
-            <Sparkles size={13} className="text-primary" />
-            <span>ENTERPRISE POS SOLUTIONS</span>
-          </motion.div>
+        <div className="site-container relative z-10 px-4 sm:px-6 text-left space-y-4">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.35 }}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10.5px] sm:text-xs font-black uppercase tracking-widest text-primary shadow-xs"
+            >
+              <Sparkles size={13} className="text-primary" />
+              <span>ENTERPRISE POS SOLUTIONS</span>
+            </motion.div>
+          </div>
 
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.08 }}
-            className="font-syne text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white leading-[1.18] sm:leading-[1.15] tracking-tight text-balance"
+            className="font-syne text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white leading-[1.18] sm:leading-[1.15] tracking-tight max-w-4xl"
           >
             Three Purpose-Built Solutions.{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-primary via-primary-light to-amber-500 block sm:inline">
@@ -151,7 +159,7 @@ export default function SolutionsClient() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.16 }}
-            className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-normal max-w-2xl mx-auto leading-relaxed"
+            className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-normal max-w-2xl leading-relaxed"
           >
             Purpose-built operating platforms for dining hospitality, high-volume retail stores, and multi-location enterprise chains.
           </motion.p>
@@ -161,7 +169,7 @@ export default function SolutionsClient() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.24 }}
-            className="mt-5 sm:mt-7 flex items-center sm:justify-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none snap-x touch-pan-x"
+            className="pt-2 flex items-center justify-start gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none snap-x touch-pan-x"
           >
             {FILTER_TABS.map((tab) => {
               const isSelected = selectedFilter === tab.id;

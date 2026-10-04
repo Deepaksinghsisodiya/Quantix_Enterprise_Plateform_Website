@@ -388,32 +388,31 @@ export default function IntegrationsClient() {
       {/* ========================================== */}
       {/* ENHANCED HERO WITH ARCHITECTURAL GRID & RESPONSIVE PADDING */}
       {/* ========================================== */}
-      <section className="bg-white page-hero-header border-b border-slate-200/80 relative overflow-hidden pt-24 pb-10 sm:pt-32 sm:pb-14 md:pt-36 md:pb-16 lg:pt-40 lg:pb-20">
-        {/* Subtle Architectural Dot Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] bg-size-[20px_20px] sm:bg-size-[24px_24px] pointer-events-none opacity-60" />
+      <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-200/80 dark:border-slate-800/80 relative overflow-hidden pt-24 pb-10 sm:pt-32 sm:pb-14 md:pt-36 md:pb-16 lg:pt-40 lg:pb-20">
+        {/* Ambient Top Glow (Matching Enterprise-vs-Standalone) */}
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-175 h-72 bg-gradient-to-b from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none" />
 
-        {/* Soft Ambient Radial Warmth */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 bg-linear-to-b from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
-
-        <div className="site-container text-center max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="site-container relative z-10 px-4 sm:px-6 text-left space-y-4">
           {/* Top Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#FF4F00] mb-3 sm:mb-3.5 shadow-2xs"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FF4F00] animate-pulse" />
-            <Sparkles size={12} className="text-[#FF4F00]" />
-            <span>{displayIntegrations.length}+ ENTERPRISE INTEGRATIONS DIRECTORY</span>
-          </motion.div>
+          <div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200/80 dark:border-orange-900/50 text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#FF4F00] shadow-2xs"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF4F00] animate-pulse" />
+              <Sparkles size={12} className="text-[#FF4F00]" />
+              <span>{displayIntegrations.length}+ ENTERPRISE INTEGRATIONS DIRECTORY</span>
+            </motion.div>
+          </div>
 
           {/* Main Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.1 }}
-            className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-950 leading-[1.2] sm:leading-[1.16] tracking-tight"
+            className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-950 dark:text-white leading-[1.2] sm:leading-[1.16] tracking-tight max-w-4xl"
           >
             Connect Quantix With Your{" "}
             <span className="text-[#FF4F00]">Enterprise Ecosystem</span>
@@ -424,28 +423,28 @@ export default function IntegrationsClient() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.2 }}
-            className="mt-2.5 sm:mt-3.5 text-xs sm:text-sm md:text-base text-slate-600 font-normal max-w-2xl mx-auto leading-relaxed px-1 sm:px-0"
+            className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-normal max-w-2xl leading-relaxed"
           >
             Automate kitchen ticket routing, payment gateway settlements, online delivery dispatching,
             and ERP accounting sync with sub-second synchronization.
           </motion.p>
 
-          {/* 4 Compact Enterprise Trust Metrics (Mobile 2x2, Desktop 4-col) */}
+          {/* 4 Compact Enterprise Trust Metrics */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.25 }}
-            className="mt-5 sm:mt-7 md:mt-8 grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 max-w-3xl mx-auto"
+            className="pt-2 grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 max-w-3xl"
           >
             {trustMetrics.map((metric, idx) => (
               <div
                 key={idx}
-                className="px-2.5 py-2 sm:px-3 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-50/90 border border-slate-200/80 backdrop-blur-xs text-center shadow-2xs"
+                className="px-2.5 py-2 sm:px-3 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-50/90 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 backdrop-blur-xs text-left shadow-2xs"
               >
-                <div className="font-syne font-extrabold text-sm sm:text-base md:text-lg text-slate-950">
+                <div className="font-syne font-extrabold text-sm sm:text-base md:text-lg text-slate-950 dark:text-white">
                   {metric.value}
                 </div>
-                <div className="text-[10px] sm:text-[11px] font-semibold text-slate-700 leading-tight">
+                <div className="text-[10px] sm:text-[11px] font-semibold text-slate-700 dark:text-slate-300 leading-tight">
                   {metric.label}
                 </div>
                 <div className="text-[9px] text-slate-400 mt-0.5 hidden sm:block">
@@ -455,12 +454,12 @@ export default function IntegrationsClient() {
             ))}
           </motion.div>
 
-          {/* Segmented Filter Control (Touch-scrollable on Mobile) */}
+          {/* Segmented Filter Control */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.35 }}
-            className="mt-6 sm:mt-8 flex justify-center w-full"
+            className="pt-4 flex justify-start w-full"
           >
             <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-slate-100/90 border border-slate-200/80 shadow-inner max-w-full overflow-x-auto scrollbar-none snap-x touch-pan-x px-1">
               <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">

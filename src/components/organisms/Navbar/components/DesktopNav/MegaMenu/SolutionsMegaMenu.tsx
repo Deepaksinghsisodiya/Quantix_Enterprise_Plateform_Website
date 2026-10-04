@@ -20,6 +20,7 @@ import {
 import { cn } from '@/lib/utils';
 import { MegaMenuWrapper } from './MegaMenuWrapper';
 import { useGetSolutionsMegaMenuQuery } from '@/features/Solutions/Service/SolutionsService';
+import { PRODUCTS_MEGA_CONFIG } from '../../../config/navConfig';
 
 const ICON_RESOLVER: Record<string, LucideIcon> = {
   Utensils,
@@ -85,6 +86,7 @@ export const SolutionsMegaMenu: React.FC<SolutionsMegaMenuProps> = ({
   const { data: apiData, isLoading } = useGetSolutionsMegaMenuQuery('Enterprise');
 
   // Dynamic promo cards from API (zero dummy fallback)
+  // Dynamic promo cards from API with safe fallback
   const promoCards = useMemo(() => {
     if (apiData?.promoCards && Array.isArray(apiData.promoCards) && apiData.promoCards.length > 0) {
       return apiData.promoCards.map((c) => ({
@@ -97,44 +99,44 @@ export const SolutionsMegaMenu: React.FC<SolutionsMegaMenuProps> = ({
         badgeColor: c?.badgeColor || 'text-amber-700 dark:text-amber-400 bg-amber-100/90 dark:bg-amber-900/30 border border-amber-300/40',
       }));
     }
-    return [];
+    return PRODUCTS_MEGA_CONFIG.promoCards || [];
   }, [apiData]);
 
-  // Dynamic categories from API (zero dummy fallback)
+  // Dynamic categories from API with safe fallback
   const categories = useMemo(() => {
     if (apiData?.categories && Array.isArray(apiData.categories) && apiData.categories.length > 0) {
       return apiData.categories.map((group) => ({
         categoryTitle: group?.categoryTitle || '',
         items: Array.isArray(group?.items)
           ? group.items.map((it) => ({
-              title: it?.title || '',
-              desc: it?.description || '',
-              href: it?.href || (it?.slug ? `/solutions/${it.slug}` : '/solutions'),
-              icon: resolveIcon(it?.iconKey, Sparkles),
-              iconColor: it?.iconColor || 'text-primary',
-              badge: it?.badge,
-            }))
+            title: it?.title || '',
+            desc: it?.description || '',
+            href: it?.href || (it?.slug ? `/solutions/${it.slug}` : '/solutions'),
+            icon: resolveIcon(it?.iconKey, Sparkles),
+            iconColor: it?.iconColor || 'text-primary',
+            badge: it?.badge,
+          }))
           : [],
       }));
     }
-    return [];
+    return PRODUCTS_MEGA_CONFIG.categories || [];
   }, [apiData]);
 
-  if (!isLoading && promoCards.length === 0 && categories.length === 0) {
+  if (isLoading) {
     return (
       <MegaMenuWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-        <div className="py-10 px-6 text-center space-y-3 w-full">
-          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-            No enterprise solutions are currently published.
-          </p>
-          <Link
-            href="/solutions"
-            onClick={onClose}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold uppercase tracking-wider hover:bg-primary-dark transition-all"
-          >
-            <span>View All Solutions</span>
-            <ChevronRight size={13} />
-          </Link>
+        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8 w-full animate-pulse">
+          <div className="flex flex-col border-slate-200/80 pr-0 dark:border-slate-800/80 lg:col-span-4 lg:border-r lg:pr-7 h-full">
+            <PromoCardSkeleton />
+          </div>
+          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
+            <MenuCategorySkeleton />
+            <MenuCategorySkeleton />
+          </div>
+        </div>
+        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs animate-pulse">
+          <div className="h-3 w-64 rounded bg-slate-200 dark:bg-slate-800" />
+          <div className="h-3 w-36 rounded bg-slate-200 dark:bg-slate-800" />
         </div>
       </MegaMenuWrapper>
     );

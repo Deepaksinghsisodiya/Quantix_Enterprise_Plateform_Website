@@ -182,22 +182,24 @@ export default function ProductsPage() {
           className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 bg-linear-to-b from-primary/20 via-primary/10 to-transparent blur-3xl pointer-events-none -z-10"
         />
 
-        <div className="site-container text-center max-w-3xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[11px] sm:text-xs font-black uppercase tracking-wider text-primary mb-3 shadow-xs"
-          >
-            <Sparkles size={13} className="text-primary animate-pulse" />
-            <span>QUANTIX PRODUCT PLATFORM</span>
-          </motion.div>
+        <div className="site-container relative z-10 px-4 sm:px-6 text-left space-y-4">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[11px] sm:text-xs font-black uppercase tracking-wider text-primary shadow-xs"
+            >
+              <Sparkles size={13} className="text-primary animate-pulse" />
+              <span>QUANTIX PRODUCT PLATFORM</span>
+            </motion.div>
+          </div>
 
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.1 }}
-            className="font-syne text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-[1.18] tracking-tight"
+            className="font-syne text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-[1.18] tracking-tight max-w-4xl"
           >
             Connected Modules For Every Part of Your Business
           </motion.h1>
@@ -206,7 +208,7 @@ export default function ProductsPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.2 }}
-            className="mt-3 text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium max-w-xl mx-auto leading-relaxed"
+            className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium max-w-2xl leading-relaxed"
           >
             Choose standalone hardware bundles or combine restaurant, retail, cloud back-office, and omnichannel storefronts into one ecosystem.
           </motion.p>
@@ -216,7 +218,7 @@ export default function ProductsPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.3 }}
-            className="mt-5 sm:mt-6 flex items-center sm:justify-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none snap-x touch-pan-x"
+            className="pt-2 flex items-center justify-start gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none snap-x touch-pan-x"
           >
             {FILTER_TABS.map((tab) => {
               const isActive = selectedFilter === tab.id;

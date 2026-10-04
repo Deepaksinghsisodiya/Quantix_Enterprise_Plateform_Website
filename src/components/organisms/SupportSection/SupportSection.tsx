@@ -37,10 +37,9 @@ export const SupportSectionSkeleton: React.FC<{ className?: string }> = ({ class
       id="support-loading"
       className={`scroll-mt-28 relative overflow-hidden py-12 lg:py-16 bg-white dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors select-none ${className}`}
     >
-      {/* Background Subtle Ambient Glows & Dot Grid */}
+      {/* Background Subtle Ambient Glows */}
       <div className="pointer-events-none absolute -top-24 -left-20 h-87.5 sm:h-125 w-87.5 sm:w-125 rounded-full bg-orange-500/4 dark:bg-orange-500/[0.07] blur-3xl" />
       <div className="pointer-events-none absolute -bottom-20 -right-20 h-75 sm:h-100 w-75 sm:w-100 rounded-full bg-amber-500/4 dark:bg-amber-500/[0.07] blur-3xl" />
-      <div className="pointer-events-none absolute bottom-4 right-4 hidden xl:block h-28 w-28 bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] dark:bg-[radial-gradient(#334155_1.5px,transparent_1.5px)] bg-size-[12px_12px]" />
 
       <div className="site-container relative z-10 px-3.5 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-10 xl:gap-14 items-center">
@@ -254,10 +253,9 @@ export const SupportSection: React.FC<SupportSectionProps> = ({
       id="support"
       className={`scroll-mt-28 relative overflow-hidden py-12 lg:py-16 bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-b border-slate-200/80 dark:border-slate-800/80 transition-colors select-none ${className}`}
     >
-      {/* Background Subtle Ambient Glows & Dot Grid */}
+      {/* Background Subtle Ambient Glows */}
       <div className="pointer-events-none absolute -top-24 -left-20 h-87.5 sm:h-125 w-87.5 sm:w-125 rounded-full bg-orange-500/4 dark:bg-orange-500/[0.07] blur-3xl" />
       <div className="pointer-events-none absolute -bottom-20 -right-20 h-75 sm:h-100 w-75 sm:w-100 rounded-full bg-amber-500/4 dark:bg-amber-500/[0.07] blur-3xl" />
-      <div className="pointer-events-none absolute bottom-4 right-4 hidden xl:block h-28 w-28 bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] dark:bg-[radial-gradient(#334155_1.5px,transparent_1.5px)] bg-size-[12px_12px]" />
 
       <div className="site-container relative z-10 px-3.5 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-10 xl:gap-14 items-center">

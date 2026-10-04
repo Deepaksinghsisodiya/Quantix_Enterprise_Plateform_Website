@@ -9,11 +9,51 @@ import { cn } from '@/lib/utils';
 import { MegaMenuWrapper } from './MegaMenuWrapper';
 import { PRODUCTS_MEGA_CONFIG } from '../../../config/navConfig';
 
+import { useGetSolutionsMegaMenuQuery } from '@/features/Solutions/Service/SolutionsService';
+
 interface ProductsMegaMenuProps {
   onClose: () => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
+
+const ProductsMegaMenuSkeleton = () => (
+  <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8 w-full animate-pulse">
+    {/* Left Column: 2 Featured Cards Skeleton (5 cols) */}
+    <div className="lg:col-span-5 border-r border-slate-200/80 dark:border-slate-800/80 pr-8 flex flex-col gap-4 justify-between">
+      {[1, 2].map((i) => (
+        <div
+          key={i}
+          className="relative flex items-center gap-4.5 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800"
+        >
+          <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl bg-slate-200 dark:bg-slate-800 shrink-0" />
+          <div className="flex-1 space-y-2 min-w-0 pr-2">
+            <div className="h-4 w-24 rounded-full bg-slate-200 dark:bg-slate-700" />
+            <div className="h-5 w-44 rounded-md bg-slate-200 dark:bg-slate-700" />
+            <div className="h-3.5 w-full rounded bg-slate-100 dark:bg-slate-800" />
+            <div className="h-3.5 w-3/4 rounded bg-slate-100 dark:bg-slate-800" />
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {/* Right Column: 3 Categories Skeleton (7 cols) */}
+    <div className="lg:col-span-7 flex flex-col justify-between py-1 space-y-4.5">
+      {[1, 2, 3].map((catIdx) => (
+        <div key={catIdx} className="space-y-2">
+          <div className="h-3 w-40 rounded bg-slate-200 dark:bg-slate-700 pb-1.5" />
+          <div className="flex items-center gap-3.5 p-2.5 px-4 rounded-2xl border border-transparent bg-slate-50/60 dark:bg-slate-900/40 w-full max-w-md">
+            <div className="h-9.5 w-9.5 rounded-xl bg-slate-200 dark:bg-slate-800 shrink-0" />
+            <div className="flex-1 space-y-1.5">
+              <div className="h-4 w-36 rounded bg-slate-200 dark:bg-slate-700" />
+              <div className="h-3 w-56 rounded bg-slate-100 dark:bg-slate-800" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 export const ProductsMegaMenu: React.FC<ProductsMegaMenuProps> = ({
   onClose,
@@ -22,6 +62,16 @@ export const ProductsMegaMenu: React.FC<ProductsMegaMenuProps> = ({
 }) => {
   const pathname = usePathname();
   const { promoCards, categories } = PRODUCTS_MEGA_CONFIG;
+
+  const { data: _apiData, isLoading } = useGetSolutionsMegaMenuQuery('Enterprise');
+
+  if (isLoading) {
+    return (
+      <MegaMenuWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <ProductsMegaMenuSkeleton />
+      </MegaMenuWrapper>
+    );
+  }
 
   return (
     <MegaMenuWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>

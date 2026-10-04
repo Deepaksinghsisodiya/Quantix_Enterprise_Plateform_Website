@@ -5,15 +5,23 @@ import React from 'react';
  * Rendered as part of the `isLoading` guard in SolutionsClient.tsx.
  * Matches the actual alternating section layout: filter tabs + 3 full-width solution sections.
  */
-export const SolutionsOverviewSkeleton: React.FC = () => {
+interface SolutionsOverviewSkeletonProps {
+  showFilterSkeleton?: boolean;
+}
+
+export const SolutionsOverviewSkeleton: React.FC<SolutionsOverviewSkeletonProps> = ({
+  showFilterSkeleton = true,
+}) => {
   return (
     <div className="w-full animate-pulse">
       {/* ─── Filter Tabs Skeleton ────────────────────────────────────── */}
-      <div className="site-container flex items-center justify-center gap-2 py-6 px-4 overflow-x-hidden">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="h-9 w-32 rounded-full bg-slate-200 dark:bg-slate-800 shrink-0" />
-        ))}
-      </div>
+      {showFilterSkeleton && (
+        <div className="site-container flex items-center justify-start gap-2 py-6 px-4 sm:px-6 overflow-x-hidden">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-9 w-32 rounded-full bg-slate-200 dark:bg-slate-800 shrink-0" />
+          ))}
+        </div>
+      )}
 
       {/* ─── 3 Full-Width Solution Section Skeletons ─────────────────── */}
       <div className="divide-y divide-slate-200/80 dark:divide-slate-800/80">

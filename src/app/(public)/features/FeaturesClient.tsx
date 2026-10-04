@@ -190,7 +190,7 @@ export default function FeaturesClient() {
 
 
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState<string>("" );
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [viewMode, setViewMode] = useState<"bento" | "grouped">("bento");
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -243,7 +243,7 @@ export default function FeaturesClient() {
         {/* Ambient Radial Lighting */}
         <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-64 bg-linear-to-b from-primary/15 via-primary/5 to-transparent blur-3xl -z-10" />
 
-        <div className="site-container text-center max-w-4xl mx-auto px-4">
+        <div className="site-container relative z-10 px-4 sm:px-6 text-left space-y-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -270,7 +270,7 @@ export default function FeaturesClient() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.16 }}
-            className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-normal max-w-2xl mx-auto leading-relaxed"
+            className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 font-normal max-w-2xl leading-relaxed"
           >
             Explore modular capabilities powering dining room hospitality, high-throughput retail stores, multi-location cloud command, and direct digital ordering.
           </motion.p>
@@ -282,7 +282,7 @@ export default function FeaturesClient() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="mt-5 sm:mt-7 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs"
+            className="pt-2 flex flex-wrap items-center justify-start gap-2 sm:gap-3 text-xs"
           >
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100/90 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold font-syne">
               <Zap className="h-3.5 w-3.5 text-amber-500" />
@@ -306,7 +306,7 @@ export default function FeaturesClient() {
       <div className="sticky top-20 sm:top-22 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800 py-3 shadow-xs">
         <div className="site-container px-3 sm:px-6">
           <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-            
+
             {/* Sliding Pill Category Tabs */}
             <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none snap-x touch-pan-x flex-1">
               {FILTER_TABS.map((tab) => {
@@ -318,11 +318,10 @@ export default function FeaturesClient() {
                     key={tab.id}
                     type="button"
                     onClick={() => setSelectedFilter(tab.id)}
-                    className={`group relative px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-syne font-bold transition-all duration-300 shrink-0 select-none snap-center flex items-center gap-1.5 cursor-pointer ${
-                      isSelected
+                    className={`group relative px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-syne font-bold transition-all duration-300 shrink-0 select-none snap-center flex items-center gap-1.5 cursor-pointer ${isSelected
                         ? "text-white shadow-sm shadow-primary/25"
                         : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800"
-                    }`}
+                      }`}
                   >
                     {isSelected && (
                       <motion.div
@@ -334,9 +333,8 @@ export default function FeaturesClient() {
                     <TabIcon className="relative z-10 h-3 w-3 stroke-[2.2] shrink-0" />
                     <span className="relative z-10">{tab.label}</span>
                     <span
-                      className={`relative z-10 text-[9px] font-mono px-1.5 py-0.2 rounded-full ${
-                        isSelected ? "bg-white/20 text-white" : "bg-slate-200 dark:bg-slate-800 text-slate-500"
-                      }`}
+                      className={`relative z-10 text-[9px] font-mono px-1.5 py-0.2 rounded-full ${isSelected ? "bg-white/20 text-white" : "bg-slate-200 dark:bg-slate-800 text-slate-500"
+                        }`}
                     >
                       {tab.count}
                     </span>
@@ -347,7 +345,7 @@ export default function FeaturesClient() {
 
             {/* Controls Right: Search + 2-Way View Toggle */}
             <div className="flex items-center gap-2 shrink-0">
-              
+
               {/* Instant Search Bar (with '/' keyboard shortcut hint) */}
               <div className="relative flex-1 sm:w-64">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
@@ -359,7 +357,7 @@ export default function FeaturesClient() {
                   placeholder="Search capability..."
                   className="w-full pl-8.5 pr-14 py-1.5 text-xs rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-hidden focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                 />
-                
+
                 {searchQuery ? (
                   <button
                     type="button"
@@ -381,11 +379,10 @@ export default function FeaturesClient() {
                   type="button"
                   onClick={() => setViewMode("bento")}
                   title="Bento Grid View"
-                  className={`p-1.5 rounded-full transition-all cursor-pointer ${
-                    viewMode === "bento"
+                  className={`p-1.5 rounded-full transition-all cursor-pointer ${viewMode === "bento"
                       ? "bg-white dark:bg-slate-800 text-primary shadow-xs"
                       : "text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
-                  }`}
+                    }`}
                 >
                   <LayoutGrid className="h-3.5 w-3.5" />
                 </button>
@@ -393,11 +390,10 @@ export default function FeaturesClient() {
                   type="button"
                   onClick={() => setViewMode("grouped")}
                   title="Grouped by Solution View"
-                  className={`p-1.5 rounded-full transition-all cursor-pointer ${
-                    viewMode === "grouped"
+                  className={`p-1.5 rounded-full transition-all cursor-pointer ${viewMode === "grouped"
                       ? "bg-white dark:bg-slate-800 text-primary shadow-xs"
                       : "text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
-                  }`}
+                    }`}
                 >
                   <LayoutList className="h-3.5 w-3.5" />
                 </button>
@@ -414,7 +410,7 @@ export default function FeaturesClient() {
       {/* ========================================================================= */}
       <section className="section-py bg-white dark:bg-slate-950">
         <div className="site-container px-3.5 sm:px-6">
-          
+
           {/* Active Search & Filter Feedback Strip */}
           {(searchQuery.trim() || selectedFilter !== "all") && (
             <div className="flex items-center justify-between gap-2 mb-4 pb-2 border-b border-slate-100 dark:border-slate-800 text-xs text-slate-500">
@@ -464,7 +460,7 @@ export default function FeaturesClient() {
               </button>
             </div>
           ) : viewMode === "grouped" && !searchQuery.trim() && selectedFilter === "all" ? (
-            
+
             // -------------------------------------------------------------
             // GROUPED BY SOLUTION VIEW (Organized by Solution Ecosystem)
             // -------------------------------------------------------------
@@ -511,7 +507,7 @@ export default function FeaturesClient() {
             </div>
 
           ) : (
-            
+
             // -------------------------------------------------------------
             // BENTO GRID VIEW (Dynamic Panoramic Cards)
             // -------------------------------------------------------------
@@ -738,10 +734,10 @@ function StandardFeatureCard({ item }: { item: FeatureCardItem }) {
 
           {/* Title & Description */}
           <div className="space-y-1">
-            <h3 className="font-syne font-black text-sm sm:text-base text-slate-950 dark:text-white group-hover:text-primary transition-colors duration-200 line-clamp-1">
+            <h3 className="font-syne font-black text-sm sm:text-base text-slate-950 dark:text-white group-hover:text-primary transition-colors duration-200">
               {item.title}
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-normal leading-relaxed line-clamp-2">
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-normal leading-relaxed">
               {item.desc}
             </p>
           </div>

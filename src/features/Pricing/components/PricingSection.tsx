@@ -89,11 +89,6 @@ export const PricingSection: React.FC = () => {
     <div className="w-full font-sans text-slate-900 dark:text-white transition-colors duration-300">
       {/* ─── 1. Page Hero Header (Why Quantix / Resources Style) ─── */}
       <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-100 dark:border-slate-800/80 pb-8 sm:pb-12 lg:pb-14 relative overflow-hidden" id="pricing-hero">
-        {/* Subtle dot grid */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-50 dark:opacity-20"
-          style={{ backgroundImage: 'radial-gradient(#E2E8F0 1px, transparent 1px)', backgroundSize: '24px 24px' }}
-        />
         {/* Warm top ambient glow */}
         <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-175 h-72 bg-gradient-to-b from-orange-400/15 via-amber-400/5 to-transparent blur-3xl pointer-events-none" />
 

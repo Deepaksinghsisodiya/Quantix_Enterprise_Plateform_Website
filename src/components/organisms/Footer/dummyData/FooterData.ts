@@ -24,9 +24,8 @@ export const INDUSTRY_LINKS: FooterLink[] = [
 export const COMPANY_LINKS: FooterLink[] = [
   { href: "/resources/pos-guide", label: "Enterprise POS Guide" },
   { href: "/blog", label: "Resource Hub & Blog", badge: "Live" },
-  { href: "/case-studies", label: "Customer Case Studies" },
   { href: "/roi-calculator", label: "ROI Savings Calculator" },
-  { href: "/downloads", label: "Desktop & Mobile Apps" },
+  { href: "/features/multi-store", label: "Multi-Store Cloud Command" },
 ];
 
 export const LEGAL_LINKS: FooterLink[] = [
@@ -34,14 +33,15 @@ export const LEGAL_LINKS: FooterLink[] = [
   { href: "/why-quantix", label: "Why Quantix" },
   { href: "/contact", label: "Contact Enterprise Sales" },
   { href: "/help", label: "24/7 Technical Support" },
-  { href: "/status", label: "Live System Status" },
+  { href: "/privacy", label: "Privacy Policy" },
+  { href: "/terms", label: "Terms of Service" },
 ];
 
 export const SOCIAL_LINKS: SocialLink[] = [
-  { href: "https://youtube.com/@quantixpos", ariaLabel: "YouTube", icon: "youtube" },
-  { href: "https://instagram.com/quantixpos", ariaLabel: "Instagram", icon: "instagram" },
-  { href: "https://facebook.com/quantixpos", ariaLabel: "Facebook", icon: "facebook" },
+  { href: "https://www.youtube.com", ariaLabel: "YouTube", icon: "youtube" },
+  { href: "https://www.instagram.com", ariaLabel: "Instagram", icon: "instagram" },
+  { href: "https://www.facebook.com", ariaLabel: "Facebook", icon: "facebook" },
 ];
 
 export const FOOTER_COPYRIGHT = "© 2026 Quantix Enterprise Inc. All rights reserved.";
-export const FOOTER_COMPLIANCE = "PCI-DSS Tier 1 Certified · SOC 2 Type II · 256-bit Encrypted";
+export const FOOTER_COMPLIANCE = "Enterprise Grade Security · 256-bit SSL Encrypted · High Availability";

@@ -253,9 +253,6 @@ export default function ClientelePageClient({ siteVariant = 'Enterprise' }: Clie
       {/* 1. HERO HEADER (Exact site-wide standard with .page-hero-header & responsive padding) */}
       {/* ========================================================================= */}
       <section className="bg-white dark:bg-slate-950 page-hero-header border-b border-slate-200/80 dark:border-slate-800 relative overflow-hidden pt-24 pb-12 sm:pt-32 sm:pb-16 md:pt-36 md:pb-20">
-        {/* Subtle Architectural Dot Pattern Background */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:20px_20px] opacity-70" />
-
         {/* Ambient Radial Glow */}
         <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-72 bg-linear-to-b from-[#FF4F00]/12 via-[#FF4F00]/4 to-transparent blur-3xl -z-10" />
 

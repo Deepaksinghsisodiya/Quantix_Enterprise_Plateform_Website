@@ -11,31 +11,36 @@ export default function AboutPage() {
   return (
     <>
       {/* 1. Hero Section */}
-      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header text-center">
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-slate-950 page-hero-header">
+        {/* Ambient top glow */}
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-175 h-72 bg-gradient-to-b from-orange-400/10 via-amber-400/5 to-transparent blur-3xl pointer-events-none" />
+
         <div className="site-container relative z-10 px-4 sm:px-6">
           {/* Breadcrumb */}
-          <div className="mb-4 inline-flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+          <div className="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
             <ChevronRight size={12} />
             <span className="text-primary font-bold">About Us</span>
           </div>
 
-          <div className="max-w-4xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
-              <Flame size={13} className="text-primary" />
-              <span>Our Mission & Architectural Vision</span>
+          <div className="max-w-4xl space-y-4 text-left">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-syne font-black uppercase tracking-wider text-primary dark:text-primary-light shadow-xs">
+                <Flame size={13} className="text-primary" />
+                <span>Our Mission & Architectural Vision</span>
+              </div>
             </div>
 
             <h1 className="font-syne text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white leading-tight tracking-tight">
               Redefining Commerce for Multi-Location Enterprises
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium max-w-2xl leading-relaxed">
               We engineer offline-first, cloud-synchronized point-of-sale platforms that empower high-volume retail chains and multi-unit restaurant brands to scale with sub-second register velocity.
             </p>
 
             {/* 3D Visual Showcase */}
-            <div className="relative w-full max-w-lg mx-auto aspect-16/10 flex items-center justify-center pt-2">
+            <div className="relative w-full max-w-lg aspect-16/10 flex items-center justify-start pt-2">
               <img
                 src="/images/ent_global_pos_bundle.png"
                 alt="Quantix Enterprise Engineering Platform"
