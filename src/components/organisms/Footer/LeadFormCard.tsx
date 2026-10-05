@@ -162,16 +162,16 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
 
   return (
     <div
-      className={`relative w-full max-w-full sm:max-w-[380px] bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-xl shadow-slate-200/70 border border-slate-200/90 transition-all duration-300 text-slate-800 overflow-hidden ${className}`}
+      className={`relative w-full max-w-full sm:max-w-95 bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-xl shadow-slate-200/70 border border-slate-200/90 transition-all duration-300 text-slate-800 overflow-hidden ${className}`}
     >
       {/* Top Laser Orange Accent Line */}
-      <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#FF4F00] to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-linear-to-r from-transparent via-[#FF4F00] to-transparent" />
 
       {/* Top Header & Branding */}
       <div className="flex flex-col items-center text-center space-y-1 mb-3 pt-0.5">
         {/* Brand Logo */}
         <div className="flex items-center justify-center gap-1.5 select-none">
-          <div className="flex h-5 w-5 items-center justify-center rounded-md bg-gradient-to-tr from-[#FF4F00] to-[#FF6B2B] text-white shadow-xs">
+          <div className="flex h-5 w-5 items-center justify-center rounded-md bg-linear-to-tr from-[#FF4F00] to-[#FF6B2B] text-white shadow-xs">
             <Zap className="h-3 w-3 fill-white stroke-[2.5]" />
           </div>
           <span className="font-syne text-xs font-black text-slate-900">
@@ -333,7 +333,7 @@ export const LeadFormCard: React.FC<LeadFormCardProps> = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-10 rounded-xl bg-gradient-to-r from-[#FF4F00] to-[#FF6B2B] text-white font-syne font-extrabold text-xs tracking-wider uppercase shadow-md shadow-orange-500/25 hover:shadow-orange-500/35 hover:scale-[1.01] active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                className="w-full h-10 rounded-xl bg-linear-to-r from-[#FF4F00] to-[#FF6B2B] text-white font-syne font-extrabold text-xs tracking-wider uppercase shadow-md shadow-orange-500/25 hover:shadow-orange-500/35 hover:scale-[1.01] active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <span>Sending Request...</span>

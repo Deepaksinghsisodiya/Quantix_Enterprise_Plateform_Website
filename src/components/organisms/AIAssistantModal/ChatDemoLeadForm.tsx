@@ -116,7 +116,7 @@ export const ChatDemoLeadForm: React.FC<ChatDemoLeadFormProps> = ({
     }`;
 
   return (
-    <div className="mx-0.5 my-1.5 rounded-xl border border-orange-200/80 dark:border-orange-900/50 bg-gradient-to-br from-orange-50 via-white to-amber-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-orange-950/20 shadow-sm overflow-hidden">
+    <div className="mx-0.5 my-1.5 rounded-xl border border-orange-200/80 dark:border-orange-900/50 bg-linear-to-br from-orange-50 via-white to-amber-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-orange-950/20 shadow-sm overflow-hidden">
       {/* header */}
       <div className="flex items-center justify-between px-3 pt-2.5 pb-1.5 border-b border-orange-100 dark:border-orange-900/40">
         <div className="flex items-center gap-1.5 text-[10.5px] font-syne font-black text-[#FF4D00] uppercase tracking-wider">
@@ -180,7 +180,7 @@ export const ChatDemoLeadForm: React.FC<ChatDemoLeadFormProps> = ({
             value={form.phone}
             onChange={handleChange}
             placeholder="(555) 000-0000 *"
-            className="flex-1 h-[34px] bg-white dark:bg-slate-800/80 px-2.5 text-[11.5px] font-medium text-slate-900 dark:text-white placeholder:text-slate-400 outline-none"
+            className="flex-1 h-8.5 bg-white dark:bg-slate-800/80 px-2.5 text-[11.5px] font-medium text-slate-900 dark:text-white placeholder:text-slate-400 outline-none"
           />
         </div>
 
@@ -198,7 +198,7 @@ export const ChatDemoLeadForm: React.FC<ChatDemoLeadFormProps> = ({
               name="merchantType"
               value={form.merchantType}
               onChange={handleChange}
-              className="w-full h-[34px] appearance-none rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 px-2.5 pr-8 text-[11.5px] font-semibold text-slate-800 dark:text-white outline-none focus:border-[#FF4D00] focus:ring-1 focus:ring-[#FF4D00]/20 cursor-pointer"
+              className="w-full h-8.5 appearance-none rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 px-2.5 pr-8 text-[11.5px] font-semibold text-slate-800 dark:text-white outline-none focus:border-[#FF4D00] focus:ring-1 focus:ring-[#FF4D00]/20 cursor-pointer"
             >
               <option value="Enterprise">Enterprise (Multi-Location / Chain)</option>
               <option value="Standalone">Standalone (Single Store / Single Outlet)</option>
@@ -215,7 +215,7 @@ export const ChatDemoLeadForm: React.FC<ChatDemoLeadFormProps> = ({
           id="cd-submit"
           type="submit"
           disabled={isSubmitting}
-          className="w-full h-[34px] flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C23500] text-white text-[11px] font-syne font-bold shadow-sm shadow-[#FF4D00]/25 transition-all cursor-pointer active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full h-8.5 flex items-center justify-center gap-1.5 rounded-lg bg-linear-to-r from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#C23500] text-white text-[11px] font-syne font-bold shadow-sm shadow-[#FF4D00]/25 transition-all enabled:cursor-pointer active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
           <span>{isSubmitting ? 'Booking...' : 'Book My Demo'}</span>

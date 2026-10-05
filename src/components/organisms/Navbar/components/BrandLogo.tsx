@@ -79,9 +79,9 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({ pathname, onClick }) => {
       href="/"
       onClick={handleBrandClick}
       aria-label={`${branding.brandName} ${branding.brandHighlight} Home`}
-      className="flex items-center gap-2.5 z-50 group shrink-0 select-none outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 ring-0 border-0"
+      className="flex items-center gap-2.5 z-50 group shrink-0 select-none outline-hidden ring-0 border-0"
     >
-      <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF4F00] to-[#FF6B2B] text-white shadow-md shadow-orange-500/20 transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-orange-500/40">
+      <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-linear-to-tr from-[#FF4F00] to-[#FF6B2B] text-white shadow-md shadow-orange-500/20 transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-orange-500/40">
         {renderIcon()}
       </div>
       <div className="flex flex-col text-left leading-none">

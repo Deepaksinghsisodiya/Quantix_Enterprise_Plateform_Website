@@ -221,12 +221,12 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     <div className={`w-full h-full flex flex-col font-sans bg-white dark:bg-slate-900/95 backdrop-blur-xl text-slate-800 dark:text-slate-100 rounded-xl border border-slate-200/90 dark:border-slate-800/90 shadow-[0_20px_50px_rgba(0,0,0,0.25)] overflow-hidden relative ${className}`}>
       
       {/* TOP GLOWING ACCENT STRIP */}
-      <div className="h-0.5 w-full bg-gradient-to-r from-[#FF4D00] via-[#FF7332] to-[#FF4D00] shrink-0" />
+      <div className="h-0.5 w-full bg-linear-to-r from-[#FF4D00] via-[#FF7332] to-[#FF4D00] shrink-0" />
 
       {/* HEADER */}
       <div className="bg-slate-900 px-3.5 py-2.5 text-white flex items-center justify-between relative shrink-0 select-none border-b border-slate-800/80 shadow-xs">
         <div className="flex items-center gap-2 min-w-0">
-          <div className="relative flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-gradient-to-br from-[#FF4D00] to-[#E03E00] text-white shadow-md shadow-[#FF4D00]/30 border border-white/20 shrink-0">
+          <div className="relative flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-linear-to-br from-[#FF4D00] to-[#E03E00] text-white shadow-md shadow-[#FF4D00]/30 border border-white/20 shrink-0">
             <Cpu className="h-4 w-4" />
             <span className="absolute -bottom-0.5 -right-0.5 flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80" />
@@ -295,7 +295,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
               <div
                 className={`py-2 px-3 sm:py-2.5 sm:px-3.5 rounded-xl shadow-xs transition-shadow font-sans ${
                   msg.sender === 'user'
-                    ? 'bg-gradient-to-r from-[#FF4D00] to-[#FF6B2B] text-white rounded-tr-xs font-medium shadow-sm shadow-[#FF4D00]/20'
+                    ? 'bg-linear-to-r from-[#FF4D00] to-[#FF6B2B] text-white rounded-tr-xs font-medium shadow-sm shadow-[#FF4D00]/20'
                     : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-tl-xs border border-slate-200/90 dark:border-slate-800/90'
                 }`}
               >
@@ -382,7 +382,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask anything or request a live demo..."
-            className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg pl-3 pr-2 py-1.5 text-xs font-sans text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:border-[#FF4D00] focus:ring-1 focus:ring-[#FF4D00]/20 transition-all shadow-inner"
+            className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg pl-3 pr-2 py-1.5 text-xs font-sans text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-hidden focus:border-[#FF4D00] focus:ring-1 focus:ring-[#FF4D00]/20 transition-all shadow-inner"
           />
         </div>
 
@@ -390,7 +390,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
           type="submit"
           disabled={!input.trim() || isTyping}
           aria-label="Send message"
-          className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#B83200] disabled:opacity-40 text-white flex items-center justify-center transition-all shadow-xs shadow-[#FF4D00]/25 active:scale-95 disabled:pointer-events-none cursor-pointer shrink-0"
+          className="h-8 w-8 rounded-lg bg-linear-to-br from-[#FF4D00] to-[#E03E00] hover:from-[#E03E00] hover:to-[#B83200] disabled:opacity-40 text-white flex items-center justify-center transition-all shadow-xs shadow-[#FF4D00]/25 active:scale-95 disabled:pointer-events-none cursor-pointer shrink-0"
         >
           <Send className="h-3.5 w-3.5" />
         </button>
@@ -400,7 +400,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
 
   if (variant === 'embedded') {
     return (
-      <div className={`w-full h-[480px] max-w-xl mx-auto my-4 sm:my-6 ${className}`}>
+      <div className={`w-full h-120 max-w-xl mx-auto my-4 sm:my-6 ${className}`}>
         {renderChatUI()}
       </div>
     );
@@ -410,7 +410,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
     <>
       <AnimatePresence>
         {!isOpen && (
-          <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[60] font-sans pointer-events-auto select-none">
+          <div className="fixed right-0 top-1/2 -translate-y-1/2 z-60 font-sans pointer-events-auto select-none">
             <motion.button
               initial={{ x: 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -428,7 +428,7 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
                 </span>
               )}
 
-              <div className="relative flex h-6 w-6 sm:h-7.5 sm:w-7.5 items-center justify-center rounded-md bg-gradient-to-br from-[#FF4D00] to-[#E03E00] text-white shadow-md shadow-[#FF4D00]/40 shrink-0">
+              <div className="relative flex h-6 w-6 sm:h-7.5 sm:w-7.5 items-center justify-center rounded-md bg-linear-to-br from-[#FF4D00] to-[#E03E00] text-white shadow-md shadow-[#FF4D00]/40 shrink-0">
                 <Cpu className="h-3.5 w-3.5 sm:h-4 sm:w-4 group-hover:rotate-12 transition-transform" />
               </div>
 
@@ -448,13 +448,13 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
 
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-x-2 bottom-2 xs:inset-x-3 xs:bottom-3 sm:inset-x-auto sm:right-5 sm:bottom-5 z-[70] font-sans pointer-events-auto flex justify-center sm:block">
+          <div className="fixed inset-x-2 bottom-2 xs:inset-x-3 xs:bottom-3 sm:inset-x-auto sm:right-5 sm:bottom-5 z-70 font-sans pointer-events-auto flex justify-center sm:block">
             <motion.div
               initial={{ opacity: 0, y: 12, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.97 }}
               transition={{ duration: 0.16, ease: "easeOut" }}
-              className="w-full max-w-[360px] sm:w-[385px] sm:max-w-none" style={{ height: 'min(540px, calc(100dvh - 16px))' }}
+              className="w-full max-w-90 sm:w-96.25 sm:max-w-none" style={{ height: 'min(540px, calc(100dvh - 16px))' }}
             >
               {renderChatUI()}
             </motion.div>
