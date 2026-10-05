@@ -77,8 +77,9 @@ export const ChatDemoLeadForm: React.FC<ChatDemoLeadFormProps> = ({
     const fullPhone = `+1 ${form.phone}`.trim();
     setIsSubmitting(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5104';
-      const res = await fetch(`${apiUrl}/api/v1/contact/demo-request`, {
+      const apiBase = (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/$/, '');
+      const endpoint = `${apiBase}/api/v1/contact/demo-request`;
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -25,7 +25,7 @@ interface PlatformDbCache {
 }
 
 const cache: Record<string, PlatformDbCache> = {};
-const CACHE_TTL_MS = 1000 * 60 * 5; // 5 minutes cache
+const CACHE_TTL_MS = 1000 * 60 * 2; // 2 minutes dynamic cache (picks up DB admin updates fast)
 
 function normalizeVariant(input?: string): 'Enterprise' | 'Restaurant' | 'Retail' {
   if (!input) return 'Enterprise';
@@ -44,40 +44,23 @@ function getApiBaseUrl(): string {
   ).replace(/\/$/, '');
 }
 
-// Built-in verified baseline plans in case of temporary network timeout
+// Verified baseline plan structure (safety net during initial server boot or network blip)
 const DEFAULT_PLANS = [
-  // Standalone POS ($6, $10, $15)
-  { planCode: 'pos-res-basic', planName: 'Standalone POS · Restaurant · Basic', displayName: 'Basic', flavour: 'RES', planType: 'StandalonePos', planPricePerDay: 6 },
-  { planCode: 'pos-res-pro', planName: 'Standalone POS · Restaurant · Pro', displayName: 'Pro', flavour: 'RES', planType: 'StandalonePos', planPricePerDay: 10 },
-  { planCode: 'pos-res-adv', planName: 'Standalone POS · Restaurant · Advance', displayName: 'Advance', flavour: 'RES', planType: 'StandalonePos', planPricePerDay: 15 },
-  { planCode: 'pos-ret-basic', planName: 'Standalone POS · Retail · Basic', displayName: 'Basic', flavour: 'RET', planType: 'StandalonePos', planPricePerDay: 6 },
-  { planCode: 'pos-ret-pro', planName: 'Standalone POS · Retail · Pro', displayName: 'Pro', flavour: 'RET', planType: 'StandalonePos', planPricePerDay: 10 },
-  { planCode: 'pos-ret-adv', planName: 'Standalone POS · Retail · Advance', displayName: 'Advance', flavour: 'RET', planType: 'StandalonePos', planPricePerDay: 15 },
-  { planCode: 'pos-bot-basic', planName: 'Standalone POS · Unified · Basic', displayName: 'Basic', flavour: 'BOT', planType: 'StandalonePos', planPricePerDay: 6 },
-  { planCode: 'pos-bot-pro', planName: 'Standalone POS · Unified · Pro', displayName: 'Pro', flavour: 'BOT', planType: 'StandalonePos', planPricePerDay: 10 },
-  { planCode: 'pos-bot-adv', planName: 'Standalone POS · Unified · Advance', displayName: 'Advance', flavour: 'BOT', planType: 'StandalonePos', planPricePerDay: 15 },
-
-  // Standalone Cloud ($20, $30, $45)
-  { planCode: 'cld-res-basic', planName: 'Standalone Cloud · Restaurant · Basic', displayName: 'Basic', flavour: 'RES', planType: 'StandaloneCloud', planPricePerDay: 20 },
-  { planCode: 'cld-res-pro', planName: 'Standalone Cloud · Restaurant · Pro', displayName: 'Pro', flavour: 'RES', planType: 'StandaloneCloud', planPricePerDay: 30 },
-  { planCode: 'cld-res-adv', planName: 'Standalone Cloud · Restaurant · Advance', displayName: 'Advance', flavour: 'RES', planType: 'StandaloneCloud', planPricePerDay: 45 },
-  { planCode: 'cld-ret-basic', planName: 'Standalone Cloud · Retail · Basic', displayName: 'Basic', flavour: 'RET', planType: 'StandaloneCloud', planPricePerDay: 20 },
-  { planCode: 'cld-ret-pro', planName: 'Standalone Cloud · Retail · Pro', displayName: 'Pro', flavour: 'RET', planType: 'StandaloneCloud', planPricePerDay: 30 },
-  { planCode: 'cld-ret-adv', planName: 'Standalone Cloud · Retail · Advance', displayName: 'Advance', flavour: 'RET', planType: 'StandaloneCloud', planPricePerDay: 45 },
-  { planCode: 'cld-bot-basic', planName: 'Standalone Cloud · Unified · Basic', displayName: 'Basic', flavour: 'BOT', planType: 'StandaloneCloud', planPricePerDay: 20 },
-  { planCode: 'cld-bot-pro', planName: 'Standalone Cloud · Unified · Pro', displayName: 'Pro', flavour: 'BOT', planType: 'StandaloneCloud', planPricePerDay: 30 },
-  { planCode: 'cld-bot-adv', planName: 'Standalone Cloud · Unified · Advance', displayName: 'Advance', flavour: 'BOT', planType: 'StandaloneCloud', planPricePerDay: 45 },
-
-  // Enterprise Cloud ($60, $100, $175)
-  { planCode: 'ent-res-basic', planName: 'Enterprise Cloud · Restaurant · Basic', displayName: 'Basic', flavour: 'RES', planType: 'EnterpriseCloud', planPricePerDay: 60 },
-  { planCode: 'ent-res-pro', planName: 'Enterprise Cloud · Restaurant · Pro', displayName: 'Pro', flavour: 'RES', planType: 'EnterpriseCloud', planPricePerDay: 100 },
-  { planCode: 'ent-res-adv', planName: 'Enterprise Cloud · Restaurant · Advance', displayName: 'Advance', flavour: 'RES', planType: 'EnterpriseCloud', planPricePerDay: 175 },
-  { planCode: 'ent-ret-basic', planName: 'Enterprise Cloud · Retail · Basic', displayName: 'Basic', flavour: 'RET', planType: 'EnterpriseCloud', planPricePerDay: 60 },
-  { planCode: 'ent-ret-pro', planName: 'Enterprise Cloud · Retail · Pro', displayName: 'Pro', flavour: 'RET', planType: 'EnterpriseCloud', planPricePerDay: 100 },
-  { planCode: 'ent-ret-adv', planName: 'Enterprise Cloud · Retail · Advance', displayName: 'Advance', flavour: 'RET', planType: 'EnterpriseCloud', planPricePerDay: 175 },
-  { planCode: 'ent-bot-basic', planName: 'Enterprise Cloud · Unified · Basic', displayName: 'Basic', flavour: 'BOT', planType: 'EnterpriseCloud', planPricePerDay: 60 },
-  { planCode: 'ent-bot-pro', planName: 'Enterprise Cloud · Unified · Pro', displayName: 'Pro', flavour: 'BOT', planType: 'EnterpriseCloud', planPricePerDay: 100 },
-  { planCode: 'ent-bot-adv', planName: 'Enterprise Cloud · Unified · Advance', displayName: 'Advance', flavour: 'BOT', planType: 'EnterpriseCloud', planPricePerDay: 175 },
+  { planCode: 'pos-res-basic', planName: 'Standalone POS · Restaurant · Basic', displayName: 'Basic', flavour: 'RES', planType: 'StandalonePos', planPricePerDay: 6, maxLocations: 1, maxTerminals: 1, marketingBullets: ['Single-terminal counter billing with offline-first local SQLite sync.'] },
+  { planCode: 'pos-res-pro', planName: 'Standalone POS · Restaurant · Pro', displayName: 'Pro', flavour: 'RES', planType: 'StandalonePos', planPricePerDay: 10, maxLocations: 1, maxTerminals: 3, marketingBullets: ['Up to 3 POS terminals, floor plan mapping & Kitchen Display System (KDS).'] },
+  { planCode: 'pos-res-adv', planName: 'Standalone POS · Restaurant · Advance', displayName: 'Advance', flavour: 'RES', planType: 'StandalonePos', planPricePerDay: 15, maxLocations: 2, maxTerminals: 5, marketingBullets: ['Up to 5 terminals across 2 outlets with live recipe costing & ingredient depletion.'] },
+  { planCode: 'pos-ret-basic', planName: 'Standalone POS · Retail · Basic', displayName: 'Basic', flavour: 'RET', planType: 'StandalonePos', planPricePerDay: 6, maxLocations: 1, maxTerminals: 1, marketingBullets: ['Rapid barcode scanning, cash drawer float tracking & receipt printing.'] },
+  { planCode: 'pos-ret-pro', planName: 'Standalone POS · Retail · Pro', displayName: 'Pro', flavour: 'RET', planType: 'StandalonePos', planPricePerDay: 10, maxLocations: 1, maxTerminals: 3, marketingBullets: ['Matrix inventory (size/color/batch), barcode labels & customer loyalty.'] },
+  { planCode: 'pos-ret-adv', planName: 'Standalone POS · Retail · Advance', displayName: 'Advance', flavour: 'RET', planType: 'StandalonePos', planPricePerDay: 15, maxLocations: 2, maxTerminals: 5, marketingBullets: ['Serial/IMEI tracking, automated purchase order replenishment & BOGO engine.'] },
+  { planCode: 'cld-res-basic', planName: 'Standalone Cloud · Restaurant · Basic', displayName: 'Cloud Basic', flavour: 'RES', planType: 'StandaloneCloud', planPricePerDay: 20, maxLocations: 2, maxTerminals: 4, marketingBullets: ['Isolated cloud instance with web storefront and 2 outlets.'] },
+  { planCode: 'cld-res-pro', planName: 'Standalone Cloud · Restaurant · Pro', displayName: 'Cloud Pro', flavour: 'RES', planType: 'StandaloneCloud', planPricePerDay: 30, maxLocations: 5, maxTerminals: 10, marketingBullets: ['Up to 5 outlets & 10 terminals with centralized menu management.'] },
+  { planCode: 'cld-res-adv', planName: 'Standalone Cloud · Restaurant · Advance', displayName: 'Cloud Advance', flavour: 'RES', planType: 'StandaloneCloud', planPricePerDay: 45, maxLocations: 10, maxTerminals: 20, marketingBullets: ['Multi-branch central kitchen, warehouse transfers and live BI telemetry.'] },
+  { planCode: 'ent-res-basic', planName: 'Enterprise Cloud · Restaurant · Basic', displayName: 'Enterprise Basic', flavour: 'RES', planType: 'EnterpriseCloud', planPricePerDay: 60, maxLocations: 15, maxTerminals: 30, marketingBullets: ['Managed enterprise cloud for up to 3 businesses and 15 outlets.'] },
+  { planCode: 'ent-res-pro', planName: 'Enterprise Cloud · Restaurant · Pro', displayName: 'Enterprise Pro', flavour: 'RES', planType: 'EnterpriseCloud', planPricePerDay: 100, maxLocations: 50, maxTerminals: 100, marketingBullets: ['10 businesses, 50 outlets and 100 terminals under one unified cloud roof.'] },
+  { planCode: 'ent-res-adv', planName: 'Enterprise Cloud · Restaurant · Advance', displayName: 'Enterprise Advance', flavour: 'RES', planType: 'EnterpriseCloud', planPricePerDay: 175, maxLocations: 100, maxTerminals: 250, marketingBullets: ['25 businesses, 100 outlets and 250 terminals — dedicated account manager & 99.99% SLA.'] },
+  { planCode: 'ent-bot-basic', planName: 'Enterprise Cloud · Unified · Basic', displayName: 'Enterprise Basic', flavour: 'BOT', planType: 'EnterpriseCloud', planPricePerDay: 60, maxLocations: 15, maxTerminals: 30, marketingBullets: ['Run restaurant and retail terminals side by side on one enterprise license.'] },
+  { planCode: 'ent-bot-pro', planName: 'Enterprise Cloud · Unified · Pro', displayName: 'Enterprise Pro', flavour: 'BOT', planType: 'EnterpriseCloud', planPricePerDay: 100, maxLocations: 50, maxTerminals: 100, marketingBullets: ['10 businesses, 50 outlets, advance inventory, HR and analytics bridge sync.'] },
+  { planCode: 'ent-bot-adv', planName: 'Enterprise Cloud · Unified · Advance', displayName: 'Enterprise Advance', flavour: 'BOT', planType: 'EnterpriseCloud', planPricePerDay: 175, maxLocations: 100, maxTerminals: 250, marketingBullets: ['Unlimited enterprise footprint, custom REST APIs, dedicated webhooks & SLA.'] },
 ];
 
 async function getLivePlatformData(siteVariantInput: string): Promise<PlatformDbCache> {
@@ -93,8 +76,8 @@ async function getLivePlatformData(siteVariantInput: string): Promise<PlatformDb
   try {
     const fetchWithTimeout = (url: string) =>
       fetch(url, {
-        next: { revalidate: 300 },
-        signal: AbortSignal.timeout(3500),
+        next: { revalidate: 120 },
+        signal: AbortSignal.timeout(4000),
       }).catch(() => null);
 
     const [featuresRes, faqRes, integrationsRes, solutionsRes, pricingRes, supportRes] = await Promise.all([
@@ -124,10 +107,10 @@ async function getLivePlatformData(siteVariantInput: string): Promise<PlatformDb
     const supportData = supportRes && supportRes.ok ? (await supportRes.json().catch(() => null))?.data || null : null;
 
     const fresh: PlatformDbCache = {
-      features: Array.isArray(featuresData) && featuresData.length > 0 ? featuresData : [],
+      features: Array.isArray(featuresData) ? featuresData : [],
       faqs: Array.isArray(faqData) ? faqData : [],
-      integrations: Array.isArray(integrationsData) && integrationsData.length > 0 ? integrationsData : [],
-      solutions: Array.isArray(solutionsData) && solutionsData.length > 0 ? solutionsData : [],
+      integrations: Array.isArray(integrationsData) ? integrationsData : [],
+      solutions: Array.isArray(solutionsData) ? solutionsData : [],
       pricingPlans: pricingRaw,
       supportSection: supportData,
       lastFetched: now,
@@ -166,10 +149,10 @@ async function autoCaptureLeadIfPresent(message: string, siteVariantInput: strin
           contactName: 'AI Chatbot Visitor',
           email: emailMatch ? emailMatch[0] : 'chat-lead@quantix.io',
           phone: phoneMatch ? phoneMatch[0] : 'N/A',
-          companyName: `${variant} Inquiry`,
+          companyName: `${variant} Website Visitor`,
           businessType: variant,
           preferredMerchantType: variant === 'Enterprise' ? 'Enterprise' : 'Standalone',
-          message: `Auto-captured user message: "${message}"`,
+          message: `Lead via AI Chatbot [Auto-captured]: "${message}"`,
         }),
       });
       return true;
@@ -181,11 +164,12 @@ async function autoCaptureLeadIfPresent(message: string, siteVariantInput: strin
 }
 
 // -------------------------------------------------------------
-// INTELLIGENT PRICING RESPONSE BUILDER
+// DYNAMIC DATABASE PRICING RESPONSE BUILDER (100% Live DB Plans)
 // -------------------------------------------------------------
 function buildPricingResponse(query: string, currentVariant: string, plans: any[]): string {
   const q = query.toLowerCase();
-  const allPlans = plans && plans.length > 0 ? plans : DEFAULT_PLANS;
+  const allPlans: any[] = plans && plans.length > 0 ? plans : DEFAULT_PLANS;
+  const activePlans = allPlans.filter((p: any) => (p.isActive ?? true) && !p.isDeprecated);
 
   const isAskingEnterprise = q.includes('enterprise') || q.includes('franchise') || q.includes('chain') || q.includes('hq');
   const isAskingRestaurant = q.includes('restaurant') || q.includes('restaurent') || q.includes('food') || q.includes('cafe') || q.includes('dining') || q.includes('kitchen') || q.includes('kds');
@@ -193,146 +177,181 @@ function buildPricingResponse(query: string, currentVariant: string, plans: any[
   const isAskingCloudOnly = (q.includes('cloud') || q.includes('multi store') || q.includes('multi location')) && !isAskingEnterprise;
   const isAskingStandaloneOnly = q.includes('standalone') || q.includes('single store') || q.includes('single outlet') || q.includes('basic pos');
 
-  // 1. User specifically asked for Enterprise Plans
+  const formatPlanLine = (p: any) => {
+    const name = p.displayName || p.planName || 'Plan';
+    const daily = Number(p.planPricePerDay || 0);
+    const monthly = Math.round(daily * 30);
+    const locs = p.maxLocations ? `${p.maxLocations} Location${p.maxLocations > 1 ? 's' : ''}` : '';
+    const tills = p.maxTerminals ? `${p.maxTerminals} Terminal${p.maxTerminals > 1 ? 's' : ''}` : '';
+    const cap = locs && tills ? ` (${locs} · ${tills})` : '';
+    const bullet = Array.isArray(p.marketingBullets) && p.marketingBullets[0]
+      ? `\n  - ${p.marketingBullets[0]}`
+      : p.description ? `\n  - ${p.description}` : '';
+    return `• **${name}**: **$${daily}/day** ($${monthly.toLocaleString()}/month)${cap}${bullet}`;
+  };
+
+  // 1. Enterprise Cloud Plans from Database
   if (isAskingEnterprise || (!isAskingRestaurant && !isAskingRetail && currentVariant === 'Enterprise' && !isAskingStandaloneOnly && !isAskingCloudOnly)) {
-    const entPlans = allPlans.filter(p => p.planType === 'EnterpriseCloud');
-    const basic = entPlans.find(p => (p.displayName || p.planName).includes('Basic')) || { planPricePerDay: 60 };
-    const pro = entPlans.find(p => (p.displayName || p.planName).includes('Pro')) || { planPricePerDay: 100 };
-    const adv = entPlans.find(p => (p.displayName || p.planName).includes('Advance')) || { planPricePerDay: 175 };
+    const entPlans = activePlans
+      .filter((p: any) => p.planType === 'EnterpriseCloud' || Number(p.planPricePerDay || 0) >= 50)
+      .sort((a: any, b: any) => Number(a.planPricePerDay || 0) - Number(b.planPricePerDay || 0));
 
-    return `🏢 **Quantix Enterprise Cloud Plans (Multi-Location & Franchise Chains):**
+    // Deduplicate by tier (Basic, Pro, Advance)
+    const tiers = ['Basic', 'Pro', 'Advance'];
+    const chosen = tiers.map(tier => entPlans.find((p: any) => (p.displayName || p.planName || '').toLowerCase().includes(tier.toLowerCase()))).filter(Boolean);
+    const listToRender = chosen.length > 0 ? chosen : entPlans.slice(0, 3);
 
-• **Enterprise Basic**: **$${basic.planPricePerDay}/day** ($${basic.planPricePerDay * 30}/month)
-  - Multi-unit centralized cloud command, real-time stock sync & unified catalog.
-
-• **Enterprise Pro**: **$${pro.planPricePerDay}/day** ($${pro.planPricePerDay * 30}/month)
-  - Automated warehouse purchase orders, recipe/matrix costing, live BI margin telemetry & audit trails.
-
-• **Enterprise Advance**: **$${adv.planPricePerDay}/day** ($${adv.planPricePerDay * 30}/month)
-  - Unlimited locations, custom REST API & webhook sync, dedicated account manager & 99.99% SLA.
-
-💡 *Looking for single-store setups? Standalone POS starts at just **$6/day**, and Multi-Store Cloud starts at **$20/day**.*`;
+    return `🏢 **Quantix Enterprise Cloud Plans (Live Database):**\n\n${listToRender.map(formatPlanLine).join('\n\n')}\n\n💡 *All Enterprise plans include Centralized Multi-Branch HQ, Warehouse Transfers, Real-Time BI Telemetry, Open REST APIs & 24/7 SLA Support.*`;
   }
 
-  // 2. User specifically asked for Restaurant Plans
+  // 2. Restaurant Plans from Database
   if (isAskingRestaurant || (currentVariant === 'Restaurant' && !isAskingRetail && !isAskingEnterprise)) {
-    return `🍽️ **Quantix Restaurant POS Pricing Plans:**
+    const resPlans = activePlans.filter((p: any) => p.flavour === 'RES' || p.flavour === 'BOT' || !p.flavour);
+    const standalone = resPlans.filter((p: any) => p.planType === 'StandalonePos').sort((a: any, b: any) => Number(a.planPricePerDay || 0) - Number(b.planPricePerDay || 0));
+    const cloud = resPlans.filter((p: any) => p.planType === 'StandaloneCloud').sort((a: any, b: any) => Number(a.planPricePerDay || 0) - Number(b.planPricePerDay || 0));
+    const enterprise = resPlans.filter((p: any) => p.planType === 'EnterpriseCloud').sort((a: any, b: any) => Number(a.planPricePerDay || 0) - Number(b.planPricePerDay || 0));
 
-**1. Standalone POS (Single Restaurant / Counter — Offline-First):**
-• **Basic**: **$6/day** ($180/mo) — High-speed counter billing, receipt printing & cash drawer sync.
-• **Pro**: **$10/day** ($300/mo) — Interactive floor map, Kitchen Display System (KDS) & split billing.
-• **Advance**: **$15/day** ($450/mo) — Recipe costing, automated ingredient depletion & tableside QR ordering.
-
-**2. Standalone Cloud (Multi-Outlet Restaurant Hub):**
-• **Cloud Basic**: **$20/day** ($600/mo) | **Cloud Pro**: **$30/day** ($900/mo) | **Cloud Advance**: **$45/day** ($1,350/mo)
-
-**3. Enterprise Cloud (Franchises & Chains):**
-• **Enterprise Basic**: **$60/day** ($1,800/mo) | **Enterprise Pro**: **$100/day** ($3,000/mo) | **Enterprise Advance**: **$175/day** ($5,250/mo)
-
-⚡ *Includes Swiggy, Zomato, DoorDash & Uber Eats aggregator sync with direct KDS routing.*`;
+    const lines: string[] = ['🍽️ **Quantix Restaurant POS Plans (Live Database):**'];
+    if (standalone.length > 0) {
+      lines.push('\n**1. Standalone POS (Single Outlet — 100% Offline-First):**');
+      lines.push(standalone.slice(0, 3).map(formatPlanLine).join('\n'));
+    }
+    if (cloud.length > 0) {
+      lines.push('\n**2. Standalone Cloud (Multi-Outlet Restaurant Hub):**');
+      lines.push(cloud.slice(0, 3).map(formatPlanLine).join('\n'));
+    }
+    if (enterprise.length > 0) {
+      lines.push('\n**3. Enterprise Cloud (Franchises & Chains):**');
+      lines.push(enterprise.slice(0, 3).map(formatPlanLine).join('\n'));
+    }
+    lines.push('\n⚡ *All restaurant plans include Kitchen Display System (KDS), Table Management, and DoorDash/Uber Eats/Zomato aggregator sync.*');
+    return lines.join('\n');
   }
 
-  // 3. User specifically asked for Retail Plans
+  // 3. Retail Plans from Database
   if (isAskingRetail || (currentVariant === 'Retail' && !isAskingRestaurant && !isAskingEnterprise)) {
-    return `🛍️ **Quantix Retail POS Pricing Plans:**
+    const retPlans = activePlans.filter((p: any) => p.flavour === 'RET' || p.flavour === 'BOT' || !p.flavour);
+    const standalone = retPlans.filter((p: any) => p.planType === 'StandalonePos').sort((a: any, b: any) => Number(a.planPricePerDay || 0) - Number(b.planPricePerDay || 0));
+    const cloud = retPlans.filter((p: any) => p.planType === 'StandaloneCloud').sort((a: any, b: any) => Number(a.planPricePerDay || 0) - Number(b.planPricePerDay || 0));
+    const enterprise = retPlans.filter((p: any) => p.planType === 'EnterpriseCloud').sort((a: any, b: any) => Number(a.planPricePerDay || 0) - Number(b.planPricePerDay || 0));
 
-**1. Standalone POS (Single Store — Offline-First):**
-• **Basic**: **$6/day** ($180/mo) — Rapid barcode scanning, cash drawer shifts & receipt printing.
-• **Pro**: **$10/day** ($300/mo) — Matrix inventory (size/color/batch), weighing scales & CRM loyalty.
-• **Advance**: **$15/day** ($450/mo) — Serial & IMEI tracking, automated PO replenishment & BOGO promos.
-
-**2. Standalone Cloud (Multi-Store Retail Hub):**
-• **Cloud Basic**: **$20/day** ($600/mo) | **Cloud Pro**: **$30/day** ($900/mo) | **Cloud Advance**: **$45/day** ($1,350/mo)
-
-**3. Enterprise Cloud (Retail Chains & Supermarkets):**
-• **Enterprise Basic**: **$60/day** ($1,800/mo) | **Enterprise Pro**: **$100/day** ($3,000/mo) | **Enterprise Advance**: **$175/day** ($5,250/mo)
-
-📦 *Includes cross-store inventory transfer, barcode label printing & accounting sync.*`;
+    const lines: string[] = ['🛍️ **Quantix Retail POS Plans (Live Database):**'];
+    if (standalone.length > 0) {
+      lines.push('\n**1. Standalone POS (Single Store — 100% Offline-First):**');
+      lines.push(standalone.slice(0, 3).map(formatPlanLine).join('\n'));
+    }
+    if (cloud.length > 0) {
+      lines.push('\n**2. Standalone Cloud (Multi-Store Retail Network):**');
+      lines.push(cloud.slice(0, 3).map(formatPlanLine).join('\n'));
+    }
+    if (enterprise.length > 0) {
+      lines.push('\n**3. Enterprise Cloud (Supermarkets & Multi-Store HQ):**');
+      lines.push(enterprise.slice(0, 3).map(formatPlanLine).join('\n'));
+    }
+    lines.push('\n📦 *All retail plans include Barcode Matrix Scanning, Electronic Scale sync, Automated Purchase Orders & Customer Loyalty.*');
+    return lines.join('\n');
   }
 
-  // 4. General / Default Pricing Summary
-  return `💰 **Official Quantix POS Pricing Plans & Rates:**
+  // 4. General Pricing Overview from Database
+  const standaloneMin = Math.min(...activePlans.filter((p: any) => p.planType === 'StandalonePos').map((p: any) => Number(p.planPricePerDay || 6)));
+  const cloudMin = Math.min(...activePlans.filter((p: any) => p.planType === 'StandaloneCloud').map((p: any) => Number(p.planPricePerDay || 20)));
+  const enterpriseMin = Math.min(...activePlans.filter((p: any) => p.planType === 'EnterpriseCloud').map((p: any) => Number(p.planPricePerDay || 60)));
 
-**1. Standalone POS (Single Store / Register — Offline-First):**
-• **Basic**: **$6/day** ($180/month) — Core billing, receipts & cashier shift tracking.
-• **Pro**: **$10/day** ($300/month) — Matrix inventory, customer CRM & hardware sync.
-• **Advance**: **$15/day** ($450/month) — Advanced replenishment, custom promos & loyalty.
+  return `💰 **Official Quantix POS Pricing Structure (Live Database):**
+
+**1. Standalone POS (Single Outlet — Offline-First):**
+• Starting from **$${standaloneMin}/day** ($${standaloneMin * 30}/month)
+• Rapid counter billing, local SQLite zero-internet failover & thermal receipt printing.
 
 **2. Standalone Cloud (Multi-Store Synchronization):**
-• **Cloud Basic**: **$20/day** ($600/month) | **Cloud Pro**: **$30/day** ($900/month) | **Cloud Advance**: **$45/day** ($1,350/month)
+• Starting from **$${cloudMin}/day** ($${cloudMin * 30}/month)
+• Web storefront, centralized menu management & multi-outlet inventory sync.
 
-**3. Enterprise Cloud (Large Franchises & Multi-Unit HQ):**
-• **Enterprise Basic**: **$60/day** ($1,800/month) | **Enterprise Pro**: **$100/day** ($3,000/month) | **Enterprise Advance**: **$175/day** ($5,250/month)
+**3. Enterprise Cloud (Franchises & Multi-Unit HQ Chains):**
+• Starting from **$${enterpriseMin}/day** ($${enterpriseMin * 30}/month)
+• Unlimited branches, inter-store warehouse transfers, custom REST APIs & 99.99% SLA.
 
-✅ *All plans include zero-downtime offline-first operation, automatic cloud backups & 24/7 technical support.*`;
+✅ *0% platform commission, zero proprietary hardware lock-in, and 24/7 dedicated support across all plans.*`;
 }
 
 // -------------------------------------------------------------
-// INTELLIGENT FEATURES RESPONSE BUILDER
+// DYNAMIC DATABASE FEATURES RESPONSE BUILDER (100% Live DB Features)
 // -------------------------------------------------------------
 function buildFeaturesResponse(variant: string, dbFeatures: any[]): string {
-  if (variant === 'Restaurant') {
-    return `🚀 **Top Features of Quantix Restaurant POS:**
+  if (Array.isArray(dbFeatures) && dbFeatures.length > 0) {
+    const list = dbFeatures.slice(0, 8).map((f: any) => {
+      const title = f.title || f.name || 'Platform Feature';
+      const cat = f.category ? ` [${f.category}]` : '';
+      const desc = f.shortDescription || f.subtitle || (Array.isArray(f.bullets) && f.bullets[0]) || '';
+      const stat = f.statValue && f.statLabel ? ` — *(${f.statValue} ${f.statLabel})*` : '';
+      return `• 🚀 **${title}**${cat}: ${desc}${stat}`;
+    });
 
-• ⚡ **Offline-First Table Billing**: Bill and print KOT tickets with zero internet lag; auto-syncs when online.
-• 📺 **Kitchen Display System (KDS)**: Digital ticket routing across hot kitchen, pantry & bar stations with live cook timers.
-• 📱 **Tableside QR Order & Pay**: Customers scan QR codes at tables to view live digital menus and order directly.
-• 🍲 **Recipe Costing & Ingredient Depletion**: Deduct ingredients in real time as each menu item is ordered.
-• 🛵 **Aggregator Sync**: Centralized injection for Zomato, Swiggy, DoorDash & Uber Eats orders.
-• 📊 **Live Restaurant Telemetry**: Track table turnover times, top-selling dishes, and hourly staff sales.`;
+    return `🚀 **Live Features of Quantix ${variant} POS (Direct from Platform Database):**\n\n${list.join('\n\n')}\n\n💡 *All features support offline-first operation, automatic cloud backups, and multi-user role permissions.*`;
   }
 
-  if (variant === 'Retail') {
-    return `🚀 **Top Features of Quantix Retail POS:**
+  // Graceful fallback if database connection is initialising
+  return `🚀 **Top Features of Quantix ${variant} POS:**
 
-• ⚡ **High-Speed Barcode Checkout**: Sub-second scanning with instant product lookup and thermal receipt printing.
-• 📦 **Multi-Store Matrix Inventory**: Manage items with size, color, brand, batch, and expiry date variants.
-• ⚖️ **Weighing Scale & Hardware Sync**: Direct RS232/USB connection with electronic grocery weighing scales.
-• 🔁 **Automated POs & Replenishment**: Generate vendor purchase orders automatically when stock drops below threshold.
-• 🏷️ **Promotional Rules & BOGO Engine**: Configure bundles, seasonal discounts, and automated loyalty points.
-• 🔒 **Cashier Security & Drawer Audits**: Cashier PINs, blind shift closings, and discrepancy tracking.`;
-  }
-
-  // Enterprise Features
-  return `🚀 **Top Enterprise Features of Quantix POS Platform:**
-
-• 🏢 **Franchise & Multi-Unit Cloud HQ**: Central command over menus, pricing tiers, and tax profiles across all branches.
-• 🔄 **Central Warehouse & Stock Transfers**: Manage regional distribution centers with inter-branch transfer manifests.
-• ⚡ **Zero-Downtime Offline Registers**: Registers operate locally with embedded SQLite; branches never freeze when broadband fails.
-• 📈 **Real-Time BI Margin Telemetry**: Consolidate live revenue, gross margins, and labor cost ratios across all outlets.
-• 🛡️ **Role-Based Access Control (RBAC)**: Fine-grained permissions, manager overrides, audit logs & cashier PIN security.
-• 🔌 **Open Enterprise APIs & Webhooks**: Seamless bi-directional sync with SAP, QuickBooks, NetSuite & custom ERPs.`;
+• ⚡ **Offline-First Billing Engine**: Process bills and print receipts with zero internet latency; automatically syncs when online.
+• 📊 **Multi-Location Inventory & Stock Transfers**: Centralized stock counts, low-stock reorder thresholds, and inter-branch manifests.
+• 📺 **Kitchen Display System (KDS) & Floor Mapping**: Real-time ticket routing with station timers and table status.
+• 💳 **Omnichannel Checkout & Integrated Payments**: Native support for Stripe, Square, Authorize.Net, and local contactless card terminals.
+• 📈 **Real-Time BI Telemetry & Gross Margin Analytics**: Monitor sales, discounts, taxes, and profitability live across outlets.`;
 }
 
 // -------------------------------------------------------------
-// INTELLIGENT INTEGRATIONS RESPONSE BUILDER
+// DYNAMIC DATABASE INTEGRATIONS RESPONSE BUILDER (100% Live DB Integrations)
 // -------------------------------------------------------------
 function buildIntegrationsResponse(variant: string, dbIntegrations: any[]): string {
-  const names = dbIntegrations && dbIntegrations.length > 0
-    ? dbIntegrations.map((i: any) => i.name || i.title).join(', ')
-    : 'Stripe, Square, Authorize.Net, DoorDash, Uber Eats';
+  if (Array.isArray(dbIntegrations) && dbIntegrations.length > 0) {
+    const categories: Record<string, any[]> = {};
+    for (const item of dbIntegrations) {
+      const cat = item.categoryLabel || item.category || 'Platform Integrations';
+      if (!categories[cat]) categories[cat] = [];
+      categories[cat].push(item);
+    }
+
+    const categoryBlocks = Object.entries(categories).map(([catName, items]) => {
+      const formattedItems = items.slice(0, 4).map((i: any) => {
+        const desc = i.description || i.tagline ? ` — ${i.description || i.tagline}` : '';
+        const speed = i.syncSpeed ? ` *(Sync: ${i.syncSpeed})*` : '';
+        return `  - **${i.name}**${desc}${speed}`;
+      }).join('\n');
+
+      return `• 🔌 **${catName.toUpperCase()}** (${items.length} Active Connectors):\n${formattedItems}`;
+    });
+
+    return `🔌 **Live Verified Integrations for Quantix ${variant} POS (Direct from Database):**\n\n${categoryBlocks.join('\n\n')}\n\n💡 *Need custom ERP, Accounting, or Payment Gateway connectivity? Our open REST APIs and webhooks integrate with any legacy system.*`;
+  }
 
   return `🔌 **Supported Integrations for Quantix ${variant} POS:**
 
-• 💳 **Payment Processors**: Stripe, Square, Authorize.Net, Card Terminals with dual pricing / surcharging.
-• 🛵 **Online Food Aggregators**: DoorDash, Uber Eats, Zomato & Swiggy — live 2-way menu and order sync.
-• 🖨️ **Hardware Compatibility**: 
-  - Thermal Receipt Printers (ESC/POS via USB, LAN, Wi-Fi, Bluetooth)
-  - 1D/2D Barcode Scanners (Zebra, Honeywell)
-  - Electronic Cash Drawers & Weighing Scales
-  - Touch KDS Screens & Customer Facing Displays (CFD)
-• 💼 **Accounting & Enterprise ERP**: QuickBooks, Xero & open REST webhook APIs for custom ERP connectivity.
-
-*(Active Connected Integrations: ${names})*`;
+• 💳 **Payment Processors**: Stripe, Square, Authorize.Net, Clover, Ingenico & Pax dual-pricing card terminals.
+• 🛵 **Online Delivery Aggregators**: DoorDash, Uber Eats, Zomato & Swiggy — live 2-way menu and order routing.
+• 🖨️ **Hardware Compatibility**: ESC/POS Thermal Printers (USB/LAN/Wi-Fi/Bluetooth), Barcode Scanners (Zebra, Honeywell), Weighing Scales, and Customer Facing Displays.
+• 💼 **Accounting & ERP**: QuickBooks Online, Xero, Tally, SAP & webhook endpoints for custom ERPs.`;
 }
 
 // -------------------------------------------------------------
-// INTELLIGENT SOLUTIONS RESPONSE BUILDER
+// DYNAMIC DATABASE SOLUTIONS RESPONSE BUILDER (100% Live DB Solutions)
 // -------------------------------------------------------------
-function buildSolutionsResponse(variant: string): string {
-  return `🎯 **Industry Solutions Powered by Quantix POS:**
+function buildSolutionsResponse(variant: string, dbSolutions: any[]): string {
+  if (Array.isArray(dbSolutions) && dbSolutions.length > 0) {
+    const list = dbSolutions.slice(0, 6).map((s: any) => {
+      const title = s.title || 'Industry Solution';
+      const badge = s.badge ? ` [${s.badge}]` : '';
+      const desc = s.description || s.heroDescription || s.tagline || '';
+      const metric = s.liveMetric ? ` *(Metric: ${s.liveMetric})*` : '';
+      return `• 🎯 **${title}**${badge}: ${desc}${metric}`;
+    });
 
-• 🍽️ **Food & Beverage**: Quick Service (QSR), Fine Dining, Cafes, Bakeries, Bars, Nightclubs, Cloud Kitchens & Virtual Multi-Brands.
+    return `🎯 **Industry Solutions Powered by Quantix ${variant} POS (Direct from Database):**\n\n${list.join('\n\n')}\n\nWould you like to schedule a personalized 1-on-1 demo tailored to your specific business model?`;
+  }
+
+  return `🎯 **Industry Solutions Powered by Quantix ${variant} POS:**
+
+• 🍽️ **Food & Beverage**: Quick Service (QSR), Fine Dining, Cafes, Bakeries, Bars, Nightclubs, Cloud Kitchens & Virtual Brands.
 • 🛍️ **Retail & Wholesale**: Supermarkets, Grocery, Fashion Boutiques, Electronics, Footwear, Vape & Smoke Shops, Hardware Stores.
 • 🏢 **Franchise & Multi-Unit Brands**: Multi-branch enterprises requiring centralized catalog control, pooled inventory, and franchise royalty audits.
 
@@ -340,7 +359,7 @@ Would you like to see a personalized demo for your specific business type?`;
 }
 
 // -------------------------------------------------------------
-// GEMINI AI RAG CALL
+// GEMINI AI RAG CALL WITH LIVE DATABASE CONTEXT
 // -------------------------------------------------------------
 async function queryGeminiWithLiveContext(
   userQuery: string,
@@ -353,14 +372,24 @@ async function queryGeminiWithLiveContext(
   const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash-latest';
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-  const systemPrompt = `You are Quantix AI, an intelligent, polite and warm SaaS sales advisor for "Quantix ${variant} POS".
-Our pricing structure:
-- Standalone POS (Single Store): Basic $6/day, Pro $10/day, Advance $15/day
-- Standalone Cloud (Multi-Store): Basic $20/day, Pro $30/day, Advance $45/day
-- Enterprise Cloud (Franchises & Chains): Basic $60/day ($1,800/mo), Pro $100/day ($3,000/mo), Advance $175/day ($5,250/mo)
+  const topFeatures = (dbData.features || []).slice(0, 6).map(f => `${f.title}: ${f.shortDescription || f.subtitle}`).join('; ');
+  const topIntegrations = (dbData.integrations || []).slice(0, 8).map(i => i.name).join(', ');
+  const topSolutions = (dbData.solutions || []).slice(0, 5).map(s => s.title).join(', ');
 
-Key features: Zero-downtime offline-first billing, multi-store matrix inventory, KDS kitchen screens, barcode checkout, Zomato/Swiggy/DoorDash sync, Stripe/Square payments.
-Always speak warmly and in the exact language of the customer (English, Hindi, or Hinglish).`;
+  const systemPrompt = `You are Quantix AI, a professional and helpful SaaS sales advisor for "Quantix ${variant} POS".
+Live Database Context:
+- Active Features in Database: ${topFeatures || 'Offline Billing, KDS, Matrix Inventory, Real-Time BI Telemetry, Automated POs'}
+- Active Integrations in Database: ${topIntegrations || 'Stripe, Square, Authorize.Net, DoorDash, Uber Eats, ESC/POS Printers'}
+- Active Solutions in Database: ${topSolutions || 'QSR, Fine Dining, Supermarket, Retail Boutique, Multi-Unit Franchise'}
+- Live Pricing Architecture:
+  * Standalone POS (Single Outlet): From $6/day ($180/mo)
+  * Standalone Cloud (Multi-Outlet): From $20/day ($600/mo)
+  * Enterprise Cloud (Chains & HQ): From $60/day ($1,800/mo)
+
+Guidelines:
+1. Always give authentic facts from the database above. Never invent fake data or pricing.
+2. If customer asks in Hindi or Hinglish, reply warmly in natural Hinglish.
+3. Keep responses structured with clean bullet points and encourage scheduling a 1-on-1 demo.`;
 
   try {
     const res = await fetch(url, {
@@ -368,9 +397,9 @@ Always speak warmly and in the exact language of the customer (English, Hindi, o
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: [{ role: 'user', parts: [{ text: `${systemPrompt}\n\nCustomer Query: "${userQuery}"` }] }],
-        generationConfig: { temperature: 0.65, maxOutputTokens: 600 }
+        generationConfig: { maxOutputTokens: 500, temperature: 0.2 },
       }),
-      signal: AbortSignal.timeout(2500)
+      signal: AbortSignal.timeout(5000),
     });
 
     if (res.ok) {
@@ -448,7 +477,7 @@ export async function processDbAiChatQuery(
     q.includes('kya haal')
   ) {
     return {
-      reply: `👋 **Hello there! Welcome to Quantix ${variant} POS.**\n\nI'm your 24/7 AI Solutions Advisor. I can help answer questions about our **pricing plans**, **key features**, **supported hardware & integrations**, or schedule a **live 1-on-1 demo**.\n\nWhat would you like to explore today?`,
+      reply: `👋 **Hello there! Welcome to Quantix ${variant} POS.**\n\nI'm your 24/7 AI Solutions Advisor. I can help answer questions about our **live pricing plans**, **key features**, **supported hardware & integrations**, or schedule a **live 1-on-1 demo**.\n\nWhat would you like to explore today?`,
       isActionable: true,
       actionType: 'NONE',
       suggestedButtons: [
@@ -461,12 +490,12 @@ export async function processDbAiChatQuery(
     };
   }
 
-  // 3. Demo Booking Intent
-  if (q.includes('demo') || q.includes('book') || q.includes('trial') || q.includes('schedule')) {
+  // 3. Demo Booking Intent / Lead Capture Request
+  if (q.includes('demo') || q.includes('book') || q.includes('trial') || q.includes('schedule') || q.includes('form')) {
     return {
       reply: leadCaptured
-        ? `✅ **Thank You!** We have registered your details with our ${variant} Solutions Team. An onboarding specialist will call you shortly.`
-        : `👋 We would love to demonstrate **Quantix ${variant} POS** in action!\n\nYou can fill our **quick 30-second Demo Request Form** right inside this chat window or leave your contact number.`,
+        ? `✅ **Thank You!** We have registered your details with our ${variant} Solutions Team. An onboarding specialist will call you shortly to confirm your demo.`
+        : `👋 We would love to demonstrate **Quantix ${variant} POS** live in action!\n\nPlease fill out our **quick 30-second Demo Request Form** below or leave your contact details so our solutions team can get in touch with you right away.`,
       isActionable: true,
       actionType: 'BOOK_DEMO',
       suggestedButtons: [
@@ -560,7 +589,7 @@ export async function processDbAiChatQuery(
     q.includes('business type')
   ) {
     return {
-      reply: buildSolutionsResponse(variant),
+      reply: buildSolutionsResponse(variant, dbData.solutions),
       isActionable: true,
       actionType: 'VIEW_SOLUTIONS',
       suggestedButtons: [

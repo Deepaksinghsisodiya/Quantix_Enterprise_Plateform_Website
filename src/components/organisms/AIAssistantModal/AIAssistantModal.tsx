@@ -109,6 +109,9 @@ export const AIAssistantModal: React.FC<AIAssistantProps> = ({
             data.suggestedButtons,
             data.leadCaptured
           );
+          if (data.actionType === 'BOOK_DEMO' && !data.leadCaptured) {
+            setShowInlineForm(true);
+          }
           setIsTyping(false);
           return;
         }
